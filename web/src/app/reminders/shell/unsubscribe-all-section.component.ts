@@ -6,11 +6,12 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { BusyDirective } from '@pu-stats/ui';
 
 @Component({
   selector: 'app-unsubscribe-all-section',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonModule, MatIconModule],
+  imports: [BusyDirective, MatButtonModule, MatIconModule],
   template: `
     <section class="reminder-section">
       <h3 i18n="@@unsubAll.section.title">📵 Push auf allen Geräten</h3>
@@ -24,7 +25,8 @@ import { MatIconModule } from '@angular/material/icon';
           type="button"
           mat-stroked-button
           color="warn"
-          [disabled]="loading()"
+          data-testid="push-unsubscribe-all"
+          [puBusy]="busy()"
           (click)="unsubscribeAll.emit()"
           i18n="@@unsubAll.button"
         >
@@ -60,6 +62,6 @@ import { MatIconModule } from '@angular/material/icon';
   `,
 })
 export class UnsubscribeAllSectionComponent {
-  readonly loading = input.required<boolean>();
+  readonly busy = input.required<boolean>();
   readonly unsubscribeAll = output<void>();
 }

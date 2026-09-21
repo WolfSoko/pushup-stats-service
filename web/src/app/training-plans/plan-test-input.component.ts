@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { BusyDirective } from '@pu-stats/ui';
 import { DayTestField } from './training-plan-detail.models';
 
 /** One measured value the user submitted. */
@@ -33,6 +34,7 @@ export interface TestResultSubmit {
 @Component({
   selector: 'app-plan-test-input',
   imports: [
+    BusyDirective,
     MatButtonModule,
     MatFormFieldModule,
     MatIconModule,
@@ -52,6 +54,8 @@ export class PlanTestInputComponent {
   readonly scalesPlan = input(false);
   /** False for future days and inactive plans — the form stays read-only. */
   readonly interactive = input(false);
+  /** The day's busy keys from the store: `record:<i>` / `clear:<i>` spin their button. */
+  readonly busyKeys = input<ReadonlySet<string>>(new Set());
 
   readonly submitResult = output<TestResultSubmit>();
   readonly clearResult = output<number>();

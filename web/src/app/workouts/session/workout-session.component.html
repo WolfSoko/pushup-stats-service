@@ -50,7 +50,7 @@
             [row]="row"
             [position]="session.stepIndex() + 1"
             [total]="session.stepsTotal()"
-            [busy]="busy()"
+            [busyKeys]="busy.busyKeys()"
             (capture)="captureCurrent()"
             (enterByHand)="enterByHand()"
             (logAsPrescribed)="logAsPrescribed()"

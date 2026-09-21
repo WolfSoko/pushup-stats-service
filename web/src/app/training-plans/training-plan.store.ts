@@ -50,6 +50,7 @@ import { resetPlanExercise } from './training-plan-store.reset';
 import { clearTestResult, recordTestResult } from './training-plan-store.tests';
 import { dayProgress } from './training-plan-store.internals';
 import { registerTrainingPlanHooks } from './training-plan-store.hooks';
+import { withPlanBusy } from './training-plan-store.busy';
 
 export type { LogPlanDayResult } from './training-plan-store.internals';
 export type { ResetExerciseResult } from './training-plan-store.reset';
@@ -114,6 +115,7 @@ export const TrainingPlanStore = signalStore(
      */
     _writingDays: signal<ReadonlySet<number>>(new Set()),
   })),
+  withPlanBusy(),
   withProps((store) => ({
     activeResource: rxResource({
       params: () => ({ userId: store._user.userIdSafe() }),
@@ -267,47 +269,77 @@ export const TrainingPlanStore = signalStore(
       activePlanLoaded,
     };
   }),
-  withMethods((store) => ({
-    /** All curated plans (re-exposed for component templates). */
-    allPlans: () => actions.allPlans(),
-    start: (planId: string, options?: lifecycle.StartPlanOptions) =>
-      lifecycle.start(store, planId, options),
-    markTodayDone: () => actions.markTodayDone(store),
-    logTodayPlanDay: () => actions.logTodayPlanDay(store),
-    markDayDone: (dayIndex: number) => actions.markDayDone(store, dayIndex),
-    logPlanDay: (dayIndex: number) => actions.logPlanDay(store, dayIndex),
-    /** Per-exercise fulfillment of a plan day, for the detail page. */
-    dayProgress: (dayIndex: number): ReadonlyArray<PlanExerciseProgress> =>
-      dayProgress(store, dayIndex),
-    logPlanExercise: (dayIndex: number, itemIndex: number) =>
-      items.logPlanExercise(store, dayIndex, itemIndex),
-    setItemDone: (dayIndex: number, itemIndex: number, done: boolean) =>
-      items.setItemDone(store, dayIndex, itemIndex, done),
-    /** Re-open one exercise: drop its tick and the entries the plan wrote. */
-    resetPlanExercise: (dayIndex: number, itemIndex: number) =>
-      resetPlanExercise(store, dayIndex, itemIndex),
-    /** Everything the user measured on a `test` day, keyed by field index. */
-    testResults: (dayIndex: number): ReadonlyMap<number, number> =>
-      planTestResults(store.activePlan(), dayIndex),
-    /** Record (or revise) one measured value; rescales the days after it. */
-    recordTestResult: (dayIndex: number, itemIndex: number, value: number) =>
-      recordTestResult(store, dayIndex, itemIndex, value),
-    /** Drop one measured value — that exercise falls back to the catalog. */
-    clearTestResult: (dayIndex: number, itemIndex: number) =>
-      clearTestResult(store, dayIndex, itemIndex),
-    unmarkDayDone: (dayIndex: number) =>
-      lifecycle.unmarkDayDone(store, dayIndex),
-    skipDay: (dayIndex: number) => lifecycle.skipDay(store, dayIndex),
-    unskipDay: (dayIndex: number) => lifecycle.unskipDay(store, dayIndex),
-    jumpToDay: (targetDayIndex: number) =>
-      lifecycle.jumpToDay(store, targetDayIndex),
-    abandon: () => lifecycle.abandon(store),
-    /** Put the plan on hold on today's day; the break costs no plan days. */
-    pause: () => pause.pause(store),
-    /** Pick a paused plan back up at the day it was frozen on. */
-    resume: () => pause.resume(store),
-    reload: () => store.activeResource.reload(),
-  })),
+  withMethods((store) => {
+    const { _busy } = store;
+    const dayKey = (dayIndex: number | null) => `day:${dayIndex}`;
+    const itemKey = (kind: string, dayIndex: number, itemIndex: number) =>
+      `${kind}:${dayIndex}:${itemIndex}`;
+    return {
+      /** All curated plans (re-exposed for component templates). */
+      allPlans: () => actions.allPlans(),
+      start: (planId: string, options?: lifecycle.StartPlanOptions) =>
+        _busy.run('start', () => lifecycle.start(store, planId, options)),
+      markTodayDone: () =>
+        _busy.run(dayKey(store.currentDayIndex()), () =>
+          actions.markTodayDone(store)
+        ),
+      logTodayPlanDay: () =>
+        _busy.run(dayKey(store.currentDayIndex()), () =>
+          actions.logTodayPlanDay(store)
+        ),
+      markDayDone: (dayIndex: number) =>
+        _busy.run(dayKey(dayIndex), () => actions.markDayDone(store, dayIndex)),
+      logPlanDay: (dayIndex: number) =>
+        _busy.run(dayKey(dayIndex), () => actions.logPlanDay(store, dayIndex)),
+      /** Per-exercise fulfillment of a plan day, for the detail page. */
+      dayProgress: (dayIndex: number): ReadonlyArray<PlanExerciseProgress> =>
+        dayProgress(store, dayIndex),
+      logPlanExercise: (dayIndex: number, itemIndex: number) =>
+        _busy.run(itemKey('item', dayIndex, itemIndex), () =>
+          items.logPlanExercise(store, dayIndex, itemIndex)
+        ),
+      setItemDone: (dayIndex: number, itemIndex: number, done: boolean) =>
+        _busy.run(itemKey('item', dayIndex, itemIndex), () =>
+          items.setItemDone(store, dayIndex, itemIndex, done)
+        ),
+      /** Re-open one exercise: drop its tick and the entries the plan wrote. */
+      resetPlanExercise: (dayIndex: number, itemIndex: number) =>
+        _busy.run(itemKey('item', dayIndex, itemIndex), () =>
+          resetPlanExercise(store, dayIndex, itemIndex)
+        ),
+      /** Everything the user measured on a `test` day, keyed by field index. */
+      testResults: (dayIndex: number): ReadonlyMap<number, number> =>
+        planTestResults(store.activePlan(), dayIndex),
+      /** Record (or revise) one measured value; rescales the days after it. */
+      recordTestResult: (dayIndex: number, itemIndex: number, value: number) =>
+        _busy.run(itemKey('record', dayIndex, itemIndex), () =>
+          recordTestResult(store, dayIndex, itemIndex, value)
+        ),
+      /** Drop one measured value — that exercise falls back to the catalog. */
+      clearTestResult: (dayIndex: number, itemIndex: number) =>
+        _busy.run(itemKey('clear', dayIndex, itemIndex), () =>
+          clearTestResult(store, dayIndex, itemIndex)
+        ),
+      unmarkDayDone: (dayIndex: number) =>
+        _busy.run(dayKey(dayIndex), () =>
+          lifecycle.unmarkDayDone(store, dayIndex)
+        ),
+      skipDay: (dayIndex: number) =>
+        _busy.run(dayKey(dayIndex), () => lifecycle.skipDay(store, dayIndex)),
+      unskipDay: (dayIndex: number) =>
+        _busy.run(dayKey(dayIndex), () => lifecycle.unskipDay(store, dayIndex)),
+      jumpToDay: (targetDayIndex: number) =>
+        _busy.run(dayKey(targetDayIndex), () =>
+          lifecycle.jumpToDay(store, targetDayIndex)
+        ),
+      abandon: () => _busy.run('abandon', () => lifecycle.abandon(store)),
+      /** Put the plan on hold on today's day; the break costs no plan days. */
+      pause: () => _busy.run('pause', () => pause.pause(store)),
+      /** Pick a paused plan back up at the day it was frozen on. */
+      resume: () => _busy.run('resume', () => pause.resume(store)),
+      reload: () => store.activeResource.reload(),
+    };
+  }),
   withHooks({
     onInit: (store) => registerTrainingPlanHooks(store),
   })

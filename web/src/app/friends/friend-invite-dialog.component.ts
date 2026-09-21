@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { BusyDirective, createBusyState } from '@pu-stats/ui';
 
 import { InviteService } from '../core/invite.service';
 import { ShareService } from '../core/share.service';
@@ -32,6 +33,7 @@ import { ShareService } from '../core/share.service';
   selector: 'app-friend-invite-dialog',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule,
@@ -96,6 +98,7 @@ import { ShareService } from '../core/share.service';
           mat-flat-button
           type="button"
           data-testid="invite-share"
+          [puBusy]="sharing.busy()"
           (click)="share()"
         >
           <mat-icon>share</mat-icon>
@@ -131,7 +134,8 @@ import { ShareService } from '../core/share.service';
 })
 export class FriendInviteDialogComponent {
   private readonly invites = inject(InviteService);
-  private readonly sharing = inject(ShareService);
+  private readonly clipboard = inject(ShareService);
+  protected readonly sharing = createBusyState();
 
   protected readonly token = resource({
     loader: () => this.invites.ensureToken(),
@@ -141,11 +145,11 @@ export class FriendInviteDialogComponent {
   protected readonly url = this.invites.inviteUrl;
 
   protected copy(): void {
-    void this.sharing.copyLink(this.url());
+    void this.clipboard.copyLink(this.url());
   }
 
   protected share(): void {
-    void this.invites.inviteFriend();
+    void this.sharing.run(() => this.invites.inviteFriend());
   }
 
   /** Tapping the field should hand over the whole link, not a caret. */

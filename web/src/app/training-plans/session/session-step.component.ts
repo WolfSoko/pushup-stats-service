@@ -9,8 +9,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { BusyDirective } from '@pu-stats/ui';
 
 import { SessionStepRow } from './training-session.rows';
+
+/** The step actions that write something, each with its own busy flag. */
+export type SessionStepAction =
+  | 'capture'
+  | 'byHand'
+  | 'prescribed'
+  | 'checkOff';
 
 /**
  * The exercise currently in focus. Purely presentational — the page owns
@@ -24,6 +32,7 @@ import { SessionStepRow } from './training-session.rows';
 @Component({
   selector: 'app-session-step',
   imports: [
+    BusyDirective,
     MatButtonModule,
     MatIconModule,
     MatProgressBarModule,
@@ -38,8 +47,8 @@ export class SessionStepComponent {
   /** 1-based position for the "Übung 2 von 3" line. */
   readonly position = input.required<number>();
   readonly total = input.required<number>();
-  /** Blocks every action while a capture or write is in flight. */
-  readonly busy = input(false);
+  /** The actions in flight; each button spins for its own. */
+  readonly busyKeys = input<ReadonlySet<SessionStepAction>>(new Set());
 
   readonly capture = output<void>();
   readonly enterByHand = output<void>();
@@ -71,6 +80,12 @@ export class SessionStepComponent {
         return 'edit';
     }
   });
+
+  /**
+   * Skipping stays locked while a write is out: the write closes the
+   * current step when it lands, which would be the wrong one by then.
+   */
+  protected readonly anyBusy = computed(() => this.busyKeys().size > 0);
 
   /** The entry dialog is the primary action already — don't offer it twice. */
   protected readonly showByHand = computed(() => this.row().tool !== 'manual');

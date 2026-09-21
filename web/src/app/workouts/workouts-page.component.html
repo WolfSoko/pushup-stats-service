@@ -62,7 +62,7 @@
     @for (workout of store.workouts(); track workout.id) {
       <app-workout-card
         [workout]="workout"
-        [busy]="store.busy()"
+        [busyKeys]="store.busyKeys()"
         (share)="share($event)"
         (toggleProfile)="toggleProfile($event)"
         (remove)="remove($event)"

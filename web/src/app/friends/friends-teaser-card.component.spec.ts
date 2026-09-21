@@ -203,4 +203,33 @@ describe('FriendsTeaserCardComponent', () => {
     expect(screen.queryByTestId('dashboard-friends-card')).toBeNull();
     expect(api.list).not.toHaveBeenCalled();
   });
+  it('should show the invite button busy until the invite link is shared', async () => {
+    // given — the invite token is still being minted
+    let answer: (result: string) => void = () => undefined;
+    const { invite, fixture } = await renderCard({});
+    invite.inviteFriend.mockReturnValue(
+      new Promise((resolve) => {
+        answer = resolve;
+      })
+    );
+
+    // when
+    screen.getByTestId('dashboard-friends-invite').click();
+    fixture.detectChanges();
+
+    // then
+    expect(
+      screen.getByTestId('dashboard-friends-invite').getAttribute('aria-busy')
+    ).toBe('true');
+
+    // when
+    answer('native');
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(
+      screen.getByTestId('dashboard-friends-invite').getAttribute('aria-busy')
+    ).toBeNull();
+  });
 });

@@ -9,6 +9,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { BusyDirective } from '@pu-stats/ui';
 import { ExerciseRefComponent } from '../core/exercise-ref/exercise-ref.component';
 import { DayExerciseRow } from './training-plan-detail.models';
 
@@ -32,6 +33,7 @@ export interface ExerciseToggle {
 @Component({
   selector: 'app-plan-day-exercises',
   imports: [
+    BusyDirective,
     MatButtonModule,
     MatCheckboxModule,
     MatIconModule,
@@ -47,6 +49,8 @@ export class PlanDayExercisesComponent {
   readonly exercises = input.required<ReadonlyArray<DayExerciseRow>>();
   /** False for future days and inactive plans — the list stays read-only. */
   readonly interactive = input(false);
+  /** The day's busy keys from the store: `item:<itemIndex>` spins that row's button. */
+  readonly busyKeys = input<ReadonlySet<string>>(new Set());
 
   readonly logExercise = output<number>();
   readonly toggleExercise = output<ExerciseToggle>();

@@ -302,6 +302,34 @@ describe('TrainingSessionComponent', () => {
     expect(screen.getByText(/Als Nächstes/)).toBeTruthy();
   });
 
+  it('should show the pressed step button busy until its write settles', async () => {
+    // given — a plan write Firestore has not acknowledged yet
+    let settle: (result: string) => void = () => undefined;
+    const { logPlanExercise } = await setup();
+    logPlanExercise.mockReturnValue(
+      new Promise((resolve) => {
+        settle = resolve;
+      })
+    );
+    await userEvent.click(byTestId('session-start'));
+
+    // when
+    await userEvent.click(byTestId('session-log-prescribed'));
+
+    // then — only that button spins; the capture button stays still
+    expect(byTestId('session-log-prescribed').getAttribute('aria-busy')).toBe(
+      'true'
+    );
+    expect(byTestId('session-capture').getAttribute('aria-busy')).toBeNull();
+    expect(byTestId('session-skip').hasAttribute('disabled')).toBe(true);
+
+    // when
+    settle('logged');
+
+    // then — moved on; the next step's buttons are at rest
+    expect(await screen.findByText(/Als Nächstes/)).toBeTruthy();
+  });
+
   it('should keep the user on the exercise when the plan write did not go through', async () => {
     // given
     const { logPlanExercise } = await setup();

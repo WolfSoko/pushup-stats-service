@@ -253,4 +253,57 @@ describe('ChallengesStore', () => {
       300, 120,
     ]);
   });
+  it('should keep the answered challenge busy until the re-read lands', async () => {
+    // given — an answer the server has not confirmed yet
+    let answer: (result: { ok: boolean }) => void = () => undefined;
+    const { store, api } = setup([invitation]);
+    api.respond.mockReturnValue(
+      new Promise((resolve) => {
+        answer = resolve;
+      })
+    );
+
+    // when
+    const done = store.accept('c2');
+
+    // then — only this card's accept button is busy
+    expect(store.isBusy('accept:c2')).toBe(true);
+    expect(store.busyKeys().has('accept:c2')).toBe(true);
+    expect(store.isBusy('decline:c2')).toBe(false);
+    expect(store.isBusy('leave:c2')).toBe(false);
+
+    // when — confirmed, then the list is re-read
+    answer({ ok: true });
+    await done;
+
+    // then
+    expect(api.list).toHaveBeenCalledTimes(1);
+    expect(store.isBusy('accept:c2')).toBe(false);
+  });
+
+  it('should mark a create busy until it settles, even when refused', async () => {
+    // given
+    const { store, api } = setup();
+    api.create.mockResolvedValue({ ok: false, reason: 'ended' });
+    const input = {
+      friendUids: ['b'],
+      exerciseId: 'pushup',
+      exerciseName: 'Liegestütze',
+      target: 500,
+      days: 7 as const,
+    };
+
+    // when
+    const done = store.create(input);
+
+    // then
+    expect(store.isBusy('create')).toBe(true);
+
+    // when
+    await done;
+
+    // then
+    expect(store.isBusy('create')).toBe(false);
+    expect(store.lastRejection()).toBe('ended');
+  });
 });

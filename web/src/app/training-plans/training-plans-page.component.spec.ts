@@ -23,6 +23,7 @@ function makeStoreMock(
     completionPercent: signal(0),
     todayDay: signal(null),
     todayDone: signal(false),
+    busyKeys: signal<ReadonlySet<string>>(new Set()),
     abandon: vitest.fn(),
     pause: vitest.fn().mockResolvedValue(undefined),
     resume: vitest.fn().mockResolvedValue(undefined),
@@ -144,6 +145,40 @@ describe('TrainingPlansPageComponent', () => {
     expect(
       screen.getByRole('link', { name: 'Details öffnen' }).getAttribute('href')
     ).toBe(`/training-plans/${activePlan.slug}`);
+  });
+
+  it('should show the active plan card button busy while its store action runs', async () => {
+    // given
+    const store = makeStoreMock(TRAINING_PLANS[0], true);
+    const { fixture } = await render(TrainingPlansPageComponent, {
+      providers: [
+        provideRouter([]),
+        { provide: TrainingPlanStore, useValue: store },
+        {
+          provide: AuthStore,
+          useValue: makeAuthStoreMock({
+            isAuthenticated: true,
+            authResolved: true,
+          }),
+        },
+      ],
+    });
+
+    // when
+    store.busyKeys.set(new Set(['abandon']));
+    fixture.detectChanges();
+
+    // then
+    expect(
+      screen
+        .getByRole('button', { name: /Plan beenden/ })
+        .getAttribute('aria-busy')
+    ).toBe('true');
+    expect(
+      screen
+        .getByRole('button', { name: /Plan pausieren/ })
+        .getAttribute('aria-busy')
+    ).toBeNull();
   });
 
   it('renders a topical hero image for every plan card', async () => {

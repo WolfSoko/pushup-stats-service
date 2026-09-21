@@ -1,11 +1,4 @@
-import {
-  patchState,
-  signalStore,
-  withComputed,
-  withMethods,
-  withState,
-} from '@ngrx/signals';
-import { computed } from '@angular/core';
+import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import {
   type ReminderConfig,
   QUICK_LOG_REPS_MAX,
@@ -53,9 +46,6 @@ const initialState: ReminderFormState = {
  */
 export const ReminderFormStore = signalStore(
   withState(initialState),
-  withComputed((store) => ({
-    canSave: computed(() => store.dirty() && !store.saving()),
-  })),
   withMethods((store) => ({
     syncFromConfig(config: ReminderConfig | null): void {
       // Clamp to both bounds on hydrate so a Firestore value written by an

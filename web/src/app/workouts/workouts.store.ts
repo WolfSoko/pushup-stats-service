@@ -19,6 +19,7 @@ import {
   type WorkoutRejection,
   type WorkoutSource,
 } from '@pu-stats/models';
+import { createKeyedBusyState } from '@pu-stats/ui';
 import { filter, firstValueFrom, of, timeout } from 'rxjs';
 
 import {
@@ -39,14 +40,12 @@ interface WorkoutsState {
   lastShared: number;
   /** Friends skipped by the last share because their list is full. */
   lastShareFull: number;
-  busy: boolean;
 }
 
 const initialState: WorkoutsState = {
   lastRejection: undefined,
   lastShared: 0,
   lastShareFull: 0,
-  busy: false,
 };
 
 /**
@@ -62,6 +61,8 @@ export const WorkoutsStore = signalStore(
     _api: inject(WorkoutsApiService),
     _share: inject(WorkoutShareApiService),
     _user: inject(UserContextService),
+    /** One flag per pressed CTA: `create`, `<action>:<workoutId>`. */
+    _busy: createKeyedBusyState<string>(),
   })),
   withProps((store) => ({
     _resource: rxResource({
@@ -76,6 +77,7 @@ export const WorkoutsStore = signalStore(
     );
     return {
       workouts,
+      busyKeys: store._busy.busyKeys,
       loaded: computed(() => store._resource.value() !== undefined),
       count: computed(() => workouts().length),
       canAddMore: computed(() => workouts().length < MAX_WORKOUTS),
@@ -104,16 +106,20 @@ export const WorkoutsStore = signalStore(
       );
     }
 
-    async function run<T>(action: () => Promise<T>, fallback: T): Promise<T> {
-      patchState(store, { lastRejection: undefined, busy: true });
-      try {
-        return await action();
-      } catch {
-        patchState(store, { lastRejection: 'failed' });
-        return fallback;
-      } finally {
-        patchState(store, { busy: false });
-      }
+    function run<T>(
+      key: string,
+      action: () => Promise<T>,
+      fallback: T
+    ): Promise<T> {
+      patchState(store, { lastRejection: undefined });
+      return store._busy.run(key, async () => {
+        try {
+          return await action();
+        } catch {
+          patchState(store, { lastRejection: 'failed' });
+          return fallback;
+        }
+      });
     }
 
     /** Validates like the rules would; a refusal lands in `lastRejection`. */
@@ -126,56 +132,77 @@ export const WorkoutsStore = signalStore(
 
     return {
       workoutById: (id: string): Workout | null => store.byId().get(id) ?? null,
+      isBusy: (key: string): boolean => store._busy.isBusy(key),
 
       /** Returns the new id, or `null` when refused or failed. */
       create: (input: WorkoutInput): Promise<string | null> =>
-        run(async () => {
-          const uid = userId();
-          if (!uid || refuse(input, null)) return null;
-          return await store._api.createWorkout(uid, input);
-        }, null),
+        run(
+          'create',
+          async () => {
+            const uid = userId();
+            if (!uid || refuse(input, null)) return null;
+            return await store._api.createWorkout(uid, input);
+          },
+          null
+        ),
 
       update: (id: string, input: WorkoutInput): Promise<boolean> =>
-        run(async () => {
-          const uid = userId();
-          if (!uid || refuse(input, id)) return false;
-          await store._api.updateWorkout(uid, id, input);
-          return true;
-        }, false),
+        run(
+          `update:${id}`,
+          async () => {
+            const uid = userId();
+            if (!uid || refuse(input, id)) return false;
+            await store._api.updateWorkout(uid, id, input);
+            return true;
+          },
+          false
+        ),
 
       remove: (id: string): Promise<boolean> =>
-        run(async () => {
-          const uid = userId();
-          if (!uid) return false;
-          await store._api.deleteWorkout(uid, id);
-          return true;
-        }, false),
+        run(
+          `remove:${id}`,
+          async () => {
+            const uid = userId();
+            if (!uid) return false;
+            await store._api.deleteWorkout(uid, id);
+            return true;
+          },
+          false
+        ),
 
       setOnProfile: (id: string, onProfile: boolean): Promise<boolean> =>
-        run(async () => {
-          const uid = userId();
-          if (!uid) return false;
-          await store._api.setOnProfile(uid, id, onProfile);
-          return true;
-        }, false),
+        run(
+          `profile:${id}`,
+          async () => {
+            const uid = userId();
+            if (!uid) return false;
+            await store._api.setOnProfile(uid, id, onProfile);
+            return true;
+          },
+          false
+        ),
 
       /** Send a copy to confirmed friends through the callable. */
       share: (
         id: string,
         friendUids: ReadonlyArray<string>
       ): Promise<boolean> =>
-        run(async () => {
-          const result = await store._share.share(id, friendUids);
-          if (!result.ok) {
-            patchState(store, { lastRejection: result.reason ?? 'failed' });
-            return false;
-          }
-          patchState(store, {
-            lastShared: result.sent ?? 0,
-            lastShareFull: result.full?.length ?? 0,
-          });
-          return true;
-        }, false),
+        run(
+          `share:${id}`,
+          async () => {
+            const result = await store._share.share(id, friendUids);
+            if (!result.ok) {
+              patchState(store, { lastRejection: result.reason ?? 'failed' });
+              return false;
+            }
+            patchState(store, {
+              lastShared: result.sent ?? 0,
+              lastShareFull: result.full?.length ?? 0,
+            });
+            return true;
+          },
+          false
+        ),
 
       /**
        * Take a workout off someone's profile into the own list. The
@@ -186,18 +213,22 @@ export const WorkoutsStore = signalStore(
         workout: PublicProfileWorkout,
         from: WorkoutSource
       ): Promise<string | null> =>
-        run(async () => {
-          await untilLoaded();
-          const uid = userId();
-          const input: WorkoutInput = {
-            title: workout.title,
-            description: workout.description,
-            exercises: workout.exercises,
-            onProfile: false,
-          };
-          if (!uid || refuse(input, null)) return null;
-          return await store._api.createWorkout(uid, input, from);
-        }, null),
+        run(
+          `import:${workout.id}`,
+          async () => {
+            await untilLoaded();
+            const uid = userId();
+            const input: WorkoutInput = {
+              title: workout.title,
+              description: workout.description,
+              exercises: workout.exercises,
+              onProfile: false,
+            };
+            if (!uid || refuse(input, null)) return null;
+            return await store._api.createWorkout(uid, input, from);
+          },
+          null
+        ),
     };
   })
 );

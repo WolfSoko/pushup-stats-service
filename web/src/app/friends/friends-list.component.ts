@@ -9,6 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
+import { BusyDirective } from '@pu-stats/ui';
 
 import { FriendAvatarComponent } from './friend-avatar.component';
 import type { FriendRow } from './friends-api.service';
@@ -18,6 +19,7 @@ import type { FriendRow } from './friends-api.service';
   selector: 'app-friends-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     FriendAvatarComponent,
     MatButtonModule,
     MatCardModule,
@@ -64,6 +66,7 @@ import type { FriendRow } from './friends-api.service';
               mat-stroked-button
               type="button"
               data-testid="friend-remove"
+              [puBusy]="busyKeys().has('remove:' + row.id)"
               (click)="remove.emit(row.id)"
               i18n="@@friends.remove"
             >
@@ -98,6 +101,8 @@ import type { FriendRow } from './friends-api.service';
 export class FriendsListComponent {
   readonly rows = input.required<ReadonlyArray<FriendRow>>();
   readonly loading = input(false);
+  /** The store's busy keys: `remove:<id>` spins that row's button. */
+  readonly busyKeys = input<ReadonlySet<string>>(new Set());
   readonly remove = output<string>();
   readonly invite = output<void>();
 

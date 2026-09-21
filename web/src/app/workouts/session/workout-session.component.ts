@@ -4,7 +4,6 @@ import {
   computed,
   effect,
   inject,
-  signal,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -14,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import type { SessionStep } from '@pu-stats/models';
+import { createKeyedBusyState } from '@pu-stats/ui';
 
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';
 import { WakeLockService } from '../../core/wake-lock.service';
@@ -25,7 +25,10 @@ import {
 import { SessionIntroComponent } from '../../training-plans/session/session-intro.component';
 import { SessionRestComponent } from '../../training-plans/session/session-rest.component';
 import { SESSION_SOURCE } from '../../training-plans/session/session-source';
-import { SessionStepComponent } from '../../training-plans/session/session-step.component';
+import {
+  SessionStepComponent,
+  type SessionStepAction,
+} from '../../training-plans/session/session-step.component';
 import { TrainingSessionStore } from '../../training-plans/session/training-session.store';
 import { buildSessionRows } from '../../training-plans/session/training-session.rows';
 import { asSessionSource, WorkoutRunStore } from './workout-run.store';
@@ -74,7 +77,7 @@ export class WorkoutSessionComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
-  protected readonly busy = signal(false);
+  protected readonly busy = createKeyedBusyState<SessionStepAction>();
   protected readonly closeLabel = $localize`:@@session.close:Session beenden`;
 
   private readonly params = toSignal(this.route.paramMap, {
@@ -113,11 +116,13 @@ export class WorkoutSessionComponent {
   }
 
   captureCurrent(): Promise<void> {
-    return this.runCapture((step) => this.capture.capture(step));
+    return this.runCapture('capture', (step) => this.capture.capture(step));
   }
 
   enterByHand(): Promise<void> {
-    return this.runCapture((step) => this.capture.captureByHand(step));
+    return this.runCapture('byHand', (step) =>
+      this.capture.captureByHand(step)
+    );
   }
 
   /**
@@ -126,13 +131,15 @@ export class WorkoutSessionComponent {
    * same way; the entry is what closes the step.
    */
   logAsPrescribed(): Promise<void> {
-    return this.runCapture((step) => this.capture.logPrescribed(step));
+    return this.runCapture('prescribed', (step) =>
+      this.capture.logPrescribed(step)
+    );
   }
 
   /** Close the step without an entry. */
   checkOff(): void {
     const step = this.session.currentStep();
-    if (!step || this.busy()) return;
+    if (!step || this.busy.busy()) return;
     this.run.tick(step.itemIndex);
     this.session.completeStep();
   }
@@ -143,18 +150,16 @@ export class WorkoutSessionComponent {
   }
 
   private async runCapture(
+    action: SessionStepAction,
     run: (step: SessionStep) => Promise<{ status: string; value: number }>
   ): Promise<void> {
     const step = this.session.currentStep();
-    if (!step || this.busy()) return;
-    this.busy.set(true);
-    try {
+    if (!step || this.busy.busy()) return;
+    await this.busy.run(action, async () => {
       const outcome = await run(step);
       if (outcome.status !== 'captured') return;
       if (step.quantified && step.logged + outcome.value < step.target) return;
       this.session.completeStep();
-    } finally {
-      this.busy.set(false);
-    }
+    });
   }
 }

@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import type { NotificationPermissionStatus } from '@pu-reminders/reminders';
+import { BusyDirective } from '@pu-stats/ui';
 import { ReminderFormStore } from './reminder-form.store';
 import { parseInputNumber } from './reminders-page.helpers';
 import { ReminderQuietHoursComponent } from './reminder-quiet-hours.component';
@@ -23,6 +24,7 @@ import { ReminderWeekdaysComponent } from './reminder-weekdays.component';
   selector: 'app-reminder-settings-section',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     MatChipsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -158,7 +160,9 @@ import { ReminderWeekdaysComponent } from './reminder-weekdays.component';
         <button
           type="button"
           mat-flat-button
-          [disabled]="!form.canSave()"
+          data-testid="reminder-save"
+          [disabled]="!form.dirty()"
+          [puBusy]="form.saving()"
           (click)="save.emit()"
           i18n="@@reminder.save"
         >

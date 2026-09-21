@@ -164,6 +164,102 @@ describe('FriendsPageComponent', () => {
     expect(api.remove).toHaveBeenCalledWith('a__b');
   });
 
+  it('should show the accept button busy until the request is answered and the lists re-read', async () => {
+    // given — an answer the server has not confirmed yet
+    let answer: (result: { ok: boolean }) => void = () => undefined;
+    const { api, fixture } = await renderPage(
+      { incoming: [row({ id: 'x__y', displayName: 'Ada' })] },
+      {
+        respond: vitest.fn().mockReturnValue(
+          new Promise((resolve) => {
+            answer = resolve;
+          })
+        ),
+      }
+    );
+
+    // when
+    screen.getByTestId('friend-accept').click();
+    fixture.detectChanges();
+
+    // then — accept spins, decline on the same card does not
+    expect(screen.getByTestId('friend-accept').getAttribute('aria-busy')).toBe(
+      'true'
+    );
+    expect(
+      screen.getByTestId('friend-decline').getAttribute('aria-busy')
+    ).toBeNull();
+
+    // when — confirmed; the re-read no longer lists the request
+    api.list.mockResolvedValue({
+      friends: [row({ id: 'x__y', displayName: 'Ada' })],
+      incoming: [],
+      outgoing: [],
+    });
+    answer({ ok: true });
+    await new Promise((resolve) => setTimeout(resolve));
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(screen.queryByTestId('friend-accept')).toBeNull();
+    expect(
+      screen.getByTestId('friend-remove').getAttribute('aria-busy')
+    ).toBeNull();
+  });
+
+  it('should show only the pressed remove button busy while the friendship ends', async () => {
+    // given — two friends, one removal left hanging
+    const { fixture } = await renderPage(
+      { friends: [row(), row({ id: 'a__c', uid: 'c', displayName: 'Cara' })] },
+      { remove: vitest.fn().mockReturnValue(new Promise(() => undefined)) }
+    );
+
+    // when
+    screen.getAllByTestId('friend-remove')[0].click();
+    fixture.detectChanges();
+
+    // then
+    const buttons = screen.getAllByTestId('friend-remove');
+    expect(buttons[0].getAttribute('aria-busy')).toBe('true');
+    expect(buttons[1].getAttribute('aria-busy')).toBeNull();
+  });
+
+  it('should show the withdraw button busy while the request is taken back', async () => {
+    // given
+    let answer: (result: { ok: boolean }) => void = () => undefined;
+    const { fixture } = await renderPage(
+      { outgoing: [row({ id: 'a__d', uid: 'd' })] },
+      {
+        remove: vitest.fn().mockReturnValue(
+          new Promise((resolve) => {
+            answer = resolve;
+          })
+        ),
+      }
+    );
+
+    // when
+    screen.getByTestId('friend-withdraw').click();
+    fixture.detectChanges();
+
+    // then
+    expect(
+      screen.getByTestId('friend-withdraw').getAttribute('aria-busy')
+    ).toBe('true');
+
+    // when
+    answer({ ok: true });
+    await new Promise((resolve) => setTimeout(resolve));
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(
+      screen.getByTestId('friend-withdraw').getAttribute('aria-busy')
+    ).toBeNull();
+  });
+
   it('should offer inviting someone when the list is empty', async () => {
     // given
     await renderPage();
@@ -198,6 +294,34 @@ describe('FriendsPageComponent', () => {
 
     // then
     expect(invite.inviteFriend).toHaveBeenCalled();
+  });
+
+  it('should show the share button busy until the share sheet has been handed the link', async () => {
+    // given — the token is still being minted
+    let answer: (result: string) => void = () => undefined;
+    const { invite, fixture } = await renderPage();
+    invite.inviteFriend.mockReturnValue(
+      new Promise((resolve) => {
+        answer = resolve;
+      })
+    );
+
+    // when
+    screen.getByTestId('friends-add').click();
+    const share = await screen.findByTestId('invite-share');
+    share.click();
+    fixture.detectChanges();
+
+    // then
+    expect(share.getAttribute('aria-busy')).toBe('true');
+
+    // when
+    answer('native');
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(share.getAttribute('aria-busy')).toBeNull();
   });
 
   it('should not offer a link the server refused to mint a token for', async () => {
@@ -337,7 +461,7 @@ describe('FriendsPageComponent', () => {
       expect(screen.getByTestId('board-cheers').textContent).toContain('3');
     });
 
-    it('should spin the tapped flame while its cheer is away', async () => {
+    it('should show the tapped flame busy while its cheer is away', async () => {
       // given — a send the server has not answered yet
       let answer: (result: { ok: boolean }) => void = () => undefined;
       const { fixture } = await renderPage(
@@ -357,11 +481,11 @@ describe('FriendsPageComponent', () => {
       await fixture.whenStable();
       fixture.detectChanges();
 
-      // then — still the flame, now turning, and not tappable a second time
+      // then — still the flame, now busy, and not tappable a second time
       const button = screen.getByTestId('board-cheer') as HTMLButtonElement;
       expect(button.textContent).toContain('whatshot');
-      expect(button.querySelector('mat-icon.is-sending')).toBeTruthy();
-      expect(button.disabled).toBe(true);
+      expect(button.getAttribute('aria-busy')).toBe('true');
+      expect(button.disabled).toBe(false);
       expect(button.getAttribute('aria-label')).toBe(
         'Anfeuerung wird gesendet'
       );
@@ -376,7 +500,7 @@ describe('FriendsPageComponent', () => {
 
       // then — it comes to rest, and only then
       expect(
-        screen.getByTestId('board-cheer').querySelector('mat-icon.is-sending')
+        screen.getByTestId('board-cheer').getAttribute('aria-busy')
       ).toBeNull();
       expect(screen.getByTestId('board-cheer').textContent).toContain(
         'whatshot'
@@ -406,8 +530,8 @@ describe('FriendsPageComponent', () => {
 
       // then — Cara's flame neither turns nor locks
       const buttons = screen.getAllByTestId('board-cheer');
-      expect(document.querySelectorAll('mat-icon.is-sending')).toHaveLength(1);
-      expect(buttons[1].querySelector('mat-icon.is-sending')).toBeNull();
+      expect(buttons[0].getAttribute('aria-busy')).toBe('true');
+      expect(buttons[1].getAttribute('aria-busy')).toBeNull();
       expect((buttons[1] as HTMLButtonElement).disabled).toBe(false);
     });
 

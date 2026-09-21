@@ -88,6 +88,7 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
           [completionPercent]="store.completionPercent()"
           [today]="todayLocalized()"
           [todayDone]="store.todayDone()"
+          [busyKeys]="store.busyKeys()"
           (abandon)="abandon()"
           (pausePlan)="pause()"
           (resumePlan)="resume()"

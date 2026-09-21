@@ -7,6 +7,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
+import { BusyDirective } from '@pu-stats/ui';
 
 import type { FriendRow } from './friends-api.service';
 
@@ -14,7 +15,7 @@ import type { FriendRow } from './friends-api.service';
 @Component({
   selector: 'app-friend-requests',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonModule, MatCardModule, RouterLink],
+  imports: [BusyDirective, MatButtonModule, MatCardModule, RouterLink],
   template: `
     <h2 i18n="@@friends.incoming">Anfragen an dich</h2>
     @for (row of rows(); track row.id) {
@@ -26,6 +27,8 @@ import type { FriendRow } from './friends-api.service';
           <button
             mat-stroked-button
             type="button"
+            data-testid="friend-decline"
+            [puBusy]="busyKeys().has('decline:' + row.id)"
             (click)="decline.emit(row.id)"
             i18n="@@friends.decline"
           >
@@ -36,6 +39,7 @@ import type { FriendRow } from './friends-api.service';
             color="primary"
             type="button"
             data-testid="friend-accept"
+            [puBusy]="busyKeys().has('accept:' + row.id)"
             (click)="accept.emit(row.id)"
             i18n="@@friends.accept"
           >
@@ -68,6 +72,8 @@ import type { FriendRow } from './friends-api.service';
 })
 export class FriendRequestsComponent {
   readonly rows = input.required<ReadonlyArray<FriendRow>>();
+  /** The store's busy keys: `accept:<id>` / `decline:<id>` spin their button. */
+  readonly busyKeys = input<ReadonlySet<string>>(new Set());
   readonly accept = output<string>();
   readonly decline = output<string>();
 

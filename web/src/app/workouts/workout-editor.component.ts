@@ -21,6 +21,7 @@ import {
   WORKOUT_MAX_EXERCISES,
   WORKOUT_TITLE_MAX,
 } from '@pu-stats/models';
+import { BusyDirective } from '@pu-stats/ui';
 
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import {
@@ -47,6 +48,7 @@ import { WorkoutsStore } from './workouts.store';
   selector: 'app-workout-editor',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
@@ -102,6 +104,11 @@ export class WorkoutEditorComponent {
   protected readonly rejection = computed(() =>
     workoutRejectionMessage(this.store.lastRejection())
   );
+
+  protected readonly saving = computed(() => {
+    const id = this.editingId();
+    return this.store.isBusy(id === null ? 'create' : `update:${id}`);
+  });
 
   protected readonly canAddLine = computed(
     () => this.form().lines.length < this.maxLines
