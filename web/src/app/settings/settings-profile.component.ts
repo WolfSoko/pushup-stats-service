@@ -18,6 +18,7 @@ import { UserContextService } from '@pu-auth/auth';
 import { AvatarService } from '../core/avatar.service';
 import { SettingsFacade } from '../stats/shell/settings.facade';
 import { ProfilePhotoService } from '../core/profile-photo.service';
+import { BusyDirective } from '@pu-stats/ui';
 
 @Component({
   selector: 'app-settings-profile',
@@ -30,6 +31,7 @@ import { ProfilePhotoService } from '../core/profile-photo.service';
     MatInputModule,
     MatSlideToggleModule,
     RouterLink,
+    BusyDirective,
   ],
   templateUrl: './settings-profile.component.html',
   styleUrl: './settings-section.scss',

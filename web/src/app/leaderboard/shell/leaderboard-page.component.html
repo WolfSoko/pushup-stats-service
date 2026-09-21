@@ -25,6 +25,7 @@
             [class.active]="isActiveExercise(chip.id)"
             [attr.aria-pressed]="isActiveExercise(chip.id)"
             [attr.data-testid]="'leaderboard-exercise-chip-' + chip.id"
+            [puBusy]="isExerciseBusy(chip.id)"
             (click)="selectExercise(chip.id)"
           >
             <mat-icon aria-hidden="true">{{ chip.icon }}</mat-icon>
@@ -36,6 +37,9 @@
           type="button"
           class="exercise-chip exercise-more"
           [class.active]="isOverflowSelection()"
+          [puBusy]="
+            isOverflowSelection() && isExerciseBusy(selectedExerciseId())
+          "
           [matMenuTriggerFor]="exerciseMenu"
           data-testid="leaderboard-exercise-more"
         >

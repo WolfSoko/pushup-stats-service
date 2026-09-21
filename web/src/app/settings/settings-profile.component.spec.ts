@@ -299,6 +299,31 @@ describe('SettingsProfileComponent', () => {
       });
     });
 
+    it('should mark the photo buttons busy while the service is working', async () => {
+      // given
+      const busy = signal(false);
+      const { view } = await setup({ busy }, null, 'https://x/photo.jpg');
+      const choose = screen.getByTestId('settings-photo-choose');
+      const remove = screen.getByTestId('settings-photo-remove');
+
+      // when
+      busy.set(true);
+      view.fixture.detectChanges();
+
+      // then
+      expect(choose.getAttribute('aria-busy')).toBe('true');
+      expect(remove.getAttribute('aria-busy')).toBe('true');
+      expect((choose as HTMLButtonElement).disabled).toBe(false);
+
+      // when
+      busy.set(false);
+      view.fixture.detectChanges();
+
+      // then
+      expect(choose.getAttribute('aria-busy')).toBeNull();
+      expect(remove.getAttribute('aria-busy')).toBeNull();
+    });
+
     it('should surface a rejection instead of failing silently', async () => {
       // given
       const { view, photoService } = await setup({

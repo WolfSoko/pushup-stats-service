@@ -30,6 +30,7 @@
           <button
             type="button"
             mat-stroked-button
+            [puBusy]="saveStatus() === 'saving'"
             (click)="retrySave()"
             i18n="@@goals.status.retry"
           >

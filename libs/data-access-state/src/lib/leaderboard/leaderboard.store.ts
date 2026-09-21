@@ -16,6 +16,7 @@ import {
   LeaderboardPeriod,
   LeaderboardService,
 } from '@pu-stats/data-access';
+import { createKeyedBusyState } from '@pu-stats/ui';
 
 type LeaderboardState = {
   /**
@@ -53,11 +54,13 @@ export const LeaderboardStore = signalStore(
     _api: inject(LeaderboardService, { optional: true }),
     _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
     _destroyRef: inject(DestroyRef),
+    /** Per exercise, so only the chip the user tapped shows a spinner. */
+    busy: createKeyedBusyState<string>(),
   })),
   withComputed((store) => ({
     loaded: computed(() => Object.keys(store.data()).length > 0),
   })),
-  withMethods(({ _api, ...store }) => {
+  withMethods(({ _api, busy, ...store }) => {
     // Tracks loads currently awaiting `_api.load(exerciseId)`, keyed by
     // exerciseId. The `loading` signal reflects "any load in flight" —
     // simpler than a per-exerciseId loading map and matches the
@@ -79,7 +82,7 @@ export const LeaderboardStore = signalStore(
           });
           return;
         }
-        const data = await _api.load(exerciseId);
+        const data = await busy.run(exerciseId, () => _api.load(exerciseId));
         patchState(store, {
           data: { ...store.data(), [exerciseId]: data },
           loading: inFlight.size > 1,

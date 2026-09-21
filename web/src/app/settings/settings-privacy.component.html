@@ -71,7 +71,8 @@
       type="button"
       mat-stroked-button
       color="warn"
-      [disabled]="facade.deletingAccount()"
+      [puBusy]="facade.deletingAccount()"
+      data-testid="settings-delete-account"
       (click)="facade.openDeleteDialog(deleteDialogTpl)"
       i18n="@@settings.deleteAccount"
     >

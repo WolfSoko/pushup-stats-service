@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { FriendInviteApiService } from '../../core/friend-invite-api.service';
 import { StatsDashboardComponent } from './stats-dashboard.component';
 import {
@@ -823,6 +823,38 @@ describe('StatsDashboardComponent', () => {
             source: 'quick-add',
           })
         );
+      });
+    });
+
+    describe('When a slot write is still pending', () => {
+      it('should keep only the pressed quick button busy until the write lands', async () => {
+        // given
+        const component = fixture.componentInstance;
+        vi.clearAllMocks();
+        const write = new Subject<{ _id: string }>();
+        exerciseCreateSpy.mockReturnValueOnce(write.asObservable());
+
+        // when
+        const run = component.addQuickEntryFromConfig({
+          key: 'reps:abs.situps:20',
+          mode: 'reps',
+          exerciseId: 'abs.situps',
+          reps: 20,
+          exerciseLabel: 'Sit-ups',
+          label: '+20 Sit-ups',
+        });
+
+        // then
+        expect(component.quickBusy.isBusy('reps:abs.situps:20')).toBe(true);
+        expect(component.quickBusy.isBusy('reps:pushup:12')).toBe(false);
+
+        // when
+        write.next({ _id: 'ex-2' });
+        write.complete();
+        await run;
+
+        // then
+        expect(component.quickBusy.busy()).toBe(false);
       });
     });
 

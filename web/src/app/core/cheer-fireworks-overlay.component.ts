@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { BusyDirective } from '@pu-stats/ui';
 import { CheerAnimationStore } from './cheer-animation.store';
 
 /**
@@ -14,6 +15,7 @@ import { CheerAnimationStore } from './cheer-animation.store';
 @Component({
   selector: 'app-cheer-fireworks-overlay',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [BusyDirective],
   template: `
     @if (store.activeCheerFrom()) {
       <div class="cheer-overlay" data-testid="cheer-overlay">
@@ -39,14 +41,11 @@ import { CheerAnimationStore } from './cheer-animation.store';
             class="cheer-back-button"
             data-testid="cheer-back-button"
             [disabled]="cheerBackDisabled()"
+            [puBusy]="store.cheerBackStatus() === 'sending'"
             [attr.aria-label]="cheerBackLabel()"
             (click)="store.cheerBack()"
           >
-            <span
-              class="cheer-back-icon"
-              [class.is-sending]="store.cheerBackStatus() === 'sending'"
-              >🔥</span
-            >
+            <span class="cheer-back-icon">🔥</span>
             {{ cheerBackLabel() }}
           </button>
         </div>
@@ -157,21 +156,11 @@ import { CheerAnimationStore } from './cheer-animation.store';
       cursor: default;
       opacity: 0.7;
     }
-    /* The flame spins while the cheer-back is in flight — same idea as
-       the friends board's cheer button (cheer-spin), a different
-       component so the animation is duplicated rather than shared. */
-    .cheer-back-icon.is-sending {
-      display: inline-block;
-      animation: cheer-spin 900ms linear infinite;
-    }
-    @keyframes cheer-spin {
-      to {
-        transform: rotate(1turn);
-      }
+    .cheer-back-button.pu-busy .cheer-back-icon {
+      display: none;
     }
     /* Fireworks without the fire: a still emoji row says the same thing
-       without the motion, matching the cheer-spin precedent on the
-       friends board. */
+       without the motion. */
     @media (prefers-reduced-motion: reduce) {
       .rocket {
         display: none;
@@ -180,10 +169,6 @@ import { CheerAnimationStore } from './cheer-animation.store';
         animation: none;
         opacity: 1;
         bottom: unset;
-      }
-      .cheer-back-icon.is-sending {
-        animation: none;
-        opacity: 0.6;
       }
     }
   `,
@@ -205,10 +190,10 @@ export class CheerFireworksOverlayComponent {
   private readonly cheerBackAlreadyLabel = $localize`:@@cheer.overlay.cheerBack.already:Heute schon angefeuert`;
   private readonly cheerBackErrorLabel = $localize`:@@cheer.overlay.cheerBack.error:Fehlgeschlagen – nochmal?`;
 
-  /** Only one attempt at a time, and no point retrying once it landed. */
+  /** No point retrying once it landed; an attempt in flight is `[puBusy]`. */
   protected cheerBackDisabled(): boolean {
     const status = this.store.cheerBackStatus();
-    return status === 'sending' || status === 'sent' || status === 'already';
+    return status === 'sent' || status === 'already';
   }
 
   protected cheerBackLabel(): string {

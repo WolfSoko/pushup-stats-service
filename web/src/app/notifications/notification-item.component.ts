@@ -6,13 +6,14 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { BusyDirective } from '@pu-stats/ui';
 
 import { RelativeTimePipe } from './relative-time.pipe';
 import type { InboxRow } from './inbox-rows';
 
 @Component({
   selector: 'app-notification-item',
-  imports: [MatButtonModule, MatIconModule, RelativeTimePipe],
+  imports: [MatButtonModule, MatIconModule, RelativeTimePipe, BusyDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
@@ -20,7 +21,12 @@ import type { InboxRow } from './inbox-rows';
       [class.unread]="row().unread"
       [class.motivation]="row().category === 'motivation'"
     >
-      <button type="button" class="main" (click)="open.emit(row())">
+      <button
+        type="button"
+        class="main"
+        [puBusy]="opening()"
+        (click)="open.emit(row())"
+      >
         <mat-icon>{{ row().icon }}</mat-icon>
         <span class="body">
           <span class="text">{{ row().text }}</span>
@@ -42,6 +48,7 @@ import type { InboxRow } from './inbox-rows';
           type="button"
           class="delete"
           [attr.aria-label]="deleteLabel"
+          [puBusy]="removing()"
           (click)="remove.emit(row())"
         >
           <mat-icon>close</mat-icon>
@@ -137,6 +144,8 @@ import type { InboxRow } from './inbox-rows';
 })
 export class NotificationItemComponent {
   readonly row = input.required<InboxRow>();
+  readonly opening = input(false);
+  readonly removing = input(false);
   readonly open = output<InboxRow>();
   readonly remove = output<InboxRow>();
 

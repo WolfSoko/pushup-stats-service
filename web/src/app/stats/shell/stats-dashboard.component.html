@@ -44,6 +44,7 @@
         type="button"
         class="header-share"
         data-testid="dashboard-invite"
+        [puBusy]="inviting.busy()"
         (click)="inviteFriend()"
       >
         <mat-icon>person_add</mat-icon>
@@ -171,6 +172,7 @@
           [attr.data-testid]="'dashboard-quick-add-' + i"
           [attr.data-mode]="vm.mode"
           [attr.data-exercise]="vm.exerciseId"
+          [puBusy]="quickBusy.isBusy(vm.key)"
           (click)="addQuickEntryFromConfig(vm)"
         >
           @if (vm.mode === 'auto-count') {
@@ -190,7 +192,8 @@
           mat-flat-button
           class="quick-btn quick-btn--goal"
           data-testid="dashboard-quick-actions-goal-fill"
-          [disabled]="planTodayFulfilled() || planFillInFlight()"
+          [disabled]="planTodayFulfilled()"
+          [puBusy]="planFillInFlight()"
           (click)="fillToGoal()"
         >
           <mat-icon>{{ planTodayFulfilled() ? 'check' : 'flag' }}</mat-icon>
@@ -212,7 +215,8 @@
           mat-flat-button
           class="quick-btn quick-btn--goal"
           data-testid="dashboard-quick-actions-goal-fill"
-          [disabled]="goalReached() || fillToGoalInFlight()"
+          [disabled]="goalReached()"
+          [puBusy]="fillToGoalInFlight()"
           (click)="fillToGoal()"
         >
           <mat-icon>{{ goalReached() ? 'check' : 'flag' }}</mat-icon>
@@ -311,6 +315,7 @@
           <app-plan-day-exercises
             [exercises]="planTodayExerciseRows()"
             [interactive]="true"
+            [busyKeys]="planTodayBusyKeys()"
             data-testid="dashboard-plan-exercises"
             (logExercise)="logPlanExercise($event)"
             (toggleExercise)="togglePlanExercise($event)"

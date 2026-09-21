@@ -11,6 +11,7 @@ import {
 } from '@ngrx/signals';
 import { UserContextService } from '@pu-auth/auth';
 import { NotificationsApiService } from '@pu-stats/data-access';
+import { createBusyState, createKeyedBusyState } from '@pu-stats/ui';
 import { of } from 'rxjs';
 
 import { ANNOUNCEMENTS } from '../core/feature-announcement.service';
@@ -40,6 +41,9 @@ export const NotificationStore = signalStore(
     _user: inject(UserContextService),
     _config: inject(UserConfigStore),
     _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
+    markingAllRead: createBusyState(),
+    /** Keyed `open:<id>` / `remove:<id>`, so each row spins on its own. */
+    rowBusy: createKeyedBusyState<string>(),
   })),
   withProps((store) => ({
     inboxResource: rxResource({
@@ -87,7 +91,10 @@ export const NotificationStore = signalStore(
       if (row.kind !== 'notification') return;
       const userId = store._user.userIdSafe();
       if (!userId) return;
-      await store._api.remove(userId, [row.id]).catch(() => undefined);
+      await store.rowBusy.run(
+        `remove:${row.id}`,
+        store._api.remove(userId, [row.id]).catch(() => undefined)
+      );
     },
 
     /**
@@ -97,27 +104,35 @@ export const NotificationStore = signalStore(
      */
     async markRead(row: InboxRow): Promise<void> {
       if (!row.unread) return;
-      if (row.kind === 'announcement') {
-        await store._config.markAnnouncementSeen(row.id).catch(() => undefined);
-        return;
-      }
-      const userId = store._user.userIdSafe();
-      if (!userId) return;
-      await store._api.markRead(userId, [row.id]).catch(() => undefined);
+      await store.rowBusy.run(`open:${row.id}`, async () => {
+        if (row.kind === 'announcement') {
+          await store._config
+            .markAnnouncementSeen(row.id)
+            .catch(() => undefined);
+          return;
+        }
+        const userId = store._user.userIdSafe();
+        if (!userId) return;
+        await store._api.markRead(userId, [row.id]).catch(() => undefined);
+      });
     },
 
     async markAllRead(): Promise<void> {
-      const userId = store._user.userIdSafe();
-      const unread = store.rows().filter((row) => row.unread);
-      const ids = unread
-        .filter((row) => row.kind === 'notification')
-        .map((row) => row.id);
-      if (userId && ids.length > 0) {
-        await store._api.markRead(userId, ids).catch(() => undefined);
-      }
-      for (const row of unread.filter((r) => r.kind === 'announcement')) {
-        await store._config.markAnnouncementSeen(row.id).catch(() => undefined);
-      }
+      await store.markingAllRead.run(async () => {
+        const userId = store._user.userIdSafe();
+        const unread = store.rows().filter((row) => row.unread);
+        const ids = unread
+          .filter((row) => row.kind === 'notification')
+          .map((row) => row.id);
+        if (userId && ids.length > 0) {
+          await store._api.markRead(userId, ids).catch(() => undefined);
+        }
+        for (const row of unread.filter((r) => r.kind === 'announcement')) {
+          await store._config
+            .markAnnouncementSeen(row.id)
+            .catch(() => undefined);
+        }
+      });
     },
   }))
 );

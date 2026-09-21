@@ -28,7 +28,12 @@
           <p>{{ labels.errorBody }}</p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-stroked-button type="button" (click)="reload()">
+          <button
+            mat-stroked-button
+            type="button"
+            [puBusy]="state().kind === 'loading'"
+            (click)="reload()"
+          >
             {{ labels.retry }}
           </button>
         </mat-card-actions>
@@ -114,7 +119,7 @@
               type="button"
               class="avatar avatar-button"
               data-testid="profile-photo-edit"
-              [disabled]="photos.busy()"
+              [puBusy]="photos.busy()"
               [attr.aria-label]="labels.photoEdit"
               (click)="photoInput.click()"
             >
@@ -177,6 +182,7 @@
                 type="button"
                 class="share-btn"
                 data-testid="public-profile-invite"
+                [puBusy]="inviting.busy()"
                 (click)="inviteFriend()"
               >
                 <mat-icon>person_add</mat-icon>
@@ -190,6 +196,7 @@
                 class="share-btn"
                 data-testid="public-profile-add-friend"
                 [disabled]="friendRequestSent() || audience.isOwner()"
+                [puBusy]="addingFriend.busy()"
                 (click)="addFriend()"
               >
                 <mat-icon>person_add</mat-icon>

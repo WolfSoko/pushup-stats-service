@@ -18,7 +18,7 @@ export interface KeyedBusyState<K> {
 }
 
 function start<T>(work: Promise<T> | (() => Promise<T>)): Promise<T> {
-  return typeof work === 'function' ? work() : work;
+  return Promise.resolve(typeof work === 'function' ? work() : work);
 }
 
 /** Busy flag for a single CTA, e.g. a form's submit button. */

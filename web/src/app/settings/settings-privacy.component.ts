@@ -17,6 +17,7 @@ import {
   setAutoCountFeedbackEnabled,
 } from '../auto-count/auto-count-feedback.models';
 import { SettingsFacade } from '../stats/shell/settings.facade';
+import { BusyDirective } from '@pu-stats/ui';
 
 @Component({
   selector: 'app-settings-privacy',
@@ -29,6 +30,7 @@ import { SettingsFacade } from '../stats/shell/settings.facade';
     MatIconModule,
     MatInputModule,
     MatSlideToggleModule,
+    BusyDirective,
   ],
   templateUrl: './settings-privacy.component.html',
   styleUrl: './settings-section.scss',

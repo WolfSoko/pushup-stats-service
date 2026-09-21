@@ -113,6 +113,36 @@ describe('QuickAddConfigDialogComponent', () => {
       expect(closeSpy).toHaveBeenCalled();
     });
 
+    it('should mark the save button busy until the config write settles', async () => {
+      // given
+      let resolveSave: (value: unknown) => void = () => undefined;
+      setup(
+        [],
+        () =>
+          new Promise((resolve) => {
+            resolveSave = resolve;
+          })
+      );
+      const saveBtn = fixture.nativeElement.querySelector(
+        '[data-testid="quick-add-config-save"]'
+      ) as HTMLButtonElement;
+
+      // when
+      saveBtn.click();
+      await fixture.whenStable();
+
+      // then
+      expect(saveBtn.getAttribute('aria-busy')).toBe('true');
+      expect(saveBtn.disabled).toBe(false);
+
+      // when
+      resolveSave({ userId: 'u1' });
+      await fixture.whenStable();
+
+      // then
+      expect(closeSpy).toHaveBeenCalled();
+    });
+
     it('Given save fails, Then a snackbar error is shown and the dialog stays open', async () => {
       setup([], () => Promise.reject(new Error('network')));
       const inputs = fixture.nativeElement.querySelectorAll(

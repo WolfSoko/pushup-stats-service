@@ -22,6 +22,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { RouterLink } from '@angular/router';
 import { UserContextService } from '@pu-auth/auth';
+import { BusyDirective } from '@pu-stats/ui';
 import {
   type ComplexGoalEntry,
   type ComplexGoals,
@@ -48,6 +49,7 @@ import {
   selector: 'app-goals-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
