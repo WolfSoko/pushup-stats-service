@@ -1,11 +1,23 @@
-# Deploy PR preview to staging Firebase project.
+# Deploy PR preview to staging Firebase project — on request only.
 # Deploys: Hosting preview, Cloud Functions, Firestore rules & indexes.
 # Uses the staging Firebase project (pushup-stats-staging-867b7) so PRs
 # never affect production data or functions.
+#
+# Flow: when a PR opens, `request_preview` posts one comment carrying a
+# checkbox. Ticking the box edits that comment, which fires `issue_comment`
+# and runs `build_and_preview` against the PR head. The job unticks the box
+# first, so it can be ticked again for another deploy, and writes the result
+# (URL, run link) back into the same comment.
+#
+# `issue_comment` workflows always run from the default branch, so changes
+# to `build_and_preview` only take effect once merged to main.
 name: Deploy to Firebase Staging on PR
-on: pull_request
+on:
+  pull_request:
+    types: [opened, reopened]
+  issue_comment:
+    types: [edited]
 permissions:
-  checks: write
   contents: read
   pull-requests: write
   # Required so the runner can mint a GitHub OIDC token for keyless
@@ -21,26 +33,54 @@ concurrency:
   group: firebase-staging-preview
   cancel-in-progress: false
 env:
-  # Für PRs nur Read-Token, für main Pushes Write-Token.
-  # Bei Fork-PRs sind Secrets automatisch nicht verfügbar.
-  NX_CLOUD_ACCESS_TOKEN: >-
-    ${{
-      github.event.pull_request.head.repo.full_name == github.repository
-        && secrets.NX_CLOUD_ACCESS_TOKEN_WRITE
-      || secrets.NX_CLOUD_ACCESS_TOKEN_READ
-    }}
-  # More heap for Angular SSR build + Playwright webServer in CI.
-  NODE_OPTIONS: --max-old-space-size=6144
+  PREVIEW_MARKER: '<!-- staging-preview-request -->'
+  PREVIEW_CHECKBOX: 'Preview auf Staging deployen'
 jobs:
-  build_and_preview:
-    # Same-repo PRs only (fork PRs have no WIF access). Dependabot PRs are
-    # skipped too: every dependency bump would otherwise block the shared
-    # staging project for a full deploy + E2E cycle, and ci.yml already runs
-    # the emulator suite against them.
+  # Posts the request comment. Skipped for fork PRs (no WIF access, and
+  # GITHUB_TOKEN is read-only there) and for Dependabot PRs (read-only
+  # token as well, and a dependency bump does not need a staging cycle).
+  request_preview:
     if: >-
       ${{
-        github.event.pull_request.head.repo.full_name == github.repository
+        github.event_name == 'pull_request'
+          && github.event.pull_request.head.repo.full_name == github.repository
           && github.event.pull_request.user.login != 'dependabot[bot]'
+      }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Post preview request comment (once per PR)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          existing=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --paginate \
+            --jq "[.[] | select(.user.login == \"github-actions[bot]\" and (.body | contains(\"$PREVIEW_MARKER\")))] | length")
+          if [ "$existing" != "0" ]; then
+            echo "Request comment already present, nothing to do."
+            exit 0
+          fi
+          body=$(cat <<BODY
+          $PREVIEW_MARKER
+          ### 🚀 Staging-Preview
+
+          Das Preview-Deployment (Hosting-Channel, Cloud Functions, Firestore-Regeln & -Indizes im Staging-Projekt, danach Critical-Path-E2E) läuft nicht automatisch. Zum Auslösen die Checkbox anhaken – sie wird nach dem Start wieder geleert und kann für ein weiteres Deployment erneut angehakt werden.
+
+          - [ ] $PREVIEW_CHECKBOX
+
+          _Status: noch kein Deployment angefordert._
+          BODY
+          )
+          gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" -f body="$body" --silent
+
+  build_and_preview:
+    if: >-
+      ${{
+        github.event_name == 'issue_comment'
+          && github.event.issue.pull_request
+          && github.event.comment.user.login == 'github-actions[bot]'
+          && contains(github.event.comment.body, '<!-- staging-preview-request -->')
+          && contains(github.event.comment.body, '- [x] Preview auf Staging deployen')
       }}
     runs-on: ubuntu-latest
     # Build, deploy and the staging suite in sequence. The suite's own
@@ -48,8 +88,55 @@ jobs:
     # is left of this budget for Playwright to report before the runner
     # pulls the plug.
     timeout-minutes: 50
+    env:
+      # Only same-repo PRs reach the deploy (see "Resolve PR head"), so the
+      # write token is safe here.
+      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN_WRITE }}
+      # More heap for Angular SSR build + Playwright webServer in CI.
+      NODE_OPTIONS: --max-old-space-size=6144
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PR_NUMBER: ${{ github.event.issue.number }}
+      COMMENT_ID: ${{ github.event.comment.id }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
     steps:
+      # Untick first: our own edits never re-trigger the workflow (GITHUB_TOKEN
+      # events don't), and a still-ticked box could not be ticked again.
+      - name: Untick checkbox and mark run as started
+        env:
+          SENDER: ${{ github.event.sender.login }}
+        run: |
+          body=$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" --jq .body)
+          body=$(printf '%s' "$body" | sed -e "s/- \[[xX]\] $PREVIEW_CHECKBOX/- [ ] $PREVIEW_CHECKBOX/" -e '/^_Status: /d')
+          printf '%s\n\n_Status: ⏳ Deployment läuft ([Run](%s), angefordert von @%s)._\n' "$body" "$RUN_URL" "$SENDER" > /tmp/comment-body.md
+          gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" -F body=@/tmp/comment-body.md --silent
+
+      # The PR number comes from the comment; head SHA and fork state are
+      # looked up here. Fork heads never get deployed (they'd run foreign
+      # code with the WIF credential), and the person ticking the box has
+      # to have write access — GitHub already restricts checkbox toggles
+      # that way, this keeps it explicit.
+      - name: Resolve PR head
+        id: pr
+        env:
+          SENDER: ${{ github.event.sender.login }}
+        run: |
+          pr=$(gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json headRefOid,isCrossRepository,state)
+          if [ "$(printf '%s' "$pr" | jq -r .isCrossRepository)" != "false" ]; then
+            echo "::error::Preview deployments are limited to same-repo PRs"; exit 1
+          fi
+          if [ "$(printf '%s' "$pr" | jq -r .state)" != "OPEN" ]; then
+            echo "::error::PR #$PR_NUMBER is not open"; exit 1
+          fi
+          perm=$(gh api "repos/$GITHUB_REPOSITORY/collaborators/$SENDER/permission" --jq .permission)
+          case "$perm" in
+            admin|write) ;;
+            *) echo "::error::@$SENDER has no write access ($perm)"; exit 1 ;;
+          esac
+          echo "sha=$(printf '%s' "$pr" | jq -r .headRefOid)" >> "$GITHUB_OUTPUT"
+
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ steps.pr.outputs.sha }}
 
       - name: Setup Node
         uses: actions/setup-node@v7
@@ -139,7 +226,7 @@ jobs:
         run: |
           DEPLOY_JSON=""
           for attempt in 1 2 3 4; do
-            if DEPLOY_JSON=$(pnpm exec firebase hosting:channel:deploy "pr-${{ github.event.pull_request.number }}" \
+            if DEPLOY_JSON=$(pnpm exec firebase hosting:channel:deploy "pr-$PR_NUMBER" \
               --expires 7d --project staging --json); then
               break
             fi
@@ -151,13 +238,6 @@ jobs:
           echo "$DEPLOY_JSON"
           URL=$(printf '%s' "$DEPLOY_JSON" | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{const m=d.match(/\{[\s\S]*\}/);if(!m)process.exit(0);const r=JSON.parse(m[0]).result||{};const c=Object.values(r)[0]||{};process.stdout.write(c.url||'')})")
           echo "url=$URL" >> "$GITHUB_OUTPUT"
-      - name: Comment preview URL on PR
-        if: steps.preview.outputs.url != ''
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh pr comment "${{ github.event.pull_request.number }}" --repo "${{ github.repository }}" \
-            --body "🚀 Staging preview deployed: ${{ steps.preview.outputs.url }} (expires in 7 days)"
 
       # The critical-path suite, this time against the deployment that was
       # just made: real rules, real callables, real indexes — the part the
@@ -188,3 +268,22 @@ jobs:
           name: e2e-staging-report
           path: dist/.playwright/web/web-e2e-emulator
           retention-days: 7
+
+      - name: Write result into request comment
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+          PREVIEW_URL: ${{ steps.preview.outputs.url }}
+          HEAD_SHA: ${{ steps.pr.outputs.sha }}
+        run: |
+          body=$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" --jq .body | sed '/^_Status: /d')
+          short_sha=$(printf '%s' "$HEAD_SHA" | cut -c1-7)
+          if [ "$JOB_STATUS" = "success" ]; then
+            status="✅ Preview deployed: $PREVIEW_URL (läuft in 7 Tagen ab) – Commit \`$short_sha\`, E2E grün ([Run]($RUN_URL))"
+          elif [ -n "$PREVIEW_URL" ]; then
+            status="❌ Preview deployed: $PREVIEW_URL, aber E2E fehlgeschlagen – Commit \`$short_sha\` ([Run]($RUN_URL))"
+          else
+            status="❌ Deployment fehlgeschlagen ([Run]($RUN_URL))"
+          fi
+          printf '%s\n\n_Status: %s._\n' "$body" "$status" > /tmp/comment-body.md
+          gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" -F body=@/tmp/comment-body.md --silent

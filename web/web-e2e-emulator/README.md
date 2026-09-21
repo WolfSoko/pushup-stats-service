@@ -34,7 +34,9 @@ The same specs also run against the deployed PR preview and the real
 staging Firebase project, from the `build_and_preview` job in
 `.github/workflows/firebase-hosting-pull-request.yml` — right after that
 job has deployed the rules, the functions and the hosting channel it is
-about to test.
+about to test. That job only runs once someone ticks the preview checkbox
+in the bot comment on the PR (see `docs/ci-cd.md` → "PR previews on
+request").
 
 ```bash
 E2E_TARGET=staging E2E_BASE_URL=https://…web.app pnpm nx run web-e2e-emulator:e2e-staging
