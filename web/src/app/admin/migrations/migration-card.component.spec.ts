@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { nextMacrotask } from '@pu-stats/testing';
 import { CallableFunctionsService } from '../callable-functions.service';
 import {
   CallableRecord,
@@ -241,6 +242,7 @@ describe('MigrationCardComponent', () => {
 
     // when
     resolveRun();
+    await nextMacrotask();
     await fixture.whenStable();
     fixture.detectChanges();
 

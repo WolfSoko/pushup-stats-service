@@ -7,6 +7,7 @@ import {
   QuickAddConfig,
   UserConfigUpdate,
 } from '@pu-stats/models';
+import { nextMacrotask } from '@pu-stats/testing';
 import { QuickAddConfigDialogComponent } from './quick-add-config-dialog.component';
 import { UserConfigStore } from '../../../core/user-config.store';
 import { signal } from '@angular/core';
@@ -137,6 +138,7 @@ describe('QuickAddConfigDialogComponent', () => {
 
       // when
       resolveSave({ userId: 'u1' });
+      await nextMacrotask();
       await fixture.whenStable();
 
       // then

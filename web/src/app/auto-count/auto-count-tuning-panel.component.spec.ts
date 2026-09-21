@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { nextMacrotask } from '@pu-stats/testing';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { AutoCountTuningPanelComponent } from './auto-count-tuning-panel.component';
@@ -185,6 +186,7 @@ describe('AutoCountTuningPanelComponent', () => {
 
     // when
     finish();
+    await nextMacrotask();
     await fixture.whenStable();
     fixture.detectChanges();
 

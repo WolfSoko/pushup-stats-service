@@ -8,6 +8,7 @@ import {
   ReminderService,
   ReminderStore,
 } from '@pu-reminders/reminders';
+import { nextMacrotask } from '@pu-stats/testing';
 import { render, screen } from '@testing-library/angular';
 import { of } from 'rxjs';
 
@@ -86,6 +87,7 @@ describe('RemindersPageComponent', () => {
 
     // when
     settle(true);
+    await nextMacrotask();
     await fixture.whenStable();
     fixture.detectChanges();
 

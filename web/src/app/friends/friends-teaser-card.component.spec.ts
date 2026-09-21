@@ -1,6 +1,7 @@
 import { PLATFORM_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { UserContextService } from '@pu-auth/auth';
+import { nextMacrotask } from '@pu-stats/testing';
 import { render, screen } from '@testing-library/angular';
 
 import { InviteService } from '../core/invite.service';
@@ -224,6 +225,7 @@ describe('FriendsTeaserCardComponent', () => {
 
     // when
     answer('native');
+    await nextMacrotask();
     await fixture.whenStable();
     fixture.detectChanges();
 

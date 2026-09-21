@@ -1,6 +1,7 @@
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import { computed, signal } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { nextMacrotask } from '@pu-stats/testing';
 import { render, screen } from '@testing-library/angular';
 
 import { InviteService } from '../core/invite.service';
@@ -317,6 +318,7 @@ describe('FriendsPageComponent', () => {
 
     // when
     answer('native');
+    await nextMacrotask();
     await fixture.whenStable();
     fixture.detectChanges();
 
