@@ -1,6 +1,7 @@
 import { inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Functions, httpsCallable } from '@angular/fire/functions';
+import { PendingRequestsService } from '@pu-stats/data-access';
 import {
   patchState,
   signalStore,
@@ -45,6 +46,7 @@ export const PushSubscriptionStore = signalStore(
       ? inject(Functions, { optional: true })
       : null,
     _vapidPublicKey: inject(VAPID_PUBLIC_KEY),
+    _pending: inject(PendingRequestsService),
     _pushSwRegistration: inject(PushSwRegistrationService),
   })),
   withMethods((store) => {
@@ -96,12 +98,14 @@ export const PushSubscriptionStore = signalStore(
         unknown,
         { ok: boolean; subId: string; deviceCount: number }
       >(store._functions, 'savePushSubscription');
-      const result = await callable({
-        endpoint: json.endpoint,
-        keys: json.keys,
-        userAgent: navigator.userAgent,
-        locale: navigator.language,
-      });
+      const result = await store._pending.track(
+        callable({
+          endpoint: json.endpoint,
+          keys: json.keys,
+          userAgent: navigator.userAgent,
+          locale: navigator.language,
+        })
+      );
       return { deviceCount: result.data.deviceCount ?? 1 };
     }
 
@@ -119,7 +123,7 @@ export const PushSubscriptionStore = signalStore(
         unknown,
         { ok: boolean; deviceCount: number }
       >(store._functions, 'deletePushSubscription');
-      const result = await callable({ endpoint });
+      const result = await store._pending.track(callable({ endpoint }));
       return { deviceCount: result.data.deviceCount ?? 0 };
     }
 

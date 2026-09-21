@@ -8,6 +8,7 @@ jest.mock('@angular/fire/functions', () => ({
 
 import { TestBed } from '@angular/core/testing';
 import { Functions, httpsCallable } from '@angular/fire/functions';
+import { PendingRequestsService } from '@pu-stats/data-access';
 import { PushSubscriptionStore } from './push-subscription.store';
 import { PushSwRegistrationService } from './push-sw-registration.service';
 import { VAPID_PUBLIC_KEY } from './vapid-key.token';
@@ -183,6 +184,24 @@ describe('PushSubscriptionStore', () => {
     expect(subscribe).toHaveBeenCalledWith(
       expect.objectContaining({ userVisibleOnly: true })
     );
+  });
+
+  it('subscribe() counts the save callable as a pending request', async () => {
+    // given
+    const { registration } = makeRegistration();
+    pushSw.setRegistration(registration);
+    mockHttpsCallable();
+    const store = setupStore();
+    const pending = TestBed.inject(PendingRequestsService);
+    const track = jest.spyOn(pending, 'track');
+
+    // when
+    const ok = await store.subscribe();
+
+    // then
+    expect(ok).toBe(true);
+    expect(track).toHaveBeenCalledTimes(1);
+    expect(pending.pending()).toBe(0);
   });
 
   it('init() sets status=not-subscribed when the registration has no subscription', async () => {

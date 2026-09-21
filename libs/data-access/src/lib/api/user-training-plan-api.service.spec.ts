@@ -649,6 +649,7 @@ describe('UserTrainingPlanApiService', () => {
   describe('pending-request tracking', () => {
     async function setupTracking(): Promise<{
       service: UserTrainingPlanApiService;
+      pending: PendingRequestsService;
       track: jest.SpyInstance;
     }> {
       (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
@@ -662,11 +663,15 @@ describe('UserTrainingPlanApiService', () => {
         ],
       });
       const injector = fixture.debugElement.injector;
+      const pending = injector.get(PendingRequestsService);
       return {
         service: injector.get(UserTrainingPlanApiService),
-        track: jest.spyOn(injector.get(PendingRequestsService), 'track'),
+        pending,
+        track: jest.spyOn(pending, 'track'),
       };
     }
+
+    const settled = () => new Promise<void>((resolve) => setTimeout(resolve));
 
     const plan = {
       planId: 'challenge-30d-v1',
@@ -717,14 +722,50 @@ describe('UserTrainingPlanApiService', () => {
       ],
     ])('should track %s as a pending request', async (_name, call) => {
       // given
-      const { service, track } = await setupTracking();
+      const { service, pending, track } = await setupTracking();
 
       // when
       call(service).subscribe();
-      await Promise.resolve();
 
       // then
       expect(track).toHaveBeenCalledTimes(1);
+      expect(pending.pending()).toBe(1);
+
+      // when
+      await settled();
+
+      // then
+      expect(pending.pending()).toBe(0);
+    });
+
+    it('should hand the transaction promise itself to the tracker', async () => {
+      // given
+      const { service, track } = await setupTracking();
+      const transaction = Promise.resolve();
+      (firestoreFns.runTransaction as jest.Mock).mockReturnValue(transaction);
+
+      // when
+      service.setTestResult('u', 1, 0, 25).subscribe();
+
+      // then
+      expect(track).toHaveBeenCalledWith(transaction);
+    });
+
+    it('should settle the count when the transaction rejects', async () => {
+      // given
+      const { service, pending } = await setupTracking();
+      (firestoreFns.runTransaction as jest.Mock).mockRejectedValue(
+        new Error('contention')
+      );
+
+      // when
+      const failed = new Promise<unknown>((resolve) =>
+        service.removeTestResult('u', 1, 0).subscribe({ error: resolve })
+      );
+
+      // then
+      await expect(failed).resolves.toBeInstanceOf(Error);
+      expect(pending.pending()).toBe(0);
     });
   });
 });

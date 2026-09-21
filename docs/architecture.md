@@ -124,9 +124,9 @@ UI Component  →  Signal Store  →  API Service
 
 Firestore and Cloud Functions bypass `HttpClient`, so there is no interceptor that sees every request. Instead `PendingRequestsService` (`@pu-stats/data-access`) counts in-flight requests, and the app shell renders `PendingRequestIndicatorComponent` — a small toolbar spinner — once a request has been pending for 300 ms (then for at least 500 ms so it never flickers).
 
-- **Every promise-based request goes through `pending.track(promise)` at the API-service layer:** Firestore writes (`setDoc`/`updateDoc`/`deleteDoc`/`batch.commit()`/`runTransaction`), one-off reads (`getDoc`/`getDocs`) and callables. In `web`, callables are covered centrally by `CallableFunctionsService`; `HttpClient` requests by `pendingRequestsInterceptor`.
+- **Every promise-based request goes through `pending.track(promise)` at the API-service layer:** Firestore writes (`setDoc`/`updateDoc`/`deleteDoc`/`batch.commit()`/`runTransaction`), one-off reads (`getDoc`/`getDocs`), Storage calls (`uploadBytes`/`deleteObject`/`getDownloadURL`) and callables — in `data-access`, `push` and `web`. In `web`, callables are covered centrally by `CallableFunctionsService`; `HttpClient` requests by `pendingRequestsInterceptor`.
 - **Live listeners stay untracked.** `docData`/`collectionData`/`onSnapshot` are streams, not actions; the indicator would never go away.
-- Libs that may not import `@pu-stats/data-access` (`auth`, `motivation`, `push`) keep their own per-action loading state.
+- Libs that may not import `@pu-stats/data-access` (`auth`, `motivation`) keep their own per-action loading state.
 - The service exposes `begin()`/`end()` for non-promise sources (the interceptor) and readonly `pending()`/`visible()` signals; the indicator only binds `visible()`.
 
 ### App Root Delegation
