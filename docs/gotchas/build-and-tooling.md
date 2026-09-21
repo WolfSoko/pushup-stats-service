@@ -278,3 +278,35 @@ Linting is oxlint (`.oxlintrc.json` at the root, no per-project configs) and for
 - **oxlint exits 1 when it is handed no lintable file** ("No files found to lint"). lint-staged therefore scopes `oxlint --fix` to script extensions and the Husky hook runs it with `--concurrent false`, because lint-staged starts every glob's tasks in parallel and `oxlint --fix` and `oxfmt` would otherwise race on the same file; a bare `'*'` glob makes every commit that stages only manifests, JSON or Markdown fail the pre-commit hook. oxfmt has `--no-error-on-unmatched-pattern` for the same situation.
 - **Rule ids use oxlint's plugin prefixes** (`typescript/no-explicit-any`, `unicorn/no-useless-spread`), but existing `// eslint-disable-next-line @typescript-eslint/...` directives keep working — oxlint honours both spellings.
 - **The scope of `ignorePatterns` differs from `.prettierignore`.** oxfmt still reads `.gitignore`, but ignore entries now live in the config and resolve relative to it; `generated-content-paths.spec.js` pins the generated content files there.
+
+## GitHub Actions: comment-triggered workflows and `gh` pitfalls
+
+Learned while moving the staging preview to a checkbox in a PR comment
+(`.github/workflows/firebase-hosting-pull-request.yml`, see
+[`ci-cd.md`](../ci-cd.md#pr-previews-on-request)).
+
+**CodeQL flags a PR-head checkout in `issue_comment` / `pull_request_target`
+jobs as `untrusted-checkout` (critical).** Those triggers run with secrets
+and the OIDC token, so `actions/checkout` with a `ref` derived from the PR
+is a critical alert even when the job verifies same-repo and write access
+first — CodeQL cannot see the guard. Keep the privileged job checkout-free
+(verify, then `POST …/actions/workflows/<file>/dispatches` with
+`ref=<head branch>`) and put the build into a `workflow_dispatch` workflow
+that checks out the branch it was dispatched on. Side effect: the deploy
+half then runs from the PR branch's copy of the file, while the
+`issue_comment` half always runs from `main`.
+
+**`gh api --paginate --jq` applies the filter per page.** A count like
+`--jq '[.[] | select(…)] | length'` prints one number per page, so
+`$existing` becomes `"0\n0"` after 100 comments and `!= "0"` is true. Emit
+matching ids and test for non-empty output instead.
+
+**Comment bodies come back with CRLF.** `gh api …/comments/<id> --jq .body`
+keeps the `\r`; a `sed '/^_Status: /d'` still matches, but the `\r`-only
+lines survive `$(…)` trimming and every rewrite adds a blank line. Strip
+`\r` first (`sed 's/\r$//'`).
+
+**Events created with `GITHUB_TOKEN` do not start workflows** — except
+`workflow_dispatch` and `repository_dispatch`. Editing the bot's own
+comment from the workflow therefore never re-fires `issue_comment`, which
+is what makes "untick the box first" safe.
