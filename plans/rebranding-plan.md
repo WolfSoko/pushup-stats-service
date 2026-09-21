@@ -8,7 +8,7 @@
 
 ## 1. Warum
 
-Die Marke sagt „Liegestütze". Das Produkt ist längst etwas anderes.
+Die Marke sagt „Liegestütze“. Das Produkt ist längst etwas anderes.
 
 Was heute drinsteckt:
 
@@ -26,8 +26,8 @@ Was heute drinsteckt:
 
 Der Mismatch wirkt auf drei Ebenen:
 
-1. **Akquise** — Play-Titel „Pushup Tracker: Liegestütze" und Domain `pushup-stats.com` filtern Nutzer weg, die Kniebeugen, Klimmzüge oder Ganzkörpertraining suchen. Die 21 Blog-Artikel ranken teils auf Nicht-Liegestütz-Themen und landen auf einer Marke, die dem Thema widerspricht.
-2. **Erwartung** — Wer wegen Liegestützen kommt, findet ein breiteres Produkt vor als beworben. Die Landing-Subtitle zählt bereits „Liegestütze, Kniebeugen, Klimmzüge, Sit-ups sowie Halte-Timer" auf — gegen den eigenen Produktnamen im Eyebrow darüber.
+1. **Akquise** — Play-Titel „Pushup Tracker: Liegestütze“ und Domain `pushup-stats.com` filtern Nutzer weg, die Kniebeugen, Klimmzüge oder Ganzkörpertraining suchen. Die 21 Blog-Artikel ranken teils auf Nicht-Liegestütz-Themen und landen auf einer Marke, die dem Thema widerspricht.
+2. **Erwartung** — Wer wegen Liegestützen kommt, findet ein breiteres Produkt vor als beworben. Die Landing-Subtitle zählt bereits „Liegestütze, Kniebeugen, Klimmzüge, Sit-ups sowie Halte-Timer“ auf — gegen den eigenen Produktnamen im Eyebrow darüber.
 3. **Weiterentwicklung** — Jede neue Kategorie (Cardio, Mobility) vergrößert die Lücke. Je später der Schnitt, desto teurer: mehr Nutzer, mehr Rankings, mehr Play-Reviews an der alten Marke.
 
 **Wichtige Abgrenzung:** Liegestütze bleiben eine erstklassige Übung mit eigenem Wiki-Bereich, eigenen Typen und eigenen Plänen. Das Rebranding entfernt Liegestütze nicht aus dem Produkt — es entfernt sie nur aus der **Dachmarke**.
@@ -44,7 +44,7 @@ Alle Zahlen aus dem Repo-Stand `0e9e29f` (ohne `node_modules`, `dist`, `.git`).
 | -------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
 | Produktname im Code  | `web/src`, `libs`, `tools` (Prod, ohne Spec/Generated)                                                                 | 22 Dateien                                  |
 | Produktname in Specs | `*.spec.ts` mit Marke oder Domain                                                                                      | 23 Dateien                                  |
-| i18n-Quelle (DE)     | `web/src/locale/messages.xlf`                                                                                          | 52 Units mit „Pushup Tracker", 3 mit Domain |
+| i18n-Quelle (DE)     | `web/src/locale/messages.xlf`                                                                                          | 52 Units mit „Pushup Tracker“, 3 mit Domain |
 | i18n-Targets         | `messages.{en,es,fr,it,nl,no,el,zh}.xlf`                                                                               | 99–110 Treffer je Locale                    |
 | Domain               | repoweit `pushup-stats.com` / `.de`                                                                                    | 252 Dateien                                 |
 | Content-Quelle       | `content/blog`, `content/wiki` (Frontmatter `heroImageCredit`, Tags, CTAs)                                             | 151 Dateien                                 |
@@ -108,7 +108,7 @@ Ein Kandidat muss **alle** erfüllen:
 
 1. **Übungsneutral** — trägt Liegestütze bis Cardio und Mobility, ohne eine Übung zu bevorzugen.
 2. **DE und EN tragfähig** — Quelle ist Deutsch, ausgeliefert wird in 9 Sprachen. Kein Wortspiel, das nur in einer Sprache funktioniert.
-3. **Play-Titel-Budget** — max. 30 Zeichen inkl. Untertitel. Zum Vergleich der heutige Titel: „Pushup Tracker: Liegestütze" = 27 Zeichen, also praktisch am Limit. Ein Name über ~14 Zeichen lässt keinen Untertitel mehr zu.
+3. **Play-Titel-Budget** — max. 30 Zeichen inkl. Untertitel. Zum Vergleich der heutige Titel: „Pushup Tracker: Liegestütze“ = 27 Zeichen, also praktisch am Limit. Ein Name über ~14 Zeichen lässt keinen Untertitel mehr zu.
 4. **Domain frei** — `.com` bevorzugt, `.de` als Ergänzung (der Bestand hat beide).
 5. **Markenrechtlich unkritisch** — DPMA- und EUIPO-Recherche in Nizza-Klasse 9 (herunterladbare Software — die Android-App), 41 (Sport und Training) **und 42 (SaaS, Server-Hosting)**. Klasse 42 ist hier keine Formalie: Das Produkt ist in erster Linie eine gehostete Web-App, die Android-App nur ein TWA-Wrapper darum. Eine Recherche ohne 42 prüft den Hauptvertriebsweg nicht. Klassenumfang an den tatsächlich angebotenen Leistungen und Zielmärkten ausrichten (neun Sprachen, EU-weit) und vor der Registrierung von einer Markenfachperson bestätigen lassen. Bekannte Fitness-Marken meiden.
 6. **Play-/App-Store-Kollisionsfrei** — keine bestehende Fitness-App gleichen Namens.
@@ -124,7 +124,24 @@ Die Richtung wurde offen gelassen; drei Stoßrichtungen mit unterschiedlichem Ch
 
 **Empfehlung:** Progress/Streak-Richtung. Sie ist die einzige, die nicht an die Zählweise gebunden ist und deshalb auch Halte-Timer, Cardio-Minuten und künftige Metriken trägt.
 
-### 3.3 Ablauf
+**Positionierung entschieden (2026-09-21): international, EN-first.** Der Name muss auf Englisch tragen und in allen neun Sprachen funktionieren; Deutsch bleibt Quellsprache, ist aber einer von neun Märkten. Damit scheiden deutsche Wortspiele aus, und auch der Play-Untertitel wird englisch.
+
+### 3.3 Erste Recherche — was bereits ausscheidet
+
+Stand 2026-09-21, per Websuche geprüft. **Domain- und Markenrecherche fehlt weiterhin** (Abschnitt 8): die Umgebung, in der diese Prüfung lief, kommt nicht an RDAP heran, und Kriterium 5 verlangt ohnehin eine Markenfachperson.
+
+| Kandidat               | Status  | Grund                                                                                                 |
+| ---------------------- | ------- | ----------------------------------------------------------------------------------------------------- |
+| Cadence                | ❌ raus | Zweifach als Fitness-App belegt: Krafttracker bei Google Play _und_ GPS-Run/Bike-App (getcadence.app) |
+| Steady                 | ❌ raus | Als App-Name mehrfach vergeben (Gig-Economy-Plattform, Membership-Dienst)                             |
+| **alles mit „Streak“** | ❌ raus | Namensraum gesättigt: FitStreak, Streak – Gym Log, GymStreak, StreakUp, MyStreaks, RunStreaker        |
+| **alles mit „Fit“**    | ❌ raus | Dieselbe Sättigung, zusätzlich schwache Unterscheidungskraft                                          |
+
+**Die wichtigste Erkenntnis:** Die Progress/Streak-_Richtung_ bleibt richtig — das Dranbleiben ist der Kern des Produkts. Ihre naheliegendste sprachliche Umsetzung ist es nicht. Ein Name mit „Streak“ oder „Fit“ scheitert doppelt: an Kriterium 6 (Store-Kollision) und an Kriterium 5, weil Markenschutz Unterscheidungskraft voraussetzt und beide Wörter in Klasse 9/41 längst verwässert sind.
+
+Daraus folgt eine Verschärfung von Kriterium 4 und 5, die beim Aufstellen der Kriterien noch nicht sichtbar war: **Ein gängiges englisches Wörterbuchwort erfüllt in der Praxis weder „Domain frei“ noch „markenrechtlich unkritisch“.** Die freie `.com` ist bei einem Wort wie `upkeep` oder `onward` seit Jahrzehnten vergeben, und ein generisches Wort ist in der eigenen Warenklasse kaum durchsetzbar. Die realistische Zone sind **Komposita und leicht kunstsprachliche Formen** — so wie es die Vergleichsprodukte gelöst haben (Strava, Zwift, Whoop, Hevy: alle erfunden; Setgraph: Kompositum).
+
+### 3.4 Ablauf
 
 1. Pro Richtung 5–8 Kandidaten sammeln.
 2. Gegen Kriterien 1–3 filtern (Schreibtischarbeit, keine externen Abfragen).
@@ -144,7 +161,7 @@ Reihenfolge ist bewusst: erst das Refactoring, das den eigentlichen Rename klein
 
 **Status: erledigt.** Konstanten, Nicht-i18n-Literale, Guard und die i18n-Platzhalter sind drin.
 
-**Problem:** Es gibt heute **keine zentrale Marken-Konstante.** „Pushup Tracker" steht 22-mal wörtlich in Prod-Quellen, `https://pushup-stats.com` als Literal in mindestens 8 Dateien (`dashboard-share.ts`, `achievement-celebration.service.ts`, `blog-article.component.ts`, `exercise-detail.component.ts`, `pushup-type-detail.component.ts`, `goal-reached-dialog`, `generate-feeds.js`, `generate-sitemap.js`). Ein Rename ohne diesen Schritt ist ein 250-Dateien-Suchen-und-Ersetzen mit hoher Fehlerquote.
+**Problem:** Es gibt heute **keine zentrale Marken-Konstante.** „Pushup Tracker“ steht 22-mal wörtlich in Prod-Quellen, `https://pushup-stats.com` als Literal in mindestens 8 Dateien (`dashboard-share.ts`, `achievement-celebration.service.ts`, `blog-article.component.ts`, `exercise-detail.component.ts`, `pushup-type-detail.component.ts`, `goal-reached-dialog`, `generate-feeds.js`, `generate-sitemap.js`). Ein Rename ohne diesen Schritt ist ein 250-Dateien-Suchen-und-Ersetzen mit hoher Fehlerquote.
 
 **Erledigt:**
 
@@ -164,7 +181,7 @@ Die Platzhalter wurden auch in die acht Ziel-Locales nachgezogen, statt 52 × 8 
 
 **Zwei Befunde für Phase 2**, beide vorbestehend und nicht durch diesen Schritt entstanden:
 
-- **Mehrere Locales haben den Produktnamen übersetzt**, statt ihn stehen zu lassen — `es` sagt „Estadísticas de flexiones", `zh` „俯卧撑追踪器", `el` „στατιστικά του PushUp". Diese Units bleiben bewusst auf `initial` und werden von der Übersetzungs-Routine gegen die neue Quelle neu erzeugt; mit Platzhalter kann die Marke dann nicht mehr wegübersetzt werden.
+- **Mehrere Locales haben den Produktnamen übersetzt**, statt ihn stehen zu lassen — `es` sagt „Estadísticas de flexiones“, `zh` „俯卧撑追踪器“, `el` „στατιστικά του PushUp“. Diese Units bleiben bewusst auf `initial` und werden von der Übersetzungs-Routine gegen die neue Quelle neu erzeugt; mit Platzhalter kann die Marke dann nicht mehr wegübersetzt werden.
 - **`seo.default.description` (alle acht Locales) und `app.title` (`no`) nennen die Marke, obwohl die deutsche Quelle das nicht tut.** Sie stehen auf `translated`, werden also von der Routine nicht angefasst und würden den alten Namen über den Rename hinweg behalten. Vor Phase 2 prüfen.
 
 **Tests:** Guard-Test neu. Die markenbehafteten Specs blieben unverändert. Der Production-Build über alle neun Locales inklusive Prerender ist die eigentliche Absicherung der XLIFF-Änderung.
@@ -259,7 +276,7 @@ Setzt Phase 4 voraus: Die TWA ist an den Host gebunden.
   | no-NO  | 3883  | 117  |
   | zh-CN  | 1639  | 2361 |
 
-  Ein neuer Absatz über die Übungsbreite passt in **keine** der acht westlichen Locales, ohne dass anderswo gekürzt wird — in `it-IT` reicht es nicht einmal für ein längeres Wort. Der Rename selbst ist netto meist neutral, aber jedes Zeichen, das der neue Name über „Pushup Tracker" hinausgeht, schlägt an jeder Nennung zu. `pnpm nx test tools` bricht bei Überschreitung, also fällt das in CI auf — aber erst nachdem die Übersetzungen schon geschrieben sind. Deshalb: Kürzungen **mit** dem neuen Text planen, nicht danach.
+  Ein neuer Absatz über die Übungsbreite passt in **keine** der acht westlichen Locales, ohne dass anderswo gekürzt wird — in `it-IT` reicht es nicht einmal für ein längeres Wort. Der Rename selbst ist netto meist neutral, aber jedes Zeichen, das der neue Name über „Pushup Tracker“ hinausgeht, schlägt an jeder Nennung zu. `pnpm nx test tools` bricht bei Überschreitung, also fällt das in CI auf — aber erst nachdem die Übersetzungen schon geschrieben sind. Deshalb: Kürzungen **mit** dem neuen Text planen, nicht danach.
 
 - Play-Grafiken neu erzeugen (`tools/src/store-graphics/`).
 - Package-ID bleibt (Option A). Nur falls Gate 0 doch auf B fällt, kommen die drei Zusatzstränge aus Abschnitt 2.3 als eigenes Ticket dazu.
@@ -275,8 +292,8 @@ Setzt Phase 4 voraus: Die TWA ist an den Host gebunden.
 - 151 Content-Quelldateien unter `content/`: `heroImageCredit`-Frontmatter (10× je Sprache), Tag `Pushup Tracker app`, CTAs mit alter Domain. Deutsch ist Quelle — für die Fremdsprachen greift die Übersetzungs-Routine, außer bei reinen Namens-/URL-Ersetzungen, die sprachübergreifend identisch sind.
 - `pnpm nx run tools:generate-content` (bzw. `node tools/src/generate-content.mjs`) — regeneriert die 151 abgeleiteten TS-Module unter `web/src/app/blog/generated` und die `*-content.generated.ts`. **Nie von Hand editieren.**
 - Feeds regenerieren.
-- **Feature-Announcement:** Neuer Eintrag in `ANNOUNCEMENTS` (`web/src/app/core/feature-announcement.service.ts`) mit frischer ID und einem kurzen Dialog: „Wir heißen jetzt X — hier ist warum, und das kann die App inzwischen alles." Erscheint einmal pro Account auf `/app`. Das ist laut `CLAUDE.md` Pflicht für nutzersichtbare Änderungen und hier besonders sinnvoll: Bestandsnutzer sollen die neue Marke nicht als fremde App erleben.
-- **Landing-Page-Sektion** über die Übungsbreite, „Neu"-getaggt — dieselbe Regel.
+- **Feature-Announcement:** Neuer Eintrag in `ANNOUNCEMENTS` (`web/src/app/core/feature-announcement.service.ts`) mit frischer ID und einem kurzen Dialog: „Wir heißen jetzt X — hier ist warum, und das kann die App inzwischen alles.“ Erscheint einmal pro Account auf `/app`. Das ist laut `CLAUDE.md` Pflicht für nutzersichtbare Änderungen und hier besonders sinnvoll: Bestandsnutzer sollen die neue Marke nicht als fremde App erleben.
+- **Landing-Page-Sektion** über die Übungsbreite, „Neu“-getaggt — dieselbe Regel.
 - Blog-Artikel zum Rebranding: erklärt den Namenswechsel, fängt Suchanfragen nach dem alten Namen ab und gibt der Search-Console-Adressänderung einen inhaltlichen Anker.
 
 ---
@@ -346,8 +363,8 @@ Gate 0 (Name + Domain + Play-Option)
 
 ## 8. Offene Punkte für Gate 0
 
-1. **Name** — Shortlist nach Abschnitt 3, dann Entscheidung.
-2. **Domain** — Verfügbarkeit prüfen, `.com` + `.de` registrieren, **bevor** Phase 2 startet.
+1. **Name** — Shortlist nach Abschnitt 3, dann Entscheidung. Positionierung ist entschieden (international, EN-first); die Suche nach 3.3 hat den „Streak“- und „Fit“-Wortraum ausgeschlossen, Kandidaten also aus Komposita und Kunstwörtern bilden.
+2. **Domain** — Verfügbarkeit prüfen, `.com` + `.de` registrieren, **bevor** Phase 2 startet. Muss beim Registrar geschehen: RDAP war aus der Arbeitsumgebung nicht erreichbar, eine Verfügbarkeitsaussage von dort wäre geraten.
 3. **Play-Lifetime-Installs** — nur bei null Installs gäbe Google die ID nach einer Löschung wieder frei. Das ist die einzige Zahl, die Option B noch günstiger machen könnte; ansonsten bleibt es bei Option A.
 4. **Kontaktadresse** — `contact@<neue-domain>` einrichten; alte Adresse für die Übergangszeit weiterleiten (steht in Impressum und Datenschutz, also rechtlich relevant).
 5. **Logo-Richtung** — soll die Formsprache des alten Icons erkennbar bleiben (sanfterer Übergang) oder bewusst brechen?
