@@ -229,9 +229,9 @@ In 3.5 stehen A und C als Alternativen, und das bleiben sie: A macht die `.com` 
 
 **Runde 1 — Kunstwörter, 1051 generiert.** Aus Morphemen kombiniert, gefiltert auf Sprechbarkeit und Beiklänge. Ergebnis: 382 ohne `.com`-Auflösung (36 %), 367 davon auch ohne `.app`-Auflösung.
 
-Der DNS-Durchlass liegt damit bei 36 % gegen 24 % in der Handrunde (11 von 46) — **Faktor 1,5, und die Überlebenden sind unbrauchbar.** Ende zu Ende ist die Maschinenrunde sogar schlechter als die Handarbeit: aus 1051 Namen ging **keiner** weiter, aus 46 einer. „agonka“, „fibraso“, „stedeus“, „morravo“: verfügbar genau deshalb, weil sie nichts bedeuten. Dazu Beiklänge, die ein Filter nicht fängt: `nerv-` (nerven), `agon-` (agony), `sedu-` (seduce), `volva-`.
+Der DNS-Durchlass liegt damit bei 36 % gegen 24 % in der Handrunde (11 von 46) — **Faktor 1,5, und die Überlebenden sind unbrauchbar.** Ende zu Ende ist die Maschinenrunde sogar schlechter als die Handarbeit: aus 1051 Namen ging **keiner** weiter, aus 46 einer. „agonka“, „fibraso“, „stedeus“, „morravo“: ohne `.com`-Auflösung genau deshalb, weil sie nichts bedeuten. Dazu Beiklänge, die ein Filter nicht fängt: `nerv-` (nerven), `agon-` (agony), `sedu-` (seduce), `volva-`.
 
-Das ist der Befund zu Option A: **Sie liefert Verfügbarkeit, nicht Qualität.** Wer aus dieser Menge wählt, wählt einen Namen, den niemand behält.
+Das ist der Befund zu Option A: **Sie liefert DNS-Durchlass, nicht Qualität** — und Durchlass ist nicht einmal Verfügbarkeit, sondern nur das Fehlen eines A-Records. Wer aus dieser Menge wählt, wählt einen Namen, den niemand behält.
 
 **Runde 2 — bedeutungsvolle Komposita, 502 generiert.** Option C macht diesen Weg erst möglich: Ein gutes Kompositum hat eine vergebene `.com` gerade _weil_ es gut ist — aber `.app` ist weit weniger gesättigt. Ergebnis: **295 ohne `.app`-Auflösung, davon 54 auch ohne `.com`-Auflösung.**
 
@@ -239,25 +239,25 @@ Bei diesen 54 löst weder `.com` noch `.app` auf. Das ist **keine** Freigabe —
 
 | Kandidat      | Zeichen | Bedeutung                              | .com  | .app  | .de   |
 | ------------- | ------: | -------------------------------------- | ----- | ----- | ----- |
-| **Holdspan**  |       8 | Die Spanne, die du hältst              | frei? | frei? | frei? |
 | **Movepath**  |       8 | Der Pfad der Bewegung                  | frei? | frei? | frei? |
 | **Tallyspan** |       9 | Was du über eine Spanne zusammenzählst | frei? | frei? | frei? |
+| **Holdspan**  |       8 | Die Spanne, die du hältst              | frei? | frei? | frei? |
 
 „frei?“ heißt: keine DNS-Auflösung. Das bleibt ein Ausschluss-, kein Freigabetest — der Registrar entscheidet.
 
 **Was aus Tallyo wurde.** Der einzige Überlebende aus 3.5 steht nicht in dieser Tabelle, und das braucht einen Grund: `tallyo.com` löst nicht auf, `tallyo.app` und `tallyo.de` sind **vergeben**. Unter der Anforderung aus C — `.app` als gleichwertige TLD — fällt damit der Ausweichweg weg, und die `.de`-Ergänzung aus Kriterium 4 ebenfalls. Tallyo bleibt als Rückfallkandidat notiert, falls die drei oben beim Registrar oder in der Markenprüfung scheitern.
 
-**Ausgeschieden in dieser Runde:** _Everspan_ — EverSpan Life, LLC hält eine eingetragene US-Marke, unter anderem für Ernährungsberatung, also angrenzend; dazu Everspan Group und Everspan Solutions.
+**Zurückgestellt in dieser Runde:** _Everspan_ — EverSpan Life, LLC hält eine eingetragene US-Marke, unter anderem für Ernährungsberatung, also angrenzend; dazu Everspan Group und Everspan Solutions.
 
-Dieser Ausschluss ist **ungleich streng**: Maßgeblich sind nach Kriterium 5 DPMA und EUIPO, nicht das US-Register, und die Recherche dort steht für alle Kandidaten noch aus (Abschnitt 8). Everspan fällt hier vorsorglich auf einen Treffer, den die drei oben schlicht noch nicht durchlaufen haben. Bestätigt die Markenrecherche die drei nicht, gehört Everspan zurück ins Feld.
+**Zurückgestellt, nicht ausgeschieden**, und zwar bewusst: Maßgeblich sind nach Kriterium 5 DPMA und EUIPO, nicht das US-Register, und die Recherche dort steht für alle Kandidaten noch aus (Abschnitt 8). Ein endgültiger Ausschluss auf einen Treffer, den die drei oben schlicht noch nicht durchlaufen haben, wäre ungleiche Strenge. Everspan ist damit Risikokandidat, kein erledigter Fall — bestätigt die Markenrecherche die drei nicht, steht es wieder im Feld.
 
 **Play-Titel-Budget** (Limit 30) für alle drei nachgerechnet:
 
-| Untertitel           | Holdspan | Movepath | Tallyspan |
-| -------------------- | -------: | -------: | --------: |
-| `Bodyweight Tracker` |       28 |       28 |        29 |
-| `Bodyweight Log`     |       24 |       24 |        25 |
-| `Train & Track`      |       23 |       23 |        24 |
+| Untertitel           | Movepath | Tallyspan | Holdspan |
+| -------------------- | -------: | --------: | -------: |
+| `Bodyweight Tracker` |       28 |        29 |       28 |
+| `Bodyweight Log`     |       24 |        25 |       24 |
+| `Train & Track`      |       23 |        24 |       23 |
 
 **Der Haken an Holdspan — zwei eigene Kriterien sprechen dagegen.**
 
@@ -490,7 +490,7 @@ Gate 0 (Name + Domain + Play-Option)
 
 ## 8. Offene Punkte für Gate 0
 
-1. **Name** — Kandidaten aus 3.6 in dieser Reihenfolge: **Movepath**, **Tallyspan**, danach **Holdspan** (belastet durch Kriterium 1 und die Holdfast-Marke, siehe 3.6). Alle drei ohne DNS-Auflösung auf `.com`, `.app` und `.de`, ohne Store-Treffer, im Play-Titel-Budget. Rückfallkandidaten: Tallyo (`.app`/`.de` vergeben) und Everspan (US-Marke). Offen: Bestätigung beim Registrar und die Markenrecherche.
+1. **Name** — Kandidaten aus 3.6 in dieser Reihenfolge: **Movepath**, **Tallyspan**, danach **Holdspan** (belastet durch Kriterium 1 und die Holdfast-Marke, siehe 3.6). Alle drei ohne DNS-Auflösung auf `.com`, `.app` und `.de`, ohne Store-Treffer, im Play-Titel-Budget. Zurückgestellt: Tallyo (`.app`/`.de` vergeben) und Everspan (US-Marke, DPMA/EUIPO offen). Offen: Bestätigung beim Registrar und die Markenrecherche.
 2. **Domain** — Verfügbarkeit prüfen und registrieren, **bevor** Phase 2 startet. Welche TLD, entscheidet der Registrar-Befund: Primär ist `.app` (Entscheidung aus 3.6), die `.com` wird mitgenommen, wenn sie frei ist, `.de` ergänzend nach Kriterium 4. Muss beim Registrar geschehen: RDAP war aus der Arbeitsumgebung nicht erreichbar, eine Verfügbarkeitsaussage von dort wäre geraten.
 3. **Play-Lifetime-Installs** — nur bei null Installs gäbe Google die ID nach einer Löschung wieder frei. Das ist die einzige Zahl, die Option B noch günstiger machen könnte; ansonsten bleibt es bei Option A.
 4. **Kontaktadresse** — `contact@<neue-domain>` einrichten; alte Adresse für die Übergangszeit weiterleiten (steht in Impressum und Datenschutz, also rechtlich relevant).
