@@ -179,12 +179,12 @@ export class UserTrainingPlanApiService {
       nonRestDaysBeforeTarget: ReadonlyArray<number>;
     }
   ): Observable<void> {
-    return this.transact(userId, (data) => ({
+    return this.transact(userId, (data, nowIso) => ({
       startDate: args.newStartDate,
       skippedDays: nextSkippedDays(data, args),
       // Re-anchoring can shift the day now mapped to today's date away
       // from whichever day already claimed it — see `dayActivatedAt`.
-      dayActivatedAt: new Date().toISOString(),
+      dayActivatedAt: nowIso,
     }));
   }
 
@@ -348,7 +348,10 @@ export class UserTrainingPlanApiService {
    *  no-op when there is no resolvable user / Firestore provider. */
   private transact(
     userId: string,
-    fields: (data: UserTrainingPlan | null) => Record<string, unknown>
+    fields: (
+      data: UserTrainingPlan | null,
+      nowIso: string
+    ) => Record<string, unknown>
   ): Observable<void> {
     const effectiveUserId = this.resolveUserId(userId);
     if (!effectiveUserId || !this.firestore) return of(void 0);
@@ -358,10 +361,8 @@ export class UserTrainingPlanApiService {
         runTransaction(this.firestore, async (tx) => {
           const snap = await tx.get(ref);
           const data = (snap.data() as UserTrainingPlan | undefined) ?? null;
-          tx.update(ref, {
-            ...fields(data),
-            updatedAt: new Date().toISOString(),
-          });
+          const nowIso = new Date().toISOString();
+          tx.update(ref, { ...fields(data, nowIso), updatedAt: nowIso });
         })
       )
     ).pipe(map(() => void 0));

@@ -2,7 +2,6 @@ import { ApplicationRef, PLATFORM_ID, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Storage } from '@angular/fire/storage';
 import { UserContextService } from '@pu-auth/auth';
-import { PendingRequestsService } from '@pu-stats/data-access';
 import { vi } from 'vitest';
 
 import {
@@ -180,39 +179,6 @@ describe('AvatarService', () => {
 
       // then
       expect(service.avatarUrl()).toBeNull();
-    });
-  });
-
-  describe('Given the Storage read is slow', () => {
-    it('should count it as a pending request until the URL arrives', async () => {
-      // given
-      let resolveRead!: (url: string) => void;
-      readPhoto.mockReturnValue(
-        new Promise<string>((resolve) => (resolveRead = resolve))
-      );
-      const { service } = setup({ photoUpdatedAt: '2026-09-21T10:00:00Z' });
-      const pending = TestBed.inject(PendingRequestsService);
-
-      // when — the resource fires once something reads it; `settle` would
-      // wait for stability, which a still-pending read never reaches
-      for (let attempt = 0; attempt < 50 && !readPhoto.mock.calls.length;) {
-        attempt++;
-        service.avatarUrl();
-        TestBed.tick();
-        await new Promise((r) => setTimeout(r, 0));
-      }
-
-      // then
-      expect(readPhoto).toHaveBeenCalledTimes(1);
-      expect(pending.pending()).toBe(1);
-
-      // when
-      resolveRead('https://own/pic');
-      await settle(service, uploadResolved(service));
-
-      // then
-      expect(service.uploadedUrl()).toBe('https://own/pic');
-      expect(pending.pending()).toBe(0);
     });
   });
 });

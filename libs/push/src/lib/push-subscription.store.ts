@@ -98,14 +98,12 @@ export const PushSubscriptionStore = signalStore(
         unknown,
         { ok: boolean; subId: string; deviceCount: number }
       >(store._functions, 'savePushSubscription');
-      const result = await store._pending.track(
-        callable({
-          endpoint: json.endpoint,
-          keys: json.keys,
-          userAgent: navigator.userAgent,
-          locale: navigator.language,
-        })
-      );
+      const result = await callable({
+        endpoint: json.endpoint,
+        keys: json.keys,
+        userAgent: navigator.userAgent,
+        locale: navigator.language,
+      });
       return { deviceCount: result.data.deviceCount ?? 1 };
     }
 
@@ -123,7 +121,7 @@ export const PushSubscriptionStore = signalStore(
         unknown,
         { ok: boolean; deviceCount: number }
       >(store._functions, 'deletePushSubscription');
-      const result = await store._pending.track(callable({ endpoint }));
+      const result = await callable({ endpoint });
       return { deviceCount: result.data.deviceCount ?? 0 };
     }
 
@@ -301,7 +299,12 @@ export const PushSubscriptionStore = signalStore(
               return false;
             }
 
-            const { deviceCount } = await saveSubscription(subToSave);
+            // Only the user's own click is tracked: the re-sync in `init()`
+            // and the SW bridge run in the background and must not show the
+            // global spinner on every launch.
+            const { deviceCount } = await store._pending.track(
+              saveSubscription(subToSave)
+            );
             patchState(store, { status: 'subscribed', deviceCount });
             return true;
           } catch (err) {
@@ -325,7 +328,9 @@ export const PushSubscriptionStore = signalStore(
           if (sub) {
             const endpoint = sub.endpoint;
             await sub.unsubscribe();
-            const { deviceCount } = await deleteSubscription(endpoint);
+            const { deviceCount } = await store._pending.track(
+              deleteSubscription(endpoint)
+            );
             // Always not-subscribed on this device, deviceCount shows other devices
             patchState(store, { status: 'not-subscribed', deviceCount });
             return;

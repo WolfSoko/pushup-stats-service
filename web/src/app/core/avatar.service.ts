@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
 import { UserContextService } from '@pu-auth/auth';
-import { PendingRequestsService } from '@pu-stats/data-access';
 
 import { UserConfigStore } from './user-config.store';
 
@@ -54,7 +53,6 @@ export class AvatarService {
   private readonly user = inject(UserContextService);
   private readonly configStore = inject(UserConfigStore);
   private readonly readPhoto = inject(PROFILE_PHOTO_READER);
-  private readonly pending = inject(PendingRequestsService);
 
   private readonly uploaded = resource({
     params: () => ({
@@ -66,9 +64,7 @@ export class AvatarService {
       // be a guaranteed 404 on every page load.
       if (!this.storage || !params.uid || !params.version) return null;
       try {
-        return await this.pending.track(
-          this.readPhoto(this.storage, profilePhotoPath(params.uid))
-        );
+        return await this.readPhoto(this.storage, profilePhotoPath(params.uid));
       } catch {
         return null;
       }

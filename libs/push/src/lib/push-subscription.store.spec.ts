@@ -186,7 +186,7 @@ describe('PushSubscriptionStore', () => {
     );
   });
 
-  it('subscribe() counts the save callable as a pending request', async () => {
+  it('should count the save callable of subscribe() as a pending request', async () => {
     // given
     const { registration } = makeRegistration();
     pushSw.setRegistration(registration);
@@ -200,6 +200,44 @@ describe('PushSubscriptionStore', () => {
 
     // then
     expect(ok).toBe(true);
+    expect(track).toHaveBeenCalledTimes(1);
+    expect(pending.pending()).toBe(0);
+  });
+
+  it('should not count the re-sync of init() as a pending request', async () => {
+    // given — an existing subscription is re-registered in the background
+    const { registration } = makeRegistration({
+      existingSubscription: makeMockSubscription(),
+    });
+    pushSw.setRegistration(registration);
+    mockHttpsCallable();
+    const store = setupStore();
+    const track = jest.spyOn(TestBed.inject(PendingRequestsService), 'track');
+
+    // when
+    await store.init();
+
+    // then
+    expect(store.status()).toBe('subscribed');
+    expect(track).not.toHaveBeenCalled();
+  });
+
+  it('should count the delete callable of unsubscribe() as a pending request', async () => {
+    // given
+    const { registration } = makeRegistration({
+      existingSubscription: makeMockSubscription(),
+    });
+    pushSw.setRegistration(registration);
+    mockHttpsCallable(0);
+    const store = setupStore();
+    const pending = TestBed.inject(PendingRequestsService);
+    const track = jest.spyOn(pending, 'track');
+
+    // when
+    await store.unsubscribe();
+
+    // then
+    expect(store.status()).toBe('not-subscribed');
     expect(track).toHaveBeenCalledTimes(1);
     expect(pending.pending()).toBe(0);
   });
