@@ -276,7 +276,7 @@ Bei diesen 54 löst weder `.com` noch `.app` auf. Das ist **keine** Freigabe —
 4. Entscheidung dokumentieren — dieser Plan wird mit dem gewählten Namen aktualisiert, danach werden die Phasen-Issues angelegt.
 5. Domain **vor** Phase 2 registrieren — das ist der Punkt, ab dem der Name nach außen geht. Ein Rename ohne gesicherte Domain ist ein Rückrufrisiko.
 
-**Ergebnis von Gate 0:** gewählter Name, registrierte Domain, Play-Strategie (A oder B), neue Kontaktadresse (`contact@<neue-domain>`). Die Domain-Entscheidung aus 3.5 ist mit 3.6 **gefallen** (Suchmethode A, Domain-Kriterium C) und steht hier nicht mehr offen — offen ist nur noch die Bestätigung beim Registrar.
+**Ergebnis von Gate 0:** gewählter Name, registrierte Domain, Play-Strategie (A oder B), neue Kontaktadresse (`contact@<neue-domain>`). Die Domain-Entscheidung aus 3.5 ist mit 3.6 **gefallen** (Suchmethode A, Domain-Kriterium C) und steht hier nicht mehr offen. Offen bleiben zwei Prüfungen, beide aus Abschnitt 8: die Bestätigung der Verfügbarkeit beim Registrar und die Markenrecherche in den Klassen 9, 41 und 42.
 
 ---
 
