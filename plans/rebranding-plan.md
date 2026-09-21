@@ -206,12 +206,12 @@ Eine zweite Runde über 46 konstruierte Namen, direkt DNS-gefiltert: **35 vergeb
 - **Ritmo** — Registrierungsstatus ungeklärt; ausgeschlossen aus einem anderen Grund: ein gängiges spanisches und italienisches Wörterbuchwort scheitert an Kriterium 5, weil Markenschutz Unterscheidungskraft voraussetzt
 - **Kepto** — Beiklang „Klepto“
 
-Übrig aus 46: **Tallyo**.
+Übrig aus 46 nach den belegten Ausschlüssen: **sechs** — Tallyo, Haltra, Holdday, Holdever, Repvault, Stedva. Weitergetragen wurde nur **Tallyo**; die anderen fünf fielen nach Klang- und Lesbarkeitsurteil, ohne dass der Grund festgehalten wurde. Das ist eine Lücke im Verfahren, keine Nebensache: Die Trefferquote unten hängt davon ab, ob diese fünf zu Recht fielen — belegt ist das nicht.
 
 Daraus zwei Regeln für die nächste Runde:
 
 1. **Die `.com`-Prüfung und die Markenprüfung sind unabhängig.** Talvio und Vantio haben **keine** `.com`-Auflösung und trotzdem ein laufendes Geschäft auf einer anderen TLD. Beides muss geprüft werden, keins ersetzt das andere.
-2. **Die Trefferquote liegt bei etwa 2 %.** Aus 46 konstruierten Namen blieb einer. Wer fünf brauchbare Kandidaten will, muss mit einigen hundert starten — oder die Anforderung „freie `.com`“ aufgeben.
+2. **Die Trefferquote liegt zwischen 2 % und 13 %.** Aus 46 konstruierten Namen blieb einer weitergetragener (2 %); sechs hatten keinen belegten Ausschlussgrund (13 %). Wer fünf brauchbare Kandidaten will, muss mit einigen hundert starten — oder die Anforderung „freie `.com`“ aufgeben.
 
 **Damit steht eine Entscheidung an, die Gate 0 vorgelagert ist:**
 
@@ -223,17 +223,19 @@ Ohne diese Entscheidung ist jede weitere Kandidatenrunde Rätselraten.
 
 ### 3.6 Entschieden: A und C — und was dabei herauskam
 
-Entscheidung vom 2026-09-21: **A und C kombiniert.** Maschinelle Runde fahren, `.app` als gleichwertige TLD zulassen.
+Entscheidung vom 2026-09-21: **das Verfahren aus A, die Anforderung aus C.** Maschinelle Runde über mehrere hundert Namen fahren, `.app` als gleichwertige TLD zulassen.
+
+In 3.5 stehen A und C als Alternativen, und das bleiben sie: A macht die `.com` zur Pflicht, C gibt genau diese Pflicht auf. Übernommen wird deshalb nicht beides, sondern **die Suchmethode von A und das Domain-Kriterium von C.** Wo eine freie `.com` ohnehin abfällt, wird sie mitgenommen — verlangt wird sie nicht mehr.
 
 **Runde 1 — Kunstwörter, 1051 generiert.** Aus Morphemen kombiniert, gefiltert auf Sprechbarkeit und Beiklänge. Ergebnis: 382 ohne `.com`-Auflösung (36 %), 367 davon auch ohne `.app`-Auflösung.
 
-Die Trefferquote ist damit achtzehnmal höher als in der Handrunde — **aber die Überlebenden sind unbrauchbar.** „agonka“, „fibraso“, „stedeus“, „morravo“: verfügbar genau deshalb, weil sie nichts bedeuten. Dazu Beiklänge, die ein Filter nicht fängt: `nerv-` (nerven), `agon-` (agony), `sedu-` (seduce), `volva-`.
+Der DNS-Durchlass liegt damit bei 36 % gegen 24 % in der Handrunde (11 von 46) — **Faktor 1,5, und die Überlebenden sind unbrauchbar.** Ende zu Ende ist die Maschinenrunde sogar schlechter als die Handarbeit: aus 1051 Namen ging **keiner** weiter, aus 46 einer. „agonka“, „fibraso“, „stedeus“, „morravo“: verfügbar genau deshalb, weil sie nichts bedeuten. Dazu Beiklänge, die ein Filter nicht fängt: `nerv-` (nerven), `agon-` (agony), `sedu-` (seduce), `volva-`.
 
 Das ist der Befund zu Option A: **Sie liefert Verfügbarkeit, nicht Qualität.** Wer aus dieser Menge wählt, wählt einen Namen, den niemand behält.
 
 **Runde 2 — bedeutungsvolle Komposita, 502 generiert.** Option C macht diesen Weg erst möglich: Ein gutes Kompositum hat eine vergebene `.com` gerade _weil_ es gut ist — aber `.app` ist weit weniger gesättigt. Ergebnis: **295 ohne `.app`-Auflösung, davon 54 auch ohne `.com`-Auflösung.**
 
-Diese 54 erfüllen A und C gleichzeitig. Nach Lesbarkeit, Übungsneutralität und Beiklang gefiltert und auf Kollisionen geprüft:
+Bei diesen 54 löst weder `.com` noch `.app` auf. Das ist **keine** Freigabe — nicht-auflösen heißt nur, dass kein A-Record gesetzt ist; es ist dieselbe Umkehrung, die dieser Abschnitt weiter unten ausdrücklich ausschließt. Ob eine davon frei ist, sagt der Registrar. Nach Lesbarkeit, Übungsneutralität und Beiklang gefiltert und auf Kollisionen geprüft:
 
 | Kandidat      | Zeichen | Bedeutung                              | .com  | .app  | .de   |
 | ------------- | ------: | -------------------------------------- | ----- | ----- | ----- |
@@ -243,7 +245,11 @@ Diese 54 erfüllen A und C gleichzeitig. Nach Lesbarkeit, Übungsneutralität un
 
 „frei?“ heißt: keine DNS-Auflösung. Das bleibt ein Ausschluss-, kein Freigabetest — der Registrar entscheidet.
 
+**Was aus Tallyo wurde.** Der einzige Überlebende aus 3.5 steht nicht in dieser Tabelle, und das braucht einen Grund: `tallyo.com` löst nicht auf, `tallyo.app` und `tallyo.de` sind **vergeben**. Unter der Anforderung aus C — `.app` als gleichwertige TLD — fällt damit der Ausweichweg weg, und die `.de`-Ergänzung aus Kriterium 4 ebenfalls. Tallyo bleibt als Rückfallkandidat notiert, falls die drei oben beim Registrar oder in der Markenprüfung scheitern.
+
 **Ausgeschieden in dieser Runde:** _Everspan_ — EverSpan Life, LLC hält eine eingetragene US-Marke, unter anderem für Ernährungsberatung, also angrenzend; dazu Everspan Group und Everspan Solutions.
+
+Dieser Ausschluss ist **ungleich streng**: Maßgeblich sind nach Kriterium 5 DPMA und EUIPO, nicht das US-Register, und die Recherche dort steht für alle Kandidaten noch aus (Abschnitt 8). Everspan fällt hier vorsorglich auf einen Treffer, den die drei oben schlicht noch nicht durchlaufen haben. Bestätigt die Markenrecherche die drei nicht, gehört Everspan zurück ins Feld.
 
 **Play-Titel-Budget** (Limit 30) für alle drei nachgerechnet:
 
@@ -253,7 +259,12 @@ Diese 54 erfüllen A und C gleichzeitig. Nach Lesbarkeit, Übungsneutralität un
 | `Bodyweight Log`     |       24 |       24 |        25 |
 | `Train & Track`      |       23 |       23 |        24 |
 
-**Einschätzung.** _Movepath_ liest sich am natürlichsten und ist am klarsten übungsneutral — jede Übung ist Bewegung. _Holdspan_ hat die passendste Doppelbedeutung für genau dieses Produkt: die gehaltene Spanne meint den Halte-Timer wörtlich und die Streak übertragen. _Tallyspan_ ist inhaltlich richtig, klingt aber sperriger.
+**Der Haken an Holdspan — zwei eigene Kriterien sprechen dagegen.**
+
+1. **Kriterium 1 (übungsneutral).** „Hold“ benennt eine Trainingsform: Halten, Isometrie, Plank. Das ist dieselbe Bindung, für die _Repora_ in 3.4 abgewertet wurde („rep“ trägt Halte-Timer sprachlich nicht) — nur spiegelverkehrt: Holdspan trägt die Wiederholung nicht. Ein Name, der auf den Halte-Timer zeigt, bevorzugt eine Übungsart, und genau das schließt Kriterium 1 aus.
+2. **Markennähe.** _Holdfast_ ist in 3.4 ausgeschieden, weil Holdfast Properties eine Marke für Software „for tracking and monitoring exercise“ hält — die Warenklasse dieses Produkts. Holdspan teilt den Stamm. Der Plan behandelt Stammnähe sonst als Risiko (drei „Keep“-Kandidaten in 3.4, Google Keep in Klasse 9); hier gilt nichts anderes.
+
+**Einschätzung.** _Movepath_ liest sich am natürlichsten und ist als einziges klar übungsneutral — jede Übung ist Bewegung. _Tallyspan_ ist inhaltlich richtig (zusammenzählen über eine Spanne), klingt aber sperriger. _Holdspan_ hat die schönste Doppelbedeutung — der Halte-Timer wörtlich, die Streak übertragen — scheitert aber an den beiden Punkten oben; es steht nur noch hinten in der Reihe, falls die Markenrecherche die anderen beiden kippt.
 
 **Nächster Schritt:** Domain-Verfügbarkeit dieser drei beim Registrar bestätigen, dann Markenrecherche (Klassen 9, 41, 42). Erst danach ist Gate 0 entscheidbar.
 
@@ -265,7 +276,7 @@ Diese 54 erfüllen A und C gleichzeitig. Nach Lesbarkeit, Übungsneutralität un
 4. Entscheidung dokumentieren — dieser Plan wird mit dem gewählten Namen aktualisiert, danach werden die Phasen-Issues angelegt.
 5. Domain **vor** Phase 2 registrieren — das ist der Punkt, ab dem der Name nach außen geht. Ein Rename ohne gesicherte Domain ist ein Rückrufrisiko.
 
-**Ergebnis von Gate 0:** gewählter Name, **Domain-Entscheidung (A, B oder C aus 3.5 — nicht zu verwechseln mit der Play-Strategie)**, registrierte Domain, Play-Strategie (A oder B), neue Kontaktadresse (`contact@<neue-domain>`).
+**Ergebnis von Gate 0:** gewählter Name, registrierte Domain, Play-Strategie (A oder B), neue Kontaktadresse (`contact@<neue-domain>`). Die Domain-Entscheidung aus 3.5 ist mit 3.6 **gefallen** (Suchmethode A, Domain-Kriterium C) und steht hier nicht mehr offen — offen ist nur noch die Bestätigung beim Registrar.
 
 ---
 
@@ -479,8 +490,8 @@ Gate 0 (Name + Domain + Play-Option)
 
 ## 8. Offene Punkte für Gate 0
 
-1. **Name** — drei Kandidaten aus 3.6: **Holdspan**, **Movepath**, **Tallyspan**. Alle drei ohne DNS-Auflösung auf `.com`, `.app` und `.de`, ohne Store-Treffer, im Play-Titel-Budget. Offen: Bestätigung beim Registrar und die Markenrecherche.
-2. **Domain** — Verfügbarkeit prüfen, `.com` + `.de` registrieren, **bevor** Phase 2 startet. Muss beim Registrar geschehen: RDAP war aus der Arbeitsumgebung nicht erreichbar, eine Verfügbarkeitsaussage von dort wäre geraten.
+1. **Name** — Kandidaten aus 3.6 in dieser Reihenfolge: **Movepath**, **Tallyspan**, danach **Holdspan** (belastet durch Kriterium 1 und die Holdfast-Marke, siehe 3.6). Alle drei ohne DNS-Auflösung auf `.com`, `.app` und `.de`, ohne Store-Treffer, im Play-Titel-Budget. Rückfallkandidaten: Tallyo (`.app`/`.de` vergeben) und Everspan (US-Marke). Offen: Bestätigung beim Registrar und die Markenrecherche.
+2. **Domain** — Verfügbarkeit prüfen und registrieren, **bevor** Phase 2 startet. Welche TLD, entscheidet der Registrar-Befund: Primär ist `.app` (Entscheidung aus 3.6), die `.com` wird mitgenommen, wenn sie frei ist, `.de` ergänzend nach Kriterium 4. Muss beim Registrar geschehen: RDAP war aus der Arbeitsumgebung nicht erreichbar, eine Verfügbarkeitsaussage von dort wäre geraten.
 3. **Play-Lifetime-Installs** — nur bei null Installs gäbe Google die ID nach einer Löschung wieder frei. Das ist die einzige Zahl, die Option B noch günstiger machen könnte; ansonsten bleibt es bei Option A.
 4. **Kontaktadresse** — `contact@<neue-domain>` einrichten; alte Adresse für die Übergangszeit weiterleiten (steht in Impressum und Datenschutz, also rechtlich relevant).
 5. **Logo-Richtung** — soll die Formsprache des alten Icons erkennbar bleiben (sanfterer Übergang) oder bewusst brechen?
