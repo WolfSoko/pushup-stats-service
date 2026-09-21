@@ -180,9 +180,50 @@ Gebildet nach der Erkenntnis aus 3.3: keine Wörterbuchwörter, sondern Komposit
 
 Jede Kombination passt. Das war beim heutigen Namen nicht selbstverständlich — er liegt mit 27 Zeichen praktisch am Limit.
 
-**Nächster Schritt:** Für diese fünf Domain-Verfügbarkeit beim Registrar prüfen und die Markenrecherche beauftragen (Klassen 9, 41, 42). Erst danach ist Gate 0 entscheidbar.
+**Nachtrag 2026-09-21 — die Shortlist ist an der Domain gescheitert, nicht an der Marke.**
 
-### 3.5 Ablauf
+Die Verfügbarkeitsprüfung war doch möglich: RDAP bleibt durch den Egress-Proxy gesperrt, aber DNS-Auflösung funktioniert. Das ist ein **Ausschluss-, kein Freigabetest** — löst eine Domain auf, ist sie sicher vergeben; löst sie nicht auf, kann sie trotzdem registriert sein (kein A-Record). `.com` kennt keinen Wildcard, eine Auflösung ist also beweiskräftig.
+
+Ergebnis für die fünf Kandidaten, jeweils `.com` / `.de` / `.app`:
+
+| Kandidat | .com     | .de             | .app            |
+| -------- | -------- | --------------- | --------------- |
+| Everkeep | vergeben | vergeben        | vergeben        |
+| Daykeep  | vergeben | vergeben        | vergeben        |
+| Keepline | vergeben | keine Auflösung | keine Auflösung |
+| Kepta    | vergeben | vergeben        | vergeben        |
+| Repora   | vergeben | vergeben        | vergeben        |
+
+**13 von 15 vergeben. Die `.com` ist bei allen fünf weg** — und damit Kriterium 4 verfehlt. Mehrere lösen auf Adressen auf, die nach Parking aussehen; ob solche Domains käuflich sind, zeigt erst der Registrar.
+
+### 3.5 Was die Domainprüfung über das Verfahren lehrt
+
+Eine zweite Runde über 46 konstruierte Namen, direkt DNS-gefiltert: **35 vergeben, 11 ohne Auflösung.** Von diesen elf fielen im Store-Check weitere:
+
+- **Vantra** — bereits ein „AI Fitness Companion“, direkte Kollision
+- **Talvio** — laufendes Geschäft auf `talvio.co`
+- **Vantio** — laufendes Geschäft auf `vantio.app`
+- **Ritmo** — gängiges spanisches Wort, mit Sicherheit registriert trotz fehlender Auflösung
+- **Kepto** — Beiklang „Klepto“
+
+Übrig aus 46: **Tallyo**.
+
+Daraus zwei Regeln für die nächste Runde:
+
+1. **Die `.com`-Prüfung und die Markenprüfung sind unabhängig.** Talvio und Vantio haben freie `.com`-Auflösung und trotzdem ein laufendes Geschäft auf einer anderen TLD. Beides muss geprüft werden, keins ersetzt das andere.
+2. **Die Trefferquote liegt bei etwa 2 %.** Aus 46 konstruierten Namen blieb einer. Wer fünf brauchbare Kandidaten will, muss mit einigen hundert starten — oder die Anforderung „freie `.com`“ aufgeben.
+
+**Damit steht eine Entscheidung an, die Gate 0 vorgelagert ist:**
+
+- **A — `.com` bleibt Pflicht.** Dann braucht es eine maschinelle Runde über mehrere hundert Kunstwörter mit DNS-Vorfilter. Aufwand vertretbar, Ergebnis unsicher, weil die überlebenden Namen zwangsläufig immer beliebiger werden.
+- **B — `.com` kaufen.** Mehrere der geprüften Domains stehen offenbar geparkt. Ein Kaufangebot kostet Geld und Verhandlungszeit, liefert aber einen Namen mit Bedeutung.
+- **C — andere TLD akzeptieren.** `.app` ist für eine App naheliegend und HSTS-preloaded, also zwingend HTTPS. Das löst das Problem sofort, kostet aber die Selbstverständlichkeit der `.com` und macht Tippfehler-Traffic zum Risiko.
+
+Ohne diese Entscheidung ist jede weitere Kandidatenrunde Rätselraten.
+
+**Nächster Schritt:** Entscheidung A, B oder C. Danach Markenrecherche (Klassen 9, 41, 42) für die verbliebenen Kandidaten.
+
+### 3.6 Ablauf
 
 1. Pro Richtung 5–8 Kandidaten sammeln.
 2. Gegen Kriterien 1–3 filtern (Schreibtischarbeit, keine externen Abfragen).
@@ -404,7 +445,7 @@ Gate 0 (Name + Domain + Play-Option)
 
 ## 8. Offene Punkte für Gate 0
 
-1. **Name** — Shortlist steht in 3.4: Everkeep, Daykeep, Keepline, Kepta, Repora. Alle fünf sind store-kollisionsfrei und erfüllen das Play-Titel-Budget. Offen ist die Markenprüfung — drei teilen den Stamm „Keep“ mit einer eingetragenen Marke derselben Klasse.
+1. **Name** — die Shortlist aus 3.4 ist an der Domain gescheitert: alle fünf `.com` sind vergeben. Vor der nächsten Kandidatenrunde steht die Grundsatzentscheidung aus 3.5 an: `.com` als Pflicht beibehalten, eine geparkte `.com` kaufen, oder eine andere TLD akzeptieren.
 2. **Domain** — Verfügbarkeit prüfen, `.com` + `.de` registrieren, **bevor** Phase 2 startet. Muss beim Registrar geschehen: RDAP war aus der Arbeitsumgebung nicht erreichbar, eine Verfügbarkeitsaussage von dort wäre geraten.
 3. **Play-Lifetime-Installs** — nur bei null Installs gäbe Google die ID nach einer Löschung wieder frei. Das ist die einzige Zahl, die Option B noch günstiger machen könnte; ansonsten bleibt es bei Option A.
 4. **Kontaktadresse** — `contact@<neue-domain>` einrichten; alte Adresse für die Übergangszeit weiterleiten (steht in Impressum und Datenschutz, also rechtlich relevant).
