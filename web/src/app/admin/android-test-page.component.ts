@@ -25,12 +25,14 @@ import {
   groupByAndroidTestStatus,
   manualAddMatches,
 } from './android-test-page.helpers';
+import { BusyDirective, createKeyedBusyState } from '@pu-stats/ui';
 import { CallableFunctionsService } from './callable-functions.service';
 
 @Component({
   selector: 'app-android-test-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     FormsModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -49,7 +51,8 @@ export class AndroidTestPageComponent {
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
   readonly users = signal<AdminUser[]>([]);
-  readonly busyUid = signal<string | null>(null);
+  /** Keyed `<uid>:<confirm|decline|added>`, one flag per row action. */
+  readonly busyUser = createKeyedBusyState<string>();
   readonly scanning = signal(false);
   readonly scanResult = signal<number | null>(null);
   readonly emailsCopied = signal(false);
@@ -111,19 +114,19 @@ export class AndroidTestPageComponent {
   }
 
   async confirm(uid: string, confirmed: boolean): Promise<void> {
-    this.busyUid.set(uid);
     this.error.set(null);
     try {
       const fn = this.callables.call<
         { uid: string; confirmed: boolean },
         { ok: boolean }
       >('adminConfirmAndroidTestCandidate');
-      await fn({ uid, confirmed });
+      await this.busyUser.run(
+        `${uid}:${confirmed ? 'confirm' : 'decline'}`,
+        () => fn({ uid, confirmed })
+      );
       await this.loadUsers();
     } catch (err) {
       this.error.set(errorMessage(err));
-    } finally {
-      this.busyUid.set(null);
     }
   }
 
@@ -138,14 +141,13 @@ export class AndroidTestPageComponent {
   }
 
   async markAdded(uid: string): Promise<void> {
-    this.busyUid.set(uid);
     this.error.set(null);
     try {
       const fn = this.callables.call<
         { uid: string },
         { ok: boolean; pushSent: boolean }
       >('adminMarkAndroidTesterAdded');
-      const result = await fn({ uid });
+      const result = await this.busyUser.run(`${uid}:added`, () => fn({ uid }));
       // `loadUsers()` resets `error` on entry, so the pushSent warning must be
       // set *after* it resolves — otherwise the refresh silently clears it.
       await this.loadUsers();
@@ -156,8 +158,6 @@ export class AndroidTestPageComponent {
       }
     } catch (err) {
       this.error.set(errorMessage(err));
-    } finally {
-      this.busyUid.set(null);
     }
   }
 

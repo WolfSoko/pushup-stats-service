@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { BusyDirective } from '@pu-stats/ui';
 import { CallableFunctionsService } from '../callable-functions.service';
 import {
   MigrationActionKind,
@@ -28,7 +28,8 @@ import {
 const MIGRATION_CALLABLE_TIMEOUT_MS = 540_000;
 
 interface ActionState {
-  busy: boolean;
+  /** Which run is in flight, so only the pressed button spins. */
+  running: 'dry' | 'live' | null;
   /**
    * A live (non-dry) run stays disabled until a dry-run for the same action
    * has completed in this session — the runbook mandates "dry-run first", so
@@ -40,7 +41,7 @@ interface ActionState {
 }
 
 const IDLE: ActionState = {
-  busy: false,
+  running: null,
   dryRunDone: false,
   result: null,
   error: null,
@@ -55,7 +56,7 @@ const IDLE: ActionState = {
     MatCardModule,
     MatChipsModule,
     MatIconModule,
-    MatProgressSpinnerModule,
+    BusyDirective,
   ],
   template: `
     <mat-card class="migration-card">
@@ -80,7 +81,7 @@ const IDLE: ActionState = {
             </mat-chip-set>
             <button
               mat-stroked-button
-              [disabled]="statusBusy()"
+              [puBusy]="statusBusy()"
               (click)="statusChange.emit(false)"
             >
               <span i18n="@@admin.migrations.status.reopen">Wieder öffnen</span>
@@ -94,7 +95,7 @@ const IDLE: ActionState = {
             <button
               mat-flat-button
               color="primary"
-              [disabled]="statusBusy()"
+              [puBusy]="statusBusy()"
               (click)="statusChange.emit(true)"
             >
               <mat-icon>check</mat-icon>
@@ -102,9 +103,6 @@ const IDLE: ActionState = {
                 >Als abgeschlossen markieren</span
               >
             </button>
-          }
-          @if (statusBusy()) {
-            <mat-spinner diameter="20" />
           }
         </div>
 
@@ -114,7 +112,8 @@ const IDLE: ActionState = {
           <div class="migration-buttons">
             <button
               mat-stroked-button
-              [disabled]="migrateState.busy"
+              [disabled]="migrateState.running === 'live'"
+              [puBusy]="migrateState.running === 'dry'"
               (click)="run('migrate', true)"
             >
               <mat-icon>science</mat-icon>
@@ -123,15 +122,15 @@ const IDLE: ActionState = {
             <button
               mat-flat-button
               color="warn"
-              [disabled]="migrateState.busy || !migrateState.dryRunDone"
+              [disabled]="
+                migrateState.running === 'dry' || !migrateState.dryRunDone
+              "
+              [puBusy]="migrateState.running === 'live'"
               (click)="run('migrate', false)"
             >
               <mat-icon>play_arrow</mat-icon>
               <span i18n="@@admin.migrations.run">Ausführen</span>
             </button>
-            @if (migrateState.busy) {
-              <mat-spinner diameter="20" />
-            }
           </div>
           @if (resultEntries('migrate'); as entries) {
             @if (entries.length) {
@@ -157,7 +156,8 @@ const IDLE: ActionState = {
             <div class="migration-buttons">
               <button
                 mat-stroked-button
-                [disabled]="rollbackState.busy"
+                [disabled]="rollbackState.running === 'live'"
+                [puBusy]="rollbackState.running === 'dry'"
                 (click)="run('rollback', true)"
               >
                 <mat-icon>science</mat-icon>
@@ -166,15 +166,15 @@ const IDLE: ActionState = {
               <button
                 mat-flat-button
                 color="warn"
-                [disabled]="rollbackState.busy || !rollbackState.dryRunDone"
+                [disabled]="
+                  rollbackState.running === 'dry' || !rollbackState.dryRunDone
+                "
+                [puBusy]="rollbackState.running === 'live'"
                 (click)="run('rollback', false)"
               >
                 <mat-icon>undo</mat-icon>
                 <span i18n="@@admin.migrations.run">Ausführen</span>
               </button>
-              @if (rollbackState.busy) {
-                <mat-spinner diameter="20" />
-              }
             </div>
             @if (resultEntries('rollback'); as entries) {
               @if (entries.length) {
@@ -267,7 +267,11 @@ export class MigrationCardComponent {
       kind === 'migrate' ? this.migration().migrate : this.migration().rollback;
     if (!action) return;
 
-    this.patch(kind, { busy: true, error: null, result: null });
+    this.patch(kind, {
+      running: dryRun ? 'dry' : 'live',
+      error: null,
+      result: null,
+    });
     try {
       const fn = this.callables.call<{ dryRun: boolean }, MigrationResult>(
         action.callable,
@@ -275,14 +279,14 @@ export class MigrationCardComponent {
       );
       const response = await fn({ dryRun });
       this.patch(kind, {
-        busy: false,
+        running: null,
         result: response.data,
         // Unlock the live run only after a successful dry-run.
         ...(dryRun ? { dryRunDone: true } : {}),
       });
     } catch (err) {
       this.patch(kind, {
-        busy: false,
+        running: null,
         error: err instanceof Error ? err.message : String(err),
       });
     }

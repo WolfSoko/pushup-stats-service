@@ -6,12 +6,12 @@ import {
   inject,
   input,
   output,
-  signal,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
+import { BusyDirective, createKeyedBusyState } from '@pu-stats/ui';
 
 import {
   paramsFor,
@@ -19,6 +19,9 @@ import {
   type TuningParam,
 } from './auto-count-tuning.models';
 import { AutoCountTuningStore } from './auto-count-tuning.store';
+
+/** Which of the three save buttons was pressed; only that one spins. */
+type SaveAction = 'keep' | 'unpublish' | 'publish';
 
 /**
  * Admin-only panel for dialling in a detector profile against the live
@@ -30,6 +33,7 @@ import { AutoCountTuningStore } from './auto-count-tuning.store';
   selector: 'app-auto-count-tuning-panel',
   standalone: true,
   imports: [
+    BusyDirective,
     DecimalPipe,
     MatButtonModule,
     MatIconModule,
@@ -52,7 +56,7 @@ export class AutoCountTuningPanelComponent {
   protected readonly params = computed<ReadonlyArray<TuningParam>>(() =>
     paramsFor(this.kind())
   );
-  protected readonly saving = signal(false);
+  protected readonly saving = createKeyedBusyState<SaveAction>();
   protected readonly published = computed(() =>
     this.store.publishedFor(this.exerciseId())
   );
@@ -91,20 +95,23 @@ export class AutoCountTuningPanelComponent {
   }
 
   /** Persists without touching the rollout state — see the template. */
-  protected async onSaveKeepingRollout(): Promise<void> {
-    await this.onSave(this.published());
+  protected onSaveKeepingRollout(): Promise<void> {
+    return this.save('keep', this.published());
   }
 
-  protected async onSave(published: boolean): Promise<void> {
-    if (this.saving()) return;
-    this.saving.set(true);
+  protected onSave(published: boolean): Promise<void> {
+    return this.save(published ? 'publish' : 'unpublish', published);
+  }
+
+  private async save(action: SaveAction, published: boolean): Promise<void> {
+    if (this.saving.busy()) return;
     try {
-      await this.store.save(this.exerciseId(), this.kind(), published);
+      await this.saving.run(action, () =>
+        this.store.save(this.exerciseId(), this.kind(), published)
+      );
     } catch {
       // Surfaced through store.error(); the panel stays open so the
       // tuned values are not lost to a failed write.
-    } finally {
-      this.saving.set(false);
     }
   }
 }

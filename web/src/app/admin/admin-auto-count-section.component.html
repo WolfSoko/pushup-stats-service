@@ -3,6 +3,7 @@
 <div class="filter-row">
   <button
     mat-icon-button
+    [puBusy]="loading()"
     (click)="load()"
     [matTooltip]="refreshTooltip"
     [attr.aria-label]="refreshTooltip"

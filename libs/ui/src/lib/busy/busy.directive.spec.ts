@@ -3,7 +3,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
-import { BUSY_SPINNER_CLASS, BusyDirective } from './busy.directive';
+import {
+  BUSY_MIN_VISIBLE_MS,
+  BUSY_SPINNER_CLASS,
+  BusyDirective,
+} from './busy.directive';
 
 @Component({
   imports: [BusyDirective, MatButtonModule, MatIconModule],
@@ -61,12 +65,37 @@ describe('BusyDirective', () => {
     expect(button.textContent).toContain('Speichern');
   });
 
-  it('should remove the spinner again once the work is done', async () => {
+  const wait = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
+
+  it('should keep a spinner visible for the minimum time and then remove it', async () => {
     // given
     const { view, host, button, spinner } = await setup();
     host.busy.set(true);
     await view.fixture.whenStable();
     expect(spinner()).not.toBeNull();
+
+    // when — the action finished right away
+    host.busy.set(false);
+    await view.fixture.whenStable();
+
+    // then — the click guard lifts at once, the spinner lingers
+    expect(button.getAttribute('aria-busy')).toBeNull();
+    expect(spinner()).not.toBeNull();
+
+    // when
+    await wait(BUSY_MIN_VISIBLE_MS + 50);
+
+    // then
+    expect(spinner()).toBeNull();
+  });
+
+  it('should remove the spinner at once when the work outlived the minimum time', async () => {
+    // given
+    const { view, host, spinner } = await setup();
+    host.busy.set(true);
+    await view.fixture.whenStable();
+    await wait(BUSY_MIN_VISIBLE_MS + 50);
 
     // when
     host.busy.set(false);
@@ -74,7 +103,23 @@ describe('BusyDirective', () => {
 
     // then
     expect(spinner()).toBeNull();
-    expect(button.getAttribute('aria-busy')).toBeNull();
+  });
+
+  it('should keep the spinner when the host turns busy again during the grace period', async () => {
+    // given
+    const { view, host, spinner } = await setup();
+    host.busy.set(true);
+    await view.fixture.whenStable();
+    host.busy.set(false);
+    await view.fixture.whenStable();
+
+    // when
+    host.busy.set(true);
+    await view.fixture.whenStable();
+    await wait(BUSY_MIN_VISIBLE_MS + 50);
+
+    // then
+    expect(spinner()).not.toBeNull();
   });
 
   it('should swallow clicks while busy and let them through again afterwards', async () => {

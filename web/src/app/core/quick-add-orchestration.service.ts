@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserContextService } from '@pu-auth/auth';
@@ -8,7 +8,9 @@ import { nowLocalIsoTimestamp } from '@pu-stats/date';
 import {
   QuickAddBridgeService,
   type QuickAddSuggestion,
+  suggestionBusyKey,
 } from '@pu-stats/quick-add';
+import { createKeyedBusyState } from '@pu-stats/ui';
 import { firstValueFrom } from 'rxjs';
 
 import { AppDataFacade } from './app-data.facade';
@@ -31,19 +33,26 @@ export class QuickAddOrchestrationService {
   private readonly appData = inject(AppDataFacade);
   private readonly captureFlow = inject(QuickAddCaptureFlowService);
 
-  private readonly _fillToGoalInFlight = signal(false);
-  readonly fillToGoalInFlight = this._fillToGoalInFlight.asReadonly();
+  /**
+   * One key per speed-dial action (`fillToGoal`, `autoCount`,
+   * `exerciseTimer`, `stopwatch`, `customDialog`, `suggestionBusyKey()`),
+   * rendered by the FAB as a spinner on the pressed button. The capture
+   * flows are busy only until their dialog is open, not until it closes.
+   */
+  private readonly busy = createKeyedBusyState<string>();
+  readonly busyKeys = this.busy.busyKeys;
+  readonly fillToGoalInFlight = computed(() => this.busy.isBusy('fillToGoal'));
 
   /**
    * Pushup rows flow through the legacy `pushups` collection; every other
    * catalog id is written to `exerciseEntries`, so the two paths diverge here.
    */
-  addSuggestion(suggestion: QuickAddSuggestion): void {
-    if (suggestion.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID) {
-      this.add(suggestion.reps);
-      return;
-    }
-    void this.addExerciseQuickEntry(suggestion);
+  addSuggestion(suggestion: QuickAddSuggestion): Promise<void> {
+    return this.busy.run(suggestionBusyKey(suggestion), () =>
+      suggestion.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID
+        ? this.add(suggestion.reps)
+        : this.addExerciseQuickEntry(suggestion)
+    );
   }
 
   private async addExerciseQuickEntry(
@@ -70,36 +79,33 @@ export class QuickAddOrchestrationService {
     }
   }
 
-  add(reps: number): void {
+  async add(reps: number): Promise<void> {
     const entry$ = this.createPushupEntry(reps, 'quick-add');
     if (!entry$) return;
-    entry$.subscribe({
-      next: () => {
-        notifyEntrySaved(this.snackBar);
-        this.appData.reloadAfterMutation();
-      },
-      error: (err) => notifyError(this.snackBar, err),
-    });
+    try {
+      await firstValueFrom(entry$);
+      notifyEntrySaved(this.snackBar);
+      this.appData.reloadAfterMutation();
+    } catch (err) {
+      notifyError(this.snackBar, err);
+    }
   }
 
-  fillToGoal(): void {
-    if (this._fillToGoalInFlight()) return;
+  async fillToGoal(): Promise<void> {
+    if (this.busy.isBusy('fillToGoal')) return;
     const gap = this.appData.remainingToGoal();
     if (gap <= 0) return;
     const entry$ = this.createPushupEntry(gap, 'goal-fill');
     if (!entry$) return;
 
-    this._fillToGoalInFlight.set(true);
-    entry$.subscribe({
-      next: () => {
+    await this.busy.run('fillToGoal', async () => {
+      try {
+        await firstValueFrom(entry$);
         notifyGoalReached(this.snackBar);
         this.appData.reloadAfterMutation();
-        this._fillToGoalInFlight.set(false);
-      },
-      error: (err) => {
+      } catch (err) {
         notifyError(this.snackBar, err);
-        this._fillToGoalInFlight.set(false);
-      },
+      }
     });
   }
 
@@ -127,12 +133,14 @@ export class QuickAddOrchestrationService {
     });
   }
 
-  openDialog(): void {
+  openDialog(): Promise<void> {
     const currentPath = this.router.url.split('?')[0];
     if (currentPath === '/app' || currentPath.startsWith('/app/')) {
       this.quickAddBridge.requestOpenDialog();
-    } else {
-      void this.router.navigate(['/app']).then(
+      return Promise.resolve();
+    }
+    return this.busy.run('customDialog', () =>
+      this.router.navigate(['/app']).then(
         (navigated) => {
           if (navigated) {
             this.quickAddBridge.requestOpenDialog();
@@ -141,20 +149,24 @@ export class QuickAddOrchestrationService {
         () => {
           // Navigation failed or was cancelled; do not open the dialog.
         }
-      );
-    }
+      )
+    );
   }
 
   /** `preselect` is a catalog id (or the pushup sentinel). */
   openAutoCount(preselect?: string): Promise<void> {
-    return this.captureFlow.openAutoCount(preselect);
+    return this.busy.run('autoCount', () =>
+      this.captureFlow.openAutoCount(preselect)
+    );
   }
 
   openExerciseTimer(): Promise<void> {
-    return this.captureFlow.openExerciseTimer();
+    return this.busy.run('exerciseTimer', () =>
+      this.captureFlow.openExerciseTimer()
+    );
   }
 
   openStopwatch(): Promise<void> {
-    return this.captureFlow.openStopwatch();
+    return this.busy.run('stopwatch', () => this.captureFlow.openStopwatch());
   }
 }

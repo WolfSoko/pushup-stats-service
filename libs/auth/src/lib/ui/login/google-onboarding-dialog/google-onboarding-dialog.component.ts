@@ -5,6 +5,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { BusyDirective, createBusyState } from '@pu-stats/ui';
 import { LoginUiStore } from '../login-ui.store';
 
 @Component({
@@ -17,6 +18,7 @@ import { LoginUiStore } from '../login-ui.store';
     MatInputModule,
     MatButtonModule,
     MatCheckboxModule,
+    BusyDirective,
   ],
   templateUrl: './google-onboarding-dialog.component.html',
   styleUrl: './google-onboarding-dialog.component.scss',
@@ -28,8 +30,12 @@ export class GoogleOnboardingDialogComponent {
     MatDialogRef<GoogleOnboardingDialogComponent>
   );
 
+  readonly finishing = createBusyState();
+
   async finish(): Promise<void> {
-    const completed = await this.loginUiStore.completeGoogleOnboarding();
+    const completed = await this.finishing.run(() =>
+      this.loginUiStore.completeGoogleOnboarding()
+    );
     if (completed) this.dialogRef.close('completed');
   }
 }

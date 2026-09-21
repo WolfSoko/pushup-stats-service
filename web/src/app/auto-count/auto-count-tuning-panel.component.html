@@ -79,7 +79,7 @@
     <button
       mat-stroked-button
       (click)="onSaveKeepingRollout()"
-      [disabled]="saving()"
+      [puBusy]="saving.isBusy('keep')"
       data-testid="auto-count-tuning-save"
       i18n="@@autoCount.tuning.save"
     >
@@ -89,7 +89,7 @@
       <button
         mat-flat-button
         (click)="onSave(false)"
-        [disabled]="saving()"
+        [puBusy]="saving.isBusy('unpublish')"
         data-testid="auto-count-tuning-unpublish"
         i18n="@@autoCount.tuning.unpublish"
       >
@@ -100,7 +100,7 @@
         mat-flat-button
         color="primary"
         (click)="onSave(true)"
-        [disabled]="saving()"
+        [puBusy]="saving.isBusy('publish')"
         data-testid="auto-count-tuning-publish"
         i18n="@@autoCount.tuning.publish"
       >

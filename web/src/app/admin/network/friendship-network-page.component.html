@@ -21,6 +21,7 @@
         <button
           mat-stroked-button
           type="button"
+          [puBusy]="loading()"
           (click)="load()"
           i18n="@@admin.network.retry"
         >

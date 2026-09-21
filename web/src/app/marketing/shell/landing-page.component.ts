@@ -7,6 +7,7 @@ import { Router, RouterLink } from '@angular/router';
 import { BRAND_NAME } from '@pu-stats/models';
 import { AdSlotComponent, AdsStore } from '@pu-stats/ads';
 import { AuthService, AuthStore } from '@pu-auth/auth';
+import { BusyDirective, createBusyState } from '@pu-stats/ui';
 import {
   AI_ASSISTANT_CONFIG,
   AI_ASSISTANT_ROUTE,
@@ -46,6 +47,7 @@ const HEATMAP_PATTERN: readonly string[] = [
   selector: 'app-landing-page',
   imports: [
     RouterLink,
+    BusyDirective,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
@@ -99,10 +101,14 @@ export class LandingPageComponent {
     this.track('landing_cta_click', { target });
   }
 
+  readonly guestSignIn = createBusyState();
+
   async onTryAsGuest(): Promise<void> {
     this.track('landing_cta_click', { target: 'guest' });
-    await this.authService.signInGuestIfNeeded();
-    await this.router.navigate(['/app']);
+    await this.guestSignIn.run(async () => {
+      await this.authService.signInGuestIfNeeded();
+      await this.router.navigate(['/app']);
+    });
   }
 
   onDiscoverCardClick(target: 'leaderboard' | 'blog'): void {

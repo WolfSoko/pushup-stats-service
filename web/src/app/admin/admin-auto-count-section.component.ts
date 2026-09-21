@@ -24,6 +24,7 @@ import type {
   AdminAutoCountReport,
   AdminAutoCountSummary,
 } from './admin-page.models';
+import { BusyDirective } from '@pu-stats/ui';
 import { CallableFunctionsService } from './callable-functions.service';
 
 /**
@@ -36,6 +37,7 @@ import { CallableFunctionsService } from './callable-functions.service';
   selector: 'app-admin-auto-count-section',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     DatePipe,
     PercentPipe,
     MatButtonModule,

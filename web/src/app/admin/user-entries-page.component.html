@@ -11,6 +11,7 @@
     </a>
     <button
       mat-icon-button
+      [puBusy]="loading()"
       (click)="loadEntries()"
       [matTooltip]="refreshTooltip"
       [attr.aria-label]="refreshTooltip"

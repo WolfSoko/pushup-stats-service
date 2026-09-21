@@ -91,7 +91,7 @@
               mat-raised-button
               type="button"
               class="full-width google-button"
-              [disabled]="registerUiStore.loading()"
+              [puBusy]="googleRegistration.busy()"
               (click)="registerWithGoogle(registerStepper)"
             >
               <svg
@@ -299,8 +299,9 @@
                     registerForm.password().invalid(),
                     registerForm.password().value() || '',
                     registerForm.repeatPassword().value() || ''
-                  ) || registerUiStore.loading()
+                  )
                 "
+                [puBusy]="submitting.busy()"
                 (click)="submitRegistration()"
                 i18n="@@auth.register.submit"
               >
@@ -309,6 +310,7 @@
               <button
                 mat-button
                 type="button"
+                [puBusy]="leaving.busy()"
                 (click)="goToLogin()"
                 i18n="@@cancel"
               >

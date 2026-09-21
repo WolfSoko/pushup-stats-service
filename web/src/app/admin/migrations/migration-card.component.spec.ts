@@ -217,4 +217,35 @@ describe('MigrationCardComponent', () => {
     // then it requests reopening
     expect(emitted).toEqual([false]);
   });
+
+  it('should spin only the pressed run button and lock its counterpart meanwhile', async () => {
+    // given a callable that answers when the test says so
+    let resolveRun!: () => void;
+    await createComponent(WITH_ROLLBACK, [
+      {
+        name: 'cleanupReminderSnoozeState',
+        impl: () =>
+          new Promise<{ data: unknown }>((resolve) => {
+            resolveRun = () => resolve({ data: { copied: 1 } });
+          }),
+      },
+    ]);
+
+    // when
+    await clickButton('Probelauf');
+
+    // then
+    expect(buttonByLabel('Probelauf').getAttribute('aria-busy')).toBe('true');
+    expect(buttonByLabel('Ausführen').getAttribute('aria-busy')).toBeNull();
+    expect(buttonByLabel('Ausführen').disabled).toBe(true);
+
+    // when
+    resolveRun();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(buttonByLabel('Probelauf').getAttribute('aria-busy')).toBeNull();
+    expect(buttonByLabel('Ausführen').disabled).toBe(false);
+  });
 });

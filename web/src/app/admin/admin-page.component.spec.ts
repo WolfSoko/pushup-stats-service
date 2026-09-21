@@ -232,4 +232,81 @@ describe('AdminPageComponent', () => {
       );
     });
   });
+
+  describe('busy state', () => {
+    it('should mark the bulk-delete button busy while the callable is pending', async () => {
+      // given
+      let resolveBulk!: () => void;
+      await createComponent(
+        [],
+        [
+          {
+            name: 'adminBulkDeleteInactiveAnonymous',
+            impl: () =>
+              new Promise<{ data: unknown }>((resolve) => {
+                resolveBulk = () =>
+                  resolve({ data: { deleted: 0, skipped: 0 } });
+              }),
+          },
+        ]
+      );
+      const bulkButton = Array.from(
+        fixture.nativeElement.querySelectorAll(
+          'button'
+        ) as NodeListOf<HTMLButtonElement>
+      ).find((b) => b.textContent?.includes('Inaktive löschen'));
+      expect(bulkButton).toBeTruthy();
+
+      // when
+      const run = component.bulkDelete();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then
+      expect(bulkButton?.getAttribute('aria-busy')).toBe('true');
+
+      // when
+      resolveBulk();
+      await run;
+      fixture.detectChanges();
+
+      // then
+      expect(bulkButton?.getAttribute('aria-busy')).toBeNull();
+    });
+
+    it('should flag the deleted user while adminDeleteUser is pending', async () => {
+      // given
+      let resolveDelete!: () => void;
+      await createComponent(
+        [sampleUser],
+        [
+          {
+            name: 'adminDeleteUser',
+            impl: () =>
+              new Promise<{ data: unknown }>((resolve) => {
+                resolveDelete = () => resolve({ data: { ok: true } });
+              }),
+          },
+        ]
+      );
+      dialogOpenSpy.mockReturnValue(stubDialogRef({ anonymize: false }));
+
+      // when
+      const run = component.openDeleteDialog(sampleUser);
+      for (let i = 0; i < 10 && !component.deletingUser.busy(); i++) {
+        await Promise.resolve();
+      }
+
+      // then
+      expect(component.deletingUser.isBusy(sampleUser.uid)).toBe(true);
+
+      // when
+      resolveDelete();
+      await run;
+
+      // then
+      expect(component.deletingUser.busy()).toBe(false);
+      expect(component.users()).toEqual([]);
+    });
+  });
 });

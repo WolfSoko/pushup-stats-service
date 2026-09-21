@@ -121,6 +121,7 @@
         [attr.aria-label]="
           swUpdateUnrecoverable() ? swUpdateRecoverAriaLabel : swUpdateAriaLabel
         "
+        [puBusy]="swUpdateApplying.busy()"
         (click)="applyServiceWorkerUpdate()"
       >
         <mat-icon>system_update_alt</mat-icon>
@@ -187,7 +188,7 @@
   [suggestions]="quickAddSuggestions()"
   [remainingToGoal]="remainingToGoal()"
   [goalReached]="goalReached()"
-  [fillToGoalInFlight]="fillToGoalInFlight()"
+  [busyKeys]="quickAddBusyKeys()"
   [autoCountEnabled]="autoCountEnabled()"
   [goalItems]="goalDialItems()"
   (quickAdd)="handleQuickAdd($event)"

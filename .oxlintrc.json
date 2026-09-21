@@ -80,7 +80,8 @@
             "onlyDependOnLibsWithTags": [
               "scope:models",
               "scope:date",
-              "scope:data-access"
+              "scope:data-access",
+              "scope:ui"
             ],
             "bannedExternalImports": ["@firebase/*"]
           },

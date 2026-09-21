@@ -25,7 +25,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {
   MatStepper,
   MatStepperModule,
@@ -41,6 +40,7 @@ import {
 } from '../../core/registration-analytics.service';
 import { RegisterSuccessComponent } from './components/register-success';
 import { RegisterUiStore } from './register-ui.store';
+import { BusyDirective, createBusyState } from '@pu-stats/ui';
 @Component({
   selector: 'pus-register',
   standalone: true,
@@ -52,7 +52,7 @@ import { RegisterUiStore } from './register-ui.store';
     MatCheckboxModule,
     MatIconModule,
     MatInputModule,
-    MatProgressSpinnerModule,
+    BusyDirective,
     MatStepperModule,
     FormField,
     RegisterSuccessComponent,
@@ -151,7 +151,25 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.registerUiStore.toggleHidePassword();
   }
 
-  async goToLogin(): Promise<void> {
+  readonly leaving = createBusyState();
+  readonly googleRegistration = createBusyState();
+  readonly submitting = createBusyState();
+
+  goToLogin(): Promise<void> {
+    return this.leaving.run(() => this.performGoToLogin());
+  }
+
+  registerWithGoogle(stepper: MatStepper): Promise<void> {
+    return this.googleRegistration.run(() =>
+      this.performGoogleRegistration(stepper)
+    );
+  }
+
+  submitRegistration(): Promise<void> {
+    return this.submitting.run(() => this.performRegistration());
+  }
+
+  private async performGoToLogin(): Promise<void> {
     if (this.authState.isAuthenticated()) await this.authState.logout();
     this.registerUiStore.resetSuccess();
     this.authState.clearError();
@@ -171,7 +189,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     stepper.next();
   }
 
-  async registerWithGoogle(stepper: MatStepper): Promise<void> {
+  private async performGoogleRegistration(stepper: MatStepper): Promise<void> {
     if (!(await this.registerUiStore.signInWithGoogle())) return;
     this.registerData.update((v) => ({
       ...v,
@@ -182,7 +200,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     stepper.next();
   }
 
-  async submitRegistration(): Promise<void> {
+  private async performRegistration(): Promise<void> {
     const { email, password, repeatPassword } = this.registerForm().value();
     if (
       !this.registerUiStore.canSubmit(

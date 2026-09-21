@@ -154,6 +154,46 @@ describe('AutoCountTuningPanelComponent', () => {
     expect(store.save).toHaveBeenCalledWith('pushup', 'angle', true);
   });
 
+  it('should spin only the pressed save button while the write is pending', async () => {
+    // given
+    values = { downAngleDeg: 75 };
+    let finish!: () => void;
+    store.save = vi.fn(
+      () => new Promise<void>((resolve) => (finish = resolve))
+    );
+    const { fixture, click } = render();
+    const button = (testId: string) =>
+      fixture.nativeElement.querySelector(
+        `[data-testid="${testId}"]`
+      ) as HTMLButtonElement;
+
+    // when
+    click('auto-count-tuning-save');
+
+    // then
+    expect(button('auto-count-tuning-save').getAttribute('aria-busy')).toBe(
+      'true'
+    );
+    expect(button('auto-count-tuning-save').disabled).toBe(false);
+    expect(
+      button('auto-count-tuning-publish').getAttribute('aria-busy')
+    ).toBeNull();
+
+    // when — a second press during the write is ignored
+    click('auto-count-tuning-publish');
+    expect(store.save).toHaveBeenCalledTimes(1);
+
+    // when
+    finish();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(
+      button('auto-count-tuning-save').getAttribute('aria-busy')
+    ).toBeNull();
+  });
+
   it('given a published profile, when rendered, then that is flagged', () => {
     // given
     store.publishedFor = vi.fn(() => true);
