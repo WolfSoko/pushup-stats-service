@@ -184,19 +184,21 @@ export class UserTrainingPlanApiService {
     const ref = this.docRef(effectiveUserId);
     const firestore = this.firestore;
     return from(
-      runTransaction(firestore, async (tx) => {
-        const snap = await tx.get(ref);
-        const data = (snap.data() as UserTrainingPlan | undefined) ?? null;
-        const nowIso = new Date().toISOString();
-        tx.update(ref, {
-          startDate: args.newStartDate,
-          skippedDays: nextSkippedDays(data, args),
-          // Re-anchoring can shift the day now mapped to today's date away
-          // from whichever day already claimed it — see `dayActivatedAt`.
-          dayActivatedAt: nowIso,
-          updatedAt: nowIso,
-        });
-      })
+      this.pending.track(
+        runTransaction(firestore, async (tx) => {
+          const snap = await tx.get(ref);
+          const data = (snap.data() as UserTrainingPlan | undefined) ?? null;
+          const nowIso = new Date().toISOString();
+          tx.update(ref, {
+            startDate: args.newStartDate,
+            skippedDays: nextSkippedDays(data, args),
+            // Re-anchoring can shift the day now mapped to today's date away
+            // from whichever day already claimed it — see `dayActivatedAt`.
+            dayActivatedAt: nowIso,
+            updatedAt: nowIso,
+          });
+        })
+      )
     ).pipe(map(() => void 0));
   }
 
@@ -242,22 +244,24 @@ export class UserTrainingPlanApiService {
     const ref = this.docRef(effectiveUserId);
     const firestore = this.firestore;
     return from(
-      runTransaction(firestore, async (tx) => {
-        const snap = await tx.get(ref);
-        const data = (snap.data() as UserTrainingPlan | undefined) ?? null;
-        const withoutField = (data?.testResults ?? []).filter((id) => {
-          const parsed = parsePlanTestResultId(id);
-          return (
-            !parsed ||
-            parsed.dayIndex !== dayIndex ||
-            parsed.itemIndex !== itemIndex
-          );
-        });
-        tx.update(ref, {
-          testResults: next(withoutField),
-          updatedAt: new Date().toISOString(),
-        });
-      })
+      this.pending.track(
+        runTransaction(firestore, async (tx) => {
+          const snap = await tx.get(ref);
+          const data = (snap.data() as UserTrainingPlan | undefined) ?? null;
+          const withoutField = (data?.testResults ?? []).filter((id) => {
+            const parsed = parsePlanTestResultId(id);
+            return (
+              !parsed ||
+              parsed.dayIndex !== dayIndex ||
+              parsed.itemIndex !== itemIndex
+            );
+          });
+          tx.update(ref, {
+            testResults: next(withoutField),
+            updatedAt: new Date().toISOString(),
+          });
+        })
+      )
     ).pipe(map(() => void 0));
   }
 

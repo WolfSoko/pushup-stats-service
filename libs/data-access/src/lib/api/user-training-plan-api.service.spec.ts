@@ -652,6 +652,7 @@ describe('UserTrainingPlanApiService', () => {
       track: jest.SpyInstance;
     }> {
       (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+      (firestoreFns.runTransaction as jest.Mock).mockResolvedValue(undefined);
       const { fixture } = await render('', {
         providers: [
           UserTrainingPlanApiService,
@@ -696,6 +697,23 @@ describe('UserTrainingPlanApiService', () => {
       [
         'removeSkippedDay',
         (s: UserTrainingPlanApiService) => s.removeSkippedDay('u', 3),
+      ],
+      [
+        'jumpToDay',
+        (s: UserTrainingPlanApiService) =>
+          s.jumpToDay('u', {
+            newStartDate: '2026-04-15',
+            targetDayIndex: 3,
+            nonRestDaysBeforeTarget: [1, 2],
+          }),
+      ],
+      [
+        'setTestResult',
+        (s: UserTrainingPlanApiService) => s.setTestResult('u', 1, 0, 25),
+      ],
+      [
+        'removeTestResult',
+        (s: UserTrainingPlanApiService) => s.removeTestResult('u', 1, 0),
       ],
     ])('should track %s as a pending request', async (_name, call) => {
       // given
