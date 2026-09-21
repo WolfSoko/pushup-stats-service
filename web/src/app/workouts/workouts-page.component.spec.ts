@@ -42,7 +42,7 @@ async function setup(
   const store = {
     workouts,
     loaded: signal(options.loaded ?? true),
-    busy: signal(false),
+    busyKeys: signal<ReadonlySet<string>>(new Set()),
     lastRejection: signal(undefined),
     lastShared: signal(1),
     lastShareFull: signal(options.full ?? 0),
@@ -55,7 +55,7 @@ async function setup(
     open: vitest.fn(() => ({ afterClosed: () => of(options.dialogResult) })),
   };
   const snackbar = { open: vitest.fn() };
-  await render(WorkoutsPageComponent, {
+  const { fixture } = await render(WorkoutsPageComponent, {
     providers: [
       provideRouter([]),
       { provide: WorkoutsStore, useValue: store },
@@ -76,7 +76,7 @@ async function setup(
       { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
     ],
   });
-  return { store, dialog, snackbar };
+  return { store, dialog, snackbar, fixture };
 }
 
 describe('WorkoutsPageComponent', () => {
@@ -190,6 +190,38 @@ describe('WorkoutsPageComponent', () => {
 
     // then
     await waitFor(() => expect(store.remove).toHaveBeenCalledWith('w1'));
+  });
+
+  it('should show only the pressed card action busy while it runs', async () => {
+    // given
+    const { store, fixture } = await setup({
+      workouts: [WORKOUT, { ...WORKOUT, id: 'w2', title: 'Lang' }],
+    });
+
+    // when
+    store.busyKeys.set(new Set(['remove:w1']));
+    fixture.detectChanges();
+
+    // then — this card's delete spins, its neighbours and the other card stay still
+    const deletes = screen.getAllByTestId('workout-delete');
+    expect(deletes[0].getAttribute('aria-busy')).toBe('true');
+    expect((deletes[0] as HTMLButtonElement).disabled).toBe(false);
+    expect(deletes[1].getAttribute('aria-busy')).toBeNull();
+    expect(
+      screen.getAllByTestId('workout-share')[0].getAttribute('aria-busy')
+    ).toBeNull();
+    expect(
+      screen
+        .getAllByTestId('workout-toggle-profile')[0]
+        .getAttribute('aria-busy')
+    ).toBeNull();
+
+    // when
+    store.busyKeys.set(new Set());
+    fixture.detectChanges();
+
+    // then
+    expect(deletes[0].getAttribute('aria-busy')).toBeNull();
   });
 
   it('should point at the profile switch while a listed workout is invisible', async () => {

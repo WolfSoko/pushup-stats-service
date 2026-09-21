@@ -19,6 +19,7 @@ import { type ExerciseEntry, TRAINING_PLANS } from '@pu-stats/models';
 import { TrainingEntryDialogComponent } from '../stats/components/training-entry-dialog/training-entry-dialog.component';
 import { type TrainingEntryDialogResult } from '../stats/components/training-entry-dialog/training-entry-dialog.models';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
+import { BusyDirective } from '@pu-stats/ui';
 import { CallableFunctionsService } from './callable-functions.service';
 import { errorMessage } from './admin-page.helpers';
 import { AdminUserDetails } from './admin-page.models';
@@ -37,6 +38,7 @@ import { dialogResultToPatch, entryToDialogData } from './user-entries.helpers';
   selector: 'app-user-entries-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     DatePipe,
     RouterLink,
     MatButtonModule,

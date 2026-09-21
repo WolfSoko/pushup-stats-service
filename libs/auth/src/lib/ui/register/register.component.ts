@@ -25,7 +25,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {
   MatStepper,
   MatStepperModule,
@@ -41,6 +40,7 @@ import {
 } from '../../core/registration-analytics.service';
 import { RegisterSuccessComponent } from './components/register-success';
 import { RegisterUiStore } from './register-ui.store';
+import { BusyDirective, createBusyState } from '@pu-stats/ui';
 @Component({
   selector: 'pus-register',
   standalone: true,
@@ -52,7 +52,7 @@ import { RegisterUiStore } from './register-ui.store';
     MatCheckboxModule,
     MatIconModule,
     MatInputModule,
-    MatProgressSpinnerModule,
+    BusyDirective,
     MatStepperModule,
     FormField,
     RegisterSuccessComponent,
@@ -151,11 +151,17 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.registerUiStore.toggleHidePassword();
   }
 
-  async goToLogin(): Promise<void> {
-    if (this.authState.isAuthenticated()) await this.authState.logout();
-    this.registerUiStore.resetSuccess();
-    this.authState.clearError();
-    await this.router.navigateByUrl('/login');
+  readonly leaving = createBusyState();
+  readonly googleRegistration = createBusyState();
+  readonly submitting = createBusyState();
+
+  goToLogin(): Promise<void> {
+    return this.leaving.run(async () => {
+      if (this.authState.isAuthenticated()) await this.authState.logout();
+      this.registerUiStore.resetSuccess();
+      this.authState.clearError();
+      await this.router.navigateByUrl('/login');
+    });
   }
 
   async completeCredentialStep(stepper: MatStepper): Promise<void> {
@@ -171,58 +177,62 @@ export class RegisterComponent implements OnInit, OnDestroy {
     stepper.next();
   }
 
-  async registerWithGoogle(stepper: MatStepper): Promise<void> {
-    if (!(await this.registerUiStore.signInWithGoogle())) return;
-    this.registerData.update((v) => ({
-      ...v,
-      email: this.registerUiStore.prepareGoogleRegistration() || v.email,
-    }));
-    stepper.selectedIndex = 0;
-    stepper.next();
-    stepper.next();
+  registerWithGoogle(stepper: MatStepper): Promise<void> {
+    return this.googleRegistration.run(async () => {
+      if (!(await this.registerUiStore.signInWithGoogle())) return;
+      this.registerData.update((v) => ({
+        ...v,
+        email: this.registerUiStore.prepareGoogleRegistration() || v.email,
+      }));
+      stepper.selectedIndex = 0;
+      stepper.next();
+      stepper.next();
+    });
   }
 
-  async submitRegistration(): Promise<void> {
-    const { email, password, repeatPassword } = this.registerForm().value();
-    if (
-      !this.registerUiStore.canSubmit(
-        this.registerForm.email().invalid(),
-        this.registerForm.password().invalid(),
-        password,
-        repeatPassword
+  submitRegistration(): Promise<void> {
+    return this.submitting.run(async () => {
+      const { email, password, repeatPassword } = this.registerForm().value();
+      if (
+        !this.registerUiStore.canSubmit(
+          this.registerForm.email().invalid(),
+          this.registerForm.password().invalid(),
+          password,
+          repeatPassword
+        )
       )
-    )
-      return;
-    const isGoogle = this.registerUiStore.isGoogleRegistration();
-    this.analytics.trackSubmitted({ is_google: isGoogle });
-    if (!isGoogle) {
-      const signedUp = await this.registerUiStore.signUpWithEmail(
-        email,
-        password
-      );
-      if (!signedUp) {
-        this.analytics.trackFailed({ is_google: false, reason: 'sign_up' });
         return;
+      const isGoogle = this.registerUiStore.isGoogleRegistration();
+      this.analytics.trackSubmitted({ is_google: isGoogle });
+      if (!isGoogle) {
+        const signedUp = await this.registerUiStore.signUpWithEmail(
+          email,
+          password
+        );
+        if (!signedUp) {
+          this.analytics.trackFailed({ is_google: false, reason: 'sign_up' });
+          return;
+        }
       }
-    }
-    try {
-      const persisted = await this.registerUiStore.persistProfile();
-      if (persisted) {
-        this.analytics.trackSucceeded({ is_google: isGoogle });
-      } else {
+      try {
+        const persisted = await this.registerUiStore.persistProfile();
+        if (persisted) {
+          this.analytics.trackSucceeded({ is_google: isGoogle });
+        } else {
+          this.analytics.trackFailed({
+            is_google: isGoogle,
+            reason: 'persist_profile',
+          });
+        }
+      } catch {
+        // RegisterOnboardingStore already exposes a localized error state.
+        // Prevent unhandled promise rejections in the click handler.
         this.analytics.trackFailed({
           is_google: isGoogle,
           reason: 'persist_profile',
         });
       }
-    } catch {
-      // RegisterOnboardingStore already exposes a localized error state.
-      // Prevent unhandled promise rejections in the click handler.
-      this.analytics.trackFailed({
-        is_google: isGoogle,
-        reason: 'persist_profile',
-      });
-    }
+    });
   }
 
   async goToDashboard(): Promise<void> {

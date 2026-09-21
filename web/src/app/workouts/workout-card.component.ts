@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import type { Workout } from '@pu-stats/models';
+import { BusyDirective } from '@pu-stats/ui';
 
 import { workoutSummary } from './workout-summary';
 
@@ -19,6 +20,7 @@ import { workoutSummary } from './workout-summary';
   selector: 'app-workout-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
@@ -77,7 +79,7 @@ import { workoutSummary } from './workout-summary';
           data-testid="workout-share"
           [matTooltip]="shareLabel"
           [attr.aria-label]="shareLabel"
-          [disabled]="busy()"
+          [puBusy]="isBusy('share')"
           (click)="share.emit(workout().id)"
         >
           <mat-icon>send</mat-icon>
@@ -89,7 +91,7 @@ import { workoutSummary } from './workout-summary';
           [matTooltip]="profileLabel()"
           [attr.aria-label]="profileLabel()"
           [attr.aria-pressed]="workout().onProfile"
-          [disabled]="busy()"
+          [puBusy]="isBusy('profile')"
           (click)="toggleProfile.emit(workout())"
         >
           <mat-icon>{{
@@ -102,7 +104,7 @@ import { workoutSummary } from './workout-summary';
           data-testid="workout-delete"
           [matTooltip]="deleteLabel"
           [attr.aria-label]="deleteLabel"
-          [disabled]="busy()"
+          [puBusy]="isBusy('remove')"
           (click)="remove.emit(workout())"
         >
           <mat-icon>delete</mat-icon>
@@ -148,7 +150,8 @@ import { workoutSummary } from './workout-summary';
 })
 export class WorkoutCardComponent {
   readonly workout = input.required<Workout>();
-  readonly busy = input(false);
+  /** The store's busy keys: `<action>:<id>` spins that button. */
+  readonly busyKeys = input<ReadonlySet<string>>(new Set());
 
   readonly share = output<string>();
   readonly toggleProfile = output<Workout>();
@@ -160,6 +163,10 @@ export class WorkoutCardComponent {
   protected readonly summary = computed(() =>
     workoutSummary(this.workout().exercises)
   );
+
+  protected isBusy(action: 'share' | 'profile' | 'remove'): boolean {
+    return this.busyKeys().has(`${action}:${this.workout().id}`);
+  }
 
   protected readonly sourceName = computed(
     () =>

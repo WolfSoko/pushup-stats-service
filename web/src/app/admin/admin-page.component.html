@@ -66,17 +66,11 @@
       <button
         mat-flat-button
         color="warn"
-        [disabled]="bulkLoading()"
+        [puBusy]="bulkLoading()"
         (click)="bulkDelete()"
       >
-        @if (bulkLoading()) {
-          <mat-spinner diameter="20" />
-        } @else {
-          <ng-container>
-            <mat-icon>delete_sweep</mat-icon>
-            <span i18n="@@admin.bulk.button">Inaktive löschen</span>
-          </ng-container>
-        }
+        <mat-icon>delete_sweep</mat-icon>
+        <span i18n="@@admin.bulk.button">Inaktive löschen</span>
       </button>
     </mat-card-actions>
     @if (bulkResult()) {
@@ -107,6 +101,7 @@
     </mat-slide-toggle>
     <button
       mat-icon-button
+      [puBusy]="loading()"
       (click)="loadUsers()"
       [matTooltip]="refreshTooltip"
       [attr.aria-label]="refreshTooltip"
@@ -228,6 +223,7 @@
               <button
                 mat-icon-button
                 color="warn"
+                [puBusy]="deletingUser.isBusy(u.uid)"
                 (click)="openDeleteDialog(u)"
                 [matTooltip]="deleteUserTooltip"
                 [attr.aria-label]="deleteUserTooltip"

@@ -43,7 +43,11 @@ interface Harness {
 
 async function setup(
   fields: DayTestField[] = [field()],
-  inputs: { scalesPlan?: boolean; interactive?: boolean } = {}
+  inputs: {
+    scalesPlan?: boolean;
+    interactive?: boolean;
+    busyKeys?: ReadonlySet<string>;
+  } = {}
 ): Promise<Harness> {
   const state: Harness = { submitted: [], cleared: [] };
   await render(PlanTestInputComponent, {
@@ -186,6 +190,26 @@ describe('PlanTestInputComponent', () => {
     // then the first is untouched
     expect(state.cleared).toEqual([1]);
     expect(byTestId('plan-test-clear-0')).toBeTruthy();
+  });
+
+  it('should show only the busy field action as busy', async () => {
+    // given — the second field's value is being recorded, the first's discarded
+    await setup(
+      [
+        field({ itemIndex: 0, name: 'Plank', result: 45 }),
+        field({ itemIndex: 1, name: 'Liegestütze' }),
+      ],
+      { busyKeys: new Set(['record:1', 'clear:0']) }
+    );
+
+    // then
+    expect(byTestId('plan-test-submit-1').getAttribute('aria-busy')).toBe(
+      'true'
+    );
+    expect(byTestId('plan-test-submit-0').getAttribute('aria-busy')).toBeNull();
+    expect(byTestId('plan-test-clear-0').getAttribute('aria-busy')).toBe(
+      'true'
+    );
   });
 
   it('should not offer to discard what was never recorded', async () => {

@@ -128,6 +128,7 @@
           <button
             mat-stroked-button
             color="warn"
+            [puBusy]="store.isBusy('abandon')"
             (click)="abandon()"
             i18n="@@trainingPlans.abandon"
           >
@@ -138,6 +139,7 @@
             <button
               mat-flat-button
               color="primary"
+              [puBusy]="store.isBusy('resume')"
               (click)="resume()"
               i18n="@@trainingPlans.resume"
             >
@@ -147,6 +149,7 @@
           } @else {
             <button
               mat-stroked-button
+              [puBusy]="store.isBusy('pause')"
               (click)="pause()"
               i18n="@@trainingPlans.pause"
             >
@@ -191,7 +194,13 @@
                 du dessen Fortschritt behalten willst.
               </p>
             }
-            <button mat-flat-button color="primary" (click)="start()">
+            <button
+              mat-flat-button
+              color="primary"
+              data-testid="plan-start"
+              [puBusy]="store.isBusy('start')"
+              (click)="start()"
+            >
               <mat-icon>play_arrow</mat-icon>
               <span i18n="@@trainingPlans.start">Plan starten</span>
             </button>
@@ -225,6 +234,7 @@
         [sessionLink]="sessionLink()"
         [interactive]="isThisPlanActive()"
         [offersSession]="showSessionCta(today)"
+        [busyKeys]="store.dayBusyKeys(today.day.dayIndex)"
         (logExercise)="dayActions.logExercise(today.day.dayIndex, $event)"
         (toggleExercise)="dayActions.toggleExercise(today.day.dayIndex, $event)"
         (resetExercise)="dayActions.resetExercise(today.day.dayIndex, $event)"
@@ -319,6 +329,7 @@
                       [fields]="test.fields"
                       [scalesPlan]="test.scalesPlan"
                       [interactive]="isThisPlanActive() && !row.isFuture"
+                      [busyKeys]="store.dayBusyKeys(row.day.dayIndex)"
                       (submitResult)="
                         dayActions.recordTest(row.day.dayIndex, $event)
                       "
@@ -330,6 +341,7 @@
                   <app-plan-day-exercises
                     [exercises]="row.exercises"
                     [interactive]="isThisPlanActive() && !row.isFuture"
+                    [busyKeys]="store.dayBusyKeys(row.day.dayIndex)"
                     (logExercise)="
                       dayActions.logExercise(row.day.dayIndex, $event)
                     "
@@ -374,6 +386,8 @@
                   <button
                     mat-icon-button
                     [matMenuTriggerFor]="dayMenu"
+                    data-testid="day-menu-trigger"
+                    [puBusy]="store.isBusy('day:' + row.day.dayIndex)"
                     aria-label="Tagesaktionen öffnen"
                     i18n-aria-label="@@trainingPlans.menu.triggerAria"
                   >

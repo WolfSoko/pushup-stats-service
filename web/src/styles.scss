@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+@use '../../libs/ui/src/lib/busy/busy';
 
 // Shared typography config
 $typography-config: (

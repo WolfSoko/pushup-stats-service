@@ -10,6 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { BusyDirective, createBusyState } from '@pu-stats/ui';
 import { firstValueFrom } from 'rxjs';
 
 import { ChallengeCardComponent } from './challenge-card.component';
@@ -28,6 +29,7 @@ import { challengeRejectionMessage } from './friends-messages';
   selector: 'app-challenges-section',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     ChallengeCardComponent,
     MatButtonModule,
     MatCardModule,
@@ -42,6 +44,7 @@ import { challengeRejectionMessage } from './friends-messages';
         type="button"
         data-testid="challenge-start"
         [disabled]="friends().length === 0"
+        [puBusy]="opening.busy() || store.isBusy('create')"
         (click)="start()"
       >
         <mat-icon>flag</mat-icon>
@@ -69,6 +72,7 @@ import { challengeRejectionMessage } from './friends-messages';
             mat-button
             type="button"
             data-testid="challenges-retry"
+            [puBusy]="store.loading()"
             (click)="store.reload()"
             i18n="@@challenges.retry"
           >
@@ -92,6 +96,7 @@ import { challengeRejectionMessage } from './friends-messages';
     @for (challenge of ordered(); track challenge.id) {
       <app-challenge-card
         [challenge]="challenge"
+        [busyKeys]="store.busyKeys()"
         (accept)="store.accept($event)"
         (decline)="store.decline($event)"
         (leave)="store.leave($event)"
@@ -127,6 +132,9 @@ export class ChallengesSectionComponent {
   /** Confirmed friends — the people a new challenge can invite. */
   readonly friends = input.required<ReadonlyArray<FriendRow>>();
 
+  /** The dialog chunk on its way; the create itself is the store's flag. */
+  protected readonly opening = createBusyState();
+
   protected readonly rejection = computed(() =>
     challengeRejectionMessage(this.store.lastRejection())
   );
@@ -142,8 +150,9 @@ export class ChallengesSectionComponent {
   ]);
 
   protected async start(): Promise<void> {
-    const { ChallengeCreateDialogComponent } =
-      await import('./challenge-create-dialog.component');
+    const { ChallengeCreateDialogComponent } = await this.opening.run(
+      () => import('./challenge-create-dialog.component')
+    );
     const ref = this.dialog.open(ChallengeCreateDialogComponent, {
       data: { friends: this.friends() },
       autoFocus: 'dialog',

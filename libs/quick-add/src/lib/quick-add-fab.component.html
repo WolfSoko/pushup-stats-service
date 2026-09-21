@@ -21,6 +21,7 @@
             class="auto-count-fab"
             aria-label="Liegestütze automatisch zählen"
             i18n-aria-label="@@quickAdd.fab.autoCountAria"
+            [puBusy]="busyKeys().has('autoCount')"
             (click)="onOpenAutoCount()"
           >
             <mat-icon>{{ item.icon }}</mat-icon>
@@ -33,6 +34,7 @@
             class="exercise-timer-fab"
             aria-label="Halteübungs-Timer öffnen"
             i18n-aria-label="@@quickAdd.fab.exerciseTimerAria"
+            [puBusy]="busyKeys().has('exerciseTimer')"
             (click)="onOpenExerciseTimer()"
           >
             <mat-icon>{{ item.icon }}</mat-icon>
@@ -46,6 +48,7 @@
             aria-label="Stoppuhr öffnen"
             i18n-aria-label="@@quickAdd.fab.stopwatchAria"
             data-testid="quick-add-stopwatch"
+            [puBusy]="busyKeys().has('stopwatch')"
             (click)="onOpenStopwatch()"
           >
             <mat-icon>{{ item.icon }}</mat-icon>
@@ -58,6 +61,7 @@
             class="custom-fab"
             aria-label="Eigenen Wert eingeben"
             i18n-aria-label="@@quickAdd.fab.customValueAria"
+            [puBusy]="busyKeys().has('customDialog')"
             (click)="onOpenDialog()"
           >
             <mat-icon>{{ item.icon }}</mat-icon>
@@ -74,6 +78,7 @@
                     class="goal-sub-fab"
                     [class.reached]="goal.reached"
                     [disabled]="goal.disabled"
+                    [puBusy]="goal.busy"
                     [attr.aria-label]="goal.ariaLabel"
                     data-testid="quick-add-goal-submenu-item"
                     (click)="onFillGoalItem(goal)"
@@ -107,6 +112,7 @@
             class="goal-fab"
             [class.reached]="goal.reached"
             [disabled]="goal.disabled"
+            [puBusy]="goal.busy"
             [attr.aria-label]="goal.ariaLabel"
             data-testid="quick-add-goal-single"
             (click)="onFillGoalItem(goal)"
@@ -119,7 +125,8 @@
             mat-fab
             extended
             class="goal-fab"
-            [disabled]="goalDisabled()"
+            [disabled]="goalReached()"
+            [puBusy]="busyKeys().has('fillToGoal')"
             [attr.aria-label]="
               goalReached() ? goalReachedAria : fillToGoalAria(item.value)
             "
@@ -140,6 +147,7 @@
             extended
             class="quick-fab"
             [attr.aria-label]="item.ariaLabel"
+            [puBusy]="suggestionBusy(item.suggestion)"
             (click)="onQuickAdd(item.suggestion)"
           >
             <span>{{ item.label }}</span>

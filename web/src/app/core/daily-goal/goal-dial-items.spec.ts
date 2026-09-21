@@ -31,6 +31,7 @@ describe('toGoalDialItems', () => {
     // then
     expect(dial.label).toBe('Liegestütze +60');
     expect(dial.disabled).toBe(false);
+    expect(dial.busy).toBe(false);
   });
 
   it('should render a reached goal as a disabled, label-only entry', () => {
@@ -54,11 +55,16 @@ describe('toGoalDialItems', () => {
     expect(dial.disabled).toBe(true);
   });
 
-  it('should disable a goal whose write is in flight', () => {
+  it('should flag a goal whose write is in flight as busy but keep it enabled', () => {
     // given / when
-    const [dial] = toGoalDialItems([item()], (id) => id === 'g1');
+    const [dial, other] = toGoalDialItems(
+      [item(), item({ id: 'g2' })],
+      (id) => id === 'g1'
+    );
 
     // then
-    expect(dial.disabled).toBe(true);
+    expect(dial.busy).toBe(true);
+    expect(dial.disabled).toBe(false);
+    expect(other.busy).toBe(false);
   });
 });

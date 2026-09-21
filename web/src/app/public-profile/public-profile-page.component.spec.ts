@@ -13,6 +13,7 @@ import { UserConfigStore } from '../core/user-config.store';
 import { ProfilePhotoService } from '../core/profile-photo.service';
 import { signal } from '@angular/core';
 import { FriendsStore } from '../friends/friends.store';
+import { InviteService } from '../core/invite.service';
 
 const firebaseAppMock = {
   options: { projectId: 'pushup-stats' },
@@ -1193,6 +1194,44 @@ describe('PublicProfilePageComponent', () => {
       expect(friends.requestFriend).toHaveBeenCalledWith(visitorProfile.uid);
     });
 
+    it('should mark the button busy until the request settles', async () => {
+      // given
+      let resolveRequest: (ok: boolean) => void = () => undefined;
+      const friends = {
+        requestFriend: vitest.fn(
+          () =>
+            new Promise<boolean>((resolve) => {
+              resolveRequest = resolve;
+            })
+        ),
+        lastRejection: () => undefined,
+      };
+      await setup({
+        resolve: visitorProfile,
+        extraProviders: [{ provide: FriendsStore, useValue: friends }],
+      });
+      const button = document.querySelector(
+        '[data-testid="public-profile-add-friend"]'
+      ) as HTMLButtonElement;
+
+      // when
+      button.click();
+      await fixture.whenStable();
+
+      // then
+      expect(button.getAttribute('aria-busy')).toBe('true');
+      expect(button.disabled).toBe(false);
+
+      // when
+      resolveRequest(true);
+      await new Promise((resolve) => setTimeout(resolve));
+      await fixture.whenStable();
+
+      // then
+      expect(button.getAttribute('aria-busy')).toBeNull();
+      expect(button.disabled).toBe(true);
+    });
+
     it('should not offer it on your own profile', async () => {
       // given
       await setup({ resolve: { ...sampleProfile, viewerIsOwner: true } });
@@ -1214,6 +1253,65 @@ describe('PublicProfilePageComponent', () => {
         document.querySelector('[data-testid="public-profile-add-friend"]')
       ).toBeNull();
       expect(document.body.textContent).toContain('Ihr seid Freunde');
+    });
+  });
+
+  describe('Owner actions while a request is in flight', () => {
+    const ownerProfile = { ...sampleProfile, viewerIsOwner: true };
+
+    it('should mark the invite button busy until the invite link is shared', async () => {
+      // given
+      let resolveInvite: (value: string) => void = () => undefined;
+      const invites = {
+        inviteFriend: vitest.fn(
+          () =>
+            new Promise<string>((resolve) => {
+              resolveInvite = resolve;
+            })
+        ),
+      };
+      await setup({
+        resolve: ownerProfile,
+        extraProviders: [{ provide: InviteService, useValue: invites }],
+      });
+      const button = document.querySelector(
+        '[data-testid="public-profile-invite"]'
+      ) as HTMLButtonElement;
+
+      // when
+      button.click();
+      await fixture.whenStable();
+
+      // then
+      expect(invites.inviteFriend).toHaveBeenCalled();
+      expect(button.getAttribute('aria-busy')).toBe('true');
+
+      // when
+      resolveInvite('native');
+      await new Promise((resolve) => setTimeout(resolve));
+      await fixture.whenStable();
+
+      // then
+      expect(button.getAttribute('aria-busy')).toBeNull();
+    });
+
+    it('should mark the photo button busy while an upload runs', async () => {
+      // given
+      await setup({ resolve: ownerProfile });
+      const button = document.querySelector(
+        '[data-testid="profile-photo-edit"]'
+      ) as HTMLButtonElement;
+
+      // when
+      photosMock.busy.set(true);
+      fixture.detectChanges();
+
+      // then
+      expect(button.getAttribute('aria-busy')).toBe('true');
+      expect(button.disabled).toBe(false);
+
+      // cleanup
+      photosMock.busy.set(false);
     });
   });
 });

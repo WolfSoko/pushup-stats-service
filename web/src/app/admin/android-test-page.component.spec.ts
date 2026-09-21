@@ -234,4 +234,38 @@ describe('AndroidTestPageComponent', () => {
     // then
     expect(component.error()).toBe('boom');
   });
+
+  it('should mark only the pressed row action busy while its callable is pending', async () => {
+    // given
+    await createComponent([user({ uid: 'c1' })]);
+    let resolveConfirm!: () => void;
+    setupCallables([
+      { name: 'adminListUsers', impl: async () => ({ data: [] }) },
+      {
+        name: 'adminConfirmAndroidTestCandidate',
+        impl: () =>
+          new Promise<{ data: unknown }>((resolve) => {
+            resolveConfirm = () => resolve({ data: { ok: true } });
+          }),
+      },
+    ]);
+
+    // when
+    const run = component.confirm('c1', true);
+
+    // then
+    expect(component.busyUser.isBusy('c1:confirm')).toBe(true);
+    expect(component.busyUser.isBusy('c1:decline')).toBe(false);
+    expect(component.busyUser.isBusy('c1:added')).toBe(false);
+    expect(component.otherActionBusy('c1', 'decline')).toBe(true);
+    expect(component.otherActionBusy('c1', 'confirm')).toBe(false);
+    expect(component.otherActionBusy('c2', 'confirm')).toBe(false);
+
+    // when
+    resolveConfirm();
+    await run;
+
+    // then
+    expect(component.busyUser.busy()).toBe(false);
+  });
 });

@@ -16,6 +16,7 @@ import {
   ReminderPermissionService,
 } from '@pu-reminders/reminders';
 import { PushSubscriptionService } from '@pu-push/push';
+import { createBusyState, createKeyedBusyState } from '@pu-stats/ui';
 import { UnsubscribeAllDevicesDialogComponent } from './unsubscribe-all-devices-dialog.component';
 import { ReminderFormStore } from './reminder-form.store';
 import { ReminderSettingsSectionComponent } from './reminder-settings-section.component';
@@ -61,13 +62,14 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
           <app-push-status-panel
             [status]="pushService.status()"
             [deviceCount]="pushService.deviceCount()"
+            [busyKeys]="push.busyKeys()"
             (subscribe)="onPushSubscribe()"
             (unsubscribe)="onPushUnsubscribe()"
           />
 
           @if (canUnsubscribeAllDevices()) {
             <app-unsubscribe-all-section
-              [loading]="authStore.loading()"
+              [busy]="unsubscribingAll.busy()"
               (unsubscribeAll)="onUnsubscribeAllDevices()"
             />
           }
@@ -96,6 +98,9 @@ export class RemindersPageComponent {
   private readonly reminderService = inject(ReminderService);
   readonly pushService = inject(PushSubscriptionService);
   readonly form = inject(ReminderFormStore);
+  /** Which push button was pressed, so only that one spins. */
+  readonly push = createKeyedBusyState<'subscribe' | 'unsubscribe'>();
+  readonly unsubscribingAll = createBusyState();
 
   readonly activeUserId = this.user.userIdSafe;
   readonly canUnsubscribeAllDevices = computed(() =>
@@ -116,7 +121,9 @@ export class RemindersPageComponent {
   // ── Push methods ──────────────────────────────────────────────────────────
 
   async onPushSubscribe(): Promise<void> {
-    const ok = await this.pushService.subscribe();
+    const ok = await this.push.run('subscribe', () =>
+      this.pushService.subscribe()
+    );
     if (!ok && this.pushService.status() !== 'denied') {
       this.snackBar.open(
         $localize`:@@push.subscribe.error:Push konnte nicht aktiviert werden.`,
@@ -126,8 +133,8 @@ export class RemindersPageComponent {
     }
   }
 
-  async onPushUnsubscribe(): Promise<void> {
-    await this.pushService.unsubscribe();
+  onPushUnsubscribe(): Promise<void> {
+    return this.push.run('unsubscribe', () => this.pushService.unsubscribe());
   }
 
   // ── Unsubscribe all devices ───────────────────────────────────────────────
@@ -142,7 +149,15 @@ export class RemindersPageComponent {
     );
     if (!confirmed) return;
 
-    const ok = await this.authStore.unsubscribeAllPushDevices();
+    const ok = await this.unsubscribingAll.run(async () => {
+      if (!(await this.authStore.unsubscribeAllPushDevices())) return false;
+      // The Cloud Function wipes the server records; drop this device's
+      // browser subscription too, so the status UI and SW match at once.
+      if (this.pushService.status() === 'subscribed') {
+        await this.pushService.unsubscribe();
+      }
+      return true;
+    });
     if (!ok) {
       this.snackBar.open(
         $localize`:@@unsubAll.error:Entfernen der Push-Abos fehlgeschlagen.`,
@@ -150,14 +165,6 @@ export class RemindersPageComponent {
         { duration: 5000 }
       );
       return;
-    }
-
-    // Server-side records are wiped by the Cloud Function. Also drop the
-    // browser-side subscription on this device so the push status UI reflects
-    // reality immediately and the service worker doesn't keep a stale
-    // subscription around.
-    if (this.pushService.status() === 'subscribed') {
-      await this.pushService.unsubscribe();
     }
 
     this.snackBar.open(

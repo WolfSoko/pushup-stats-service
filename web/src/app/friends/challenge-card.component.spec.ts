@@ -77,4 +77,21 @@ describe('ChallengeCardComponent', () => {
       'Beendet'
     );
   });
+  it('should mark only the button whose action is in flight as busy', async () => {
+    // given
+    await render(ChallengeCardComponent, {
+      inputs: {
+        challenge: { ...base, viewerInvited: true },
+        busyKeys: new Set(['accept:c1']),
+      },
+    });
+
+    // then
+    expect(
+      screen.getByTestId('challenge-accept').getAttribute('aria-busy')
+    ).toBe('true');
+    expect(
+      screen.getByTestId('challenge-decline').getAttribute('aria-busy')
+    ).toBeNull();
+  });
 });

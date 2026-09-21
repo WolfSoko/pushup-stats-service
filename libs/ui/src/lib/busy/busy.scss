@@ -1,0 +1,56 @@
+// Global styles for `[puBusy]` (libs/ui). Imported once by web/src/styles.scss.
+
+.pu-busy {
+  cursor: progress;
+  // Click and keyboard activation are already swallowed by the directive;
+  // this only removes hover/ripple feedback that would suggest otherwise.
+  pointer-events: none;
+}
+
+.pu-busy-spinner {
+  flex: none;
+  box-sizing: border-box;
+  width: 1.125em;
+  height: 1.125em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: pu-busy-spin 0.8s linear infinite;
+}
+
+// Text buttons: the spinner stands in for the leading icon, or precedes the
+// label when there is none. Trailing icons (`iconPositionEnd`) stay.
+.pu-busy > .pu-busy-spinner {
+  margin-inline-end: 8px;
+}
+
+.pu-busy > .mat-icon:not([iconPositionEnd]) {
+  display: none;
+}
+
+// Icon-only buttons: the spinner takes the icon's place, centred.
+.pu-busy.mat-mdc-icon-button,
+.pu-busy.mat-mdc-mini-fab,
+.pu-busy.mat-mdc-fab:not(.mat-mdc-extended-fab) {
+  > .mat-icon {
+    display: none;
+  }
+
+  > .pu-busy-spinner {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+  }
+}
+
+@keyframes pu-busy-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pu-busy-spinner {
+    animation-duration: 2s;
+  }
+}

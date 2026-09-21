@@ -19,6 +19,7 @@ import {
 } from '@pu-stats/models';
 import { TrainingPlanDetailComponent } from './training-plan-detail.component';
 import { ShareService } from '../core/share.service';
+import { dayBusyKeys } from './training-plan-store.busy';
 import { TrainingPlanStore } from './training-plan.store';
 
 function makeStoreMock(overrides: Partial<ReturnType<typeof baseStore>> = {}) {
@@ -26,7 +27,11 @@ function makeStoreMock(overrides: Partial<ReturnType<typeof baseStore>> = {}) {
 }
 
 function baseStore() {
+  const busyKeys = signal<ReadonlySet<string>>(new Set());
   return {
+    busyKeys,
+    isBusy: (key: string) => busyKeys().has(key),
+    dayBusyKeys: (dayIndex: number) => dayBusyKeys(busyKeys(), dayIndex),
     activeCatalog: signal<TrainingPlan | null>(null),
     activePlan: signal<UserTrainingPlan | null>(null),
     hasActivePlan: signal(false),
@@ -628,7 +633,11 @@ describe('TrainingPlanDetailComponent', () => {
     async function renderWithStore(
       store: ReturnType<typeof makeStoreMock>
     ): Promise<void> {
-      await render(TrainingPlanDetailComponent, {
+      await renderDetail(store);
+    }
+
+    async function renderDetail(store: ReturnType<typeof makeStoreMock>) {
+      return render(TrainingPlanDetailComponent, {
         providers: [
           provideRouter([]),
           { provide: ActivatedRoute, useValue: makeRouteMock('full-body-6w') },
@@ -643,6 +652,38 @@ describe('TrainingPlanDetailComponent', () => {
         ],
       });
     }
+
+    it('should show only the busy exercise button and the busy day menu trigger as busy', async () => {
+      // given — the store reports the first exercise of day 2 and day 3 as being written
+      const store = activeStore();
+      const { fixture } = await renderDetail(store);
+
+      // when
+      store.busyKeys.set(new Set(['item:2:0', 'day:3']));
+      fixture.detectChanges();
+
+      // then — the today card and the day row both show that exercise's button busy
+      const busyLogs = document.querySelectorAll(
+        '.exercise-log[aria-busy="true"]'
+      );
+      expect(busyLogs.length).toBeGreaterThanOrEqual(1);
+      expect(document.querySelectorAll('.exercise-log').length).toBeGreaterThan(
+        busyLogs.length
+      );
+      const triggers = screen.getAllByTestId('day-menu-trigger');
+      expect(
+        triggers.filter((t) => t.getAttribute('aria-busy') === 'true')
+      ).toHaveLength(1);
+
+      // when
+      store.busyKeys.set(new Set());
+      fixture.detectChanges();
+
+      // then
+      expect(
+        document.querySelector('.exercise-log[aria-busy="true"]')
+      ).toBeNull();
+    });
 
     it('should list every exercise of the day, not just the pushups', async () => {
       // given a circuit day prescribing four exercises
@@ -888,7 +929,7 @@ describe('TrainingPlanDetailComponent', () => {
     }
 
     async function renderWith(store: ReturnType<typeof makeStoreMock>) {
-      await render(TrainingPlanDetailComponent, {
+      return render(TrainingPlanDetailComponent, {
         providers: [
           provideRouter([]),
           { provide: ActivatedRoute, useValue: makeRouteMock('recruit-6w') },
@@ -903,6 +944,33 @@ describe('TrainingPlanDetailComponent', () => {
         ],
       });
     }
+
+    it('should show the pressed lifecycle button busy while its write runs', async () => {
+      // given
+      const store = planStore(false);
+      const { fixture } = await renderWith(store);
+
+      // when
+      store.busyKeys.set(new Set(['pause']));
+      fixture.detectChanges();
+
+      // then — pause spins, abandon next to it does not
+      const pause = screen.getByRole('button', { name: /Plan pausieren/ });
+      expect(pause.getAttribute('aria-busy')).toBe('true');
+      expect((pause as HTMLButtonElement).disabled).toBe(false);
+      expect(
+        screen
+          .getByRole('button', { name: /Plan beenden/ })
+          .getAttribute('aria-busy')
+      ).toBeNull();
+
+      // when
+      store.busyKeys.set(new Set());
+      fixture.detectChanges();
+
+      // then
+      expect(pause.getAttribute('aria-busy')).toBeNull();
+    });
 
     it('should offer pausing a running plan', async () => {
       // given

@@ -39,6 +39,35 @@ describe('ActivePlanCardComponent', () => {
     expect(document.body.textContent).toContain('Aktiver Plan');
   });
 
+  it('should show only the busy action as busy, keyed by the store', async () => {
+    // given — today's log is on its way
+    await renderCard({ busyKeys: new Set(['day:3']) });
+
+    // then
+    expect(
+      screen
+        .getByRole('button', { name: /Heute eintragen/ })
+        .getAttribute('aria-busy')
+    ).toBe('true');
+    expect(
+      screen
+        .getByRole('button', { name: /Plan pausieren/ })
+        .getAttribute('aria-busy')
+    ).toBeNull();
+  });
+
+  it('should show the resume button busy while the plan is picked back up', async () => {
+    // given
+    await renderCard({ paused: true, busyKeys: new Set(['resume']) });
+
+    // then
+    expect(
+      screen
+        .getByRole('button', { name: /Plan fortsetzen/ })
+        .getAttribute('aria-busy')
+    ).toBe('true');
+  });
+
   it('should offer sharing the plan', async () => {
     // given — a plan is the one thing on this page worth showing off
     const sharePlan = vitest.fn();

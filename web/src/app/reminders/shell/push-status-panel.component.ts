@@ -7,11 +7,12 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import type { PushStatus } from '@pu-push/push';
+import { BusyDirective } from '@pu-stats/ui';
 
 @Component({
   selector: 'app-push-status-panel',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonModule, MatIconModule],
+  imports: [BusyDirective, MatButtonModule, MatIconModule],
   template: `
     <section id="reminders" class="reminder-section">
       <h3 i18n="@@push.section.title">🔔 Erinnerungen</h3>
@@ -48,8 +49,12 @@ import type { PushStatus } from '@pu-push/push';
           <button
             type="button"
             mat-stroked-button
+            data-testid="push-unsubscribe"
+            [disabled]="
+              status() === 'loading' && !busyKeys().has('unsubscribe')
+            "
+            [puBusy]="busyKeys().has('unsubscribe')"
             (click)="unsubscribe.emit()"
-            [disabled]="status() === 'loading'"
             i18n="@@push.unsubscribe"
           >
             <mat-icon>notifications_off</mat-icon>
@@ -72,8 +77,10 @@ import type { PushStatus } from '@pu-push/push';
           type="button"
           mat-flat-button
           color="primary"
+          data-testid="push-subscribe"
+          [disabled]="status() === 'loading' && !busyKeys().has('subscribe')"
+          [puBusy]="busyKeys().has('subscribe')"
           (click)="subscribe.emit()"
-          [disabled]="status() === 'loading'"
           i18n="@@push.subscribe"
         >
           <mat-icon>notifications</mat-icon>
@@ -129,6 +136,10 @@ import type { PushStatus } from '@pu-push/push';
 export class PushStatusPanelComponent {
   readonly status = input.required<PushStatus>();
   readonly deviceCount = input.required<number>();
+  /** The push action in flight, if any — only the pressed button spins. */
+  readonly busyKeys = input<ReadonlySet<'subscribe' | 'unsubscribe'>>(
+    new Set()
+  );
   readonly subscribe = output<void>();
   readonly unsubscribe = output<void>();
 }

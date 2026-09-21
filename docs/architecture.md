@@ -7,6 +7,8 @@ Detailed architecture reference for the Pushup Stats Service. CLAUDE.md keeps th
 ```
 @pu-stats/models                (pure types, zero dependencies)
 @pu-stats/date                  (date/time helpers, standalone leaf — zero dependencies)
+@pu-stats/ui                    (BusyDirective + busy-state helpers, standalone leaf —
+                                 Angular/Material only, importable by every lib)
     ^
     |--- @pu-stats/data-access        (stateless Firestore API services)
     |        ^
@@ -30,14 +32,15 @@ Detailed architecture reference for the Pushup Stats Service. CLAUDE.md keeps th
 Enforced via `@nx/enforce-module-boundaries` in `.oxlintrc.json` (the ESLint rule runs inside oxlint through the `@nx/oxlint/boundaries-plugin` bridge):
 
 - `scope:date` -> nothing (standalone leaf — pure date/time helpers, no library deps)
-- `scope:auth` -> `scope:models`, `scope:date` only (no data-access!)
+- `scope:ui` -> nothing (standalone leaf — `BusyDirective`, `createBusyState()`; Angular + Material only)
+- `scope:auth` -> `scope:models`, `scope:date`, `scope:ui` only (no data-access!)
 - `scope:motivation` -> `scope:models`, `scope:date` only (no auth!)
 - `scope:data-access` -> `scope:models`, `scope:date` only
-- `scope:data-access-state` -> `scope:models`, `scope:data-access`, `scope:date`
+- `scope:data-access-state` -> `scope:models`, `scope:data-access`, `scope:date`, `scope:ui`
 - `scope:auto-count` -> `scope:models`, `scope:date` only
 - `scope:cloud-functions` -> `scope:models`, `scope:date` only
-- `scope:push` -> `scope:models`, `scope:data-access`, `scope:date` (no auth, no reminders!)
-- `scope:reminders` -> `scope:models`, `scope:data-access`, `scope:data-access-state`, `scope:motivation`, `scope:push`, `scope:date` (no auth!)
+- `scope:push` -> `scope:models`, `scope:data-access`, `scope:date`, `scope:ui` (no auth, no reminders!)
+- `scope:reminders` -> `scope:models`, `scope:data-access`, `scope:data-access-state`, `scope:motivation`, `scope:push`, `scope:date`, `scope:ui` (no auth!)
 - `scope:sw-push` -> nothing (standalone service-worker bundle; bundling anything else would bloat the SW)
 - `scope:app` -> everything
 
@@ -50,6 +53,7 @@ Enforced via `@nx/enforce-module-boundaries` in `.oxlintrc.json` (the ESLint rul
 | data-access-state | `stats-data-access-state` |
 | models/stats      | `stats-models`            |
 | date              | `stats-date`              |
+| ui                | `pus-ui`                  |
 | motivation        | `pus-motivation`          |
 | reminders         | `pus-reminders`           |
 | push              | `pus-push`                |
@@ -119,6 +123,15 @@ UI Component  →  Signal Store  →  API Service
 - Components only do template binding + user event delegation
 - Stores own all state, resources, computed signals, and domain logic
 - API services are pure data access with no state
+
+### Busy CTAs (`[puBusy]`)
+
+Every button whose click starts async work (a Firestore write, a callable, auth, Storage, an `HttpClient` call) shows its own inline spinner while that work runs. The pieces live in `@pu-stats/ui`, a leaf lib every other lib may import:
+
+- **`BusyDirective`** — `<button mat-flat-button [puBusy]="saving()" (click)="save()">`. While busy the host gets `aria-busy="true"`, the `pu-busy` class, a `currentColor` spinner as its first child (it replaces a leading `mat-icon`, or precedes the label; icon-only buttons get it centred) and swallows further clicks, so a double tap cannot fire the action twice. The host stays enabled: a disabled Material button turns grey and reads as "not allowed", a busy one is doing what the user asked. Don't bind `[disabled]` to the same flag. Styles: `libs/ui/src/lib/busy/busy.scss`, pulled in once by `web/src/styles.scss`.
+- **`createBusyState()`** — `readonly saving = createBusyState(); … this.saving.run(() => this.api.save(...))`; the template binds `saving.busy()`. Stores and components own the state, the directive only renders it.
+- **`createKeyedBusyState<K>()`** — one flag per row (`isBusy(entry.id)`), for lists where each row has its own action.
+- The global toolbar indicator below is orthogonal: it reacts to the request itself, the busy flag to the CTA the user pressed. Both usually fire together.
 
 ### Global pending-request indicator
 

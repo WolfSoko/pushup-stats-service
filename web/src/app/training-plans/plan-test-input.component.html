@@ -55,6 +55,7 @@
           class="test-submit"
           [attr.data-testid]="'plan-test-submit-' + field.itemIndex"
           [disabled]="!interactive() || !isValid(field)"
+          [puBusy]="busyKeys().has('record:' + field.itemIndex)"
           (click)="submit(field)"
         >
           <mat-icon>check</mat-icon>
@@ -72,6 +73,7 @@
             [attr.data-testid]="'plan-test-clear-' + field.itemIndex"
             [matTooltip]="clearTooltip"
             [attr.aria-label]="clearTooltip + ': ' + field.name"
+            [puBusy]="busyKeys().has('clear:' + field.itemIndex)"
             (click)="clearResult.emit(field.itemIndex)"
           >
             <mat-icon>restart_alt</mat-icon>

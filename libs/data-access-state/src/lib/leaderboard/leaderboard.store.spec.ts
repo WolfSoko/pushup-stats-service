@@ -243,6 +243,36 @@ describe('LeaderboardStore — per-exercise caching', () => {
     expect(store.data()[LEADERBOARD_PUSHUP_ID]).toEqual(emptyLeaderboard);
   });
 
+  describe('busy', () => {
+    it('should flag only the loading exercise as busy until its load settles', async () => {
+      // given
+      const api = makeApiMock();
+      let resolveLoad: (data: LeaderboardData) => void = () => undefined;
+      api.load.mockImplementation(
+        () =>
+          new Promise<LeaderboardData>((resolve) => {
+            resolveLoad = resolve;
+          })
+      );
+      const { store } = setup(api);
+
+      // when
+      const pending = store.load('legs.squats');
+
+      // then
+      expect(store.busy.isBusy('legs.squats')).toBe(true);
+      expect(store.busy.isBusy(LEADERBOARD_PUSHUP_ID)).toBe(false);
+
+      // when
+      resolveLoad(emptyLeaderboard);
+      await pending;
+
+      // then
+      expect(store.busy.isBusy('legs.squats')).toBe(false);
+      expect(store.busy.busy()).toBe(false);
+    });
+  });
+
   describe('lastUpdatedFor', () => {
     it('Returns null until the exercise has been loaded', () => {
       // Given — no load has happened yet, so the cache has no entry for

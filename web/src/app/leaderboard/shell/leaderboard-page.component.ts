@@ -17,6 +17,7 @@ import {
   LeaderboardPeriod,
 } from '@pu-stats/data-access';
 import { LeaderboardStore } from '@pu-stats/data-access-state';
+import { BusyDirective } from '@pu-stats/ui';
 import {
   EXERCISE_CATEGORIES,
   type ExerciseCategoryInfo,
@@ -68,6 +69,7 @@ const POPULAR_EXERCISE_IDS: ReadonlyArray<string> = [
     MatMenuModule,
     RouterLink,
     PageHeaderComponent,
+    BusyDirective,
   ],
   templateUrl: './leaderboard-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -196,6 +198,10 @@ export class LeaderboardPageComponent {
 
   isActiveExercise(id: string): boolean {
     return this.selectedExerciseId() === id;
+  }
+
+  isExerciseBusy(id: string): boolean {
+    return this.store.busy.isBusy(id);
   }
 
   /**

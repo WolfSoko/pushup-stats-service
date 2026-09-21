@@ -30,6 +30,7 @@ describe('LeaderboardPageComponent', () => {
   > = {};
   const lastUpdatedByExercise: Record<string, Date | null> = {};
   const loadMock = vitest.fn();
+  const busyExerciseIds = signal<ReadonlySet<string>>(new Set());
 
   function setEntries(exerciseId: string, entries: LeaderboardEntry[]): void {
     entriesByExerciseAndPeriod[exerciseId] = {
@@ -59,6 +60,7 @@ describe('LeaderboardPageComponent', () => {
     lastUpdatedFor: (exerciseId: () => string): (() => Date | null) =>
       computed(() => lastUpdatedByExercise[exerciseId()] ?? null),
     load: loadMock,
+    busy: { isBusy: (id: string) => busyExerciseIds().has(id) },
   };
 
   async function setup(
@@ -94,6 +96,7 @@ describe('LeaderboardPageComponent', () => {
 
   beforeEach(() => {
     loadMock.mockClear();
+    busyExerciseIds.set(new Set());
     for (const key of Object.keys(entriesByExerciseAndPeriod)) {
       delete entriesByExerciseAndPeriod[key];
     }
@@ -223,6 +226,49 @@ describe('LeaderboardPageComponent', () => {
         '[data-testid="leaderboard-link-1"]'
       ) as HTMLAnchorElement | null;
       expect(link?.textContent?.trim()).toBe('Sue');
+    });
+  });
+
+  describe('Given an exercise whose leaderboard is still loading', () => {
+    it('should mark only the tapped chip busy while its load is pending', async () => {
+      // given
+      await setup([], { exerciseId: LEADERBOARD_PUSHUP_ID });
+      const root = fixture.nativeElement as HTMLElement;
+      const chip = (id: string) =>
+        root.querySelector(
+          `[data-testid="leaderboard-exercise-chip-${id}"]`
+        ) as HTMLButtonElement;
+
+      // when
+      busyExerciseIds.set(new Set(['legs.squats']));
+      fixture.detectChanges();
+
+      // then
+      expect(chip('legs.squats').getAttribute('aria-busy')).toBe('true');
+      expect(chip(LEADERBOARD_PUSHUP_ID).getAttribute('aria-busy')).toBeNull();
+
+      // when
+      busyExerciseIds.set(new Set());
+      fixture.detectChanges();
+
+      // then
+      expect(chip('legs.squats').getAttribute('aria-busy')).toBeNull();
+    });
+
+    it('should mark the overflow chip busy while a menu-picked exercise loads', async () => {
+      // given
+      await setup([], { exerciseId: LEADERBOARD_PUSHUP_ID });
+      fixture.componentInstance.selectExercise('abs.situps');
+      const more = (fixture.nativeElement as HTMLElement).querySelector(
+        '[data-testid="leaderboard-exercise-more"]'
+      ) as HTMLButtonElement;
+
+      // when
+      busyExerciseIds.set(new Set(['abs.situps']));
+      fixture.detectChanges();
+
+      // then
+      expect(more.getAttribute('aria-busy')).toBe('true');
     });
   });
 

@@ -12,6 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { UserContextService } from '@pu-auth/auth';
+import { BusyDirective, createBusyState } from '@pu-stats/ui';
 
 import { InviteService } from '../core/invite.service';
 import { boardValueLabel } from './board-value-label';
@@ -30,7 +31,13 @@ const TOP_ROWS = 3;
 @Component({
   selector: 'app-friends-teaser-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonModule, MatCardModule, MatIconModule, RouterLink],
+  imports: [
+    BusyDirective,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    RouterLink,
+  ],
   template: `
     @if (visible()) {
       <mat-card class="friends-card" data-testid="dashboard-friends-card">
@@ -94,6 +101,7 @@ const TOP_ROWS = 3;
               mat-flat-button
               type="button"
               data-testid="dashboard-friends-invite"
+              [puBusy]="inviting.busy()"
               (click)="invite()"
             >
               <mat-icon>person_add</mat-icon>
@@ -180,6 +188,7 @@ export class FriendsTeaserCardComponent implements OnInit {
   private readonly user = inject(UserContextService);
   private readonly invites = inject(InviteService);
   private readonly platformId = inject(PLATFORM_ID);
+  protected readonly inviting = createBusyState();
 
   protected readonly visible = computed(
     () => !!this.user.userIdSafe() && !this.user.isGuest()
@@ -239,6 +248,6 @@ export class FriendsTeaserCardComponent implements OnInit {
   }
 
   protected invite(): void {
-    void this.invites.inviteFriend();
+    void this.inviting.run(() => this.invites.inviteFriend());
   }
 }

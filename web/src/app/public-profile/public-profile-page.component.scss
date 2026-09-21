@@ -538,8 +538,10 @@
   background: none;
   cursor: pointer;
 
-  &:disabled {
-    cursor: progress;
+  > .pu-busy-spinner {
+    position: absolute;
+    inset: 0;
+    margin: auto;
   }
 }
 

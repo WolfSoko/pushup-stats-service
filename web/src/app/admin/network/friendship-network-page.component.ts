@@ -15,6 +15,7 @@ import { RouterLink } from '@angular/router';
 
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';
 import { errorMessage } from '../admin-page.helpers';
+import { BusyDirective } from '@pu-stats/ui';
 import { CallableFunctionsService } from '../callable-functions.service';
 import { FriendshipGraphComponent } from './friendship-graph.component';
 import {
@@ -34,6 +35,7 @@ import {
   selector: 'app-friendship-network-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     FriendshipGraphComponent,
     MatButtonModule,
     MatCardModule,

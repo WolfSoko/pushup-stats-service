@@ -10,6 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { challengeDaysLeft, challengePercent } from '@pu-stats/models';
 import { toBerlinIsoDate } from '@pu-stats/date';
+import { BusyDirective } from '@pu-stats/ui';
 
 import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
 import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
@@ -21,7 +22,12 @@ import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
 @Component({
   selector: 'app-challenge-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonModule, MatCardModule, MatProgressBarModule],
+  imports: [
+    BusyDirective,
+    MatButtonModule,
+    MatCardModule,
+    MatProgressBarModule,
+  ],
   template: `
     <mat-card
       class="challenge-card"
@@ -85,6 +91,7 @@ import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
             mat-stroked-button
             type="button"
             data-testid="challenge-decline"
+            [puBusy]="isBusy('decline')"
             (click)="decline.emit(challenge().id)"
             i18n="@@challenges.decline"
           >
@@ -95,6 +102,7 @@ import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
             type="button"
             data-testid="challenge-accept"
             [disabled]="challenge().status === 'ended'"
+            [puBusy]="isBusy('accept')"
             (click)="accept.emit(challenge().id)"
             i18n="@@challenges.accept"
           >
@@ -105,6 +113,7 @@ import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
             mat-button
             type="button"
             data-testid="challenge-leave"
+            [puBusy]="isBusy('leave')"
             (click)="leave.emit(challenge().id)"
             i18n="@@challenges.leave"
           >
@@ -151,6 +160,8 @@ import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
 })
 export class ChallengeCardComponent {
   readonly challenge = input.required<ChallengeView>();
+  /** The store's busy keys: `<action>:<id>` spins that button. */
+  readonly busyKeys = input<ReadonlySet<string>>(new Set());
   readonly accept = output<string>();
   readonly decline = output<string>();
   readonly leave = output<string>();
@@ -177,6 +188,10 @@ export class ChallengeCardComponent {
   });
 
   private readonly anonymous = $localize`:@@friends.anonymous:Ohne Namen`;
+
+  protected isBusy(action: 'accept' | 'decline' | 'leave'): boolean {
+    return this.busyKeys().has(`${action}:${this.challenge().id}`);
+  }
 
   protected label(entry: ChallengeEntry): string {
     if (entry.isViewer) return $localize`:@@friends.board.you:Du`;

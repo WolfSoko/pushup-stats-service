@@ -94,7 +94,7 @@ describe('QuickAddOrchestrationService.fillToGoal', () => {
   it('Given gap=42, When fillToGoal() is called, Then createEntry is called with exerciseId=pushup, reps=42 and source=goal-fill', () => {
     const service = setup();
 
-    service.fillToGoal();
+    void service.fillToGoal();
 
     expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
     const [userId, payload] = exerciseApiMock.createEntry.mock.calls[0];
@@ -110,16 +110,16 @@ describe('QuickAddOrchestrationService.fillToGoal', () => {
     const service = setup();
     remainingToGoal.set(0);
 
-    service.fillToGoal();
+    void service.fillToGoal();
 
     expect(exerciseApiMock.createEntry).not.toHaveBeenCalled();
     expect(snackBarMock.open).not.toHaveBeenCalled();
   });
 
-  it('Given successful createPushup, When fillToGoal() is called, Then celebratory snackbar opens and resources reload', () => {
+  it('Given successful createPushup, When fillToGoal() is called, Then celebratory snackbar opens and resources reload', async () => {
     const service = setup();
 
-    service.fillToGoal();
+    await service.fillToGoal();
 
     expect(snackBarMock.open).toHaveBeenCalledTimes(1);
     const message = snackBarMock.open.mock.calls[0][0] as string;
@@ -127,13 +127,13 @@ describe('QuickAddOrchestrationService.fillToGoal', () => {
     expect(reloadAfterMutation).toHaveBeenCalledTimes(1);
   });
 
-  it('Given createEntry errors, When fillToGoal() is called, Then error snackbar opens and reload is not called', () => {
+  it('Given createEntry errors, When fillToGoal() is called, Then error snackbar opens and reload is not called', async () => {
     const service = setup();
     exerciseApiMock.createEntry.mockReturnValue(
       throwError(() => new Error('x'))
     );
 
-    service.fillToGoal();
+    await service.fillToGoal();
 
     expect(snackBarMock.open).toHaveBeenCalledTimes(1);
     const message = snackBarMock.open.mock.calls[0][0] as string;
@@ -141,32 +141,40 @@ describe('QuickAddOrchestrationService.fillToGoal', () => {
     expect(reloadAfterMutation).not.toHaveBeenCalled();
   });
 
-  it('Given PushupValidationError out-of-range When fillToGoal() is called Then snackbar surfaces the 1..500 cap', () => {
+  it('Given PushupValidationError out-of-range When fillToGoal() is called Then snackbar surfaces the 1..500 cap', async () => {
     const service = setup();
     exerciseApiMock.createEntry.mockReturnValue(
       throwError(() => new PushupValidationError('reps', 'out-of-range'))
     );
 
-    service.fillToGoal();
+    await service.fillToGoal();
 
     const message = snackBarMock.open.mock.calls[0][0] as string;
     expect(message).toMatch(/zwischen 1.*und 500.*liegen/);
   });
 
-  it('Given a previous fillToGoal() is still in flight, When called again, Then createEntry is called only once', () => {
+  it('should report fillToGoal busy while the write is pending, run it once and clear afterwards', async () => {
+    // given
     const service = setup();
     const pending = new Subject<{ _id: string }>();
     exerciseApiMock.createEntry.mockReturnValue(pending.asObservable());
 
-    service.fillToGoal();
-    service.fillToGoal();
+    // when
+    const first = service.fillToGoal();
+    void service.fillToGoal();
 
+    // then
     expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
+    expect(service.busyKeys()).toEqual(new Set(['fillToGoal']));
     expect(service.fillToGoalInFlight()).toBe(true);
 
+    // when
     pending.next({ _id: '1' });
     pending.complete();
+    await first;
 
+    // then
+    expect(service.busyKeys().size).toBe(0);
     expect(service.fillToGoalInFlight()).toBe(false);
   });
 
@@ -174,7 +182,7 @@ describe('QuickAddOrchestrationService.fillToGoal', () => {
     const service = setup();
     remainingToGoal.set(42);
 
-    service.fillToGoal();
+    void service.fillToGoal();
     remainingToGoal.set(0);
 
     const [, payload] = exerciseApiMock.createEntry.mock.calls[0];
@@ -232,7 +240,7 @@ describe('QuickAddOrchestrationService.addSuggestion', () => {
   it('Given a pushup suggestion, Then createEntry is called with exerciseId=pushup, the suggestion reps and quick-add source', () => {
     const service = setup();
 
-    service.addSuggestion(pushupSuggestion);
+    void service.addSuggestion(pushupSuggestion);
 
     expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
     const [userId, payload] = exerciseApiMock.createEntry.mock.calls[0];
@@ -246,7 +254,7 @@ describe('QuickAddOrchestrationService.addSuggestion', () => {
   it('Given a non-pushup suggestion, Then exerciseApi.createEntry is called with that exerciseId', async () => {
     const service = setup();
 
-    service.addSuggestion(situpsSuggestion);
+    void service.addSuggestion(situpsSuggestion);
     await waitForAssertion(() =>
       expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1)
     );
@@ -259,10 +267,31 @@ describe('QuickAddOrchestrationService.addSuggestion', () => {
     expect(statsApiMock.createPushup).not.toHaveBeenCalled();
   });
 
+  it('should report a suggestion busy under its own key while its write is pending', async () => {
+    // given
+    const service = setup();
+    const pending = new Subject<{ _id: string }>();
+    exerciseApiMock.createEntry.mockReturnValue(pending.asObservable());
+
+    // when
+    const done = service.addSuggestion(situpsSuggestion);
+
+    // then
+    expect(service.busyKeys()).toEqual(new Set(['suggestion:slot:1']));
+
+    // when
+    pending.next({ _id: 'e1' });
+    pending.complete();
+    await done;
+
+    // then
+    expect(service.busyKeys().size).toBe(0);
+  });
+
   it('Given a non-pushup suggestion without a logged-in user, Then an error snackbar opens and nothing is created', async () => {
     const service = setup({ userId: '' });
 
-    service.addSuggestion(situpsSuggestion);
+    void service.addSuggestion(situpsSuggestion);
     await waitForAssertion(() =>
       expect(snackBarMock.open).toHaveBeenCalledTimes(1)
     );
@@ -376,6 +405,25 @@ describe('QuickAddOrchestrationService.openStopwatch', () => {
     expect(reloadAfterMutation).toHaveBeenCalledTimes(1);
   });
 
+  it('should report stopwatch busy only until its dialog is open', async () => {
+    // given
+    const { service, dialogMock } = setup(null, undefined);
+
+    // when
+    const opening = service.openStopwatch();
+
+    // then
+    expect(service.busyKeys()).toEqual(new Set(['stopwatch']));
+    expect(dialogMock.open).not.toHaveBeenCalled();
+
+    // when
+    await opening;
+
+    // then
+    expect(dialogMock.open).toHaveBeenCalledTimes(1);
+    expect(service.busyKeys().size).toBe(0);
+  });
+
   it('should not open the entry dialog when the stopwatch is dismissed', async () => {
     // given
     const { service, dialogMock } = setup(null, undefined);
@@ -448,6 +496,25 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
 
     expect(dialogMock.open).toHaveBeenCalledTimes(1);
     expect(statsApiMock.createPushup).not.toHaveBeenCalled();
+  });
+
+  it('should report autoCount busy only until the camera dialog is open', async () => {
+    // given
+    const { service, dialogMock } = setup(null, undefined);
+
+    // when
+    const opening = service.openAutoCount();
+
+    // then
+    expect(service.busyKeys()).toEqual(new Set(['autoCount']));
+    expect(dialogMock.open).not.toHaveBeenCalled();
+
+    // when
+    await opening;
+
+    // then
+    expect(dialogMock.open).toHaveBeenCalledTimes(1);
+    expect(service.busyKeys().size).toBe(0);
   });
 
   it('Given the camera dialog returns pushup reps, Then the entry dialog opens prefilled with kind=pushup, reps and source=auto-count', async () => {
@@ -748,6 +815,25 @@ describe('QuickAddOrchestrationService.openExerciseTimer', () => {
     expect(exerciseApiMock.createEntry).not.toHaveBeenCalled();
   });
 
+  it('should report exerciseTimer busy only until the timer dialog is open', async () => {
+    // given
+    const { service, dialogMock } = setup(null, undefined);
+
+    // when
+    const opening = service.openExerciseTimer();
+
+    // then
+    expect(service.busyKeys()).toEqual(new Set(['exerciseTimer']));
+    expect(dialogMock.open).not.toHaveBeenCalled();
+
+    // when
+    await opening;
+
+    // then
+    expect(dialogMock.open).toHaveBeenCalledTimes(1);
+    expect(service.busyKeys().size).toBe(0);
+  });
+
   it('Given the timer dialog returns plank durationSec, Then the entry dialog opens prefilled with kind=exercise and exerciseId=plank.standard', async () => {
     const { service, dialogMock } = setup(
       { exerciseId: 'plank', durationSec: 45 },
@@ -810,5 +896,87 @@ describe('QuickAddOrchestrationService.openExerciseTimer', () => {
       durationSec: 60,
       source: 'exercise-timer',
     });
+  });
+});
+
+describe('QuickAddOrchestrationService.openDialog', () => {
+  const statsApiMock = { createPushup: vitest.fn() };
+  const exerciseApiMock = { createEntry: vitest.fn() };
+  const snackBarMock = { open: vitest.fn() };
+  const bridgeMock = { requestOpenDialog: vitest.fn() };
+  const appDataMock: Partial<AppDataFacade> = {
+    remainingToGoal: signal(0).asReadonly(),
+    reloadAfterMutation: vitest.fn(),
+  };
+
+  function setup(url: string) {
+    vitest.clearAllMocks();
+    const routerMock = { url, navigate: vitest.fn() };
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: baseProviders({
+        statsApiMock,
+        exerciseApiMock,
+        snackBarMock,
+        routerMock,
+        bridgeMock,
+        appDataMock,
+      }),
+    });
+    return {
+      service: TestBed.inject(QuickAddOrchestrationService),
+      routerMock,
+    };
+  }
+
+  it('should ask the dashboard to open the dialog at once when already on /app', async () => {
+    // given
+    const { service, routerMock } = setup('/app?tab=1');
+
+    // when
+    await service.openDialog();
+
+    // then
+    expect(bridgeMock.requestOpenDialog).toHaveBeenCalledTimes(1);
+    expect(routerMock.navigate).not.toHaveBeenCalled();
+    expect(service.busyKeys().size).toBe(0);
+  });
+
+  it('should report customDialog busy while navigating to /app and open the dialog once there', async () => {
+    // given
+    const { service, routerMock } = setup('/friends');
+    let navigated!: (ok: boolean) => void;
+    routerMock.navigate.mockReturnValue(
+      new Promise<boolean>((resolve) => (navigated = resolve))
+    );
+
+    // when
+    const opening = service.openDialog();
+
+    // then
+    expect(service.busyKeys()).toEqual(new Set(['customDialog']));
+    expect(bridgeMock.requestOpenDialog).not.toHaveBeenCalled();
+
+    // when
+    navigated(true);
+    await opening;
+
+    // then
+    expect(routerMock.navigate).toHaveBeenCalledWith(['/app']);
+    expect(bridgeMock.requestOpenDialog).toHaveBeenCalledTimes(1);
+    expect(service.busyKeys().size).toBe(0);
+  });
+
+  it('should not open the dialog when the navigation is cancelled', async () => {
+    // given
+    const { service, routerMock } = setup('/friends');
+    routerMock.navigate.mockResolvedValue(false);
+
+    // when
+    await service.openDialog();
+
+    // then
+    expect(bridgeMock.requestOpenDialog).not.toHaveBeenCalled();
+    expect(service.busyKeys().size).toBe(0);
   });
 });

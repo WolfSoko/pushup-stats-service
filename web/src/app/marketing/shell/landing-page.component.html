@@ -69,6 +69,7 @@
           <button
             mat-button
             type="button"
+            [puBusy]="guestSignIn.busy()"
             (click)="onTryAsGuest()"
             i18n="@@landing.cta.guest"
           >

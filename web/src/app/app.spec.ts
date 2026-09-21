@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { render, screen } from '@testing-library/angular';
+import { render, screen, waitFor } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { signal, WritableSignal, PLATFORM_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
@@ -1132,6 +1132,33 @@ describe('App (testing-library)', () => {
       expect(applyUpdate).toHaveBeenCalledTimes(1);
     });
 
+    it('should show the reload button busy while the update is being applied', async () => {
+      // given
+      let finish!: () => void;
+      const applyUpdate = vitest.fn(
+        () => new Promise<void>((resolve) => (finish = resolve))
+      );
+      await renderWithSwUpdate({
+        updateAvailable: () => true,
+        applyUpdate,
+      });
+      const button = screen.getByRole('button', {
+        name: /Neue Version verf\u00fcgbar/i,
+      });
+
+      // when
+      await userEvent.click(button);
+
+      // then
+      expect(button.getAttribute('aria-busy')).toBe('true');
+
+      // when
+      finish();
+
+      // then
+      await waitFor(() => expect(button.getAttribute('aria-busy')).toBeNull());
+    });
+
     // A corrupted ngsw cache is not "a new version is ready" — screen readers
     // must not announce it as one.
     it('should announce the corrupted-cache state instead of a new version', async () => {
@@ -1293,7 +1320,7 @@ describe('App (testing-library)', () => {
               fillToGoal: vitest.fn(),
               openDialog: vitest.fn(),
               openAutoCount,
-              fillToGoalInFlight: signal(false).asReadonly(),
+              busyKeys: signal(new Set<string>()).asReadonly(),
             },
           },
         ],
@@ -1353,7 +1380,7 @@ describe('App (testing-library)', () => {
               openDialog: vitest.fn(),
               openAutoCount: vitest.fn(),
               openExerciseTimer,
-              fillToGoalInFlight: signal(false).asReadonly(),
+              busyKeys: signal(new Set<string>()).asReadonly(),
             },
           },
         ],

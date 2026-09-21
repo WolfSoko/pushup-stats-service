@@ -21,12 +21,16 @@ function row(overrides: Partial<DayExerciseRow> = {}): DayExerciseRow {
   };
 }
 
-async function setup(exercises: DayExerciseRow[], interactive = true) {
+async function setup(
+  exercises: DayExerciseRow[],
+  interactive = true,
+  busyKeys: ReadonlySet<string> = new Set()
+) {
   const logExercise = vitest.fn();
   const toggleExercise = vitest.fn();
   const resetExercise = vitest.fn();
   await render(PlanDayExercisesComponent, {
-    inputs: { exercises, interactive },
+    inputs: { exercises, interactive, busyKeys },
     on: { logExercise, toggleExercise, resetExercise },
     providers: [provideRouter([])],
   });
@@ -50,6 +54,31 @@ describe('PlanDayExercisesComponent', () => {
     await userEvent.click(screen.getByRole('button'));
     // then
     expect(logExercise).toHaveBeenCalledWith(2);
+  });
+
+  it('should show only the busy exercise button as busy', async () => {
+    // given — the second exercise's write is in flight
+    await setup(
+      [row(), row({ itemIndex: 1, name: 'Plank' })],
+      true,
+      new Set(['item:1'])
+    );
+
+    // then
+    const buttons = screen.getAllByRole('button');
+    expect(buttons[0].getAttribute('aria-busy')).toBeNull();
+    expect(buttons[1].getAttribute('aria-busy')).toBe('true');
+    expect((buttons[1] as HTMLButtonElement).disabled).toBe(false);
+  });
+
+  it('should show the reset button busy for its own exercise', async () => {
+    // given
+    await setup([row({ itemIndex: 2, done: true })], true, new Set(['item:2']));
+
+    // then
+    expect(
+      screen.getByTestId('plan-exercise-reset').getAttribute('aria-busy')
+    ).toBe('true');
   });
 
   it('should emit a tick when the checkbox is checked', async () => {

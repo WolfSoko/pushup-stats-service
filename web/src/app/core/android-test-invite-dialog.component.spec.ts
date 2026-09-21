@@ -86,4 +86,75 @@ describe('AndroidTestInviteDialogComponent', () => {
     expect(typeof patch.ui.androidTestPopupDismissedUntil).toBe('string');
     expect(dialogRefSpy.close).toHaveBeenCalled();
   });
+
+  describe('busy CTAs', () => {
+    function deferred() {
+      let resolve: () => void = () => undefined;
+      const promise = new Promise<void>((r) => {
+        resolve = r;
+      });
+      return { promise, resolve: () => resolve() };
+    }
+
+    it('should mark only "Ich bin dabei" busy until the opt-in callable settles', async () => {
+      // given
+      setup();
+      const call = deferred();
+      callableSpy.mockReturnValue(call.promise);
+      const join = fixture.nativeElement.querySelector(
+        '[data-testid="android-test-invite-join"]'
+      ) as HTMLButtonElement;
+      const dismiss = fixture.nativeElement.querySelector(
+        '[data-testid="android-test-invite-dismiss"]'
+      ) as HTMLButtonElement;
+
+      // when
+      join.click();
+      await fixture.whenStable();
+
+      // then
+      expect(join.getAttribute('aria-busy')).toBe('true');
+      expect(join.disabled).toBe(false);
+      expect(dismiss.getAttribute('aria-busy')).toBeNull();
+      expect(fixture.nativeElement.querySelector('mat-spinner')).toBeNull();
+
+      // when
+      call.resolve();
+      await new Promise<void>((resolve) => setTimeout(resolve));
+
+      // then
+      expect(component.state()).toBe('thanks');
+    });
+
+    it('should mark only "Nicht jetzt" busy until the snooze is saved', async () => {
+      // given
+      setup({ ui: {} });
+      const save = deferred();
+      saveSpy.mockReturnValue(save.promise);
+      const join = fixture.nativeElement.querySelector(
+        '[data-testid="android-test-invite-join"]'
+      ) as HTMLButtonElement;
+      const dismiss = fixture.nativeElement.querySelector(
+        '[data-testid="android-test-invite-dismiss"]'
+      ) as HTMLButtonElement;
+
+      // when
+      dismiss.click();
+      await fixture.whenStable();
+
+      // then
+      expect(dismiss.getAttribute('aria-busy')).toBe('true');
+      expect(join.getAttribute('aria-busy')).toBeNull();
+      expect(dialogRefSpy.close).not.toHaveBeenCalled();
+
+      // when
+      save.resolve();
+      await new Promise((resolve) => setTimeout(resolve));
+      await fixture.whenStable();
+
+      // then
+      expect(dismiss.getAttribute('aria-busy')).toBeNull();
+      expect(dialogRefSpy.close).toHaveBeenCalled();
+    });
+  });
 });

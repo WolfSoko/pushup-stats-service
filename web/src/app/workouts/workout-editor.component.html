@@ -204,7 +204,7 @@
           color="primary"
           type="submit"
           data-testid="workout-save"
-          [disabled]="store.busy()"
+          [puBusy]="saving()"
         >
           <mat-icon>save</mat-icon>
           <span i18n="@@workouts.editor.save">Speichern</span>

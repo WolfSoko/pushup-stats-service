@@ -3,7 +3,6 @@ import {
   Component,
   computed,
   inject,
-  signal,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -15,6 +14,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthStore } from '@pu-auth/auth';
 import { findPlanBySlug, SessionStep } from '@pu-stats/models';
+import { createKeyedBusyState } from '@pu-stats/ui';
 
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';
 import { TrainingPlanStore } from '../training-plan.store';
@@ -23,7 +23,10 @@ import { WakeLockService } from '../../core/wake-lock.service';
 import { SessionCaptureService } from './session-capture.service';
 import { SessionIntroComponent } from './session-intro.component';
 import { SessionRestComponent } from './session-rest.component';
-import { SessionStepComponent } from './session-step.component';
+import {
+  SessionStepComponent,
+  type SessionStepAction,
+} from './session-step.component';
 import { TrainingSessionStore } from './training-session.store';
 import { buildSessionRows } from './training-session.rows';
 
@@ -69,8 +72,8 @@ export class TrainingSessionComponent {
   protected readonly authResolved = this.authStore.authResolved;
   protected readonly planLoaded = this.planStore.activePlanLoaded;
 
-  /** Blocks the step actions while a dialog or write is in flight. */
-  protected readonly busy = signal(false);
+  /** The step action in flight — one at a time, so the others wait. */
+  protected readonly busy = createKeyedBusyState<SessionStepAction>();
 
   protected readonly closeLabel = $localize`:@@session.close:Session beenden`;
 
@@ -137,12 +140,14 @@ export class TrainingSessionComponent {
 
   /** Run the step's own tool. */
   captureCurrent(): Promise<void> {
-    return this.runCapture((step) => this.capture.capture(step));
+    return this.runCapture('capture', (step) => this.capture.capture(step));
   }
 
   /** Open the entry dialog regardless of the step's primary tool. */
   enterByHand(): Promise<void> {
-    return this.runCapture((step) => this.capture.captureByHand(step));
+    return this.runCapture('byHand', (step) =>
+      this.capture.captureByHand(step)
+    );
   }
 
   /**
@@ -154,27 +159,28 @@ export class TrainingSessionComponent {
    */
   async logAsPrescribed(): Promise<void> {
     if (this.session.currentStep()?.finalRound === false) {
-      return this.runCapture((step) => this.capture.logPrescribed(step));
+      return this.runCapture('prescribed', (step) =>
+        this.capture.logPrescribed(step)
+      );
     }
     const step = this.session.currentStep();
     const dayIndex = this.session.dayIndex();
-    if (!step || dayIndex === null || this.busy()) return;
-    this.busy.set(true);
-    try {
-      const result = await this.planStore.logPlanExercise(
-        dayIndex,
-        step.itemIndex
-      );
-      if (result === 'logged' || result === 'already-logged') {
-        this.session.completeStep();
-        return;
+    if (!step || dayIndex === null || this.busy.busy()) return;
+    await this.busy.run('prescribed', async () => {
+      try {
+        const result = await this.planStore.logPlanExercise(
+          dayIndex,
+          step.itemIndex
+        );
+        if (result === 'logged' || result === 'already-logged') {
+          this.session.completeStep();
+          return;
+        }
+        this.notifyNotLogged();
+      } catch {
+        this.notifyNotLogged();
       }
-      this.notifyNotLogged();
-    } catch {
-      this.notifyNotLogged();
-    } finally {
-      this.busy.set(false);
-    }
+    });
   }
 
   /** Close the step without an entry — the escape hatch for anything
@@ -183,16 +189,15 @@ export class TrainingSessionComponent {
   async checkOff(): Promise<void> {
     const step = this.session.currentStep();
     const dayIndex = this.session.dayIndex();
-    if (!step || dayIndex === null || this.busy()) return;
-    this.busy.set(true);
-    try {
-      await this.planStore.setItemDone(dayIndex, step.itemIndex, true);
-      this.session.completeStep();
-    } catch {
-      this.notifyNotLogged();
-    } finally {
-      this.busy.set(false);
-    }
+    if (!step || dayIndex === null || this.busy.busy()) return;
+    await this.busy.run('checkOff', async () => {
+      try {
+        await this.planStore.setItemDone(dayIndex, step.itemIndex, true);
+        this.session.completeStep();
+      } catch {
+        this.notifyNotLogged();
+      }
+    });
   }
 
   finish(): void {
@@ -205,19 +210,17 @@ export class TrainingSessionComponent {
    * new partial progress showing, so they can top it up.
    */
   private async runCapture(
+    action: SessionStepAction,
     run: (step: SessionStep) => Promise<{ status: string; value: number }>
   ): Promise<void> {
     const step = this.session.currentStep();
-    if (!step || this.busy()) return;
-    this.busy.set(true);
-    try {
+    if (!step || this.busy.busy()) return;
+    await this.busy.run(action, async () => {
       const outcome = await run(step);
       if (outcome.status !== 'captured') return;
       if (step.quantified && step.logged + outcome.value < step.target) return;
       this.session.completeStep();
-    } finally {
-      this.busy.set(false);
-    }
+    });
   }
 
   private notifyNotLogged(): void {

@@ -55,6 +55,7 @@
           <button
             mat-icon-button
             class="exercise-log"
+            [puBusy]="busyKeys().has('item:' + ex.itemIndex)"
             (click)="logExercise.emit(ex.itemIndex)"
             [matTooltip]="logTooltip"
             [attr.aria-label]="logTooltip + ': ' + ex.name"
@@ -68,6 +69,7 @@
             mat-icon-button
             class="exercise-reset"
             data-testid="plan-exercise-reset"
+            [puBusy]="busyKeys().has('item:' + ex.itemIndex)"
             (click)="resetExercise.emit(ex.itemIndex)"
             [matTooltip]="resetTooltip"
             [attr.aria-label]="resetTooltip + ': ' + ex.name"

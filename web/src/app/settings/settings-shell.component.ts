@@ -6,6 +6,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { SettingsFacade } from '../stats/shell/settings.facade';
+import { BusyDirective } from '@pu-stats/ui';
 
 /**
  * Frame around the settings section: page header, the shared save-status
@@ -19,6 +20,7 @@ import { SettingsFacade } from '../stats/shell/settings.facade';
   selector: 'app-settings-shell',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,

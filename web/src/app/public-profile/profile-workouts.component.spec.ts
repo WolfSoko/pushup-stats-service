@@ -17,12 +17,22 @@ const WORKOUTS = [
   },
 ];
 
-async function setup(options: { userId?: string; isOwner?: boolean } = {}) {
-  const store = { importWorkout: vitest.fn().mockResolvedValue('new-id') };
+async function setup(
+  options: {
+    userId?: string;
+    isOwner?: boolean;
+    workouts?: typeof WORKOUTS;
+    importWorkout?: ReturnType<typeof vitest.fn>;
+  } = {}
+) {
+  const store = {
+    importWorkout:
+      options.importWorkout ?? vitest.fn().mockResolvedValue('new-id'),
+  };
   const snackbar = { open: vitest.fn() };
-  await render(ProfileWorkoutsComponent, {
+  const view = await render(ProfileWorkoutsComponent, {
     inputs: {
-      workouts: WORKOUTS,
+      workouts: options.workouts ?? WORKOUTS,
       ownerUid: 'owner',
       ownerName: 'Wolfi',
       isOwner: options.isOwner ?? false,
@@ -40,7 +50,7 @@ async function setup(options: { userId?: string; isOwner?: boolean } = {}) {
   const navigate = vitest
     .spyOn(TestBed.inject(Router), 'navigate')
     .mockResolvedValue(true);
-  return { store, snackbar, navigate };
+  return { store, snackbar, navigate, view };
 }
 
 describe('ProfileWorkoutsComponent', () => {
@@ -62,6 +72,42 @@ describe('ProfileWorkoutsComponent', () => {
       expect(screen.getByTestId('profile-workout-copied')).toBeTruthy()
     );
     expect(snackbar.open).toHaveBeenCalled();
+  });
+
+  it('should mark only the copied session busy until its write settles', async () => {
+    // given
+    let resolveImport: (id: string) => void = () => undefined;
+    const importWorkout = vitest.fn(
+      () =>
+        new Promise<string>((resolve) => {
+          resolveImport = resolve;
+        })
+    );
+    const { view } = await setup({
+      importWorkout,
+      workouts: [...WORKOUTS, { ...WORKOUTS[0], id: 'w2', title: 'Zweite' }],
+    });
+    const [first, second] = screen.getAllByTestId(
+      'profile-workout-copy'
+    ) as HTMLButtonElement[];
+
+    // when
+    first.click();
+    await view.fixture.whenStable();
+
+    // then
+    expect(first.getAttribute('aria-busy')).toBe('true');
+    expect(first.disabled).toBe(false);
+    expect(second.getAttribute('aria-busy')).toBeNull();
+
+    // when
+    resolveImport('new-id');
+    await waitFor(() =>
+      expect(screen.getByTestId('profile-workout-copied')).toBeTruthy()
+    );
+
+    // then
+    expect(second.getAttribute('aria-busy')).toBeNull();
   });
 
   it('should send an anonymous visitor to the signup page instead', async () => {

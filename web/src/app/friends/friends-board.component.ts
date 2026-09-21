@@ -13,6 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import { EXERCISE_CATALOG } from '@pu-stats/models';
+import { BusyDirective } from '@pu-stats/ui';
 
 import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
 import { boardValueLabel } from './board-value-label';
@@ -34,13 +35,15 @@ const REP_EXERCISES = EXERCISE_CATALOG.filter(
  *
  * Each friend's row carries a cheer button: one tap a day, and the row
  * shows how many cheers they collected today. While a cheer is on its way
- * the flame that was tapped spins — the send and the board re-read behind
- * it take long enough that a still icon reads as a tap that missed.
+ * the button that was tapped shows a spinner — the send and the board
+ * re-read behind it take long enough that a still icon reads as a tap
+ * that missed.
  */
 @Component({
   selector: 'app-friends-board',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     MatButtonModule,
     MatChipsModule,
     MatFormFieldModule,
@@ -131,12 +134,13 @@ const REP_EXERCISES = EXERCISE_CATALOG.filter(
                 class="cheer-button"
                 data-testid="board-cheer"
                 [class.is-cheered]="entry.cheered"
-                [disabled]="entry.cheered || isCheering(entry.uid)"
+                [disabled]="entry.cheered"
+                [puBusy]="isCheering(entry.uid)"
                 [attr.aria-label]="cheerLabel(entry)"
                 [matTooltip]="cheerLabel(entry)"
                 (click)="cheer.emit(entry.uid)"
               >
-                <mat-icon [class.is-sending]="isCheering(entry.uid)">{{
+                <mat-icon>{{
                   entry.cheered ? 'local_fire_department' : 'whatshot'
                 }}</mat-icon>
               </button>
@@ -198,28 +202,9 @@ const REP_EXERCISES = EXERCISE_CATALOG.filter(
       opacity: 0.85;
       white-space: nowrap;
     }
-    .cheer-button.is-cheered {
+    .cheer-button.is-cheered,
+    .cheer-button.pu-busy {
       color: var(--mat-sys-tertiary, #ff7043);
-    }
-    /* The flame itself is the spinner while its cheer is away. The button
-       is disabled meanwhile, so the icon takes the lit colour explicitly
-       — inherited, it would be the greyed-out disabled one. */
-    .cheer-button mat-icon.is-sending {
-      color: var(--mat-sys-tertiary, #ff7043);
-      animation: cheer-spin 900ms linear infinite;
-    }
-    @keyframes cheer-spin {
-      to {
-        transform: rotate(1turn);
-      }
-    }
-    /* No spinning for anyone who asked for less of it: the lit colour and
-       the dimmed flame still say the tap landed and is on its way. */
-    @media (prefers-reduced-motion: reduce) {
-      .cheer-button mat-icon.is-sending {
-        animation: none;
-        opacity: 0.6;
-      }
     }
   `,
 })
@@ -230,8 +215,8 @@ export class FriendsBoardComponent {
   readonly periodChange = output<unknown>();
   readonly comparisonChange = output<FriendsBoardComparison>();
   readonly cheer = output<string>();
-  /** The friend whose cheer is in flight, if any. */
-  readonly cheering = input<string | null>(null);
+  /** The store's busy keys; a row spins while `cheer:<uid>` is among them. */
+  readonly busyKeys = input<ReadonlySet<string>>(new Set());
 
   protected readonly repExercises = REP_EXERCISES;
 
@@ -262,7 +247,7 @@ export class FriendsBoardComponent {
   protected readonly cheeringAria = $localize`:@@friends.board.cheering:Anfeuerung wird gesendet`;
 
   protected isCheering(uid: string): boolean {
-    return this.cheering() === uid;
+    return this.busyKeys().has(`cheer:${uid}`);
   }
 
   /** What the button is doing, for the tooltip and for screen readers. */

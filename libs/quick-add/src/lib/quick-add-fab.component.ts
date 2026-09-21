@@ -8,6 +8,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { patchState, signalState } from '@ngrx/signals';
+import { BusyDirective } from '@pu-stats/ui';
 
 /**
  * Pre-resolved quick-add the speed dial should render. Producers
@@ -35,7 +36,17 @@ export interface QuickAddGoalItem {
   readonly label: string;
   readonly ariaLabel: string;
   readonly reached: boolean;
+  /** Cannot be filled with one tap: already reached or needs a manual entry. */
   readonly disabled: boolean;
+  /** A check-off write for this goal is in flight. */
+  readonly busy: boolean;
+}
+
+/** Entry in `busyKeys` for a suggestion whose write is in flight. */
+export function suggestionBusyKey(
+  suggestion: Pick<QuickAddSuggestion, 'key'>
+): string {
+  return `suggestion:${suggestion.key}`;
 }
 
 interface DialItem {
@@ -58,7 +69,7 @@ interface DialItem {
 @Component({
   selector: 'lib-quick-add-fab',
   standalone: true,
-  imports: [MatButtonModule, MatIconModule],
+  imports: [MatButtonModule, MatIconModule, BusyDirective],
   templateUrl: './quick-add-fab.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './quick-add-fab.component.scss',
@@ -67,8 +78,13 @@ export class QuickAddFabComponent {
   readonly suggestions = input<QuickAddSuggestion[]>([]);
   readonly remainingToGoal = input<number>(0);
   readonly goalReached = input<boolean>(false);
-  readonly fillToGoalInFlight = input<boolean>(false);
   readonly autoCountEnabled = input<boolean>(false);
+  /**
+   * Dial actions with work in flight: `fillToGoal`, `autoCount`,
+   * `exerciseTimer`, `stopwatch`, `customDialog` and `suggestionBusyKey()`
+   * entries. The matching button shows a spinner and swallows clicks.
+   */
+  readonly busyKeys = input<ReadonlySet<string>>(new Set());
   /**
    * Today's daily goals. With more than one the goal dial entry becomes a
    * submenu — a single "bis zum Ziel" button can only ever fill one of
@@ -149,10 +165,6 @@ export class QuickAddFabComponent {
     return $localize`:@@quickAdd.fab.fillToGoalAria:${gap}:GAP: Liegestütze bis zum Tagesziel hinzufügen`;
   }
 
-  protected goalDisabled(): boolean {
-    return this.goalReached() || this.fillToGoalInFlight();
-  }
-
   protected readonly goalsLabel = $localize`:@@quickAdd.fab.goals:Tagesziele`;
   protected readonly goalsAria = $localize`:@@quickAdd.fab.goalsAria:Tagesziele zum Abhaken anzeigen`;
 
@@ -206,8 +218,12 @@ export class QuickAddFabComponent {
     this.openFeedback.emit();
   }
 
+  protected suggestionBusy(suggestion: QuickAddSuggestion): boolean {
+    return this.busyKeys().has(suggestionBusyKey(suggestion));
+  }
+
   protected onFillToGoal(): void {
-    if (this.goalDisabled()) return;
+    if (this.goalReached()) return;
     this.closeDial();
     this.fillToGoal.emit();
   }

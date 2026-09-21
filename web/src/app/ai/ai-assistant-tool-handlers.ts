@@ -116,7 +116,7 @@ export function logExerciseEntry(
   // Reports success once the entry is queued, not once Firestore acknowledges
   // it — the quick-add path is fire-and-forget and surfaces write failures in
   // a snackbar rather than to the caller.
-  quickAdd.addSuggestion({
+  void quickAdd.addSuggestion({
     key: `ai:${exerciseId}`,
     reps,
     label: `+${reps} ${name}`,

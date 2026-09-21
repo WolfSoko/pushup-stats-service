@@ -53,6 +53,7 @@ import {
   QuickAddFabCoachmarkComponent,
   type QuickAddSuggestion,
 } from '@pu-stats/quick-add';
+import { BusyDirective, createBusyState } from '@pu-stats/ui';
 import { UserConfigStore } from './core/user-config.store';
 import { DailyGoalActionsService } from './core/daily-goal-actions.service';
 import { DailyGoalChecklistComponent } from './core/daily-goal/daily-goal-checklist.component';
@@ -102,6 +103,7 @@ import {
     CheerFireworksOverlayComponent,
     NotificationBellComponent,
     PendingRequestIndicatorComponent,
+    BusyDirective,
   ],
   templateUrl: './app.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -113,6 +115,7 @@ export class App {
   /** Drives the persistent "new version" button in the toolbar. */
   readonly swUpdateAvailable = this.swUpdate.updateAvailable;
   readonly swUpdateUnrecoverable = this.swUpdate.unrecoverable;
+  protected readonly swUpdateApplying = createBusyState();
   protected readonly swUpdateAriaLabel = $localize`:@@sw.update.buttonAria:Neue Version verfügbar – jetzt neu laden`;
   protected readonly swUpdateRecoverAriaLabel = $localize`:@@sw.update.recoverButtonAria:App-Daten beschädigt – jetzt neu laden`;
   private readonly snackBar = inject(MatSnackBar);
@@ -274,7 +277,7 @@ export class App {
   closeGoalDetails(): void {
     this.goalOverlay.hide();
   }
-  readonly fillToGoalInFlight = this.quickAdd.fillToGoalInFlight;
+  readonly quickAddBusyKeys = this.quickAdd.busyKeys;
 
   private readonly goalActions = inject(DailyGoalActionsService);
   /** Daily goals rendered as the speed dial's goal submenu. */
@@ -336,15 +339,15 @@ export class App {
   }
 
   applyServiceWorkerUpdate(): void {
-    void this.swUpdate.applyUpdate();
+    void this.swUpdateApplying.run(() => this.swUpdate.applyUpdate());
   }
 
   handleQuickAdd(suggestion: QuickAddSuggestion): void {
-    this.quickAdd.addSuggestion(suggestion);
+    void this.quickAdd.addSuggestion(suggestion);
   }
 
   handleOpenDialog(): void {
-    this.quickAdd.openDialog();
+    void this.quickAdd.openDialog();
   }
 
   handleOpenAutoCount(): void {
@@ -360,7 +363,7 @@ export class App {
   }
 
   handleFillToGoal(): void {
-    this.quickAdd.fillToGoal();
+    void this.quickAdd.fillToGoal();
   }
 
   handleFabOpened(): void {

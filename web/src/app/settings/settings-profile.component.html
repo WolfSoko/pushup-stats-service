@@ -26,7 +26,7 @@
       <button
         mat-stroked-button
         type="button"
-        [disabled]="photos.busy()"
+        [puBusy]="photos.busy()"
         data-testid="settings-photo-choose"
         (click)="photoInput.click()"
       >
@@ -37,7 +37,7 @@
         <button
           mat-button
           type="button"
-          [disabled]="photos.busy()"
+          [puBusy]="photos.busy()"
           data-testid="settings-photo-remove"
           (click)="removePhoto()"
         >

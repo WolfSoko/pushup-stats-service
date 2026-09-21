@@ -1,6 +1,7 @@
 import { PLATFORM_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { UserContextService } from '@pu-auth/auth';
+import { nextMacrotask } from '@pu-stats/testing';
 import { render, screen } from '@testing-library/angular';
 
 import { InviteService } from '../core/invite.service';
@@ -202,5 +203,35 @@ describe('FriendsTeaserCardComponent', () => {
     // then
     expect(screen.queryByTestId('dashboard-friends-card')).toBeNull();
     expect(api.list).not.toHaveBeenCalled();
+  });
+  it('should show the invite button busy until the invite link is shared', async () => {
+    // given — the invite token is still being minted
+    let answer: (result: string) => void = () => undefined;
+    const { invite, fixture } = await renderCard({});
+    invite.inviteFriend.mockReturnValue(
+      new Promise((resolve) => {
+        answer = resolve;
+      })
+    );
+
+    // when
+    screen.getByTestId('dashboard-friends-invite').click();
+    fixture.detectChanges();
+
+    // then
+    expect(
+      screen.getByTestId('dashboard-friends-invite').getAttribute('aria-busy')
+    ).toBe('true');
+
+    // when
+    answer('native');
+    await nextMacrotask();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(
+      screen.getByTestId('dashboard-friends-invite').getAttribute('aria-busy')
+    ).toBeNull();
   });
 });

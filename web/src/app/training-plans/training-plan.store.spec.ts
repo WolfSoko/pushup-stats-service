@@ -715,6 +715,65 @@ describe('TrainingPlanStore', () => {
     expect(store.hasActivePlan()).toBe(false);
   });
 
+  it('should keep the abandon flag busy until the plan write settles', async () => {
+    // given — a plan write Firestore has not acknowledged yet
+    const { store, mocks } = setup({
+      userId: 'u1',
+      planId: PLAN.id,
+      startDate: toBerlinIsoDate(new Date()),
+      status: 'active',
+      completedDays: [],
+    });
+    await flush();
+    const write = new Subject<UserTrainingPlan>();
+    mocks.apiMock.updatePlan.mockReturnValueOnce(write.asObservable());
+
+    // when
+    const done = store.abandon();
+
+    // then — only this CTA's key is busy
+    expect(store.isBusy('abandon')).toBe(true);
+    expect(store.busyKeys().has('abandon')).toBe(true);
+    expect(store.isBusy('pause')).toBe(false);
+
+    // when
+    write.next(mocks.current as UserTrainingPlan);
+    write.complete();
+    await done;
+
+    // then
+    expect(store.isBusy('abandon')).toBe(false);
+  });
+
+  it('should key a day action by its day index until the write settles', async () => {
+    // given
+    const { store, mocks } = setup({
+      userId: 'u1',
+      planId: PLAN.id,
+      startDate: toBerlinIsoDate(new Date()),
+      status: 'active',
+      completedDays: [],
+    });
+    await flush();
+    const write = new Subject<void>();
+    mocks.apiMock.addCompletedDay.mockReturnValueOnce(write.asObservable());
+
+    // when
+    const done = store.markDayDone(1);
+
+    // then
+    expect(store.isBusy('day:1')).toBe(true);
+    expect(store.isBusy('day:2')).toBe(false);
+
+    // when
+    write.next();
+    write.complete();
+    await done;
+
+    // then
+    expect(store.busyKeys().size).toBe(0);
+  });
+
   it('completionPercent counts non-rest days', async () => {
     const today = toBerlinIsoDate(new Date());
     const { store } = setup({

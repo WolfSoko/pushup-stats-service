@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 import { UserContextService } from '@pu-auth/auth';
 import type { PublicProfileWorkout } from '@pu-stats/models';
+import { BusyDirective, createKeyedBusyState } from '@pu-stats/ui';
 
 import { workoutSummary } from '../workouts/workout-summary';
 import { WorkoutsStore } from '../workouts/workouts.store';
@@ -30,7 +31,7 @@ import { PROFILE_LABELS } from './profile-labels';
 @Component({
   selector: 'app-profile-workouts',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonModule, MatIconModule, RouterLink],
+  imports: [MatButtonModule, MatIconModule, RouterLink, BusyDirective],
   template: `
     <ul class="workout-list">
       @for (workout of workouts(); track workout.id) {
@@ -60,7 +61,7 @@ import { PROFILE_LABELS } from './profile-labels';
               mat-stroked-button
               type="button"
               data-testid="profile-workout-copy"
-              [disabled]="busy()"
+              [puBusy]="busy.isBusy(workout.id)"
               (click)="copy(workout)"
             >
               <mat-icon>content_copy</mat-icon>
@@ -114,7 +115,7 @@ export class ProfileWorkoutsComponent {
   private readonly snackbar = inject(MatSnackBar);
 
   protected readonly labels = PROFILE_LABELS;
-  protected readonly busy = signal(false);
+  protected readonly busy = createKeyedBusyState<string>();
   protected readonly copied = signal<ReadonlySet<string>>(new Set());
 
   protected summary(workout: PublicProfileWorkout): string {
@@ -130,26 +131,23 @@ export class ProfileWorkoutsComponent {
       return;
     }
     const store = this.injector.get(WorkoutsStore, null);
-    if (!store || this.busy()) return;
-    this.busy.set(true);
-    try {
-      const id = await store.importWorkout(workout, {
+    if (!store || this.busy.isBusy(workout.id)) return;
+    const id = await this.busy.run(workout.id, () =>
+      store.importWorkout(workout, {
         uid: this.ownerUid(),
         workoutId: workout.id,
         displayName: this.ownerName(),
+      })
+    );
+    if (id) {
+      this.copied.update((set) => new Set(set).add(workout.id));
+      this.snackbar.open(this.labels.workoutsCopiedNote, undefined, {
+        duration: 3000,
       });
-      if (id) {
-        this.copied.update((set) => new Set(set).add(workout.id));
-        this.snackbar.open(this.labels.workoutsCopiedNote, undefined, {
-          duration: 3000,
-        });
-      } else {
-        this.snackbar.open(this.labels.workoutsCopyFailed, undefined, {
-          duration: 4000,
-        });
-      }
-    } finally {
-      this.busy.set(false);
+    } else {
+      this.snackbar.open(this.labels.workoutsCopyFailed, undefined, {
+        duration: 4000,
+      });
     }
   }
 }
