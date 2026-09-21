@@ -3,44 +3,68 @@ const { resolve } = require('node:path');
 const { parse } = require('yaml');
 
 const ROOT = resolve(__dirname, '../..');
-const PREVIEW_WORKFLOW = resolve(
+const REQUEST_WORKFLOW = resolve(
   ROOT,
   '.github/workflows/firebase-hosting-pull-request.yml'
+);
+const DEPLOY_WORKFLOW = resolve(
+  ROOT,
+  '.github/workflows/firebase-hosting-staging-preview.yml'
 );
 
 /**
  * The staging preview deploys into the one shared staging project and runs
  * the critical-path suite against it, serialised under a concurrency group.
  * A run blocks that project for up to 50 minutes, so previews are deployed
- * on request only: a bot comment with a checkbox is posted when the PR
- * opens, ticking the box fires `issue_comment: edited`, and only that event
- * (from the bot's own comment, with the box ticked) starts the deploy job.
+ * on request only, in two workflows:
+ *
+ * - firebase-hosting-pull-request.yml posts a bot comment with a checkbox
+ *   when the PR opens and, when the box is ticked (`issue_comment: edited`
+ *   on the bot's own comment), verifies the request and dispatches the
+ *   deploy workflow on the PR branch. It never checks out code: an
+ *   `issue_comment` job runs with secrets, and a PR-head checkout there is
+ *   what CodeQL's untrusted-checkout rule flags.
+ * - firebase-hosting-staging-preview.yml is that `workflow_dispatch` target;
+ *   it builds, deploys, runs `e2e-staging` and writes the result back into
+ *   the request comment.
  *
  * These tests pin the pieces that make the handshake work — the triggers,
- * both job conditions, the marker/checkbox strings used on both ends, and
- * the safety steps that run before the PR head is checked out.
+ * the job conditions, the marker/checkbox strings shared by both files, the
+ * no-checkout rule for the privileged job and the safety steps before the
+ * dispatch.
  */
-function loadWorkflow() {
-  return parse(readFileSync(PREVIEW_WORKFLOW, 'utf-8'));
-}
-
-function stepIndex(job, predicate) {
-  return (job.steps ?? []).findIndex(predicate);
-}
+const load = (file) => parse(readFileSync(file, 'utf-8'));
 
 const isCheckout = (step) =>
   typeof step.uses === 'string' && step.uses.startsWith('actions/checkout@');
 
+const runOf = (step) => (typeof step.run === 'string' ? step.run : '');
+
+const stepIndex = (job, predicate) => (job.steps ?? []).findIndex(predicate);
+
 describe('PR preview: on-demand handshake', () => {
-  const workflow = loadWorkflow();
-  const { request_preview: requestJob, build_and_preview: deployJob } =
-    workflow.jobs;
-  const marker = workflow.env.PREVIEW_MARKER;
-  const checkbox = workflow.env.PREVIEW_CHECKBOX;
+  const request = load(REQUEST_WORKFLOW);
+  const deploy = load(DEPLOY_WORKFLOW);
+  const { request_preview: requestJob, trigger_preview: triggerJob } =
+    request.jobs;
+  const deployJob = deploy.jobs.build_and_preview;
+  const marker = request.env.PREVIEW_MARKER;
+  const checkbox = request.env.PREVIEW_CHECKBOX;
+
+  it('should share marker and checkbox strings between both workflows', () => {
+    // given both workflow env blocks
+    // then the deploy workflow edits the same comment the request one created
+    expect(deploy.env.PREVIEW_MARKER).toBe(marker);
+    expect(deploy.env.PREVIEW_CHECKBOX).toBe(checkbox);
+    // and the dispatcher names the deploy workflow file that actually exists
+    expect(request.env.PREVIEW_WORKFLOW).toBe(
+      'firebase-hosting-staging-preview.yml'
+    );
+  });
 
   it('should only react to PR open events and comment edits', () => {
-    // given the workflow triggers
-    const on = workflow.on;
+    // given the request workflow triggers
+    const on = request.on;
 
     // then no pull_request type other than open/reopen starts a run
     expect(on.pull_request.types).toEqual(['opened', 'reopened']);
@@ -66,9 +90,9 @@ describe('PR preview: on-demand handshake', () => {
 
   it('should post a comment carrying the marker and an unticked checkbox', () => {
     // given the comment step
-    const run = requestJob.steps.map((s) => s.run ?? '').join('\n');
+    const run = requestJob.steps.map(runOf).join('\n');
 
-    // then the body contains the marker and the checkbox the deploy job looks for
+    // then the body contains the marker and the checkbox the trigger job looks for
     expect(run).toContain('$PREVIEW_MARKER');
     expect(run).toContain('- [ ] $PREVIEW_CHECKBOX');
     // and the step checks for an existing comment before posting
@@ -76,9 +100,9 @@ describe('PR preview: on-demand handshake', () => {
     expect(run).toContain('contains(\\"$PREVIEW_MARKER\\")');
   });
 
-  it("should deploy only when the bot's own comment is edited with the box ticked", () => {
-    // given the deploy job condition
-    const condition = String(deployJob.if);
+  it("should trigger only when the bot's own comment is edited with the box ticked", () => {
+    // given the trigger job condition
+    const condition = String(triggerJob.if);
 
     // then it is bound to comment edits on pull requests
     expect(condition).toContain("github.event_name == 'issue_comment'");
@@ -96,33 +120,61 @@ describe('PR preview: on-demand handshake', () => {
     );
   });
 
-  it('should untick the box and verify the requester before checking out the PR head', () => {
-    // given the deploy job steps
-    const checkoutAt = stepIndex(deployJob, isCheckout);
-    const untickAt = stepIndex(
-      deployJob,
-      (s) =>
-        typeof s.run === 'string' && s.run.includes('- [ ] $PREVIEW_CHECKBOX')
-    );
-    const resolveAt = stepIndex(
-      deployJob,
-      (s) =>
-        typeof s.run === 'string' &&
-        s.run.includes('isCrossRepository') &&
-        s.run.includes('/permission')
-    );
+  it('should never check out code in the comment-triggered job', () => {
+    // given the trigger job steps
+    // then no actions/checkout step exists (privileged context + PR head = untrusted checkout)
+    expect(triggerJob.steps.some(isCheckout)).toBe(false);
+    // and the job is allowed to dispatch workflows
+    expect(triggerJob.permissions.actions).toBe('write');
+  });
 
-    // then all three steps exist
-    expect(checkoutAt).toBeGreaterThan(-1);
-    expect(untickAt).toBeGreaterThan(-1);
-    expect(resolveAt).toBeGreaterThan(-1);
-    // and the untick + fork/permission checks run before foreign code is checked out
-    expect(untickAt).toBeLessThan(checkoutAt);
-    expect(resolveAt).toBeLessThan(checkoutAt);
-    // and the checkout targets the resolved head SHA, not the default branch
-    expect(deployJob.steps[checkoutAt].with.ref).toBe(
-      '${{ steps.pr.outputs.sha }}'
+  it('should untick the box and verify the requester before dispatching', () => {
+    // given the trigger job steps
+    const untickAt = stepIndex(triggerJob, (s) =>
+      runOf(s).includes('- [ ] $PREVIEW_CHECKBOX')
     );
+    const dispatchAt = stepIndex(triggerJob, (s) =>
+      runOf(s).includes('/actions/workflows/$PREVIEW_WORKFLOW/dispatches')
+    );
+    const dispatch = runOf(triggerJob.steps[dispatchAt]);
+
+    // then both steps exist, untick first
+    expect(untickAt).toBeGreaterThan(-1);
+    expect(dispatchAt).toBeGreaterThan(untickAt);
+    // and the dispatch step refuses fork heads and requesters without write access
+    expect(dispatch).toContain('isCrossRepository');
+    expect(dispatch).toContain('/permission');
+    expect(dispatch.indexOf('isCrossRepository')).toBeLessThan(
+      dispatch.indexOf('/dispatches')
+    );
+    // and the dispatched run targets the PR branch with the comment to update
+    expect(dispatch).toContain('-f ref="$head_ref"');
+    expect(dispatch).toContain('inputs[pr_number]=$PR_NUMBER');
+    expect(dispatch).toContain('inputs[comment_id]=$COMMENT_ID');
+    // and a failed start is reported back into the comment
+    const failureStep = triggerJob.steps.at(-1);
+    expect(failureStep.if).toBe('failure()');
+    expect(runOf(failureStep)).toContain('issues/comments/$COMMENT_ID');
+  });
+
+  it('should run the deploy only via workflow_dispatch with the comment to update', () => {
+    // given the deploy workflow trigger
+    const { inputs } = deploy.on.workflow_dispatch;
+
+    // then it is not started by any PR event
+    expect(Object.keys(deploy.on)).toEqual(['workflow_dispatch']);
+    // and both handshake inputs are mandatory
+    expect(inputs.pr_number.required).toBe(true);
+    expect(inputs.comment_id.required).toBe(true);
+  });
+
+  it('should check out the dispatched branch itself, not a PR-derived ref', () => {
+    // given the deploy job's checkout step
+    const checkout = deployJob.steps.find(isCheckout);
+
+    // then it exists without a ref override
+    expect(checkout).toBeDefined();
+    expect(checkout.with?.ref).toBeUndefined();
   });
 
   it('should always write the outcome back into the request comment', () => {
@@ -131,14 +183,14 @@ describe('PR preview: on-demand handshake', () => {
 
     // then it runs regardless of the job outcome and patches the comment
     expect(last.if).toBe('always()');
-    expect(last.run).toContain('issues/comments/$COMMENT_ID');
-    expect(last.run).toContain('_Status: ');
+    expect(runOf(last)).toContain('issues/comments/$COMMENT_ID');
+    expect(runOf(last)).toContain('_Status: ');
   });
 
   it('should keep the shared staging project serialised', () => {
-    // given the workflow concurrency block
+    // given the deploy workflow concurrency block
     // then it is one group without cancellation
-    expect(workflow.concurrency).toEqual({
+    expect(deploy.concurrency).toEqual({
       group: 'firebase-staging-preview',
       'cancel-in-progress': false,
     });

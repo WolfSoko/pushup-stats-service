@@ -32,7 +32,7 @@ Java is required — the Firestore emulator is a JAR.
 
 The same specs also run against the deployed PR preview and the real
 staging Firebase project, from the `build_and_preview` job in
-`.github/workflows/firebase-hosting-pull-request.yml` — right after that
+`.github/workflows/firebase-hosting-staging-preview.yml` — right after that
 job has deployed the rules, the functions and the hosting channel it is
 about to test. That job only runs once someone ticks the preview checkbox
 in the bot comment on the PR (see `docs/ci-cd.md` → "PR previews on
