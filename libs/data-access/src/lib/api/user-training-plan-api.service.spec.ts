@@ -2,10 +2,11 @@ import { PLATFORM_ID } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import * as firestoreFns from '@angular/fire/firestore';
 import { Firestore } from '@angular/fire/firestore';
-import { UserTrainingPlan } from '@pu-stats/models';
+import { ParkedTrainingPlan, UserTrainingPlan } from '@pu-stats/models';
 import { render } from '@testing-library/angular';
 import { Observable, of } from 'rxjs';
 import { UserTrainingPlanApiService } from './user-training-plan-api.service';
+import { PendingRequestsService } from '../pending-requests.service';
 
 jest.mock('@angular/fire/auth', () => ({
   Auth: jest.fn(),
@@ -17,6 +18,8 @@ jest.mock('@angular/fire/firestore', () => ({
   docData: jest.fn(),
   setDoc: jest.fn(() => Promise.resolve()),
   updateDoc: jest.fn(() => Promise.resolve()),
+  getDoc: jest.fn(() => Promise.resolve({ exists: () => false })),
+  deleteDoc: jest.fn(() => Promise.resolve()),
   runTransaction: jest.fn(),
   arrayUnion: jest.fn((...values: unknown[]) => ({
     __type: 'arrayUnion',
@@ -140,7 +143,7 @@ describe('UserTrainingPlanApiService', () => {
       })
       .subscribe((r) => (result = r));
 
-    await Promise.resolve();
+    await new Promise<void>((resolve) => setTimeout(resolve));
     expect(firestoreFns.setDoc).toHaveBeenCalled();
     expect(result?.planId).toBe('challenge-30d-v1');
     expect(result?.userId).toBe('u');
@@ -641,5 +644,69 @@ describe('UserTrainingPlanApiService', () => {
       service.setTestResult('u', 1, 0, 20)
     );
     expect(payload['testResults']).toEqual(['1:0:20']);
+  });
+
+  describe('pending-request tracking', () => {
+    async function setupTracking(): Promise<{
+      service: UserTrainingPlanApiService;
+      track: jest.SpyInstance;
+    }> {
+      (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+      const { fixture } = await render('', {
+        providers: [
+          UserTrainingPlanApiService,
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          { provide: Firestore, useValue: {} },
+          { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+        ],
+      });
+      const injector = fixture.debugElement.injector;
+      return {
+        service: injector.get(UserTrainingPlanApiService),
+        track: jest.spyOn(injector.get(PendingRequestsService), 'track'),
+      };
+    }
+
+    const plan = {
+      planId: 'challenge-30d-v1',
+      startDate: '2026-04-01',
+      status: 'active',
+      completedDays: [],
+    } as Omit<UserTrainingPlan, 'userId'>;
+    const parked = { planId: 'challenge-30d-v1' } as ParkedTrainingPlan;
+
+    it.each([
+      [
+        'updatePlan',
+        (s: UserTrainingPlanApiService) =>
+          s.updatePlan('u', { status: 'paused' }),
+      ],
+      ['setPlan', (s: UserTrainingPlanApiService) => s.setPlan('u', plan)],
+      ['parkPlan', (s: UserTrainingPlanApiService) => s.parkPlan('u', parked)],
+      [
+        'getParkedPlan',
+        (s: UserTrainingPlanApiService) =>
+          s.getParkedPlan('u', 'challenge-30d-v1'),
+      ],
+      [
+        'deleteParkedPlan',
+        (s: UserTrainingPlanApiService) =>
+          s.deleteParkedPlan('u', 'challenge-30d-v1'),
+      ],
+      [
+        'removeSkippedDay',
+        (s: UserTrainingPlanApiService) => s.removeSkippedDay('u', 3),
+      ],
+    ])('should track %s as a pending request', async (_name, call) => {
+      // given
+      const { service, track } = await setupTracking();
+
+      // when
+      call(service).subscribe();
+      await Promise.resolve();
+
+      // then
+      expect(track).toHaveBeenCalledTimes(1);
+    });
   });
 });

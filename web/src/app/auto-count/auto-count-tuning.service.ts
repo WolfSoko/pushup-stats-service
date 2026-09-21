@@ -11,6 +11,7 @@ import {
   serverTimestamp,
   setDoc,
 } from '@angular/fire/firestore';
+import { PendingRequestsService } from '@pu-stats/data-access';
 
 import {
   sanitizeTuningValues,
@@ -33,6 +34,7 @@ export const AUTO_COUNT_PROFILES_COLLECTION = 'autoCountProfiles';
 @Injectable({ providedIn: 'root' })
 export class AutoCountTuningService {
   private readonly firestore = inject(Firestore, { optional: true });
+  private readonly pending = inject(PendingRequestsService);
 
   private readonly collectionFn: (
     firestore: Firestore,
@@ -57,7 +59,7 @@ export class AutoCountTuningService {
       this.firestore,
       AUTO_COUNT_PROFILES_COLLECTION
     );
-    const snapshot = await this.getDocsFn(ref);
+    const snapshot = await this.pending.track(this.getDocsFn(ref));
     const profiles: TuningProfileDoc[] = [];
     for (const document of snapshot.docs) {
       const data = document.data() as Record<string, unknown>;
@@ -80,12 +82,14 @@ export class AutoCountTuningService {
       this.collectionFn(this.firestore, AUTO_COUNT_PROFILES_COLLECTION),
       profile.exerciseId
     );
-    await this.setDocFn(ref, {
-      kind: profile.kind,
-      values: sanitizeTuningValues(profile.kind, profile.values),
-      published: profile.published,
-      updatedBy: userId,
-      updatedAt: this.serverTimestampFn(),
-    });
+    await this.pending.track(
+      this.setDocFn(ref, {
+        kind: profile.kind,
+        values: sanitizeTuningValues(profile.kind, profile.values),
+        published: profile.published,
+        updatedBy: userId,
+        updatedAt: this.serverTimestampFn(),
+      })
+    );
   }
 }

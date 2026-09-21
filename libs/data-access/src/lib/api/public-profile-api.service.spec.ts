@@ -8,6 +8,7 @@ import { TestBed } from '@angular/core/testing';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import { type PublicProfile } from '@pu-stats/models';
 import { PublicProfileApiService } from './public-profile-api.service';
+import { PendingRequestsService } from '../pending-requests.service';
 
 const sampleProfile: PublicProfile = {
   uid: 'abcdef1234567890',
@@ -141,6 +142,20 @@ describe('PublicProfileApiService', () => {
       await expect(service.getProfile('abcdef1234567890')).rejects.toBe(
         'boom-string'
       );
+    });
+  });
+
+  describe('pending-request tracking', () => {
+    it('should track the callable as a pending request', async () => {
+      // given
+      const { service } = setup(async () => ({ data: sampleProfile }));
+      const track = jest.spyOn(TestBed.inject(PendingRequestsService), 'track');
+
+      // when
+      await service.getProfile('abcdef1234567890');
+
+      // then
+      expect(track).toHaveBeenCalledTimes(1);
     });
   });
 });

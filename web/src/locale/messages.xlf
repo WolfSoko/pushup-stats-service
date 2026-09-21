@@ -4407,7 +4407,7 @@
     </unit>
     <unit id="toolbarDailyGoal">
       <notes>
-        <note category="location">web/src/app/app.html:78,79</note>
+        <note category="location">web/src/app/app.html:79,80</note>
       </notes>
       <segment>
         <source>Tagesziel</source>
@@ -4415,7 +4415,7 @@
     </unit>
     <unit id="toolbarDailyGoal.checkHint">
       <notes>
-        <note category="location">web/src/app/app.html:111,113</note>
+        <note category="location">web/src/app/app.html:112,114</note>
       </notes>
       <segment>
         <source> Teilziele abhaken kannst du auf dem Dashboard. </source>
@@ -4423,7 +4423,7 @@
     </unit>
     <unit id="nav.admin">
       <notes>
-        <note category="location">web/src/app/app.html:136,137</note>
+        <note category="location">web/src/app/app.html:137,138</note>
       </notes>
       <segment>
         <source>Admin-Bereich</source>
@@ -4431,7 +4431,7 @@
     </unit>
     <unit id="footer.aria">
       <notes>
-        <note category="location">web/src/app/app.html:153</note>
+        <note category="location">web/src/app/app.html:154</note>
       </notes>
       <segment>
         <source>Rechtliches</source>
@@ -4439,7 +4439,7 @@
     </unit>
     <unit id="footer.pushupTypes">
       <notes>
-        <note category="location">web/src/app/app.html:158,160</note>
+        <note category="location">web/src/app/app.html:159,161</note>
       </notes>
       <segment>
         <source>Liegestütztypen</source>
@@ -4447,7 +4447,7 @@
     </unit>
     <unit id="footer.exercises">
       <notes>
-        <note category="location">web/src/app/app.html:161,163</note>
+        <note category="location">web/src/app/app.html:162,164</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -4455,7 +4455,7 @@
     </unit>
     <unit id="footer.about">
       <notes>
-        <note category="location">web/src/app/app.html:163,164</note>
+        <note category="location">web/src/app/app.html:164,165</note>
       </notes>
       <segment>
         <source>Über uns</source>
@@ -4463,7 +4463,7 @@
     </unit>
     <unit id="footer.impressum">
       <notes>
-        <note category="location">web/src/app/app.html:165,167</note>
+        <note category="location">web/src/app/app.html:166,168</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -4471,7 +4471,7 @@
     </unit>
     <unit id="footer.datenschutz">
       <notes>
-        <note category="location">web/src/app/app.html:168,171</note>
+        <note category="location">web/src/app/app.html:169,172</note>
       </notes>
       <segment>
         <source>Datenschutz</source>
@@ -4479,7 +4479,7 @@
     </unit>
     <unit id="footer.cookies">
       <notes>
-        <note category="location">web/src/app/app.html:175,177</note>
+        <note category="location">web/src/app/app.html:176,178</note>
       </notes>
       <segment>
         <source> Cookie-Einstellungen </source>
@@ -4839,7 +4839,7 @@
     </unit>
     <unit id="sw.update.buttonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:114</note>
+        <note category="location">web/src/app/app.ts:116</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar – jetzt neu laden</source>
@@ -4847,7 +4847,7 @@
     </unit>
     <unit id="sw.update.recoverButtonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:115</note>
+        <note category="location">web/src/app/app.ts:117</note>
       </notes>
       <segment>
         <source>App-Daten beschädigt – jetzt neu laden</source>
@@ -4855,7 +4855,7 @@
     </unit>
     <unit id="toolbarDailyGoal.detailsAria">
       <notes>
-        <note category="location">web/src/app/app.ts:256</note>
+        <note category="location">web/src/app/app.ts:258</note>
       </notes>
       <segment>
         <source>Tagesziel-Einzelpositionen anzeigen</source>
@@ -4863,7 +4863,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:325</note>
+        <note category="location">web/src/app/app.ts:327</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4871,7 +4871,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:328</note>
+        <note category="location">web/src/app/app.ts:330</note>
       </notes>
       <segment>
         <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
@@ -4879,7 +4879,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:396</note>
+        <note category="location">web/src/app/app.ts:398</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -4887,7 +4887,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:425</note>
+        <note category="location">web/src/app/app.ts:427</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -4895,7 +4895,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:432</note>
+        <note category="location">web/src/app/app.ts:434</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -6201,6 +6201,14 @@
       </notes>
       <segment>
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></source>
+      </segment>
+    </unit>
+    <unit id="pendingRequest.indicatorAria">
+      <notes>
+        <note category="location">web/src/app/core/pending-request-indicator.component.ts:20,21</note>
+      </notes>
+      <segment>
+        <source>Anfrage wird verarbeitet</source>
       </segment>
     </unit>
     <unit id="quickAdd.success.create">

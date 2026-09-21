@@ -6,6 +6,7 @@ import {
   AUTO_COUNT_PROFILES_COLLECTION,
   AutoCountTuningService,
 } from './auto-count-tuning.service';
+import { PendingRequestsService } from '@pu-stats/data-access';
 
 const override = (
   service: AutoCountTuningService,
@@ -163,5 +164,52 @@ describe('AutoCountTuningService', () => {
         'uid-1'
       )
     ).rejects.toThrow(/Firestore/);
+  });
+
+  it('given a slow read, when loading, then it counts as a pending request until it lands', async () => {
+    // given
+    const pending = TestBed.inject(PendingRequestsService);
+    let resolveRead!: () => void;
+    getDocsFn.mockReturnValue(
+      new Promise((resolve) => (resolveRead = () => resolve(makeSnapshot([]))))
+    );
+
+    // when
+    const load = service.load();
+
+    // then
+    expect(pending.pending()).toBe(1);
+
+    // when
+    resolveRead();
+    await load;
+
+    // then
+    expect(pending.pending()).toBe(0);
+  });
+
+  it('given a slow write, when saving, then it counts as a pending request until it lands', async () => {
+    // given
+    const pending = TestBed.inject(PendingRequestsService);
+    let resolveWrite!: () => void;
+    setDocFn.mockReturnValue(
+      new Promise<void>((resolve) => (resolveWrite = resolve))
+    );
+
+    // when
+    const save = service.save(
+      { exerciseId: 'pushup', kind: 'angle', values: {}, published: false },
+      'admin-1'
+    );
+
+    // then
+    expect(pending.pending()).toBe(1);
+
+    // when
+    resolveWrite();
+    await save;
+
+    // then
+    expect(pending.pending()).toBe(0);
   });
 });

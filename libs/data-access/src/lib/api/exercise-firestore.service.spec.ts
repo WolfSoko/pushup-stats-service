@@ -20,6 +20,7 @@ import {
   ExerciseFirestoreService,
   ExerciseValidationError,
 } from './exercise-firestore.service';
+import { PendingRequestsService } from '../pending-requests.service';
 
 describe('ExerciseFirestoreService', () => {
   let service: ExerciseFirestoreService;
@@ -510,6 +511,55 @@ describe('ExerciseFirestoreService', () => {
     it('returns ok when delete succeeds', async () => {
       const result = await firstValueFrom(service.deleteEntry('s1'));
       expect(result).toEqual({ ok: true });
+    });
+  });
+
+  describe('pending-request tracking', () => {
+    let track: jest.SpyInstance;
+
+    beforeEach(() => {
+      track = jest.spyOn(TestBed.inject(PendingRequestsService), 'track');
+    });
+
+    it('should track the listEntries read as a pending request', async () => {
+      // when
+      await firstValueFrom(service.listEntries('u1'));
+
+      // then
+      expect(track).toHaveBeenCalledTimes(1);
+    });
+
+    it('should track the createEntry write as a pending request', async () => {
+      // when
+      await firstValueFrom(
+        service.createEntry('u1', {
+          exerciseId: 'abs.situps',
+          timestamp: '2026-04-15T08:00:00Z',
+          reps: 25,
+          source: 'web',
+        })
+      );
+
+      // then
+      expect(track).toHaveBeenCalledTimes(1);
+    });
+
+    it('should track the updateEntry write as a pending request', async () => {
+      // when
+      await firstValueFrom(
+        service.updateEntry('s1', 'abs.situps', { source: 'mobile' })
+      );
+
+      // then
+      expect(track).toHaveBeenCalledTimes(1);
+    });
+
+    it('should track the deleteEntry write as a pending request', async () => {
+      // when
+      await firstValueFrom(service.deleteEntry('s1'));
+
+      // then
+      expect(track).toHaveBeenCalledTimes(1);
     });
   });
 });

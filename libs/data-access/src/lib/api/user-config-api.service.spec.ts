@@ -5,6 +5,7 @@ import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
 import { render } from '@testing-library/angular';
 import { of } from 'rxjs';
 import { UserConfigApiService } from './user-config-api.service';
+import { PendingRequestsService } from '../pending-requests.service';
 
 jest.mock('@angular/fire/auth', () => ({
   Auth: jest.fn(),
@@ -143,7 +144,7 @@ describe('UserConfigApiService', () => {
       .updateConfig('u', { dailyGoal: 120 } as UserConfigUpdate)
       .subscribe((r) => (result = r));
 
-    await Promise.resolve();
+    await new Promise<void>((resolve) => setTimeout(resolve));
     expect(firestoreFns.setDoc).toHaveBeenCalledWith(
       { id: 'u' },
       { userId: 'u', dailyGoal: 120 },
@@ -169,5 +170,56 @@ describe('UserConfigApiService', () => {
       .subscribe((r) => (result = r));
 
     expect(result).toBeUndefined();
+  });
+
+  describe('pending-request tracking', () => {
+    async function setupTracking(): Promise<{
+      service: UserConfigApiService;
+      track: jest.SpyInstance;
+    }> {
+      const firestoreFns = await import('@angular/fire/firestore');
+      (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+      const { fixture } = await render('', {
+        providers: [
+          UserConfigApiService,
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          { provide: Firestore, useValue: {} },
+          { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+        ],
+      });
+      const injector = fixture.debugElement.injector;
+      return {
+        service: injector.get(UserConfigApiService),
+        track: jest.spyOn(injector.get(PendingRequestsService), 'track'),
+      };
+    }
+
+    it('should track updateConfig as a pending request', async () => {
+      // given
+      const { service, track } = await setupTracking();
+
+      // when
+      service
+        .updateConfig('u', { dailyGoal: 120 } as UserConfigUpdate)
+        .subscribe();
+      await Promise.resolve();
+
+      // then
+      expect(track).toHaveBeenCalledTimes(1);
+    });
+
+    it('should track setConfig as a pending request', async () => {
+      // given
+      const { service, track } = await setupTracking();
+
+      // when
+      await service.setConfig('u', {
+        userId: 'u',
+        dailyGoal: 50,
+      } as UserConfig);
+
+      // then
+      expect(track).toHaveBeenCalledTimes(1);
+    });
   });
 });

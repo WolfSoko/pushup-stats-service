@@ -24,6 +24,7 @@ import {
 } from '@pu-stats/models';
 import { from, map, Observable, of } from 'rxjs';
 import { nextSkippedDays } from './user-training-plan.jump';
+import { PendingRequestsService } from '../pending-requests.service';
 
 const COLLECTION = 'userTrainingPlans';
 /** Subcollection holding the progress of plans the user switched away from. */
@@ -62,6 +63,7 @@ function patchedPlan(
 export class UserTrainingPlanApiService {
   private readonly firestore = inject(Firestore, { optional: true });
   private readonly auth = inject(Auth, { optional: true });
+  private readonly pending = inject(PendingRequestsService);
 
   getActivePlan(userId: string): Observable<UserTrainingPlan | null> {
     const effectiveUserId = this.resolveUserId(userId);
@@ -88,7 +90,7 @@ export class UserTrainingPlanApiService {
       userId: effectiveUserId,
       updatedAt: new Date().toISOString(),
     };
-    return from(setDoc(ref, payload, { merge: true })).pipe(
+    return from(this.pending.track(setDoc(ref, payload, { merge: true }))).pipe(
       map(() => patchedPlan(effectiveUserId, patch))
     );
   }
@@ -313,7 +315,9 @@ export class UserTrainingPlanApiService {
       createdAt: plan.createdAt ?? nowIso,
       updatedAt: nowIso,
     };
-    return from(setDoc(ref, payload)).pipe(map(() => payload));
+    return from(this.pending.track(setDoc(ref, payload))).pipe(
+      map(() => payload)
+    );
   }
 
   /**
@@ -324,7 +328,9 @@ export class UserTrainingPlanApiService {
   parkPlan(userId: string, parked: ParkedTrainingPlan): Observable<void> {
     const ref = this.historyRef(userId, parked.planId);
     if (!ref) return of(void 0);
-    return from(setDoc(ref, parked)).pipe(map(() => void 0));
+    return from(this.pending.track(setDoc(ref, parked))).pipe(
+      map(() => void 0)
+    );
   }
 
   /** A plan's parked progress, or null when it has none. */
@@ -334,7 +340,7 @@ export class UserTrainingPlanApiService {
   ): Observable<ParkedTrainingPlan | null> {
     const ref = this.historyRef(userId, planId);
     if (!ref) return of(null);
-    return from(getDoc(ref)).pipe(
+    return from(this.pending.track(getDoc(ref))).pipe(
       map((snap) => (snap.exists() ? snap.data() : null))
     );
   }
@@ -343,7 +349,7 @@ export class UserTrainingPlanApiService {
   deleteParkedPlan(userId: string, planId: string): Observable<void> {
     const ref = this.historyRef(userId, planId);
     if (!ref) return of(void 0);
-    return from(deleteDoc(ref)).pipe(map(() => void 0));
+    return from(this.pending.track(deleteDoc(ref))).pipe(map(() => void 0));
   }
 
   private historyRef(
@@ -370,10 +376,12 @@ export class UserTrainingPlanApiService {
     const effectiveUserId = this.resolveUserId(userId);
     if (!effectiveUserId || !this.firestore) return of(void 0);
     return from(
-      updateDoc(this.docRef(effectiveUserId), {
-        ...fields,
-        updatedAt: new Date().toISOString(),
-      })
+      this.pending.track(
+        updateDoc(this.docRef(effectiveUserId), {
+          ...fields,
+          updatedAt: new Date().toISOString(),
+        })
+      )
     ).pipe(map(() => void 0));
   }
 
