@@ -1,4 +1,8 @@
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
 import {
   ApplicationConfig,
   ErrorHandler,
@@ -55,11 +59,15 @@ import { appRoutes } from './app.routes';
 import { createAppRouterFeatures } from './app.router-features';
 import { DeferredSentryErrorHandler } from './core/observability/sentry';
 import { ReminderGoalService } from './core/reminder-goal.service';
+import { pendingRequestsInterceptor } from './core/pending-requests.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(withFetch()),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([pendingRequestsInterceptor])
+    ),
     provideRouter(appRoutes, ...createAppRouterFeatures()),
     // Sentry error monitoring – production only (not in dev mode or emulator).
     // The handler buffers errors until the Sentry SDK is lazily initialised

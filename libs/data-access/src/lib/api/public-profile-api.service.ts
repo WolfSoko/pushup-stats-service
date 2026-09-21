@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import { type PublicProfile } from '@pu-stats/models';
+import { PendingRequestsService } from '../pending-requests.service';
 
 /**
  * Thin wrapper around the `getPublicProfile` callable Cloud Function.
@@ -13,6 +14,7 @@ import { type PublicProfile } from '@pu-stats/models';
 @Injectable({ providedIn: 'root' })
 export class PublicProfileApiService {
   private readonly functions = inject(Functions);
+  private readonly pending = inject(PendingRequestsService);
 
   /**
    * Fetches the public profile projection. Returns `null` when the requested
@@ -25,7 +27,7 @@ export class PublicProfileApiService {
       'getPublicProfile'
     );
     try {
-      const result = await callable({ uid });
+      const result = await this.pending.track(callable({ uid }));
       const data = result.data;
       if (!data) return null;
       // Hosting can serve ahead of a functions deploy for a moment, and a

@@ -8,6 +8,7 @@ import {
   serverTimestamp,
 } from '@angular/fire/firestore';
 import { UserContextService } from '@pu-auth/auth';
+import { PendingRequestsService } from '@pu-stats/data-access';
 
 import type { AutoCountFeedback } from './auto-count-feedback.models';
 
@@ -25,6 +26,7 @@ export const AUTO_COUNT_FEEDBACK_COLLECTION = 'autoCountFeedback';
 export class AutoCountFeedbackService {
   private readonly firestore = inject(Firestore, { optional: true });
   private readonly user = inject(UserContextService);
+  private readonly pending = inject(PendingRequestsService);
 
   private readonly collectionFn: (
     firestore: Firestore,
@@ -42,16 +44,18 @@ export class AutoCountFeedbackService {
       this.firestore,
       AUTO_COUNT_FEEDBACK_COLLECTION
     );
-    await this.addDocFn(ref, {
-      exerciseId: feedback.exerciseId,
-      profileId: feedback.profileId,
-      mode: feedback.mode,
-      detectedReps: feedback.detectedReps,
-      actualReps: feedback.actualReps,
-      thresholds: { ...feedback.thresholds },
-      userId: this.user.userIdSafe() || null,
-      userAgent: globalThis.navigator?.userAgent ?? null,
-      createdAt: this.serverTimestampFn(),
-    });
+    await this.pending.track(
+      this.addDocFn(ref, {
+        exerciseId: feedback.exerciseId,
+        profileId: feedback.profileId,
+        mode: feedback.mode,
+        detectedReps: feedback.detectedReps,
+        actualReps: feedback.actualReps,
+        thresholds: { ...feedback.thresholds },
+        userId: this.user.userIdSafe() || null,
+        userAgent: globalThis.navigator?.userAgent ?? null,
+        createdAt: this.serverTimestampFn(),
+      })
+    );
   }
 }

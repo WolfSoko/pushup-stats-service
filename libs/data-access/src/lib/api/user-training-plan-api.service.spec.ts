@@ -2,10 +2,11 @@ import { PLATFORM_ID } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import * as firestoreFns from '@angular/fire/firestore';
 import { Firestore } from '@angular/fire/firestore';
-import { UserTrainingPlan } from '@pu-stats/models';
+import { ParkedTrainingPlan, UserTrainingPlan } from '@pu-stats/models';
 import { render } from '@testing-library/angular';
 import { Observable, of } from 'rxjs';
 import { UserTrainingPlanApiService } from './user-training-plan-api.service';
+import { PendingRequestsService } from '../pending-requests.service';
 
 jest.mock('@angular/fire/auth', () => ({
   Auth: jest.fn(),
@@ -17,6 +18,8 @@ jest.mock('@angular/fire/firestore', () => ({
   docData: jest.fn(),
   setDoc: jest.fn(() => Promise.resolve()),
   updateDoc: jest.fn(() => Promise.resolve()),
+  getDoc: jest.fn(() => Promise.resolve({ exists: () => false })),
+  deleteDoc: jest.fn(() => Promise.resolve()),
   runTransaction: jest.fn(),
   arrayUnion: jest.fn((...values: unknown[]) => ({
     __type: 'arrayUnion',
@@ -140,7 +143,7 @@ describe('UserTrainingPlanApiService', () => {
       })
       .subscribe((r) => (result = r));
 
-    await Promise.resolve();
+    await new Promise<void>((resolve) => setTimeout(resolve));
     expect(firestoreFns.setDoc).toHaveBeenCalled();
     expect(result?.planId).toBe('challenge-30d-v1');
     expect(result?.userId).toBe('u');
@@ -641,5 +644,128 @@ describe('UserTrainingPlanApiService', () => {
       service.setTestResult('u', 1, 0, 20)
     );
     expect(payload['testResults']).toEqual(['1:0:20']);
+  });
+
+  describe('pending-request tracking', () => {
+    async function setupTracking(): Promise<{
+      service: UserTrainingPlanApiService;
+      pending: PendingRequestsService;
+      track: jest.SpyInstance;
+    }> {
+      (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+      (firestoreFns.runTransaction as jest.Mock).mockResolvedValue(undefined);
+      const { fixture } = await render('', {
+        providers: [
+          UserTrainingPlanApiService,
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          { provide: Firestore, useValue: {} },
+          { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+        ],
+      });
+      const injector = fixture.debugElement.injector;
+      const pending = injector.get(PendingRequestsService);
+      return {
+        service: injector.get(UserTrainingPlanApiService),
+        pending,
+        track: jest.spyOn(pending, 'track'),
+      };
+    }
+
+    const settled = () => new Promise<void>((resolve) => setTimeout(resolve));
+
+    const plan = {
+      planId: 'challenge-30d-v1',
+      startDate: '2026-04-01',
+      status: 'active',
+      completedDays: [],
+    } as Omit<UserTrainingPlan, 'userId'>;
+    const parked = { planId: 'challenge-30d-v1' } as ParkedTrainingPlan;
+
+    it.each([
+      [
+        'updatePlan',
+        (s: UserTrainingPlanApiService) =>
+          s.updatePlan('u', { status: 'paused' }),
+      ],
+      ['setPlan', (s: UserTrainingPlanApiService) => s.setPlan('u', plan)],
+      ['parkPlan', (s: UserTrainingPlanApiService) => s.parkPlan('u', parked)],
+      [
+        'getParkedPlan',
+        (s: UserTrainingPlanApiService) =>
+          s.getParkedPlan('u', 'challenge-30d-v1'),
+      ],
+      [
+        'deleteParkedPlan',
+        (s: UserTrainingPlanApiService) =>
+          s.deleteParkedPlan('u', 'challenge-30d-v1'),
+      ],
+      [
+        'removeSkippedDay',
+        (s: UserTrainingPlanApiService) => s.removeSkippedDay('u', 3),
+      ],
+      [
+        'jumpToDay',
+        (s: UserTrainingPlanApiService) =>
+          s.jumpToDay('u', {
+            newStartDate: '2026-04-15',
+            targetDayIndex: 3,
+            nonRestDaysBeforeTarget: [1, 2],
+          }),
+      ],
+      [
+        'setTestResult',
+        (s: UserTrainingPlanApiService) => s.setTestResult('u', 1, 0, 25),
+      ],
+      [
+        'removeTestResult',
+        (s: UserTrainingPlanApiService) => s.removeTestResult('u', 1, 0),
+      ],
+    ])('should track %s as a pending request', async (_name, call) => {
+      // given
+      const { service, pending, track } = await setupTracking();
+
+      // when
+      call(service).subscribe();
+
+      // then
+      expect(track).toHaveBeenCalledTimes(1);
+      expect(pending.pending()).toBe(1);
+
+      // when
+      await settled();
+
+      // then
+      expect(pending.pending()).toBe(0);
+    });
+
+    it('should hand the transaction promise itself to the tracker', async () => {
+      // given
+      const { service, track } = await setupTracking();
+      const transaction = Promise.resolve();
+      (firestoreFns.runTransaction as jest.Mock).mockReturnValue(transaction);
+
+      // when
+      service.setTestResult('u', 1, 0, 25).subscribe();
+
+      // then
+      expect(track).toHaveBeenCalledWith(transaction);
+    });
+
+    it('should settle the count when the transaction rejects', async () => {
+      // given
+      const { service, pending } = await setupTracking();
+      (firestoreFns.runTransaction as jest.Mock).mockRejectedValue(
+        new Error('contention')
+      );
+
+      // when
+      const failed = new Promise<unknown>((resolve) =>
+        service.removeTestResult('u', 1, 0).subscribe({ error: resolve })
+      );
+
+      // then
+      await expect(failed).resolves.toBeInstanceOf(Error);
+      expect(pending.pending()).toBe(0);
+    });
   });
 });

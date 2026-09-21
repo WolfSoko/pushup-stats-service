@@ -15227,5 +15227,11 @@ Active:         </target>
         <target>Diese App bekommt einen neuen Namen</target>
       </segment>
     </unit>
+    <unit id="pendingRequest.indicatorAria">
+      <segment state="initial">
+        <source>Anfrage wird verarbeitet</source>
+        <target>Anfrage wird verarbeitet</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

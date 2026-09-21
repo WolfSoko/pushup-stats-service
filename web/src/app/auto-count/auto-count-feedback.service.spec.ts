@@ -8,6 +8,7 @@ import {
   AUTO_COUNT_FEEDBACK_COLLECTION,
   AutoCountFeedbackService,
 } from './auto-count-feedback.service';
+import { PendingRequestsService } from '@pu-stats/data-access';
 
 const REPORT: AutoCountFeedback = {
   exerciseId: 'pushup',
@@ -101,5 +102,28 @@ describe('AutoCountFeedbackService', () => {
     // when / then
     await expect(service.submit(REPORT)).resolves.toBeUndefined();
     expect(addDocFn).not.toHaveBeenCalled();
+  });
+
+  it('should count the write as a pending request until it lands', async () => {
+    // given
+    setup();
+    const pending = TestBed.inject(PendingRequestsService);
+    let resolveWrite!: () => void;
+    addDocFn.mockReturnValue(
+      new Promise<void>((resolve) => (resolveWrite = resolve))
+    );
+
+    // when
+    const submit = service.submit(REPORT);
+
+    // then
+    expect(pending.pending()).toBe(1);
+
+    // when
+    resolveWrite();
+    await submit;
+
+    // then
+    expect(pending.pending()).toBe(0);
   });
 });

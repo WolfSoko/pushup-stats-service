@@ -7,11 +7,13 @@ import {
   Firestore,
   serverTimestamp,
 } from '@angular/fire/firestore';
+import { PendingRequestsService } from '@pu-stats/data-access';
 import { FeedbackResult } from './feedback.models';
 
 @Injectable({ providedIn: 'root' })
 export class FeedbackService {
   private readonly firestore = inject(Firestore, { optional: true });
+  private readonly pending = inject(PendingRequestsService);
 
   // Store Firebase functions as instance properties so tests can override them
   // via Object.defineProperty without relying on vi.mock module interception
@@ -32,13 +34,15 @@ export class FeedbackService {
     }
 
     const feedbackRef = this.collectionFn(this.firestore, 'feedback');
-    await this.addDocFn(feedbackRef, {
-      name: feedback.name || null,
-      email: feedback.email || null,
-      message: feedback.message,
-      userId: feedback.anonymous ? null : userId || null,
-      createdAt: this.serverTimestampFn(),
-      userAgent: globalThis.navigator?.userAgent ?? null,
-    });
+    await this.pending.track(
+      this.addDocFn(feedbackRef, {
+        name: feedback.name || null,
+        email: feedback.email || null,
+        message: feedback.message,
+        userId: feedback.anonymous ? null : userId || null,
+        createdAt: this.serverTimestampFn(),
+        userAgent: globalThis.navigator?.userAgent ?? null,
+      })
+    );
   }
 }

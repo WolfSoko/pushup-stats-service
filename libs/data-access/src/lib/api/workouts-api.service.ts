@@ -20,6 +20,7 @@ import {
   type WorkoutSource,
 } from '@pu-stats/models';
 import { map, Observable, of } from 'rxjs';
+import { PendingRequestsService } from '../pending-requests.service';
 
 const COLLECTION = 'workouts';
 
@@ -58,6 +59,7 @@ function inputPayload(input: WorkoutInput): WorkoutInput {
 export class WorkoutsApiService {
   private readonly firestore = inject(Firestore, { optional: true });
   private readonly auth = inject(Auth, { optional: true });
+  private readonly pending = inject(PendingRequestsService);
 
   /** Live list, newest change first. Documents that do not validate are dropped. */
   listWorkouts(userId: string): Observable<ReadonlyArray<Workout>> {
@@ -97,7 +99,7 @@ export class WorkoutsApiService {
       createdAt: now,
       updatedAt: now,
     };
-    await setDoc(ref, payload);
+    await this.pending.track(setDoc(ref, payload));
     return ref.id;
   }
 
@@ -108,10 +110,12 @@ export class WorkoutsApiService {
   ): Promise<void> {
     const ref = this.docRef(userId, id);
     if (!ref) return;
-    await updateDoc(ref, {
-      ...inputPayload(input),
-      updatedAt: new Date().toISOString(),
-    });
+    await this.pending.track(
+      updateDoc(ref, {
+        ...inputPayload(input),
+        updatedAt: new Date().toISOString(),
+      })
+    );
   }
 
   async setOnProfile(
@@ -121,13 +125,15 @@ export class WorkoutsApiService {
   ): Promise<void> {
     const ref = this.docRef(userId, id);
     if (!ref) return;
-    await updateDoc(ref, { onProfile, updatedAt: new Date().toISOString() });
+    await this.pending.track(
+      updateDoc(ref, { onProfile, updatedAt: new Date().toISOString() })
+    );
   }
 
   async deleteWorkout(userId: string, id: string): Promise<void> {
     const ref = this.docRef(userId, id);
     if (!ref) return;
-    await deleteDoc(ref);
+    await this.pending.track(deleteDoc(ref));
   }
 
   private docRef(userId: string, id: string) {

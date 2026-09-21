@@ -3,6 +3,7 @@ import { Auth } from '@angular/fire/auth';
 import { doc, docData, Firestore, getDoc } from '@angular/fire/firestore';
 import { findExerciseDefinition, type MeasurementType } from '@pu-stats/models';
 import { EMPTY, Observable } from 'rxjs';
+import { PendingRequestsService } from '../pending-requests.service';
 
 export type LeaderboardPeriod = 'daily' | 'last7' | 'last30' | 'allTime';
 
@@ -81,6 +82,7 @@ function emptyLeaderboardData(): LeaderboardData {
 export class LeaderboardService {
   private readonly firestore = inject(Firestore, { optional: true });
   private readonly auth = inject(Auth, { optional: true });
+  private readonly pending = inject(PendingRequestsService);
 
   /**
    * Real-time stream of the precomputed `leaderboards/current` document.
@@ -134,8 +136,8 @@ export class LeaderboardService {
     const currentUserId = this.auth?.currentUser?.uid ?? null;
 
     try {
-      const snap = await getDoc(
-        doc(this.firestore, 'leaderboards', 'exercises')
+      const snap = await this.pending.track(
+        getDoc(doc(this.firestore, 'leaderboards', 'exercises'))
       );
       if (!snap.exists()) return emptyLeaderboardData();
 

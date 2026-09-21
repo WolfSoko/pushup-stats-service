@@ -34,6 +34,7 @@ import { AuthService, AuthStore, UserMenuComponent } from '@pu-auth/auth';
 
 import { AvatarService } from './core/avatar.service';
 import { CheerFireworksOverlayComponent } from './core/cheer-fireworks-overlay.component';
+import { PendingRequestIndicatorComponent } from './core/pending-request-indicator.component';
 import { NotificationBellComponent } from './notifications/notification-bell.component';
 import { NotificationStore } from './notifications/notification.store';
 import { filter } from 'rxjs';
@@ -100,6 +101,7 @@ import {
     OverlayModule,
     CheerFireworksOverlayComponent,
     NotificationBellComponent,
+    PendingRequestIndicatorComponent,
   ],
   templateUrl: './app.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

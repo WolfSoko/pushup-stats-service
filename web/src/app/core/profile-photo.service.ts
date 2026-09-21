@@ -1,6 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { deleteObject, ref, Storage, uploadBytes } from '@angular/fire/storage';
 import { UserContextService } from '@pu-auth/auth';
+import { PendingRequestsService } from '@pu-stats/data-access';
 
 import { profilePhotoPath } from './avatar.service';
 import { UserConfigStore } from './user-config.store';
@@ -24,6 +25,15 @@ export class ProfilePhotoService {
   private readonly storage = inject(Storage, { optional: true });
   private readonly user = inject(UserContextService);
   private readonly configStore = inject(UserConfigStore);
+  private readonly pending = inject(PendingRequestsService);
+
+  // Storage calls and the image pipeline are held as instance properties
+  // so specs can swap them — module-mocking `@angular/fire/storage` is not
+  // reliable in the shared web test registry (see `avatar.service.ts`).
+  private readonly refFn: typeof ref = ref;
+  private readonly uploadBytesFn: typeof uploadBytes = uploadBytes;
+  private readonly deleteObjectFn: typeof deleteObject = deleteObject;
+  private readonly prepareFn: typeof prepareProfilePhoto = prepareProfilePhoto;
 
   readonly busy = signal(false);
 
@@ -31,17 +41,17 @@ export class ProfilePhotoService {
     const uid = this.user.userIdSafe();
     if (!this.storage || !uid) return { ok: false, reason: 'upload' };
 
-    const prepared = await prepareProfilePhoto(file);
+    const prepared = await this.prepareFn(file);
     if ('rejected' in prepared) return { ok: false, reason: prepared.rejected };
 
     this.busy.set(true);
     try {
-      await uploadBytes(
-        ref(this.storage, profilePhotoPath(uid)),
-        prepared.blob,
-        {
-          contentType: 'image/jpeg',
-        }
+      await this.pending.track(
+        this.uploadBytesFn(
+          this.refFn(this.storage, profilePhotoPath(uid)),
+          prepared.blob,
+          { contentType: 'image/jpeg' }
+        )
       );
       await this.configStore.save({ photoUpdatedAt: new Date().toISOString() });
       return { ok: true };
@@ -57,7 +67,9 @@ export class ProfilePhotoService {
     if (!this.storage || !uid) return;
     this.busy.set(true);
     try {
-      await deleteObject(ref(this.storage, profilePhotoPath(uid)));
+      await this.pending.track(
+        this.deleteObjectFn(this.refFn(this.storage, profilePhotoPath(uid)))
+      );
     } catch {
       // Already gone is a success for the caller's purposes.
     } finally {

@@ -9,11 +9,13 @@ import {
 } from '@angular/fire/firestore';
 import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
 import { from, map, Observable, of } from 'rxjs';
+import { PendingRequestsService } from '../pending-requests.service';
 
 @Injectable({ providedIn: 'root' })
 export class UserConfigApiService {
   private readonly firestore = inject(Firestore, { optional: true });
   private readonly auth = inject(Auth, { optional: true });
+  private readonly pending = inject(PendingRequestsService);
 
   /**
    * Subscribe to the user's config document. Emits initially and on every
@@ -51,10 +53,12 @@ export class UserConfigApiService {
 
     const ref = this.docRef(effectiveUserId);
     return from(
-      setDoc(
-        ref,
-        { ...patch, userId: effectiveUserId } as Partial<UserConfig>,
-        { merge: true }
+      this.pending.track(
+        setDoc(
+          ref,
+          { ...patch, userId: effectiveUserId } as Partial<UserConfig>,
+          { merge: true }
+        )
       )
     ).pipe(map(() => ({ userId: effectiveUserId, ...patch }) as UserConfig));
   }
@@ -65,10 +69,12 @@ export class UserConfigApiService {
       return Promise.resolve();
     }
 
-    return setDoc(this.docRef(effectiveUserId), {
-      ...config,
-      userId: effectiveUserId,
-    } as UserConfig);
+    return this.pending.track(
+      setDoc(this.docRef(effectiveUserId), {
+        ...config,
+        userId: effectiveUserId,
+      } as UserConfig)
+    );
   }
 
   private resolveUserId(fallbackUserId: string): string {
