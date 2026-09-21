@@ -16,7 +16,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { BusyDirective, createKeyedBusyState } from '@pu-stats/ui';
+import {
+  BusyDirective,
+  createKeyedBusyState,
+  otherKeyBusy,
+} from '@pu-stats/ui';
 import { CallableFunctionsService } from './callable-functions.service';
 import { DeleteFeedbackDialogComponent } from './delete-feedback-dialog.component';
 import { AdminFeedback } from './admin-page.models';
@@ -65,6 +69,14 @@ export class AdminFeedbackSectionComponent {
   readonly feedbackList = signal<AdminFeedback[]>([]);
   /** Keyed `<feedbackId>:<read|issue|delete>`, so one row's actions stay independent. */
   readonly feedbackAction = createKeyedBusyState<string>();
+
+  otherActionBusy(id: string, action: string): boolean {
+    return otherKeyBusy(
+      this.feedbackAction.busyKeys(),
+      `${id}:`,
+      `${id}:${action}`
+    );
+  }
   readonly feedbackActionError = signal<string | null>(null);
 
   readonly feedbackDataSource = new MatTableDataSource<AdminFeedback>([]);

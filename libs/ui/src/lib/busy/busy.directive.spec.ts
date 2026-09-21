@@ -79,15 +79,17 @@ describe('BusyDirective', () => {
     host.busy.set(false);
     await view.fixture.whenStable();
 
-    // then — the click guard lifts at once, the spinner lingers
+    // then — the click guard lifts at once, the spinner and its styling linger
     expect(button.getAttribute('aria-busy')).toBeNull();
     expect(spinner()).not.toBeNull();
+    expect(button.classList.contains('pu-busy')).toBe(true);
 
     // when
     await wait(BUSY_MIN_VISIBLE_MS + 50);
 
     // then
     expect(spinner()).toBeNull();
+    expect(button.classList.contains('pu-busy')).toBe(false);
   });
 
   it('should remove the spinner at once when the work outlived the minimum time', async () => {

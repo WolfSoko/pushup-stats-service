@@ -249,6 +249,8 @@ describe('AdminFeedbackSectionComponent', () => {
       expect(component.feedbackAction.isBusy('fb-1:read')).toBe(true);
       expect(component.feedbackAction.isBusy('fb-1:delete')).toBe(false);
       expect(component.feedbackAction.isBusy('fb-1:issue')).toBe(false);
+      expect(component.otherActionBusy('fb-1', 'delete')).toBe(true);
+      expect(component.otherActionBusy('fb-1', 'read')).toBe(false);
 
       // when
       resolveRead();

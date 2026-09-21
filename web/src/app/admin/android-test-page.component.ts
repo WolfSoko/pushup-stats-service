@@ -25,7 +25,11 @@ import {
   groupByAndroidTestStatus,
   manualAddMatches,
 } from './android-test-page.helpers';
-import { BusyDirective, createKeyedBusyState } from '@pu-stats/ui';
+import {
+  BusyDirective,
+  createKeyedBusyState,
+  otherKeyBusy,
+} from '@pu-stats/ui';
 import { CallableFunctionsService } from './callable-functions.service';
 
 @Component({
@@ -53,6 +57,15 @@ export class AndroidTestPageComponent {
   readonly users = signal<AdminUser[]>([]);
   /** Keyed `<uid>:<confirm|decline|added>`, one flag per row action. */
   readonly busyUser = createKeyedBusyState<string>();
+
+  /** A row's other buttons stay locked while one of its actions runs. */
+  otherActionBusy(uid: string, action: string): boolean {
+    return otherKeyBusy(
+      this.busyUser.busyKeys(),
+      `${uid}:`,
+      `${uid}:${action}`
+    );
+  }
   readonly scanning = signal(false);
   readonly scanResult = signal<number | null>(null);
   readonly emailsCopied = signal(false);

@@ -1,3 +1,4 @@
+import { computed } from '@angular/core';
 import {
   signalStoreFeature,
   withComputed,
@@ -16,25 +17,42 @@ import { createKeyedBusyState } from '@pu-stats/ui';
 export function withPlanBusy() {
   return signalStoreFeature(
     withProps(() => ({ _busy: createKeyedBusyState<string>() })),
-    withComputed((store) => ({ busyKeys: store._busy.busyKeys })),
+    withComputed((store) => ({
+      busyKeys: store._busy.busyKeys,
+      // Grouped once per change, so a day component gets the same Set
+      // reference back until its keys actually change (OnPush inputs).
+      _busyKeysByDay: computed(() => groupDayBusyKeys(store._busy.busyKeys())),
+    })),
     withMethods((store) => ({
       isBusy: (key: string): boolean => store._busy.isBusy(key),
       /** One day's per-exercise keys, day index stripped: `item:0`, `record:1`, … */
       dayBusyKeys: (dayIndex: number): ReadonlySet<string> =>
-        dayBusyKeys(store._busy.busyKeys(), dayIndex),
+        store._busyKeysByDay().get(dayIndex) ?? NO_KEYS,
     }))
   );
 }
+
+const NO_KEYS: ReadonlySet<string> = new Set();
 
 export function dayBusyKeys(
   keys: ReadonlySet<string>,
   dayIndex: number
 ): ReadonlySet<string> {
-  const day = String(dayIndex);
-  const result = new Set<string>();
+  return groupDayBusyKeys(keys).get(dayIndex) ?? NO_KEYS;
+}
+
+/** Per-exercise keys grouped by day, day index stripped from each key. */
+export function groupDayBusyKeys(
+  keys: ReadonlySet<string>
+): ReadonlyMap<number, ReadonlySet<string>> {
+  const byDay = new Map<number, Set<string>>();
   for (const key of keys) {
     const [kind, keyDay, item] = key.split(':');
-    if (keyDay === day && item !== undefined) result.add(`${kind}:${item}`);
+    if (keyDay === undefined || item === undefined) continue;
+    const day = Number(keyDay);
+    let bucket = byDay.get(day);
+    if (!bucket) byDay.set(day, (bucket = new Set()));
+    bucket.add(`${kind}:${item}`);
   }
-  return result;
+  return byDay;
 }

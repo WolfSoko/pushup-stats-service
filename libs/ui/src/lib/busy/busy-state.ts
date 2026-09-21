@@ -17,8 +17,27 @@ export interface KeyedBusyState<K> {
   run<T>(key: K, work: Promise<T> | (() => Promise<T>)): Promise<T>;
 }
 
+/** A factory that throws synchronously must still settle the counter. */
 function start<T>(work: Promise<T> | (() => Promise<T>)): Promise<T> {
-  return Promise.resolve(typeof work === 'function' ? work() : work);
+  return new Promise<T>((resolve) => {
+    resolve(typeof work === 'function' ? work() : work);
+  });
+}
+
+/**
+ * True when another action on the same row is running: a key under
+ * `prefix` other than `ownKey`. Lets a row disable its sibling CTAs while
+ * one of them spins, so two conflicting writes cannot race.
+ */
+export function otherKeyBusy(
+  keys: ReadonlySet<string>,
+  prefix: string,
+  ownKey: string
+): boolean {
+  for (const key of keys) {
+    if (key !== ownKey && key.startsWith(prefix)) return true;
+  }
+  return false;
 }
 
 /** Busy flag for a single CTA, e.g. a form's submit button. */

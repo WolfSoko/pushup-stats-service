@@ -1,4 +1,8 @@
-import { createBusyState, createKeyedBusyState } from './busy-state';
+import {
+  createBusyState,
+  createKeyedBusyState,
+  otherKeyBusy,
+} from './busy-state';
 
 interface Deferred<T> {
   promise: Promise<T>;
@@ -54,6 +58,20 @@ describe('createBusyState', () => {
     // then
     expect(state.busy()).toBe(true);
     await expect(result).rejects.toThrow('nope');
+    expect(state.busy()).toBe(false);
+  });
+
+  it('should settle when the factory throws synchronously', async () => {
+    // given
+    const state = createBusyState();
+
+    // when
+    const result = state.run(() => {
+      throw new Error('sync');
+    });
+
+    // then
+    await expect(result).rejects.toThrow('sync');
     expect(state.busy()).toBe(false);
   });
 
@@ -129,5 +147,17 @@ describe('createKeyedBusyState', () => {
     // then
     await expect(secondRun).rejects.toThrow('x');
     expect(state.isBusy(7)).toBe(false);
+  });
+});
+
+describe('otherKeyBusy', () => {
+  it('should flag a sibling action of the same row but not the own key or other rows', () => {
+    // given
+    const keys = new Set(['u1:confirm', 'u2:added']);
+
+    // then
+    expect(otherKeyBusy(keys, 'u1:', 'u1:decline')).toBe(true);
+    expect(otherKeyBusy(keys, 'u1:', 'u1:confirm')).toBe(false);
+    expect(otherKeyBusy(keys, 'u3:', 'u3:confirm')).toBe(false);
   });
 });

@@ -84,10 +84,11 @@ export class LoginComponent {
     if (this.loginForm.email().invalid() || this.loginForm.password().invalid())
       return;
     const { email, password } = this.loginForm().value();
-    const signedIn = await this.emailSignIn.run(() =>
-      this.loginUiStore.signInWithEmail(email, password)
-    );
-    if (signedIn) await this.showSuccessToastAndNavigate();
+    await this.emailSignIn.run(async () => {
+      if (await this.loginUiStore.signInWithEmail(email, password)) {
+        await this.showSuccessToastAndNavigate();
+      }
+    });
   }
 
   async signInWithGoogle(): Promise<void> {
@@ -108,7 +109,7 @@ export class LoginComponent {
         return;
       }
     }
-    await this.showSuccessToastAndNavigate();
+    await this.googleSignIn.run(() => this.showSuccessToastAndNavigate());
   }
 
   private async showSuccessToastAndNavigate(): Promise<void> {

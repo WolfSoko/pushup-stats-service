@@ -50,6 +50,9 @@ import { BusyDirective } from '@pu-stats/ui';
             type="button"
             mat-stroked-button
             data-testid="push-unsubscribe"
+            [disabled]="
+              status() === 'loading' && !busyKeys().has('unsubscribe')
+            "
             [puBusy]="busyKeys().has('unsubscribe')"
             (click)="unsubscribe.emit()"
             i18n="@@push.unsubscribe"
@@ -75,6 +78,7 @@ import { BusyDirective } from '@pu-stats/ui';
           mat-flat-button
           color="primary"
           data-testid="push-subscribe"
+          [disabled]="status() === 'loading' && !busyKeys().has('subscribe')"
           [puBusy]="busyKeys().has('subscribe')"
           (click)="subscribe.emit()"
           i18n="@@push.subscribe"

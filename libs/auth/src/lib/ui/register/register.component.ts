@@ -156,24 +156,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
   readonly submitting = createBusyState();
 
   goToLogin(): Promise<void> {
-    return this.leaving.run(() => this.performGoToLogin());
-  }
-
-  registerWithGoogle(stepper: MatStepper): Promise<void> {
-    return this.googleRegistration.run(() =>
-      this.performGoogleRegistration(stepper)
-    );
-  }
-
-  submitRegistration(): Promise<void> {
-    return this.submitting.run(() => this.performRegistration());
-  }
-
-  private async performGoToLogin(): Promise<void> {
-    if (this.authState.isAuthenticated()) await this.authState.logout();
-    this.registerUiStore.resetSuccess();
-    this.authState.clearError();
-    await this.router.navigateByUrl('/login');
+    return this.leaving.run(async () => {
+      if (this.authState.isAuthenticated()) await this.authState.logout();
+      this.registerUiStore.resetSuccess();
+      this.authState.clearError();
+      await this.router.navigateByUrl('/login');
+    });
   }
 
   async completeCredentialStep(stepper: MatStepper): Promise<void> {
@@ -189,58 +177,62 @@ export class RegisterComponent implements OnInit, OnDestroy {
     stepper.next();
   }
 
-  private async performGoogleRegistration(stepper: MatStepper): Promise<void> {
-    if (!(await this.registerUiStore.signInWithGoogle())) return;
-    this.registerData.update((v) => ({
-      ...v,
-      email: this.registerUiStore.prepareGoogleRegistration() || v.email,
-    }));
-    stepper.selectedIndex = 0;
-    stepper.next();
-    stepper.next();
+  registerWithGoogle(stepper: MatStepper): Promise<void> {
+    return this.googleRegistration.run(async () => {
+      if (!(await this.registerUiStore.signInWithGoogle())) return;
+      this.registerData.update((v) => ({
+        ...v,
+        email: this.registerUiStore.prepareGoogleRegistration() || v.email,
+      }));
+      stepper.selectedIndex = 0;
+      stepper.next();
+      stepper.next();
+    });
   }
 
-  private async performRegistration(): Promise<void> {
-    const { email, password, repeatPassword } = this.registerForm().value();
-    if (
-      !this.registerUiStore.canSubmit(
-        this.registerForm.email().invalid(),
-        this.registerForm.password().invalid(),
-        password,
-        repeatPassword
+  submitRegistration(): Promise<void> {
+    return this.submitting.run(async () => {
+      const { email, password, repeatPassword } = this.registerForm().value();
+      if (
+        !this.registerUiStore.canSubmit(
+          this.registerForm.email().invalid(),
+          this.registerForm.password().invalid(),
+          password,
+          repeatPassword
+        )
       )
-    )
-      return;
-    const isGoogle = this.registerUiStore.isGoogleRegistration();
-    this.analytics.trackSubmitted({ is_google: isGoogle });
-    if (!isGoogle) {
-      const signedUp = await this.registerUiStore.signUpWithEmail(
-        email,
-        password
-      );
-      if (!signedUp) {
-        this.analytics.trackFailed({ is_google: false, reason: 'sign_up' });
         return;
+      const isGoogle = this.registerUiStore.isGoogleRegistration();
+      this.analytics.trackSubmitted({ is_google: isGoogle });
+      if (!isGoogle) {
+        const signedUp = await this.registerUiStore.signUpWithEmail(
+          email,
+          password
+        );
+        if (!signedUp) {
+          this.analytics.trackFailed({ is_google: false, reason: 'sign_up' });
+          return;
+        }
       }
-    }
-    try {
-      const persisted = await this.registerUiStore.persistProfile();
-      if (persisted) {
-        this.analytics.trackSucceeded({ is_google: isGoogle });
-      } else {
+      try {
+        const persisted = await this.registerUiStore.persistProfile();
+        if (persisted) {
+          this.analytics.trackSucceeded({ is_google: isGoogle });
+        } else {
+          this.analytics.trackFailed({
+            is_google: isGoogle,
+            reason: 'persist_profile',
+          });
+        }
+      } catch {
+        // RegisterOnboardingStore already exposes a localized error state.
+        // Prevent unhandled promise rejections in the click handler.
         this.analytics.trackFailed({
           is_google: isGoogle,
           reason: 'persist_profile',
         });
       }
-    } catch {
-      // RegisterOnboardingStore already exposes a localized error state.
-      // Prevent unhandled promise rejections in the click handler.
-      this.analytics.trackFailed({
-        is_google: isGoogle,
-        reason: 'persist_profile',
-      });
-    }
+    });
   }
 
   async goToDashboard(): Promise<void> {

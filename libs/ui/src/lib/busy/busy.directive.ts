@@ -6,6 +6,7 @@ import {
   inject,
   input,
   Renderer2,
+  signal,
 } from '@angular/core';
 
 export const BUSY_CLASS = 'pu-busy';
@@ -17,9 +18,10 @@ export const BUSY_MIN_VISIBLE_MS = 400;
 /**
  * Inline loading state for a CTA. While `puBusy` is true the host
  *
- * - carries `aria-busy="true"` and the `pu-busy` class (the stylesheet in
- *   `busy.scss` dims the label, hides a leading icon and swaps in a
- *   spinner that follows `currentColor`, so it works on filled buttons),
+ * - carries `aria-busy="true"`, and the `pu-busy` class for as long as the
+ *   spinner is shown (the stylesheet in `busy.scss` hides a leading icon
+ *   and swaps in a spinner that follows `currentColor`, so it works on
+ *   filled buttons),
  * - shows a spinner element as its first child, for at least
  *   {@link BUSY_MIN_VISIBLE_MS} once it appeared,
  * - swallows further clicks and keyboard activations, so a double tap
@@ -33,7 +35,7 @@ export const BUSY_MIN_VISIBLE_MS = 400;
   selector: '[puBusy]',
   host: {
     '[attr.aria-busy]': 'busy() ? "true" : null',
-    '[class.pu-busy]': 'busy()',
+    '[class.pu-busy]': 'spinnerShown()',
   },
 })
 export class BusyDirective {
@@ -41,6 +43,8 @@ export class BusyDirective {
 
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly renderer = inject(Renderer2);
+  /** True while the spinner element is in the DOM, grace period included. */
+  protected readonly spinnerShown = signal(false);
   private spinner: HTMLElement | null = null;
   private shownAt = 0;
   private hideTimer: ReturnType<typeof setTimeout> | undefined;
@@ -77,6 +81,7 @@ export class BusyDirective {
     this.renderer.setAttribute(spinner, 'aria-hidden', 'true');
     this.renderer.insertBefore(element, spinner, element.firstChild);
     this.spinner = spinner;
+    this.spinnerShown.set(true);
   }
 
   private hideSpinner(): void {
@@ -96,5 +101,6 @@ export class BusyDirective {
     if (!this.spinner) return;
     this.renderer.removeChild(this.host.nativeElement, this.spinner);
     this.spinner = null;
+    this.spinnerShown.set(false);
   }
 }

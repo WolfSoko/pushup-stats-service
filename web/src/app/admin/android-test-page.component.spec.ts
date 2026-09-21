@@ -257,6 +257,9 @@ describe('AndroidTestPageComponent', () => {
     expect(component.busyUser.isBusy('c1:confirm')).toBe(true);
     expect(component.busyUser.isBusy('c1:decline')).toBe(false);
     expect(component.busyUser.isBusy('c1:added')).toBe(false);
+    expect(component.otherActionBusy('c1', 'decline')).toBe(true);
+    expect(component.otherActionBusy('c1', 'confirm')).toBe(false);
+    expect(component.otherActionBusy('c2', 'confirm')).toBe(false);
 
     // when
     resolveConfirm();

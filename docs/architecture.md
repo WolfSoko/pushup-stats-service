@@ -36,7 +36,7 @@ Enforced via `@nx/enforce-module-boundaries` in `.oxlintrc.json` (the ESLint rul
 - `scope:auth` -> `scope:models`, `scope:date`, `scope:ui` only (no data-access!)
 - `scope:motivation` -> `scope:models`, `scope:date` only (no auth!)
 - `scope:data-access` -> `scope:models`, `scope:date` only
-- `scope:data-access-state` -> `scope:models`, `scope:data-access`, `scope:date`
+- `scope:data-access-state` -> `scope:models`, `scope:data-access`, `scope:date`, `scope:ui`
 - `scope:auto-count` -> `scope:models`, `scope:date` only
 - `scope:cloud-functions` -> `scope:models`, `scope:date` only
 - `scope:push` -> `scope:models`, `scope:data-access`, `scope:date`, `scope:ui` (no auth, no reminders!)

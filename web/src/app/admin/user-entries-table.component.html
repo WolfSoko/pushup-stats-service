@@ -10,6 +10,7 @@
     <button
       mat-button
       color="warn"
+      [disabled]="deleting.busy() && !deleting.isBusy(SELECTED)"
       [puBusy]="deleting.isBusy(SELECTED)"
       (click)="deleteSelected()"
     >
@@ -94,6 +95,7 @@
         </button>
         <button
           mat-icon-button
+          [disabled]="deleting.isBusy(SELECTED)"
           [puBusy]="deleting.isBusy(e._id)"
           (click)="deleteOne(e)"
           [matTooltip]="deleteTooltip"

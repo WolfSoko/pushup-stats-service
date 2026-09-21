@@ -133,8 +133,8 @@ export class RemindersPageComponent {
     }
   }
 
-  async onPushUnsubscribe(): Promise<void> {
-    await this.push.run('unsubscribe', () => this.pushService.unsubscribe());
+  onPushUnsubscribe(): Promise<void> {
+    return this.push.run('unsubscribe', () => this.pushService.unsubscribe());
   }
 
   // ── Unsubscribe all devices ───────────────────────────────────────────────
@@ -151,10 +151,8 @@ export class RemindersPageComponent {
 
     const ok = await this.unsubscribingAll.run(async () => {
       if (!(await this.authStore.unsubscribeAllPushDevices())) return false;
-      // Server-side records are wiped by the Cloud Function. Also drop the
-      // browser-side subscription on this device so the push status UI
-      // reflects reality immediately and the service worker doesn't keep a
-      // stale subscription around.
+      // The Cloud Function wipes the server records; drop this device's
+      // browser subscription too, so the status UI and SW match at once.
       if (this.pushService.status() === 'subscribed') {
         await this.pushService.unsubscribe();
       }

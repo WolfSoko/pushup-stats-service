@@ -95,6 +95,7 @@
             mat-icon-button
             [attr.aria-label]="f.read ? markUnreadTooltip : markReadTooltip"
             [matTooltip]="f.read ? markUnreadTooltip : markReadTooltip"
+            [disabled]="otherActionBusy(f.id, 'read')"
             [puBusy]="feedbackAction.isBusy(f.id + ':read')"
             (click)="markFeedbackRead(f, !f.read)"
           >
@@ -118,6 +119,7 @@
               mat-icon-button
               [attr.aria-label]="createIssueTooltip"
               [matTooltip]="createIssueTooltip"
+              [disabled]="otherActionBusy(f.id, 'issue')"
               [puBusy]="feedbackAction.isBusy(f.id + ':issue')"
               (click)="createGithubIssue(f)"
             >
@@ -129,6 +131,7 @@
             color="warn"
             [attr.aria-label]="deleteFeedbackTooltip"
             [matTooltip]="deleteFeedbackTooltip"
+            [disabled]="otherActionBusy(f.id, 'delete')"
             [puBusy]="feedbackAction.isBusy(f.id + ':delete')"
             (click)="deleteFeedback(f)"
           >

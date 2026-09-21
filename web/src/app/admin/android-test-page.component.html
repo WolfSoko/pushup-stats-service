@@ -74,6 +74,7 @@
           <button
             type="button"
             mat-stroked-button
+            [disabled]="otherActionBusy(user.uid, 'confirm')"
             [puBusy]="busyUser.isBusy(user.uid + ':confirm')"
             (click)="confirm(user.uid, true)"
             i18n="@@admin.androidTest.confirm"
@@ -83,6 +84,7 @@
           <button
             type="button"
             mat-button
+            [disabled]="otherActionBusy(user.uid, 'decline')"
             [puBusy]="busyUser.isBusy(user.uid + ':decline')"
             (click)="confirm(user.uid, false)"
             i18n="@@admin.androidTest.decline"
@@ -118,6 +120,7 @@
         <button
           type="button"
           mat-stroked-button
+          [disabled]="otherActionBusy(user.uid, 'confirm')"
           [puBusy]="busyUser.isBusy(user.uid + ':confirm')"
           (click)="addManually(user.uid)"
           i18n="@@admin.androidTest.manualAdd"
@@ -141,6 +144,7 @@
           <button
             type="button"
             mat-button
+            [disabled]="otherActionBusy(user.uid, 'decline')"
             [puBusy]="busyUser.isBusy(user.uid + ':decline')"
             (click)="confirm(user.uid, false)"
             i18n="@@admin.androidTest.withdraw"
@@ -176,6 +180,7 @@
           <button
             type="button"
             mat-stroked-button
+            [disabled]="otherActionBusy(user.uid, 'added')"
             [puBusy]="busyUser.isBusy(user.uid + ':added')"
             (click)="markAdded(user.uid)"
             i18n="@@admin.androidTest.markAdded"
