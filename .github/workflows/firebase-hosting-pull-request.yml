@@ -33,7 +33,15 @@ env:
   NODE_OPTIONS: --max-old-space-size=6144
 jobs:
   build_and_preview:
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    # Same-repo PRs only (fork PRs have no WIF access). Dependabot PRs are
+    # skipped too: every dependency bump would otherwise block the shared
+    # staging project for a full deploy + E2E cycle, and ci.yml already runs
+    # the emulator suite against them.
+    if: >-
+      ${{
+        github.event.pull_request.head.repo.full_name == github.repository
+          && github.event.pull_request.user.login != 'dependabot[bot]'
+      }}
     runs-on: ubuntu-latest
     # Build, deploy and the staging suite in sequence. The suite's own
     # ceiling is the step timeout below, which has to stay under whatever

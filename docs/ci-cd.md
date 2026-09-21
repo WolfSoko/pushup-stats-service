@@ -99,7 +99,7 @@ browser + SSR Sentry events.
 
 - **Firebase Hosting** (static, `.github/workflows/firebase-hosting-merge.yml`): Triggers on push to `deploy` branch.
 - **Firebase App Hosting** (SSR/Cloud Run, `apphosting.yaml`): Auto-deploys on push to `deploy` branch (configured in Firebase Console).
-- **PR Previews** (`.github/workflows/firebase-hosting-pull-request.yml`): Full staging deployment on every PR (same-repo only) — see [Staging Environment](#staging-environment) below.
+- **PR Previews** (`.github/workflows/firebase-hosting-pull-request.yml`): Full staging deployment on every PR (same-repo only; Dependabot PRs are skipped because a bump does not need a staging cycle and would only queue the shared project) — see [Staging Environment](#staging-environment) below.
 - **Rule:** No deployment path should bypass CI. Both Hosting and App Hosting are gated on green CI.
 - **Sentry source maps:** The deploy workflow uploads source maps to Sentry after the production build (`pnpm sentry:sourcemaps`). Requires `SENTRY_AUTH_TOKEN` GitHub secret. See [`observability/sentry.md`](observability/sentry.md).
 
