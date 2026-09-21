@@ -221,9 +221,43 @@ Daraus zwei Regeln für die nächste Runde:
 
 Ohne diese Entscheidung ist jede weitere Kandidatenrunde Rätselraten.
 
-**Nächster Schritt:** Entscheidung A, B oder C. Danach Markenrecherche (Klassen 9, 41, 42) für die verbliebenen Kandidaten.
+### 3.6 Entschieden: A und C — und was dabei herauskam
 
-### 3.6 Ablauf
+Entscheidung vom 2026-09-21: **A und C kombiniert.** Maschinelle Runde fahren, `.app` als gleichwertige TLD zulassen.
+
+**Runde 1 — Kunstwörter, 1051 generiert.** Aus Morphemen kombiniert, gefiltert auf Sprechbarkeit und Beiklänge. Ergebnis: 382 ohne `.com`-Auflösung (36 %), 367 davon auch ohne `.app`-Auflösung.
+
+Die Trefferquote ist damit achtzehnmal höher als in der Handrunde — **aber die Überlebenden sind unbrauchbar.** „agonka“, „fibraso“, „stedeus“, „morravo“: verfügbar genau deshalb, weil sie nichts bedeuten. Dazu Beiklänge, die ein Filter nicht fängt: `nerv-` (nerven), `agon-` (agony), `sedu-` (seduce), `volva-`.
+
+Das ist der Befund zu Option A: **Sie liefert Verfügbarkeit, nicht Qualität.** Wer aus dieser Menge wählt, wählt einen Namen, den niemand behält.
+
+**Runde 2 — bedeutungsvolle Komposita, 502 generiert.** Option C macht diesen Weg erst möglich: Ein gutes Kompositum hat eine vergebene `.com` gerade _weil_ es gut ist — aber `.app` ist weit weniger gesättigt. Ergebnis: **295 ohne `.app`-Auflösung, davon 54 auch ohne `.com`-Auflösung.**
+
+Diese 54 erfüllen A und C gleichzeitig. Nach Lesbarkeit, Übungsneutralität und Beiklang gefiltert und auf Kollisionen geprüft:
+
+| Kandidat      | Zeichen | Bedeutung                              | .com  | .app  | .de   |
+| ------------- | ------: | -------------------------------------- | ----- | ----- | ----- |
+| **Holdspan**  |       8 | Die Spanne, die du hältst              | frei? | frei? | frei? |
+| **Movepath**  |       8 | Der Pfad der Bewegung                  | frei? | frei? | frei? |
+| **Tallyspan** |       9 | Was du über eine Spanne zusammenzählst | frei? | frei? | frei? |
+
+„frei?“ heißt: keine DNS-Auflösung. Das bleibt ein Ausschluss-, kein Freigabetest — der Registrar entscheidet.
+
+**Ausgeschieden in dieser Runde:** _Everspan_ — EverSpan Life, LLC hält eine eingetragene US-Marke, unter anderem für Ernährungsberatung, also angrenzend; dazu Everspan Group und Everspan Solutions.
+
+**Play-Titel-Budget** (Limit 30) für alle drei nachgerechnet:
+
+| Untertitel           | Holdspan | Movepath | Tallyspan |
+| -------------------- | -------: | -------: | --------: |
+| `Bodyweight Tracker` |       28 |       28 |        29 |
+| `Bodyweight Log`     |       24 |       24 |        25 |
+| `Train & Track`      |       23 |       23 |        24 |
+
+**Einschätzung.** _Movepath_ liest sich am natürlichsten und ist am klarsten übungsneutral — jede Übung ist Bewegung. _Holdspan_ hat die passendste Doppelbedeutung für genau dieses Produkt: die gehaltene Spanne meint den Halte-Timer wörtlich und die Streak übertragen. _Tallyspan_ ist inhaltlich richtig, klingt aber sperriger.
+
+**Nächster Schritt:** Domain-Verfügbarkeit dieser drei beim Registrar bestätigen, dann Markenrecherche (Klassen 9, 41, 42). Erst danach ist Gate 0 entscheidbar.
+
+### 3.7 Ablauf
 
 1. Pro Richtung 5–8 Kandidaten sammeln.
 2. Gegen Kriterien 1–3 filtern (Schreibtischarbeit, keine externen Abfragen).
@@ -445,7 +479,7 @@ Gate 0 (Name + Domain + Play-Option)
 
 ## 8. Offene Punkte für Gate 0
 
-1. **Name** — die Shortlist aus 3.4 ist an der Domain gescheitert: alle fünf `.com` sind vergeben. Vor der nächsten Kandidatenrunde steht die Grundsatzentscheidung aus 3.5 an: `.com` als Pflicht beibehalten, eine geparkte `.com` kaufen, oder eine andere TLD akzeptieren.
+1. **Name** — drei Kandidaten aus 3.6: **Holdspan**, **Movepath**, **Tallyspan**. Alle drei ohne DNS-Auflösung auf `.com`, `.app` und `.de`, ohne Store-Treffer, im Play-Titel-Budget. Offen: Bestätigung beim Registrar und die Markenrecherche.
 2. **Domain** — Verfügbarkeit prüfen, `.com` + `.de` registrieren, **bevor** Phase 2 startet. Muss beim Registrar geschehen: RDAP war aus der Arbeitsumgebung nicht erreichbar, eine Verfügbarkeitsaussage von dort wäre geraten.
 3. **Play-Lifetime-Installs** — nur bei null Installs gäbe Google die ID nach einer Löschung wieder frei. Das ist die einzige Zahl, die Option B noch günstiger machen könnte; ansonsten bleibt es bei Option A.
 4. **Kontaktadresse** — `contact@<neue-domain>` einrichten; alte Adresse für die Übergangszeit weiterleiten (steht in Impressum und Datenschutz, also rechtlich relevant).
