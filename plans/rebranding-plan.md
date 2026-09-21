@@ -141,7 +141,48 @@ Stand 2026-09-21, per Websuche geprüft. **Domain- und Markenrecherche fehlt wei
 
 Daraus folgt eine Verschärfung von Kriterium 4 und 5, die beim Aufstellen der Kriterien noch nicht sichtbar war: **Ein gängiges englisches Wörterbuchwort erfüllt in der Praxis weder „Domain frei“ noch „markenrechtlich unkritisch“.** Die freie `.com` ist bei einem Wort wie `upkeep` oder `onward` seit Jahrzehnten vergeben, und ein generisches Wort ist in der eigenen Warenklasse kaum durchsetzbar. Die realistische Zone sind **Komposita und leicht kunstsprachliche Formen** — so wie es die Vergleichsprodukte gelöst haben (Strava, Zwift, Whoop, Hevy: alle erfunden; Setgraph: Kompositum).
 
-### 3.4 Ablauf
+### 3.4 Shortlist — Stand 2026-09-21
+
+Gebildet nach der Erkenntnis aus 3.3: keine Wörterbuchwörter, sondern Komposita und Kunstwörter. Alle Kandidaten per Websuche auf Store- und Markenkollision geprüft.
+
+**Ausgeschieden in dieser Runde** — jeweils mit Beleg:
+
+| Kandidat  | Grund                                                                                                                             |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| RepStack  | Existiert als Krafttraining-App im App Store                                                                                      |
+| Holdfast  | Als App vergeben; Holdfast Properties hält eine Marke für Software „for tracking and monitoring exercise“ — genau die Warenklasse |
+| Tallio    | Inventar-App im App Store                                                                                                         |
+| Onvia     | Mehrfach besetzt: Onvia Inc. (Deltek), ONVIA by Marriott, Onvia Home                                                              |
+| Everlog   | Existiert als Krafttraining-Tracker bei Google Play, dazu eine Journal-App                                                        |
+| KeepCount | Tally-Counter-App, ausdrücklich auch für Workouts                                                                                 |
+| Habitus   | Gym-App bei Google Play                                                                                                           |
+| Tonus     | Mehrere Gym-Apps (Tonus Gym, Tonus fitnes klub, Fyt Tonus)                                                                        |
+
+**Überlebende der ersten Runde** — keine Store-Treffer:
+
+| Kandidat | Zeichen | Bedeutung                  | Schwäche                                                            |
+| -------- | ------: | -------------------------- | ------------------------------------------------------------------- |
+| Everkeep |       8 | Was du behältst, dauerhaft | „Keep“-Stamm, siehe unten                                           |
+| Daykeep  |       7 | Der tägliche Verlauf       | „Keep“-Stamm                                                        |
+| Keepline |       8 | Die Linie halten           | „Keep“-Stamm                                                        |
+| Kepta    |       5 | Kunstwort aus „kept“       | Bedeutung undurchsichtig; phonetisch nah an „Keep“                  |
+| Repora   |       6 | Kunstwort aus „rep“        | „rep“ bindet an Wiederholungen — trägt Halte-Timer sprachlich nicht |
+
+**Der Haken, den diese Liste hat:** Drei der fünf teilen den Stamm „Keep“, und Google Keep ist eine eingetragene Marke in derselben Nizza-Klasse 9 (herunterladbare Software). Der Stamm ist semantisch genau richtig für ein Produkt, dessen Kern der gehaltene Verlauf ist — aber ob die Nähe tragfähig ist, entscheidet Kriterium 5, nicht diese Recherche. Fällt die Markenprüfung dort negativ aus, bleiben nur Kepta und Repora, und es braucht eine weitere Runde.
+
+**Kriterium 3 ist für alle fünf erfüllt.** Nachgerechnet gegen das 30-Zeichen-Budget (heutiger Titel „Pushup Tracker: Liegestütze“ = 27):
+
+| Untertitel           | Everkeep | Daykeep | Keepline | Kepta | Repora |
+| -------------------- | -------: | ------: | -------: | ----: | -----: |
+| `Bodyweight Tracker` |       28 |      27 |       28 |    25 |     26 |
+| `Bodyweight Log`     |       24 |      23 |       24 |    21 |     22 |
+| `Train & Track`      |       23 |      22 |       23 |    20 |     21 |
+
+Jede Kombination passt. Das war beim heutigen Namen nicht selbstverständlich — er liegt mit 27 Zeichen praktisch am Limit.
+
+**Nächster Schritt:** Für diese fünf Domain-Verfügbarkeit beim Registrar prüfen und die Markenrecherche beauftragen (Klassen 9, 41, 42). Erst danach ist Gate 0 entscheidbar.
+
+### 3.5 Ablauf
 
 1. Pro Richtung 5–8 Kandidaten sammeln.
 2. Gegen Kriterien 1–3 filtern (Schreibtischarbeit, keine externen Abfragen).
@@ -363,7 +404,7 @@ Gate 0 (Name + Domain + Play-Option)
 
 ## 8. Offene Punkte für Gate 0
 
-1. **Name** — Shortlist nach Abschnitt 3, dann Entscheidung. Positionierung ist entschieden (international, EN-first); die Suche nach 3.3 hat den „Streak“- und „Fit“-Wortraum ausgeschlossen, Kandidaten also aus Komposita und Kunstwörtern bilden.
+1. **Name** — Shortlist steht in 3.4: Everkeep, Daykeep, Keepline, Kepta, Repora. Alle fünf sind store-kollisionsfrei und erfüllen das Play-Titel-Budget. Offen ist die Markenprüfung — drei teilen den Stamm „Keep“ mit einer eingetragenen Marke derselben Klasse.
 2. **Domain** — Verfügbarkeit prüfen, `.com` + `.de` registrieren, **bevor** Phase 2 startet. Muss beim Registrar geschehen: RDAP war aus der Arbeitsumgebung nicht erreichbar, eine Verfügbarkeitsaussage von dort wäre geraten.
 3. **Play-Lifetime-Installs** — nur bei null Installs gäbe Google die ID nach einer Löschung wieder frei. Das ist die einzige Zahl, die Option B noch günstiger machen könnte; ansonsten bleibt es bei Option A.
 4. **Kontaktadresse** — `contact@<neue-domain>` einrichten; alte Adresse für die Übergangszeit weiterleiten (steht in Impressum und Datenschutz, also rechtlich relevant).
