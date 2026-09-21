@@ -124,7 +124,24 @@ Die Richtung wurde offen gelassen; drei Stoßrichtungen mit unterschiedlichem Ch
 
 **Empfehlung:** Progress/Streak-Richtung. Sie ist die einzige, die nicht an die Zählweise gebunden ist und deshalb auch Halte-Timer, Cardio-Minuten und künftige Metriken trägt.
 
-### 3.3 Ablauf
+**Positionierung entschieden (2026-09-21): international, EN-first.** Der Name muss auf Englisch tragen und in allen neun Sprachen funktionieren; Deutsch bleibt Quellsprache, ist aber einer von neun Märkten. Damit scheiden deutsche Wortspiele aus, und auch der Play-Untertitel wird englisch.
+
+### 3.3 Erste Recherche — was bereits ausscheidet
+
+Stand 2026-09-21, per Websuche geprüft. **Domain- und Markenrecherche fehlt weiterhin** (Abschnitt 8): die Umgebung, in der diese Prüfung lief, kommt nicht an RDAP heran, und Kriterium 5 verlangt ohnehin eine Markenfachperson.
+
+| Kandidat               | Status  | Grund                                                                                                 |
+| ---------------------- | ------- | ----------------------------------------------------------------------------------------------------- |
+| Cadence                | ❌ raus | Zweifach als Fitness-App belegt: Krafttracker bei Google Play _und_ GPS-Run/Bike-App (getcadence.app) |
+| Steady                 | ❌ raus | Als App-Name mehrfach vergeben (Gig-Economy-Plattform, Membership-Dienst)                             |
+| **alles mit „Streak"** | ❌ raus | Namensraum gesättigt: FitStreak, Streak – Gym Log, GymStreak, StreakUp, MyStreaks, RunStreaker        |
+| **alles mit „Fit"**    | ❌ raus | Dieselbe Sättigung, zusätzlich schwache Unterscheidungskraft                                          |
+
+**Die wichtigste Erkenntnis:** Die Progress/Streak-_Richtung_ bleibt richtig — das Dranbleiben ist der Kern des Produkts. Ihre naheliegendste sprachliche Umsetzung ist es nicht. Ein Name mit „Streak" oder „Fit" scheitert doppelt: an Kriterium 6 (Store-Kollision) und an Kriterium 5, weil Markenschutz Unterscheidungskraft voraussetzt und beide Wörter in Klasse 9/41 längst verwässert sind.
+
+Daraus folgt eine Verschärfung von Kriterium 4 und 5, die beim Aufstellen der Kriterien noch nicht sichtbar war: **Ein gängiges englisches Wörterbuchwort erfüllt in der Praxis weder „Domain frei" noch „markenrechtlich unkritisch".** Die freie `.com` ist bei einem Wort wie `upkeep` oder `onward` seit Jahrzehnten vergeben, und ein generisches Wort ist in der eigenen Warenklasse kaum durchsetzbar. Die realistische Zone sind **Komposita und leicht kunstsprachliche Formen** — so wie es die Vergleichsprodukte gelöst haben (Strava, Zwift, Whoop, Hevy: alle erfunden; Setgraph: Kompositum).
+
+### 3.4 Ablauf
 
 1. Pro Richtung 5–8 Kandidaten sammeln.
 2. Gegen Kriterien 1–3 filtern (Schreibtischarbeit, keine externen Abfragen).
@@ -346,8 +363,8 @@ Gate 0 (Name + Domain + Play-Option)
 
 ## 8. Offene Punkte für Gate 0
 
-1. **Name** — Shortlist nach Abschnitt 3, dann Entscheidung.
-2. **Domain** — Verfügbarkeit prüfen, `.com` + `.de` registrieren, **bevor** Phase 2 startet.
+1. **Name** — Shortlist nach Abschnitt 3, dann Entscheidung. Positionierung ist entschieden (international, EN-first); die Suche nach 3.3 hat den „Streak"- und „Fit"-Wortraum ausgeschlossen, Kandidaten also aus Komposita und Kunstwörtern bilden.
+2. **Domain** — Verfügbarkeit prüfen, `.com` + `.de` registrieren, **bevor** Phase 2 startet. Muss beim Registrar geschehen: RDAP war aus der Arbeitsumgebung nicht erreichbar, eine Verfügbarkeitsaussage von dort wäre geraten.
 3. **Play-Lifetime-Installs** — nur bei null Installs gäbe Google die ID nach einer Löschung wieder frei. Das ist die einzige Zahl, die Option B noch günstiger machen könnte; ansonsten bleibt es bei Option A.
 4. **Kontaktadresse** — `contact@<neue-domain>` einrichten; alte Adresse für die Übergangszeit weiterleiten (steht in Impressum und Datenschutz, also rechtlich relevant).
 5. **Logo-Richtung** — soll die Formsprache des alten Icons erkennbar bleiben (sanfterer Übergang) oder bewusst brechen?
