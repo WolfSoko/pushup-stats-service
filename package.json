@@ -153,7 +153,7 @@
     "rxjs": "7.8.2",
     "socket.io": "4.8.3",
     "socket.io-client": "4.8.3",
-    "zod": "3.25.76"
+    "zod": "4.6.5"
   },
   "packageManager": "pnpm@11.17.0+sha512.cca3cea332ad254bb84145f966d19f4879615210346fc92c79a047f23a0d7b3cca3c3792f0076ba1f1831d277efbcf0a9119b31a9a60eca7fb3d6231f331ef72"
 }
