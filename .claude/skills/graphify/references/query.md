@@ -65,13 +65,13 @@ If the list is empty, say so plainly and stop — do not proceed to traversal.
 
 ### Step 1 — Traversal
 
-Build the **expanded query string** by joining the selected tokens with spaces. Use this string as `QUESTION` below — NOT the original user question. (The original question is preserved only for `save-result` at the end.)
+Build the **expanded query string** by joining the selected tokens with spaces. Put this string into `GRAPHIFY_QUERY` (see "Safe substitution" in `SKILL.md`) — NOT the original user question, which goes into `GRAPHIFY_QUESTION` only for `save-result` at the end.
 
 Prefer the CLI when it is installed:
 
 ```bash
-graphify query "QUESTION"
-# or: graphify query "QUESTION" --dfs --budget 3000
+graphify query "$GRAPHIFY_QUERY"
+# or: graphify query "$GRAPHIFY_QUERY" --dfs --budget 3000
 ```
 
 If the CLI is unavailable, load `graphify-out/graph.json` and run the traversal inline:
@@ -92,7 +92,7 @@ from pathlib import Path
 data = json.loads(Path('graphify-out/graph.json').read_text(encoding='utf-8'))
 G = json_graph.node_link_graph(data, edges='links')
 
-question = __import__('os').environ['GRAPHIFY_QUESTION']
+question = __import__('os').environ['GRAPHIFY_QUERY']
 mode = 'MODE'  # 'bfs' or 'dfs'
 terms = [t.lower() for t in question.split() if len(t) >= 3]  # match the vocab threshold; keeps api/jwt/ios (#1392)
 
@@ -174,7 +174,7 @@ print(output)
 "
 ```
 
-Replace `QUESTION` with the **expanded** query string, `MODE` with `bfs` or `dfs`, and `BUDGET` with the token budget (default `2000`, or whatever `--budget N` specifies). Then answer based on the subgraph output above, using only what the graph contains.
+Set `GRAPHIFY_QUERY` to the **expanded** query string, replace `MODE` with `bfs` or `dfs`, and `BUDGET` with the token budget (default `2000`, or whatever `--budget N` specifies). Then answer based on the subgraph output above, using only what the graph contains.
 
 After writing the answer, save it back into the graph so it improves future queries. Include the expanded tokens inside the `--answer` text (e.g. `"Expanded from original query via vocab: [tokens]. Then traversed..."`) so the next `--update` extracts the expansion history as a graph node:
 
@@ -182,7 +182,7 @@ After writing the answer, save it back into the graph so it improves future quer
 $(cat graphify-out/.graphify_python) -m graphify save-result --question "$GRAPHIFY_QUESTION" --answer "$GRAPHIFY_ANSWER" --type query --nodes "${GRAPHIFY_NODES[@]}"
 ```
 
-Replace `ORIGINAL_QUESTION` with the user's verbatim question, `ANSWER` with your full answer text (containing the expanded-token trace), `NODE1 NODE2` with the list of node labels you cited. This closes the feedback loop: the next `--update` will extract this Q&A as a node in the graph.
+Set `GRAPHIFY_QUESTION` to the user's verbatim question, `GRAPHIFY_ANSWER` to your full answer text (containing the expanded-token trace), and `GRAPHIFY_NODES` (via `mapfile`) to the node labels you cited — all in the same Bash call as the command. This closes the feedback loop: the next `--update` will extract this Q&A as a node in the graph.
 
 **Work memory (self-improving loop).** Add an `--outcome` so future sessions learn from this one — append `--outcome useful|dead_end|corrected` to the `save-result` command (and `--correction "the right answer"` when correcting):
 
@@ -199,7 +199,7 @@ At the **start** of graph work, refresh and read the lessons: run `graphify refl
 Find the shortest path between two named concepts in the graph. Prefer the CLI when installed:
 
 ```bash
-graphify path "NODE_A" "NODE_B"
+graphify path "$GRAPHIFY_NODE_A" "$GRAPHIFY_NODE_B"
 ```
 
 If the CLI is unavailable, run it inline:
@@ -252,7 +252,7 @@ except nx.NodeNotFound as e:
 "
 ```
 
-Replace `NODE_A` and `NODE_B` with the actual concept names from the user. Then explain the path in plain language - what each hop means, why it's significant.
+Set `GRAPHIFY_NODE_A` and `GRAPHIFY_NODE_B` to the actual concept names from the user. Then explain the path in plain language - what each hop means, why it's significant.
 
 After writing the explanation, save it back:
 
@@ -267,7 +267,7 @@ $(cat graphify-out/.graphify_python) -m graphify save-result --question "Path fr
 Give a plain-language explanation of a single node - everything connected to it. Prefer the CLI when installed:
 
 ```bash
-graphify explain "NODE_NAME"
+graphify explain "$GRAPHIFY_NODE_NAME"
 ```
 
 If the CLI is unavailable, run it inline:
@@ -313,7 +313,7 @@ for neighbor in G.neighbors(nid):
 "
 ```
 
-Replace `NODE_NAME` with the concept the user asked about. Then write a 3-5 sentence explanation of what this node is, what it connects to, and why those connections are significant. Use the source locations as citations.
+Set `GRAPHIFY_NODE_NAME` to the concept the user asked about. Then write a 3-5 sentence explanation of what this node is, what it connects to, and why those connections are significant. Use the source locations as citations.
 
 After writing the explanation, save it back:
 

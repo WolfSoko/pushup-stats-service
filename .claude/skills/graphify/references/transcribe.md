@@ -24,7 +24,13 @@ Read the top god node labels from detect output or analysis, then compose a shor
 **Step 2 - Transcribe:**
 
 ```bash
-export GRAPHIFY_WHISPER_MODEL=base  # or whatever --whisper-model the user passed; must match ^[A-Za-z0-9._-]+$
+export GRAPHIFY_WHISPER_MODEL="$(cat <<'GRAPHIFY_EOF'
+base
+GRAPHIFY_EOF
+)"  # replace base with the --whisper-model the user passed, if any
+case "$GRAPHIFY_WHISPER_MODEL" in
+  ''|*[!A-Za-z0-9._-]*) echo "error: invalid --whisper-model: $GRAPHIFY_WHISPER_MODEL" >&2; exit 1 ;;
+esac
 export GRAPHIFY_WHISPER_PROMPT="$(cat <<'GRAPHIFY_EOF'
 <the one-sentence domain hint you composed in Step 1>
 GRAPHIFY_EOF

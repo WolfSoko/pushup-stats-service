@@ -75,7 +75,7 @@ GRAPHIFY_EOF
 )"
 ```
 
-Variables used: `GRAPHIFY_INPUT_PATH`, `GRAPHIFY_SPEC_PATH`, `GRAPHIFY_QUESTION`, `GRAPHIFY_ANSWER`, `GRAPHIFY_NODE_A`, `GRAPHIFY_NODE_B`, `GRAPHIFY_NODE_NAME`, `GRAPHIFY_URL`, `GRAPHIFY_AUTHOR`, `GRAPHIFY_CONTRIBUTOR`, `GRAPHIFY_WHISPER_PROMPT`. For lists (cited node labels) use `mapfile -t GRAPHIFY_NODES <<'GRAPHIFY_EOF'` with one value per line and pass `"${GRAPHIFY_NODES[@]}"`. `MODE`, `BUDGET` and `IS_DIRECTED` are closed choices (`bfs`/`dfs`, an integer, `True`/`False`) and are substituted literally. Wherever the text below says "replace INPUT_PATH" (or another dynamic placeholder), read it as "set the matching `GRAPHIFY_*` variable".
+Variables used: `GRAPHIFY_INPUT_PATH`, `GRAPHIFY_SPEC_PATH`, `GRAPHIFY_QUERY` (expanded query terms), `GRAPHIFY_QUESTION` (the user's verbatim question), `GRAPHIFY_ANSWER`, `GRAPHIFY_NODE_A`, `GRAPHIFY_NODE_B`, `GRAPHIFY_NODE_NAME`, `GRAPHIFY_URL`, `GRAPHIFY_AUTHOR`, `GRAPHIFY_CONTRIBUTOR`, `GRAPHIFY_WHISPER_MODEL`, `GRAPHIFY_WHISPER_PROMPT`. For lists (cited node labels) use `mapfile -t GRAPHIFY_NODES <<'GRAPHIFY_EOF'` with one value per line and pass `"${GRAPHIFY_NODES[@]}"`. `MODE`, `BUDGET` and `IS_DIRECTED` are closed choices (`bfs`/`dfs`, an integer, `True`/`False`) and are substituted literally. Wherever the text below says "replace INPUT_PATH" (or another dynamic placeholder), read it as "set the matching `GRAPHIFY_*` variable".
 
 ### Step 1 - Ensure graphify is installed
 
@@ -710,10 +710,10 @@ Both are non-default subcommands. `--update` re-extracts only new or changed fil
 
 ## For /graphify query
 
-When `graphify-out/graph.json` already exists and the user asks a question about the corpus, answer from the graph rather than rebuilding it:
+When `graphify-out/graph.json` already exists and the user asks a question about the corpus, answer from the graph rather than rebuilding it (set `GRAPHIFY_QUERY` per "Safe substitution" in the same Bash call):
 
 ```bash
-graphify query "<question>"
+graphify query "$GRAPHIFY_QUERY"
 ```
 
 Before traversal, expand the question against the graph's own vocabulary so a wording mismatch does not collapse the answer to noise. If the `graphify query` CLI is unavailable, fall back to an inline NetworkX traversal of `graphify-out/graph.json`. Answer using only what the graph output contains, and quote `source_location` when citing a specific fact. For that vocab-expansion step, the BFS/DFS traversal modes, the `--budget` cap, the NetworkX fallback, `save-result` feedback, and the `/graphify path` and `/graphify explain` flows, see `references/query.md`.
