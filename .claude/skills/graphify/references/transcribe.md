@@ -24,8 +24,11 @@ Read the top god node labels from detect output or analysis, then compose a shor
 **Step 2 - Transcribe:**
 
 ```bash
-export GRAPHIFY_WHISPER_MODEL=base  # or whatever --whisper-model the user passed (must be exported)
-export GRAPHIFY_WHISPER_PROMPT="<the one-sentence domain hint you composed in Step 1>"
+export GRAPHIFY_WHISPER_MODEL=base  # or whatever --whisper-model the user passed; must match ^[A-Za-z0-9._-]+$
+export GRAPHIFY_WHISPER_PROMPT="$(cat <<'GRAPHIFY_EOF'
+<the one-sentence domain hint you composed in Step 1>
+GRAPHIFY_EOF
+)"
 $(cat graphify-out/.graphify_python) -c "
 import json, os, sys
 from pathlib import Path

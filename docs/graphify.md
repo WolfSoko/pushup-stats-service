@@ -41,3 +41,5 @@ graphify install --project && graphify claude install --project
 ```
 
 Re-running the installers rewrites the skill, the `## graphify` section in `CLAUDE.md` and the hooks in place; review the diff before committing.
+
+**The vendored skill is locally hardened — an upgrade must keep that.** Upstream templates paste paths, questions, answers and graph labels straight into shell/Python source (command injection via `$(...)` or a stray `'`, and labels can come from cloned third-party repos). Our copy routes every dynamic value through `GRAPHIFY_*` environment variables set via quoted heredoc (see "Safe substitution" at the top of `SKILL.md`), reads the Neo4j password from `NEO4J_PASSWORD` instead of argv, and lets the directed BFS fallback in `references/query.md` follow predecessors too. After an upgrade, re-apply those changes on top of the new upstream files (`git diff` against the previous skill commit shows them).

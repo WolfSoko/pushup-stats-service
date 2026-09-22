@@ -92,7 +92,7 @@ from pathlib import Path
 data = json.loads(Path('graphify-out/graph.json').read_text(encoding='utf-8'))
 G = json_graph.node_link_graph(data, edges='links')
 
-question = 'QUESTION'
+question = __import__('os').environ['GRAPHIFY_QUESTION']
 mode = 'MODE'  # 'bfs' or 'dfs'
 terms = [t.lower() for t in question.split() if len(t) >= 3]  # match the vocab threshold; keeps api/jwt/ios (#1392)
 
@@ -135,10 +135,15 @@ else:
     for _ in range(3):
         next_frontier = set()
         for n in frontier:
-            for neighbor in G.neighbors(n):
+            # A DiGraph's neighbors() yields successors only; BFS discovery must
+            # also reach callers, recorded as (pred, n) so G[u][v] resolves.
+            hops = [(neighbor, (n, neighbor)) for neighbor in G.neighbors(n)]
+            if G.is_directed():
+                hops += [(pred, (pred, n)) for pred in G.predecessors(n)]
+            for neighbor, edge in hops:
                 if neighbor not in subgraph_nodes:
                     next_frontier.add(neighbor)
-                    subgraph_edges.append((n, neighbor))
+                    subgraph_edges.append(edge)
         subgraph_nodes.update(next_frontier)
         frontier = next_frontier
 
@@ -174,7 +179,7 @@ Replace `QUESTION` with the **expanded** query string, `MODE` with `bfs` or `dfs
 After writing the answer, save it back into the graph so it improves future queries. Include the expanded tokens inside the `--answer` text (e.g. `"Expanded from original query via vocab: [tokens]. Then traversed..."`) so the next `--update` extracts the expansion history as a graph node:
 
 ```bash
-$(cat graphify-out/.graphify_python) -m graphify save-result --question "ORIGINAL_QUESTION" --answer "ANSWER" --type query --nodes NODE1 NODE2
+$(cat graphify-out/.graphify_python) -m graphify save-result --question "$GRAPHIFY_QUESTION" --answer "$GRAPHIFY_ANSWER" --type query --nodes "${GRAPHIFY_NODES[@]}"
 ```
 
 Replace `ORIGINAL_QUESTION` with the user's verbatim question, `ANSWER` with your full answer text (containing the expanded-token trace), `NODE1 NODE2` with the list of node labels you cited. This closes the feedback loop: the next `--update` will extract this Q&A as a node in the graph.
@@ -209,8 +214,8 @@ from pathlib import Path
 data = json.loads(Path('graphify-out/graph.json').read_text(encoding='utf-8'))
 G = json_graph.node_link_graph(data, edges='links')
 
-a_term = 'NODE_A'
-b_term = 'NODE_B'
+a_term = __import__('os').environ['GRAPHIFY_NODE_A']
+b_term = __import__('os').environ['GRAPHIFY_NODE_B']
 
 def find_node(term):
     term = term.lower()
@@ -252,7 +257,7 @@ Replace `NODE_A` and `NODE_B` with the actual concept names from the user. Then 
 After writing the explanation, save it back:
 
 ```bash
-$(cat graphify-out/.graphify_python) -m graphify save-result --question "Path from NODE_A to NODE_B" --answer "ANSWER" --type path_query --nodes NODE_A NODE_B
+$(cat graphify-out/.graphify_python) -m graphify save-result --question "Path from $GRAPHIFY_NODE_A to $GRAPHIFY_NODE_B" --answer "$GRAPHIFY_ANSWER" --type path_query --nodes "$GRAPHIFY_NODE_A" "$GRAPHIFY_NODE_B"
 ```
 
 ---
@@ -277,7 +282,7 @@ from pathlib import Path
 data = json.loads(Path('graphify-out/graph.json').read_text(encoding='utf-8'))
 G = json_graph.node_link_graph(data, edges='links')
 
-term = 'NODE_NAME'
+term = __import__('os').environ['GRAPHIFY_NODE_NAME']
 term_lower = term.lower()
 
 # Find best matching node
@@ -313,5 +318,5 @@ Replace `NODE_NAME` with the concept the user asked about. Then write a 3-5 sent
 After writing the explanation, save it back:
 
 ```bash
-$(cat graphify-out/.graphify_python) -m graphify save-result --question "Explain NODE_NAME" --answer "ANSWER" --type explain --nodes NODE_NAME
+$(cat graphify-out/.graphify_python) -m graphify save-result --question "Explain $GRAPHIFY_NODE_NAME" --answer "$GRAPHIFY_ANSWER" --type explain --nodes "$GRAPHIFY_NODE_NAME"
 ```

@@ -8,12 +8,12 @@ Fetch a URL and add it to the corpus, then update the graph.
 
 ```bash
 $(cat graphify-out/.graphify_python) -c "
-import sys
+import os, sys
 from graphify.ingest import ingest
 from pathlib import Path
 
 try:
-    out = ingest('URL', Path('./raw'), author='AUTHOR', contributor='CONTRIBUTOR')
+    out = ingest(os.environ['GRAPHIFY_URL'], Path('./raw'), author=os.environ.get('GRAPHIFY_AUTHOR') or None, contributor=os.environ.get('GRAPHIFY_CONTRIBUTOR') or None)
     print(f'Saved to {out}')
 except ValueError as e:
     print(f'error: {e}', file=sys.stderr)
@@ -42,7 +42,7 @@ Supported URL types (auto-detected):
 Start a background watcher that monitors a folder and auto-updates the graph when files change.
 
 ```bash
-$(cat graphify-out/.graphify_python) -m graphify.watch INPUT_PATH --debounce 3
+$(cat graphify-out/.graphify_python) -m graphify.watch "$GRAPHIFY_INPUT_PATH" --debounce 3
 ```
 
 Replace INPUT_PATH with the folder to watch. Behavior depends on what changed:

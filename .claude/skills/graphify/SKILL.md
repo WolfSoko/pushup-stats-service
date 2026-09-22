@@ -62,6 +62,21 @@ Follow these steps in order. Do not skip steps.
 
 Only when the path is one or more `https://github.com/...` URLs, or several local subfolders to merge. See `references/github-and-merge.md` for the clone, cross-repo merge, and monorepo flow, then continue with the resolved local path. A plain local path skips this step.
 
+### Safe substitution of dynamic values (mandatory)
+
+Never paste a path, URL, question, answer, author, node label or any other dynamic value into shell or Python source: double quotes do not stop `$(...)`, and a stray `'` breaks out of a Python literal. Node labels and answers come from graph content, which `graphify clone` can pull from arbitrary repositories.
+
+The snippets below therefore read every such value from a `GRAPHIFY_*` environment variable. Set it **in the same Bash call** as the snippet (shell state does not persist between calls), using a quoted heredoc so nothing inside is expanded:
+
+```bash
+export GRAPHIFY_INPUT_PATH="$(cat <<'GRAPHIFY_EOF'
+<the value, verbatim>
+GRAPHIFY_EOF
+)"
+```
+
+Variables used: `GRAPHIFY_INPUT_PATH`, `GRAPHIFY_SPEC_PATH`, `GRAPHIFY_QUESTION`, `GRAPHIFY_ANSWER`, `GRAPHIFY_NODE_A`, `GRAPHIFY_NODE_B`, `GRAPHIFY_NODE_NAME`, `GRAPHIFY_URL`, `GRAPHIFY_AUTHOR`, `GRAPHIFY_CONTRIBUTOR`, `GRAPHIFY_WHISPER_PROMPT`. For lists (cited node labels) use `mapfile -t GRAPHIFY_NODES <<'GRAPHIFY_EOF'` with one value per line and pass `"${GRAPHIFY_NODES[@]}"`. `MODE`, `BUDGET` and `IS_DIRECTED` are closed choices (`bfs`/`dfs`, an integer, `True`/`False`) and are substituted literally. Wherever the text below says "replace INPUT_PATH" (or another dynamic placeholder), read it as "set the matching `GRAPHIFY_*` variable".
+
 ### Step 1 - Ensure graphify is installed
 
 ```bash
@@ -97,7 +112,7 @@ fi
 mkdir -p graphify-out
 "$PYTHON" -c "import sys; open('graphify-out/.graphify_python', 'w', encoding='utf-8').write(sys.executable)"
 # Save scan root so `graphify update` (no args) knows where to look next time
-echo "$(cd INPUT_PATH && pwd)" > graphify-out/.graphify_root
+echo "$(cd "$GRAPHIFY_INPUT_PATH" && pwd)" > graphify-out/.graphify_root
 ```
 
 If the import succeeds, print nothing and move straight to Step 2.
@@ -111,7 +126,7 @@ $(cat graphify-out/.graphify_python) -c "
 import json
 from graphify.detect import detect
 from pathlib import Path
-result = detect(Path('INPUT_PATH'))
+result = detect(Path(__import__('os').environ['GRAPHIFY_INPUT_PATH']))
 # Write the sidecar from Python, not a shell redirect, so the same block renders
 # on PowerShell hosts without console-encoding drift (#2528).
 Path('graphify-out/.graphify_detect.json').write_text(json.dumps(result, ensure_ascii=False), encoding=\"utf-8\")
@@ -186,7 +201,7 @@ for f in detect.get('files', {}).get('code', []):
     code_files.extend(collect_files(Path(f)) if Path(f).is_dir() else [Path(f)])
 
 if code_files:
-    result = extract(code_files, cache_root=Path('INPUT_PATH'))
+    result = extract(code_files, cache_root=Path(__import__('os').environ['GRAPHIFY_INPUT_PATH']))
     Path('graphify-out/.graphify_ast.json').write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding=\"utf-8\")
     print(f'AST: {len(result[\"nodes\"])} nodes, {len(result[\"edges\"])} edges')
 else:
@@ -234,7 +249,7 @@ detect = json.loads(Path('graphify-out/.graphify_detect.json').read_text(encodin
 # every source file (#1392). Video is transcribed to a document in Step 2.5 first.
 all_files = [f for cat in ('document', 'paper', 'image') for f in detect['files'].get(cat, [])]
 
-cached_nodes, cached_edges, cached_hyperedges, uncached = check_semantic_cache(all_files, root='INPUT_PATH', prompt_file='SPEC_PATH')
+cached_nodes, cached_edges, cached_hyperedges, uncached = check_semantic_cache(all_files, root=__import__('os').environ['GRAPHIFY_INPUT_PATH'], prompt_file=__import__('os').environ['GRAPHIFY_SPEC_PATH'])
 
 # Always (re)write the cache file: write hits, else DELETE any leftover from a prior
 # run so Part C never merges a stale .graphify_cached.json (#1392).
@@ -328,7 +343,7 @@ from pathlib import Path
 
 new = json.loads(Path('graphify-out/.graphify_semantic_new.json').read_text(encoding=\"utf-8\")) if Path('graphify-out/.graphify_semantic_new.json').exists() else {'nodes':[],'edges':[],'hyperedges':[]}
 uncached = [line for line in Path('graphify-out/.graphify_uncached.txt').read_text(encoding=\"utf-8\").splitlines() if line]
-saved = save_semantic_cache(new.get('nodes', []), new.get('edges', []), new.get('hyperedges', []), root='INPUT_PATH', allowed_source_files=uncached, prompt_file='SPEC_PATH')
+saved = save_semantic_cache(new.get('nodes', []), new.get('edges', []), new.get('hyperedges', []), root=__import__('os').environ['GRAPHIFY_INPUT_PATH'], allowed_source_files=uncached, prompt_file=__import__('os').environ['GRAPHIFY_SPEC_PATH'])
 print(f'Cached {saved} files')
 "
 ```
@@ -421,7 +436,7 @@ detection  = json.loads(Path('graphify-out/.graphify_detect.json').read_text(enc
 
 # root= mirrors the --update runbook (#1361): relativize source_file to the same
 # base so the full build and incremental --update never drift apart on re-extract.
-G = build_from_json(extraction, root='INPUT_PATH', directed=IS_DIRECTED)
+G = build_from_json(extraction, root=__import__('os').environ['GRAPHIFY_INPUT_PATH'], directed=IS_DIRECTED)
 # Guard BEFORE any write: an empty extraction must not clobber a good graph.json /
 # GRAPH_REPORT.md / analysis sidecar. Check immediately after build (#1392).
 if G.number_of_nodes() == 0:
@@ -446,7 +461,7 @@ if not wrote:
     print('ERROR: refused to shrink graphify-out/graph.json (existing graph has more nodes; #479).')
     print('If this shrink is intentional (you deleted files), re-run a full build with --force.')
     raise SystemExit(1)
-report = generate(G, communities, cohesion, labels, gods, surprises, detection, tokens, 'INPUT_PATH', suggested_questions=questions)
+report = generate(G, communities, cohesion, labels, gods, surprises, detection, tokens, __import__('os').environ['GRAPHIFY_INPUT_PATH'], suggested_questions=questions)
 Path('graphify-out/GRAPH_REPORT.md').write_text(report, encoding=\"utf-8\")
 analysis = {
     'communities': {str(k): v for k, v in communities.items()},
@@ -475,7 +490,7 @@ from pathlib import Path
 from graphify.diagnostics import diagnose_extraction, format_diagnostic_report
 
 extraction = json.loads(Path('graphify-out/.graphify_extract.json').read_text(encoding=\"utf-8\"))
-summary = diagnose_extraction(extraction, directed=IS_DIRECTED, root='INPUT_PATH')
+summary = diagnose_extraction(extraction, directed=IS_DIRECTED, root=__import__('os').environ['GRAPHIFY_INPUT_PATH'])
 print(format_diagnostic_report(summary))
 flags = [f'{summary[k]} {label}' for k, label in (
     ('dangling_endpoint_edges', 'dangling-endpoint edges'),
@@ -511,7 +526,7 @@ detection  = json.loads(Path('graphify-out/.graphify_detect.json').read_text(enc
 analysis   = json.loads(Path('graphify-out/.graphify_analysis.json').read_text(encoding=\"utf-8\"))
 
 # root= as in Step 4 / the --update runbook (#1361) — same base for node-key parity.
-G = build_from_json(extraction, root='INPUT_PATH', directed=IS_DIRECTED)
+G = build_from_json(extraction, root=__import__('os').environ['GRAPHIFY_INPUT_PATH'], directed=IS_DIRECTED)
 communities = {int(k): v for k, v in analysis['communities'].items()}
 cohesion = {int(k): v for k, v in analysis['cohesion'].items()}
 tokens = {'input': extraction.get('input_tokens', 0), 'output': extraction.get('output_tokens', 0)}
@@ -522,7 +537,7 @@ labels = LABELS_DICT
 # Regenerate questions with real community labels (labels affect question phrasing)
 questions = suggest_questions(G, communities, labels)
 
-report = generate(G, communities, cohesion, labels, analysis['gods'], analysis['surprises'], detection, tokens, 'INPUT_PATH', suggested_questions=questions)
+report = generate(G, communities, cohesion, labels, analysis['gods'], analysis['surprises'], detection, tokens, __import__('os').environ['GRAPHIFY_INPUT_PATH'], suggested_questions=questions)
 Path('graphify-out/GRAPH_REPORT.md').write_text(report, encoding=\"utf-8\")
 Path('graphify-out/.graphify_labels.json').write_text(json.dumps({str(k): v for k, v in labels.items()}, ensure_ascii=False), encoding=\"utf-8\")
 # Re-export so graph.json nodes carry the curated community_name (#2490).
@@ -592,7 +607,7 @@ extract = json.loads(Path('graphify-out/.graphify_extract.json').read_text(encod
 # types are gated on output.
 from graphify.cli import _stamped_manifest_files
 _corpus = detect.get('all_files') or detect['files']
-_manifest_files = _stamped_manifest_files(_corpus, extract, Path('INPUT_PATH'))
+_manifest_files = _stamped_manifest_files(_corpus, extract, Path(__import__('os').environ['GRAPHIFY_INPUT_PATH']))
 # Files dispatched this run (the changed subset) but NOT stamped above still carry
 # a stale semantic_hash from a prior run; clear it so detect_incremental re-queues
 # them instead of reading them as unchanged (#1948).
@@ -604,7 +619,7 @@ _cleared = _dispatched - _stamped
 # files newly excluded since last run are dropped rather than masquerading as
 # deletions; untouched files' prior rows are still preserved (#1908).
 _scan = {f for fl in _corpus.values() for f in fl}
-save_manifest(_manifest_files, root='INPUT_PATH', scan_corpus=_scan, clear_semantic=_cleared or None)
+save_manifest(_manifest_files, root=__import__('os').environ['GRAPHIFY_INPUT_PATH'], scan_corpus=_scan, clear_semantic=_cleared or None)
 
 # Update cumulative cost tracker
 input_tok = extract.get('input_tokens', 0)
