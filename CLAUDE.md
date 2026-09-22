@@ -149,6 +149,7 @@ Detailed reference material lives in [`docs/`](docs/). **Read the relevant doc b
 | Play-Store-Text: Quelldateien, Publish-Script, Setup                    | [`docs/play-store-publishing.md`](docs/play-store-publishing.md), [`docs/playstore-listing.md`](docs/playstore-listing.md)     |
 | Android Closed-Test: Kandidaten-Scan, Invite-Popup, Tester-Rekrutierung | [`docs/android-test-program.md`](docs/android-test-program.md)                                                                 |
 | TWA-Wrapper: Bubblewrap-Regeneration, AGP/R8-Handarbeit, CI-Build       | [`docs/android-twa-wrapper.md`](docs/android-twa-wrapper.md)                                                                   |
+| graphify: Code-Knowledge-Graph für Agents (query/path/explain, Hooks)   | [`docs/graphify.md`](docs/graphify.md)                                                                                         |
 
 ### Push notifications
 
@@ -199,3 +200,14 @@ Detailed reference material lives in [`docs/`](docs/). **Read the relevant doc b
 - The `nx-generate` skill handles generator discovery internally - don't call nx_docs just to look up generator syntax
 
 <!-- nx configuration end-->
+
+## graphify
+
+This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships. `graphify-out/` is gitignored — if it is missing, build it with `graphify update .` (install: `uv tool install graphifyy`). Details: [`docs/graphify.md`](docs/graphify.md).
+
+Rules:
+
+- For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
+- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
+- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
+- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
