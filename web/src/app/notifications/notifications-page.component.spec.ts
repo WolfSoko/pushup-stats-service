@@ -17,6 +17,33 @@ async function setup() {
 }
 
 describe('NotificationsPageComponent', () => {
+  it('should show skeleton rows instead of the empty text until the inbox has loaded', async () => {
+    // given
+    const { view, store } = await setup();
+    store.setRows([]);
+    store.setLoaded(false);
+    view.fixture.detectChanges();
+    const page = view.container.querySelector('.page') as HTMLElement;
+
+    // then
+    expect(
+      page.querySelectorAll('[data-testid="notifications-skeleton-row"]')
+    ).toHaveLength(4);
+    expect(page.querySelectorAll('pu-skeleton').length).toBeGreaterThan(0);
+    expect(page.getAttribute('aria-busy')).toBe('true');
+    expect(page.querySelector('.empty')).toBeNull();
+    expect(page.textContent).not.toContain('Hier landen');
+
+    // when
+    store.setLoaded(true);
+    view.fixture.detectChanges();
+
+    // then
+    expect(page.querySelector('pu-skeleton')).toBeNull();
+    expect(page.getAttribute('aria-busy')).toBeNull();
+    expect(page.querySelector('.empty')?.textContent).toContain('Hier landen');
+  });
+
   it('should mark "Alle gelesen" busy while the store marks everything read', async () => {
     // given
     const { view, store } = await setup();

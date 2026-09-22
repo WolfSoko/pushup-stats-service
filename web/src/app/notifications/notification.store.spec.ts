@@ -1,8 +1,8 @@
-import { PLATFORM_ID, signal } from '@angular/core';
+import { ApplicationRef, PLATFORM_ID, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { UserContextService } from '@pu-auth/auth';
 import { NotificationsApiService } from '@pu-stats/data-access';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 
 import { UserConfigStore } from '../core/user-config.store';
 import type { InboxRow } from './inbox-rows';
@@ -57,6 +57,32 @@ describe('NotificationStore', () => {
 
   beforeEach(() => {
     vitest.clearAllMocks();
+  });
+
+  it('should report loaded only once the inbox listener delivered its first snapshot', async () => {
+    // given
+    const inbox = new Subject<never[]>();
+    api.watch.mockReturnValueOnce(inbox);
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: NotificationsApiService, useValue: api },
+        { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+        { provide: UserConfigStore, useValue: config },
+      ],
+    });
+    const store = TestBed.inject(NotificationStore);
+
+    // then
+    expect(store.loaded()).toBe(false);
+
+    // when
+    TestBed.tick();
+    inbox.next([]);
+    await TestBed.inject(ApplicationRef).whenStable();
+
+    // then
+    expect(store.loaded()).toBe(true);
   });
 
   it('should flag the row as opening until its read mark settles', async () => {

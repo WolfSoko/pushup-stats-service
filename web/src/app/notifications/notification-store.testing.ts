@@ -18,7 +18,11 @@ export function notificationStoreMock() {
   const markingAllRead = signal(false);
   const busyKeys = signal<ReadonlySet<string>>(new Set());
   const rows = signal<ReadonlyArray<InboxRow>>([UNREAD_ROW]);
+  const loaded = signal(true);
   return {
+    loaded: loaded.asReadonly(),
+    setLoaded: (value: boolean) => loaded.set(value),
+    setRows: (value: ReadonlyArray<InboxRow>) => rows.set(value),
     markingAllRead: { busy: markingAllRead.asReadonly() },
     rowBusy: { isBusy: (key: string) => busyKeys().has(key) },
     setMarkingAllRead: (busy: boolean) => markingAllRead.set(busy),

@@ -75,6 +75,8 @@ export const NotificationStore = signalStore(
       unreadCount: computed(() => unreadCount(rows())),
       hasUnread: computed(() => unreadCount(rows()) > 0),
       hasAny: computed(() => rows().length > 0),
+      /** False until the listener's first snapshot, so the page shows a skeleton, not "empty". */
+      loaded: computed(() => !store.inboxResource.isLoading()),
     };
   }),
   withMethods((store) => ({

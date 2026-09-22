@@ -79,9 +79,24 @@
         <mat-card-title>{{ scope.title }}</mat-card-title>
         <mat-card-subtitle>{{ scope.subtitle }}</mat-card-subtitle>
       </mat-card-header>
-      <mat-card-content class="stack">
+      <mat-card-content
+        class="stack"
+        [attr.aria-busy]="configLoaded() ? null : 'true'"
+      >
         @let list = entriesFor(scope.id)();
-        @if (list.length === 0) {
+        @if (!configLoaded()) {
+          @for (row of skeletonRows; track row) {
+            <div
+              class="goal-row"
+              aria-hidden="true"
+              [attr.data-testid]="'goals-skeleton-' + scope.id"
+            >
+              <pu-skeleton shape="rect" height="56px" />
+              <pu-skeleton shape="rect" height="56px" />
+              <pu-skeleton shape="circle" width="40px" height="40px" />
+            </div>
+          }
+        } @else if (list.length === 0) {
           <p
             class="muted empty"
             [attr.data-testid]="'goals-empty-' + scope.id"
