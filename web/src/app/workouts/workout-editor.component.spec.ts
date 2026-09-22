@@ -248,4 +248,46 @@ describe('WorkoutEditorComponent', () => {
     expect(screen.queryByTestId('workout-editor-missing')).toBeNull();
     expect(screen.getByText('Session wird geladen …')).toBeTruthy();
   });
+
+  it('should hold a form-shaped skeleton with a hidden status text while the workout loads', async () => {
+    // given / when
+    const { fixture } = await setup({ id: 'w1', loaded: false, workouts: [] });
+
+    // then
+    const loading = screen.getByTestId('workout-editor-loading');
+    expect(loading.getAttribute('aria-busy')).toBe('true');
+    expect(loading.querySelectorAll('pu-skeleton')).toHaveLength(4);
+    expect(
+      loading.querySelector('.pu-visually-hidden[role="status"]')?.textContent
+    ).toContain('Session wird geladen …');
+    expect(fixture.nativeElement.querySelector('mat-spinner')).toBeNull();
+    expect(screen.queryByTestId('workout-title')).toBeNull();
+  });
+
+  it('should swap the skeleton for the form once the list is there', async () => {
+    // given
+    const { store, fixture } = await setup({ id: 'w1', loaded: false });
+
+    // when
+    store.loaded.set(true);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    // then
+    expect(screen.queryByTestId('workout-editor-loading')).toBeNull();
+    expect(fixture.nativeElement.querySelector('pu-skeleton')).toBeNull();
+    expect(
+      (screen.getByTestId('workout-title') as HTMLInputElement).value
+    ).toBe('Beine');
+  });
+
+  it('should not show the skeleton for a new session', async () => {
+    // given / when
+    const { fixture } = await setup({ loaded: false });
+
+    // then
+    expect(screen.queryByTestId('workout-editor-loading')).toBeNull();
+    expect(fixture.nativeElement.querySelector('pu-skeleton')).toBeNull();
+    expect(screen.getByTestId('workout-title')).toBeTruthy();
+  });
 });

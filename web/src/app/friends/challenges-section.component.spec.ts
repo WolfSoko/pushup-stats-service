@@ -95,6 +95,46 @@ describe('ChallengesSectionComponent', () => {
     expect(api.list).toHaveBeenCalledTimes(1);
   });
 
+  it('should hold a card-shaped skeleton and no empty text while the first list is read', async () => {
+    // given — the re-read hangs, nothing has arrived yet
+    let answer: (list: ChallengeView[]) => void = () => undefined;
+    const { api, fixture } = await renderSection([]);
+    api.list.mockReturnValue(
+      new Promise((resolve) => {
+        answer = resolve;
+      })
+    );
+
+    // when
+    void fixture.debugElement.injector.get(ChallengesStore).reload();
+    fixture.detectChanges();
+
+    // then
+    const loading = screen.getByTestId('challenges-loading');
+    expect(loading.tagName.toLowerCase()).toBe('mat-card');
+    expect(loading.getAttribute('aria-busy')).toBe('true');
+    expect(loading.querySelector('mat-card-title pu-skeleton')).not.toBeNull();
+    expect(
+      loading.querySelector('mat-card-subtitle pu-skeleton')
+    ).not.toBeNull();
+    expect(loading.querySelectorAll('.participant')).toHaveLength(2);
+    expect(loading.querySelectorAll('.participant pu-skeleton')).toHaveLength(
+      4
+    );
+    expect(document.body.querySelector('mat-spinner')).toBeNull();
+    expect(document.body.textContent).not.toContain('Noch keine Challenge');
+
+    // when
+    answer([]);
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(screen.queryByTestId('challenges-loading')).toBeNull();
+    expect(document.body.querySelector('pu-skeleton')).toBeNull();
+    expect(document.body.textContent).toContain('Noch keine Challenge');
+  });
+
   it('should say so and offer a retry when the list could not be loaded', async () => {
     // given — the first read fails, the retry succeeds
     const { api, fixture } = await renderSection([challenge]);

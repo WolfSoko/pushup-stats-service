@@ -41,13 +41,23 @@ describe('FriendsTeaserCardComponent', () => {
     challenges?: unknown[];
     guest?: boolean;
     uid?: string;
+    /** Hold the friends list back until `answerList` is called. */
+    listPending?: boolean;
   }) {
+    const lists = {
+      friends: options.friends ?? [],
+      incoming: options.incoming ?? [],
+      outgoing: [],
+    };
+    let answerList: () => void = () => undefined;
     const api = {
-      list: vitest.fn().mockResolvedValue({
-        friends: options.friends ?? [],
-        incoming: options.incoming ?? [],
-        outgoing: [],
-      }),
+      list: vitest.fn(() =>
+        options.listPending
+          ? new Promise<typeof lists>((resolve) => {
+              answerList = () => resolve(lists);
+            })
+          : Promise.resolve(lists)
+      ),
       board: vitest.fn().mockResolvedValue(options.board ?? []),
     };
     const challengesApi = {
@@ -72,8 +82,46 @@ describe('FriendsTeaserCardComponent', () => {
     });
     await fixture.whenStable();
     fixture.detectChanges();
-    return { api, challengesApi, invite, fixture };
+    return {
+      api,
+      challengesApi,
+      invite,
+      fixture,
+      answerList: () => answerList(),
+    };
   }
+
+  it('should hold the card body as a skeleton and no invite CTA while the lists load', async () => {
+    // given / when
+    const { fixture } = await renderCard({ listPending: true });
+
+    // then
+    const loading = screen.getByTestId('dashboard-friends-loading');
+    expect(loading.tagName.toLowerCase()).toBe('app-friends-teaser-skeleton');
+    expect(loading.getAttribute('aria-busy')).toBe('true');
+    expect(loading.querySelectorAll('pu-skeleton').length).toBeGreaterThan(0);
+    expect(fixture.nativeElement.querySelector('mat-spinner')).toBeNull();
+    expect(screen.queryByTestId('dashboard-friends-invite')).toBeNull();
+    expect(document.body.textContent).not.toContain('Trainier mit Freunden');
+    expect(screen.getByTestId('dashboard-friends-link')).toBeTruthy();
+  });
+
+  it('should swap the skeleton for the invite CTA once the empty lists arrive', async () => {
+    // given
+    const { fixture, answerList } = await renderCard({ listPending: true });
+
+    // when
+    answerList();
+    await nextMacrotask();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(screen.queryByTestId('dashboard-friends-loading')).toBeNull();
+    expect(fixture.nativeElement.querySelector('pu-skeleton')).toBeNull();
+    expect(screen.getByTestId('dashboard-friends-invite')).toBeTruthy();
+    expect(document.body.textContent).toContain('Trainier mit Freunden');
+  });
 
   it('should invite when the user has no friends yet', async () => {
     // given

@@ -181,6 +181,90 @@ describe('TrainingPlansPageComponent', () => {
     ).toBeNull();
   });
 
+  it('should hold the active plan card as a skeleton while the plan is still loading', async () => {
+    // given
+    const store = makeStoreMock(TRAINING_PLANS[0], true);
+    store.activePlanLoaded.set(false);
+
+    // when
+    const { container } = await render(TrainingPlansPageComponent, {
+      providers: [
+        provideRouter([]),
+        { provide: TrainingPlanStore, useValue: store },
+        {
+          provide: AuthStore,
+          useValue: makeAuthStoreMock({
+            isAuthenticated: true,
+            authResolved: true,
+          }),
+        },
+      ],
+    });
+
+    // then
+    const loading = screen.getByTestId('active-plan-loading');
+    expect(loading.getAttribute('aria-busy')).toBe('true');
+    expect(loading.closest('app-active-plan-card-skeleton')).not.toBeNull();
+    expect(loading.querySelectorAll('pu-skeleton').length).toBeGreaterThan(0);
+    expect(container.querySelector('app-active-plan-card')).toBeNull();
+    expect(container.querySelector('mat-spinner')).toBeNull();
+  });
+
+  it('should swap the skeleton for the active plan card once the plan is there', async () => {
+    // given
+    const store = makeStoreMock(TRAINING_PLANS[0], true);
+    store.activePlanLoaded.set(false);
+    const { container, fixture } = await render(TrainingPlansPageComponent, {
+      providers: [
+        provideRouter([]),
+        { provide: TrainingPlanStore, useValue: store },
+        {
+          provide: AuthStore,
+          useValue: makeAuthStoreMock({
+            isAuthenticated: true,
+            authResolved: true,
+          }),
+        },
+      ],
+    });
+
+    // when
+    store.activePlanLoaded.set(true);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    // then
+    expect(screen.queryByTestId('active-plan-loading')).toBeNull();
+    expect(container.querySelector('pu-skeleton')).toBeNull();
+    expect(container.querySelector('app-active-plan-card')).not.toBeNull();
+  });
+
+  it('should never show the active plan skeleton to a guest', async () => {
+    // given
+    const store = makeStoreMock();
+    store.activePlanLoaded.set(false);
+
+    // when
+    const { container } = await render(TrainingPlansPageComponent, {
+      providers: [
+        provideRouter([]),
+        { provide: TrainingPlanStore, useValue: store },
+        {
+          provide: AuthStore,
+          useValue: makeAuthStoreMock({
+            isAuthenticated: false,
+            authResolved: true,
+          }),
+        },
+      ],
+    });
+
+    // then
+    expect(screen.queryByTestId('active-plan-loading')).toBeNull();
+    expect(container.querySelector('app-active-plan-card-skeleton')).toBeNull();
+    expect(container.querySelector('app-active-plan-card')).toBeNull();
+  });
+
   it('renders a topical hero image for every plan card', async () => {
     const { container } = await render(TrainingPlansPageComponent, {
       providers: [
