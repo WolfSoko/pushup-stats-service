@@ -78,11 +78,14 @@ describe('PublicProfilePageComponent', () => {
       uid?: string | null;
       resolve?: PublicProfile | null;
       reject?: unknown;
+      pending?: Promise<PublicProfile | null>;
       extraProviders?: unknown[];
     } = {}
   ): Promise<void> {
     vitest.clearAllMocks();
-    if (options.reject !== undefined) {
+    if (options.pending) {
+      apiMock.getProfile.mockReturnValue(options.pending);
+    } else if (options.reject !== undefined) {
       apiMock.getProfile.mockRejectedValue(options.reject);
     } else {
       apiMock.getProfile.mockResolvedValue(options.resolve ?? null);
@@ -173,6 +176,48 @@ describe('PublicProfilePageComponent', () => {
       );
       expect(payload.text).toContain('Wolfi');
       expect(payload.text).toContain('5000');
+    });
+  });
+
+  describe('Given the profile request is still pending', () => {
+    it('should render the page skeleton without a spinner until the profile lands', async () => {
+      // given
+      let resolve: (profile: PublicProfile | null) => void = () => undefined;
+      const pending = new Promise<PublicProfile | null>((r) => {
+        resolve = r;
+      });
+      await setup({ pending });
+      const root = fixture.nativeElement as HTMLElement;
+
+      // then
+      const loading = root.querySelector(
+        '[data-testid="public-profile-loading"]'
+      );
+      expect(loading?.getAttribute('role')).toBe('status');
+      expect(loading?.getAttribute('aria-busy')).toBe('true');
+      expect(
+        loading?.querySelectorAll('app-public-profile-skeleton pu-skeleton')
+          .length
+      ).toBeGreaterThan(5);
+      expect(root.querySelector('mat-spinner')).toBeNull();
+      expect(
+        root.querySelector('[data-testid="public-profile-name"]')
+      ).toBeNull();
+
+      // when
+      resolve(sampleProfile);
+      await pending;
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then
+      expect(
+        root.querySelector('[data-testid="public-profile-loading"]')
+      ).toBeNull();
+      expect(root.querySelector('pu-skeleton')).toBeNull();
+      expect(
+        root.querySelector('[data-testid="public-profile-name"]')?.textContent
+      ).toContain('Wolfi');
     });
   });
 

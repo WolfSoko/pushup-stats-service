@@ -1,3 +1,4 @@
+import { ChangeDetectorRef } from '@angular/core';
 import { render, screen, fireEvent } from '@testing-library/angular';
 import { Auth } from '@angular/fire/auth';
 import { provideRouter, Router } from '@angular/router';
@@ -252,22 +253,54 @@ describe('UserMenuComponent', () => {
     expect(navigateSpy).toHaveBeenCalledWith(['/settings']);
   });
 
-  it('shows spinner when loading', async () => {
-    await render(UserMenuComponent, {
+  it('should reserve the avatar slot with a circle skeleton while auth resolves', async () => {
+    // given
+    const store = makeStore({
+      isAuthenticated: false,
+      isGuest: false,
+      loading: true,
+    });
+
+    // when
+    const { fixture } = await render(UserMenuComponent, {
       providers: [
         provideRouter([]),
         {
           provide: AuthStore,
-          useValue: makeStore({
-            isAuthenticated: false,
-            isGuest: false,
-            loading: true,
-          }),
+          useValue: store,
         },
         { provide: Auth, useValue: {} },
       ],
     });
-    expect(document.body.querySelector('mat-spinner')).toBeTruthy();
+
+    // then
+    const skeleton = document.body.querySelector(
+      '[data-testid="user-menu-skeleton"]'
+    ) as HTMLElement;
+    expect(skeleton).toBeTruthy();
+    expect(skeleton.style.width).toBe('32px');
+    expect(skeleton.getAttribute('aria-hidden')).toBe('true');
+    expect(document.body.querySelector('mat-spinner')).toBeNull();
+    expect(document.body.querySelector('button')).toBeNull();
+
+    // when
+    store.loading.mockReturnValue(false);
+    store.isAuthenticated.mockReturnValue(true);
+    store.user.mockReturnValue({
+      uid: 'test-uid',
+      displayName: 'Test User',
+      email: 'test@example.com',
+      photoURL: null,
+    });
+    fixture.componentRef.injector.get(ChangeDetectorRef).markForCheck();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    // then
+    expect(
+      document.body.querySelector('[data-testid="user-menu-skeleton"]')
+    ).toBeNull();
+    expect(screen.getByLabelText('Nutzerkonto-Menü')).toBeTruthy();
   });
 });
 

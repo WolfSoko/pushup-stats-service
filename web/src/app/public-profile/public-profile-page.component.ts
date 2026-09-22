@@ -16,7 +16,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   resolveAchievementBadges,
@@ -36,6 +35,7 @@ import { UserConfigStore } from '../core/user-config.store';
 import { ProfilePhotoService } from '../core/profile-photo.service';
 import { InviteBannerComponent } from '../core/invite-banner.component';
 import { ProfileWorkoutsComponent } from './profile-workouts.component';
+import { PublicProfileSkeletonComponent } from './public-profile-skeleton.component';
 import { InviteService } from '../core/invite.service';
 import { FriendsStore } from '../friends/friends.store';
 import { BusyDirective, createBusyState } from '@pu-stats/ui';
@@ -56,10 +56,10 @@ type LoadState =
     MatIconModule,
     MatButtonModule,
     MatButtonToggleModule,
-    MatProgressSpinnerModule,
     MatTooltipModule,
     InviteBannerComponent,
     ProfileWorkoutsComponent,
+    PublicProfileSkeletonComponent,
     BusyDirective,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
