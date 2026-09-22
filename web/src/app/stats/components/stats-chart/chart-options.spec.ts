@@ -233,3 +233,15 @@ describe('buildChartOptions axis titles', () => {
     expect(scales.yIntegral.title.display).toBe(false);
   });
 });
+
+describe('buildChartOptions axis visibility', () => {
+  it('should leave both y axes to Chart.js so a switched-off series takes its axis with it', () => {
+    // given / when
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const scales = (optionsFor() as any).scales;
+
+    // then — `'auto'` draws a scale only while a visible dataset uses it
+    expect(scales.y.display).toBe('auto');
+    expect(scales.yIntegral.display).toBe('auto');
+  });
+});

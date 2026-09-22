@@ -194,6 +194,22 @@ mkdir /tmp/x && (cd /tmp/x && npm init -y > /dev/null && npm i --silent <pkgs>) 
 
 See `tools/src/generate-logo-assets.js` for a real example.
 
+## Running a subset of `web`'s specs
+
+`web:test` is the `@angular/build:unit-test` builder, not a bare Vitest run, so the usual ways to narrow it all fail:
+
+- positional args (`pnpm nx test web -- foo.spec.ts`) → `Schema does not support positional arguments`
+- Jest's flag (`--testPathPattern=…`) → `'testPathPattern' is not found in schema`
+- calling Vitest directly (`npx vitest run --config web/vitest.config.ts`) → `describe is not defined` / `$localize is not defined`. `web/vitest.config.ts` is only a timeout overlay; the builder supplies the Angular transform and `setupFiles`.
+
+Use the builder's own `--include`, and keep the glob loose — a `src/`-rooted one matches nothing:
+
+```bash
+pnpm nx test web --coverage=false --include='**/stats-chart/*.spec.ts'
+```
+
+`--coverage=false` skips the workspace-wide coverage pass, which dominates the runtime of a narrow run.
+
 ## pnpm via corepack, not `pnpm/action-setup`
 
 CI uses `corepack enable` to pick up the exact pnpm pinned in `package.json`'s `packageManager` field (currently pnpm 11.x) instead of `pnpm/action-setup@v6`, which resolves its own version independently and can drift from the pin. See `pnpm/action-setup#228`. (pnpm 11's lockfile can be a multi-document YAML file; Nx 23+ parses that fine — the risk `action-setup` posed was picking a version this repo hadn't validated yet, not the format itself.)

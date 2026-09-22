@@ -42,6 +42,37 @@ export function exerciseLegendId(exerciseId: string): string {
   return `${EXERCISE_LEGEND_PREFIX}${exerciseId}`;
 }
 
+/**
+ * What is hidden before anyone touches the legend. The cumulative line
+ * restates what the bars already add up to and costs a second axis for
+ * it, so it stays off until asked for. In pace mode the same slot
+ * carries the km pace instead — that one *is* the reason a distance
+ * chart exists, so it draws from the start.
+ */
+export function defaultHiddenSeries(
+  paceMode: boolean
+): ReadonlySet<ChartSeriesKey> {
+  return paceMode
+    ? new Set<ChartSeriesKey>()
+    : new Set<ChartSeriesKey>(['secondary']);
+}
+
+/**
+ * The defaults with every key the user clicked flipped the other way,
+ * so a legend click reads as "the opposite of what this chart starts
+ * with" rather than as an absolute hide.
+ */
+export function resolveHiddenSeries(
+  defaults: ReadonlySet<ChartSeriesKey>,
+  clicked: ReadonlySet<ChartSeriesKey>
+): ReadonlySet<ChartSeriesKey> {
+  const hidden = new Set(defaults);
+  for (const key of clicked) {
+    if (!hidden.delete(key)) hidden.add(key);
+  }
+  return hidden;
+}
+
 function seriesItem(
   key: ChartSeriesKey,
   input: LegendItemsInput

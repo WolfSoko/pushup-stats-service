@@ -34,7 +34,9 @@ import {
 } from './chart-messages';
 import {
   buildLegendItems,
+  defaultHiddenSeries,
   parseLegendId,
+  resolveHiddenSeries,
   type ChartSeriesKey,
 } from './chart-legend-items';
 import {
@@ -127,12 +129,22 @@ export class StatsChartComponent implements AfterViewInit {
   );
 
   /**
-   * Series switched off through the legend. Local rather than store
-   * state: the lines describe this chart alone, and the same chart is
-   * embedded on the dashboard teaser where no store is in reach.
+   * Series whose visibility the legend flipped away from the default.
+   * Stored as the clicks rather than as the result because the default
+   * depends on `paceMode`, which an input can still change under us.
+   * Local rather than store state: the lines describe this chart alone,
+   * and the same chart is embedded on the dashboard teaser where no
+   * store is in reach.
    */
-  private readonly hiddenSeries = signal<ReadonlySet<ChartSeriesKey>>(
+  private readonly clickedSeries = signal<ReadonlySet<ChartSeriesKey>>(
     new Set()
+  );
+
+  private readonly hiddenSeries = computed(() =>
+    resolveHiddenSeries(
+      defaultHiddenSeries(this.paceMode()),
+      this.clickedSeries()
+    )
   );
 
   /**
@@ -220,8 +232,8 @@ export class StatsChartComponent implements AfterViewInit {
       this.hiddenExercises.update((hidden) => toggled(hidden, parsed.key));
       return;
     }
-    this.hiddenSeries.update((hidden) =>
-      toggled(hidden, parsed.key as ChartSeriesKey)
+    this.clickedSeries.update((clicked) =>
+      toggled(clicked, parsed.key as ChartSeriesKey)
     );
   }
 

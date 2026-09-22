@@ -203,6 +203,10 @@ export function buildChartOptions(
         grid: { color: colors.chartGridLight },
       },
       y: {
+        // An axis whose every series the legend switched off describes
+        // nothing — `'auto'` drops it along with its ticks and title
+        // instead of leaving a scale for invisible data.
+        display: 'auto',
         stacked: hasSetsData || stackedBreakdown,
         title: {
           display: yAxisTitle.length > 0,
@@ -217,6 +221,7 @@ export function buildChartOptions(
         grid: { color: colors.chartGrid },
       },
       yIntegral: {
+        display: 'auto',
         position: 'right',
         title: {
           display: ySecondaryAxisTitle.length > 0,
