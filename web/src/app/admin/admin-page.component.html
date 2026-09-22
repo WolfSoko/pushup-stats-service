@@ -111,9 +111,9 @@
   </div>
 
   @if (loading()) {
-    <div class="spinner-container">
-      <mat-spinner />
-    </div>
+    <mat-card aria-busy="true" data-testid="admin-users-skeleton">
+      <pu-skeleton-table [rows]="8" [columns]="7" />
+    </mat-card>
   } @else if (error()) {
     <p class="error-text">{{ error() }}</p>
   } @else {

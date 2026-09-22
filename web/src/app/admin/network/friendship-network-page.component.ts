@@ -9,13 +9,16 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';
 import { errorMessage } from '../admin-page.helpers';
-import { BusyDirective } from '@pu-stats/ui';
+import {
+  BusyDirective,
+  SkeletonComponent,
+  SkeletonTableComponent,
+} from '@pu-stats/ui';
 import { CallableFunctionsService } from '../callable-functions.service';
 import { FriendshipGraphComponent } from './friendship-graph.component';
 import {
@@ -35,12 +38,13 @@ import {
   selector: 'app-friendship-network-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    SkeletonComponent,
+    SkeletonTableComponent,
     BusyDirective,
     FriendshipGraphComponent,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatProgressSpinnerModule,
     MatTableModule,
     PageHeaderComponent,
     RouterLink,

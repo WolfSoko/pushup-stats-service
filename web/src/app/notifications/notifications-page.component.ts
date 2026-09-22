@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { Router } from '@angular/router';
-import { BusyDirective } from '@pu-stats/ui';
+import { BusyDirective, SkeletonComponent } from '@pu-stats/ui';
 
 import type { InboxRow } from './inbox-rows';
 import { NotificationItemComponent } from './notification-item.component';
@@ -15,10 +15,11 @@ import { NotificationStore } from './notification.store';
     MatButtonToggleModule,
     NotificationItemComponent,
     BusyDirective,
+    SkeletonComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <section class="page">
+    <section class="page" [attr.aria-busy]="store.loaded() ? null : 'true'">
       <header>
         <h1 i18n="@@notifications.page.title">Nachrichten</h1>
         @if (store.hasUnread()) {
@@ -48,24 +49,37 @@ import { NotificationStore } from './notification.store';
         >
       </mat-button-toggle-group>
 
-      @for (row of store.visibleRows(); track row.id) {
-        <app-notification-item
-          [row]="row"
-          [opening]="store.rowBusy.isBusy('open:' + row.id)"
-          [removing]="store.rowBusy.isBusy('remove:' + row.id)"
-          (open)="open($event)"
-          (remove)="store.remove($event)"
-        />
-      } @empty {
-        @if (store.inboxFilter() === 'unread' && store.hasAny()) {
-          <p class="empty" i18n="@@notifications.page.allRead">
-            Alles gelesen. Über „Alle“ siehst du auch ältere Nachrichten.
-          </p>
-        } @else {
-          <p class="empty" i18n="@@notifications.page.empty">
-            Hier landen Anfeuerungen, Freundschaftsanfragen, Challenges und neue
-            Abzeichen.
-          </p>
+      @if (!store.loaded()) {
+        @for (row of skeletonRows; track row) {
+          <div class="skeleton-row" data-testid="notifications-skeleton-row">
+            <pu-skeleton shape="circle" width="40px" height="40px" />
+            <div class="skeleton-body">
+              <pu-skeleton width="80%" />
+              <pu-skeleton width="55%" height="0.75em" />
+            </div>
+            <pu-skeleton width="3em" height="0.75em" />
+          </div>
+        }
+      } @else {
+        @for (row of store.visibleRows(); track row.id) {
+          <app-notification-item
+            [row]="row"
+            [opening]="store.rowBusy.isBusy('open:' + row.id)"
+            [removing]="store.rowBusy.isBusy('remove:' + row.id)"
+            (open)="open($event)"
+            (remove)="store.remove($event)"
+          />
+        } @empty {
+          @if (store.inboxFilter() === 'unread' && store.hasAny()) {
+            <p class="empty" i18n="@@notifications.page.allRead">
+              Alles gelesen. Über „Alle“ siehst du auch ältere Nachrichten.
+            </p>
+          } @else {
+            <p class="empty" i18n="@@notifications.page.empty">
+              Hier landen Anfeuerungen, Freundschaftsanfragen, Challenges und
+              neue Abzeichen.
+            </p>
+          }
         }
       }
     </section>
@@ -97,6 +111,20 @@ import { NotificationStore } from './notification.store';
       margin-bottom: 8px;
     }
 
+    .skeleton-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+    }
+
+    .skeleton-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
     .empty {
       padding: 32px 8px;
       text-align: center;
@@ -106,6 +134,7 @@ import { NotificationStore } from './notification.store';
 })
 export class NotificationsPageComponent {
   protected readonly store = inject(NotificationStore);
+  protected readonly skeletonRows = [0, 1, 2, 3];
   private readonly router = inject(Router);
 
   protected async open(row: InboxRow): Promise<void> {

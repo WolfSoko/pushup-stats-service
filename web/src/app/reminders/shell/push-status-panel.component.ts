@@ -1,20 +1,25 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   input,
   output,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import type { PushStatus } from '@pu-push/push';
-import { BusyDirective } from '@pu-stats/ui';
+import { BusyDirective, SkeletonComponent } from '@pu-stats/ui';
 
 @Component({
   selector: 'app-push-status-panel',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [BusyDirective, MatButtonModule, MatIconModule],
+  imports: [BusyDirective, MatButtonModule, MatIconModule, SkeletonComponent],
   template: `
-    <section id="reminders" class="reminder-section">
+    <section
+      id="reminders"
+      class="reminder-section"
+      [attr.aria-busy]="resolving() ? 'true' : null"
+    >
       <h3 i18n="@@push.section.title">🔔 Erinnerungen</h3>
       <p class="muted" i18n="@@push.section.desc">
         Wir tippen dir auf die Schulter, wenn es Zeit für Liegestütze ist.
@@ -69,6 +74,12 @@ import { BusyDirective } from '@pu-stats/ui';
             </span>
           </p>
         }
+      } @else if (resolving()) {
+        <div class="skeleton" data-testid="push-status-skeleton">
+          <pu-skeleton shape="title" width="40%" />
+          <pu-skeleton width="70%" />
+          <pu-skeleton shape="rect" width="180px" height="40px" />
+        </div>
       } @else {
         <p class="muted" i18n="@@push.cta.desc">
           Nie wieder eine Einheit verpassen.
@@ -126,6 +137,10 @@ import { BusyDirective } from '@pu-stats/ui';
       font-size: 0.85rem;
       color: #90ee90;
     }
+    .skeleton {
+      display: grid;
+      gap: 10px;
+    }
     .device-count-hint {
       display: flex;
       align-items: center;
@@ -139,6 +154,13 @@ export class PushStatusPanelComponent {
   /** The push action in flight, if any — only the pressed button spins. */
   readonly busyKeys = input<ReadonlySet<'subscribe' | 'unsubscribe'>>(
     new Set()
+  );
+  /**
+   * The initial status probe. A `loading` caused by a pressed button keeps
+   * that button's panel, so the spinner stays where the user clicked.
+   */
+  protected readonly resolving = computed(
+    () => this.status() === 'loading' && this.busyKeys().size === 0
   );
   readonly subscribe = output<void>();
   readonly unsubscribe = output<void>();

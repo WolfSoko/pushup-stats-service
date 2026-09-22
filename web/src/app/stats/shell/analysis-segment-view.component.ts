@@ -8,6 +8,7 @@ import {
 import { MatCardModule } from '@angular/material/card';
 import type { StatsGranularity, UnifiedEntryFilterKey } from '@pu-stats/models';
 import type { RangeModes } from '@pu-stats/date';
+import { SkeletonComponent } from '@pu-stats/ui';
 import {
   ExerciseBreakdownControlsComponent,
   type ExerciseChoice,
@@ -42,6 +43,7 @@ import {
   selector: 'app-analysis-segment-view',
   imports: [
     MatCardModule,
+    SkeletonComponent,
     AnalysisTrendTableComponent,
     ExerciseBreakdownControlsComponent,
     SetsDistributionComponent,

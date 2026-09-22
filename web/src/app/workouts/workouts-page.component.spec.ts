@@ -80,6 +80,37 @@ async function setup(
 }
 
 describe('WorkoutsPageComponent', () => {
+  it('should hold three card skeletons and no empty card while the list loads', async () => {
+    // given / when
+    const { fixture } = await setup({ workouts: [], loaded: false });
+
+    // then
+    const loading = screen.getByTestId('workouts-loading');
+    expect(loading.getAttribute('aria-busy')).toBe('true');
+    expect(loading.querySelectorAll('app-workout-card-skeleton')).toHaveLength(
+      3
+    );
+    expect(loading.querySelector('pu-skeleton')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('mat-spinner')).toBeNull();
+    expect(screen.queryByTestId('workouts-empty')).toBeNull();
+    expect(screen.queryByTestId('workout-card')).toBeNull();
+  });
+
+  it('should swap the skeletons for the empty card once the list is there', async () => {
+    // given
+    const { store, fixture } = await setup({ workouts: [], loaded: false });
+
+    // when
+    store.loaded.set(true);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    // then
+    expect(screen.queryByTestId('workouts-loading')).toBeNull();
+    expect(fixture.nativeElement.querySelector('pu-skeleton')).toBeNull();
+    expect(screen.getByTestId('workouts-empty')).toBeTruthy();
+  });
+
   it('should invite the user to create their first session when there is none', async () => {
     // given
     await setup({ workouts: [] });

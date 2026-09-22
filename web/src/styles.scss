@@ -1,5 +1,6 @@
 @use '@angular/material' as mat;
 @use '../../libs/ui/src/lib/busy/busy';
+@use '../../libs/ui/src/lib/skeleton/skeleton';
 
 // Shared typography config
 $typography-config: (

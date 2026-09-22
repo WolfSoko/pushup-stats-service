@@ -1,0 +1,13 @@
+// Screen-reader-only text next to a skeleton, so a loading region can still
+// announce itself while the placeholder stays `aria-hidden`.
+.pu-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

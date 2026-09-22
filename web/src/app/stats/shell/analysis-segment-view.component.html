@@ -109,6 +109,8 @@
       <mat-card-content>
         @defer (hydrate on viewport) {
           <app-type-pie [data]="typeBreakdownDisplay()" />
+        } @placeholder {
+          <pu-skeleton shape="rect" height="160px" />
         }
       </mat-card-content>
     </mat-card>
@@ -137,6 +139,8 @@
         <mat-card-content>
           @defer (hydrate on viewport) {
             <app-sets-distribution [data]="segment().setsDistribution" />
+          } @placeholder {
+            <pu-skeleton shape="rect" height="120px" />
           }
         </mat-card-content>
       </mat-card>

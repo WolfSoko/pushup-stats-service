@@ -10,7 +10,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
 import {
   ANDROID_TEST_THRESHOLD_LIMITS,
@@ -27,6 +26,7 @@ import {
 } from './android-test-page.helpers';
 import {
   BusyDirective,
+  SkeletonComponent,
   createKeyedBusyState,
   otherKeyBusy,
 } from '@pu-stats/ui';
@@ -36,13 +36,13 @@ import { CallableFunctionsService } from './callable-functions.service';
   selector: 'app-android-test-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    SkeletonComponent,
     BusyDirective,
     FormsModule,
     MatButtonModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatProgressSpinnerModule,
     RouterLink,
     PageHeaderComponent,
   ],
@@ -53,6 +53,7 @@ export class AndroidTestPageComponent {
   private readonly callables = inject(CallableFunctionsService);
 
   readonly loading = signal(false);
+  readonly skeletonRows = [0, 1, 2, 3];
   readonly error = signal<string | null>(null);
   readonly users = signal<AdminUser[]>([]);
   /** Keyed `<uid>:<confirm|decline|added>`, one flag per row action. */

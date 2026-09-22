@@ -9,9 +9,9 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatListModule, MatListOption } from '@angular/material/list';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
 import { MAX_WORKOUT_SHARE_RECIPIENTS } from '@pu-stats/models';
+import { SkeletonComponent } from '@pu-stats/ui';
 
 import { FriendsStore } from '../friends/friends.store';
 
@@ -27,8 +27,8 @@ import { FriendsStore } from '../friends/friends.store';
     MatButtonModule,
     MatDialogModule,
     MatListModule,
-    MatProgressSpinnerModule,
     RouterLink,
+    SkeletonComponent,
   ],
   template: `
     <h2 mat-dialog-title i18n="@@workouts.share.title">
@@ -36,7 +36,14 @@ import { FriendsStore } from '../friends/friends.store';
     </h2>
     <mat-dialog-content class="content">
       @if (friends.loading() && friends.friends().length === 0) {
-        <mat-spinner diameter="28" />
+        <div aria-busy="true" data-testid="workout-share-loading">
+          @for (row of skeletonRows; track row) {
+            <div class="skeleton-row">
+              <pu-skeleton shape="circle" width="24px" height="24px" />
+              <pu-skeleton width="60%" />
+            </div>
+          }
+        </div>
       } @else if (friends.friends().length === 0) {
         <p i18n="@@workouts.share.noFriends">
           Du hast noch keine bestätigten Freunde. Lade jemanden ein — dann
@@ -97,6 +104,13 @@ import { FriendsStore } from '../friends/friends.store';
       margin: 0;
       opacity: 0.8;
     }
+    .skeleton-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-height: 48px;
+      padding: 0 16px;
+    }
   `,
 })
 export class WorkoutShareDialogComponent implements OnInit {
@@ -107,6 +121,7 @@ export class WorkoutShareDialogComponent implements OnInit {
 
   protected readonly anonymous = $localize`:@@friends.anonymous:Ohne Namen`;
   protected readonly selected = signal<string[]>([]);
+  protected readonly skeletonRows = [0, 1, 2];
 
   protected readonly valid = computed(
     () =>

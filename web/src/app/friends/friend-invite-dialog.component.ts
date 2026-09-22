@@ -9,8 +9,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { BusyDirective, createBusyState } from '@pu-stats/ui';
+import {
+  BusyDirective,
+  createBusyState,
+  SkeletonComponent,
+} from '@pu-stats/ui';
 
 import { InviteService } from '../core/invite.service';
 import { ShareService } from '../core/share.service';
@@ -39,13 +42,20 @@ import { ShareService } from '../core/share.service';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatProgressSpinnerModule,
+    SkeletonComponent,
   ],
   template: `
     <h2 mat-dialog-title i18n="@@friends.invite.title">Freund hinzufügen</h2>
     <mat-dialog-content class="content">
       @if (token.isLoading()) {
-        <div class="centered"><mat-spinner diameter="32" /></div>
+        <div
+          class="link-skeleton"
+          aria-busy="true"
+          data-testid="invite-loading"
+        >
+          <pu-skeleton lines="2" />
+          <pu-skeleton shape="rect" height="56px" />
+        </div>
       } @else if (ready()) {
         <p class="hint" i18n="@@friends.invite.hint">
           Schick diesen Link an jemanden, mit dem du trainieren möchtest. Wer
@@ -84,7 +94,9 @@ import { ShareService } from '../core/share.service';
       >
         Schließen
       </button>
-      @if (ready()) {
+      @if (token.isLoading()) {
+        <pu-skeleton shape="rect" width="112px" height="36px" />
+      } @else if (ready()) {
         <button
           mat-stroked-button
           type="button"
@@ -113,10 +125,10 @@ import { ShareService } from '../core/share.service';
       gap: 8px;
       min-width: min(80vw, 380px);
     }
-    .centered {
-      display: flex;
-      justify-content: center;
-      padding: 12px 0;
+    .link-skeleton {
+      display: grid;
+      gap: 12px;
+      padding: 4px 0 8px;
     }
     .hint {
       margin: 0 0 4px;

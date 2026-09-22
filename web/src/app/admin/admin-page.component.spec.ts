@@ -93,6 +93,43 @@ describe('AdminPageComponent', () => {
   });
 
   describe('user list initialization', () => {
+    it('should render a skeleton table instead of a spinner while the users load', async () => {
+      // given
+      await createComponent([]);
+      let resolve: (value: { data: AdminUser[] }) => void = () => undefined;
+      const pending = new Promise<{ data: AdminUser[] }>((r) => {
+        resolve = r;
+      });
+      setupCallables([
+        { name: 'adminListUsers', impl: () => pending },
+        { name: 'adminListFeedback', impl: async () => ({ data: [] }) },
+      ]);
+      const host = fixture.nativeElement as HTMLElement;
+
+      // when
+      const load = component.loadUsers();
+      fixture.detectChanges();
+
+      // then
+      const skeleton = host.querySelector(
+        '[data-testid="admin-users-skeleton"]'
+      );
+      expect(skeleton?.getAttribute('aria-busy')).toBe('true');
+      expect(skeleton?.querySelector('pu-skeleton-table')).toBeTruthy();
+      expect(host.querySelector('mat-spinner')).toBeNull();
+      expect(host.querySelector('mat-table')).toBeNull();
+
+      // when
+      resolve({ data: [sampleUser] });
+      await load;
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then
+      expect(host.querySelector('pu-skeleton-table')).toBeNull();
+      expect(host.querySelector('mat-table')).toBeTruthy();
+    });
+
     it('should load users on init via the adminListUsers callable', async () => {
       // given / when
       await createComponent([sampleUser]);

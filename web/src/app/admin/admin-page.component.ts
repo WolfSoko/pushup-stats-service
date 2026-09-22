@@ -17,12 +17,15 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { BusyDirective, createKeyedBusyState } from '@pu-stats/ui';
+import {
+  BusyDirective,
+  SkeletonTableComponent,
+  createKeyedBusyState,
+} from '@pu-stats/ui';
 import { CallableFunctionsService } from './callable-functions.service';
 import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';
@@ -41,6 +44,7 @@ import {
   selector: 'app-admin-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    SkeletonTableComponent,
     BusyDirective,
     DatePipe,
     FormsModule,
@@ -50,7 +54,6 @@ import {
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatProgressSpinnerModule,
     MatSortModule,
     MatTableModule,
     MatTooltipModule,

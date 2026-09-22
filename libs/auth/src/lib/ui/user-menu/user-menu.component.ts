@@ -10,8 +10,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
+import { SkeletonComponent } from '@pu-stats/ui';
 import { AuthStore } from '../../core/state/auth.store';
 
 @Component({
@@ -23,7 +23,7 @@ import { AuthStore } from '../../core/state/auth.store';
     MatIconModule,
     MatMenuModule,
     MatDividerModule,
-    MatProgressSpinner,
+    SkeletonComponent,
   ],
   templateUrl: './user-menu.component.html',
   styleUrl: './user-menu.component.scss',

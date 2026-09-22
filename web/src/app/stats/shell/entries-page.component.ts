@@ -148,6 +148,7 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
 
       <app-stats-table
         [entries]="store.filteredRows()"
+        [loading]="store.loading()"
         [busyAction]="store.busyAction()"
         [busyId]="store.busyId()"
         [highlightEntryId]="highlightEntryId()"

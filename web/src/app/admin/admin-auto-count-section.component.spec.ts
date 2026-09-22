@@ -69,6 +69,43 @@ describe('AdminAutoCountSectionComponent', () => {
     });
   });
 
+  it('should render two skeleton tables instead of the empty text while the reports load', async () => {
+    // given
+    let resolve: (value: { data: AdminAutoCountFeedback }) => void = () =>
+      undefined;
+    const pending = new Promise<{ data: AdminAutoCountFeedback }>((r) => {
+      resolve = r;
+    });
+    setupCallables([
+      { name: 'adminListAutoCountFeedback', impl: () => pending },
+    ]);
+
+    // when
+    const fixture = TestBed.createComponent(AdminAutoCountSectionComponent);
+    fixture.detectChanges();
+    const host = fixture.nativeElement as HTMLElement;
+
+    // then
+    const skeleton = host.querySelector(
+      '[data-testid="admin-auto-count-skeleton"]'
+    );
+    expect(skeleton?.getAttribute('aria-busy')).toBe('true');
+    expect(skeleton?.querySelectorAll('pu-skeleton-table')).toHaveLength(2);
+    expect(host.querySelector('mat-spinner')).toBeNull();
+    expect(host.textContent).not.toContain('Noch keine Rückmeldungen');
+
+    // when
+    resolve({ data: RESPONSE });
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(host.querySelector('pu-skeleton-table')).toBeNull();
+    expect(
+      host.querySelector('[data-testid="admin-auto-count-summaries"]')
+    ).toBeTruthy();
+  });
+
   it('given reports exist, when the section loads, then each threshold set is compared', async () => {
     // given
     setupCallables([

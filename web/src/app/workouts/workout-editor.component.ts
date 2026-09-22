@@ -21,7 +21,7 @@ import {
   WORKOUT_MAX_EXERCISES,
   WORKOUT_TITLE_MAX,
 } from '@pu-stats/models';
-import { BusyDirective } from '@pu-stats/ui';
+import { BusyDirective, SkeletonComponent } from '@pu-stats/ui';
 
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import {
@@ -59,6 +59,7 @@ import { WorkoutsStore } from './workouts.store';
     MatTooltipModule,
     PageHeaderComponent,
     RouterLink,
+    SkeletonComponent,
   ],
   templateUrl: './workout-editor.component.html',
   styleUrl: './workout-editor.component.css',

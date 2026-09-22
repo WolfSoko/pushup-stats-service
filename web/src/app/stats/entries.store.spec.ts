@@ -447,4 +447,34 @@ describe('EntriesStore', () => {
       expect(store.busyAction()).toBeNull();
     });
   });
+
+  it('should report loading only while the feed is disconnected and has no rows yet', () => {
+    // given
+    const store = setup();
+    liveMock.connected.set(false);
+    liveMock.exerciseEntries.set([] as never[]);
+
+    // then
+    expect(store.loading()).toBe(true);
+
+    // when — rows arrive although the listener reports disconnected
+    liveMock.exerciseEntries.set([
+      {
+        _id: 'e1',
+        exerciseId: 'pushup',
+        timestamp: '2026-02-10T10:00:00.000Z',
+        reps: 10,
+      },
+    ] as never[]);
+
+    // then
+    expect(store.loading()).toBe(false);
+
+    // when
+    liveMock.connected.set(true);
+    liveMock.exerciseEntries.set([] as never[]);
+
+    // then
+    expect(store.loading()).toBe(false);
+  });
 });

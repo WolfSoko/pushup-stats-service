@@ -11,10 +11,20 @@
   </app-page-header>
 
   @if (loading()) {
-    <mat-card>
-      <mat-card-content i18n="@@workouts.editor.loading"
-        >Session wird geladen …</mat-card-content
-      >
+    <mat-card aria-busy="true" data-testid="workout-editor-loading">
+      <mat-card-content class="editor-skeleton">
+        <p
+          class="pu-visually-hidden"
+          role="status"
+          i18n="@@workouts.editor.loading"
+        >
+          Session wird geladen …
+        </p>
+        <pu-skeleton shape="rect" height="56px" />
+        <pu-skeleton shape="rect" height="56px" />
+        <pu-skeleton lines="3" />
+        <pu-skeleton shape="rect" width="160px" height="40px" />
+      </mat-card-content>
     </mat-card>
   } @else if (missing()) {
     <mat-card data-testid="workout-editor-missing">

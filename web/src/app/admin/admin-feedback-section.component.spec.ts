@@ -83,6 +83,41 @@ describe('AdminFeedbackSectionComponent', () => {
   });
 
   describe('feedback list initialization', () => {
+    it('should render a skeleton table instead of the empty text while the feedback loads', async () => {
+      // given
+      await createComponent([]);
+      let resolve: (value: { data: typeof baseFeedback }) => void = () =>
+        undefined;
+      const pending = new Promise<{ data: typeof baseFeedback }>((r) => {
+        resolve = r;
+      });
+      setupCallables([{ name: 'adminListFeedback', impl: () => pending }]);
+      const host = fixture.nativeElement as HTMLElement;
+
+      // when
+      const load = component.loadFeedback();
+      fixture.detectChanges();
+
+      // then
+      const skeleton = host.querySelector(
+        '[data-testid="admin-feedback-skeleton"]'
+      );
+      expect(skeleton?.getAttribute('aria-busy')).toBe('true');
+      expect(skeleton?.querySelector('pu-skeleton-table')).toBeTruthy();
+      expect(host.querySelector('mat-spinner')).toBeNull();
+      expect(host.textContent).not.toContain('Noch kein Feedback vorhanden.');
+
+      // when
+      resolve({ data: [] });
+      await load;
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then
+      expect(host.querySelector('pu-skeleton-table')).toBeNull();
+      expect(host.textContent).toContain('Noch kein Feedback vorhanden.');
+    });
+
     it('should load feedback on init via the adminListFeedback callable', async () => {
       // given / when
       await createComponent();

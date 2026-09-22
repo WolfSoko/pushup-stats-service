@@ -1,8 +1,13 @@
 <main class="container" data-testid="public-profile-page">
   @switch (state().kind) {
     @case ('loading') {
-      <div class="status-card" role="status" aria-live="polite">
-        <mat-spinner diameter="36"></mat-spinner>
+      <div
+        role="status"
+        aria-live="polite"
+        aria-busy="true"
+        data-testid="public-profile-loading"
+      >
+        <app-public-profile-skeleton />
       </div>
     }
     @case ('not-found') {

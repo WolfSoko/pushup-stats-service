@@ -11,7 +11,8 @@ import {
 export type ThemeMode = 'auto' | 'light' | 'dark';
 export type ResolvedTheme = 'light' | 'dark';
 
-const STORAGE_KEY = 'theme-mode';
+/** Also read by the boot script in `web/src/index.html`. */
+export const THEME_STORAGE_KEY = 'theme-mode';
 
 interface ThemeState {
   mode: ThemeMode;
@@ -23,7 +24,7 @@ function loadStoredMode(): ThemeMode {
     return 'auto';
   }
   try {
-    const stored = localStorage.getItem(STORAGE_KEY);
+    const stored = localStorage.getItem(THEME_STORAGE_KEY);
     if (stored === 'light' || stored === 'dark' || stored === 'auto') {
       return stored;
     }
@@ -45,7 +46,7 @@ function getSystemPreference(): ResolvedTheme {
 function persistMode(mode: ThemeMode): void {
   if (typeof localStorage !== 'undefined') {
     try {
-      localStorage.setItem(STORAGE_KEY, mode);
+      localStorage.setItem(THEME_STORAGE_KEY, mode);
     } catch {
       // ignore persistence errors (e.g. storage disabled or quota exceeded)
     }
@@ -56,13 +57,12 @@ function applyThemeClass(_mode: ThemeMode, resolved: ResolvedTheme): void {
   if (typeof document === 'undefined') {
     return;
   }
+  // Toggle instead of remove+add: the boot script in index.html has usually
+  // set the right class already, and a remove would briefly leave <html>
+  // without any theme class.
   const html = document.documentElement;
-
-  // Remove existing theme classes
-  html.classList.remove('light-theme', 'dark-theme');
-
-  // Always apply resolved theme class (ThemeService handles prefers-color-scheme via JS)
-  html.classList.add(`${resolved}-theme`);
+  html.classList.toggle('light-theme', resolved === 'light');
+  html.classList.toggle('dark-theme', resolved === 'dark');
 }
 
 const initialState: ThemeState = {
