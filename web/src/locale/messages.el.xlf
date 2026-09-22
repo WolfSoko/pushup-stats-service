@@ -15040,5 +15040,35 @@
         <target>Anfrage wird verarbeitet</target>
       </segment>
     </unit>
+    <unit id="exercise.cardio.hiking.name">
+      <segment state="initial">
+        <source>Wandern</source>
+        <target>Wandern</target>
+      </segment>
+    </unit>
+    <unit id="exercise.cardio.nordicwalking.name">
+      <segment state="initial">
+        <source>Nordic Walking</source>
+        <target>Nordic Walking</target>
+      </segment>
+    </unit>
+    <unit id="exercise.cardio.elliptical.name">
+      <segment state="initial">
+        <source>Crosstrainer</source>
+        <target>Crosstrainer</target>
+      </segment>
+    </unit>
+    <unit id="exercise.cardio.inlineskating.name">
+      <segment state="initial">
+        <source>Inline-Skaten</source>
+        <target>Inline-Skaten</target>
+      </segment>
+    </unit>
+    <unit id="exercise.cardio.crosscountryskiing.name">
+      <segment state="initial">
+        <source>Skilanglauf</source>
+        <target>Skilanglauf</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

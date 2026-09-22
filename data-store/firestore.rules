@@ -59,7 +59,7 @@ service cloud.firestore {
       return [
         // BEGIN GENERATED isDistanceTimeExerciseId (source: EXERCISE_CATALOG; run: pnpm nx run cloud-functions:generate-exercise-rules)
         // cardio
-        'cardio.cycling', 'cardio.rowing', 'cardio.running', 'cardio.swimming', 'cardio.walking'
+        'cardio.crosscountryskiing', 'cardio.cycling', 'cardio.elliptical', 'cardio.hiking', 'cardio.inlineskating', 'cardio.nordicwalking', 'cardio.rowing', 'cardio.running', 'cardio.swimming', 'cardio.walking'
         // END GENERATED isDistanceTimeExerciseId
       ].hasAny([id]);
     }
