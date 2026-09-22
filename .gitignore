@@ -88,3 +88,6 @@ mobile/android-twa/local.properties
 .orchestration/
 
 .nx/migrate-runs
+# graphify knowledge graph (generated locally via `graphify update .`)
+graphify-out/
+*.graphify-bak
