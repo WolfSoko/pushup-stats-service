@@ -13,14 +13,31 @@ describe('SkeletonComponent', () => {
     expect(host.querySelectorAll('.pu-skeleton__bar')).toHaveLength(1);
   });
 
-  it('should stack one bar per requested line', async () => {
+  it('should stack one bar per requested line and switch to the multiline layout', async () => {
     // given / when
-    const { container } = await render(SkeletonComponent, {
+    const { container, fixture } = await render(SkeletonComponent, {
       inputs: { lines: 3 },
     });
 
     // then
     expect(container.querySelectorAll('.pu-skeleton__bar')).toHaveLength(3);
+    expect(
+      (fixture.nativeElement as HTMLElement).classList.contains(
+        'pu-skeleton--multiline'
+      )
+    ).toBe(true);
+  });
+
+  it('should keep the single-line layout for one line', async () => {
+    // given / when
+    const { fixture } = await render(SkeletonComponent);
+
+    // then
+    expect(
+      (fixture.nativeElement as HTMLElement).classList.contains(
+        'pu-skeleton--multiline'
+      )
+    ).toBe(false);
   });
 
   it('should apply the shape class and explicit dimensions to the host', async () => {

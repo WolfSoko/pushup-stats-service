@@ -20,20 +20,19 @@
     </button>
   </div>
 
-  @if (loading()) {
-    <div aria-busy="true" data-testid="user-entries-skeleton">
-      <mat-card class="user-card">
-        <mat-card-content class="user-card-skeleton">
-          <pu-skeleton shape="title" width="40%" />
-          <pu-skeleton width="70%" />
-          <pu-skeleton width="55%" />
-          <pu-skeleton width="60%" />
-        </mat-card-content>
-      </mat-card>
-      <mat-card>
-        <pu-skeleton-table [rows]="8" [columns]="6" />
-      </mat-card>
-    </div>
+  @if (!detailsLoaded()) {
+    <mat-card
+      class="user-card"
+      aria-busy="true"
+      data-testid="user-details-skeleton"
+    >
+      <mat-card-content class="user-card-skeleton">
+        <pu-skeleton shape="title" width="40%" />
+        <pu-skeleton width="70%" />
+        <pu-skeleton width="55%" />
+        <pu-skeleton width="60%" />
+      </mat-card-content>
+    </mat-card>
   } @else {
     <mat-card class="user-card">
       <mat-card-content>
@@ -123,22 +122,26 @@
         </dl>
       </mat-card-content>
     </mat-card>
+  }
 
-    @if (error()) {
-      <p class="error-text">{{ error() }}</p>
-    } @else if (!entries().length) {
-      <p class="empty-text" i18n="@@admin.entries.empty">
-        Keine Einträge vorhanden.
-      </p>
-    } @else {
-      <mat-card>
-        <app-user-entries-table
-          [entries]="entries()"
-          [uid]="uid"
-          (edit)="openEditDialog($event)"
-          (refresh)="loadEntries()"
-        />
-      </mat-card>
-    }
+  @if (!entriesLoaded()) {
+    <mat-card aria-busy="true" data-testid="user-entries-skeleton">
+      <pu-skeleton-table [rows]="8" [columns]="6" />
+    </mat-card>
+  } @else if (error()) {
+    <p class="error-text">{{ error() }}</p>
+  } @else if (!entries().length) {
+    <p class="empty-text" i18n="@@admin.entries.empty">
+      Keine Einträge vorhanden.
+    </p>
+  } @else {
+    <mat-card>
+      <app-user-entries-table
+        [entries]="entries()"
+        [uid]="uid"
+        (edit)="openEditDialog($event)"
+        (refresh)="loadEntries()"
+      />
+    </mat-card>
   }
 </div>

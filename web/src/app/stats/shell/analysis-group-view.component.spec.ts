@@ -219,14 +219,16 @@ describe('AnalysisGroupViewComponent', () => {
   });
 
   it('should show chart skeletons instead of the chart until the live feed has connected', async () => {
-    // given — the seeded pushup entry is in range, but the feed is not connected yet
+    // given — the feed has neither connected nor delivered a row yet
     const host: HTMLElement = fixture.nativeElement;
     expect(
       host.querySelector('[data-testid="analysis-chart-reps"]')
     ).toBeTruthy();
+    const seeded = liveExerciseEntries();
 
     // when
     liveMock.connected.set(false);
+    liveExerciseEntries.set([]);
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
@@ -237,11 +239,6 @@ describe('AnalysisGroupViewComponent', () => {
         '[data-testid="analysis-group-view-loading"] pu-skeleton'
       )
     ).toBeTruthy();
-    expect(
-      host.querySelector(
-        '[data-testid="segment-chart-skeleton-reps"] pu-skeleton'
-      )
-    ).toBeTruthy();
     expect(host.querySelector('app-stats-chart')).toBeNull();
     expect(
       host.querySelector('[data-testid="segment-chart-placeholder-reps"]')
@@ -250,6 +247,7 @@ describe('AnalysisGroupViewComponent', () => {
 
     // when
     liveMock.connected.set(true);
+    liveExerciseEntries.set(seeded);
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
@@ -268,8 +266,10 @@ describe('AnalysisGroupViewComponent', () => {
   });
 
   it('should hold back the "Keine Einträge" notice until the live feed has connected', async () => {
-    // given — a category without entries, feed not connected yet
+    // given — a category without entries, feed not connected and empty yet
+    const seeded = liveExerciseEntries();
     liveMock.connected.set(false);
+    liveExerciseEntries.set([]);
     const groupViewEl = fixture.debugElement.query(
       By.directive(AnalysisGroupViewComponent)
     );
@@ -294,6 +294,7 @@ describe('AnalysisGroupViewComponent', () => {
 
     // when
     liveMock.connected.set(true);
+    liveExerciseEntries.set(seeded);
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();

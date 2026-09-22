@@ -82,7 +82,9 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
         </mat-card>
       }
 
-      @if (isAuthenticated() && !store.activePlanLoaded()) {
+      @if (
+        (!authResolved() || isAuthenticated()) && !store.activePlanLoaded()
+      ) {
         <app-active-plan-card-skeleton />
       } @else if (activeView(); as active) {
         <app-active-plan-card

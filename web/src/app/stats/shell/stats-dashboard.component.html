@@ -427,13 +427,14 @@
   }
 
   @if (loading()) {
-    <section
-      class="status-banner loading"
+    <p
+      class="pu-visually-hidden"
+      role="status"
       aria-live="polite"
       i18n="@@loadingStats"
     >
       Lade Statistikdaten…
-    </section>
+    </p>
   }
 
   <section class="latest-entries teaser-card">

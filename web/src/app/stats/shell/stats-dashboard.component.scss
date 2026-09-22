@@ -243,12 +243,6 @@ h1 {
   background: rgba(112, 29, 29, 0.35);
 }
 
-.status-banner.loading {
-  color: #d7e4ff;
-  border-color: rgba(125, 167, 255, 0.35);
-  background: rgba(34, 59, 104, 0.28);
-}
-
 .today-focus {
   display: grid;
   gap: 12px;
@@ -696,12 +690,6 @@ h1 {
     color: #991b1b;
     border-color: rgba(220, 38, 38, 0.4);
     background: rgba(254, 226, 226, 0.6);
-  }
-
-  .status-banner.loading {
-    color: #1e40af;
-    border-color: rgba(59, 130, 246, 0.35);
-    background: rgba(219, 234, 254, 0.5);
   }
 
   .day-chart-mode {

@@ -130,6 +130,7 @@ const TOP_ROWS = 3;
       </mat-card>
     }
   `,
+  styleUrl: './friends-mini-board.scss',
   styles: `
     .friends-card mat-card-header {
       align-items: center;
@@ -148,25 +149,6 @@ const TOP_ROWS = 3;
     .standing {
       margin: 0 0 8px;
       font-weight: 500;
-    }
-    .mini-board {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 4px;
-    }
-    .mini-board li {
-      display: grid;
-      grid-template-columns: 1.5rem 1fr auto;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 8px;
-      background: rgba(0, 0, 0, 0.04);
-    }
-    :host-context(.dark-theme) .mini-board li {
-      background: rgba(255, 255, 255, 0.05);
     }
     .mini-board li.is-viewer {
       outline: 2px solid var(--mat-sys-primary, #3f51b5);

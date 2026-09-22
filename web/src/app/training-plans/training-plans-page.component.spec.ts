@@ -210,6 +210,31 @@ describe('TrainingPlansPageComponent', () => {
     expect(container.querySelector('mat-spinner')).toBeNull();
   });
 
+  it('should reserve the active plan slot before auth has resolved', async () => {
+    // given
+    const store = makeStoreMock(TRAINING_PLANS[0], true);
+    store.activePlanLoaded.set(false);
+
+    // when
+    const { container } = await render(TrainingPlansPageComponent, {
+      providers: [
+        provideRouter([]),
+        { provide: TrainingPlanStore, useValue: store },
+        {
+          provide: AuthStore,
+          useValue: makeAuthStoreMock({
+            isAuthenticated: false,
+            authResolved: false,
+          }),
+        },
+      ],
+    });
+
+    // then
+    expect(screen.getByTestId('active-plan-loading')).toBeTruthy();
+    expect(container.querySelector('app-active-plan-card')).toBeNull();
+  });
+
   it('should swap the skeleton for the active plan card once the plan is there', async () => {
     // given
     const store = makeStoreMock(TRAINING_PLANS[0], true);

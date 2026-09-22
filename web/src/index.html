@@ -69,7 +69,8 @@
          after the router's blocking initial navigation (which waits for
          Firebase Auth), so without this the SSR page shows the dark default
          until then and then flips to the user's light theme. Mirrors
-         ThemeService: 'theme-mode' in localStorage, 'auto' follows the OS. -->
+         ThemeService: 'theme-mode' in localStorage, 'auto' follows the OS,
+         no matchMedia means dark. -->
     <script id="theme-boot">
       (function () {
         var mode = null;
@@ -80,7 +81,7 @@
         }
         if (mode !== 'light' && mode !== 'dark') {
           mode =
-            window.matchMedia &&
+            !window.matchMedia ||
             window.matchMedia('(prefers-color-scheme: dark)').matches
               ? 'dark'
               : 'light';

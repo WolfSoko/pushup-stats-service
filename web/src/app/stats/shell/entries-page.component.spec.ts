@@ -120,8 +120,10 @@ describe('EntriesPageComponent', () => {
       host.querySelector('[data-testid="stats-table-skeleton"]')
     ).toBeNull();
 
-    // when
+    // when — neither connected nor any row delivered yet
+    const seeded = liveMock.exerciseEntries();
     liveMock.connected.set(false);
+    liveMock.exerciseEntries.set([]);
     await fixture.whenStable();
 
     // then
@@ -135,6 +137,7 @@ describe('EntriesPageComponent', () => {
 
     // when
     liveMock.connected.set(true);
+    liveMock.exerciseEntries.set(seeded);
     await fixture.whenStable();
 
     // then

@@ -20,7 +20,7 @@ export type SkeletonShape = 'text' | 'title' | 'circle' | 'rect';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'aria-hidden': 'true',
-    '[class]': '"pu-skeleton pu-skeleton--" + shape()',
+    '[class]': 'hostClass()',
     '[style.width]': 'width()',
     '[style.height]': 'height()',
   },
@@ -53,23 +53,32 @@ export type SkeletonShape = 'text' | 'title' | 'circle' | 'rect';
       height: auto;
     }
     .pu-skeleton__bar {
+      position: relative;
       display: block;
       flex: 1 1 auto;
       width: 100%;
       min-height: 0.75em;
+      overflow: hidden;
       border-radius: 6px;
       background-color: color-mix(
         in srgb,
         var(--mat-sys-on-surface, #fff) 12%,
         transparent
       );
-      background-image: linear-gradient(
+    }
+    /* The highlight is a translated pseudo-element: compositor-only, so a
+       page full of bars does not repaint every frame. */
+    .pu-skeleton__bar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
         90deg,
         transparent 0%,
         color-mix(in srgb, var(--mat-sys-on-surface, #fff) 10%, transparent) 50%,
         transparent 100%
       );
-      background-size: 200% 100%;
+      transform: translateX(-100%);
       animation: pu-skeleton-shimmer 1.6s ease-in-out infinite;
     }
     :host(.pu-skeleton--multiline) .pu-skeleton__bar {
@@ -86,15 +95,12 @@ export type SkeletonShape = 'text' | 'title' | 'circle' | 'rect';
       border-radius: 12px;
     }
     @keyframes pu-skeleton-shimmer {
-      from {
-        background-position: 200% 0;
-      }
       to {
-        background-position: -200% 0;
+        transform: translateX(100%);
       }
     }
     @media (prefers-reduced-motion: reduce) {
-      .pu-skeleton__bar {
+      .pu-skeleton__bar::after {
         animation: none;
       }
     }
@@ -107,6 +113,12 @@ export class SkeletonComponent {
   readonly height = input<string | null>(null);
   /** Stacked text bars; the last one is shorter, like a paragraph's end. */
   readonly lines = input(1, { transform: numberAttribute });
+
+  protected readonly hostClass = computed(() => {
+    const classes = ['pu-skeleton', `pu-skeleton--${this.shape()}`];
+    if (this.lines() > 1) classes.push('pu-skeleton--multiline');
+    return classes.join(' ');
+  });
 
   protected readonly lineIndexes = computed(() =>
     Array.from({ length: Math.max(1, this.lines()) }, (_, index) => index)

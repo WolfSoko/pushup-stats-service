@@ -43,7 +43,11 @@ import {
 })
 export class AnalysisGroupViewComponent {
   readonly store = inject(AnalysisStore);
-  readonly loaded = inject(LiveDataStore).connected;
+  private readonly live = inject(LiveDataStore);
+  /** A listener error drops `connected` but keeps the rows; those still render. */
+  readonly loaded = computed(
+    () => this.live.connected() || this.live.exerciseEntries().length > 0
+  );
   readonly heatmapMode = signal<HeatmapMode>('primary');
 
   readonly hasMultipleSegments = computed(

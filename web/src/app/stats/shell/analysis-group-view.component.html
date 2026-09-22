@@ -32,7 +32,6 @@
 @for (segment of store.viewSegments(); track segment.measurement) {
   <app-analysis-segment-view
     [segment]="segment"
-    [loading]="!loaded()"
     [showLabel]="hasMultipleSegments()"
     [granularity]="store.viewGranularity()"
     [rangeMode]="store.rangeMode()"

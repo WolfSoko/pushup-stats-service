@@ -79,6 +79,8 @@ export class UserEntriesPageComponent {
   readonly publicBadge = $localize`:@@admin.entries.publicProfile:Öffentliches Profil`;
 
   readonly loading = signal(false);
+  readonly entriesLoaded = signal(false);
+  readonly detailsLoaded = signal(false);
   readonly error = signal<string | null>(null);
   readonly entries = signal<ExerciseEntry[]>([]);
   readonly details = signal<AdminUserDetails | null>(null);
@@ -122,6 +124,7 @@ export class UserEntriesPageComponent {
       this.error.set(errorMessage(err));
     } finally {
       this.loading.set(false);
+      this.entriesLoaded.set(true);
     }
   }
 
@@ -136,6 +139,8 @@ export class UserEntriesPageComponent {
       this.details.set(result.data);
     } catch {
       this.details.set(null);
+    } finally {
+      this.detailsLoaded.set(true);
     }
   }
 

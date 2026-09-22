@@ -56,8 +56,6 @@ import {
 })
 export class AnalysisSegmentViewComponent {
   readonly segment = input.required<AnalysisSegment>();
-  /** Shows a chart-sized skeleton instead of the "no entries" frame. */
-  readonly loading = input<boolean>(false);
   /** False for a single-measurement view, which needs no disambiguation. */
   readonly showLabel = input<boolean>(false);
   readonly granularity = input<StatsGranularity>('daily');
