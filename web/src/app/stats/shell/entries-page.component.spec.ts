@@ -109,6 +109,41 @@ describe('EntriesPageComponent', () => {
     await fixture.whenStable();
   });
 
+  afterEach(() => {
+    liveMock.connected.set(true);
+  });
+
+  it('should show the table skeleton until the live feed has connected', async () => {
+    // given
+    const host = fixture.nativeElement as HTMLElement;
+    expect(
+      host.querySelector('[data-testid="stats-table-skeleton"]')
+    ).toBeNull();
+
+    // when
+    liveMock.connected.set(false);
+    await fixture.whenStable();
+
+    // then
+    expect(
+      host.querySelector(
+        '[data-testid="stats-table-skeleton"] pu-skeleton-table'
+      )
+    ).toBeTruthy();
+    expect(host.querySelector('.empty')).toBeNull();
+    expect(host.querySelector('[data-testid="entries-empty-cta"]')).toBeNull();
+
+    // when
+    liveMock.connected.set(true);
+    await fixture.whenStable();
+
+    // then
+    expect(
+      host.querySelector('[data-testid="stats-table-skeleton"]')
+    ).toBeNull();
+    expect(host.querySelector('mat-table')).toBeTruthy();
+  });
+
   it('prefills date range with oldest and today (browser uses live entries)', () => {
     expect(store.from()).toBe('2026-02-10');
     expect(store.to()).toMatch(/^\d{4}-\d{2}-\d{2}$/);

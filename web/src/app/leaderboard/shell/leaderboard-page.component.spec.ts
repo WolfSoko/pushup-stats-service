@@ -31,6 +31,7 @@ describe('LeaderboardPageComponent', () => {
   const lastUpdatedByExercise: Record<string, Date | null> = {};
   const loadMock = vitest.fn();
   const busyExerciseIds = signal<ReadonlySet<string>>(new Set());
+  const loading = signal(false);
 
   function setEntries(exerciseId: string, entries: LeaderboardEntry[]): void {
     entriesByExerciseAndPeriod[exerciseId] = {
@@ -60,12 +61,13 @@ describe('LeaderboardPageComponent', () => {
     lastUpdatedFor: (exerciseId: () => string): (() => Date | null) =>
       computed(() => lastUpdatedByExercise[exerciseId()] ?? null),
     load: loadMock,
+    loading,
     busy: { isBusy: (id: string) => busyExerciseIds().has(id) },
   };
 
   async function setup(
     entries: LeaderboardEntry[],
-    options?: { exerciseId?: string; updatedAt?: Date | null }
+    options?: { exerciseId?: string; updatedAt?: Date | null; userId?: string }
   ): Promise<void> {
     const exerciseId = options?.exerciseId ?? LEADERBOARD_PUSHUP_ID;
     setEntries(exerciseId, entries);
@@ -81,7 +83,7 @@ describe('LeaderboardPageComponent', () => {
         {
           provide: UserContextService,
           useValue: {
-            userIdSafe: signal('').asReadonly(),
+            userIdSafe: signal(options?.userId ?? '').asReadonly(),
             isGuest: signal(false).asReadonly(),
           },
         },
@@ -97,6 +99,7 @@ describe('LeaderboardPageComponent', () => {
   beforeEach(() => {
     loadMock.mockClear();
     busyExerciseIds.set(new Set());
+    loading.set(false);
     for (const key of Object.keys(entriesByExerciseAndPeriod)) {
       delete entriesByExerciseAndPeriod[key];
     }
@@ -269,6 +272,97 @@ describe('LeaderboardPageComponent', () => {
 
       // then
       expect(more.getAttribute('aria-busy')).toBe('true');
+    });
+  });
+
+  describe('Given the first load of a selection is still pending', () => {
+    it('should render 25 skeleton rows instead of dash rows and mark the list busy', async () => {
+      // given
+      loading.set(true);
+      await setup([]);
+      const root = fixture.nativeElement as HTMLElement;
+
+      // then
+      const rows = root.querySelectorAll(
+        '[data-testid="leaderboard-skeleton-row"]'
+      );
+      expect(rows).toHaveLength(25);
+      expect(rows[0].querySelector('.rank')?.textContent?.trim()).toBe('#1');
+      expect(rows[0].querySelectorAll('pu-skeleton')).toHaveLength(2);
+      expect(root.querySelector('li span.alias')).toBeNull();
+      expect(
+        root
+          .querySelector('.leaderboard-list-scroll')
+          ?.getAttribute('aria-busy')
+      ).toBe('true');
+
+      // when
+      loading.set(false);
+      fixture.detectChanges();
+
+      // then
+      expect(
+        root.querySelectorAll('[data-testid="leaderboard-skeleton-row"]')
+      ).toHaveLength(0);
+      expect(root.querySelectorAll('li span.alias')).toHaveLength(25);
+      expect(
+        root
+          .querySelector('.leaderboard-list-scroll')
+          ?.getAttribute('aria-busy')
+      ).toBeNull();
+    });
+
+    it('should keep cached rows visible while a reload is in flight', async () => {
+      // given
+      loading.set(true);
+
+      // when
+      await setup([{ rank: 1, alias: 'Alice', reps: 100, uid: 'abc123' }]);
+
+      // then
+      const root = fixture.nativeElement as HTMLElement;
+      expect(
+        root.querySelector('[data-testid="leaderboard-skeleton-row"]')
+      ).toBeNull();
+      expect(
+        root.querySelector('[data-testid="leaderboard-link-1"]')
+      ).not.toBeNull();
+    });
+
+    it('should show an own-rank skeleton for a signed-in user until the list has loaded', async () => {
+      // given
+      loading.set(true);
+      await setup([], { userId: 'u1' });
+      const root = fixture.nativeElement as HTMLElement;
+
+      // then
+      expect(
+        root.querySelector('[data-testid="leaderboard-own-rank-skeleton"]')
+      ).not.toBeNull();
+
+      // when
+      loading.set(false);
+      fixture.detectChanges();
+
+      // then
+      expect(
+        root.querySelector('[data-testid="leaderboard-own-rank-skeleton"]')
+      ).toBeNull();
+    });
+
+    it('should not reserve an own-rank row for a guest', async () => {
+      // given
+      loading.set(true);
+
+      // when
+      await setup([]);
+
+      // then
+      expect(
+        (fixture.nativeElement as HTMLElement).querySelector(
+          '[data-testid="leaderboard-own-rank-skeleton"]'
+        )
+      ).toBeNull();
     });
   });
 

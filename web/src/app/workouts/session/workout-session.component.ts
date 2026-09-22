@@ -29,6 +29,7 @@ import {
   SessionStepComponent,
   type SessionStepAction,
 } from '../../training-plans/session/session-step.component';
+import { SessionSkeletonComponent } from '../../training-plans/session/session-skeleton.component';
 import { TrainingSessionStore } from '../../training-plans/session/training-session.store';
 import { buildSessionRows } from '../../training-plans/session/training-session.rows';
 import { asSessionSource, WorkoutRunStore } from './workout-run.store';
@@ -51,6 +52,7 @@ import { asSessionSource, WorkoutRunStore } from './workout-run.store';
     RouterLink,
     SessionIntroComponent,
     SessionRestComponent,
+    SessionSkeletonComponent,
     SessionStepComponent,
   ],
   providers: [

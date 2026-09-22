@@ -44,6 +44,11 @@ import { DailyGoalChecklistComponent } from '../../core/daily-goal/daily-goal-ch
 import { registerDashboardDeepLinks } from './stats-dashboard.deep-links';
 import { AdSlotComponent } from '@pu-stats/ads';
 import { AllTimeBadgesComponent } from '../dashboard/all-time-badges.component';
+import {
+  AnalysisTeaserSkeletonComponent,
+  RecentExercisesSkeletonComponent,
+} from '../dashboard/dashboard-skeletons.component';
+import { SkeletonComponent } from '@pu-stats/ui';
 import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { TrainingEntryDialogComponent } from '../components/training-entry-dialog/training-entry-dialog.component';
@@ -89,6 +94,9 @@ import {
     DatePipe,
     AllTimeBadgesComponent,
     AnalysisTeaserCardComponent,
+    AnalysisTeaserSkeletonComponent,
+    RecentExercisesSkeletonComponent,
+    SkeletonComponent,
     ChallengeSpotlightComponent,
     FriendsTeaserCardComponent,
     DailyGoalChecklistComponent,

@@ -56,13 +56,12 @@ function applyThemeClass(_mode: ThemeMode, resolved: ResolvedTheme): void {
   if (typeof document === 'undefined') {
     return;
   }
+  // Toggle instead of remove+add: the boot script in index.html has usually
+  // set the right class already, and a remove would briefly leave <html>
+  // without any theme class.
   const html = document.documentElement;
-
-  // Remove existing theme classes
-  html.classList.remove('light-theme', 'dark-theme');
-
-  // Always apply resolved theme class (ThemeService handles prefers-color-scheme via JS)
-  html.classList.add(`${resolved}-theme`);
+  html.classList.toggle('light-theme', resolved === 'light');
+  html.classList.toggle('dark-theme', resolved === 'dark');
 }
 
 const initialState: ThemeState = {

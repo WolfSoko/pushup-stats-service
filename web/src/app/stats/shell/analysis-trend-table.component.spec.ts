@@ -1,4 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  DeferBlockBehavior,
+  DeferBlockState,
+  TestBed,
+} from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
 import type { TrendPoint } from '../analysis/analysis.types';
 import type { SegmentMeasurement } from '../analysis/measurement-groups';
@@ -11,11 +16,13 @@ const rows: TrendPoint[] = [
 
 async function render(
   measurement: SegmentMeasurement,
-  showSets: boolean
+  showSets: boolean,
+  deferBlockBehavior = DeferBlockBehavior.Playthrough
 ): Promise<ComponentFixture<AnalysisTrendTableComponent>> {
   await TestBed.configureTestingModule({
     imports: [AnalysisTrendTableComponent],
     providers: [{ provide: PLATFORM_ID, useValue: 'server' }],
+    deferBlockBehavior,
   }).compileComponents();
 
   const fixture = TestBed.createComponent(AnalysisTrendTableComponent);
@@ -64,6 +71,33 @@ describe('AnalysisTrendTableComponent', () => {
 
     // then
     expect(fixture.componentInstance.columns()).toEqual(['label', 'total']);
+  });
+
+  it('should hold a skeleton table where the deferred rows will render', async () => {
+    // given
+    const fixture = await render('reps', true, DeferBlockBehavior.Manual);
+    const [block] = await fixture.getDeferBlocks();
+    const host: HTMLElement = fixture.nativeElement;
+
+    // when
+    await block.render(DeferBlockState.Placeholder);
+
+    // then
+    expect(
+      host.querySelector('.trend-skeleton pu-skeleton-table')
+    ).toBeTruthy();
+    expect(
+      host.querySelector('.trend-skeleton')?.getAttribute('aria-busy')
+    ).toBe('true');
+    expect(host.querySelector('.trend-placeholder')).toBeNull();
+    expect(host.querySelector('mat-table')).toBeNull();
+
+    // when
+    await block.render(DeferBlockState.Complete);
+
+    // then
+    expect(host.querySelector('pu-skeleton-table')).toBeNull();
+    expect(host.querySelector('mat-table')).toBeTruthy();
   });
 
   it('should keep the sets column for rep-measured blocks', async () => {

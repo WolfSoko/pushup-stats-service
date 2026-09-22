@@ -27,6 +27,7 @@ import {
   SessionStepComponent,
   type SessionStepAction,
 } from './session-step.component';
+import { SessionSkeletonComponent } from './session-skeleton.component';
 import { TrainingSessionStore } from './training-session.store';
 import { buildSessionRows } from './training-session.rows';
 
@@ -52,6 +53,7 @@ import { buildSessionRows } from './training-session.rows';
     RouterLink,
     SessionIntroComponent,
     SessionRestComponent,
+    SessionSkeletonComponent,
     SessionStepComponent,
   ],
   providers: [TrainingSessionStore, SessionCaptureService],

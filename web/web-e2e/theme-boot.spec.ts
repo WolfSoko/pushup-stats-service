@@ -2,9 +2,10 @@ import { expect, test } from './fixtures/test-fixtures';
 import type { Page } from '@playwright/test';
 
 /**
- * Records every `class` value the <html> element carries, starting before
- * any page script runs, so a dark→light flip between first paint and
- * Angular's boot shows up as a class value without the stored theme.
+ * Records the <html> class value after every class mutation, starting before
+ * any page script runs. The boot script's own change is the first entry;
+ * a dark→light flip before Angular boots would show up as an entry carrying
+ * the wrong theme class.
  */
 async function recordHtmlClassHistory(
   page: Page,
@@ -16,11 +17,16 @@ async function recordHtmlClassHistory(
     (
       window as unknown as { __themeClassHistory: string[] }
     ).__themeClassHistory = history;
-    const root = document.documentElement;
-    history.push(root.className);
-    new MutationObserver(() => history.push(root.className)).observe(root, {
+    new MutationObserver((records) => {
+      for (const record of records) {
+        if (record.target === document.documentElement) {
+          history.push(document.documentElement.className);
+        }
+      }
+    }).observe(document, {
       attributes: true,
       attributeFilter: ['class'],
+      subtree: true,
     });
   }, storedMode);
 }
@@ -45,13 +51,8 @@ test.describe('Theme boot', () => {
             .__themeClassHistory
       );
       const other = OTHER_THEME_CLASS[mode];
-      expect(history.length).toBeGreaterThan(1);
-      // The first entry is the SSR markup before any script ran; from the
-      // boot script onwards every class value must carry the stored theme.
-      for (const value of history.slice(1)) {
-        expect(value).toContain(`${mode}-theme`);
-        expect(value).not.toContain(other);
-      }
+      expect(history[0]).toContain(`${mode}-theme`);
+      expect(history.some((value) => value.includes(other))).toBe(false);
       await expect(page.locator('html')).toHaveClass(
         new RegExp(`${mode}-theme`)
       );

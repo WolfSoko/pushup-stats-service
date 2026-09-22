@@ -1,9 +1,15 @@
 <mat-card class="table-card">
   <mat-card-header>
     <mat-card-title i18n="@@entriesTitle">Historie</mat-card-title>
-    <mat-card-subtitle i18n="@@entriesCount"
-      >{{ entries().length }} Einträge</mat-card-subtitle
-    >
+    <mat-card-subtitle>
+      @if (loading()) {
+        <pu-skeleton width="6em" />
+      } @else {
+        <ng-container i18n="@@entriesCount"
+          >{{ entries().length }} Einträge</ng-container
+        >
+      }
+    </mat-card-subtitle>
     <span class="header-spacer"></span>
     <button
       type="button"
@@ -33,8 +39,12 @@
     }
   </mat-card-header>
 
-  <mat-card-content>
-    @if (isBrowser) {
+  <mat-card-content [attr.aria-busy]="loading() ? 'true' : null">
+    @if (loading()) {
+      <div class="table-wrap" data-testid="stats-table-skeleton">
+        <pu-skeleton-table [rows]="8" [columns]="6" />
+      </div>
+    } @else if (isBrowser) {
       <cdk-virtual-scroll-viewport
         class="table-wrap"
         [itemSize]="56"
@@ -49,7 +59,7 @@
       </div>
     }
 
-    @if (!entries().length) {
+    @if (!loading() && !entries().length) {
       <p class="empty" i18n="@@noEntriesInSelectedRange">
         Keine Einträge im gewählten Zeitraum.
       </p>

@@ -22,7 +22,17 @@
   (showAll)="showAll.emit()"
 />
 
-@if (!segment().hasRangeRows) {
+@if (loading()) {
+  <mat-card
+    class="chart-placeholder"
+    aria-busy="true"
+    [attr.data-testid]="'segment-chart-skeleton-' + segment().measurement"
+  >
+    <mat-card-content>
+      <pu-skeleton shape="rect" height="260px" />
+    </mat-card-content>
+  </mat-card>
+} @else if (!segment().hasRangeRows) {
   <mat-card
     class="chart-placeholder"
     [attr.data-testid]="'segment-chart-placeholder-' + segment().measurement"
@@ -48,7 +58,7 @@
   </mat-card>
 }
 
-@if (segment().hasRangeRows) {
+@if (!loading() && segment().hasRangeRows) {
   <app-stats-chart
     [attr.data-testid]="'analysis-chart-' + segment().measurement"
     [series]="segment().series"
@@ -109,6 +119,8 @@
       <mat-card-content>
         @defer (hydrate on viewport) {
           <app-type-pie [data]="typeBreakdownDisplay()" />
+        } @placeholder {
+          <pu-skeleton shape="rect" height="160px" />
         }
       </mat-card-content>
     </mat-card>
@@ -137,6 +149,8 @@
         <mat-card-content>
           @defer (hydrate on viewport) {
             <app-sets-distribution [data]="segment().setsDistribution" />
+          } @placeholder {
+            <pu-skeleton shape="rect" height="120px" />
           }
         </mat-card-content>
       </mat-card>

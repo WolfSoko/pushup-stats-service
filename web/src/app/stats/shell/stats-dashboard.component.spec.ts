@@ -1327,6 +1327,59 @@ describe('StatsDashboardComponent', () => {
     });
   });
 
+  describe('Given the live feed has not connected yet', () => {
+    beforeEach(async () => {
+      liveEntries.set([]);
+      liveExerciseEntries.set([]);
+      liveConnected.set(false);
+      await fixture.whenStable();
+    });
+
+    it('should reserve the layout with skeletons instead of zeros and empty states', async () => {
+      // given
+      const root = fixture.nativeElement as HTMLElement;
+
+      // then
+      expect(
+        root.querySelector('[data-testid="dashboard-today-total-skeleton"]')
+      ).toBeTruthy();
+      expect(
+        root.querySelector('[data-testid="dashboard-goal-skeleton"]')
+      ).toBeTruthy();
+      expect(
+        root.querySelector('[data-testid="dashboard-last-entry-skeleton"]')
+      ).toBeTruthy();
+      expect(root.querySelector('app-recent-exercises-skeleton')).toBeTruthy();
+      expect(
+        root.querySelectorAll('app-all-time-badges pu-skeleton')
+      ).toHaveLength(4);
+      expect(
+        root.querySelector('.today-focus')?.getAttribute('aria-busy')
+      ).toBe('true');
+      expect(root.textContent).not.toContain('Noch kein Eintrag.');
+    });
+
+    it('should swap the skeletons for the real content once the feed connects', async () => {
+      // given
+      const root = fixture.nativeElement as HTMLElement;
+
+      // when
+      liveConnected.set(true);
+      await fixture.whenStable();
+
+      // then
+      expect(root.querySelector('pu-skeleton')).toBeNull();
+      expect(root.querySelector('app-recent-exercises-skeleton')).toBeNull();
+      expect(root.querySelector('.focus-number')?.textContent?.trim()).toBe(
+        '0'
+      );
+      expect(root.textContent).toContain('Noch kein Eintrag.');
+      expect(
+        root.querySelector('.today-focus')?.getAttribute('aria-busy')
+      ).toBeNull();
+    });
+  });
+
   describe('Given live websocket updates', () => {
     describe('When the live tick changes', () => {
       it('Then it should reload data', async () => {

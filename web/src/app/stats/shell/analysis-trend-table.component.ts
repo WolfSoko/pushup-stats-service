@@ -2,6 +2,7 @@ import { DecimalPipe } from '@angular/common';
 import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
+import { SkeletonTableComponent } from '@pu-stats/ui';
 import type { TrendPoint } from '../analysis/analysis.types';
 import type { SegmentMeasurement } from '../analysis/measurement-groups';
 import { formatSegmentCell } from './analysis-segment.helpers';
@@ -14,7 +15,7 @@ import { formatSegmentCell } from './analysis-segment.helpers';
  */
 @Component({
   selector: 'app-analysis-trend-table',
-  imports: [DecimalPipe, MatCardModule, MatTableModule],
+  imports: [DecimalPipe, MatCardModule, MatTableModule, SkeletonTableComponent],
   templateUrl: './analysis-trend-table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styles: `
@@ -29,7 +30,7 @@ import { formatSegmentCell } from './analysis-segment.helpers';
     }
     /* Reserve roughly the rendered table height so revealing the
        deferred block doesn't shift the rest of the page down. */
-    .trend-placeholder {
+    .trend-skeleton {
       min-height: 320px;
     }
   `,

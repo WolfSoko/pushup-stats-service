@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
+import { SkeletonComponent } from '@pu-stats/ui';
 
 /**
  * The badge row above the dashboard: everything the user ever logged as
@@ -21,7 +22,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-all-time-badges',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatIconModule, MatTooltipModule, RouterLink],
+  imports: [MatIconModule, MatTooltipModule, RouterLink, SkeletonComponent],
   template: `
     <section class="all-time">
       <h2 class="all-time-heading">
@@ -34,34 +35,63 @@ import { RouterLink } from '@angular/router';
         class="mini-badges mini-badges--link"
         routerLink="/analysis"
         data-testid="dashboard-all-time-badges-link"
+        [attr.aria-busy]="loading() ? 'true' : null"
       >
         <span
           class="badge"
           [matTooltip]="hints.total"
           [attr.aria-label]="hints.total"
         >
-          <small i18n="@@allTimeTotal">Gesamt</small><b>{{ total() }}</b>
+          <small i18n="@@allTimeTotal">Gesamt</small
+          ><b>
+            @if (loading()) {
+              <pu-skeleton width="2.5em" />
+            } @else {
+              {{ total() }}
+            }
+          </b>
         </span>
         <span
           class="badge"
           [matTooltip]="hints.days"
           [attr.aria-label]="hints.days"
         >
-          <small i18n="@@allTimeDays">Tage</small><b>{{ days() }}</b>
+          <small i18n="@@allTimeDays">Tage</small
+          ><b>
+            @if (loading()) {
+              <pu-skeleton width="2.5em" />
+            } @else {
+              {{ days() }}
+            }
+          </b>
         </span>
         <span
           class="badge"
           [matTooltip]="hints.entries"
           [attr.aria-label]="hints.entries"
         >
-          <small i18n="@@allTimeEntries">Einträge</small><b>{{ entries() }}</b>
+          <small i18n="@@allTimeEntries">Einträge</small
+          ><b>
+            @if (loading()) {
+              <pu-skeleton width="2.5em" />
+            } @else {
+              {{ entries() }}
+            }
+          </b>
         </span>
         <span
           class="badge"
           [matTooltip]="hints.avg"
           [attr.aria-label]="hints.avg"
         >
-          <small i18n="@@allTimeAvg">Ø pro Tag</small><b>{{ avg() }}</b>
+          <small i18n="@@allTimeAvg">Ø pro Tag</small
+          ><b>
+            @if (loading()) {
+              <pu-skeleton width="2.5em" />
+            } @else {
+              {{ avg() }}
+            }
+          </b>
         </span>
         <span class="badges-cta">
           <mat-icon aria-hidden="true">insights</mat-icon>
@@ -87,6 +117,11 @@ import { RouterLink } from '@angular/router';
         width: 16px;
         height: 16px;
       }
+    }
+
+    .badge b pu-skeleton {
+      display: inline-flex;
+      vertical-align: middle;
     }
 
     .mini-badges {
@@ -188,6 +223,7 @@ export class AllTimeBadgesComponent {
   readonly days = input.required<number | string>();
   readonly entries = input.required<number | string>();
   readonly avg = input.required<number | string>();
+  readonly loading = input(false);
 
   protected readonly hints = {
     total: $localize`:@@dashboard.allTime.hint.total:Alle Liegestütze, die du je eingetragen hast. Andere Übungen zählen hier nicht mit.`,

@@ -24,7 +24,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { UserContextService } from '@pu-auth/auth';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { UnifiedEntry } from '@pu-stats/models';
-import { BusyDirective, createBusyState } from '@pu-stats/ui';
+import {
+  BusyDirective,
+  createBusyState,
+  SkeletonComponent,
+  SkeletonTableComponent,
+} from '@pu-stats/ui';
 import { firstValueFrom } from 'rxjs';
 import { ExerciseRefComponent } from '../../../core/exercise-ref/exercise-ref.component';
 import { TrainingEntryDialogComponent } from '../training-entry-dialog/training-entry-dialog.component';
@@ -67,6 +72,8 @@ import {
     ScrollingModule,
     ExerciseRefComponent,
     BusyDirective,
+    SkeletonComponent,
+    SkeletonTableComponent,
   ],
   templateUrl: './stats-table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -92,6 +99,7 @@ export class StatsTableComponent {
   readonly highlightEntryId = input<string | null>(null);
 
   readonly entries = input<UnifiedEntry[]>([]);
+  readonly loading = input(false);
   readonly readOnly = input(false);
   readonly busyAction = input<'create' | 'update' | 'delete' | null>(null);
   readonly busyId = input<string | null>(null);

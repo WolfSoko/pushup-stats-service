@@ -888,6 +888,45 @@ describe('StatsTableComponent', () => {
     });
   });
 
+  describe('loading skeleton', () => {
+    it('should render a skeleton table and no empty text while the entries are loading', async () => {
+      // given
+      fixture.componentRef.setInput('entries', []);
+
+      // when
+      fixture.componentRef.setInput('loading', true);
+      await fixture.whenStable();
+
+      // then
+      const host = fixture.nativeElement as HTMLElement;
+      expect(
+        host.querySelector(
+          '[data-testid="stats-table-skeleton"] pu-skeleton-table'
+        )
+      ).toBeTruthy();
+      expect(
+        host.querySelector('mat-card-content')?.getAttribute('aria-busy')
+      ).toBe('true');
+      expect(host.querySelector('.empty')).toBeNull();
+      expect(host.querySelector('mat-table')).toBeNull();
+      expect(host.textContent).not.toContain('Einträge');
+
+      // when
+      fixture.componentRef.setInput('loading', false);
+      await fixture.whenStable();
+
+      // then
+      expect(host.querySelector('pu-skeleton-table')).toBeNull();
+      expect(
+        host.querySelector('mat-card-content')?.getAttribute('aria-busy')
+      ).toBeNull();
+      expect(host.querySelector('.empty')?.textContent).toContain(
+        'Keine Einträge im gewählten Zeitraum.'
+      );
+      expect(host.textContent).toContain('0 Einträge');
+    });
+  });
+
   it('renders non-virtual table fallback on server platform', async () => {
     TestBed.resetTestingModule();
     await TestBed.configureTestingModule({

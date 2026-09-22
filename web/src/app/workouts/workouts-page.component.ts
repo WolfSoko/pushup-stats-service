@@ -9,7 +9,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
 import { sectionVisibility, type Workout } from '@pu-stats/models';
@@ -21,6 +20,7 @@ import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { ownProfilePath } from '../core/profile-share-url';
 import { UserConfigStore } from '../core/user-config.store';
 import { WorkoutCardComponent } from './workout-card.component';
+import { WorkoutCardSkeletonComponent } from './workout-card-skeleton.component';
 import { workoutRejectionMessage } from './workouts-messages';
 import { WorkoutsStore } from './workouts.store';
 
@@ -35,16 +35,17 @@ import { WorkoutsStore } from './workouts.store';
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatProgressSpinnerModule,
     PageHeaderComponent,
     RouterLink,
     WorkoutCardComponent,
+    WorkoutCardSkeletonComponent,
   ],
   templateUrl: './workouts-page.component.html',
   styleUrl: './workouts-page.component.css',
 })
 export class WorkoutsPageComponent {
   protected readonly store = inject(WorkoutsStore);
+  protected readonly skeletonRows = [0, 1, 2];
   private readonly config = inject(UserConfigStore);
   private readonly user = inject(UserContextService);
   private readonly dialog = inject(MatDialog);

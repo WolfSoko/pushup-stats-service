@@ -8,6 +8,7 @@ import {
 import { MatCardModule } from '@angular/material/card';
 import type { StatsGranularity, UnifiedEntryFilterKey } from '@pu-stats/models';
 import type { RangeModes } from '@pu-stats/date';
+import { SkeletonComponent } from '@pu-stats/ui';
 import {
   ExerciseBreakdownControlsComponent,
   type ExerciseChoice,
@@ -42,6 +43,7 @@ import {
   selector: 'app-analysis-segment-view',
   imports: [
     MatCardModule,
+    SkeletonComponent,
     AnalysisTrendTableComponent,
     ExerciseBreakdownControlsComponent,
     SetsDistributionComponent,
@@ -54,6 +56,8 @@ import {
 })
 export class AnalysisSegmentViewComponent {
   readonly segment = input.required<AnalysisSegment>();
+  /** Shows a chart-sized skeleton instead of the "no entries" frame. */
+  readonly loading = input<boolean>(false);
   /** False for a single-measurement view, which needs no disambiguation. */
   readonly showLabel = input<boolean>(false);
   readonly granularity = input<StatsGranularity>('daily');

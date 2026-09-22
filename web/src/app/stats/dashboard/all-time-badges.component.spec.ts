@@ -86,6 +86,29 @@ describe('AllTimeBadgesComponent', () => {
     expect(text).toContain('40.0');
   });
 
+  it('should show a skeleton per value while the totals are still loading', async () => {
+    // given
+    const fixture = await render();
+    // when
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+    const host = fixture.nativeElement as HTMLElement;
+    // then
+    expect(host.querySelectorAll('.badge pu-skeleton')).toHaveLength(4);
+    expect(host.textContent).not.toContain('1200');
+    expect(
+      host
+        .querySelector('[data-testid="dashboard-all-time-badges-link"]')
+        ?.getAttribute('aria-busy')
+    ).toBe('true');
+    // when
+    fixture.componentRef.setInput('loading', false);
+    fixture.detectChanges();
+    // then
+    expect(host.querySelector('pu-skeleton')).toBeNull();
+    expect(host.textContent).toContain('1200');
+  });
+
   it('should still link to the analysis page', async () => {
     // given
     const fixture = await render();

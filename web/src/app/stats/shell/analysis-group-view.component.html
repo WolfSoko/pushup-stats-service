@@ -1,4 +1,13 @@
-@if (isEmptyRange()) {
+@if (!loaded()) {
+  <mat-card aria-busy="true" data-testid="analysis-group-view-loading">
+    <mat-card-header>
+      <pu-skeleton shape="title" width="40%" />
+    </mat-card-header>
+    <mat-card-content>
+      <pu-skeleton shape="rect" height="260px" />
+    </mat-card-content>
+  </mat-card>
+} @else if (isEmptyRange()) {
   <p
     class="empty"
     data-testid="analysis-group-view-empty"
@@ -23,6 +32,7 @@
 @for (segment of store.viewSegments(); track segment.measurement) {
   <app-analysis-segment-view
     [segment]="segment"
+    [loading]="!loaded()"
     [showLabel]="hasMultipleSegments()"
     [granularity]="store.viewGranularity()"
     [rangeMode]="store.rangeMode()"
@@ -39,7 +49,7 @@
   />
 }
 
-@if (!isEmptyRange()) {
+@if (loaded() && !isEmptyRange()) {
   <section class="grid">
     <mat-card>
       <mat-card-header>
@@ -95,6 +105,8 @@
           [measurement]="heatmapMeasurement()"
           [mode]="heatmapMode()"
         />
+      } @placeholder {
+        <pu-skeleton shape="rect" height="360px" />
       }
     </mat-card-content>
   </mat-card>

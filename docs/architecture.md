@@ -133,6 +133,16 @@ Every button whose click starts async work (a Firestore write, a callable, auth,
 - **`createKeyedBusyState<K>()`** — one flag per row (`isBusy(entry.id)`), for lists where each row has its own action.
 - The global toolbar indicator below is orthogonal: it reacts to the request itself, the busy flag to the CTA the user pressed. Both usually fire together.
 
+### Loading skeletons (`pu-skeleton`)
+
+Content that arrives asynchronously (a Firestore listener, a `resource`, a callable) reserves its layout while it loads instead of rendering zeros, a bare `mat-spinner` or an empty state that later turns out to be wrong. `@pu-stats/ui` provides:
+
+- **`SkeletonComponent`** — `<pu-skeleton />` renders one shimmer bar the size of a text line; `shape="title" | "circle" | "rect"` change the proportions, `width` / `height` take any CSS length, `lines="3"` stacks bars like a paragraph. Colours derive from `--mat-sys-on-surface`, so it works in both themes; `prefers-reduced-motion` stops the shimmer.
+- **`SkeletonTableComponent`** — `<pu-skeleton-table [rows]="8" [columns]="6" />` for tables and lists.
+- **Pattern:** branch on the store's loading flag (`loading()`, `!loaded()`, `resource.isLoading()`) and render skeletons in the _same_ container the loaded content uses (same grid, same card), so nothing shifts when the data lands. Mirror the loaded shape (a title bar, three text lines, a 40px circle for an avatar) rather than one big grey block. Skeletons are `aria-hidden`; put `aria-busy="true"` on the region while it loads and keep an existing `role="status"` text if one exists.
+- **Announce, don't hide.** When a loading region had a visible text before ("Session wird geladen …"), keep it as `<p class="pu-visually-hidden" role="status">` next to the skeleton so screen readers still hear it and the i18n unit stays in use. The class is global (`libs/ui/src/lib/skeleton/skeleton.scss`, pulled in by `web/src/styles.scss`).
+- **Never flash an empty state** (`Noch kein Eintrag.`, `Keine Einträge …`) before the data has loaded: gate it on the loaded flag, show the skeleton until then.
+
 ### Global pending-request indicator
 
 Firestore and Cloud Functions bypass `HttpClient`, so there is no interceptor that sees every request. Instead `PendingRequestsService` (`@pu-stats/data-access`) counts in-flight requests, and the app shell renders `PendingRequestIndicatorComponent` — a small toolbar spinner — once a request has been pending for 300 ms (then for at least 500 ms so it never flickers).
