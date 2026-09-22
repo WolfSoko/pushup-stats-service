@@ -1,3 +1,4 @@
+import { EXERCISE_WIKI_CATALOG } from '@pu-stats/models';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 import { of } from 'rxjs';
@@ -69,9 +70,9 @@ describe('ExercisesWikiPageComponent', () => {
     });
 
     const tocLinks = container.querySelectorAll('nav.toc a.toc-link');
-    // 40 catalog exercises + 1 hub-card entry that cross-links to the
+    // Every wiki entry plus the hub-card entry that cross-links to the
     // dedicated /wiki/liegestuetz-typen wiki under the "push" category.
-    expect(tocLinks.length).toBe(41);
+    expect(tocLinks.length).toBe(EXERCISE_WIKI_CATALOG.length + 1);
     for (const link of Array.from(tocLinks)) {
       const href = link.getAttribute('href') ?? '';
       expect(href.startsWith('#')).toBe(true);

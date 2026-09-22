@@ -1,4 +1,4 @@
-Pushup Tracker gjør armhevninger og 41 andre øvelser til et spill du vil vinne.
+Pushup Tracker gjør armhevninger og 46 andre øvelser til et spill du vil vinne.
 
 Enten du starter på null eller allerede er på ditt første hundre: denne appen holder deg i gang. Kameraet teller repetisjonene automatisk, treningsplanene gir deg en klar oppgave hver dag, og venner og resultatlista motiverer uten å mase.
 

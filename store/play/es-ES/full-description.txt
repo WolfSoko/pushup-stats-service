@@ -1,4 +1,4 @@
-Pushup Tracker convierte las flexiones y otros 41 ejercicios en un juego que quieres ganar.
+Pushup Tracker convierte las flexiones y otros 46 ejercicios en un juego que quieres ganar.
 
 Empiezas de cero o ya vas por tu primer centenar: esta app te mantiene en marcha. La cámara cuenta tus repeticiones automáticamente, los planes de entrenamiento te dan una consigna clara cada día, y los amigos y la clasificación motivan sin dar la lata.
 

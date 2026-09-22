@@ -59,10 +59,12 @@ bleiben `Pushups`: der Launcher schneidet längere Labels ohnehin ab.
 
 ## Belege für die Aussagen im Listing
 
-- **42 Übungen + 9 Kategorien** — `EXERCISE_CATALOG` / `EXERCISE_CATEGORIES`
+- **47 Übungen + 9 Kategorien** — `EXERCISE_CATALOG` / `EXERCISE_CATEGORIES`
   in `libs/stats/src/lib/models/exercise.catalog.ts`. Der Katalog enthält
-  `PUSHUP_DEFINITION` **plus** 41 weitere Definitionen — daher „Liegestütze
-  und 41 weitere Übungen“ im Fließtext, aber „42 Übungen“ in der Aufzählung.
+  `PUSHUP_DEFINITION` **plus** 46 weitere Definitionen — daher „Liegestütze
+  und 46 weitere Übungen“ im Fließtext, aber „47 Übungen“ in der Aufzählung.
+  Beide Zahlen wandern mit jedem neuen Katalogeintrag; nur die Aufzählung
+  ist durch `exercise.catalog.spec.ts` abgesichert, der Fließtext nicht.
 - **13 Liegestütz-Varianten** — `PUSHUP_TYPES` in
   `libs/stats/src/lib/models/pushup-type.models.ts`
 - **10 Trainingspläne** — `TRAINING_PLANS` in

@@ -844,6 +844,38 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "article": "<h2>波比跳为什么这么累人</h2>\n<p>\n  波比跳把四个动作组合在一起——深蹲、俯卧撑、回到深蹲、垂直跳跃——每次重复都要让身体在地面和\n  直立之间往返两次。正是这种高度的反复变化，让心率上升的速度快过几乎所有其他动作：循环系统\n  必须不断重新分配血液。\n</p>\n<p>\n  因此它是极佳的体能训练动作，但作为力量训练只能算中等水平。想增长力量的人，用分开的动作训练\n  效果更好；而想在十分钟内气喘吁吁，波比跳正合适。\n</p>\n<h2>动作要领</h2>\n<p>\n  从站立蹲下，双手撑地，双脚向后跳入高平板支撑。做一个胸部触地的俯卧撑，然后双脚跳回双手位置，\n  爆发式向上伸展起立。在支撑阶段核心必须保持稳固——这正是大多数人在疲劳时最容易失去动作标准\n  的环节。\n</p>\n<h2>调整方式</h2>\n<ul>\n  <li><strong>不跳跃。</strong>只是向上站直而不是跳起——对关节明显更友好，同时保持相近的心肺刺激。</li>\n  <li><strong>不做俯卧撑。</strong>适合初学者；强度依然足够高。</li>\n  <li><strong>用迈步代替跳跃。</strong>双脚依次向后迈步，能减轻下背部的负担。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  以间歇形式训练，而不是长时间连续做组：工作20到40秒，休息时间相同，共六到十轮。一旦俯卧撑\n  阶段动作变形——比如髋部下塌、幅度减半——就应该结束这一组。\n</p>"
     }
   },
+  "cardio.crosscountryskiing": {
+    "de": {
+      "name": "Skilanglauf",
+      "summary": "Die vollständigste Ausdauerform — Arme, Beine und Rumpf arbeiten gleichzeitig, ohne jede Stoßbelastung.",
+      "instructions": [
+        "Gewicht vollständig auf den Gleitski verlagern; zwei belastete Skier gleichzeitig bedeuten Stillstand.",
+        "Im klassischen Stil Ski in der Spur, Abdruck nach unten-hinten; im Skating diagonal nach außen.",
+        "Stockschub aus Rumpf und Latissimus einleiten, nicht aus dem Trizeps allein.",
+        "Beim Abdruck kurz und kräftig, beim Gleiten vollständig entspannen — der Rhythmus ist die Technik."
+      ],
+      "tips": [
+        "Klassisch ist leichter zu lernen, Skating anspruchsvoller und intensiver; für den Einstieg lohnt eine Stunde Unterricht mehr als zehn Stunden Üben.",
+        "Nach Gefühl zu warm angezogen ist der häufigste Anfängerfehler — nach zehn Minuten stimmt die Rechnung nicht mehr."
+      ],
+      "article": "<h2>Die vollständigste Ausdauerbelastung</h2>\n<p>\n  Skilanglauf beschäftigt Beine, Rumpf und Oberkörper gleichzeitig und erzeugt damit die höchsten\n  gemessenen Sauerstoffaufnahmewerte aller Ausdauersportarten. Der Grund ist schlicht Muskelmasse:\n  Wo Laufen im Wesentlichen die Beine beansprucht, sind hier Latissimus, Trizeps und Rumpf bei jedem\n  Stockschub beteiligt. Und das bei null Stoßbelastung, weil der Ski den Schnee nie verlässt.\n</p>\n<h2>Zwei Stile, zwei Lernkurven</h2>\n<p>\n  Der klassische Stil bleibt in der gespurten Loipe und ähnelt in der Beinarbeit dem Gehen — er ist in\n  einer Stunde grob erlernbar. Skating läuft auf präparierter Fläche mit seitlichem Abdruck, ist\n  technisch anspruchsvoller und bei gleichem Tempo deutlich intensiver.\n</p>\n<p>\n  Beiden gemeinsam ist die Gewichtsverlagerung: Wer nicht vollständig auf den gleitenden Ski wechselt,\n  schiebt beide Skier gleichzeitig und kommt kaum vorwärts. Das ist der Punkt, an dem die meisten\n  Anfänger hängenbleiben — und der, den eine einzige Unterrichtsstunde meist löst.\n</p>\n<h2>Wofür es besonders taugt</h2>\n<ul>\n  <li><strong>Maximaler Herz-Kreislauf-Reiz.</strong> Mehr beteiligte Muskulatur als jede andere Ausdauerform.</li>\n  <li><strong>Oberkörperausdauer.</strong> Der Stockschub trainiert Zugmuskulatur über Stunden statt über Sätze.</li>\n  <li><strong>Gelenkschonung.</strong> Gleitende Bewegung ohne Aufprall, ganzjährig relevant als Wintervariante zum Laufen.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  60 bis 120 Minuten locker in der Loipe. Weil so viel Muskulatur beteiligt ist, fühlt sich ein\n  moderates Tempo leichter an, als es kreislaufseitig ist — die ersten Einheiten eher kürzer ansetzen\n  als geplant.\n</p>"
+    },
+    "en": {
+      "name": "Cross-Country Skiing",
+      "summary": "The most complete endurance sport — arms, legs and core working at once, with zero impact.",
+      "instructions": [
+        "Shift your weight fully onto the gliding ski; two loaded skis at once means standing still.",
+        "Classic style keeps the skis in the track, pushing down and back; skating pushes diagonally outward.",
+        "Start the pole push from the core and lats, not the triceps alone.",
+        "Push short and hard, then relax completely during the glide — the rhythm is the technique."
+      ],
+      "tips": [
+        "Classic is easier to learn, skating harder and more intense; one hour of instruction beats ten hours of practice.",
+        "Dressing as warmly as feels right is the classic beginner mistake — ten minutes in, the maths no longer works."
+      ],
+      "article": "<h2>The most complete endurance load there is</h2>\n<p>\n  Cross-country skiing works the legs, core and upper body at the same time and produces the highest\n  oxygen uptake values measured in any endurance sport. The reason is simply muscle mass: where running\n  mainly loads the legs, here the lats, triceps and core contribute on every pole push. And it does so\n  at zero impact, because the ski never leaves the snow.\n</p>\n<h2>Two styles, two learning curves</h2>\n<p>\n  Classic style stays in the prepared track and its leg work resembles walking — roughly learnable in\n  an hour. Skating runs on a groomed surface with a lateral push, is technically harder, and is\n  noticeably more intense at the same speed.\n</p>\n<p>\n  What both share is the weight transfer: without fully committing to the gliding ski you push both\n  skis at once and barely move. That is where most beginners get stuck — and what a single lesson\n  usually fixes.\n</p>\n<h2>What it's especially good for</h2>\n<ul>\n  <li><strong>Maximum cardiovascular stimulus.</strong> More muscle involved than in any other endurance form.</li>\n  <li><strong>Upper-body endurance.</strong> The pole push trains pulling muscles over hours rather than over sets.</li>\n  <li><strong>Joint protection.</strong> Gliding motion without landing, and the natural winter counterpart to running.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  60 to 120 minutes easy in the track. Because so much muscle is involved, a moderate pace feels easier\n  than it is on the cardiovascular side — plan the first few sessions shorter than you think you need.\n</p>"
+    }
+  },
   "cardio.cycling": {
     "de": {
       "name": "Radfahren",
@@ -981,6 +1013,38 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "article": "<h2>关节友好，强度可精准控制</h2>\n<p>\n  相比跑步，骑行有两个优势。第一，没有冲击性负荷——体重由车座承担，而不是膝盖和踝关节。第二，\n  强度可以非常精确地控制，尤其是在室内自行车上。这两点让自行车成为长时间轻松训练的首选。\n</p>\n<p>\n  这正是它的主要价值所在：在最大心率60%到70%的二区强度下，线粒体和脂肪代谢获益最大。这类训练\n  在自行车上比跑步更容易坚持下来。\n</p>\n<h2>坐姿</h2>\n<p>\n  骑行时膝盖疼痛最常见的原因是车座太低。一个参考标准是：曲柄转到最低点时，膝盖应仍保持轻微\n  弯曲，大约25到30度。而车座太高则会让髋部在每一圈蹬踏中都发生倾斜。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>齿轮比过重。</strong>低踏频配合高阻力会加重膝盖负担，对耐力的锻炼效果也更差。80到95转/分钟是比较合适的范围。</li>\n  <li><strong>始终保持同一种中等强度。</strong>这里同样适用：大部分时间轻松骑行，偶尔高强度冲刺，很少停留在中间地带。</li>\n  <li><strong>只骑自行车。</strong>没有冲击性负荷，骨密度就缺乏必要的刺激——应该搭配力量训练或跳跃类动作。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  每周两到四次训练，轻松骑行45到90分钟，高强度间歇训练时间则明显更短。\n</p>"
     }
   },
+  "cardio.elliptical": {
+    "de": {
+      "name": "Crosstrainer",
+      "summary": "Laufähnliche Bewegung ohne Stoßbelastung — der verlässlichste Indoor-Ersatz fürs Laufen.",
+      "instructions": [
+        "Füße flach auf den Pedalen, Gewicht auf der ganzen Sohle, Ferse nicht abheben.",
+        "Aufrecht stehen, nicht am Lenker hängen — die Griffe geben die Richtung vor, nicht die Last.",
+        "Arme aktiv mitschieben und ziehen, nicht nur mitführen.",
+        "Trittfrequenz konstant halten; Widerstand ändern statt zu beschleunigen."
+      ],
+      "tips": [
+        "Die Distanzanzeige ist eine Schätzung des Geräts und zwischen Modellen nicht vergleichbar — nutze sie für den Verlauf, nicht für Vergleiche.",
+        "Sich auf den Lenker zu stützen senkt den Verbrauch deutlich, ohne dass es sich leichter anfühlt."
+      ],
+      "article": "<h2>Laufen ohne den Aufprall</h2>\n<p>\n  Der Crosstrainer bildet den Bewegungsablauf des Laufens nach, ohne dass der Fuß je den Kontakt\n  verliert. Damit fällt die Stoßbelastung weg, die beim Laufen das limitierende Element ist — für\n  Menschen mit Knie-, Hüft- oder Rückenproblemen oft der Unterschied zwischen Ausdauertraining und\n  keinem Ausdauertraining.\n</p>\n<h2>Warum die Distanz nur ein Anhaltspunkt ist</h2>\n<p>\n  Ein Crosstrainer misst keine Strecke, er rechnet sie aus Schrittzahl und Schrittlänge hoch. Zwei\n  Geräte nebeneinander können bei identischer Arbeit unterschiedliche Kilometer anzeigen. Als\n  Verlaufsgröße auf demselben Gerät ist der Wert brauchbar; als Vergleich zu einer gelaufenen Strecke\n  ist er es nicht.\n</p>\n<p>\n  Der zweite Fallstrick ist die Haltung. Wer sich mit dem Oberkörpergewicht auf den Lenker stützt,\n  nimmt einen erheblichen Teil der Arbeit heraus — das Display zeigt trotzdem fleißig weiter.\n</p>\n<h2>Wofür es besonders taugt</h2>\n<ul>\n  <li><strong>Ersatz für Laufeinheiten.</strong> Vergleichbarer Herz-Kreislauf-Reiz, deutlich geringere Gelenkbelastung.</li>\n  <li><strong>Wetterunabhängige Grundlage.</strong> Zone-2-Arbeit, die nicht von Dunkelheit oder Glätte abhängt.</li>\n  <li><strong>Intervalle mit sauberem Widerstandssprung.</strong> Der Wechsel geht schneller und präziser als an jeder Steigung draußen.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  30 bis 60 Minuten im ruhigen Bereich, oder 20 Minuten als Intervall. Steigere den Widerstand, bevor\n  du die Frequenz erhöhst — hohe Frequenz bei niedrigem Widerstand fühlt sich hart an und trainiert\n  wenig.\n</p>"
+    },
+    "en": {
+      "name": "Elliptical Trainer",
+      "summary": "A running-like motion without the impact — the most reliable indoor substitute for running.",
+      "instructions": [
+        "Feet flat on the pedals, weight across the whole sole, heels down.",
+        "Stand tall, don't hang off the handles — they steer, they don't carry you.",
+        "Actively push and pull with the arms rather than just holding on.",
+        "Keep cadence steady; change the resistance instead of speeding up."
+      ],
+      "tips": [
+        "The distance readout is the machine's estimate and isn't comparable between models — use it for trends, not comparisons.",
+        "Leaning on the handlebars cuts the work substantially without feeling any easier."
+      ],
+      "article": "<h2>Running without the landing</h2>\n<p>\n  The elliptical reproduces the pattern of running while the foot never leaves the pedal. That removes\n  the repeated impact that limits running — for people with knee, hip or back trouble it is often the\n  difference between doing endurance work and doing none.\n</p>\n<h2>Why the distance is only a rough guide</h2>\n<p>\n  An elliptical doesn't measure distance, it extrapolates it from stride count and stride length. Two\n  machines side by side can report different kilometres for identical work. As a trend on the same\n  machine the number is useful; as a comparison against a run outdoors it is not.\n</p>\n<p>\n  The second trap is posture. Resting your upper-body weight on the handles removes a large share of\n  the work — while the display keeps counting happily.\n</p>\n<h2>What it's especially good for</h2>\n<ul>\n  <li><strong>Replacing running sessions.</strong> Comparable cardiovascular stimulus at a fraction of the joint load.</li>\n  <li><strong>Weather-proof base work.</strong> Zone-2 training that doesn't depend on darkness or ice.</li>\n  <li><strong>Intervals with a clean resistance step.</strong> Switching is faster and more precise than any hill outdoors.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  30 to 60 minutes easy, or 20 minutes as intervals. Raise the resistance before you raise the\n  cadence — high cadence against low resistance feels hard and trains little.\n</p>"
+    }
+  },
   "cardio.highknees": {
     "de": {
       "name": "High Knees",
@@ -1116,6 +1180,70 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         "如果膝盖没有抬高，那就只是原地慢跑——不是这个动作。"
       ],
       "article": "<h2>心率提升，髂腰肌激活</h2>\n<p>\n  高抬腿是原地跑步的一种，膝盖抬得比平时夸张得多。它能快速拉高心率，同时激活髂腰肌——这块\n  肌群在久坐生活中虽然容易缩短，力量却往往不足。\n</p>\n<p>\n  它真正的价值在于跑步和跳跃训练前的热身：它能以比轻松慢跑更高的频率，预先激活之后所需要的\n  动作模式。\n</p>\n<h2>动作要领</h2>\n<p>\n  身体直立站好，然后交替将膝盖抬至髋部高度。脚掌前部短暂触地，脚跟几乎不落地。上半身保持\n  竖直——不能靠向后仰来让膝盖看起来抬得更高。\n</p>\n<p>\n  双臂像冲刺跑一样，与双腿交替摆动。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>向后仰。</strong>最常见的错误。它会制造出膝盖抬得更高的假象，同时给下背部带来负担。</li>\n  <li><strong>用脚跟着地。</strong>声音大、冲击硬，速度也慢。接触地面应该用脚掌前部。</li>\n  <li><strong>膝盖抬得太低。</strong>低于髋部高度，动作就变成了原地慢跑，失去了真正的训练效果。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  作为热身：两到三轮，每轮20秒。作为体能训练环节：30到45秒，休息时间相同，共六到八轮。\n</p>"
+    }
+  },
+  "cardio.hiking": {
+    "de": {
+      "name": "Wandern",
+      "summary": "Ausdauer über Stunden statt Minuten — mit Höhenmetern als Intensitätsregler.",
+      "instructions": [
+        "Tempo so wählen, dass es über Stunden trägt; bergauf lieber kleinere Schritte als längere.",
+        "Bergab kurze Schritte, Knie leicht gebeugt — hier entsteht der Muskelkater, nicht bergauf.",
+        "Rucksack eng am Rücken, Hüftgurt trägt das Gewicht, nicht die Schultern.",
+        "Alle 60-90 Minuten kurz trinken und essen, bevor der Hunger da ist."
+      ],
+      "tips": [
+        "Höhenmeter sind der Intensitätsregler — 300 Höhenmeter kosten ungefähr so viel wie ein zusätzlicher Flachkilometer.",
+        "Eingelaufene Schuhe und zwei Paar Socken verhindern mehr Abbrüche als jedes Ausdauertraining."
+      ],
+      "article": "<h2>Ausdauer in einer anderen Zeitskala</h2>\n<p>\n  Wandern unterscheidet sich von Gehen nicht durch die Bewegung, sondern durch die Dauer und das\n  Gelände. Eine Tour von vier Stunden liegt fast durchgehend in Zone 1 bis 2 — genau dem Bereich, den\n  ein Intervalltraining nie lange genug hält. Der Trainingsreiz kommt nicht aus der Intensität,\n  sondern aus der schieren Zeit unter Belastung.\n</p>\n<h2>Höhenmeter statt Tempo</h2>\n<p>\n  Wer eine Wanderung härter machen will, geht nicht schneller — er geht steiler. Eine grobe Faustregel\n  aus der Tourenplanung: 300 Höhenmeter im Aufstieg entsprechen etwa einem zusätzlichen Kilometer in\n  der Ebene. Das macht die Intensität planbar, ohne auf Herzfrequenz schauen zu müssen.\n</p>\n<p>\n  Der Abstieg wird dabei regelmäßig unterschätzt. Er belastet die Oberschenkelvorderseite exzentrisch\n  und ist der Grund, warum der Muskelkater am Tag danach kommt — nicht der Aufstieg. Kurze Schritte und\n  ein leicht gebeugtes Knie nehmen einen großen Teil davon weg.\n</p>\n<h2>Wofür es besonders taugt</h2>\n<ul>\n  <li><strong>Grundlagenausdauer ohne Laufbelastung.</strong> Stundenlange Zone-2-Arbeit, ohne dass die Gelenke die Stoßbelastung des Laufens abbekommen.</li>\n  <li><strong>Beinkraft im Abstieg.</strong> Exzentrische Belastung über Stunden, die kein Satz Kniebeugen so nachbildet.</li>\n  <li><strong>Training, das nicht nach Training aussieht.</strong> Der Hauptgrund, warum Menschen dabeibleiben.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Eine längere Tour pro Woche reicht als Ausdauerblock. Wer aufbaut, steigert zuerst die Dauer, dann\n  die Höhenmeter, dann das Gepäck — und nie zwei davon gleichzeitig.\n</p>"
+    },
+    "en": {
+      "name": "Hiking",
+      "summary": "Endurance measured in hours rather than minutes — with elevation as the intensity dial.",
+      "instructions": [
+        "Pick a pace you can hold for hours; uphill, shorten your stride rather than lengthening it.",
+        "Downhill, take short steps with a softly bent knee — this is where the soreness comes from, not the climb.",
+        "Keep the pack tight to your back; the hip belt carries the weight, not your shoulders.",
+        "Drink and eat briefly every 60-90 minutes, before you feel the need."
+      ],
+      "tips": [
+        "Elevation is the intensity dial — 300 metres of climb costs roughly as much as an extra flat kilometre.",
+        "Broken-in shoes and two pairs of socks end more hikes early than any lack of fitness does."
+      ],
+      "article": "<h2>Endurance on a different time scale</h2>\n<p>\n  Hiking differs from walking not in the movement but in the duration and the terrain. A four-hour\n  outing sits almost entirely in zone 1 to 2 — exactly the range interval training never sustains long\n  enough. The stimulus comes from sheer time under load, not from intensity.\n</p>\n<h2>Elevation, not pace</h2>\n<p>\n  To make a hike harder, don't go faster — go steeper. A rough rule from route planning: 300 metres of\n  ascent is worth about one extra kilometre on the flat. That makes intensity plannable without\n  watching a heart rate monitor.\n</p>\n<p>\n  The descent is the part people routinely underestimate. It loads the quadriceps eccentrically and is\n  the reason you are sore the next day — not the climb. Short steps and a softly bent knee remove much\n  of that.\n</p>\n<h2>What it's especially good for</h2>\n<ul>\n  <li><strong>Base endurance without running impact.</strong> Hours of zone-2 work while your joints skip the repeated impact of running.</li>\n  <li><strong>Leg strength on the way down.</strong> Eccentric loading over hours that no set of squats reproduces.</li>\n  <li><strong>Training that doesn't look like training.</strong> The main reason people keep doing it.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  One longer outing per week works as an endurance block. When building up, add duration first, then\n  elevation, then pack weight — and never two at once.\n</p>"
+    }
+  },
+  "cardio.inlineskating": {
+    "de": {
+      "name": "Inline-Skaten",
+      "summary": "Seitliches Abdrücken statt Abrollen — trainiert Gesäß und Abduktoren, die beim Laufen kaum vorkommen.",
+      "instructions": [
+        "Knie gebeugt, Hüfte tief, Oberkörper leicht vorgeneigt — aufrechtes Stehen macht jede Kurve unsicher.",
+        "Zur Seite abdrücken, nicht nach hinten; der Schub kommt aus der Hüfte, nicht aus dem Fußgelenk.",
+        "Zwischen den Schüben auf einem Bein gleiten lassen, statt hektisch nachzusetzen.",
+        "Bremsen vor dem Tempo lernen — Heel-Brake oder T-Stopp, bevor die erste Abfahrt kommt."
+      ],
+      "tips": [
+        "Handgelenkschoner sind die eine Schutzausrüstung, die sich nicht diskutieren lässt; die meisten Stürze gehen nach vorn auf die Hände.",
+        "Nasser Asphalt und Rollen vertragen sich nicht — Bremsweg und Kurvenhalt brechen abrupt weg."
+      ],
+      "article": "<h2>Eine Ebene, die im Laufen fehlt</h2>\n<p>\n  Laufen, Radfahren und Crosstrainer bewegen sich alle nach vorn. Inline-Skaten nicht: Der Vortrieb\n  entsteht aus einem seitlichen Abdruck, und damit aus Gesäßmuskulatur und Abduktoren — genau den\n  Muskeln, die in den anderen Ausdauerformen kaum Arbeit bekommen. Wer viel läuft, merkt nach der\n  ersten Stunde auf Skates Muskeln, von deren Existenz er nichts wusste.\n</p>\n<h2>Gleiten statt treten</h2>\n<p>\n  Anfänger machen viele kurze Schritte; Fortgeschrittene machen wenige lange. Der Unterschied ist die\n  Gleitphase: Nach jedem Abdruck rollt man eine Weile auf einem Bein, bevor das andere übernimmt. Das\n  ist nicht nur effizienter, sondern auch der eigentliche Stabilitätsreiz der Sportart.\n</p>\n<p>\n  Bremsen gehört an den Anfang, nicht ans Ende des Lernens. Eine Strecke, die bergab führt, ist ohne\n  sichere Bremstechnik keine Trainingseinheit, sondern ein Risiko.\n</p>\n<h2>Wofür es besonders taugt</h2>\n<ul>\n  <li><strong>Gesäß und Abduktoren.</strong> Seitliche Kraftentwicklung, die kein Laufkilometer liefert.</li>\n  <li><strong>Gleichgewicht und Rumpfstabilität.</strong> Jede Gleitphase ist ein einbeiniger Stand in Bewegung.</li>\n  <li><strong>Ausdauer ohne Stoßbelastung.</strong> Die Rollen nehmen dem Gelenk den Aufprall komplett ab.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  45 bis 90 Minuten auf einer bekannten, glatten Strecke. Die Belastungsgrenze setzt am Anfang nicht\n  die Ausdauer, sondern die Konzentration — müde Beine fahren unsauber, und unsauber fahren heißt\n  stürzen.\n</p>"
+    },
+    "en": {
+      "name": "Inline Skating",
+      "summary": "Pushing sideways instead of rolling forward — trains glutes and abductors that running barely touches.",
+      "instructions": [
+        "Knees bent, hips low, torso leaning slightly forward — standing tall makes every turn unstable.",
+        "Push to the side, not backwards; the drive comes from the hip, not the ankle.",
+        "Glide on one leg between pushes instead of stepping frantically.",
+        "Learn to stop before you chase speed — heel brake or T-stop, before the first descent."
+      ],
+      "tips": [
+        "Wrist guards are the one piece of protection that isn't up for debate; most falls go forward onto the hands.",
+        "Wet asphalt and wheels don't mix — braking distance and cornering grip disappear abruptly."
+      ],
+      "article": "<h2>A plane that running leaves out</h2>\n<p>\n  Running, cycling and the elliptical all move forward. Inline skating does not: propulsion comes from\n  a sideways push, and therefore from the glutes and abductors — precisely the muscles the other\n  endurance forms barely load. Anyone who runs a lot will discover muscles they didn't know about after\n  their first hour on skates.\n</p>\n<h2>Glide, don't step</h2>\n<p>\n  Beginners take many short steps; experienced skaters take few long ones. The difference is the glide\n  phase: after each push you roll on one leg for a while before the other takes over. That is not just\n  more efficient, it is the actual stability stimulus of the sport.\n</p>\n<p>\n  Braking belongs at the start of learning, not the end. A route that runs downhill is not a training\n  session without solid braking technique — it's a risk.\n</p>\n<h2>What it's especially good for</h2>\n<ul>\n  <li><strong>Glutes and abductors.</strong> Lateral force production that no running kilometre delivers.</li>\n  <li><strong>Balance and core stability.</strong> Every glide phase is a single-leg stance in motion.</li>\n  <li><strong>Endurance without impact.</strong> The wheels take the landing off your joints entirely.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  45 to 90 minutes on a known, smooth route. Early on, the limit isn't endurance but concentration —\n  tired legs skate sloppily, and sloppy skating means falling.\n</p>"
     }
   },
   "cardio.jumpingjacks": {
@@ -1390,6 +1518,38 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         "不要强行做二重跳——先掌握基本节奏，再加速。"
       ],
       "article": "<h2>在很小的空间里获得很高的刺激</h2>\n<p>\n  跳绳能在极短时间内把心率拉高，只需要两平方米的空间，花费也几乎为零。同时它还能锻炼小腿\n  力量、踝关节稳定性和节奏感——这些能力对跑步都有直接帮助。\n</p>\n<p>\n  代价是冲击负荷：每一跳产生的冲击力与跑步大致相当，只是更集中在小腿和跟腱上。刚开始接触\n  跳绳的人，应该非常谨慎地逐步增加训练量。\n</p>\n<h2>动作要领</h2>\n<p>\n  跳跃幅度要小——两到三厘米就足够，绳子本身也很细。落地时用脚掌前部，脚跟几乎不接触地面。\n  肘部始终贴近身体，转动的力量来自手腕，而不是肩膀。\n</p>\n<p>\n  正确的绳长：站在绳子中间，手柄大约应该到达腋下的高度。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>跳得太高。</strong>白白消耗力气，还会增加负荷却没有额外好处。</li>\n  <li><strong>用肩膀甩绳。</strong>很快就会疲劳，还会打乱节奏。</li>\n  <li><strong>一开始练得太多。</strong>小腿的反应会延迟出现。第一周每次五分钟就足够了。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  作为间歇训练：跳30到60秒，休息时间相同，共六到十轮。作为热身：轻松跳三到五分钟。\n</p>"
+    }
+  },
+  "cardio.nordicwalking": {
+    "de": {
+      "name": "Nordic Walking",
+      "summary": "Gehen mit Stöcken — bezieht den Oberkörper ein und hebt den Energieverbrauch spürbar an.",
+      "instructions": [
+        "Stocklänge etwa Körpergröße × 0,66; im Zweifel die kürzere Variante wählen.",
+        "Stock diagonal zum Fuß aufsetzen, hinter dem Körper abdrücken — nicht vor dem Körper aufstellen.",
+        "Hand am Ende des Schubs öffnen, die Schlaufe hält den Stock; das schont Unterarm und Schulter.",
+        "Oberkörper leicht nach vorn geneigt, Schultern tief, Rumpf gespannt."
+      ],
+      "tips": [
+        "Der häufigste Fehler ist, die Stöcke nur mitzutragen — ohne echten Abdruck ist es einfach Gehen mit Zusatzgewicht.",
+        "Auf Asphalt Gummipuffer nutzen, im Gelände die Metallspitze."
+      ],
+      "article": "<h2>Gehen, das den Oberkörper mitnimmt</h2>\n<p>\n  Nordic Walking hat den Ruf, eine Rentnerdisziplin zu sein — und ist tatsächlich eine der wenigen\n  Formen, die aus einer Bewegung mit sehr niedriger Gelenkbelastung einen Ganzkörperreiz macht.\n  Richtig ausgeführt beteiligt der Stockabdruck Latissimus, Trizeps und Rumpf an jedem Schritt. Der\n  Energieverbrauch liegt spürbar über dem des Gehens bei gleichem Tempo, ohne dass sich die Belastung\n  für Knie und Hüfte erhöht.\n</p>\n<h2>Der Abdruck entscheidet</h2>\n<p>\n  Der Unterschied zwischen Training und Spazierengehen mit Stöcken liegt in einer Bewegung: Der Stock\n  wird schräg hinter dem Körper abgedrückt, nicht vor dem Körper aufgesetzt. Wer die Stöcke nur\n  mitführt, trägt Gewicht spazieren.\n</p>\n<p>\n  Ein guter Test: Nach zehn Minuten sollte die Rückseite der Schulter zu spüren sein. Ist sie es\n  nicht, fehlt der Schub.\n</p>\n<h2>Wofür es besonders taugt</h2>\n<ul>\n  <li><strong>Gelenkschonendes Ausdauertraining.</strong> Die Stöcke nehmen bei jedem Schritt Last von Knie und Hüfte.</li>\n  <li><strong>Wiedereinstieg nach Verletzungen.</strong> Höhere Stabilität als freies Gehen, mehr Reiz als Spazieren.</li>\n  <li><strong>Schulter- und Nackenmobilität.</strong> Die rhythmische Armarbeit löst, was Schreibtischarbeit festsetzt.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  30 bis 60 Minuten, zwei- bis dreimal pro Woche. Technik vor Tempo: Die ersten Einheiten gehören der\n  Abdruckbewegung, alles andere ergibt sich danach.\n</p>"
+    },
+    "en": {
+      "name": "Nordic Walking",
+      "summary": "Walking with poles — brings the upper body in and raises energy expenditure noticeably.",
+      "instructions": [
+        "Pole length roughly your height × 0.66; when in doubt, take the shorter option.",
+        "Plant the pole diagonally next to the foot and push off behind you — never plant it ahead of your body.",
+        "Open the hand at the end of the push; the strap holds the pole and spares your forearm and shoulder.",
+        "Lean the torso slightly forward, shoulders down, core engaged."
+      ],
+      "tips": [
+        "The most common mistake is simply carrying the poles — without a real push-off it's just walking with added weight.",
+        "Rubber tips on asphalt, the metal spike off-road."
+      ],
+      "article": "<h2>Walking that brings the upper body along</h2>\n<p>\n  Nordic walking has a reputation as a retirees' pastime — and is in fact one of the few ways to turn\n  a very low-impact movement into a whole-body stimulus. Done properly, the pole push involves the\n  lats, triceps and core on every stride. Energy expenditure sits noticeably above plain walking at\n  the same pace, without adding any load to knees or hips.\n</p>\n<h2>The push-off is what counts</h2>\n<p>\n  The difference between training and strolling with poles comes down to one movement: the pole is\n  pushed off diagonally behind the body, not planted in front of it. Carry the poles along and you're\n  taking weight for a walk.\n</p>\n<p>\n  A good test: after ten minutes you should feel the back of your shoulder. If you don't, the push is\n  missing.\n</p>\n<h2>What it's especially good for</h2>\n<ul>\n  <li><strong>Low-impact endurance.</strong> The poles take load off knees and hips on every stride.</li>\n  <li><strong>Returning after injury.</strong> More stable than free walking, more stimulus than strolling.</li>\n  <li><strong>Shoulder and neck mobility.</strong> The rhythmic arm work loosens what desk work locks up.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  30 to 60 minutes, two or three times a week. Technique before pace: give the first few sessions to\n  the push-off and the rest follows.\n</p>"
     }
   },
   "cardio.rowing": {

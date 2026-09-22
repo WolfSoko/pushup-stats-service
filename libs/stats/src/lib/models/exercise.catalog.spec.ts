@@ -426,4 +426,31 @@ describe('Play Store listing stays in sync with the catalog', () => {
       categories: EXERCISE_CATEGORIES.length,
     });
   });
+
+  /**
+   * The opening line counts the same catalog a second time, phrased as
+   * "push-ups and N more" — so it sits one below the bullet's total.
+   * Bumping only the bullet leaves the two lines contradicting each
+   * other in the published listing.
+   */
+  it.each([
+    ['de-DE', /Liegestützen und (\d+) weiteren Übungen/],
+    ['en-US', /push-ups and (\d+) more exercises/],
+  ])('should quote the non-pushup count in the %s intro', (locale, pattern) => {
+    // given
+    const path = join(
+      repoRoot,
+      'store',
+      'play',
+      locale,
+      'full-description.txt'
+    );
+
+    // when
+    const match = pattern.exec(readFileSync(path, 'utf-8'));
+
+    // then
+    expect(match).not.toBeNull();
+    expect(Number(match?.[1])).toBe(EXERCISE_CATALOG.length - 1);
+  });
 });

@@ -241,6 +241,20 @@ export const EXERCISE_WIKI_CATALOG: ReadonlyArray<ExerciseWikiEntry> = [
     icon: 'directions_walk',
   },
   {
+    id: 'cardio.hiking',
+    categoryId: 'cardio',
+    slug: 'hiking',
+    difficulty: 'beginner',
+    icon: 'hiking',
+  },
+  {
+    id: 'cardio.nordicwalking',
+    categoryId: 'cardio',
+    slug: 'nordic-walking',
+    difficulty: 'beginner',
+    icon: 'nordic_walking',
+  },
+  {
     id: 'cardio.running',
     categoryId: 'cardio',
     slug: 'running',
@@ -269,6 +283,13 @@ export const EXERCISE_WIKI_CATALOG: ReadonlyArray<ExerciseWikiEntry> = [
     icon: 'pool',
   },
   {
+    id: 'cardio.elliptical',
+    categoryId: 'cardio',
+    slug: 'elliptical-trainer',
+    difficulty: 'beginner',
+    icon: 'fitness_center',
+  },
+  {
     id: 'cardio.jumprope',
     categoryId: 'cardio',
     slug: 'jump-rope',
@@ -288,6 +309,20 @@ export const EXERCISE_WIKI_CATALOG: ReadonlyArray<ExerciseWikiEntry> = [
     slug: 'high-knees',
     difficulty: 'beginner',
     icon: 'directions_run',
+  },
+  {
+    id: 'cardio.inlineskating',
+    categoryId: 'cardio',
+    slug: 'inline-skating',
+    difficulty: 'intermediate',
+    icon: 'roller_skating',
+  },
+  {
+    id: 'cardio.crosscountryskiing',
+    categoryId: 'cardio',
+    slug: 'cross-country-skiing',
+    difficulty: 'intermediate',
+    icon: 'downhill_skiing',
   },
   {
     id: 'cardio.burpees',
@@ -384,6 +419,11 @@ export interface ExerciseWikiLocalized {
  * without a translation still render meaningful copy from the canonical
  * German source. Returns `null` only if no copy exists at all (which
  * would be a build-time error caught by the generator).
+ *
+ * `article` is exempt from that chain and resolves strictly per locale,
+ * so an untranslated page stays noindexed instead of being advertised as
+ * an indexable duplicate of the English body — the same rule
+ * `generate-sitemap.js` applies when it decides which URLs to list.
  */
 export function localizeExerciseWiki(
   entry: ExerciseWikiEntry,
@@ -399,6 +439,6 @@ export function localizeExerciseWiki(
     summary: content.summary,
     instructions: content.instructions,
     tips: content.tips,
-    article: content.article,
+    article: overrides[primary]?.article,
   };
 }

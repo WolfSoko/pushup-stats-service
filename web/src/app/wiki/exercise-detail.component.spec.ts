@@ -128,11 +128,11 @@ describe('ExerciseDetailComponent', () => {
 
     it('should emit noindex for a locale whose translation has no body yet', async () => {
       // given — the gate is per locale, not per entry: a translation that
-      // has not caught up must not be advertised as indexable. Every real
-      // exercise now carries a body in every supported locale, so this
-      // case is exercised via the DI lookup seams instead of depending on
-      // incidental content gaps (`vi.mock` cannot intercept this
-      // workspace-internal import — see docs/gotchas/testing.md).
+      // has not caught up must not be advertised as indexable. Driven via
+      // the DI lookup seams rather than a real exercise, so the case
+      // survives the translation routine filling every content gap
+      // (`vi.mock` cannot intercept this workspace-internal import — see
+      // docs/gotchas/testing.md).
       document.head.querySelector('meta[name="robots"]')?.remove();
 
       // when

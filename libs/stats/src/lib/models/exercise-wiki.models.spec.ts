@@ -79,6 +79,36 @@ describe('exercise wiki catalog', () => {
       expect(localized?.name).toBe('Squats');
     });
 
+    it('should withhold the body from a locale that has none, while still falling back for the name', () => {
+      // given — cardio.hiking ships de + en copy only
+      const entry = findExerciseWikiEntryBySlug('hiking');
+      expect(entry).not.toBeNull();
+      if (!entry) return;
+
+      // when
+      const localized = localizeExerciseWiki(entry, 'fr');
+
+      // then — frontmatter falls back, the article does not: inheriting
+      // it would make `exercise-detail.component.ts` advertise an
+      // English duplicate as indexable French, and the sitemap (which
+      // resolves per locale) would not list it.
+      expect(localized?.name).toBe('Hiking');
+      expect(localized?.article).toBeUndefined();
+    });
+
+    it('should keep the body for a locale that has its own copy', () => {
+      // given
+      const entry = findExerciseWikiEntryBySlug('hiking');
+      expect(entry).not.toBeNull();
+      if (!entry) return;
+
+      // when
+      const localized = localizeExerciseWiki(entry, 'en');
+
+      // then
+      expect(localized?.article).toBeTruthy();
+    });
+
     it('strips region subtag (fr-CH → fr) before lookup', () => {
       const entry = findExerciseWikiEntryBySlug('squats');
       expect(entry).not.toBeNull();

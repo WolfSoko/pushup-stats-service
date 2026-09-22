@@ -1,4 +1,4 @@
-A push-up counter and workout tracker that turns push-ups and 41 more exercises into a game you want to win.
+A push-up counter and workout tracker that turns push-ups and 46 more exercises into a game you want to win.
 
 Whether you are starting from zero or already past your first hundred, this app keeps you going. Your camera counts reps automatically, curated training plans tell you exactly what to do today, and friends and the leaderboard push you without nagging.
 
