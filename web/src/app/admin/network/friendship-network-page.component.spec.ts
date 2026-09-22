@@ -41,6 +41,43 @@ describe('FriendshipNetworkPageComponent', () => {
     return { fixture };
   }
 
+  it('should reserve the graph and table with skeletons while the network loads', async () => {
+    // given
+    let resolve: (value: { data: FriendshipGraph }) => void = () => undefined;
+    const pending = new Promise<{ data: FriendshipGraph }>((r) => {
+      resolve = r;
+    });
+    const { fixture } = await render(FriendshipNetworkPageComponent, {
+      providers: [
+        provideRouter([]),
+        {
+          provide: CallableFunctionsService,
+          useValue: { call: () => () => pending },
+        },
+      ],
+    });
+    const host = fixture.nativeElement as HTMLElement;
+
+    // then
+    const skeleton = host.querySelector('[data-testid="network-skeleton"]');
+    expect(skeleton?.getAttribute('aria-busy')).toBe('true');
+    expect(
+      skeleton?.querySelector('pu-skeleton.pu-skeleton--rect')
+    ).toBeTruthy();
+    expect(skeleton?.querySelector('pu-skeleton-table')).toBeTruthy();
+    expect(host.querySelector('mat-spinner')).toBeNull();
+    expect(host.textContent).not.toContain('Noch niemand ist mit jemandem');
+
+    // when
+    resolve({ data: graph });
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(host.querySelector('pu-skeleton-table')).toBeNull();
+    expect(screen.getByTestId('friendship-graph')).toBeTruthy();
+  });
+
   it('should draw a node per connected account', async () => {
     // given
     await renderPage();

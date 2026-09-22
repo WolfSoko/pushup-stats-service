@@ -88,6 +88,49 @@ describe('UserEntriesPageComponent', () => {
     vi.clearAllMocks();
   });
 
+  it('should render the details and table skeleton instead of the empty text while the entries load', async () => {
+    // given
+    await createComponent([]);
+    let resolve: (value: { data: ExerciseEntry[] }) => void = () => undefined;
+    const pending = new Promise<{ data: ExerciseEntry[] }>((r) => {
+      resolve = r;
+    });
+    setupCallables([
+      { name: 'adminListUserEntries', impl: () => pending },
+      {
+        name: 'adminGetUserDetails',
+        impl: async () => ({ data: sampleDetails }),
+      },
+    ]);
+    const host = fixture.nativeElement as HTMLElement;
+
+    // when
+    const load = component.loadEntries();
+    fixture.detectChanges();
+
+    // then
+    const skeleton = host.querySelector(
+      '[data-testid="user-entries-skeleton"]'
+    );
+    expect(skeleton?.getAttribute('aria-busy')).toBe('true');
+    expect(skeleton?.querySelectorAll('pu-skeleton').length).toBeGreaterThan(4);
+    expect(skeleton?.querySelector('pu-skeleton-table')).toBeTruthy();
+    expect(host.querySelector('mat-spinner')).toBeNull();
+    expect(host.querySelector('.user-head')).toBeNull();
+    expect(host.textContent).not.toContain('Keine Einträge vorhanden.');
+
+    // when
+    resolve({ data: [] });
+    await load;
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(host.querySelector('pu-skeleton')).toBeNull();
+    expect(host.querySelector('.user-head')).toBeTruthy();
+    expect(host.textContent).toContain('Keine Einträge vorhanden.');
+  });
+
   it('should read the uid from the route and load that user’s entries', async () => {
     // given / when
     await createComponent();

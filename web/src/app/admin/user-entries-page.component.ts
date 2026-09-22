@@ -13,13 +13,16 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { type ExerciseEntry, TRAINING_PLANS } from '@pu-stats/models';
 import { TrainingEntryDialogComponent } from '../stats/components/training-entry-dialog/training-entry-dialog.component';
 import { type TrainingEntryDialogResult } from '../stats/components/training-entry-dialog/training-entry-dialog.models';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
-import { BusyDirective } from '@pu-stats/ui';
+import {
+  BusyDirective,
+  SkeletonComponent,
+  SkeletonTableComponent,
+} from '@pu-stats/ui';
 import { CallableFunctionsService } from './callable-functions.service';
 import { errorMessage } from './admin-page.helpers';
 import { AdminUserDetails } from './admin-page.models';
@@ -38,6 +41,8 @@ import { dialogResultToPatch, entryToDialogData } from './user-entries.helpers';
   selector: 'app-user-entries-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    SkeletonComponent,
+    SkeletonTableComponent,
     BusyDirective,
     DatePipe,
     RouterLink,
@@ -46,7 +51,6 @@ import { dialogResultToPatch, entryToDialogData } from './user-entries.helpers';
     MatChipsModule,
     MatDialogModule,
     MatIconModule,
-    MatProgressSpinnerModule,
     MatTooltipModule,
     PageHeaderComponent,
     UserEntriesTableComponent,

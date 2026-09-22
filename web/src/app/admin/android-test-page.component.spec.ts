@@ -57,6 +57,41 @@ describe('AndroidTestPageComponent', () => {
     vi.clearAllMocks();
   });
 
+  it('should render skeleton rows instead of the empty text while the candidates load', async () => {
+    // given
+    await createComponent([]);
+    let resolve: (value: { data: AdminUser[] }) => void = () => undefined;
+    const pending = new Promise<{ data: AdminUser[] }>((r) => {
+      resolve = r;
+    });
+    setupCallables([{ name: 'adminListUsers', impl: () => pending }]);
+    const host = fixture.nativeElement as HTMLElement;
+
+    // when
+    const load = component.loadUsers();
+    fixture.detectChanges();
+
+    // then
+    const skeleton = host.querySelector(
+      '[data-testid="android-test-skeleton"]'
+    );
+    expect(skeleton?.getAttribute('aria-busy')).toBe('true');
+    expect(skeleton?.querySelectorAll('.user-row')).toHaveLength(4);
+    expect(skeleton?.querySelectorAll('pu-skeleton')).toHaveLength(12);
+    expect(host.querySelector('mat-spinner')).toBeNull();
+    expect(host.textContent).not.toContain('Keine offenen Kandidaten.');
+
+    // when
+    resolve({ data: [] });
+    await load;
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(host.querySelector('pu-skeleton')).toBeNull();
+    expect(host.textContent).toContain('Keine offenen Kandidaten.');
+  });
+
   it('should load users on init and group them by androidTest status', async () => {
     // given / when
     await createComponent([

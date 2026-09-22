@@ -13,9 +13,9 @@
 </div>
 
 @if (feedbackLoading()) {
-  <div class="spinner-container">
-    <mat-spinner />
-  </div>
+  <mat-card aria-busy="true" data-testid="admin-feedback-skeleton">
+    <pu-skeleton-table [rows]="6" [columns]="6" />
+  </mat-card>
 } @else if (feedbackError()) {
   <p class="error-text">{{ feedbackError() }}</p>
 } @else if (feedbackList().length === 0) {

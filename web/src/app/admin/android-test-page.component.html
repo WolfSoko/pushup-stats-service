@@ -61,7 +61,15 @@
       Kandidaten ({{ groups().candidates.length }})
     </h2>
     @if (loading()) {
-      <mat-spinner diameter="24"></mat-spinner>
+      <div aria-busy="true" data-testid="android-test-skeleton">
+        @for (row of skeletonRows; track row) {
+          <div class="user-row">
+            <pu-skeleton class="user-label" width="60%" />
+            <pu-skeleton shape="rect" width="112px" height="36px" />
+            <pu-skeleton shape="rect" width="96px" height="36px" />
+          </div>
+        }
+      </div>
     } @else if (groups().candidates.length === 0) {
       <p i18n="@@admin.androidTest.noCandidates">Keine offenen Kandidaten.</p>
     } @else {

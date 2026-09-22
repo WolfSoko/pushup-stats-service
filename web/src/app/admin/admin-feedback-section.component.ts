@@ -12,12 +12,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   BusyDirective,
+  SkeletonTableComponent,
   createKeyedBusyState,
   otherKeyBusy,
 } from '@pu-stats/ui';
@@ -30,13 +30,13 @@ import { adminFeedbackSortValue, errorMessage } from './admin-page.helpers';
   selector: 'app-admin-feedback-section',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    SkeletonTableComponent,
     BusyDirective,
     DatePipe,
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
     MatIconModule,
-    MatProgressSpinnerModule,
     MatSortModule,
     MatTableModule,
     MatTooltipModule,
