@@ -216,6 +216,13 @@
                 <mat-icon aria-hidden="true">group</mat-icon>
                 <span i18n="@@friends.already">Ihr seid Freunde</span>
               </span>
+              @if (p.viewerIsFriend && !audience.isOwner()) {
+                <app-cheer-button
+                  [uid]="p.uid"
+                  [cheered]="p.viewerCheeredToday"
+                  [labeled]="true"
+                />
+              }
             }
           </div>
         </header>

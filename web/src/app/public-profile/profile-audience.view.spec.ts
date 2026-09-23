@@ -31,6 +31,7 @@ const sample: PublicProfile = {
   hidden: [],
   visibility: {},
   viewerIsFriend: false,
+  viewerCheeredToday: false,
   updatedAt: '2026-04-29T08:30:00.000Z',
 };
 

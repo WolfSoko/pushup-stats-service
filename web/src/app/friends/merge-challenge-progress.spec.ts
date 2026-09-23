@@ -18,8 +18,22 @@ describe('withKnownProgress', () => {
   const scored: ChallengeView = {
     ...base,
     entries: [
-      { uid: 'friend', displayName: 'Ada', value: 300, isViewer: false },
-      { uid: 'me', displayName: 'Wolf', value: 120, isViewer: true },
+      {
+        uid: 'friend',
+        displayName: 'Ada',
+        value: 300,
+        isViewer: false,
+        canCheer: false,
+        cheered: false,
+      },
+      {
+        uid: 'me',
+        displayName: 'Wolf',
+        value: 120,
+        isViewer: true,
+        canCheer: false,
+        cheered: false,
+      },
     ],
   };
 
@@ -27,8 +41,22 @@ describe('withKnownProgress', () => {
   const counted: ChallengeView = {
     ...base,
     entries: [
-      { uid: 'friend', displayName: 'Ada', value: 0, isViewer: false },
-      { uid: 'me', displayName: 'Wolf', value: 0, isViewer: true },
+      {
+        uid: 'friend',
+        displayName: 'Ada',
+        value: 0,
+        isViewer: false,
+        canCheer: false,
+        cheered: false,
+      },
+      {
+        uid: 'me',
+        displayName: 'Wolf',
+        value: 0,
+        isViewer: true,
+        canCheer: false,
+        cheered: false,
+      },
     ],
   };
 
@@ -48,8 +76,22 @@ describe('withKnownProgress', () => {
     const known: ChallengeView = {
       ...scored,
       entries: [
-        { uid: 'me', displayName: 'Wolf', value: 480, isViewer: true },
-        { uid: 'friend', displayName: 'Ada', value: 120, isViewer: false },
+        {
+          uid: 'me',
+          displayName: 'Wolf',
+          value: 480,
+          isViewer: true,
+          canCheer: false,
+          cheered: false,
+        },
+        {
+          uid: 'friend',
+          displayName: 'Ada',
+          value: 120,
+          isViewer: false,
+          canCheer: false,
+          cheered: false,
+        },
       ],
     };
 
@@ -88,7 +130,14 @@ describe('withKnownProgress', () => {
       ...counted,
       entries: [
         ...counted.entries,
-        { uid: 'new', displayName: 'Bo', value: 0, isViewer: false },
+        {
+          uid: 'new',
+          displayName: 'Bo',
+          value: 0,
+          isViewer: false,
+          canCheer: false,
+          cheered: false,
+        },
       ],
     };
 
@@ -101,6 +150,25 @@ describe('withKnownProgress', () => {
       ['me', 120],
       ['new', 0],
     ]);
+  });
+
+  it('should keep the cheer state read with the sums', () => {
+    // given — the full load knew the friend could be cheered and was
+    const cheerable: ChallengeView = {
+      ...scored,
+      entries: scored.entries.map((e) =>
+        e.isViewer ? e : { ...e, canCheer: true, cheered: true }
+      ),
+    };
+
+    // when
+    const merged = withKnownProgress([counted], [cheerable]);
+
+    // then
+    expect(merged[0].entries.find((e) => e.uid === 'friend')).toMatchObject({
+      canCheer: true,
+      cheered: true,
+    });
   });
 
   it('should pass the answer through when nothing is known yet', () => {

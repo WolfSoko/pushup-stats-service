@@ -93,7 +93,7 @@ describe('friends/challenges', () => {
         new Map(),
         'a',
         '2026-09-15',
-        new Set(['b'])
+        { failedSums: new Set(['b']) }
       );
 
       // then
@@ -116,9 +116,57 @@ describe('friends/challenges', () => {
       expect(view.status).toBe('active');
       expect(view.viewerInvited).toBe(false);
       expect(view.entries).toEqual([
-        { uid: 'b', displayName: 'Bob', value: 320, isViewer: false },
-        { uid: 'a', displayName: null, value: 0, isViewer: true },
+        {
+          uid: 'b',
+          displayName: 'Bob',
+          value: 320,
+          isViewer: false,
+          canCheer: false,
+          cheered: false,
+        },
+        {
+          uid: 'a',
+          displayName: null,
+          value: 0,
+          isViewer: true,
+          canCheer: false,
+          cheered: false,
+        },
       ]);
+    });
+
+    it('should offer a cheer only for the viewer’s friends in a running challenge', () => {
+      // given — b is a friend already cheered today, c is not a friend
+      const extras = {
+        friendUids: new Set(['b']),
+        cheeredByViewer: new Set(['b']),
+      };
+      const running = doc({ participants: ['a', 'b', 'c'] });
+
+      // when
+      const view = buildChallengeView(
+        running,
+        new Map(),
+        new Map(),
+        'a',
+        '2026-09-15',
+        extras
+      );
+      const ended = buildChallengeView(
+        { ...running, to: '2026-09-14' },
+        new Map(),
+        new Map(),
+        'a',
+        '2026-09-15',
+        extras
+      );
+
+      // then
+      const byUid = new Map(view.entries.map((e) => [e.uid, e]));
+      expect(byUid.get('a')).toMatchObject({ canCheer: false });
+      expect(byUid.get('b')).toMatchObject({ canCheer: true, cheered: true });
+      expect(byUid.get('c')).toMatchObject({ canCheer: false, cheered: false });
+      expect(ended.entries.some((e) => e.canCheer)).toBe(false);
     });
 
     it('should show an invitee the framing but nobody’s numbers', () => {

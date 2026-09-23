@@ -80,6 +80,8 @@ export interface PublicProfile {
   >;
   /** True when the viewer is a confirmed friend of this profile's owner. */
   readonly viewerIsFriend: boolean;
+  /** A friend already cheered the owner today; always `false` for anyone else. */
+  readonly viewerCheeredToday: boolean;
   /** ISO timestamp of the last stats update. */
   readonly updatedAt: string;
 }

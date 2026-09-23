@@ -29,6 +29,7 @@ import {
   sumChallengeEntries,
   toChallengeDoc,
 } from './friends/challenges-read';
+import { readChallengeCheerContext } from './friends/cheers-read';
 import { VAPID_SECRETS } from './push/vapid';
 import { readDisplayNames } from './user-config-read';
 
@@ -172,9 +173,15 @@ export const listChallenges = onCall(
     const today = berlinDateParts().isoDate;
     const docs = visibleChallenges(await readChallengesOf(uid), today);
 
-    const names = await readDisplayNames(
-      docs.flatMap((doc) => [...doc.participants, ...invitedOf(doc)])
-    );
+    // Cheers only matter next to the numbers; a count-only call skips them.
+    const [names, cheerContext] = await Promise.all([
+      readDisplayNames(
+        docs.flatMap((doc) => [...doc.participants, ...invitedOf(doc)])
+      ),
+      withProgress && docs.length > 0
+        ? readChallengeCheerContext(uid, today)
+        : Promise.resolve({}),
+    ]);
 
     const challenges = await Promise.all(
       docs.map(async (doc) => {
@@ -202,7 +209,10 @@ export const listChallenges = onCall(
             })
           );
         }
-        return buildChallengeView(doc, sums, names, uid, today, failed);
+        return buildChallengeView(doc, sums, names, uid, today, {
+          ...cheerContext,
+          failedSums: failed,
+        });
       })
     );
 

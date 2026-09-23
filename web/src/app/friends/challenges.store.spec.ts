@@ -26,14 +26,42 @@ describe('ChallengesStore', () => {
     viewerInvited: true,
   };
   const zeroed = [
-    { uid: 'friend', displayName: 'Ada', value: 0, isViewer: false },
-    { uid: 'me', displayName: 'Wolf', value: 0, isViewer: true },
+    {
+      uid: 'friend',
+      displayName: 'Ada',
+      value: 0,
+      isViewer: false,
+      canCheer: false,
+      cheered: false,
+    },
+    {
+      uid: 'me',
+      displayName: 'Wolf',
+      value: 0,
+      isViewer: true,
+      canCheer: false,
+      cheered: false,
+    },
   ];
   const scored: ChallengeView = {
     ...active,
     entries: [
-      { uid: 'friend', displayName: 'Ada', value: 300, isViewer: false },
-      { uid: 'me', displayName: 'Wolf', value: 120, isViewer: true },
+      {
+        uid: 'friend',
+        displayName: 'Ada',
+        value: 300,
+        isViewer: false,
+        canCheer: false,
+        cheered: false,
+      },
+      {
+        uid: 'me',
+        displayName: 'Wolf',
+        value: 120,
+        isViewer: true,
+        canCheer: false,
+        cheered: false,
+      },
     ],
   };
 

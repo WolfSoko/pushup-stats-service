@@ -13,6 +13,7 @@ import { toBerlinIsoDate } from '@pu-stats/date';
 import { BusyDirective } from '@pu-stats/ui';
 
 import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
+import { CheerButtonComponent } from './cheer-button.component';
 import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
 
 /**
@@ -24,6 +25,7 @@ import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     BusyDirective,
+    CheerButtonComponent,
     MatButtonModule,
     MatCardModule,
     MatProgressBarModule,
@@ -68,12 +70,24 @@ import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
             <div
               class="participant"
               [class.is-viewer]="entry.isViewer"
+              [class.has-cheer]="hasCheers()"
               data-testid="challenge-participant"
             >
               <span class="participant-name">{{ label(entry) }}</span>
               <span class="participant-value"
                 >{{ entry.value }} / {{ challenge().target }}</span
               >
+              @if (hasCheers()) {
+                <span class="cheer-slot">
+                  @if (entry.canCheer) {
+                    <app-cheer-button
+                      [uid]="entry.uid"
+                      [cheered]="entry.cheered"
+                      [name]="entry.displayName"
+                    />
+                  }
+                </span>
+              }
               <mat-progress-bar mode="determinate" [value]="percent(entry)" />
             </div>
           }
@@ -139,8 +153,16 @@ import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
       gap: 2px 8px;
       padding: 6px 0;
     }
+    .participant.has-cheer {
+      grid-template-columns: 1fr auto 48px;
+      align-items: center;
+    }
     .participant mat-progress-bar {
       grid-column: 1 / -1;
+    }
+    .cheer-slot {
+      display: inline-flex;
+      justify-content: center;
     }
     .participant.is-viewer .participant-name {
       font-weight: 600;
@@ -186,6 +208,11 @@ export class ChallengeCardComponent {
       ? $localize`:@@challenges.lastDay:Letzter Tag`
       : $localize`:@@challenges.daysLeft:Noch ${days}:days: Tage`;
   });
+
+  /** Keeps the value column aligned when only some rows get a flame. */
+  protected readonly hasCheers = computed(() =>
+    this.challenge().entries.some((entry) => entry.canCheer)
+  );
 
   private readonly anonymous = $localize`:@@friends.anonymous:Ohne Namen`;
 

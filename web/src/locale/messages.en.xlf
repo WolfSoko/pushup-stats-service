@@ -15593,6 +15593,24 @@ Active:         </target>
         <target>Konto konnte nicht gelöscht werden. Bitte versuche es erneut.</target>
       </segment>
     </unit>
+    <unit id="friends.cheer.done">
+      <segment state="initial">
+        <source>Heute angefeuert</source>
+        <target>Heute angefeuert</target>
+      </segment>
+    </unit>
+    <unit id="friends.cheer.doneFor">
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="name"/> heute schon angefeuert</source>
+        <target><ph id="0" equiv="name" disp="name"/> heute schon angefeuert</target>
+      </segment>
+    </unit>
+    <unit id="friends.cheer.for">
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="name"/> anfeuern</source>
+        <target><ph id="0" equiv="name" disp="name"/> anfeuern</target>
+      </segment>
+    </unit>
     <unit id="achievement.dialog.eyebrow">
       <segment state="initial">
         <source>Neues Abzeichen</source>
@@ -15617,7 +15635,7 @@ Active:         </target>
         <target>Snap!</target>
       </segment>
     </unit>
-        <unit id="achievement.dialog.snapAria">
+    <unit id="achievement.dialog.snapAria">
       <segment state="initial">
         <source>Snap! – Abzeichen vaporisieren</source>
         <target>Snap! – Abzeichen vaporisieren</target>

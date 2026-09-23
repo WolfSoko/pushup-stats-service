@@ -17,6 +17,7 @@ import { BusyDirective, createBusyState } from '@pu-stats/ui';
 import { InviteService } from '../core/invite.service';
 import { boardValueLabel } from './board-value-label';
 import { ChallengesStore } from './challenges.store';
+import { CheerButtonComponent } from './cheer-button.component';
 import {
   challengesLabel,
   invitationsLabel,
@@ -40,6 +41,7 @@ const TOP_ROWS = 3;
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     BusyDirective,
+    CheerButtonComponent,
     FriendsTeaserSkeletonComponent,
     MatButtonModule,
     MatCardModule,
@@ -95,6 +97,15 @@ const TOP_ROWS = 3;
                     >{{ label(entry) }}</a
                   >
                   <strong>{{ valueLabel(entry) }}</strong>
+                  <span class="cheer-slot">
+                    @if (!entry.isViewer) {
+                      <app-cheer-button
+                        [uid]="entry.uid"
+                        [cheered]="entry.cheered"
+                        [name]="entry.displayName"
+                      />
+                    }
+                  </span>
                 </li>
               }
             </ol>
@@ -149,6 +160,11 @@ const TOP_ROWS = 3;
     .standing {
       margin: 0 0 8px;
       font-weight: 500;
+    }
+    .mini-board li {
+      grid-template-columns: 1.5rem 1fr auto 40px;
+      padding-block: 0;
+      min-height: 44px;
     }
     .mini-board li.is-viewer {
       outline: 2px solid var(--mat-sys-primary, #3f51b5);

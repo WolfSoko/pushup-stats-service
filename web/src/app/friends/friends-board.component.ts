@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  inject,
   input,
   output,
 } from '@angular/core';
@@ -17,6 +18,7 @@ import { BusyDirective } from '@pu-stats/ui';
 
 import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
 import { boardValueLabel } from './board-value-label';
+import { CheerStore } from './cheer.store';
 import type {
   FriendsBoardComparison,
   FriendsBoardEntry,
@@ -133,15 +135,15 @@ const REP_EXERCISES = EXERCISE_CATALOG.filter(
                 type="button"
                 class="cheer-button"
                 data-testid="board-cheer"
-                [class.is-cheered]="entry.cheered"
-                [disabled]="entry.cheered"
+                [class.is-cheered]="isCheered(entry)"
+                [disabled]="isCheered(entry)"
                 [puBusy]="isCheering(entry.uid)"
                 [attr.aria-label]="cheerLabel(entry)"
                 [matTooltip]="cheerLabel(entry)"
                 (click)="cheer.emit(entry.uid)"
               >
                 <mat-icon>{{
-                  entry.cheered ? 'local_fire_department' : 'whatshot'
+                  isCheered(entry) ? 'local_fire_department' : 'whatshot'
                 }}</mat-icon>
               </button>
             }
@@ -218,6 +220,8 @@ export class FriendsBoardComponent {
   /** The store's busy keys; a row spins while `cheer:<uid>` is among them. */
   readonly busyKeys = input<ReadonlySet<string>>(new Set());
 
+  private readonly cheers = inject(CheerStore);
+
   protected readonly repExercises = REP_EXERCISES;
 
   /** The select's value: one key per choice, reps keyed by exercise. */
@@ -246,6 +250,11 @@ export class FriendsBoardComponent {
   protected readonly cheeredAria = $localize`:@@friends.board.cheered:Heute schon angefeuert`;
   protected readonly cheeringAria = $localize`:@@friends.board.cheering:Anfeuerung wird gesendet`;
 
+  /** Also lit by a cheer sent from a challenge card since the board was read. */
+  protected isCheered(entry: FriendsBoardEntry): boolean {
+    return entry.cheered || this.cheers.hasCheered(entry.uid);
+  }
+
   protected isCheering(uid: string): boolean {
     return this.busyKeys().has(`cheer:${uid}`);
   }
@@ -253,7 +262,7 @@ export class FriendsBoardComponent {
   /** What the button is doing, for the tooltip and for screen readers. */
   protected cheerLabel(entry: FriendsBoardEntry): string {
     if (this.isCheering(entry.uid)) return this.cheeringAria;
-    return entry.cheered ? this.cheeredAria : this.cheerAria;
+    return this.isCheered(entry) ? this.cheeredAria : this.cheerAria;
   }
 
   /** The viewer's own row says so, rather than repeating their name. */
