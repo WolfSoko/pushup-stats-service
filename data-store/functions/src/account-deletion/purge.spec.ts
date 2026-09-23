@@ -43,6 +43,11 @@ function seededWorld(): FakeFirestore {
     .seed('deletedExerciseEntries/e-0', { userId: GONE })
     .seed('workouts/w-1', { ownerId: GONE, title: 'Mine' })
     .seed('workouts/w-friend', { ownerId: FRIEND, title: 'Theirs' })
+    .seed('workoutReminders/w-1', { ownerId: GONE, workoutId: 'w-1' })
+    .seed('workoutReminders/w-friend', {
+      ownerId: FRIEND,
+      workoutId: 'w-friend',
+    })
     .seed(`friendships/${FRIEND}__${GONE}`, { users: [FRIEND, GONE] })
     .seed('friendInvites/token-1', { uid: GONE })
     .seed(`cheers/${GONE}__${FRIEND}__2026-09-01`, { from: GONE, to: FRIEND })
@@ -82,6 +87,7 @@ describe('purgeUserData', () => {
       `motivationQuotes/${FRIEND}__de`,
       `userConfigs/${FRIEND}`,
       `userStats/${FRIEND}/perExercise/pushup`,
+      'workoutReminders/w-friend',
       'workouts/w-friend',
     ]);
   });

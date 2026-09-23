@@ -448,6 +448,70 @@ service cloud.firestore {
                     && resource.data.ownerId == request.auth.uid;
     }
 
+    // Session reminders — one per workout, id = the workout's id. Only the
+    // workout's owner may schedule one, so nobody can aim pushes at a
+    // session they cannot see. `dispatchWorkoutReminders` (Admin SDK)
+    // moves `nextAt` on and stamps `lastSentAt`; a client save may keep
+    // or drop `lastSentAt`, never set it.
+    function isValidWorkoutReminderRepeat(repeat) {
+      return repeat is map
+             && ((repeat.keys().hasOnly(['kind', 'everyDays', 'startDate'])
+                  && repeat.kind == 'interval'
+                  && repeat.everyDays is int
+                  && repeat.everyDays >= 1
+                  && repeat.everyDays <= 30
+                  && repeat.startDate is string
+                  && repeat.startDate.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$'))
+                 || (repeat.keys().hasOnly(['kind', 'weekdays'])
+                  && repeat.kind == 'weekdays'
+                  && repeat.weekdays is list
+                  && repeat.weekdays.size() >= 1
+                  && repeat.weekdays.size() <= 7));
+    }
+
+    function isValidWorkoutReminder(data, workoutId) {
+      return data.keys().hasOnly([
+               'ownerId', 'workoutId', 'enabled', 'time', 'repeat',
+               'timezone', 'nextAt', 'updatedAt', 'lastSentAt'
+             ])
+             && data.workoutId == workoutId
+             && data.enabled is bool
+             && data.time is string
+             && data.time.matches('^([01][0-9]|2[0-3]):[0-5][0-9]$')
+             && isValidWorkoutReminderRepeat(data.repeat)
+             && data.timezone is string
+             && data.timezone.size() >= 1
+             && data.timezone.size() <= 64
+             && data.nextAt is string
+             && data.nextAt.size() <= 32
+             && data.updatedAt is string
+             && data.updatedAt.size() <= 32;
+    }
+
+    function ownsWorkout(workoutId) {
+      return get(/databases/$(database)/documents/workouts/$(workoutId)).data.ownerId
+             == request.auth.uid;
+    }
+
+    match /workoutReminders/{workoutId} {
+      allow read: if request.auth != null
+                  && resource.data.ownerId == request.auth.uid;
+      allow create: if request.auth != null
+                    && request.resource.data.ownerId == request.auth.uid
+                    && !('lastSentAt' in request.resource.data.keys())
+                    && isValidWorkoutReminder(request.resource.data, workoutId)
+                    && ownsWorkout(workoutId);
+      allow update: if request.auth != null
+                    && resource.data.ownerId == request.auth.uid
+                    && request.resource.data.ownerId == request.auth.uid
+                    && request.resource.data.get('lastSentAt', null)
+                       in [null, resource.data.get('lastSentAt', null)]
+                    && isValidWorkoutReminder(request.resource.data, workoutId)
+                    && ownsWorkout(workoutId);
+      allow delete: if request.auth != null
+                    && resource.data.ownerId == request.auth.uid;
+    }
+
     // Friendships — one doc per pair, id `<loUid>__<hiUid>`. Participants
     // read their own records (the friends screen queries
     // `array-contains` on `users`); every write goes through the

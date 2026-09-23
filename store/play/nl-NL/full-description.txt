@@ -1,6 +1,6 @@
 Pushup Tracker maakt van push-ups en 46 andere oefeningen een spel dat je wilt winnen.
 
-Of je net begint of al aan je eerste honderd zit: deze app houdt je erbij. De camera telt je herhalingen automatisch, trainingsplannen geven je elke dag een duidelijke opdracht, vrienden en de ranglijst motiveren zonder te zeuren.
+De camera telt je herhalingen automatisch, trainingsplannen geven je elke dag een duidelijke opdracht, vrienden en de ranglijst motiveren zonder te zeuren.
 
 📷 HERHALINGEN AUTOMATISCH TELLEN
 Zet je telefoon neer, open de autoteller en ga: de AI herkent push-ups, squats, pull-ups en sit-ups in realtime en telt elke schone herhaling. Voor plank en hollow hold loopt in plaats daarvan een automatische houdtimer. Draait op je eigen toestel — geen video verlaat je telefoon.
@@ -8,7 +8,7 @@ Zet je telefoon neer, open de autoteller en ga: de AI herkent push-ups, squats, 
 🏋️ MEER DAN ALLEEN PUSH-UPS
 • 13 push-upvarianten: knie, incline, decline, wide, diamond, pike, archer tot de eenarmige — met uitleg per type
 • 47 oefeningen in 9 categorieën: push-ups, push, pull, squat, hinge, lunge, romp, cardio, mobiliteit
-• Pull-ups, dips, squats, lunges, plank, hollow hold, burpees, touwtjespringen, yoga, rekken en meer
+• Pull-ups, dips, squats, lunges, plank, burpees, yoga en meer
 • Duursport op afstand en tijd: hardlopen, fietsen, roeien, zwemmen — inclusief tempo
 
 ⚡ INVOEREN IN TWEE SECONDEN
@@ -25,7 +25,7 @@ Zet je telefoon neer, open de autoteller en ga: de AI herkent push-ups, squats, 
 Elke dag de opdracht die past, met rustdagen, lichte dagen en testdagen. Vijf plannen rekenen elke dagopdracht om naar jouw maxtest: geen 3×20 als je er 8 doet. Afgewerkte dagen vinken zichzelf af, en je actieve plan kun je delen.
 
 🧩 EIGEN SESSIES
-Stel je eigen workout samen: oefeningen, doelen en sets in jouw volgorde. De app leidt je er stap voor stap doorheen. Toon je sessies op je profiel of stuur ze direct naar vrienden — iedereen krijgt een eigen kopie.
+Stel je eigen workout samen: oefeningen, doelen en sets in jouw volgorde. De app leidt je er stap voor stap doorheen. Toon je sessies op je profiel of stuur ze direct naar vrienden — iedereen krijgt een eigen kopie. Elke sessie kan je zelf herinneren — bv. om de 2 dagen om 15:00 via push.
 
 🎯 DOELEN, STREAKS & STATISTIEKEN
 • Dag-, week- en maanddoelen — per oefening, met weekdagfilter

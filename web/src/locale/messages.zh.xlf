@@ -14601,10 +14601,280 @@
         <target> Neu laden </target>
       </segment>
     </unit>
+    <unit id="announcements.workoutReminders">
+      <segment state="initial">
+        <source>Neu: Erinnerungen für deine Sessions</source>
+        <target>Neu: Erinnerungen für deine Sessions</target>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.eyebrow">
+      <segment state="initial">
+        <source> Neu · Session-Erinnerungen </source>
+        <target> Neu · Session-Erinnerungen </target>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.headline">
+      <segment state="initial">
+        <source> Deine Session meldet sich — genau dann, wenn du trainieren willst. </source>
+        <target> Deine Session meldet sich — genau dann, wenn du trainieren willst. </target>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.desc">
+      <segment state="initial">
+        <source> Gib jeder Session ihren eigenen Rhythmus: alle zwei Tage um 15:00 oder jeden Montag, Mittwoch und Freitag. Zur gewählten Zeit kommt eine Push-Benachrichtigung aufs Handy — ein Tipp, und die Session startet. </source>
+        <target> Gib jeder Session ihren eigenen Rhythmus: alle zwei Tage um 15:00 oder jeden Montag, Mittwoch und Freitag. Zur gewählten Zeit kommt eine Push-Benachrichtigung aufs Handy — ein Tipp, und die Session startet. </target>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.chip.rhythm">
+      <segment state="initial">
+        <source>Alle paar Tage oder an festen Wochentagen</source>
+        <target>Alle paar Tage oder an festen Wochentagen</target>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.chip.time">
+      <segment state="initial">
+        <source>Deine Uhrzeit, auch bei Zeitumstellung</source>
+        <target>Deine Uhrzeit, auch bei Zeitumstellung</target>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.chip.push">
+      <segment state="initial">
+        <source>Push aufs Handy — ein Tipp startet die Session</source>
+        <target>Push aufs Handy — ein Tipp startet die Session</target>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.cta">
+      <segment state="initial">
+        <source>Erinnerung einrichten</source>
+        <target>Erinnerung einrichten</target>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.mock.title">
+      <segment state="initial">
+        <source>⏰ Ganzkörper kurz</source>
+        <target>⏰ Ganzkörper kurz</target>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.mock.subtitle">
+      <segment state="initial">
+        <source>Alle 2 Tage</source>
+        <target>Alle 2 Tage</target>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.mock.body">
+      <segment state="initial">
+        <source>Zeit für deine Session. Tippe, um direkt loszulegen.</source>
+        <target>Zeit für deine Session. Tippe, um direkt loszulegen.</target>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.mock.action">
+      <segment state="initial">
+        <source>Session starten</source>
+        <target>Session starten</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.title">
+      <segment state="initial">
+        <source>Erinnerung</source>
+        <target>Erinnerung</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.enabled">
+      <segment state="initial">
+        <source>Erinnerung aktiv</source>
+        <target>Erinnerung aktiv</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.kind.aria">
+      <segment state="initial">
+        <source>Rhythmus</source>
+        <target>Rhythmus</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.kind.interval">
+      <segment state="initial">
+        <source>Alle paar Tage</source>
+        <target>Alle paar Tage</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.kind.weekdays">
+      <segment state="initial">
+        <source>Wochentage</source>
+        <target>Wochentage</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.everyDays">
+      <segment state="initial">
+        <source>Alle … Tage</source>
+        <target>Alle … Tage</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.startDate">
+      <segment state="initial">
+        <source>Ab</source>
+        <target>Ab</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.time">
+      <segment state="initial">
+        <source>Uhrzeit</source>
+        <target>Uhrzeit</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.next">
+      <segment state="initial">
+        <source>Nächste Erinnerung: <ph id="0" equiv="INTERPOLATION" disp="{{ next }}"/></source>
+        <target>Nächste Erinnerung: <ph id="0" equiv="INTERPOLATION" disp="{{ next }}"/></target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.pushOff">
+      <segment state="initial">
+        <source> Push ist auf diesem Gerät aus. Dann erinnert dich die App nur, solange sie geöffnet ist. </source>
+        <target> Push ist auf diesem Gerät aus. Dann erinnert dich die App nur, solange sie geöffnet ist. </target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.enablePush">
+      <segment state="initial">
+        <source>Push aktivieren</source>
+        <target>Push aktivieren</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.failed">
+      <segment state="initial">
+        <source> Das hat nicht geklappt. Bitte versuch es noch einmal. </source>
+        <target> Das hat nicht geklappt. Bitte versuch es noch einmal. </target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.remove">
+      <segment state="initial">
+        <source> Entfernen </source>
+        <target> Entfernen </target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.cancel">
+      <segment state="initial">
+        <source> Abbrechen </source>
+        <target> Abbrechen </target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.save">
+      <segment state="initial">
+        <source> Speichern </source>
+        <target> Speichern </target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.notificationBody">
+      <segment state="initial">
+        <source>Zeit für deine Session. Tippe, um direkt loszulegen.</source>
+        <target>Zeit für deine Session. Tippe, um direkt loszulegen.</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.daily">
+      <segment state="initial">
+        <source>Täglich</source>
+        <target>Täglich</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.badge">
+      <segment state="initial">
+        <source>Neu</source>
+        <target>Neu</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.title">
+      <segment state="initial">
+        <source>Session-Erinnerungen</source>
+        <target>Session-Erinnerungen</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.stepCount">
+      <segment state="initial">
+        <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
+        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.later">
+      <segment state="initial">
+        <source> Später </source>
+        <target> Später </target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.back">
+      <segment state="initial">
+        <source>Zurück</source>
+        <target>Zurück</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.start">
+      <segment state="initial">
+        <source>Zu meinen Sessions</source>
+        <target>Zu meinen Sessions</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.next">
+      <segment state="initial">
+        <source>Weiter</source>
+        <target>Weiter</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.step1.title">
+      <segment state="initial">
+        <source>Erinnerungen für deine Sessions</source>
+        <target>Erinnerungen für deine Sessions</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.step1.body">
+      <segment state="initial">
+        <source>Jede Session kann dich jetzt ans Training erinnern — zum Beispiel alle 2 Tage um 15:00 oder jeden Montag, Mittwoch und Freitag.</source>
+        <target>Jede Session kann dich jetzt ans Training erinnern — zum Beispiel alle 2 Tage um 15:00 oder jeden Montag, Mittwoch und Freitag.</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.step2.title">
+      <segment state="initial">
+        <source>So richtest du sie ein</source>
+        <target>So richtest du sie ein</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.step2.body">
+      <segment state="initial">
+        <source>Tippe auf der Session-Karte auf das Wecker-Symbol, wähle den Rhythmus und die Uhrzeit — fertig.</source>
+        <target>Tippe auf der Session-Karte auf das Wecker-Symbol, wähle den Rhythmus und die Uhrzeit — fertig.</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.step3.title">
+      <segment state="initial">
+        <source>Push aufs Handy</source>
+        <target>Push aufs Handy</target>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.step3.body">
+      <segment state="initial">
+        <source>Zur gewählten Zeit kommt eine Push-Benachrichtigung, ein Tipp startet die Session. Ohne Push erinnert dich die App, solange sie geöffnet ist.</source>
+        <target>Zur gewählten Zeit kommt eine Push-Benachrichtigung, ein Tipp startet die Session. Ohne Push erinnert dich die App, solange sie geöffnet ist.</target>
+      </segment>
+    </unit>
+    <unit id="workouts.card.reminderEdit">
+      <segment state="initial">
+        <source>Erinnerung ändern</source>
+        <target>Erinnerung ändern</target>
+      </segment>
+    </unit>
+    <unit id="workouts.card.reminderAdd">
+      <segment state="initial">
+        <source>Erinnerung einrichten</source>
+        <target>Erinnerung einrichten</target>
+      </segment>
+    </unit>
     <unit id="auth.error.requiresRecentLogin">
       <segment state="initial">
         <source>Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.</source>
         <target>Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.</target>
+      </segment>
+    </unit>
+    <unit id="admin.bulk.remaining">
+      <segment state="initial">
+        <source>Noch offen (erneut ausführen):</source>
+        <target>Noch offen (erneut ausführen):</target>
       </segment>
     </unit>
     <unit id="admin.delete.purgeInfo">
@@ -14629,12 +14899,6 @@
       <segment state="initial">
         <source>Konto konnte nicht gelöscht werden. Bitte versuche es erneut.</source>
         <target>Konto konnte nicht gelöscht werden. Bitte versuche es erneut.</target>
-      </segment>
-    </unit>
-    <unit id="admin.bulk.remaining">
-      <segment state="initial">
-        <source>Noch offen (erneut ausführen):</source>
-        <target>Noch offen (erneut ausführen):</target>
       </segment>
     </unit>
 </file>

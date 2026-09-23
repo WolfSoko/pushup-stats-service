@@ -58,6 +58,7 @@ export const OWNED_QUERIES: readonly OwnedQuery[] = [
   { collection: 'exerciseEntries', field: 'userId', op: '==' },
   { collection: 'deletedExerciseEntries', field: 'userId', op: '==' },
   { collection: 'workouts', field: 'ownerId', op: '==' },
+  { collection: 'workoutReminders', field: 'ownerId', op: '==' },
   { collection: 'friendships', field: 'users', op: 'array-contains' },
   { collection: 'friendInvites', field: 'uid', op: '==' },
   { collection: 'cheers', field: 'from', op: '==' },

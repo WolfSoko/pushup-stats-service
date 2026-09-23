@@ -91,6 +91,7 @@ export {
 export { notifyFriendshipWrite } from './functions-friends-notify';
 export { sendCheer } from './functions-cheers';
 export { shareWorkout } from './functions-workouts';
+export { dispatchWorkoutReminders } from './functions-workout-reminders';
 export {
   createChallenge,
   leaveChallenge,

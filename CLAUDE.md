@@ -155,6 +155,7 @@ Detailed reference material lives in [`docs/`](docs/). **Read the relevant doc b
 ### Push notifications
 
 - **Two-tier reminder system:** In-app (`ReminderService` with `setInterval`) + server-side (`dispatchPushReminders` Cloud Function every 5 min via Web Push).
+- **Session reminders** (`workoutReminders/{workoutId}`, `dispatchWorkoutReminders`) are a separate schedule per workout with the same two tiers — see [`docs/architecture.md`](docs/architecture.md) → "Custom workouts".
 - Browser API quirks, VAPID keys, subscription vs reminder toggle, Cloud Function lease handling — see [`docs/gotchas/push-and-service-workers.md`](docs/gotchas/push-and-service-workers.md).
 
 ### Gotchas & pitfalls

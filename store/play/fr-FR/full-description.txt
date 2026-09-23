@@ -1,6 +1,6 @@
 Pushup Tracker transforme les pompes et 46 autres exercices en un jeu que tu veux gagner.
 
-Débutant ou déjà à ta première centaine — cette app te fait tenir. La caméra compte tes répétitions automatiquement, des programmes te donnent une consigne claire chaque jour, les amis et le classement motivent sans harceler.
+La caméra compte tes répétitions automatiquement, des programmes te donnent une consigne claire chaque jour, les amis et le classement motivent sans harceler.
 
 📷 COMPTAGE AUTOMATIQUE DES RÉPÉTITIONS
 Pose ton téléphone, ouvre le compteur auto, c'est parti : l'IA reconnaît pompes, squats, tractions et abdos en temps réel et compte chaque répétition propre. Pour la planche et le hollow hold, un minuteur de maintien prend le relais. Ça tourne sur ton appareil — aucune vidéo ne quitte ton téléphone.
@@ -8,7 +8,7 @@ Pose ton téléphone, ouvre le compteur auto, c'est parti : l'IA reconnaît pomp
 🏋️ BIEN PLUS QUE DES POMPES
 • 13 variantes de pompes : genoux, inclinées, déclinées, larges, diamant, pike, archer jusqu'à la pompe à un bras — avec instructions par type
 • 47 exercices en 9 catégories : pompes, push, pull, squat, hinge, lunge, tronc, cardio, mobilité
-• Tractions, dips, squats, fentes, planche, hollow hold, burpees, corde à sauter, yoga, étirements et plus
+• Tractions, dips, squats, fentes, planche, burpees, yoga et plus
 • Endurance en distance et en temps : course, vélo, rameur, natation — allure incluse
 
 ⚡ SAISIE EN DEUX SECONDES
@@ -25,7 +25,7 @@ Pose ton téléphone, ouvre le compteur auto, c'est parti : l'IA reconnaît pomp
 Chaque jour la bonne consigne — avec jours de repos, jours légers et jours de test. Cinq plans recalculent chaque objectif quotidien sur ton test max : pas de 3×20 si tu en fais 8. Les jours faits se cochent tout seuls, et tu peux partager ton plan actif.
 
 🧩 TES PROPRES SÉANCES
-Compose ton entraînement : exercices, objectifs et séries dans ton ordre. L'app te guide pas à pas. Affiche tes séances sur ton profil ou envoie-les à des amis.
+Compose ton entraînement : exercices, objectifs et séries dans ton ordre. L'app te guide pas à pas. Affiche tes séances sur ton profil ou envoie-les à des amis. Chaque séance peut te rappeler elle-même — p. ex. tous les 2 jours à 15 h par push.
 
 🎯 OBJECTIFS, SÉRIES & STATS
 • Objectifs du jour, de la semaine et du mois — par exercice, avec filtre par jour

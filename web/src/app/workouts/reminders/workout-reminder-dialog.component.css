@@ -1,0 +1,53 @@
+.content {
+  display: grid;
+  gap: 12px;
+  min-width: min(80vw, 380px);
+}
+.subject {
+  margin: 0;
+  font-weight: 500;
+}
+.kind,
+.weekdays {
+  flex-wrap: wrap;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.every {
+  width: 120px;
+}
+.start {
+  flex: 1;
+  min-width: 160px;
+}
+.time {
+  width: 160px;
+}
+.next {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  opacity: 0.8;
+}
+.push-off {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--mat-sys-surface-container-high);
+}
+.push-off p {
+  margin: 0;
+}
+.error {
+  margin: 0;
+  color: var(--mat-sys-error);
+}
+.remove {
+  margin-right: auto;
+}

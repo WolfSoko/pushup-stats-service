@@ -34,5 +34,7 @@ export * from './lib/models/training-session.models';
 export * from './lib/models/training-session-circuit.models';
 export * from './lib/models/workout.models';
 export * from './lib/models/workout-share.models';
+export * from './lib/models/workout-reminder.models';
+export * from './lib/models/workout-reminder-schedule';
 export * from './lib/models/pushup-type.models';
 export * from './lib/models/exercise-wiki.models';
