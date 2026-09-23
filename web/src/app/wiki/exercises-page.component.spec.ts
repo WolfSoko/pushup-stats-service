@@ -1,6 +1,7 @@
 import { EXERCISE_WIKI_CATALOG } from '@pu-stats/models';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
+import userEvent from '@testing-library/user-event';
 import { of } from 'rxjs';
 import { ExercisesWikiPageComponent } from './exercises-page.component';
 
@@ -106,5 +107,117 @@ describe('ExercisesWikiPageComponent', () => {
     expect(section).toBeTruthy();
     const steps = section?.querySelectorAll('ol.instructions li');
     expect(steps?.length ?? 0).toBeGreaterThanOrEqual(3);
+  });
+});
+
+describe('ExercisesWikiPageComponent search', () => {
+  async function setup(queryParams: Record<string, string> = {}) {
+    const result = await render(ExercisesWikiPageComponent, {
+      providers: [
+        { provide: ActivatedRoute, useValue: makeRouteMock(queryParams) },
+      ],
+    });
+    const user = userEvent.setup();
+    return { ...result, user };
+  }
+
+  it('should narrow the list to matching exercises and hide the overview', async () => {
+    // given
+    const { container, user } = await setup();
+
+    // when
+    await user.type(screen.getByTestId('wiki-exercises-search'), 'kniebeug');
+
+    // then
+    expect(container.querySelector('section#squats')).toBeTruthy();
+    expect(container.querySelector('section#plank')).toBeNull();
+    expect(container.querySelector('nav.toc')).toBeNull();
+    expect(screen.queryByTestId('wiki-exercises-pushup-hub')).toBeNull();
+    expect(
+      screen.getByTestId('wiki-exercises-search-status').textContent
+    ).toMatch(/gefunden/);
+  });
+
+  it('should focus the search field when the link asks for the search', async () => {
+    // given / when
+    await setup({ suche: '' });
+
+    // then
+    await vitest.waitFor(() =>
+      expect(document.activeElement).toBe(
+        screen.getByTestId('wiki-exercises-search')
+      )
+    );
+  });
+
+  it('should count the pushup hub as a result when only its text matches', async () => {
+    // given
+    const { user } = await setup();
+
+    // when
+    await user.type(
+      screen.getByTestId('wiki-exercises-search'),
+      'alle varianten'
+    );
+
+    // then
+    expect(screen.getByTestId('wiki-exercises-pushup-hub')).toBeTruthy();
+    expect(
+      screen.getByTestId('wiki-exercises-search-status').textContent
+    ).not.toMatch(/Keine/);
+  });
+
+  it('should prefill the search from the link', async () => {
+    // given / when
+    const { container } = await setup({ suche: 'plank' });
+
+    // then
+    expect(
+      (screen.getByTestId('wiki-exercises-search') as HTMLInputElement).value
+    ).toBe('plank');
+    expect(container.querySelector('section#squats')).toBeNull();
+  });
+
+  it('should list matching pushup types under the pushup hub', async () => {
+    // given
+    const { user } = await setup();
+
+    // when
+    await user.type(screen.getByTestId('wiki-exercises-search'), 'diamant');
+
+    // then
+    const hits = screen.getByTestId('wiki-exercises-pushup-hits');
+    expect(hits.textContent).toContain('Diamant');
+    expect(hits.querySelector('a')?.getAttribute('href')).toBe(
+      '/wiki/liegestuetz-typen/diamant'
+    );
+  });
+
+  it('should say so when nothing matches and restore the list on reset', async () => {
+    // given
+    const { container, user } = await setup();
+    await user.type(screen.getByTestId('wiki-exercises-search'), 'xyzzy');
+
+    // when
+    expect(screen.getByTestId('wiki-exercises-no-results')).toBeTruthy();
+    await user.click(screen.getByText(/Alle Übungen zeigen/));
+
+    // then
+    expect(screen.queryByTestId('wiki-exercises-no-results')).toBeNull();
+    expect(container.querySelector('section#plank')).toBeTruthy();
+    expect(container.querySelector('nav.toc')).toBeTruthy();
+  });
+
+  it('should offer to start a session with an exercise', async () => {
+    // given / when
+    const { container } = await setup();
+
+    // then
+    const cta = container
+      .querySelector('section#squats')
+      ?.querySelector('[data-testid="wiki-exercises-new-session"]');
+    expect(cta?.getAttribute('href')).toBe(
+      '/workouts/new?exercise=legs.squats'
+    );
   });
 });

@@ -1,0 +1,261 @@
+<main class="wiki-page">
+  <header class="wiki-header">
+    <a
+      mat-icon-button
+      routerLink="/training-plans"
+      aria-label="Zurück zu den Trainingsplänen"
+      i18n-aria-label="@@wiki.exercises.back"
+    >
+      <mat-icon>arrow_back</mat-icon>
+    </a>
+    <div class="wiki-header-text">
+      <h1 i18n="@@wiki.exercises.title">Übungen — saubere Ausführung</h1>
+      <p class="muted" i18n="@@wiki.exercises.intro">
+        Kurzanleitungen für alle Übungen, die du in der App tracken kannst — von
+        Kniebeugen über Klimmzüge bis zu Mobilitäts-Drills.
+      </p>
+    </div>
+  </header>
+
+  <search class="wiki-search">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label i18n="@@wiki.exercises.search.label">Übung suchen</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input
+        #searchInput
+        matInput
+        type="search"
+        autocomplete="off"
+        data-testid="wiki-exercises-search"
+        placeholder="z. B. Kniebeuge, Rücken, Plank"
+        i18n-placeholder="@@wiki.exercises.search.placeholder"
+        [value]="query()"
+        (input)="onSearch($event)"
+      />
+      @if (searching()) {
+        <button
+          matSuffix
+          mat-icon-button
+          type="button"
+          data-testid="wiki-exercises-search-clear"
+          aria-label="Suche leeren"
+          i18n-aria-label="@@wiki.exercises.search.clear"
+          (click)="clearSearch()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+    <p
+      class="pu-visually-hidden"
+      role="status"
+      data-testid="wiki-exercises-search-status"
+    >
+      @if (searching()) {
+        <ng-container
+          i18n="@@wiki.exercises.search.count"
+          >{resultCount(), plural,
+            =0 {Keine Übung gefunden}
+            =1 {Eine Übung gefunden}
+            other {{{ resultCount() }} Übungen gefunden}
+          }</ng-container
+        >
+      }
+    </p>
+  </search>
+
+  @if (nothingFound()) {
+    <div class="search-empty" data-testid="wiki-exercises-no-results">
+      <p i18n="@@wiki.exercises.search.empty">
+        Keine Übung passt zu „{{ query() }}“.
+      </p>
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="clearSearch()"
+        i18n="@@wiki.exercises.search.reset"
+      >
+        Alle Übungen zeigen
+      </button>
+    </div>
+  }
+
+  @if (!searching()) {
+    <nav class="toc" aria-labelledby="wiki-exercises-toc-heading">
+      <h2 id="wiki-exercises-toc-heading" i18n="@@wiki.exercises.tocTitle">
+        Übersicht
+      </h2>
+      <section class="toc-group toc-group--pushup">
+        <h3>{{ pushupCategoryLabel }}</h3>
+        <ul>
+          <li>
+            <a
+              class="toc-link"
+              href="#{{ pushupHubSlug }}"
+              (click)="scrollTo($event, pushupHubSlug)"
+              i18n="@@wiki.exercises.pushupHub.tocLink"
+              >Liegestütze (alle Varianten)</a
+            >
+            <span
+              class="muted toc-summary"
+              i18n="@@wiki.exercises.pushupHub.summary"
+            >
+              — Eigenes Wiki mit allen Liegestützvarianten von Standard bis
+              Planche.</span
+            >
+          </li>
+        </ul>
+      </section>
+      @for (group of categories(); track group.id) {
+        <section class="toc-group">
+          <h3>{{ group.label }}</h3>
+          <ul>
+            @for (entry of group.entries; track entry.id) {
+              <li>
+                <a
+                  class="toc-link"
+                  href="#{{ entry.slug }}"
+                  (click)="scrollTo($event, entry.slug)"
+                  >{{ entry.name }}</a
+                >
+                <span class="muted toc-summary"> — {{ entry.summary }}</span>
+              </li>
+            }
+          </ul>
+        </section>
+      }
+    </nav>
+  }
+
+  <div class="type-list">
+    @if (showPushupHub()) {
+      <h2 class="category-heading">{{ pushupCategoryLabel }}</h2>
+      <section
+        [id]="pushupHubSlug"
+        class="type-section pushup-hub-section"
+        data-testid="wiki-exercises-pushup-hub"
+      >
+        <mat-card>
+          <mat-card-header class="type-card-header">
+            <mat-card-title>
+              <h3 i18n="@@wiki.exercises.pushupHub.title">
+                Liegestütze (alle Varianten)
+              </h3>
+            </mat-card-title>
+            <mat-card-subtitle i18n="@@wiki.exercises.pushupHub.subtitle">
+              Eigenes Wiki mit über 20 Liegestützvarianten
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="type-summary" i18n="@@wiki.exercises.pushupHub.body">
+              Vom Standard-Liegestütz bis Planche und Archer — alle Varianten
+              mit Ausführung, Tipps und Schwierigkeitsgrad findest du im
+              dedizierten Liegestütz-Wiki.
+            </p>
+            <a
+              mat-flat-button
+              color="primary"
+              class="detail-link"
+              routerLink="/wiki/liegestuetz-typen"
+              data-testid="wiki-exercises-pushup-hub-link"
+              i18n="@@wiki.exercises.pushupHub.cta"
+              >Zum Liegestütz-Wiki</a
+            >
+            @if (pushupHits().length > 0) {
+              <h4 i18n="@@wiki.exercises.search.pushupHits">
+                Passende Varianten
+              </h4>
+              <ul class="pushup-hits" data-testid="wiki-exercises-pushup-hits">
+                @for (hit of pushupHits(); track hit.id) {
+                  <li>
+                    <a
+                      class="toc-link"
+                      [routerLink]="['/wiki/liegestuetz-typen', hit.slug]"
+                      >{{ hit.name }}</a
+                    >
+                  </li>
+                }
+              </ul>
+            }
+          </mat-card-content>
+        </mat-card>
+      </section>
+    }
+    @for (group of categories(); track group.id) {
+      <h2 class="category-heading">{{ group.label }}</h2>
+      @for (entry of group.entries; track entry.id) {
+        <section [id]="entry.slug" class="type-section">
+          <mat-card>
+            <mat-card-header class="type-card-header">
+              <mat-card-title>
+                <h3>{{ entry.name }}</h3>
+              </mat-card-title>
+              <mat-card-subtitle>
+                <mat-chip-set>
+                  @if (entry.difficulty === 'beginner') {
+                    <mat-chip
+                      class="difficulty-chip beginner"
+                      i18n="@@wiki.pushupTypes.level.beginner"
+                      >Einsteiger</mat-chip
+                    >
+                  } @else if (entry.difficulty === 'intermediate') {
+                    <mat-chip
+                      class="difficulty-chip intermediate"
+                      i18n="@@wiki.pushupTypes.level.intermediate"
+                      >Mittelstufe</mat-chip
+                    >
+                  } @else {
+                    <mat-chip
+                      class="difficulty-chip advanced"
+                      i18n="@@wiki.pushupTypes.level.advanced"
+                      >Fortgeschritten</mat-chip
+                    >
+                  }
+                </mat-chip-set>
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="type-summary">{{ entry.summary }}</p>
+              <h4 i18n="@@wiki.pushupTypes.instructionsTitle">Ausführung</h4>
+              <ol class="instructions">
+                @for (step of entry.instructions; track $index) {
+                  <li>{{ step }}</li>
+                }
+              </ol>
+              @if (entry.tips.length > 0) {
+                <h4 i18n="@@wiki.pushupTypes.tipsTitle">Tipps</h4>
+                <ul class="tips">
+                  @for (tip of entry.tips; track $index) {
+                    <li>{{ tip }}</li>
+                  }
+                </ul>
+              }
+              <div class="card-actions">
+                <a
+                  mat-button
+                  class="detail-link"
+                  [routerLink]="['/wiki/uebungen', entry.slug]"
+                  i18n="@@wiki.exercises.viewDetail"
+                  >Detailseite öffnen</a
+                >
+                @if (entry.workoutReady) {
+                  <a
+                    mat-button
+                    data-testid="wiki-exercises-new-session"
+                    routerLink="/workouts/new"
+                    [queryParams]="{ exercise: entry.id }"
+                  >
+                    <mat-icon>playlist_add</mat-icon>
+                    <span i18n="@@wiki.exercise.newSession"
+                      >Als Session anlegen</span
+                    >
+                  </a>
+                }
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </section>
+      }
+    }
+  </div>
+</main>

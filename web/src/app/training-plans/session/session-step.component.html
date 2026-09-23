@@ -19,6 +19,16 @@
 
   <mat-icon class="step-icon" aria-hidden="true">{{ row().icon }}</mat-icon>
   <h2 class="step-name">{{ row().name }}</h2>
+  <button
+    mat-button
+    type="button"
+    class="step-guide"
+    data-testid="session-step-guide"
+    (click)="openGuide()"
+  >
+    <mat-icon>help_outline</mat-icon>
+    <span>{{ guideLabel }}</span>
+  </button>
 
   @if (row().quantified) {
     <p class="step-target">

@@ -70,24 +70,14 @@
       @for (line of form().lines; track $index; let i = $index) {
         <mat-card class="line" data-testid="workout-line">
           <mat-card-content class="line-fields">
-            <mat-form-field appearance="outline" class="line-exercise">
-              <mat-label i18n="@@workouts.editor.exercise">Übung</mat-label>
-              <mat-select
-                data-testid="workout-line-exercise"
-                [value]="line.exerciseId"
-                (valueChange)="changeExercise(i, $event)"
-              >
-                @for (group of groups; track group.label) {
-                  <mat-optgroup [label]="group.label">
-                    @for (option of group.options; track option.id) {
-                      <mat-option [value]="option.id">{{
-                        option.label
-                      }}</mat-option>
-                    }
-                  </mat-optgroup>
-                }
-              </mat-select>
-            </mat-form-field>
+            <div class="line-exercise" data-testid="workout-line-exercise">
+              <app-exercise-picker
+                [exerciseId]="line.exerciseId"
+                [measurements]="measurements"
+                [wikiLink]="false"
+                (exerciseIdChange)="changeExercise(i, $event)"
+              />
+            </div>
 
             @if (variantsFor(line.exerciseId); as variants) {
               @if (variants.length > 0) {
@@ -142,6 +132,17 @@
             </mat-form-field>
           </mat-card-content>
           <mat-card-actions class="line-actions">
+            <button
+              mat-icon-button
+              type="button"
+              data-testid="workout-line-guide"
+              [attr.aria-label]="guideLabel"
+              [matTooltip]="guideLabel"
+              (click)="openGuide(line)"
+            >
+              <mat-icon>help_outline</mat-icon>
+            </button>
+            <span class="line-actions-spacer"></span>
             <button
               mat-icon-button
               type="button"

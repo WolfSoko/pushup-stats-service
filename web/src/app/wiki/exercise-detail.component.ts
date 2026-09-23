@@ -23,6 +23,7 @@ import {
   localizeExerciseWiki,
 } from '@pu-stats/models';
 import { SeoService } from '../core/seo.service';
+import { isWorkoutExercise } from '../workouts/workout-form';
 
 // `vi.mock` cannot intercept this workspace-internal import in the `web`
 // esbuild unit-test build (see docs/gotchas/testing.md), so the noindex
@@ -121,6 +122,17 @@ export const EXERCISE_WIKI_LOCALIZER = new InjectionToken<
             i18n="@@wiki.exercise.detail.toList"
             >Alle Übungen</a
           >
+          @if (workoutReady) {
+            <a
+              mat-stroked-button
+              data-testid="wiki-exercise-new-session"
+              routerLink="/workouts/new"
+              [queryParams]="{ exercise: entry.id }"
+            >
+              <mat-icon>playlist_add</mat-icon>
+              <span i18n="@@wiki.exercise.newSession">Als Session anlegen</span>
+            </a>
+          }
           <a
             mat-flat-button
             color="primary"
@@ -132,111 +144,7 @@ export const EXERCISE_WIKI_LOCALIZER = new InjectionToken<
       </article>
     }
   `,
-  styles: [
-    `
-      :host {
-        display: block;
-      }
-      .detail-article {
-        display: block;
-        margin-top: 28px;
-        line-height: 1.65;
-      }
-      .detail-article ::ng-deep h2 {
-        margin: 28px 0 8px;
-        font-size: 1.15rem;
-        line-height: 1.3;
-      }
-      .detail-article ::ng-deep h2:first-child {
-        margin-top: 0;
-      }
-      .detail-article ::ng-deep p {
-        margin: 0 0 14px;
-      }
-      .detail-article ::ng-deep ul {
-        margin: 0 0 14px;
-        padding-left: 22px;
-      }
-      .detail-article ::ng-deep li {
-        margin-bottom: 6px;
-      }
-      .detail-page {
-        max-width: 760px;
-        margin: 0 auto;
-        padding: clamp(20px, 4vw, 44px);
-      }
-      .detail-header {
-        margin-bottom: 24px;
-      }
-      .back-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        margin: 0 0 16px -8px;
-        color: var(--mat-sys-on-surface-variant);
-        font-size: 0.9rem;
-      }
-      h1 {
-        margin: 4px 0 12px;
-        font-size: clamp(1.6rem, 4vw, 2.4rem);
-        line-height: 1.2;
-      }
-      .summary {
-        margin: 16px 0 0;
-        font-size: 1.05rem;
-        line-height: 1.6;
-        color: var(--mat-sys-on-surface-variant);
-      }
-      .difficulty-chip {
-        font-size: 0.78rem;
-        --mdc-chip-container-height: 24px;
-      }
-      .difficulty-chip.beginner {
-        --mdc-chip-elevated-container-color: rgba(76, 175, 80, 0.18);
-      }
-      .difficulty-chip.intermediate {
-        --mdc-chip-elevated-container-color: rgba(255, 167, 38, 0.2);
-      }
-      .difficulty-chip.advanced {
-        --mdc-chip-elevated-container-color: rgba(244, 67, 54, 0.2);
-      }
-      .detail-card {
-        padding: 8px 4px;
-      }
-      .detail-card h2 {
-        margin: 20px 0 6px;
-        font-size: 0.95rem;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        color: var(--mat-sys-on-surface-variant);
-      }
-      .detail-card h2:first-child {
-        margin-top: 4px;
-      }
-      .instructions,
-      .tips {
-        padding-left: 22px;
-        line-height: 1.65;
-        margin: 4px 0 16px;
-      }
-      .instructions li,
-      .tips li {
-        margin-bottom: 8px;
-      }
-      .instructions li:last-child,
-      .tips li:last-child {
-        margin-bottom: 0;
-      }
-      .detail-footer {
-        margin-top: 32px;
-        padding-top: 20px;
-        border-top: 1px solid var(--mat-sys-outline-variant);
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-    `,
-  ],
+  styleUrl: './exercise-detail.component.css',
 })
 export class ExerciseDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
@@ -255,6 +163,7 @@ export class ExerciseDetailComponent implements OnInit {
   tips: ReadonlyArray<string> = [];
   /** Long-form body for the active locale; `null` keeps the page noindexed. */
   article: string | null = null;
+  workoutReady = false;
 
   constructor() {
     this.destroyRef.onDestroy(() => this.removeJsonLd());
@@ -280,6 +189,7 @@ export class ExerciseDetailComponent implements OnInit {
     this.instructions = localized.instructions;
     this.tips = localized.tips;
     this.article = localized.article ?? null;
+    this.workoutReady = isWorkoutExercise(found.id);
 
     const titleSuffix = $localize`:@@seo.wiki.exercise.titleSuffix:Anleitung & Technik | ${BRAND_NAME}:brand:`;
     const seoTitle = `${this.name} – ${titleSuffix}`;

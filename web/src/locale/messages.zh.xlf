@@ -14577,5 +14577,89 @@
         <target>Skilanglauf</target>
       </segment>
     </unit>
+    <unit id="exerciseGuide.empty">
+      <segment state="initial">
+        <source> Für diese Übung gibt es noch keine Anleitung. </source>
+        <target> Für diese Übung gibt es noch keine Anleitung. </target>
+      </segment>
+    </unit>
+    <unit id="exerciseGuide.toWiki">
+      <segment state="initial">
+        <source>Im Wiki öffnen</source>
+        <target>Im Wiki öffnen</target>
+      </segment>
+    </unit>
+    <unit id="exerciseGuide.close">
+      <segment state="initial">
+        <source> Verstanden </source>
+        <target> Verstanden </target>
+      </segment>
+    </unit>
+    <unit id="session.step.guide">
+      <segment state="initial">
+        <source>Anleitung</source>
+        <target>Anleitung</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercise.newSession">
+      <segment state="initial">
+        <source>Als Session anlegen</source>
+        <target>Als Session anlegen</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.search.label">
+      <segment state="initial">
+        <source>Übung suchen</source>
+        <target>Übung suchen</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.search.placeholder">
+      <segment state="initial">
+        <source>z. B. Kniebeuge, Rücken, Plank</source>
+        <target>z. B. Kniebeuge, Rücken, Plank</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.search.clear">
+      <segment state="initial">
+        <source>Suche leeren</source>
+        <target>Suche leeren</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.search.count">
+      <segment state="initial">
+        <source>{VAR_PLURAL, plural, =0 {Keine Übung gefunden} =1 {Eine Übung gefunden} other {<ph id="0" equiv="INTERPOLATION"/> Übungen gefunden}}</source>
+        <target>{VAR_PLURAL, plural, =0 {Keine Übung gefunden} =1 {Eine Übung gefunden} other {<ph id="0" equiv="INTERPOLATION"/> Übungen gefunden}}</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.search.empty">
+      <segment state="initial">
+        <source> Keine Übung passt zu „<ph id="0" equiv="INTERPOLATION" disp="{{ query() }}"/>“. </source>
+        <target> Keine Übung passt zu „<ph id="0" equiv="INTERPOLATION" disp="{{ query() }}"/>“. </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.search.reset">
+      <segment state="initial">
+        <source> Alle Übungen zeigen </source>
+        <target> Alle Übungen zeigen </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.search.pushupHits">
+      <segment state="initial">
+        <source>Passende Varianten</source>
+        <target>Passende Varianten</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.guide">
+      <segment state="initial">
+        <source>Anleitung ansehen</source>
+        <target>Anleitung ansehen</target>
+      </segment>
+    </unit>
+    <unit id="announcements.exerciseSearch">
+      <segment state="initial">
+        <source>Neu: Übungssuche und Anleitungen direkt in deinen Sessions</source>
+        <target>Neu: Übungssuche und Anleitungen direkt in deinen Sessions</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

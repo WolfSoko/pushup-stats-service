@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 import { GENERATED_BLOG_POSTS } from '../blog/generated';
 import {
   ANNOUNCEMENTS,
+  EXERCISE_SEARCH_ANNOUNCEMENT,
   FeatureAnnouncementService,
   INBOX_ANNOUNCEMENT,
   isDashboard,
@@ -200,6 +201,27 @@ describe('FeatureAnnouncementService', () => {
 
     // then
     expect(open).toHaveBeenCalledTimes(1);
+  });
+
+  it('should never open a dialog for an inbox-only announcement', async () => {
+    // given — every walkthrough seen, only inbox messages left
+    setup('/app');
+
+    // when
+    config.set({
+      userId: 'u1',
+      ui: {
+        seenAnnouncements: ANNOUNCEMENTS.filter((a) => a.load).map((a) => a.id),
+      },
+    } as UserConfig);
+    await settle();
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    // then
+    expect(
+      ANNOUNCEMENTS.some((a) => a.id === EXERCISE_SEARCH_ANNOUNCEMENT)
+    ).toBe(true);
+    expect(open).not.toHaveBeenCalled();
   });
 
   it('should do nothing on the server', async () => {

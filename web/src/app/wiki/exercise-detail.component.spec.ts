@@ -103,6 +103,25 @@ describe('ExerciseDetailComponent', () => {
     expect(back?.getAttribute('href')).toBe('/wiki/uebungen');
   });
 
+  it('should offer to start a new session with this exercise', async () => {
+    // given / when
+    const { container } = await render(ExerciseDetailComponent, {
+      providers: [
+        provideRouter([]),
+        provideLocationMocks(),
+        { provide: ActivatedRoute, useValue: makeRouteMock('squats') },
+      ],
+    });
+
+    // then
+    const cta = container.querySelector(
+      '[data-testid="wiki-exercise-new-session"]'
+    );
+    expect(cta?.getAttribute('href')).toBe(
+      '/workouts/new?exercise=legs.squats'
+    );
+  });
+
   describe('robots meta tag', () => {
     afterEach(() => {
       document.head.querySelector('meta[name="robots"]')?.remove();

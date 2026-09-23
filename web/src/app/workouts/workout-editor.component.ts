@@ -23,16 +23,18 @@ import {
 } from '@pu-stats/models';
 import { BusyDirective, SkeletonComponent } from '@pu-stats/ui';
 
+import { ExerciseGuideService } from '../core/exercise-ref/exercise-guide.service';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
+import { ExercisePickerComponent } from '../stats/components/training-entry-dialog/exercise-picker.component';
 import {
-  emptyForm,
   emptyLine,
+  formForExercise,
   formFromWorkout,
   formToInput,
   setsTotal,
   targetUnitLabel,
   variantOptions,
-  workoutExerciseGroups,
+  WORKOUT_MEASUREMENTS,
   type WorkoutFormLine,
   type WorkoutFormState,
 } from './workout-form';
@@ -49,6 +51,7 @@ import { WorkoutsStore } from './workouts.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     BusyDirective,
+    ExercisePickerComponent,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
@@ -68,19 +71,27 @@ export class WorkoutEditorComponent {
   protected readonly store = inject(WorkoutsStore);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly guide = inject(ExerciseGuideService);
 
   protected readonly titleMax = WORKOUT_TITLE_MAX;
   protected readonly descriptionMax = WORKOUT_DESCRIPTION_MAX;
   protected readonly maxLines = WORKOUT_MAX_EXERCISES;
-  protected readonly groups = workoutExerciseGroups();
+  protected readonly measurements = WORKOUT_MEASUREMENTS;
   protected readonly variantsFor = variantOptions;
   protected readonly unitFor = targetUnitLabel;
 
-  protected readonly form = signal<WorkoutFormState>(emptyForm());
+  /** A new workout opened from the wiki starts on that exercise. */
+  protected readonly form = signal<WorkoutFormState>(
+    formForExercise(
+      this.route.snapshot.queryParamMap.get('exercise'),
+      this.route.snapshot.queryParamMap.get('variant')
+    )
+  );
 
   protected readonly moveUpLabel = $localize`:@@workouts.editor.moveUp:Nach oben`;
   protected readonly moveDownLabel = $localize`:@@workouts.editor.moveDown:Nach unten`;
   protected readonly removeLabel = $localize`:@@workouts.editor.removeExercise:Übung entfernen`;
+  protected readonly guideLabel = $localize`:@@workouts.editor.guide:Anleitung ansehen`;
 
   private readonly params = toSignal(this.route.paramMap, {
     initialValue: this.route.snapshot.paramMap,
@@ -146,6 +157,8 @@ export class WorkoutEditorComponent {
 
   /** A new exercise drops the variant — it belonged to the old one. */
   protected changeExercise(index: number, exerciseId: string): void {
+    // Re-picking the same exercise must not throw its variant away.
+    if (this.form().lines[index]?.exerciseId === exerciseId) return;
     const fresh = emptyLine(exerciseId);
     this.patchLine(index, {
       exerciseId,
@@ -182,6 +195,10 @@ export class WorkoutEditorComponent {
     if (target < 0 || target >= lines.length) return;
     [lines[index], lines[target]] = [lines[target], lines[index]];
     this.patch({ lines });
+  }
+
+  protected openGuide(line: WorkoutFormLine): void {
+    void this.guide.open(line.exerciseId, line.variantId || null);
   }
 
   protected toNumber(event: Event): number {

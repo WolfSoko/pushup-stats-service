@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
+import { ExerciseGuideService } from '../../core/exercise-ref/exercise-guide.service';
+
 import {
   SessionStepComponent,
   type SessionStepAction,
@@ -10,6 +12,8 @@ import type { SessionStepRow } from './training-session.rows';
 function row(overrides: Partial<SessionStepRow> = {}): SessionStepRow {
   return {
     itemIndex: 0,
+    exerciseId: 'pushup',
+    variantId: null,
     name: 'Liegestütze',
     icon: 'fitness_center',
     target: '15',
@@ -35,17 +39,33 @@ async function setup(
   const logAsPrescribed = vitest.fn();
   const checkOff = vitest.fn();
   const skip = vitest.fn();
+  const guide = { open: vitest.fn().mockResolvedValue(undefined) };
   await render(SessionStepComponent, {
     inputs: { row: row(overrides), position: 2, total: 3, busyKeys },
     on: { capture, enterByHand, logAsPrescribed, checkOff, skip },
+    providers: [{ provide: ExerciseGuideService, useValue: guide }],
   });
-  return { capture, enterByHand, logAsPrescribed, checkOff, skip };
+  return { capture, enterByHand, logAsPrescribed, checkOff, skip, guide };
 }
 
 const byTestId = (id: string): HTMLElement =>
   document.querySelector(`[data-testid="${id}"]`) as HTMLElement;
 
 describe('SessionStepComponent', () => {
+  it('should open the guide for the exercise and variant in focus', async () => {
+    // given
+    const { guide } = await setup({
+      exerciseId: 'legs.squats',
+      variantId: 'sumo',
+    });
+
+    // when
+    await userEvent.click(byTestId('session-step-guide'));
+
+    // then
+    expect(guide.open).toHaveBeenCalledWith('legs.squats', 'sumo');
+  });
+
   it('should render the exercise, its target and the position in the day', async () => {
     // given / when
     await setup();

@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  inject,
   input,
   output,
 } from '@angular/core';
@@ -10,6 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BusyDirective } from '@pu-stats/ui';
+
+import { ExerciseGuideService } from '../../core/exercise-ref/exercise-guide.service';
 
 import { SessionStepRow } from './training-session.rows';
 
@@ -43,6 +46,8 @@ export type SessionStepAction =
   styleUrl: './session-step.component.css',
 })
 export class SessionStepComponent {
+  private readonly guide = inject(ExerciseGuideService);
+
   readonly row = input.required<SessionStepRow>();
   /** 1-based position for the "Übung 2 von 3" line. */
   readonly position = input.required<number>();
@@ -55,6 +60,8 @@ export class SessionStepComponent {
   readonly logAsPrescribed = output<void>();
   readonly checkOff = output<void>();
   readonly skip = output<void>();
+
+  protected readonly guideLabel = $localize`:@@session.step.guide:Anleitung`;
 
   protected readonly toolLabel = computed(() => {
     switch (this.row().tool) {
@@ -93,4 +100,10 @@ export class SessionStepComponent {
   protected readonly hasProgress = computed(
     () => this.row().quantified && this.row().percent > 0
   );
+
+  /** Opens the wiki's how-to over the session instead of leaving it. */
+  protected openGuide(): void {
+    const { exerciseId, variantId } = this.row();
+    void this.guide.open(exerciseId, variantId);
+  }
 }

@@ -14,11 +14,15 @@ import { filter, map } from 'rxjs';
 
 import { UserConfigStore } from './user-config.store';
 
-/** One "what's new" walkthrough: a stable id and the dialog that shows it. */
+/**
+ * One "what's new" entry: a stable id, its inbox row and, for a feature
+ * that earns a walkthrough, the dialog that shows it. Without `load` it is
+ * a plain inbox message — for improvements too small to interrupt anyone.
+ */
 export interface FeatureAnnouncement {
-  /** Persisted per account once the dialog closes; never reused. */
+  /** Persisted per account once read or the dialog closes; never reused. */
   readonly id: string;
-  readonly load: () => Promise<Type<unknown>>;
+  readonly load?: () => Promise<Type<unknown>>;
   /** One line for the message inbox, which lists unseen announcements. */
   readonly label: string;
   /** Where the inbox row goes, without locale prefix. */
@@ -28,6 +32,7 @@ export interface FeatureAnnouncement {
 export const WORKOUTS_ANNOUNCEMENT = 'workouts-2026-09';
 export const INBOX_ANNOUNCEMENT = 'inbox-achievements-2026-09';
 export const REBRAND_ANNOUNCEMENT = 'rebrand-2026-09';
+export const EXERCISE_SEARCH_ANNOUNCEMENT = 'exercise-search-2026-09';
 
 /**
  * Every announcement, oldest first. A new feature adds an entry with a
@@ -62,10 +67,16 @@ export const ANNOUNCEMENTS: ReadonlyArray<FeatureAnnouncement> = [
     label: $localize`:@@announcements.rebrand:Diese App bekommt einen neuen Namen`,
     url: '/blog/neuer-name-kommt',
   },
+  {
+    id: EXERCISE_SEARCH_ANNOUNCEMENT,
+    label: $localize`:@@announcements.exerciseSearch:Neu: Übungssuche und Anleitungen direkt in deinen Sessions`,
+    url: '/wiki/uebungen?suche',
+  },
 ];
 
 /**
- * Opens the first unseen walkthrough on the dashboard, once per app
+ * Opens the first unseen walkthrough on the dashboard (inbox-only
+ * announcements are skipped), once per app
  * session, for a signed-in user. Waits for the dashboard rather than
  * firing on the first page after login: a dialog over the login or
  * register form, or over a shared profile the user just landed on, would
@@ -100,24 +111,25 @@ export class FeatureAnnouncementService {
     const url = this.url();
     if (!config || !isDashboard(url) || this.user.isGuest()) return;
     const seen = config.ui?.seenAnnouncements ?? [];
-    const next = ANNOUNCEMENTS.find((a) => !seen.includes(a.id));
-    if (!next) return;
+    const next = ANNOUNCEMENTS.find((a) => a.load && !seen.includes(a.id));
+    if (!next?.load) return;
 
     this.shown = true;
-    void this.open(next);
+    void this.open(next.id, next.load);
   });
 
-  private async open(announcement: FeatureAnnouncement): Promise<void> {
-    const component = await announcement.load();
+  private async open(
+    id: string,
+    load: () => Promise<Type<unknown>>
+  ): Promise<void> {
+    const component = await load();
     const ref = this.dialog.open(component, {
       width: 'min(92vw, 440px)',
       maxWidth: '92vw',
       autoFocus: 'dialog',
     });
     ref.afterClosed().subscribe(() => {
-      void this.userConfig
-        .markAnnouncementSeen(announcement.id)
-        .catch(() => undefined);
+      void this.userConfig.markAnnouncementSeen(id).catch(() => undefined);
     });
   }
 }

@@ -28,12 +28,16 @@ h2 {
 
 .line-exercise {
   grid-column: 1 / -1;
+  display: grid;
 }
 
 .line-actions {
   display: flex;
-  justify-content: flex-end;
   gap: 4px;
+}
+
+.line-actions-spacer {
+  flex: 1;
 }
 
 .hint {

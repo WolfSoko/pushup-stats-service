@@ -18,6 +18,7 @@ import { ExerciseSuggestions } from './training-entry-dialog.models';
     [exerciseId]="exerciseId()"
     [suggestions]="suggestions()"
     [locked]="locked()"
+    [wikiLink]="wikiLink()"
     (exerciseIdChange)="picked.push($event)"
   />`,
 })
@@ -25,6 +26,7 @@ class HostComponent {
   readonly exerciseId = signal('pushup');
   readonly suggestions: WritableSignal<ExerciseSuggestions> = signal({});
   readonly locked = signal(false);
+  readonly wikiLink = signal(true);
   readonly picked: string[] = [];
 }
 
@@ -171,7 +173,25 @@ describe('ExercisePickerComponent', () => {
 
     // then — abs.situps maps to slug 'sit-ups'.
     expect(component.showWikiLink()).toBe(true);
-    expect(component.wikiLink()).toEqual(['/wiki/uebungen', 'sit-ups']);
+    expect(component.wikiRoute()).toEqual(['/wiki/uebungen', 'sit-ups']);
+  });
+
+  it('should drop the wiki link when the host turns it off', () => {
+    // given
+    const { component, host, fixture } = render();
+
+    // when
+    host.wikiLink.set(false);
+    host.exerciseId.set('abs.situps');
+    fixture.detectChanges();
+
+    // then
+    expect(component.showWikiLink()).toBe(false);
+    expect(
+      fixture.nativeElement.querySelector(
+        '[data-testid="training-entry-exercise-wiki"]'
+      )
+    ).toBeNull();
   });
 
   it('should keep the wiki link inside the field so it stays as wide as the dialog', () => {

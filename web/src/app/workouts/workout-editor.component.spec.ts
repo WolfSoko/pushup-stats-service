@@ -5,6 +5,7 @@ import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { BehaviorSubject, of } from 'rxjs';
 
+import { ExerciseGuideService } from '../core/exercise-ref/exercise-guide.service';
 import { WorkoutEditorComponent } from './workout-editor.component';
 import { WorkoutsStore } from './workouts.store';
 
@@ -20,9 +21,15 @@ const WORKOUT: Workout = {
 };
 
 async function setup(
-  options: { id?: string; workouts?: Workout[]; loaded?: boolean } = {}
+  options: {
+    id?: string;
+    workouts?: Workout[];
+    loaded?: boolean;
+    query?: Record<string, string>;
+  } = {}
 ) {
   const params = options.id ? { id: options.id } : {};
+  const guide = { open: vitest.fn().mockResolvedValue(undefined) };
   const paramMap$ = new BehaviorSubject(convertToParamMap(params));
   const busyKeys = signal<ReadonlySet<string>>(new Set());
   const store = {
@@ -42,7 +49,10 @@ async function setup(
         provide: ActivatedRoute,
         useValue: {
           paramMap: paramMap$.asObservable(),
-          snapshot: { paramMap: convertToParamMap(params) },
+          snapshot: {
+            paramMap: convertToParamMap(params),
+            queryParamMap: convertToParamMap(options.query ?? {}),
+          },
         },
       },
       {
@@ -55,12 +65,92 @@ async function setup(
         },
       },
       { provide: WorkoutsStore, useValue: store },
+      { provide: ExerciseGuideService, useValue: guide },
     ],
   });
-  return { store, navigateByUrl, paramMap$, fixture, busyKeys };
+  return { store, navigateByUrl, paramMap$, fixture, busyKeys, guide };
 }
 
+const exerciseInput = (): HTMLInputElement =>
+  screen
+    .getByTestId('workout-line-exercise')
+    .querySelector('input') as HTMLInputElement;
+
 describe('WorkoutEditorComponent', () => {
+  it('should start on the exercise the wiki handed over', async () => {
+    // given / when
+    const { fixture } = await setup({ query: { exercise: 'legs.squats' } });
+    await fixture.whenStable();
+
+    // then
+    expect(exerciseInput().value).toBe('Kniebeugen');
+  });
+
+  it('should ignore an exercise from the link that a workout cannot hold', async () => {
+    // given / when
+    const { fixture } = await setup({ query: { exercise: 'nope' } });
+    await fixture.whenStable();
+
+    // then
+    expect(exerciseInput().value).toBe('Liegestütze');
+  });
+
+  it('should find an exercise by typing part of its name', async () => {
+    // given
+    const { store } = await setup();
+    const user = userEvent.setup();
+
+    // when
+    await user.type(exerciseInput(), 'kniebeu');
+    await user.click(await screen.findByRole('option', { name: 'Kniebeugen' }));
+    await user.type(screen.getByTestId('workout-title'), 'Beine');
+    await user.click(screen.getByTestId('workout-save'));
+
+    // then
+    expect(store.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        exercises: [expect.objectContaining({ exerciseId: 'legs.squats' })],
+      })
+    );
+  });
+
+  it('should keep the variant when the same exercise is picked again', async () => {
+    // given
+    const { store } = await setup({
+      query: { exercise: 'legs.squats', variant: 'bodyweight' },
+    });
+    const user = userEvent.setup();
+
+    // when
+    await user.click(exerciseInput());
+    await user.click(await screen.findByRole('option', { name: 'Kniebeugen' }));
+    await user.type(screen.getByTestId('workout-title'), 'Beine');
+    await user.click(screen.getByTestId('workout-save'));
+
+    // then
+    expect(store.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        exercises: [
+          expect.objectContaining({
+            exerciseId: 'legs.squats',
+            variantId: 'bodyweight',
+          }),
+        ],
+      })
+    );
+  });
+
+  it('should open the guide for a line without leaving the form', async () => {
+    // given
+    const { guide } = await setup({ query: { exercise: 'legs.squats' } });
+
+    // when
+    await userEvent.click(screen.getByTestId('workout-line-guide'));
+
+    // then
+    expect(guide.open).toHaveBeenCalledWith('legs.squats', null);
+  });
+
   it('should start a new session with one pushup line', async () => {
     // given
     await setup();

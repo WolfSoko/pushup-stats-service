@@ -2,7 +2,6 @@ import {
   buildExercisePickerGroups,
   filterExercisePickerGroups,
   initialSuggestedExerciseId,
-  normalizeSearch,
   RECENT_SUGGESTION_LIMIT,
 } from './exercise-picker.groups';
 
@@ -201,12 +200,5 @@ describe('initialSuggestedExerciseId', () => {
   it('should fall back to pushups without any suggestion', () => {
     // given / when / then
     expect(initialSuggestedExerciseId()).toBe('pushup');
-  });
-});
-
-describe('normalizeSearch', () => {
-  it('should fold umlauts, sharp s and whitespace', () => {
-    // given / when / then
-    expect(normalizeSearch('  Füße  Straße ')).toBe('fusse strasse');
   });
 });
