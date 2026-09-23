@@ -181,6 +181,19 @@ describe('AppUpdateService', () => {
     expect(reload).toHaveBeenCalledWith('/history');
   });
 
+  it('should abort the SPA navigation so the old build loads no chunks meanwhile', async () => {
+    // given
+    const { router } = await setup();
+    versionUpdates.next(versionReady);
+
+    // when
+    const navigated = await router.navigateByUrl('/history');
+
+    // then
+    expect(navigated).toBe(false);
+    expect(router.url).toBe('/');
+  });
+
   it('should not reload when only query params change', async () => {
     // given
     const { router } = await setup({ startUrl: '/history' });

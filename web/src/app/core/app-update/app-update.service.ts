@@ -100,6 +100,9 @@ export class AppUpdateService {
     // Filters and tabs rewrite query params on the same page; reloading
     // there would feel like the page broke rather than moved on.
     if (pathOf(url) === pathOf(this.router.url)) return;
+    // Otherwise the old build keeps routing while activateUpdate() runs and
+    // may fetch a lazy chunk the new deployment no longer serves.
+    this.router.currentNavigation()?.abort();
     void this.reloader.reload(url);
   }
 }
