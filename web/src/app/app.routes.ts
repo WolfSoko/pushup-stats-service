@@ -9,6 +9,7 @@ import {
 } from '@pu-auth/auth';
 import { AI_ASSISTANT_ROUTE } from './ai/ai-assistant.config';
 import { aiAssistantEnabledGuard } from './ai/ai-assistant.guard';
+import { blocksAppUpdateData } from './core/app-update/app-update-route-data';
 import { SettingsFacade } from './stats/shell/settings.facade';
 
 export const appRoutes: Routes = [
@@ -161,6 +162,7 @@ export const appRoutes: Routes = [
     // Ahead of `training-plans/:slug` so the session page wins the more
     // specific URL instead of being swallowed by the detail route.
     path: 'training-plans/:slug/session',
+    data: blocksAppUpdateData,
     loadComponent: () =>
       import('./training-plans/session/training-session.component').then(
         (m) => m.TrainingSessionComponent
@@ -189,7 +191,7 @@ export const appRoutes: Routes = [
   {
     path: 'workouts/new',
     canActivate: [authGuard],
-    data: { noindex: true },
+    data: { noindex: true, ...blocksAppUpdateData },
     loadComponent: () =>
       import('./workouts/workout-editor.component').then(
         (m) => m.WorkoutEditorComponent
@@ -198,7 +200,7 @@ export const appRoutes: Routes = [
   {
     path: 'workouts/:id/edit',
     canActivate: [authGuard],
-    data: { noindex: true },
+    data: { noindex: true, ...blocksAppUpdateData },
     loadComponent: () =>
       import('./workouts/workout-editor.component').then(
         (m) => m.WorkoutEditorComponent
@@ -207,7 +209,7 @@ export const appRoutes: Routes = [
   {
     path: 'workouts/:id/run',
     canActivate: [authGuard],
-    data: { noindex: true },
+    data: { noindex: true, ...blocksAppUpdateData },
     loadComponent: () =>
       import('./workouts/session/workout-session.component').then(
         (m) => m.WorkoutSessionComponent

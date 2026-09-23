@@ -4416,7 +4416,7 @@
     </unit>
     <unit id="nav.admin">
       <notes>
-        <note category="location">web/src/app/app.html:138,139</note>
+        <note category="location">web/src/app/app.html:125,126</note>
       </notes>
       <segment>
         <source>Admin-Bereich</source>
@@ -4424,7 +4424,7 @@
     </unit>
     <unit id="footer.aria">
       <notes>
-        <note category="location">web/src/app/app.html:155</note>
+        <note category="location">web/src/app/app.html:144</note>
       </notes>
       <segment>
         <source>Rechtliches</source>
@@ -4432,7 +4432,7 @@
     </unit>
     <unit id="footer.pushupTypes">
       <notes>
-        <note category="location">web/src/app/app.html:160,162</note>
+        <note category="location">web/src/app/app.html:149,151</note>
       </notes>
       <segment>
         <source>Liegestütztypen</source>
@@ -4440,7 +4440,7 @@
     </unit>
     <unit id="footer.exercises">
       <notes>
-        <note category="location">web/src/app/app.html:163,165</note>
+        <note category="location">web/src/app/app.html:152,154</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -4448,7 +4448,7 @@
     </unit>
     <unit id="footer.about">
       <notes>
-        <note category="location">web/src/app/app.html:165,166</note>
+        <note category="location">web/src/app/app.html:154,155</note>
       </notes>
       <segment>
         <source>Über uns</source>
@@ -4456,7 +4456,7 @@
     </unit>
     <unit id="footer.impressum">
       <notes>
-        <note category="location">web/src/app/app.html:167,169</note>
+        <note category="location">web/src/app/app.html:156,158</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -4464,7 +4464,7 @@
     </unit>
     <unit id="footer.datenschutz">
       <notes>
-        <note category="location">web/src/app/app.html:170,173</note>
+        <note category="location">web/src/app/app.html:159,162</note>
       </notes>
       <segment>
         <source>Datenschutz</source>
@@ -4472,7 +4472,7 @@
     </unit>
     <unit id="footer.cookies">
       <notes>
-        <note category="location">web/src/app/app.html:177,179</note>
+        <note category="location">web/src/app/app.html:166,168</note>
       </notes>
       <segment>
         <source> Cookie-Einstellungen </source>
@@ -4480,7 +4480,7 @@
     </unit>
     <unit id="seo.landing.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:19</note>
+        <note category="location">web/src/app/app.routes.ts:20</note>
       </notes>
       <segment>
         <source>Liegestütze per Kamera zählen – kostenlos im Browser</source>
@@ -4488,7 +4488,7 @@
     </unit>
     <unit id="seo.landing.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:20</note>
+        <note category="location">web/src/app/app.routes.ts:21</note>
       </notes>
       <segment>
         <source>Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks, Bestenliste und Challenges mit Freunden – auch für Kniebeugen und Klimmzüge.</source>
@@ -4496,7 +4496,7 @@
     </unit>
     <unit id="seo.dashboard.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:31</note>
+        <note category="location">web/src/app/app.routes.ts:32</note>
       </notes>
       <segment>
         <source>Dashboard – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4504,7 +4504,7 @@
     </unit>
     <unit id="seo.dashboard.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:32</note>
+        <note category="location">web/src/app/app.routes.ts:33</note>
       </notes>
       <segment>
         <source>Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert.</source>
@@ -4512,7 +4512,7 @@
     </unit>
     <unit id="seo.login.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:48</note>
+        <note category="location">web/src/app/app.routes.ts:49</note>
       </notes>
       <segment>
         <source>Login – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4520,7 +4520,7 @@
     </unit>
     <unit id="seo.login.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:49</note>
+        <note category="location">web/src/app/app.routes.ts:50</note>
       </notes>
       <segment>
         <source>Melde dich an und tracke dein Pushup-Training über alle Geräte.</source>
@@ -4528,7 +4528,7 @@
     </unit>
     <unit id="seo.register.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:58</note>
+        <note category="location">web/src/app/app.routes.ts:59</note>
       </notes>
       <segment>
         <source>Registrierung – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4536,7 +4536,7 @@
     </unit>
     <unit id="seo.register.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:59</note>
+        <note category="location">web/src/app/app.routes.ts:60</note>
       </notes>
       <segment>
         <source>Erstelle dein Konto und richte Profil, Tagesziel und Einwilligungen ein.</source>
@@ -4544,7 +4544,7 @@
     </unit>
     <unit id="seo.history.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:68</note>
+        <note category="location">web/src/app/app.routes.ts:69</note>
       </notes>
       <segment>
         <source>Historie – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4552,7 +4552,7 @@
     </unit>
     <unit id="seo.history.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:69</note>
+        <note category="location">web/src/app/app.routes.ts:70</note>
       </notes>
       <segment>
         <source>Durchsuche deine Trainingshistorie, filtere nach Zeitraum und behalte den Überblick.</source>
@@ -4560,7 +4560,7 @@
     </unit>
     <unit id="seo.analysis.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:80</note>
+        <note category="location">web/src/app/app.routes.ts:81</note>
       </notes>
       <segment>
         <source>Analyse – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4568,7 +4568,7 @@
     </unit>
     <unit id="seo.analysis.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:81</note>
+        <note category="location">web/src/app/app.routes.ts:82</note>
       </notes>
       <segment>
         <source>Analysiere Trends, Verteilungen und Streaks deines Trainings.</source>
@@ -4576,7 +4576,7 @@
     </unit>
     <unit id="seo.settings.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:95</note>
+        <note category="location">web/src/app/app.routes.ts:96</note>
       </notes>
       <segment>
         <source>Einstellungen – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4584,7 +4584,7 @@
     </unit>
     <unit id="seo.settings.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:96</note>
+        <note category="location">web/src/app/app.routes.ts:97</note>
       </notes>
       <segment>
         <source>Verwalte Profil, Leaderboard-Sichtbarkeit und Tagesziel-Einstellungen.</source>
@@ -4592,7 +4592,7 @@
     </unit>
     <unit id="seo.goals.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:114</note>
+        <note category="location">web/src/app/app.routes.ts:115</note>
       </notes>
       <segment>
         <source>Tagesziele – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4600,7 +4600,7 @@
     </unit>
     <unit id="seo.goals.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:115</note>
+        <note category="location">web/src/app/app.routes.ts:116</note>
       </notes>
       <segment>
         <source>Plane verschiedene Übungen pro Tag, pro Woche und pro Monat – mit Wochentag-Filter.</source>
@@ -4608,7 +4608,7 @@
     </unit>
     <unit id="seo.reminders.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:125</note>
+        <note category="location">web/src/app/app.routes.ts:126</note>
       </notes>
       <segment>
         <source>Erinnerungen – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4616,7 +4616,7 @@
     </unit>
     <unit id="seo.reminders.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:126</note>
+        <note category="location">web/src/app/app.routes.ts:127</note>
       </notes>
       <segment>
         <source>Konfiguriere Liegestütz-Erinnerungen und Push-Benachrichtigungen.</source>
@@ -4624,7 +4624,7 @@
     </unit>
     <unit id="seo.trainingPlans.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:152</note>
+        <note category="location">web/src/app/app.routes.ts:153</note>
       </notes>
       <segment>
         <source>Trainingspläne – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4632,7 +4632,7 @@
     </unit>
     <unit id="seo.trainingPlans.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:153</note>
+        <note category="location">web/src/app/app.routes.ts:154</note>
       </notes>
       <segment>
         <source>Strukturierte Liegestütz-Trainingspläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung.</source>
@@ -4640,7 +4640,7 @@
     </unit>
     <unit id="seo.workouts.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:180</note>
+        <note category="location">web/src/app/app.routes.ts:182</note>
       </notes>
       <segment>
         <source>Meine Sessions – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4648,7 +4648,7 @@
     </unit>
     <unit id="seo.workouts.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:181</note>
+        <note category="location">web/src/app/app.routes.ts:183</note>
       </notes>
       <segment>
         <source>Eigene Trainingssessions zusammenstellen, geführt durchführen und mit Freunden teilen.</source>
@@ -4656,7 +4656,7 @@
     </unit>
     <unit id="seo.wiki.pushupTypes.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:223</note>
+        <note category="location">web/src/app/app.routes.ts:225</note>
       </notes>
       <segment>
         <source>Liegestütztypen erklärt – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4664,7 +4664,7 @@
     </unit>
     <unit id="seo.wiki.pushupTypes.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:224</note>
+        <note category="location">web/src/app/app.routes.ts:226</note>
       </notes>
       <segment>
         <source>Saubere Ausführung der wichtigsten Liegestütz-Varianten – Standard, Knie, Diamant, Archer, einarmig und mehr.</source>
@@ -4672,7 +4672,7 @@
     </unit>
     <unit id="seo.wiki.exercises.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:247</note>
+        <note category="location">web/src/app/app.routes.ts:249</note>
       </notes>
       <segment>
         <source>Übungen erklärt – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4680,7 +4680,7 @@
     </unit>
     <unit id="seo.wiki.exercises.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:248</note>
+        <note category="location">web/src/app/app.routes.ts:250</note>
       </notes>
       <segment>
         <source>Saubere Ausführung der Übungen, die du in <ph id="0" equiv="brand" disp="BRAND_NAME"/> mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.</source>
@@ -4688,7 +4688,7 @@
     </unit>
     <unit id="seo.friends.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:268</note>
+        <note category="location">web/src/app/app.routes.ts:270</note>
       </notes>
       <segment>
         <source>Freunde – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4696,7 +4696,7 @@
     </unit>
     <unit id="seo.friends.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:269</note>
+        <note category="location">web/src/app/app.routes.ts:271</note>
       </notes>
       <segment>
         <source>Freunde bestätigen, Anfragen beantworten und gemeinsam trainieren.</source>
@@ -4704,7 +4704,7 @@
     </unit>
     <unit id="seo.notifications.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:281</note>
+        <note category="location">web/src/app/app.routes.ts:283</note>
       </notes>
       <segment>
         <source>Nachrichten – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4712,7 +4712,7 @@
     </unit>
     <unit id="seo.notifications.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:282</note>
+        <note category="location">web/src/app/app.routes.ts:284</note>
       </notes>
       <segment>
         <source>Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen an einem Ort.</source>
@@ -4720,7 +4720,7 @@
     </unit>
     <unit id="seo.achievements.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:294</note>
+        <note category="location">web/src/app/app.routes.ts:296</note>
       </notes>
       <segment>
         <source>Abzeichen – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4728,7 +4728,7 @@
     </unit>
     <unit id="seo.achievements.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:295</note>
+        <note category="location">web/src/app/app.routes.ts:297</note>
       </notes>
       <segment>
         <source>Deine verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist.</source>
@@ -4736,7 +4736,7 @@
     </unit>
     <unit id="seo.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:306</note>
+        <note category="location">web/src/app/app.routes.ts:308</note>
       </notes>
       <segment>
         <source>Bestenliste – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4744,7 +4744,7 @@
     </unit>
     <unit id="seo.leaderboard.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:307</note>
+        <note category="location">web/src/app/app.routes.ts:309</note>
       </notes>
       <segment>
         <source>Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.</source>
@@ -4752,7 +4752,7 @@
     </unit>
     <unit id="seo.publicProfile.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:317</note>
+        <note category="location">web/src/app/app.routes.ts:319</note>
       </notes>
       <segment>
         <source>Profil – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4760,7 +4760,7 @@
     </unit>
     <unit id="seo.publicProfile.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:318</note>
+        <note category="location">web/src/app/app.routes.ts:320</note>
       </notes>
       <segment>
         <source>Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.</source>
@@ -4768,7 +4768,7 @@
     </unit>
     <unit id="seo.blog.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:332</note>
+        <note category="location">web/src/app/app.routes.ts:334</note>
       </notes>
       <segment>
         <source>Blog – Liegestütze Tipps &amp; Guides | <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4776,7 +4776,7 @@
     </unit>
     <unit id="seo.blog.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:333</note>
+        <note category="location">web/src/app/app.routes.ts:335</note>
       </notes>
       <segment>
         <source>Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten.</source>
@@ -4784,7 +4784,7 @@
     </unit>
     <unit id="seo.about.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:350</note>
+        <note category="location">web/src/app/app.routes.ts:352</note>
       </notes>
       <segment>
         <source>Über uns – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4792,7 +4792,7 @@
     </unit>
     <unit id="seo.about.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:351</note>
+        <note category="location">web/src/app/app.routes.ts:353</note>
       </notes>
       <segment>
         <source>Wer hinter <ph id="0" equiv="brand" disp="BRAND_NAME"/> steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</source>
@@ -4800,7 +4800,7 @@
     </unit>
     <unit id="seo.impressum.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:361</note>
+        <note category="location">web/src/app/app.routes.ts:363</note>
       </notes>
       <segment>
         <source>Impressum – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4808,7 +4808,7 @@
     </unit>
     <unit id="seo.impressum.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:362</note>
+        <note category="location">web/src/app/app.routes.ts:364</note>
       </notes>
       <segment>
         <source>Impressum und Anbieterkennzeichnung von <ph id="0" equiv="brand" disp="BRAND_NAME"/>.</source>
@@ -4816,7 +4816,7 @@
     </unit>
     <unit id="seo.datenschutz.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:372</note>
+        <note category="location">web/src/app/app.routes.ts:374</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4824,31 +4824,15 @@
     </unit>
     <unit id="seo.datenschutz.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:373</note>
+        <note category="location">web/src/app/app.routes.ts:375</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung von <ph id="0" equiv="brand" disp="BRAND_NAME"/> – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
       </segment>
     </unit>
-    <unit id="sw.update.buttonAria">
-      <notes>
-        <note category="location">web/src/app/app.ts:119</note>
-      </notes>
-      <segment>
-        <source>Neue Version verfügbar – jetzt neu laden</source>
-      </segment>
-    </unit>
-    <unit id="sw.update.recoverButtonAria">
-      <notes>
-        <note category="location">web/src/app/app.ts:120</note>
-      </notes>
-      <segment>
-        <source>App-Daten beschädigt – jetzt neu laden</source>
-      </segment>
-    </unit>
     <unit id="toolbarDailyGoal.detailsAria">
       <notes>
-        <note category="location">web/src/app/app.ts:261</note>
+        <note category="location">web/src/app/app.ts:259</note>
       </notes>
       <segment>
         <source>Tagesziel-Einzelpositionen anzeigen</source>
@@ -4856,7 +4840,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:330</note>
+        <note category="location">web/src/app/app.ts:328</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -4864,7 +4848,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:333</note>
+        <note category="location">web/src/app/app.ts:331</note>
       </notes>
       <segment>
         <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
@@ -4872,7 +4856,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:401</note>
+        <note category="location">web/src/app/app.ts:395</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -4880,7 +4864,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:430</note>
+        <note category="location">web/src/app/app.ts:424</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -4888,7 +4872,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:437</note>
+        <note category="location">web/src/app/app.ts:431</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -5802,6 +5786,38 @@
         <source><ph id="0" equiv="REPS" disp="cfg.reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/> hinzufügen</source>
       </segment>
     </unit>
+    <unit id="appUpdate.banner.unrecoverable">
+      <notes>
+        <note category="location">web/src/app/core/app-update/app-update-banner.component.ts:26,29</note>
+      </notes>
+      <segment>
+        <source>App-Daten sind veraltet – bitte neu laden.</source>
+      </segment>
+    </unit>
+    <unit id="appUpdate.banner.ready">
+      <notes>
+        <note category="location">web/src/app/core/app-update/app-update-banner.component.ts:30,33</note>
+      </notes>
+      <segment>
+        <source>Eine neue Version ist verfügbar.</source>
+      </segment>
+    </unit>
+    <unit id="appUpdate.banner.later">
+      <notes>
+        <note category="location">web/src/app/core/app-update/app-update-banner.component.ts:39,41</note>
+      </notes>
+      <segment>
+        <source> Später </source>
+      </segment>
+    </unit>
+    <unit id="appUpdate.banner.reload">
+      <notes>
+        <note category="location">web/src/app/core/app-update/app-update-banner.component.ts:50,52</note>
+      </notes>
+      <segment>
+        <source> Neu laden </source>
+      </segment>
+    </unit>
     <unit id="cheer.overlay.message">
       <notes>
         <note category="location">web/src/app/core/cheer-fireworks-overlay.component.ts:37,39</note>
@@ -5919,7 +5935,7 @@
       <notes>
         <note category="location">web/src/app/core/exercise-ref/exercise-guide-dialog.component.ts:36,37</note>
         <note category="location">web/src/app/wiki/exercise-detail.component.ts:97,99</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.html:213,215</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.html:219,221</note>
         <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:79,81</note>
         <note category="location">web/src/app/wiki/pushup-types-page.component.ts:124,126</note>
       </notes>
@@ -5939,7 +5955,7 @@
       <notes>
         <note category="location">web/src/app/core/exercise-ref/exercise-guide-dialog.component.ts:48,50</note>
         <note category="location">web/src/app/wiki/exercise-detail.component.ts:104,106</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.html:221,223</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.html:226,228</note>
         <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:86,88</note>
         <note category="location">web/src/app/wiki/pushup-types-page.component.ts:131,132</note>
       </notes>
@@ -6301,30 +6317,6 @@
       </notes>
       <segment>
         <source>In die Zwischenablage kopiert. Jetzt einfügen und teilen!</source>
-      </segment>
-    </unit>
-    <unit id="sw.update.unrecoverable">
-      <notes>
-        <note category="location">web/src/app/core/sw-update.service.ts:138</note>
-      </notes>
-      <segment>
-        <source>App-Daten beschädigt – bitte neu laden</source>
-      </segment>
-    </unit>
-    <unit id="sw.update.available">
-      <notes>
-        <note category="location">web/src/app/core/sw-update.service.ts:139</note>
-      </notes>
-      <segment>
-        <source>Neue Version verfügbar</source>
-      </segment>
-    </unit>
-    <unit id="sw.update.reload">
-      <notes>
-        <note category="location">web/src/app/core/sw-update.service.ts:148</note>
-      </notes>
-      <segment>
-        <source>Neu laden</source>
       </segment>
     </unit>
     <unit id="theme.toggle.auto">
@@ -15596,7 +15588,7 @@
     <unit id="wiki.pushupTypes.level.beginner">
       <notes>
         <note category="location">web/src/app/wiki/exercise-detail.component.ts:76,78</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.html:192,194</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.html:199,201</note>
         <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:58,60</note>
         <note category="location">web/src/app/wiki/pushup-types-page.component.ts:104,106</note>
       </notes>
@@ -15607,7 +15599,7 @@
     <unit id="wiki.pushupTypes.level.intermediate">
       <notes>
         <note category="location">web/src/app/wiki/exercise-detail.component.ts:82,85</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.html:198,200</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.html:205,207</note>
         <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:64,67</note>
         <note category="location">web/src/app/wiki/pushup-types-page.component.ts:110,112</note>
       </notes>
@@ -15618,7 +15610,7 @@
     <unit id="wiki.pushupTypes.level.advanced">
       <notes>
         <note category="location">web/src/app/wiki/exercise-detail.component.ts:88,91</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.html:204,206</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.html:211,213</note>
         <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:70,73</note>
         <note category="location">web/src/app/wiki/pushup-types-page.component.ts:116,118</note>
       </notes>
@@ -15637,7 +15629,7 @@
     <unit id="wiki.exercise.newSession">
       <notes>
         <note category="location">web/src/app/wiki/exercise-detail.component.ts:133,136</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.html:245,247</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.html:250,252</note>
       </notes>
       <segment>
         <source>Als Session anlegen</source>
@@ -15709,7 +15701,7 @@
     </unit>
     <unit id="wiki.exercises.search.count">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.html:56,59</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.html:57,60</note>
       </notes>
       <segment>
         <source>{VAR_PLURAL, plural, =0 {Keine Übung gefunden} =1 {Eine Übung gefunden} other {<ph id="0" equiv="INTERPOLATION"/> Übungen gefunden}}</source>
@@ -15717,7 +15709,7 @@
     </unit>
     <unit id="wiki.exercises.search.empty">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.html:65,67</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.html:70,72</note>
       </notes>
       <segment>
         <source> Keine Übung passt zu „<ph id="0" equiv="INTERPOLATION" disp="{{ query() }}"/>“. </source>
@@ -15725,7 +15717,7 @@
     </unit>
     <unit id="wiki.exercises.search.reset">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.html:73,78</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.html:78,83</note>
       </notes>
       <segment>
         <source> Alle Übungen zeigen </source>
@@ -15733,7 +15725,7 @@
     </unit>
     <unit id="wiki.exercises.tocTitle">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.html:81,83</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.html:86,88</note>
       </notes>
       <segment>
         <source> Übersicht </source>
@@ -15741,7 +15733,7 @@
     </unit>
     <unit id="wiki.exercises.pushupHub.tocLink">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.html:92,95</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.html:97,100</note>
         <note category="location">web/src/app/wiki/exercises-page.component.ts:96</note>
       </notes>
       <segment>
@@ -15750,7 +15742,7 @@
     </unit>
     <unit id="wiki.exercises.pushupHub.summary">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.html:98,101</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.html:103,105</note>
       </notes>
       <segment>
         <source> — Eigenes Wiki mit allen Liegestützvarianten von Standard bis Planche.</source>
@@ -15758,7 +15750,7 @@
     </unit>
     <unit id="wiki.exercises.pushupHub.title">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.html:137,139</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.html:142,144</note>
       </notes>
       <segment>
         <source> Liegestütze (alle Varianten) </source>
@@ -15766,7 +15758,7 @@
     </unit>
     <unit id="wiki.exercises.pushupHub.subtitle">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.html:141,143</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.html:146,148</note>
       </notes>
       <segment>
         <source> Eigenes Wiki mit über 20 Liegestützvarianten </source>
@@ -15774,7 +15766,7 @@
     </unit>
     <unit id="wiki.exercises.pushupHub.body">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.html:146,149</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.html:151,154</note>
       </notes>
       <segment>
         <source> Vom Standard-Liegestütz bis Planche und Archer — alle Varianten mit Ausführung, Tipps und Schwierigkeitsgrad findest du im dedizierten Liegestütz-Wiki. </source>
@@ -15782,7 +15774,7 @@
     </unit>
     <unit id="wiki.exercises.pushupHub.cta">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.html:157,159</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.html:162,164</note>
       </notes>
       <segment>
         <source>Zum Liegestütz-Wiki</source>
@@ -15790,15 +15782,15 @@
     </unit>
     <unit id="wiki.exercises.search.pushupHits">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.html:160,161</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.html:166,168</note>
       </notes>
       <segment>
-        <source>Passende Varianten</source>
+        <source> Passende Varianten </source>
       </segment>
     </unit>
     <unit id="wiki.exercises.viewDetail">
       <notes>
-        <note category="location">web/src/app/wiki/exercises-page.component.html:234,236</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.html:239,241</note>
       </notes>
       <segment>
         <source>Detailseite öffnen</source>
@@ -16175,7 +16167,7 @@
     </unit>
     <unit id="workouts.editor.unit.seconds">
       <notes>
-        <note category="location">web/src/app/workouts/workout-form.ts:172</note>
+        <note category="location">web/src/app/workouts/workout-form.ts:174</note>
       </notes>
       <segment>
         <source>Sek.</source>
@@ -16183,7 +16175,7 @@
     </unit>
     <unit id="workouts.editor.unit.meters">
       <notes>
-        <note category="location">web/src/app/workouts/workout-form.ts:175</note>
+        <note category="location">web/src/app/workouts/workout-form.ts:177</note>
       </notes>
       <segment>
         <source>m</source>
@@ -16191,7 +16183,7 @@
     </unit>
     <unit id="workouts.editor.unit.reps">
       <notes>
-        <note category="location">web/src/app/workouts/workout-form.ts:177</note>
+        <note category="location">web/src/app/workouts/workout-form.ts:179</note>
       </notes>
       <segment>
         <source>Wdh.</source>

@@ -1819,24 +1819,6 @@
         <target>Suivez les répétitions, les tendances et les séquences avec Pushup Tracker.</target>
       </segment>
     </unit>
-    <unit id="sw.update.available">
-      <notes>
-        <note category="location">web/src/app/app.ts:243</note>
-      </notes>
-      <segment state="translated">
-        <source>Neue Version verfügbar</source>
-        <target>Nouvelle version disponible</target>
-      </segment>
-    </unit>
-    <unit id="sw.update.reload">
-      <notes>
-        <note category="location">web/src/app/app.ts:244</note>
-      </notes>
-      <segment state="translated">
-        <source>Neu laden</source>
-        <target>Recharger</target>
-      </segment>
-    </unit>
     <unit id="feedback.success">
       <notes>
         <note category="location">web/src/app/app.ts:302</note>
@@ -10466,24 +10448,6 @@
         <target>Coche retirée — tes propres saisies restent conservées.</target>
       </segment>
     </unit>
-    <unit id="sw.update.buttonAria">
-      <segment state="translated">
-        <source>Neue Version verfügbar – jetzt neu laden</source>
-        <target>Nouvelle version disponible – recharger maintenant</target>
-      </segment>
-    </unit>
-    <unit id="sw.update.unrecoverable">
-      <segment state="translated">
-        <source>App-Daten beschädigt – bitte neu laden</source>
-        <target>Données de l'application corrompues – veuillez recharger</target>
-      </segment>
-    </unit>
-    <unit id="sw.update.recoverButtonAria">
-      <segment state="translated">
-        <source>App-Daten beschädigt – jetzt neu laden</source>
-        <target>Données de l'application corrompues – recharger maintenant</target>
-      </segment>
-    </unit>
     <unit id="dashboard.goalFill.fillPlan">
       <segment state="translated">
         <source>Alle Übungen eintragen</source>
@@ -15024,6 +14988,30 @@
       <segment state="initial">
         <source>Neu: Übungssuche und Anleitungen direkt in deinen Sessions</source>
         <target>Neu: Übungssuche und Anleitungen direkt in deinen Sessions</target>
+      </segment>
+    </unit>
+    <unit id="appUpdate.banner.unrecoverable">
+      <segment state="initial">
+        <source>App-Daten sind veraltet – bitte neu laden.</source>
+        <target>App-Daten sind veraltet – bitte neu laden.</target>
+      </segment>
+    </unit>
+    <unit id="appUpdate.banner.ready">
+      <segment state="initial">
+        <source>Eine neue Version ist verfügbar.</source>
+        <target>Eine neue Version ist verfügbar.</target>
+      </segment>
+    </unit>
+    <unit id="appUpdate.banner.later">
+      <segment state="initial">
+        <source> Später </source>
+        <target> Später </target>
+      </segment>
+    </unit>
+    <unit id="appUpdate.banner.reload">
+      <segment state="initial">
+        <source> Neu laden </source>
+        <target> Neu laden </target>
       </segment>
     </unit>
 </file>

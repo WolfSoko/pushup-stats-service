@@ -6,6 +6,7 @@ import {
   RegisterComponent,
 } from '@pu-auth/auth';
 import { appRoutes } from './app.routes';
+import { BLOCKS_APP_UPDATE } from './core/app-update/app-update-route-data';
 import { LandingPageComponent } from './marketing/shell/landing-page.component';
 import { AnalysisPageComponent } from './stats/shell/analysis-page.component';
 import { EntriesPageComponent } from './stats/shell/entries-page.component';
@@ -252,5 +253,20 @@ describe('appRoutes', () => {
     // visitors and social-card crawlers can open /u/<uid> directly.
     const route = appRoutes.find((r) => r.path === 'u/:uid');
     expect(route?.canActivate).toBeUndefined();
+  });
+
+  it('should block app updates on session and editor routes only', () => {
+    // given
+    const blocking = appRoutes
+      .filter((r) => r.data?.[BLOCKS_APP_UPDATE] === true)
+      .map((r) => r.path);
+
+    // when / then
+    expect(blocking).toEqual([
+      'training-plans/:slug/session',
+      'workouts/new',
+      'workouts/:id/edit',
+      'workouts/:id/run',
+    ]);
   });
 });

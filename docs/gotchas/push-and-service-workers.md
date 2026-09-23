@@ -4,63 +4,17 @@
 
 In-app reminders use `ReminderService` with `setInterval`. Server-side reminders come from the `dispatchPushReminders` Cloud Function (runs every 5 min via Web Push).
 
-## The update prompt must not live in a snackbar alone
+## App updates (ngsw): banner, navigation fallback, chunk recovery
 
-`MatSnackBar` is a singleton: every `open()` dismisses whatever is currently
-displayed. The app opens routine toasts from ~a dozen call sites (quick-add,
-training plans, feedback, reminders), and `VERSION_READY` fires **exactly once**
-per downloaded version — so the sticky reload prompt was regularly wiped by the
-next "Eintrag gespeichert" toast and never came back. Users reported never
-seeing an update notice at all.
+Everything lives in `web/src/app/core/app-update/`:
 
-`SwUpdateService` (`web/src/app/core/sw-update.service.ts`) latches the event
-into an `updateAvailable` signal that stays set until the user reloads. The
-toolbar renders it as a persistent button; the snackbar is only the loud,
-transient half of the notice. Anything that has to survive a competing toast
-belongs in that signal, not in the snackbar.
-
-The service also re-opens the prompt (and skips the manifest check) on
-`visibilitychange → visible`, which is what actually reaches a PWA the user
-resumes hours after a deploy — background tabs get their `interval` timers
-throttled, so the 10-minute poll alone is not enough.
-
-## ngsw update prompt: `activateUpdate()` before `reload()`
-
-`SwUpdate.versionUpdates` fires `VERSION_READY` when ngsw has downloaded a new version, but the new worker stays in `installed/waiting` until the **last** client of the old worker is gone. A plain `window.location.reload()` does not qualify — it just opens another navigation against the still-active old worker, so the user taps "Neu laden", the page reloads, and they keep seeing the old build until every tab is closed.
-
-Always call `await swUpdate.activateUpdate()` first, then `reload()`
-(`SwUpdateService.applyUpdate()`):
-
-```ts
-try {
-  await swUpdate.activateUpdate();
-} catch {
-  // no waiting worker (UNRECOVERABLE_STATE) — reload anyway
-}
-window.location.reload();
-```
-
-`SwUpdate.unrecoverable` needs the same treatment: ngsw has lost the version it
-was serving and cannot self-heal, so the page keeps running on stale in-memory
-code until someone reloads it. Left unhandled it looks exactly like "the app
-stopped updating".
-
-## ngsw doesn't poll — long-lived PWA/TWA sessions miss updates
-
-`SwUpdate` only checks the manifest once on app stabilisation (`registerWhenStable:2000` in `app.config.ts`). PWA / TWA users who never close the tab consequently **never** receive `VERSION_READY` after a deploy. Poll explicitly, and pair the timer with a visibility hook:
-
-```ts
-merge(
-  interval(10 * 60 * 1000),
-  fromEvent(document, 'visibilitychange').pipe(
-    filter(() => document.visibilityState === 'visible')
-  )
-)
-  .pipe(takeUntilDestroyed(this.destroyRef))
-  .subscribe(() => void swUpdate.checkForUpdate());
-```
-
-Symptom that points here: "the SW update notification stopped working after deploys" while DevTools shows the new ngsw is registered but stuck in `waiting`.
+- **`AppUpdateStore`** holds the state (`current` / `ready` / `unrecoverable`, "Später" dismissed, current route blocks updates). **`AppUpdateService`** feeds it from `SwUpdate` and drives the fallback; **`AppUpdateBannerComponent`** sits under the toolbar and only binds the store.
+- **Never put the notice in a `MatSnackBar`.** The snackbar is a singleton, every `open()` dismisses the current one, and `VERSION_READY` fires once per version — the old prompt was regularly wiped by the next routine toast and never came back.
+- **Silent fallback:** while an update is pending, the next router navigation to another path (query-param-only changes excluded) becomes a full page load of its target (`NavigationStart` → `PageReloadService.reload(url)`), unless the page being left carries `blocksAppUpdate` route data (`blocksAppUpdateData` — sessions and the workout editor) or a `MatDialog` is open. New pages where a reload would destroy work in progress need that route data too.
+- **`activateUpdate()` before reloading.** A waiting ngsw version only takes over once every client of the old one is gone; a plain `location.reload()` is just another navigation against the old worker, so the user would reload into the same stale build. `PageReloadService` is the only place that reloads — go through it.
+- **ngsw never re-checks on its own** (one check at registration, `registerWhenStable:2000`). Installed PWA/TWA sessions get resumed, not restarted, so the service polls every 30 min and on `visibilitychange → visible` (throttled to one check per 5 min) — background tabs throttle timers, the visibility hook is what reaches a resumed app.
+- **`SwUpdate.unrecoverable`** (ngsw lost the cached version) gets the same banner with its own text and no "Später"; a later `VERSION_READY` must not downgrade it.
+- **Stale lazy chunks without a SW** (first visit, private mode): the first lazy route after a deploy fails with `Failed to fetch dynamically imported module`. `ChunkLoadRecoveryService` reloads into the target URL once, guarded by a `sessionStorage` timestamp so a genuinely broken deploy cannot loop.
 
 ## Browser API quirks
 

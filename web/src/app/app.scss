@@ -95,19 +95,6 @@ mat-sidenav-content {
     flex: 1 1 auto;
   }
 
-  // The reload prompt's snackbar half can be pushed aside by any other
-  // toast, so this button is the notice that has to survive on its own.
-  // The pulse is what makes it register as new rather than as one more
-  // permanent toolbar icon.
-  .sw-update-button {
-    color: var(--mat-sys-primary, #7aa0ff);
-    animation: sw-update-pulse 2.4s ease-in-out infinite;
-
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-  }
-
   .brand-link {
     display: inline-flex;
     align-items: center;
@@ -256,17 +243,5 @@ html.light-theme {
 
   .app-footer {
     border-top-color: rgba(148, 163, 184, 0.25);
-  }
-}
-
-@keyframes sw-update-pulse {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.55;
-    transform: scale(0.88);
   }
 }

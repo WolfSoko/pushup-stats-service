@@ -113,19 +113,6 @@
           </p>
         </div>
       </ng-template>
-      } @if (swUpdateAvailable()) {
-      <button
-        mat-icon-button
-        class="sw-update-button"
-        data-testid="sw-update-button"
-        [attr.aria-label]="
-          swUpdateUnrecoverable() ? swUpdateRecoverAriaLabel : swUpdateAriaLabel
-        "
-        [puBusy]="swUpdateApplying.busy()"
-        (click)="applyServiceWorkerUpdate()"
-      >
-        <mat-icon>system_update_alt</mat-icon>
-      </button>
       }
       <app-theme-toggle />
       <app-ai-assistant-nav-button />
@@ -146,6 +133,8 @@
         [unreadNotifications]="unreadNotifications()"
       />
     </mat-toolbar>
+
+    <app-update-banner />
 
     <main class="app-content">
       <router-outlet />
