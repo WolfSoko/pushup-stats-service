@@ -22,6 +22,7 @@ import { UserConfigStore } from '../core/user-config.store';
 import { WorkoutCardComponent } from './workout-card.component';
 import { WorkoutCardSkeletonComponent } from './workout-card-skeleton.component';
 import { workoutRejectionMessage } from './workouts-messages';
+import { WorkoutRemindersStore } from './reminders/workout-reminders.store';
 import { WorkoutsStore } from './workouts.store';
 
 /**
@@ -45,6 +46,7 @@ import { WorkoutsStore } from './workouts.store';
 })
 export class WorkoutsPageComponent {
   protected readonly store = inject(WorkoutsStore);
+  protected readonly reminders = inject(WorkoutRemindersStore);
   protected readonly skeletonRows = [0, 1, 2];
   private readonly config = inject(UserConfigStore);
   private readonly user = inject(UserContextService);
@@ -118,6 +120,18 @@ export class WorkoutsPageComponent {
       autoFocus: 'dialog',
     });
     if ((await firstValueFrom(ref.afterClosed())) !== true) return;
-    await this.store.remove(workout.id);
+    if (await this.store.remove(workout.id)) {
+      await this.reminders.remove(workout.id);
+    }
+  }
+
+  protected async editReminder(workout: Workout): Promise<void> {
+    const { WorkoutReminderDialogComponent } =
+      await import('./reminders/workout-reminder-dialog.component');
+    if (this.destroyed) return;
+    this.dialog.open(WorkoutReminderDialogComponent, {
+      data: { workoutId: workout.id, title: workout.title },
+      autoFocus: 'dialog',
+    });
   }
 }

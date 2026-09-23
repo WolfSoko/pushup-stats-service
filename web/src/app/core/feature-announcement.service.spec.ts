@@ -14,6 +14,7 @@ import {
   INBOX_ANNOUNCEMENT,
   isDashboard,
   REBRAND_ANNOUNCEMENT,
+  WORKOUT_REMINDERS_ANNOUNCEMENT,
   WORKOUTS_ANNOUNCEMENT,
 } from './feature-announcement.service';
 import { UserConfigStore } from './user-config.store';
@@ -39,6 +40,7 @@ describe('ANNOUNCEMENTS', () => {
     expect(new Set(ids).size).toBe(ids.length);
     expect(ids).toContain(WORKOUTS_ANNOUNCEMENT);
     expect(ids).toContain(REBRAND_ANNOUNCEMENT);
+    expect(ids).toContain(WORKOUT_REMINDERS_ANNOUNCEMENT);
   });
 
   it.each(

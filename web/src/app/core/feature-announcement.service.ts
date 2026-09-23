@@ -33,6 +33,7 @@ export const WORKOUTS_ANNOUNCEMENT = 'workouts-2026-09';
 export const INBOX_ANNOUNCEMENT = 'inbox-achievements-2026-09';
 export const REBRAND_ANNOUNCEMENT = 'rebrand-2026-09';
 export const EXERCISE_SEARCH_ANNOUNCEMENT = 'exercise-search-2026-09';
+export const WORKOUT_REMINDERS_ANNOUNCEMENT = 'workout-reminders-2026-09';
 
 /**
  * Every announcement, oldest first. A new feature adds an entry with a
@@ -71,6 +72,15 @@ export const ANNOUNCEMENTS: ReadonlyArray<FeatureAnnouncement> = [
     id: EXERCISE_SEARCH_ANNOUNCEMENT,
     label: $localize`:@@announcements.exerciseSearch:Neu: Übungssuche und Anleitungen direkt in deinen Sessions`,
     url: '/wiki/uebungen?suche',
+  },
+  {
+    id: WORKOUT_REMINDERS_ANNOUNCEMENT,
+    load: () =>
+      import('../workouts/reminders/workout-reminders-intro-dialog.component').then(
+        (m) => m.WorkoutRemindersIntroDialogComponent
+      ),
+    label: $localize`:@@announcements.workoutReminders:Neu: Erinnerungen für deine Sessions`,
+    url: '/workouts',
   },
 ];
 

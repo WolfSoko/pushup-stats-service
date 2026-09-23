@@ -5989,7 +5989,7 @@
     </unit>
     <unit id="announcements.workouts">
       <notes>
-        <note category="location">web/src/app/core/feature-announcement.service.ts:49</note>
+        <note category="location">web/src/app/core/feature-announcement.service.ts:50</note>
       </notes>
       <segment>
         <source>Neu: eigene Sessions zusammenstellen</source>
@@ -5997,7 +5997,7 @@
     </unit>
     <unit id="announcements.inbox">
       <notes>
-        <note category="location">web/src/app/core/feature-announcement.service.ts:58</note>
+        <note category="location">web/src/app/core/feature-announcement.service.ts:59</note>
       </notes>
       <segment>
         <source>Neu: Nachrichten und deine Abzeichen</source>
@@ -6005,7 +6005,7 @@
     </unit>
     <unit id="announcements.rebrand">
       <notes>
-        <note category="location">web/src/app/core/feature-announcement.service.ts:67</note>
+        <note category="location">web/src/app/core/feature-announcement.service.ts:68</note>
       </notes>
       <segment>
         <source>Diese App bekommt einen neuen Namen</source>
@@ -6013,10 +6013,18 @@
     </unit>
     <unit id="announcements.exerciseSearch">
       <notes>
-        <note category="location">web/src/app/core/feature-announcement.service.ts:72</note>
+        <note category="location">web/src/app/core/feature-announcement.service.ts:73</note>
       </notes>
       <segment>
         <source>Neu: Übungssuche und Anleitungen direkt in deinen Sessions</source>
+      </segment>
+    </unit>
+    <unit id="announcements.workoutReminders">
+      <notes>
+        <note category="location">web/src/app/core/feature-announcement.service.ts:82</note>
+      </notes>
+      <segment>
+        <source>Neu: Erinnerungen für deine Sessions</source>
       </segment>
     </unit>
     <unit id="feedback.dialog.title">
@@ -6440,7 +6448,7 @@
         <note category="location">web/src/app/friends/friends-list.component.ts:124</note>
         <note category="location">web/src/app/friends/friends-page.component.ts:230</note>
         <note category="location">web/src/app/friends/friends-teaser-card.component.ts:225</note>
-        <note category="location">web/src/app/workouts/workout-card.component.ts:174</note>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:204</note>
         <note category="location">web/src/app/workouts/workout-share-dialog.component.ts:122</note>
       </notes>
       <segment>
@@ -7941,6 +7949,94 @@
         <source> Als Nächstes: 20 Russian Twists </source>
       </segment>
     </unit>
+    <unit id="landing.workoutReminders.eyebrow">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workout-reminders-feature-section/workout-reminders-feature-section.component.html:4,6</note>
+      </notes>
+      <segment>
+        <source> Neu · Session-Erinnerungen </source>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.headline">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workout-reminders-feature-section/workout-reminders-feature-section.component.html:7,9</note>
+      </notes>
+      <segment>
+        <source> Deine Session meldet sich — genau dann, wenn du trainieren willst. </source>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.desc">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workout-reminders-feature-section/workout-reminders-feature-section.component.html:10,15</note>
+      </notes>
+      <segment>
+        <source> Gib jeder Session ihren eigenen Rhythmus: alle zwei Tage um 15:00 oder jeden Montag, Mittwoch und Freitag. Zur gewählten Zeit kommt eine Push-Benachrichtigung aufs Handy — ein Tipp, und die Session startet. </source>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.chip.rhythm">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workout-reminders-feature-section/workout-reminders-feature-section.component.html:19,23</note>
+      </notes>
+      <segment>
+        <source>Alle paar Tage oder an festen Wochentagen</source>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.chip.time">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workout-reminders-feature-section/workout-reminders-feature-section.component.html:25,29</note>
+      </notes>
+      <segment>
+        <source>Deine Uhrzeit, auch bei Zeitumstellung</source>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.chip.push">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workout-reminders-feature-section/workout-reminders-feature-section.component.html:31,37</note>
+      </notes>
+      <segment>
+        <source>Push aufs Handy — ein Tipp startet die Session</source>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.cta">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workout-reminders-feature-section/workout-reminders-feature-section.component.html:42,46</note>
+      </notes>
+      <segment>
+        <source>Erinnerung einrichten</source>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.mock.title">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workout-reminders-feature-section/workout-reminders-feature-section.component.html:50,52</note>
+      </notes>
+      <segment>
+        <source>⏰ Ganzkörper kurz</source>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.mock.subtitle">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workout-reminders-feature-section/workout-reminders-feature-section.component.html:53,55</note>
+      </notes>
+      <segment>
+        <source>Alle 2 Tage</source>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.mock.body">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workout-reminders-feature-section/workout-reminders-feature-section.component.html:62,65</note>
+      </notes>
+      <segment>
+        <source>Zeit für deine Session. Tippe, um direkt loszulegen.</source>
+      </segment>
+    </unit>
+    <unit id="landing.workoutReminders.mock.action">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workout-reminders-feature-section/workout-reminders-feature-section.component.html:69,72</note>
+      </notes>
+      <segment>
+        <source>Session starten</source>
+      </segment>
+    </unit>
     <unit id="landing.workouts.mock.title">
       <notes>
         <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:6,8</note>
@@ -8579,7 +8675,7 @@
     </unit>
     <unit id="landing.trust.bar">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:307,311</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:314,318</note>
       </notes>
       <segment>
         <source> ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first </source>
@@ -8587,7 +8683,7 @@
     </unit>
     <unit id="landing.features.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:312,313</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:319,320</note>
       </notes>
       <segment>
         <source>Funktionen</source>
@@ -8595,7 +8691,7 @@
     </unit>
     <unit id="landing.feature.autoCount.imageAlt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:319,320</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:326,327</note>
       </notes>
       <segment>
         <source>Sportlerin bei einer sauberen Liegestütze auf Holzboden</source>
@@ -8603,7 +8699,7 @@
     </unit>
     <unit id="landing.feature.autoCount.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:330,332</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:337,339</note>
       </notes>
       <segment>
         <source>Reps automatisch zählen</source>
@@ -8611,7 +8707,7 @@
     </unit>
     <unit id="landing.feature.autoCount.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:334,339</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:341,346</note>
       </notes>
       <segment>
         <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
@@ -8619,7 +8715,7 @@
     </unit>
     <unit id="landing.feature.analytics.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:402,404</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:409,411</note>
       </notes>
       <segment>
         <source>Charts, Trends &amp; alle Übungen</source>
@@ -8627,7 +8723,7 @@
     </unit>
     <unit id="landing.feature.analytics.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:406,410</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:413,417</note>
       </notes>
       <segment>
         <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
@@ -8635,7 +8731,7 @@
     </unit>
     <unit id="landing.feature.goals.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:506,508</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:513,515</note>
       </notes>
       <segment>
         <source>Tages-, Wochen- &amp; Monatsziele</source>
@@ -8643,7 +8739,7 @@
     </unit>
     <unit id="landing.feature.goals.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:510,513</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:517,520</note>
       </notes>
       <segment>
         <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
@@ -8651,7 +8747,7 @@
     </unit>
     <unit id="landing.feature.heatmap.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:555,557</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:562,564</note>
       </notes>
       <segment>
         <source>Heatmap-Kalender</source>
@@ -8659,7 +8755,7 @@
     </unit>
     <unit id="landing.feature.heatmap.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:559,563</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:566,570</note>
       </notes>
       <segment>
         <source>Sieh auf einen Blick, an welchen Tagen du wie hart trainiert hast. Lücken werden sichtbar – Konsistenz wird zur Gewohnheit.</source>
@@ -8667,7 +8763,7 @@
     </unit>
     <unit id="landing.feature.multiset.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:650,652</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:657,659</note>
       </notes>
       <segment>
         <source>Sätze &amp; Intervalle</source>
@@ -8675,7 +8771,7 @@
     </unit>
     <unit id="landing.feature.multiset.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:654,657</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:661,664</note>
       </notes>
       <segment>
         <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
@@ -8683,7 +8779,7 @@
     </unit>
     <unit id="landing.feature.quick.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:666,668</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:673,675</note>
       </notes>
       <segment>
         <source>Quick Logging mit FAB</source>
@@ -8691,7 +8787,7 @@
     </unit>
     <unit id="landing.feature.quick.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:670,673</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:677,680</note>
       </notes>
       <segment>
         <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
@@ -8699,7 +8795,7 @@
     </unit>
     <unit id="landing.feature.adaptive.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:681,683</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:688,690</note>
       </notes>
       <segment>
         <source>Adaptive Vorschläge</source>
@@ -8707,7 +8803,7 @@
     </unit>
     <unit id="landing.feature.adaptive.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:685,689</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:692,696</note>
       </notes>
       <segment>
         <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
@@ -8715,7 +8811,7 @@
     </unit>
     <unit id="landing.feature.pwa.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:696,698</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:703,705</note>
       </notes>
       <segment>
         <source>App-Installation, Live-Sync &amp; Teilen</source>
@@ -8723,7 +8819,7 @@
     </unit>
     <unit id="landing.feature.pwa.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:700,703</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:707,710</note>
       </notes>
       <segment>
         <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
@@ -8731,7 +8827,7 @@
     </unit>
     <unit id="landing.feature.pwa.installed">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:708,710</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:715,717</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </source>
@@ -8739,7 +8835,7 @@
     </unit>
     <unit id="landing.feature.pwa.install">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:721,723</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:728,730</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </source>
@@ -8747,7 +8843,7 @@
     </unit>
     <unit id="landing.feature.pwa.iosHint">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:728,731</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:735,738</note>
       </notes>
       <segment>
         <source> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </source>
@@ -8755,7 +8851,7 @@
     </unit>
     <unit id="landing.feature.privacy.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:739,741</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:746,748</note>
       </notes>
       <segment>
         <source>Privacy first &amp; 100 % kostenlos</source>
@@ -8763,7 +8859,7 @@
     </unit>
     <unit id="landing.feature.privacy.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:743,747</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:750,754</note>
       </notes>
       <segment>
         <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
@@ -8771,7 +8867,7 @@
     </unit>
     <unit id="ads.landing.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:750</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:757</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -8779,7 +8875,7 @@
     </unit>
     <unit id="landing.ai.eyebrow">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:758,759</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:765,766</note>
       </notes>
       <segment>
         <source>AI ready</source>
@@ -8787,7 +8883,7 @@
     </unit>
     <unit id="landing.ai.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:760,762</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:767,769</note>
       </notes>
       <segment>
         <source> Bereit für deinen KI-Coach </source>
@@ -8795,7 +8891,7 @@
     </unit>
     <unit id="landing.ai.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:763,767</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:770,774</note>
       </notes>
       <segment>
         <source> Die App spricht das offene AG-UI-Protokoll: Ein KI-Agent kann deinen Tagesfortschritt abfragen, Sätze für dich eintragen und dich durch die App navigieren. Die Oberfläche baut auf CopilotKit für Angular auf – du verbindest einfach deinen eigenen Agenten. </source>
@@ -8803,7 +8899,7 @@
     </unit>
     <unit id="landing.ai.chip.protocol">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:771,774</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:778,781</note>
       </notes>
       <segment>
         <source>AG-UI-Protokoll</source>
@@ -8811,7 +8907,7 @@
     </unit>
     <unit id="landing.ai.chip.copilotkit">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:775,778</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:782,785</note>
       </notes>
       <segment>
         <source>CopilotKit für Angular</source>
@@ -8819,7 +8915,7 @@
     </unit>
     <unit id="landing.ai.chip.tools">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:780,783</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:787,790</note>
       </notes>
       <segment>
         <source>Eintragen &amp; Abfragen per Tool</source>
@@ -8827,7 +8923,7 @@
     </unit>
     <unit id="landing.ai.chip.onDevice">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:785,788</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:792,795</note>
       </notes>
       <segment>
         <source>Kamera-KI ohne Cloud</source>
@@ -8835,7 +8931,7 @@
     </unit>
     <unit id="landing.ai.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:796,799</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:803,806</note>
       </notes>
       <segment>
         <source>KI-Coach öffnen</source>
@@ -8843,7 +8939,7 @@
     </unit>
     <unit id="landing.preview.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:804,806</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:811,813</note>
       </notes>
       <segment>
         <source> Deine Statistik auf einen Blick </source>
@@ -8851,7 +8947,7 @@
     </unit>
     <unit id="landing.preview.alt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:811,812</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:818,819</note>
       </notes>
       <segment>
         <source>Vorschau der Statistikansicht</source>
@@ -8859,7 +8955,7 @@
     </unit>
     <unit id="landing.discover.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:952,953</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:959,960</note>
       </notes>
       <segment>
         <source>Mehr entdecken</source>
@@ -8867,7 +8963,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:958,960</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:965,967</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -8875,7 +8971,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:962,965</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:969,972</note>
       </notes>
       <segment>
         <source> Vergleiche dich mit der Community: Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
@@ -8883,7 +8979,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:972,975</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:979,982</note>
       </notes>
       <segment>
         <source>Zur Bestenliste</source>
@@ -8891,7 +8987,7 @@
     </unit>
     <unit id="landing.discover.blog.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:981,983</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:988,990</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -8899,7 +8995,7 @@
     </unit>
     <unit id="landing.discover.blog.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:985,988</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:992,995</note>
       </notes>
       <segment>
         <source> Tipps, Hintergrundwissen und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. Viele Artikel verlinken direkt auf den passenden Trainingsplan. </source>
@@ -8907,7 +9003,7 @@
     </unit>
     <unit id="landing.discover.blog.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:995,997</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:1002,1004</note>
       </notes>
       <segment>
         <source>Zum Blog</source>
@@ -10236,6 +10332,7 @@
     <unit id="reminder.weekdays.aria">
       <notes>
         <note category="location">web/src/app/reminders/shell/reminder-weekdays.component.ts:26,27</note>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-dialog.component.html:62,63</note>
       </notes>
       <segment>
         <source>Wochentage</source>
@@ -10252,6 +10349,7 @@
     <unit id="reminder.weekday.mon">
       <notes>
         <note category="location">web/src/app/reminders/shell/reminder-weekdays.component.ts:61</note>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-summary.ts:8</note>
       </notes>
       <segment>
         <source>Mo</source>
@@ -10260,6 +10358,7 @@
     <unit id="reminder.weekday.tue">
       <notes>
         <note category="location">web/src/app/reminders/shell/reminder-weekdays.component.ts:62</note>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-summary.ts:9</note>
       </notes>
       <segment>
         <source>Di</source>
@@ -10268,6 +10367,7 @@
     <unit id="reminder.weekday.wed">
       <notes>
         <note category="location">web/src/app/reminders/shell/reminder-weekdays.component.ts:63</note>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-summary.ts:10</note>
       </notes>
       <segment>
         <source>Mi</source>
@@ -10276,6 +10376,7 @@
     <unit id="reminder.weekday.thu">
       <notes>
         <note category="location">web/src/app/reminders/shell/reminder-weekdays.component.ts:64</note>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-summary.ts:11</note>
       </notes>
       <segment>
         <source>Do</source>
@@ -10284,6 +10385,7 @@
     <unit id="reminder.weekday.fri">
       <notes>
         <note category="location">web/src/app/reminders/shell/reminder-weekdays.component.ts:65</note>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-summary.ts:12</note>
       </notes>
       <segment>
         <source>Fr</source>
@@ -10292,6 +10394,7 @@
     <unit id="reminder.weekday.sat">
       <notes>
         <note category="location">web/src/app/reminders/shell/reminder-weekdays.component.ts:66</note>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-summary.ts:13</note>
       </notes>
       <segment>
         <source>Sa</source>
@@ -10300,6 +10403,7 @@
     <unit id="reminder.weekday.sun">
       <notes>
         <note category="location">web/src/app/reminders/shell/reminder-weekdays.component.ts:67</note>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-summary.ts:14</note>
       </notes>
       <segment>
         <source>So</source>
@@ -15868,6 +15972,248 @@
         <source>Detailseite öffnen</source>
       </segment>
     </unit>
+    <unit id="workouts.reminder.title">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-dialog.component.html:1,2</note>
+      </notes>
+      <segment>
+        <source>Erinnerung</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.enabled">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-dialog.component.html:12,15</note>
+      </notes>
+      <segment>
+        <source>Erinnerung aktiv</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.kind.aria">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-dialog.component.html:18,19</note>
+      </notes>
+      <segment>
+        <source>Rhythmus</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.kind.interval">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-dialog.component.html:24,26</note>
+      </notes>
+      <segment>
+        <source>Alle paar Tage</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.kind.weekdays">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-dialog.component.html:27,29</note>
+      </notes>
+      <segment>
+        <source>Wochentage</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.everyDays">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-dialog.component.html:34,36</note>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-summary.ts:27</note>
+      </notes>
+      <segment>
+        <source>Alle … Tage</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.startDate">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-dialog.component.html:47,49</note>
+      </notes>
+      <segment>
+        <source>Ab</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.time">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-dialog.component.html:76,78</note>
+      </notes>
+      <segment>
+        <source>Uhrzeit</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.next">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-dialog.component.html:90,92</note>
+      </notes>
+      <segment>
+        <source>Nächste Erinnerung: <ph id="0" equiv="INTERPOLATION" disp="{{ next }}"/></source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.pushOff">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-dialog.component.html:98,101</note>
+      </notes>
+      <segment>
+        <source> Push ist auf diesem Gerät aus. Dann erinnert dich die App nur, solange sie geöffnet ist. </source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.enablePush">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-dialog.component.html:110,113</note>
+      </notes>
+      <segment>
+        <source>Push aktivieren</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.failed">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-dialog.component.html:118,121</note>
+      </notes>
+      <segment>
+        <source> Das hat nicht geklappt. Bitte versuch es noch einmal. </source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.remove">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-dialog.component.html:133,137</note>
+      </notes>
+      <segment>
+        <source> Entfernen </source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.cancel">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-dialog.component.html:142,145</note>
+      </notes>
+      <segment>
+        <source> Abbrechen </source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.save">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-dialog.component.html:153,155</note>
+      </notes>
+      <segment>
+        <source> Speichern </source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.notificationBody">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-in-app.service.ts:87</note>
+      </notes>
+      <segment>
+        <source>Zeit für deine Session. Tippe, um direkt loszulegen.</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.daily">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-summary.ts:26</note>
+        <note category="location">web/src/app/workouts/reminders/workout-reminder-summary.ts:29</note>
+      </notes>
+      <segment>
+        <source>Täglich</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.badge">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminders-intro-dialog.component.ts:30,31</note>
+      </notes>
+      <segment>
+        <source>Neu</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.title">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminders-intro-dialog.component.ts:31,33</note>
+      </notes>
+      <segment>
+        <source>Session-Erinnerungen</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.stepCount">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminders-intro-dialog.component.ts:47,49</note>
+      </notes>
+      <segment>
+        <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.later">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminders-intro-dialog.component.ts:58,60</note>
+      </notes>
+      <segment>
+        <source> Später </source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.back">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminders-intro-dialog.component.ts:67,70</note>
+      </notes>
+      <segment>
+        <source>Zurück</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.start">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminders-intro-dialog.component.ts:79,82</note>
+      </notes>
+      <segment>
+        <source>Zu meinen Sessions</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.next">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminders-intro-dialog.component.ts:89,90</note>
+      </notes>
+      <segment>
+        <source>Weiter</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.step1.title">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminders-intro-dialog.component.ts:164</note>
+      </notes>
+      <segment>
+        <source>Erinnerungen für deine Sessions</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.step1.body">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminders-intro-dialog.component.ts:165</note>
+      </notes>
+      <segment>
+        <source>Jede Session kann dich jetzt ans Training erinnern — zum Beispiel alle 2 Tage um 15:00 oder jeden Montag, Mittwoch und Freitag.</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.step2.title">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminders-intro-dialog.component.ts:169</note>
+      </notes>
+      <segment>
+        <source>So richtest du sie ein</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.step2.body">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminders-intro-dialog.component.ts:170</note>
+      </notes>
+      <segment>
+        <source>Tippe auf der Session-Karte auf das Wecker-Symbol, wähle den Rhythmus und die Uhrzeit — fertig.</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.step3.title">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminders-intro-dialog.component.ts:174</note>
+      </notes>
+      <segment>
+        <source>Push aufs Handy</source>
+      </segment>
+    </unit>
+    <unit id="workouts.reminder.intro.step3.body">
+      <notes>
+        <note category="location">web/src/app/workouts/reminders/workout-reminders-intro-dialog.component.ts:175</note>
+      </notes>
+      <segment>
+        <source>Zur gewählten Zeit kommt eine Push-Benachrichtigung, ein Tipp startet die Session. Ohne Push erinnert dich die App, solange sie geöffnet ist.</source>
+      </segment>
+    </unit>
     <unit id="workoutSession.title">
       <notes>
         <note category="location">web/src/app/workouts/session/workout-session.component.html:4,6</note>
@@ -15903,7 +16249,7 @@
     </unit>
     <unit id="workouts.card.from">
       <notes>
-        <note category="location">web/src/app/workouts/workout-card.component.ts:46,47</note>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:47,48</note>
       </notes>
       <segment>
         <source>Von <ph id="0" equiv="INTERPOLATION" disp="{{ sourceName() }}"/></source>
@@ -15911,7 +16257,7 @@
     </unit>
     <unit id="workouts.card.onProfile">
       <notes>
-        <note category="location">web/src/app/workouts/workout-card.component.ts:52,54</note>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:59,61</note>
       </notes>
       <segment>
         <source>Auf deinem Profil</source>
@@ -15919,7 +16265,7 @@
     </unit>
     <unit id="workouts.card.run">
       <notes>
-        <note category="location">web/src/app/workouts/workout-card.component.ts:65,68</note>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:72,75</note>
       </notes>
       <segment>
         <source>Starten</source>
@@ -15927,7 +16273,7 @@
     </unit>
     <unit id="workouts.card.edit">
       <notes>
-        <note category="location">web/src/app/workouts/workout-card.component.ts:73,75</note>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:80,82</note>
       </notes>
       <segment>
         <source>Bearbeiten</source>
@@ -15935,7 +16281,7 @@
     </unit>
     <unit id="workouts.card.share">
       <notes>
-        <note category="location">web/src/app/workouts/workout-card.component.ts:160</note>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:179</note>
       </notes>
       <segment>
         <source>An Freunde schicken</source>
@@ -15943,15 +16289,31 @@
     </unit>
     <unit id="workouts.card.delete">
       <notes>
-        <note category="location">web/src/app/workouts/workout-card.component.ts:161</note>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:180</note>
       </notes>
       <segment>
         <source>Löschen</source>
       </segment>
     </unit>
+    <unit id="workouts.card.reminderEdit">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:193</note>
+      </notes>
+      <segment>
+        <source>Erinnerung ändern</source>
+      </segment>
+    </unit>
+    <unit id="workouts.card.reminderAdd">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:194</note>
+      </notes>
+      <segment>
+        <source>Erinnerung einrichten</source>
+      </segment>
+    </unit>
     <unit id="workouts.card.hideFromProfile">
       <notes>
-        <note category="location">web/src/app/workouts/workout-card.component.ts:179</note>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:209</note>
       </notes>
       <segment>
         <source>Vom Profil nehmen</source>
@@ -15959,7 +16321,7 @@
     </unit>
     <unit id="workouts.card.showOnProfile">
       <notes>
-        <note category="location">web/src/app/workouts/workout-card.component.ts:180</note>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:210</note>
       </notes>
       <segment>
         <source>Auf dem Profil zeigen</source>
@@ -16488,7 +16850,7 @@
     </unit>
     <unit id="workouts.sharedPartly">
       <notes>
-        <note category="location">web/src/app/workouts/workouts-page.component.ts:102</note>
+        <note category="location">web/src/app/workouts/workouts-page.component.ts:104</note>
       </notes>
       <segment>
         <source>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt. <ph id="1" equiv="full" disp="full"/> hatten keinen Platz mehr (höchstens 50 Sessions).</source>
@@ -16496,7 +16858,7 @@
     </unit>
     <unit id="workouts.shared">
       <notes>
-        <note category="location">web/src/app/workouts/workouts-page.component.ts:103</note>
+        <note category="location">web/src/app/workouts/workouts-page.component.ts:105</note>
       </notes>
       <segment>
         <source>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt.</source>

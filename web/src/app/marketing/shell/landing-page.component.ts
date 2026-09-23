@@ -18,6 +18,7 @@ import { ReminderFeatureSectionComponent } from '../components/reminder-feature-
 import { SessionFeatureSectionComponent } from '../components/session-feature-section/session-feature-section.component';
 import { InboxFeatureSectionComponent } from '../components/inbox-feature-section/inbox-feature-section.component';
 import { WorkoutsFeatureSectionComponent } from '../components/workouts-feature-section/workouts-feature-section.component';
+import { WorkoutRemindersFeatureSectionComponent } from '../components/workout-reminders-feature-section/workout-reminders-feature-section.component';
 import { InviteBannerComponent } from '../../core/invite-banner.component';
 
 // Each string is 7 characters — one per day, top-to-bottom.
@@ -56,6 +57,7 @@ const HEATMAP_PATTERN: readonly string[] = [
     ReminderFeatureSectionComponent,
     SessionFeatureSectionComponent,
     WorkoutsFeatureSectionComponent,
+    WorkoutRemindersFeatureSectionComponent,
     InboxFeatureSectionComponent,
   ],
   templateUrl: './landing-page.component.html',
@@ -137,6 +139,10 @@ export class LandingPageComponent {
 
   onWorkoutsCtaClick(): void {
     this.track('landing_workouts_cta_click', { target: 'workouts' });
+  }
+
+  onWorkoutRemindersCtaClick(): void {
+    this.track('landing_workout_reminders_cta_click', { target: 'workouts' });
   }
 
   onInboxCtaClick(): void {

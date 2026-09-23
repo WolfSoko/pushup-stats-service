@@ -1,6 +1,6 @@
 Pushup Tracker convierte las flexiones y otros 46 ejercicios en un juego que quieres ganar.
 
-Empiezas de cero o ya vas por tu primer centenar: esta app te mantiene en marcha. La cámara cuenta tus repeticiones automáticamente, los planes de entrenamiento te dan una consigna clara cada día, y los amigos y la clasificación motivan sin dar la lata.
+La cámara cuenta tus repeticiones automáticamente, los planes de entrenamiento te dan una consigna clara cada día, y los amigos y la clasificación motivan sin dar la lata.
 
 📷 CONTEO AUTOMÁTICO DE REPETICIONES
 Apoya el móvil, abre el contador automático y empieza: la IA reconoce flexiones, sentadillas, dominadas y abdominales en tiempo real y cuenta cada repetición limpia. Para plancha y hollow hold corre un cronómetro de sostén automático. Funciona en tu dispositivo — ningún vídeo sale de tu móvil.
@@ -8,7 +8,7 @@ Apoya el móvil, abre el contador automático y empieza: la IA reconoce flexione
 🏋️ MUCHO MÁS QUE FLEXIONES
 • 13 variantes de flexión: rodillas, inclinada, declinada, abierta, diamante, pike, arquero hasta la flexión a un brazo — con instrucciones por tipo
 • 47 ejercicios en 9 categorías: flexiones, push, pull, sentadilla, hinge, zancada, core, cardio, movilidad
-• Dominadas, fondos, sentadillas, zancadas, plancha, hollow hold, burpees, comba, yoga, estiramientos y más
+• Dominadas, fondos, sentadillas, zancadas, plancha, burpees, yoga y más
 • Resistencia por distancia y tiempo: correr, bici, remo, natación — con ritmo
 
 ⚡ REGISTRAR EN DOS SEGUNDOS
@@ -25,7 +25,7 @@ Apoya el móvil, abre el contador automático y empieza: la IA reconoce flexione
 Cada día la consigna que toca, con días de descanso, días suaves y días de test. Cinco planes recalculan cada objetivo diario según tu test máximo: nada de 3×20 si haces 8. Los días cumplidos se marcan solos, y puedes compartir tu plan activo.
 
 🧩 TUS PROPIAS SESIONES
-Monta tu propio entrenamiento: ejercicios, objetivos y series en tu orden. La app te guía paso a paso. Muestra tus sesiones en tu perfil o envíalas a tus amigos.
+Monta tu propio entrenamiento: ejercicios, objetivos y series en tu orden. La app te guía paso a paso. Muestra tus sesiones en tu perfil o envíalas a tus amigos. Cada sesión puede recordártela ella misma — p. ej. cada 2 días a las 15:00 por push.
 
 🎯 OBJETIVOS, RACHAS Y ESTADÍSTICAS
 • Objetivos de día, semana y mes — por ejercicio, con filtro por día de la semana

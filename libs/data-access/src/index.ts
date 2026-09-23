@@ -5,6 +5,7 @@ export * from './lib/api/notifications-api.service';
 export * from './lib/api/user-achievements-api.service';
 export * from './lib/api/user-training-plan-api.service';
 export * from './lib/api/workouts-api.service';
+export * from './lib/api/workout-reminders-api.service';
 export * from './lib/api/user-stats-api.service';
 export * from './lib/api/public-profile-api.service';
 export * from './lib/api/pushup-firestore.service';
