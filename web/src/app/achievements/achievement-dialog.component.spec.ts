@@ -31,7 +31,6 @@ vi.mock('@wolsok/thanos', async () => {
 
 import { ShareService } from '../core/share.service';
 import {
-  ACHIEVEMENT_DIALOG_TITLE_ID,
   AchievementDialogComponent,
   type AchievementDialogData,
 } from './achievement-dialog.component';
@@ -57,6 +56,7 @@ async function setup(
         useValue: {
           badge,
           shareUrl: 'https://pushup-stats.com',
+          titleId: 'achievement-title-7',
           ...options.data,
         },
       },
@@ -97,7 +97,7 @@ describe('AchievementDialogComponent', () => {
 
     // then
     expect(screen.getByRole('heading', { level: 2 }).id).toBe(
-      ACHIEVEMENT_DIALOG_TITLE_ID
+      'achievement-title-7'
     );
   });
 

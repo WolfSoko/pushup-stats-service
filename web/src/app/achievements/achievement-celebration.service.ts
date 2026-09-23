@@ -14,10 +14,11 @@ import {
   readCelebrated,
 } from './achievement-celebration';
 import {
-  ACHIEVEMENT_DIALOG_TITLE_ID,
   AchievementDialogComponent,
   type AchievementDialogData,
 } from './achievement-dialog.component';
+
+let nextDialogTitleId = 0;
 
 /**
  * Opens a celebration dialog the first time the user sees a badge.
@@ -73,8 +74,10 @@ export class AchievementCelebrationService {
       .find((entry) => entry !== null);
     if (!badge) return;
 
+    const titleId = `achievement-dialog-title-${nextDialogTitleId++}`;
     this.dialog.open(AchievementDialogComponent, {
       data: {
+        titleId,
         badge,
         shareUrl: BRAND_URL,
         maxParticleCount: SNAP_QUALITY_PARTICLES[this.userConfig.snapQuality()],
@@ -82,7 +85,7 @@ export class AchievementCelebrationService {
       panelClass: 'achievement-dialog-panel',
       autoFocus: 'dialog',
       restoreFocus: true,
-      ariaLabelledBy: ACHIEVEMENT_DIALOG_TITLE_ID,
+      ariaLabelledBy: titleId,
       width: 'min(92vw, 420px)',
       maxWidth: '92vw',
     });

@@ -17,7 +17,6 @@ import { snapElement } from '../core/snap-element';
 import type { AchievementBadge } from '../public-profile/achievement-badge';
 
 export const ACHIEVEMENT_SNAP_DURATION_MS = 4000;
-export const ACHIEVEMENT_DIALOG_TITLE_ID = 'achievement-dialog-title';
 
 export interface AchievementDialogData {
   readonly badge: AchievementBadge;
@@ -28,6 +27,11 @@ export interface AchievementDialogData {
    * users still share their profile from the profile page itself.
    */
   readonly shareUrl: string;
+  /**
+   * DOM id of the title, for `ariaLabelledBy`. A badge can sync while an
+   * earlier celebration is still open, so it must be unique per dialog.
+   */
+  readonly titleId: string;
   /** The user's snap-quality preset; the project default when omitted. */
   readonly maxParticleCount?: number;
 }
@@ -54,7 +58,6 @@ export class AchievementDialogComponent {
     viewChild.required<ElementRef<HTMLElement>>('card');
   protected readonly snapping = signal(false);
 
-  protected readonly titleId = ACHIEVEMENT_DIALOG_TITLE_ID;
   protected readonly rays = Array.from(
     { length: RAY_COUNT },
     (_, i) => (360 / RAY_COUNT) * i

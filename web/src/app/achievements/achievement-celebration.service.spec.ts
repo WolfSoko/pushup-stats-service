@@ -74,6 +74,26 @@ describe('AchievementCelebrationService', () => {
     expect(config.data.badge.id).toBe('plan-days-1');
   });
 
+  it('should give each dialog its own title id', () => {
+    // given — a second badge can sync while the first dialog is still open;
+    // a shared id would point its aria-labelledby at the wrong heading
+    const stream = new Subject<Array<{ id: string; awardedAt: string }>>();
+    const { open } = setup({ stream });
+
+    // when
+    stream.next([{ id: 'plan-days-1', awardedAt: '2026-01-02T00:00:00.000Z' }]);
+    stream.next([
+      { id: 'plan-days-1', awardedAt: '2026-01-02T00:00:00.000Z' },
+      { id: 'plan-days-10', awardedAt: '2026-01-11T00:00:00.000Z' },
+    ]);
+
+    // then
+    const [first, second] = open.mock.calls.map((call) => call[1]);
+    expect(first.ariaLabelledBy).toBe(first.data.titleId);
+    expect(second.ariaLabelledBy).toBe(second.data.titleId);
+    expect(first.data.titleId).not.toBe(second.data.titleId);
+  });
+
   it('should not reopen for a badge already celebrated', () => {
     // given — the document re-syncs on every visit
     globalThis.localStorage?.setItem(
