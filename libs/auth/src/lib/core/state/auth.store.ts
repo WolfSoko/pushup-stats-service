@@ -33,7 +33,11 @@ function toFriendlyAuthError(error: unknown): Error {
       : '';
 
   const message = error instanceof Error ? error.message : String(error || '');
-  const normalized = code || (message.match(/auth\/([a-z-]+)/)?.[1] ?? '');
+  // Callables report Auth codes in the message (`functions/…` is the code).
+  const normalized =
+    code && !code.startsWith('functions/')
+      ? code
+      : (message.match(/auth\/([a-z-]+)/)?.[1] ?? code);
 
   const map: Record<string, string> = {
     'popup-closed-by-user': $localize`:@@auth.error.popupClosed:Google-Anmeldung abgebrochen. Das Anmelde-Fenster wurde geschlossen.`,

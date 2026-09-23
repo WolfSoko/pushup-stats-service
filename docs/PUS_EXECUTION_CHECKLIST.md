@@ -62,8 +62,8 @@ Ziel: Themen konsequent abarbeiten, mit klaren Definition-of-Done (DoD) und Gege
 
 ## 3) Danger Zone: Delete Account => vollständige Löschung
 
-Ursprünglich als Anonymisierung umgesetzt; inzwischen löscht der Trigger
-`purgeUserDataOnAccountDelete` alle Nutzerdaten (siehe
+Ursprünglich als Anonymisierung umgesetzt; inzwischen löscht der Callable
+`deleteOwnAccount` alle Nutzerdaten (siehe
 `docs/cloud-functions.md` → „Account deletion“).
 
 ### DoD

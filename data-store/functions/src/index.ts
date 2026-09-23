@@ -12,7 +12,7 @@ import './firebase-app';
 
 export {
   cleanupOrphanedUserData,
-  purgeUserDataOnAccountDelete,
+  deleteOwnAccount,
 } from './functions-account-deletion';
 
 export {

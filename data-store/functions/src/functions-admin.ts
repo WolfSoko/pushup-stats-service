@@ -7,6 +7,8 @@ import {
   validateAdminAccess,
   validateLeaderboardExclusionPayload,
 } from './admin';
+import { deleteAccountWithData } from './account-deletion/delete-account';
+import { liveDeleteAccountDeps } from './account-deletion/live-deps';
 import { hasEntrySince, readUserActivity } from './admin/user-data-ops';
 import { db, DEMO_USER_ID } from './firebase-app';
 
@@ -67,7 +69,7 @@ export const adminListUsers = onCall(
 );
 
 export const adminDeleteUser = onCall(
-  { region: 'europe-west3', timeoutSeconds: 120 },
+  { region: 'europe-west3', timeoutSeconds: 540, memory: '512MiB' },
   async (request) => {
     assertAdmin(request);
 
@@ -81,11 +83,9 @@ export const adminDeleteUser = onCall(
       );
     }
 
-    // The data goes with the account: `purgeUserDataOnAccountDelete`
-    // fires on this deletion.
-    await getAuth().deleteUser(uid);
+    const result = await deleteAccountWithData(liveDeleteAccountDeps(), uid);
 
-    logger.info('adminDeleteUser', { uid, by: request.auth?.uid });
+    logger.info('adminDeleteUser', { uid, ...result, by: request.auth?.uid });
     return { ok: true };
   }
 );
@@ -129,7 +129,7 @@ export const adminSetLeaderboardExclusion = onCall(
 );
 
 export const adminBulkDeleteInactiveAnonymous = onCall(
-  { region: 'europe-west3', timeoutSeconds: 300 },
+  { region: 'europe-west3', timeoutSeconds: 540, memory: '512MiB' },
   async (request) => {
     assertAdmin(request);
 
@@ -174,7 +174,7 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
         continue;
       }
 
-      await getAuth().deleteUser(uid);
+      await deleteAccountWithData(liveDeleteAccountDeps(), uid);
       deleted++;
     }
 

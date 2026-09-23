@@ -309,4 +309,23 @@ describe('AuthStore – deleteAccount', () => {
     expect(store.error()?.message).toContain('wieder anmelden');
     expect(store.loading()).toBe(false);
   });
+
+  it('should map a callable rejection carrying the auth code to the re-login hint', async () => {
+    // given — `deleteOwnAccount` reports `functions/failed-precondition`
+    // with the Auth code in the message
+    const store = await storeWith(() =>
+      Promise.reject(
+        Object.assign(new Error('auth/requires-recent-login'), {
+          code: 'functions/failed-precondition',
+        })
+      )
+    );
+
+    // when
+    const result = await store.deleteAccount();
+
+    // then
+    expect(result).toBe(false);
+    expect(store.error()?.message).toContain('wieder anmelden');
+  });
 });

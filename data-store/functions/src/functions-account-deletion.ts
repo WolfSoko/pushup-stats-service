@@ -1,47 +1,52 @@
 import { getAuth } from 'firebase-admin/auth';
-import { getStorage } from 'firebase-admin/storage';
 import { logger } from 'firebase-functions';
-import { onCall } from 'firebase-functions/v2/https';
-import * as functionsV1 from 'firebase-functions/v1';
+import { HttpsError, onCall } from 'firebase-functions/v2/https';
 
+import {
+  deleteAccountWithData,
+  isRecentLogin,
+} from './account-deletion/delete-account';
+import { liveDeleteAccountDeps } from './account-deletion/live-deps';
 import {
   collectDataOwnerUids,
   findOrphanUids,
 } from './account-deletion/orphans';
-import { purgeUserData, type PurgeDeps } from './account-deletion/purge';
+import { purgeUserData } from './account-deletion/purge';
+import { requireUid } from './callable-auth';
 import { db, DEMO_USER_ID } from './firebase-app';
 import { assertAdmin } from './functions-admin';
-import { PHOTO_BUCKET } from './profile/photo-storage';
 
 /** Orphaned accounts purged per admin run; the rest waits for the next run. */
 export const ORPHAN_PURGE_LIMIT = 25;
 
-function purgeDeps(): PurgeDeps {
-  return {
-    db,
-    photoBucket: getStorage().bucket(PHOTO_BUCKET),
-    nowMs: Date.now(),
-  };
-}
+// Self-service deletion from the settings page. A callable rather than an
+// Auth `onDelete` trigger: that trigger exists only in 1st gen, and 1st gen
+// does not run the Node 24 runtime this codebase deploys with.
+export const deleteOwnAccount = onCall(
+  { region: 'europe-west3', timeoutSeconds: 540, memory: '512MiB' },
+  async (request) => {
+    const uid = requireUid(request.auth);
+    if (uid === DEMO_USER_ID) {
+      throw new HttpsError(
+        'failed-precondition',
+        'Demo-Benutzer kann nicht gelöscht werden.'
+      );
+    }
+    // The message carries the Firebase Auth code so the client maps it to
+    // the same "please sign in again" hint a client-side deletion shows.
+    if (!isRecentLogin(request.auth?.token?.auth_time, Date.now())) {
+      throw new HttpsError('failed-precondition', 'auth/requires-recent-login');
+    }
 
-// Auth `onDelete` only exists as a 1st-gen trigger — 2nd gen has blocking
-// triggers for sign-up/sign-in but nothing for deletion. It fires for every
-// deletion path at once: self-service in the settings, the admin callables
-// and the Firebase console. `failurePolicy` retries a failed purge; the
-// purge is idempotent, so a retry finishes what the first run started.
-export const purgeUserDataOnAccountDelete = functionsV1
-  .region('europe-west3')
-  .runWith({ timeoutSeconds: 540, memory: '512MB', failurePolicy: true })
-  .auth.user()
-  .onDelete(async (user) => {
-    if (user.uid === DEMO_USER_ID) return;
-    const result = await purgeUserData(purgeDeps(), user.uid);
-    logger.info('purgeUserDataOnAccountDelete', { uid: user.uid, ...result });
-  });
+    const result = await deleteAccountWithData(liveDeleteAccountDeps(), uid);
+    logger.info('deleteOwnAccount', { uid, ...result });
+    return { ok: true };
+  }
+);
 
-// Cleans up the data junk of accounts deleted before the purge trigger
+// Cleans up the data junk of accounts deleted without a purge: before it
 // existed (settings used to only anonymize `userConfigs`, the admin
-// callables left most collections behind). Runs from the admin migrations
+// callables left most collections behind) or through the Firebase console. Runs from the admin migrations
 // page with the uniform `{ dryRun }` contract; only an explicit
 // `dryRun: false` deletes anything.
 export const cleanupOrphanedUserData = onCall(
@@ -68,7 +73,7 @@ export const cleanupOrphanedUserData = onCall(
     const batch = orphans.slice(0, ORPHAN_PURGE_LIMIT);
     let deletedDocs = 0;
     for (const uid of batch) {
-      const result = await purgeUserData(purgeDeps(), uid);
+      const result = await purgeUserData(liveDeleteAccountDeps(), uid);
       deletedDocs += result.deletedDocs;
     }
 

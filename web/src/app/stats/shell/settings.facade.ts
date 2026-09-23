@@ -183,7 +183,6 @@ export class SettingsFacade implements OnDestroy {
 
     try {
       await this.pushService.unsubscribe();
-      // The stored data is purged server-side by the auth `onDelete` trigger.
       if (!(await this.auth.deleteAccount())) {
         this.deleteAccountError.set(
           this.auth.error()?.message ??
