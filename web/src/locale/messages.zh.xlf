@@ -2623,22 +2623,6 @@
         <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
       <target>追踪次数、趋势和连续天数，使用Pushup Tracker。</target></segment>
     </unit>
-    <unit id="sw.update.available">
-      <notes>
-        <note category="location">web/src/app/app.ts:306</note>
-      </notes>
-      <segment state="translated">
-        <source>Neue Version verfügbar</source>
-      <target>新版本可用</target></segment>
-    </unit>
-    <unit id="sw.update.reload">
-      <notes>
-        <note category="location">web/src/app/app.ts:307</note>
-      </notes>
-      <segment state="translated">
-        <source>Neu laden</source>
-      <target>重新加载</target></segment>
-    </unit>
     <unit id="feedback.success">
       <notes>
         <note category="location">web/src/app/app.ts:365</note>
@@ -10101,24 +10085,6 @@
         <target>已取消勾选 — 你自己的记录仍会保留。</target>
       </segment>
     </unit>
-    <unit id="sw.update.buttonAria">
-      <segment state="translated">
-        <source>Neue Version verfügbar – jetzt neu laden</source>
-        <target>新版本可用 – 立即重新加载</target>
-      </segment>
-    </unit>
-    <unit id="sw.update.unrecoverable">
-      <segment state="translated">
-        <source>App-Daten beschädigt – bitte neu laden</source>
-        <target>应用数据已损坏 – 请重新加载</target>
-      </segment>
-    </unit>
-    <unit id="sw.update.recoverButtonAria">
-      <segment state="translated">
-        <source>App-Daten beschädigt – jetzt neu laden</source>
-        <target>应用数据已损坏 – 立即重新加载</target>
-      </segment>
-    </unit>
     <unit id="dashboard.goalFill.fillPlan">
       <segment state="translated">
         <source>Alle Übungen eintragen</source>
@@ -14659,6 +14625,30 @@
       <segment state="initial">
         <source>Neu: Übungssuche und Anleitungen direkt in deinen Sessions</source>
         <target>Neu: Übungssuche und Anleitungen direkt in deinen Sessions</target>
+      </segment>
+    </unit>
+    <unit id="appUpdate.banner.unrecoverable">
+      <segment state="initial">
+        <source>App-Daten sind veraltet – bitte neu laden.</source>
+        <target>App-Daten sind veraltet – bitte neu laden.</target>
+      </segment>
+    </unit>
+    <unit id="appUpdate.banner.ready">
+      <segment state="initial">
+        <source>Eine neue Version ist verfügbar.</source>
+        <target>Eine neue Version ist verfügbar.</target>
+      </segment>
+    </unit>
+    <unit id="appUpdate.banner.later">
+      <segment state="initial">
+        <source> Später </source>
+        <target> Später </target>
+      </segment>
+    </unit>
+    <unit id="appUpdate.banner.reload">
+      <segment state="initial">
+        <source> Neu laden </source>
+        <target> Neu laden </target>
       </segment>
     </unit>
 </file>

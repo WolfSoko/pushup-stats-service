@@ -53,7 +53,6 @@ import {
   QuickAddFabCoachmarkComponent,
   type QuickAddSuggestion,
 } from '@pu-stats/quick-add';
-import { BusyDirective, createBusyState } from '@pu-stats/ui';
 import { UserConfigStore } from './core/user-config.store';
 import { DailyGoalActionsService } from './core/daily-goal-actions.service';
 import { DailyGoalChecklistComponent } from './core/daily-goal/daily-goal-checklist.component';
@@ -63,7 +62,9 @@ import { ThemeToggleComponent } from './core/theme';
 import { ReminderOrchestrationService } from './core/reminder-orchestration.service';
 import { AndroidTestInviteOrchestrationService } from './core/android-test-invite-orchestration.service';
 import { FeatureAnnouncementService } from './core/feature-announcement.service';
-import { SwUpdateService } from './core/sw-update.service';
+import { AppUpdateBannerComponent } from './core/app-update/app-update-banner.component';
+import { AppUpdateService } from './core/app-update/app-update.service';
+import { ChunkLoadRecoveryService } from './core/app-update/chunk-load-recovery.service';
 import { AppDataFacade } from './core/app-data.facade';
 import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';
 import { AchievementCelebrationService } from './achievements/achievement-celebration.service';
@@ -103,21 +104,14 @@ import {
     CheerFireworksOverlayComponent,
     NotificationBellComponent,
     PendingRequestIndicatorComponent,
-    BusyDirective,
+    AppUpdateBannerComponent,
   ],
   templateUrl: './app.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './app.scss',
 })
 export class App {
-  private readonly swUpdate = inject(SwUpdateService);
   protected readonly avatar = inject(AvatarService);
-  /** Drives the persistent "new version" button in the toolbar. */
-  readonly swUpdateAvailable = this.swUpdate.updateAvailable;
-  readonly swUpdateUnrecoverable = this.swUpdate.unrecoverable;
-  protected readonly swUpdateApplying = createBusyState();
-  protected readonly swUpdateAriaLabel = $localize`:@@sw.update.buttonAria:Neue Version verfügbar – jetzt neu laden`;
-  protected readonly swUpdateRecoverAriaLabel = $localize`:@@sw.update.recoverButtonAria:App-Daten beschädigt – jetzt neu laden`;
   private readonly snackBar = inject(MatSnackBar);
   private readonly dialog = inject(MatDialog);
   private readonly firebaseAuth = inject(Auth, { optional: true });
@@ -224,6 +218,10 @@ export class App {
   // Eager-inject so the "what's new" walkthrough fires once the dashboard
   // is up, whichever page the user signed in from.
   private readonly _announcements = inject(FeatureAnnouncementService);
+  // Eager-inject so update detection and the navigation fallback run from
+  // the first page on, not only once the banner has something to show.
+  private readonly _appUpdate = inject(AppUpdateService);
+  private readonly _chunkLoadRecovery = inject(ChunkLoadRecoveryService);
 
   // Delegate to facade
   readonly quickAddSuggestions = this.appData.quickAddSuggestions;
@@ -336,10 +334,6 @@ export class App {
         this.seo.update(title, description, path, { noindex: data.noindex });
         this.trackAnalytics('page_view', { page_path: path });
       });
-  }
-
-  applyServiceWorkerUpdate(): void {
-    void this.swUpdateApplying.run(() => this.swUpdate.applyUpdate());
   }
 
   handleQuickAdd(suggestion: QuickAddSuggestion): void {
