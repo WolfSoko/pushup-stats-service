@@ -1,4 +1,4 @@
-import { signal } from '@angular/core';
+import { LOCALE_ID, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PushSubscriptionService, type PushStatus } from '@pu-push/push';
 import type { WorkoutReminder } from '@pu-stats/models';
@@ -43,6 +43,7 @@ async function setup(
       { provide: WorkoutRemindersStore, useValue: reminders },
       { provide: PushSubscriptionService, useValue: push },
       { provide: MatDialogRef, useValue: dialogRef },
+      { provide: LOCALE_ID, useValue: 'de' },
       {
         provide: MAT_DIALOG_DATA,
         useValue: { workoutId: 'w1', title: 'Core 15' },
@@ -84,7 +85,7 @@ describe('WorkoutReminderDialogComponent', () => {
 
     // then
     expect(screen.getByTestId('workout-reminder-next').textContent).toMatch(
-      /Nächste Erinnerung: .+, \d\d\.\d\d\., 18:00/
+      /Nächste Erinnerung: \S+ \d\d\.\d\d\., 18:00/
     );
   });
 

@@ -1,4 +1,3 @@
-import { formatDate } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -87,11 +86,19 @@ export class WorkoutReminderDialogComponent implements OnInit {
     () => workoutReminderRejection(this.input()) === null
   );
 
+  private readonly nextFormat = new Intl.DateTimeFormat(this.locale, {
+    weekday: 'short',
+    day: '2-digit',
+    month: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+
   /** "Nächste Erinnerung: Fr., 25.09., 15:00" — proof the rhythm is what was meant. */
   protected readonly nextLabel = computed(() => {
     if (!this.valid() || !this.form().enabled) return null;
     const next = nextWorkoutReminderAt(this.input(), new Date());
-    return next ? formatDate(next, 'EE, dd.MM., HH:mm', this.locale) : null;
+    return next ? this.nextFormat.format(next) : null;
   });
 
   protected readonly pushOff = computed(

@@ -1,4 +1,7 @@
-import type { ReminderLocale } from '@pu-stats/models';
+import {
+  WORKOUT_REMINDER_GRACE_MS,
+  type ReminderLocale,
+} from '@pu-stats/models';
 
 import type { PushSendOptions } from '../push/deliver';
 
@@ -49,16 +52,29 @@ const TEXTS: Record<
   },
 };
 
+/** Floor for the TTL, so a send at the very end of the window still has a chance. */
+const MIN_TTL_SECONDS = 60;
+
 /**
- * A reminder that arrives after its time is no use — the same half hour
- * the dispatcher allows for a late tick. One collapse topic per workout,
- * so two sessions due at once both show up. Web Push topics allow at
- * most 32 URL-safe characters; Firestore auto-ids are 20.
+ * A reminder that arrives after its time is no use: the push service may
+ * hold it only for what is left of the grace window after `nextAt`. One
+ * collapse topic per workout, so two sessions due at once both show up.
+ * Web Push topics allow at most 32 URL-safe characters; Firestore
+ * auto-ids are 20.
  */
-export function workoutReminderPushOptions(workoutId: string): PushSendOptions {
+export function workoutReminderPushOptions(
+  workoutId: string,
+  nextAt: string,
+  now: Date
+): PushSendOptions {
+  const remainingMs =
+    Date.parse(nextAt) + WORKOUT_REMINDER_GRACE_MS - now.getTime();
   return {
     urgency: 'high',
-    TTL: 1800,
+    TTL: Math.max(
+      MIN_TTL_SECONDS,
+      Number.isFinite(remainingMs) ? Math.floor(remainingMs / 1000) : 0
+    ),
     topic: `wr-${workoutId.replace(/[^A-Za-z0-9_-]/g, '').slice(0, 29)}`,
   };
 }

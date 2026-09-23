@@ -73,7 +73,7 @@ async function dispatchOne(
       workoutId: reminder.workoutId,
       title,
     }),
-    workoutReminderPushOptions(reminder.workoutId),
+    workoutReminderPushOptions(reminder.workoutId, reminder.nextAt, now),
     'dispatchWorkoutReminders'
   );
   return 'sent';
@@ -96,11 +96,10 @@ export const dispatchWorkoutReminders = onSchedule(
       logger.warn('dispatchWorkoutReminders: VAPID secrets not set, skipping');
       return;
     }
-    const now = new Date();
     const due = await db
       .collection(REMINDERS)
       .where('enabled', '==', true)
-      .where('nextAt', '<=', now.toISOString())
+      .where('nextAt', '<=', new Date().toISOString())
       .limit(BATCH_LIMIT)
       .get();
 
@@ -114,7 +113,9 @@ export const dispatchWorkoutReminders = onSchedule(
     };
     for (const doc of due.docs) {
       try {
-        results[await dispatchOne(doc.ref, now)]++;
+        // A fresh clock per reminder: a long batch must not judge the
+        // grace window by the time the tick started.
+        results[await dispatchOne(doc.ref, new Date())]++;
       } catch (err: unknown) {
         results.errors++;
         logger.error('dispatchWorkoutReminders: error for reminder', {

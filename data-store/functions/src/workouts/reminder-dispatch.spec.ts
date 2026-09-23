@@ -133,11 +133,39 @@ describe('buildWorkoutReminderPayload', () => {
 describe('workoutReminderPushOptions', () => {
   it('should collapse per workout within the 32-character topic limit', () => {
     // when
-    const options = workoutReminderPushOptions('a'.repeat(40));
+    const options = workoutReminderPushOptions(
+      'a'.repeat(40),
+      DUE_AT,
+      new Date(DUE_AT)
+    );
 
     // then
     expect(options.topic).toBe(`wr-${'a'.repeat(29)}`);
     expect(options.topic.length).toBe(32);
     expect(options).toMatchObject({ urgency: 'high', TTL: 1800 });
+  });
+
+  it('should only keep the push for what is left of the grace window', () => {
+    // when sent 20 minutes late
+    const options = workoutReminderPushOptions(
+      'w1',
+      DUE_AT,
+      new Date(Date.parse(DUE_AT) + 20 * 60 * 1000)
+    );
+
+    // then
+    expect(options.TTL).toBe(600);
+  });
+
+  it('should keep a minimal TTL at the very end of the window', () => {
+    // when
+    const options = workoutReminderPushOptions(
+      'w1',
+      DUE_AT,
+      new Date(Date.parse(DUE_AT) + WORKOUT_REMINDER_GRACE_MS)
+    );
+
+    // then
+    expect(options.TTL).toBe(60);
   });
 });
