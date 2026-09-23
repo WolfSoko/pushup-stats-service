@@ -7,13 +7,8 @@ import {
   validateAdminAccess,
   validateLeaderboardExclusionPayload,
 } from './admin';
-import {
-  deleteUserExerciseData,
-  hasEntrySince,
-  readUserActivity,
-} from './admin/user-data-ops';
+import { hasEntrySince, readUserActivity } from './admin/user-data-ops';
 import { db, DEMO_USER_ID } from './firebase-app';
-import { deleteAllPushSubscriptions } from './functions-push';
 
 export function assertAdmin(request: {
   auth?: { uid: string; token: Record<string, unknown> };
@@ -77,7 +72,6 @@ export const adminDeleteUser = onCall(
     assertAdmin(request);
 
     const uid = String(request.data?.uid || '').trim();
-    const anonymize = Boolean(request.data?.anonymize ?? true);
 
     if (!uid) throw new HttpsError('invalid-argument', 'uid erforderlich.');
     if (uid === DEMO_USER_ID) {
@@ -87,28 +81,11 @@ export const adminDeleteUser = onCall(
       );
     }
 
+    // The data goes with the account: `purgeUserDataOnAccountDelete`
+    // fires on this deletion.
     await getAuth().deleteUser(uid);
 
-    if (anonymize) {
-      await db
-        .collection('userConfigs')
-        .doc(uid)
-        .set(
-          {
-            displayName: 'Gelöschter Benutzer',
-            email: null,
-            ui: { hideFromLeaderboard: true },
-          },
-          { merge: true }
-        );
-    } else {
-      await db.collection('userConfigs').doc(uid).delete();
-      await deleteUserExerciseData(uid);
-    }
-
-    await deleteAllPushSubscriptions(uid);
-
-    logger.info('adminDeleteUser', { uid, anonymize, by: request.auth?.uid });
+    logger.info('adminDeleteUser', { uid, by: request.auth?.uid });
     return { ok: true };
   }
 );
@@ -198,10 +175,6 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
       }
 
       await getAuth().deleteUser(uid);
-      await db.collection('userConfigs').doc(uid).delete();
-      await deleteUserExerciseData(uid);
-
-      await deleteAllPushSubscriptions(uid);
       deleted++;
     }
 

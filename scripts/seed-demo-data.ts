@@ -12,14 +12,8 @@ import * as admin from 'firebase-admin';
 
 const DEMO_USER_ID = process.env['DEMO_USER_ID'] ?? 'DEMO_USER_ID_PLACEHOLDER';
 
-const PUSHUP_TYPES = ['Standard', 'Wide', 'Diamond', 'Pike'] as const;
-
 function randomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function randomItem<T>(arr: readonly T[]): T {
-  return arr[randomInt(0, arr.length - 1)];
 }
 
 function padTwo(n: number): string {
@@ -39,8 +33,10 @@ function randomTimestamp(date: Date): string {
 async function run(): Promise<void> {
   admin.initializeApp();
   const db = admin.firestore();
-  const batch = db.batch();
-  const pushupsRef = db.collection('pushups');
+  const entriesRef = db.collection('exerciseEntries');
+  // Firestore caps a batch at 500 writes; 90 days can hold up to 720.
+  let batch = db.batch();
+  let staged = 0;
 
   const now = new Date();
   let totalEntries = 0;
@@ -53,17 +49,21 @@ async function run(): Promise<void> {
     for (let i = 0; i < entriesPerDay; i++) {
       const timestamp = randomTimestamp(date);
       const nowIso = new Date().toISOString();
-      const docRef = pushupsRef.doc();
-      batch.set(docRef, {
+      batch.set(entriesRef.doc(), {
         userId: DEMO_USER_ID,
+        exerciseId: 'pushup',
         timestamp,
         reps: randomInt(10, 50),
-        type: randomItem(PUSHUP_TYPES),
         source: 'seed',
         createdAt: nowIso,
         updatedAt: nowIso,
       });
       totalEntries++;
+      if (++staged === 400) {
+        await batch.commit();
+        batch = db.batch();
+        staged = 0;
+      }
     }
   }
 

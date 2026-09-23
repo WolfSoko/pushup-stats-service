@@ -48,6 +48,7 @@ function toFriendlyAuthError(error: unknown): Error {
     'weak-password': $localize`:@@auth.error.weakPassword:Das Passwort ist zu schwach (mindestens 6 Zeichen).`,
     'too-many-requests': $localize`:@@auth.error.tooManyRequests:Zu viele Versuche. Bitte kurz warten und erneut versuchen.`,
     'internal-error': $localize`:@@auth.error.internalError:Ein technischer Fehler ist aufgetreten. Bitte gleich erneut versuchen.`,
+    'requires-recent-login': $localize`:@@auth.error.requiresRecentLogin:Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.`,
   };
 
   if (normalized && map[normalized]) {
@@ -75,7 +76,7 @@ export const AuthStore = signalStore(
     login: async (): Promise<boolean> => {
       patchState(store, { loading: true, error: null });
       try {
-        await _authService.signInWithGoogleAndMigrateGuest();
+        await _authService.signInWithGoogle();
         return true;
       } catch (e) {
         patchState(store, {
@@ -112,14 +113,16 @@ export const AuthStore = signalStore(
         patchState(store, { loading: false });
       }
     },
-    deleteAccount: async () => {
+    deleteAccount: async (): Promise<boolean> => {
       patchState(store, { loading: true, error: null });
       try {
         await _authService.deleteAccount();
+        return true;
       } catch (e) {
         patchState(store, {
           error: toFriendlyAuthError(e),
         });
+        return false;
       } finally {
         patchState(store, { loading: false });
       }
@@ -130,7 +133,7 @@ export const AuthStore = signalStore(
     ): Promise<boolean> => {
       patchState(store, { loading: true, error: null });
       try {
-        await _authService.signInWithEmailAndMigrateGuest(email, password);
+        await _authService.signInWithEmail(email, password);
         return true;
       } catch (e) {
         patchState(store, {

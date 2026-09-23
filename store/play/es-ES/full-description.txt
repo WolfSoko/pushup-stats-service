@@ -48,7 +48,7 @@ Notificaciones con intervalo, horas de silencio, días y zona horaria — tambi�
 Wiki de ejercicios con la ejecución correcta y los errores típicos, además de un blog.
 
 🔒 TUS DATOS
-Pruébala como invitado, sin cuenta. Cumple el RGPD con consentimiento de cookies ajustable. Cuenta borrable en cualquier momento, los datos de entrenamiento quedan solo anonimizados. Base de datos en Fráncfort.
+Pruébala como invitado, sin cuenta. Cumple el RGPD con consentimiento de cookies ajustable. Cuenta borrable en cualquier momento, junto con todos tus datos de entrenamiento. Base de datos en Fráncfort.
 
 📱 ANDROID + WEB
 Los mismos datos en el móvil y en el navegador, sincronización en tiempo real en todos tus dispositivos. Entra con Google o correo. También sin conexión — las entradas se sincronizan al volver. Tema claro y oscuro.

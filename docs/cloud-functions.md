@@ -40,6 +40,16 @@ Two consequences worth remembering:
 - `expiresAt` must be a real Firestore `Timestamp`. TTL ignores ISO strings, and the documents would never expire.
 - Expiry is approximate: Firestore deletes expired documents typically within 24 hours of `expiresAt`, and they stay readable until then. Irrelevant at a 365-day window, but do not build exact-cutoff assumptions on it.
 
+## Account deletion (data purge)
+
+Deleting an account removes **every** document about the user — the privacy policy (`@@datenschutz.deletion.body`) promises exactly that. The purge runs server-side on the 1st-gen auth trigger `purgeUserDataOnAccountDelete` (`auth.user().onDelete`; 2nd gen has no deletion trigger), so one code path covers self-service deletion in the settings, `adminDeleteUser`, `adminBulkDeleteInactiveAnonymous` and the Firebase console. Clients and admin callables only delete the Auth user.
+
+- **Inventory lives in `account-deletion/plan.ts`.** `UID_KEYED_COLLECTIONS` (doc id = uid, deleted recursively with their subcollections), `OWNED_QUERIES` (deleted by field match: entries, trash, workouts, friendships, invites, cheers), `ANONYMIZED_QUERIES` (feedback reports keep their text, lose `userId`/`email`). Challenges drop the user from `participants`/`invited` and go away when nobody is left. The profile-photo folder in Storage is deleted too. **A new per-user collection must be added to `plan.ts`** — otherwise it outlives every deleted account.
+- **Tombstone `deletedAccounts/{uid}`.** Written before the first delete. The `exerciseEntries` triggers (trash archive, `userStats`, `adminUserActivity`, leaderboard refresh) call `isPurgedEntryDeletion()` on a delete event and stand down — otherwise they would re-create the archive and zeroed aggregates the purge just removed, and rebuild the leaderboard once per deleted entry. Tombstones expire via a TTL policy after 30 days.
+- **Idempotent.** Every step deletes what still matches, so `failurePolicy` retries simply finish the job.
+- **Legacy junk:** `cleanupOrphanedUserData` (admin migrations page, `{ dryRun }` contract) finds uids that still own data but have no Auth account — leftovers from the time the settings only anonymized `userConfigs` — and purges up to 25 per run.
+- Not covered: inbox entries in _other_ users' inboxes naming the deleted user as actor; they expire through the inbox TTL.
+
 ## Admin Authorization
 
 Admin access uses **Firebase Custom Claims** (`{ admin: true }`) — NOT Firestore fields. This ensures only server-side Admin SDK can grant admin privileges.

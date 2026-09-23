@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { Analytics } from '@angular/fire/analytics';
 import { clearTranslations, loadTranslations } from '@angular/localize';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
@@ -290,12 +290,106 @@ describe('SettingsFacade — auto-save', () => {
       expect(component.deletingAccount()).toBe(false);
     });
 
+    function setupDeletion(
+      deleteAccount: () => Promise<boolean>,
+      error: Error | null = null
+    ): { navigateSpy: ReturnType<typeof vitest.spyOn> } {
+      TestBed.resetTestingModule();
+      saveSpy = vitest.fn();
+      TestBed.configureTestingModule({
+        providers: [
+          SettingsFacade,
+          {
+            provide: UserConfigStore,
+            useValue: {
+              config: signal<UserConfig>({ userId: 'u1', displayName: 'Wolf' }),
+              save: saveSpy,
+              reload: vitest.fn(),
+            },
+          },
+          {
+            provide: UserContextService,
+            useValue: { isGuest: signal(false), userIdSafe: signal('u1') },
+          },
+          {
+            provide: AuthStore,
+            useValue: {
+              ...makeAuthStoreMock(),
+              deleteAccount,
+              error: signal(error),
+            },
+          },
+          provideRouter([]),
+          { provide: Analytics, useValue: null },
+          {
+            provide: PushSubscriptionService,
+            useValue: { unsubscribe: vitest.fn().mockResolvedValue(undefined) },
+          },
+          { provide: ShareService, useValue: { share: vitest.fn() } },
+        ],
+      });
+      component = TestBed.inject(SettingsFacade);
+      const navigateSpy = vitest
+        .spyOn(TestBed.inject(Router), 'navigateByUrl')
+        .mockResolvedValue(true);
+      TestBed.tick();
+      return { navigateSpy };
+    }
+
+    it('should delete the account without rewriting the user config first', async () => {
+      // given — the server purges every document once the auth user is gone
+      const deleteAccount = vitest.fn().mockResolvedValue(true);
+      const { navigateSpy } = setupDeletion(deleteAccount);
+      await flushMicrotasks();
+      component.deletePhraseInput.set('löschen');
+
+      // when
+      await component.confirmDeleteFromDialog();
+
+      // then
+      expect(deleteAccount).toHaveBeenCalledTimes(1);
+      expect(saveSpy).not.toHaveBeenCalled();
+      expect(navigateSpy).toHaveBeenCalledWith('/');
+      expect(component.deleteAccountError()).toBe('');
+    });
+
+    it('should stay on the page and show the auth error when the deletion fails', async () => {
+      // given — e.g. Firebase demands a recent login before deleting
+      const { navigateSpy } = setupDeletion(
+        vitest.fn().mockResolvedValue(false),
+        new Error('Bitte erneut anmelden')
+      );
+      await flushMicrotasks();
+      component.deletePhraseInput.set('löschen');
+
+      // when
+      await component.confirmDeleteFromDialog();
+
+      // then
+      expect(component.deleteAccountError()).toBe('Bitte erneut anmelden');
+      expect(navigateSpy).not.toHaveBeenCalled();
+      expect(component.deletingAccount()).toBe(false);
+    });
+
+    it('should fall back to a generic message when the store has no error', async () => {
+      // given
+      setupDeletion(vitest.fn().mockResolvedValue(false));
+      await flushMicrotasks();
+      component.deletePhraseInput.set('löschen');
+
+      // when
+      await component.confirmDeleteFromDialog();
+
+      // then
+      expect(component.deleteAccountError()).not.toBe('');
+    });
+
     it('should accept the locale-translated phrase, not the German fallback', async () => {
       // given — inject a non-German translation so $localize returns 'delete'.
       // This test would have FAILED before the fix: the old hardcoded 'löschen'
       // would not match 'delete', blocking deletion on every non-German locale.
       loadTranslations({ 'settings.delete.confirmPlaceholder': 'delete' });
-      const deleteAccountSpy = vitest.fn().mockResolvedValue(undefined);
+      const deleteAccountSpy = vitest.fn().mockResolvedValue(true);
       TestBed.resetTestingModule();
       const configSignalLocal = signal<UserConfig>({
         userId: 'u1',

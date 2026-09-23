@@ -12,7 +12,7 @@ function makeCredential(uid: string): UserCredential {
 describe('AuthService', () => {
   let adapter: Partial<AuthAdapter>;
   let profileSyncHook: PostAuthHook;
-  let migrationHook: PostAuthHook;
+  let secondHook: PostAuthHook;
 
   beforeEach(() => {
     const mockFirebaseUser: Partial<FirebaseUser> = {
@@ -39,14 +39,13 @@ describe('AuthService', () => {
     profileSyncHook = {
       onAuthenticated: jest.fn().mockResolvedValue(undefined),
     };
-    migrationHook = {
+    secondHook = {
       onAuthenticated: jest.fn().mockResolvedValue(undefined),
-      onGuestMigration: jest.fn().mockResolvedValue(undefined),
     };
   });
 
   function makeProviders(
-    hooks: PostAuthHook[] = [profileSyncHook, migrationHook]
+    hooks: PostAuthHook[] = [profileSyncHook, secondHook]
   ) {
     return [
       AuthService,
@@ -219,82 +218,6 @@ describe('AuthService', () => {
     });
   });
 
-  describe('guest data migration', () => {
-    it('signInWithEmailAndMigrateGuest: runs migration hook when currentUser is anonymous', async () => {
-      const guestUser: Partial<FirebaseUser> = {
-        uid: 'guest-uid',
-        isAnonymous: true,
-      };
-      adapter.currentUser = guestUser as FirebaseUser;
-      adapter.authUser = (() => null) as Signal<
-        FirebaseUser | null | undefined
-      >;
-      const realCredential = {
-        user: { uid: 'real-uid' } as FirebaseUser,
-      } as UserCredential;
-      adapter.signInWithEmail = jest.fn().mockResolvedValue(realCredential);
-
-      const { fixture } = await render('', { providers: makeProviders() });
-      const service = fixture.debugElement.injector.get(AuthService);
-      await service.signInWithEmailAndMigrateGuest('a@b.de', 'pw');
-
-      expect(migrationHook.onGuestMigration).toHaveBeenCalledWith(
-        'guest-uid',
-        'real-uid'
-      );
-    });
-
-    it('signInWithEmailAndMigrateGuest: skips migration when currentUser is not anonymous', async () => {
-      const realCredential = {
-        user: { uid: 'real-uid' } as FirebaseUser,
-      } as UserCredential;
-      adapter.signInWithEmail = jest.fn().mockResolvedValue(realCredential);
-
-      const { fixture } = await render('', { providers: makeProviders() });
-      const service = fixture.debugElement.injector.get(AuthService);
-      await service.signInWithEmailAndMigrateGuest('a@b.de', 'pw');
-
-      expect(migrationHook.onGuestMigration).not.toHaveBeenCalled();
-    });
-
-    it('signInWithGoogleAndMigrateGuest: runs migration hook when currentUser is anonymous', async () => {
-      const guestUser: Partial<FirebaseUser> = {
-        uid: 'guest-uid',
-        isAnonymous: true,
-      };
-      adapter.currentUser = guestUser as FirebaseUser;
-      adapter.authUser = (() => null) as Signal<
-        FirebaseUser | null | undefined
-      >;
-      const realCredential = {
-        user: { uid: 'real-uid' } as FirebaseUser,
-      } as UserCredential;
-      adapter.signInWithGoogle = jest.fn().mockResolvedValue(realCredential);
-
-      const { fixture } = await render('', { providers: makeProviders() });
-      const service = fixture.debugElement.injector.get(AuthService);
-      await service.signInWithGoogleAndMigrateGuest();
-
-      expect(migrationHook.onGuestMigration).toHaveBeenCalledWith(
-        'guest-uid',
-        'real-uid'
-      );
-    });
-
-    it('signInWithGoogleAndMigrateGuest: skips migration when currentUser is not anonymous', async () => {
-      const realCredential = {
-        user: { uid: 'real-uid' } as FirebaseUser,
-      } as UserCredential;
-      adapter.signInWithGoogle = jest.fn().mockResolvedValue(realCredential);
-
-      const { fixture } = await render('', { providers: makeProviders() });
-      const service = fixture.debugElement.injector.get(AuthService);
-      await service.signInWithGoogleAndMigrateGuest();
-
-      expect(migrationHook.onGuestMigration).not.toHaveBeenCalled();
-    });
-  });
-
   describe('unsubscribeAllPushDevices', () => {
     it('Given adapter resolves When service.unsubscribeAllPushDevices is called Then it delegates and does NOT sign out locally', async () => {
       // Given
@@ -383,7 +306,7 @@ describe('AuthService', () => {
         ],
       });
       const service = fixture.debugElement.injector.get(AuthService);
-      await service.signInWithGoogleAndMigrateGuest();
+      await service.signInWithGoogle();
 
       // The hook must receive the REAL user (from currentUser), not the stale
       // anonymous user from the signal.

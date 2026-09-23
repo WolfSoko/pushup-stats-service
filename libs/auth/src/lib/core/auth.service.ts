@@ -146,47 +146,6 @@ export class AuthService {
     }, 'Upgrade with Google');
   }
 
-  /**
-   * Signs a guest into an EXISTING account (email/password).
-   * Captures the guest UID first, signs in, then migrates orphaned pushup data.
-   */
-  async signInWithEmailAndMigrateGuest(
-    email: string,
-    password: string
-  ): Promise<void> {
-    await this.wrapAsync(async () => {
-      const currentUser = this.authAdapter.currentUser;
-      const guestUid = currentUser?.isAnonymous
-        ? (currentUser.uid ?? null)
-        : null;
-      const cred = await this.authAdapter.signInWithEmail(email, password);
-      await this.runPostAuthHooks();
-      if (guestUid && cred.user.uid !== guestUid) {
-        await this.runGuestMigrationHooks(guestUid, cred.user.uid);
-      }
-      return cred;
-    }, 'Email sign-in with guest migration');
-  }
-
-  /**
-   * Signs a guest into an EXISTING Google account.
-   * Captures the guest UID first, signs in, then migrates orphaned pushup data.
-   */
-  async signInWithGoogleAndMigrateGuest(): Promise<void> {
-    await this.wrapAsync(async () => {
-      const currentUser = this.authAdapter.currentUser;
-      const guestUid = currentUser?.isAnonymous
-        ? (currentUser.uid ?? null)
-        : null;
-      const cred = await this.authAdapter.signInWithGoogle();
-      await this.runPostAuthHooks();
-      if (guestUid && cred.user.uid !== guestUid) {
-        await this.runGuestMigrationHooks(guestUid, cred.user.uid);
-      }
-      return cred;
-    }, 'Google sign-in with guest migration');
-  }
-
   /** Sign out (alias for logout) */
   async signOut(): Promise<void> {
     await this.logout();
@@ -239,22 +198,6 @@ export class AuthService {
       this.userDbSyncState.set('error');
       // Do not fail login if post-auth hooks fail after successful auth.
       console.warn('[AuthService] post-auth hook failed:', e);
-    }
-  }
-
-  private async runGuestMigrationHooks(
-    fromUid: string,
-    toUid: string
-  ): Promise<void> {
-    try {
-      await Promise.all(
-        this.postAuthHooks.flatMap((hook) =>
-          hook.onGuestMigration ? [hook.onGuestMigration(fromUid, toUid)] : []
-        )
-      );
-    } catch (e) {
-      // Migration failure must not block the sign-in itself.
-      console.warn('[AuthService] guest data migration hook failed:', e);
     }
   }
 

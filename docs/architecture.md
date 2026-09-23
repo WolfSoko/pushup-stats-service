@@ -72,7 +72,7 @@ Enforced via `@nx/enforce-module-boundaries` in `.oxlintrc.json` (the ESLint rul
 ### Ports & Adapters (Auth <-> Data-Access)
 
 - Auth defines `PostAuthHook` interface and `USER_PROFILE_PORT` token
-- Concrete implementations (`UserProfileSyncHook`, `GuestDataMigrationHook`) live at app level
+- Concrete implementations (`UserProfileSyncHook`, `ReferralClaimHook`) live at app level
 - Wired in `app.config.ts` via DI providers
 - Auth has ZERO imports from `@pu-stats/data-access`
 

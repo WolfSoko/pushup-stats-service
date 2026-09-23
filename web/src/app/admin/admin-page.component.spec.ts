@@ -314,19 +314,17 @@ describe('AdminPageComponent', () => {
     it('should flag the deleted user while adminDeleteUser is pending', async () => {
       // given
       let resolveDelete!: () => void;
+      const deleteImpl = vi.fn(
+        () =>
+          new Promise<{ data: unknown }>((resolve) => {
+            resolveDelete = () => resolve({ data: { ok: true } });
+          })
+      );
       await createComponent(
         [sampleUser],
-        [
-          {
-            name: 'adminDeleteUser',
-            impl: () =>
-              new Promise<{ data: unknown }>((resolve) => {
-                resolveDelete = () => resolve({ data: { ok: true } });
-              }),
-          },
-        ]
+        [{ name: 'adminDeleteUser', impl: deleteImpl }]
       );
-      dialogOpenSpy.mockReturnValue(stubDialogRef({ anonymize: false }));
+      dialogOpenSpy.mockReturnValue(stubDialogRef(true));
 
       // when
       const run = component.openDeleteDialog(sampleUser);
@@ -341,9 +339,10 @@ describe('AdminPageComponent', () => {
       resolveDelete();
       await run;
 
-      // then
+      // then — only the uid is sent, the server purges the data
       expect(component.deletingUser.busy()).toBe(false);
       expect(component.users()).toEqual([]);
+      expect(deleteImpl).toHaveBeenCalledWith({ uid: sampleUser.uid });
     });
   });
 });

@@ -203,7 +203,6 @@ export function makeFirebaseAuthMock(opts?: {
 export function makePostAuthHookMock(overrides: Record<string, unknown> = {}) {
   return {
     onAuthenticated: () => Promise.resolve(),
-    onGuestMigration: () => Promise.resolve(),
     ...overrides,
   };
 }

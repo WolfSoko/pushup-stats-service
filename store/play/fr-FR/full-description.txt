@@ -48,7 +48,7 @@ Notifications avec intervalle, heures calmes, jours et fuseau horaire — même 
 Wiki d'exercices avec exécution propre et erreurs classiques, plus un blog.
 
 🔒 TES DONNÉES
-Essaie en invité, sans compte. Conforme au RGPD avec consentement cookies ajustable. Compte supprimable à tout moment, les données d'entraînement ne restent qu'anonymisées. Base de données à Francfort.
+Essaie en invité, sans compte. Conforme au RGPD avec consentement cookies ajustable. Compte supprimable à tout moment, avec toutes tes données d'entraînement. Base de données à Francfort.
 
 📱 ANDROID + WEB
 Mêmes données sur le téléphone et dans le navigateur, synchro en temps réel sur tous tes appareils. Connexion Google ou e-mail. Hors ligne aussi — les entrées se synchronisent dès que tu es en ligne. Thème clair et sombre.

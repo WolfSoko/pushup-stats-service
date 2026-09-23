@@ -58,9 +58,9 @@ export interface MigrationDescriptor {
 
 export const DATA_MIGRATIONS: readonly MigrationDescriptor[] = [
   {
-    id: 'reminder-snooze-cleanup',
-    title: $localize`:@@admin.migrations.reminderSnoozeCleanup.title:Snooze-Reste aus reminderDispatchState entfernen`,
-    description: $localize`:@@admin.migrations.reminderSnoozeCleanup.description:Löscht „snoozedUntil“, „snoozedAt“ und „snoozeMinutes“ aus „reminderDispatchState/{uid}“. Die Snooze-Aktion der Erinnerung wurde entfernt, die Felder werden von niemandem mehr gelesen. Idempotent, nicht umkehrbar — erst den Probelauf ausführen.`,
-    migrate: { callable: 'cleanupReminderSnoozeState' },
+    id: 'orphaned-user-data-cleanup',
+    title: $localize`:@@admin.migrations.orphanedUserData.title:Datenmüll gelöschter Konten entfernen`,
+    description: $localize`:@@admin.migrations.orphanedUserData.description:Sucht Daten von Nutzern ohne Firebase-Auth-Konto (Einträge, Statistiken, Pläne, Workouts, Freundschaften, Push-Abos, Nachrichten, Profilfotos …) und löscht sie wie bei einer Kontolöschung. Bis zu 25 Konten pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Nicht umkehrbar — erst den Probelauf ausführen.`,
+    migrate: { callable: 'cleanupOrphanedUserData' },
   },
 ];

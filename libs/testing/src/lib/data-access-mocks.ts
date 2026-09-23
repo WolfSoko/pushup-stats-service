@@ -2,15 +2,15 @@
  * Shared data-access mock factories for tests across the monorepo.
  *
  * Usage:
- *   import { makePushupFirestoreMock, makeUserConfigMock, makeStatsApiMock } from '@pu-stats/testing';
+ *   import { makeUserConfigMock, makeStatsApiMock } from '@pu-stats/testing';
  *
  * All factories are framework-agnostic (no jest/vitest imports).
  * Pass your framework's spy as an override to verify calls:
  *
  *   // Jest:
- *   const mock = makePushupFirestoreMock({ migrateUserData: jest.fn() });
+ *   const mock = makeUserConfigMock({ getConfig: jest.fn() });
  *   // Vitest:
- *   const mock = makePushupFirestoreMock({ migrateUserData: vitest.fn() });
+ *   const mock = makeUserConfigMock({ getConfig: vitest.fn() });
  */
 
 import { EMPTY, of } from 'rxjs';
@@ -18,30 +18,10 @@ import {
   LeaderboardBucket,
   LeaderboardData,
   LeaderboardService,
-  PushupFirestoreService,
   StatsApiService,
   UserConfigApiService,
 } from '@pu-stats/data-access';
 import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
-
-// ---------------------------------------------------------------------------
-// PushupFirestoreService mock
-// ---------------------------------------------------------------------------
-
-/**
- * Creates a PushupFirestoreService mock.
- *
- * @example
- * { provide: PushupFirestoreService, useValue: makePushupFirestoreMock() }
- */
-export function makePushupFirestoreMock(
-  overrides: Partial<PushupFirestoreService> = {}
-): Partial<PushupFirestoreService> {
-  return {
-    migrateUserData: () => Promise.resolve(),
-    ...overrides,
-  };
-}
 
 // ---------------------------------------------------------------------------
 // UserConfigApiService mock

@@ -164,14 +164,12 @@ export class AdminPageComponent {
       width: '420px',
     });
 
-    const result = await firstValueFrom(ref.afterClosed());
-    if (!result) return;
+    const confirmed = await firstValueFrom(ref.afterClosed());
+    if (!confirmed) return;
 
     try {
       const fn = this.callables.call('adminDeleteUser');
-      await this.deletingUser.run(user.uid, () =>
-        fn({ uid: user.uid, anonymize: result.anonymize })
-      );
+      await this.deletingUser.run(user.uid, () => fn({ uid: user.uid }));
       this.users.update((list) => list.filter((u) => u.uid !== user.uid));
     } catch (err) {
       this.error.set(errorMessage(err));

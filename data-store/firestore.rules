@@ -173,8 +173,7 @@ service cloud.firestore {
       allow read, update, delete: if false;
     }
 
-    // Generic exercise entries (sit-ups, squats, plank, …). New
-    // collection that co-exists with `pushups` while we migrate. Caps
+    // Exercise entries (pushups, sit-ups, squats, plank, …). Caps
     // mirror the catalog in
     // `libs/stats/src/lib/models/exercise.catalog.ts`. Custom
     // user-defined exercises are NOT yet allowed — the `exerciseId`
@@ -593,6 +592,14 @@ service cloud.firestore {
       // rather than by decision. Resetting a profile writes an empty
       // `values` map, it does not remove the document.
       allow delete: if false;
+    }
+
+    // Tombstones of deleted accounts — written by the account purge via
+    // the Admin SDK so the entry triggers stand down while the purge
+    // deletes the entries. Server-only; expire through the `expiresAt`
+    // TTL policy.
+    match /deletedAccounts/{uid} {
+      allow read, write: if false;
     }
 
     // Deny everything else by default.
