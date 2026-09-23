@@ -29,7 +29,9 @@ function seededWorld(): FakeFirestore {
     .seed(`userTrainingPlans/${GONE}`, { userId: GONE })
     .seed(`userTrainingPlans/${GONE}/history/plan-a`, { day: 3 })
     .seed(`userAchievements/${GONE}`, { earned: [] })
-    .seed(`motivationQuotes/${GONE}`, { quotes: [] })
+    .seed(`motivationQuotes/${GONE}__de`, { quotes: [] })
+    .seed(`motivationQuotes/${GONE}__en`, { quotes: [] })
+    .seed(`motivationQuotes/${FRIEND}__de`, { quotes: [] })
     .seed(`reminderDispatchState/${GONE}`, { lastSentAt: 'x' })
     .seed(`cheerPings/${GONE}`, { from: FRIEND })
     .seed(`pushSubscriptions/${GONE}/subs/sub-1`, { endpoint: 'https://push' })
@@ -48,7 +50,12 @@ function seededWorld(): FakeFirestore {
     .seed('challenges/solo', { participants: [GONE], invited: [FRIEND] })
     .seed('challenges/shared', { participants: [FRIEND, GONE], invited: [] })
     .seed('challenges/invited', { participants: [FRIEND], invited: [GONE] })
-    .seed('feedback/f-1', { userId: GONE, email: 'a@b.c', text: 'Nice' })
+    .seed('feedback/f-1', {
+      userId: GONE,
+      email: 'a@b.c',
+      name: 'Gone Person',
+      text: 'Nice',
+    })
     .seed('autoCountFeedback/a-1', { userId: GONE, counted: 9, actual: 10 });
 }
 
@@ -72,6 +79,7 @@ describe('purgeUserData', () => {
       `${DELETED_ACCOUNTS_COLLECTION}/${GONE}`,
       'exerciseEntries/e-friend',
       'feedback/f-1',
+      `motivationQuotes/${FRIEND}__de`,
       `userConfigs/${FRIEND}`,
       `userStats/${FRIEND}/perExercise/pushup`,
       'workouts/w-friend',
@@ -114,6 +122,7 @@ describe('purgeUserData', () => {
     expect(fake.docs.get('feedback/f-1')).toEqual({
       userId: null,
       email: null,
+      name: null,
       text: 'Nice',
     });
     expect(fake.docs.get('autoCountFeedback/a-1')).toEqual({

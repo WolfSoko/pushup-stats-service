@@ -22,7 +22,6 @@ export const UID_KEYED_COLLECTIONS = [
   'userConfigs',
   'userTrainingPlans',
   'userAchievements',
-  'motivationQuotes',
   'reminderDispatchState',
   'cheerPings',
   'pushSubscriptions',
@@ -30,6 +29,19 @@ export const UID_KEYED_COLLECTIONS = [
   'userStats',
   'adminUserActivity',
 ] as const;
+
+/**
+ * Collections keyed `{uid}__{suffix}` — one document per uid and variant,
+ * e.g. `motivationQuotes/{uid}__{lang}`. Deleted by a document-id range.
+ */
+export const UID_PREFIXED_COLLECTIONS = ['motivationQuotes'] as const;
+
+export const UID_PREFIX_SEPARATOR = '__';
+
+/** The uid a `{uid}__{suffix}` document id belongs to. */
+export function uidOfPrefixedId(docId: string): string {
+  return docId.split(UID_PREFIX_SEPARATOR)[0];
+}
 
 export interface OwnedQuery {
   readonly collection: string;
@@ -61,7 +73,7 @@ export const ANONYMIZED_QUERIES: ReadonlyArray<{
   readonly collection: string;
   readonly patch: Readonly<Record<string, null>>;
 }> = [
-  { collection: 'feedback', patch: { userId: null, email: null } },
+  { collection: 'feedback', patch: { userId: null, email: null, name: null } },
   { collection: 'autoCountFeedback', patch: { userId: null } },
 ];
 

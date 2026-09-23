@@ -4,7 +4,11 @@ import {
   type QueryDocumentSnapshot,
 } from 'firebase-admin/firestore';
 
-import { UID_KEYED_COLLECTIONS } from './plan';
+import {
+  UID_KEYED_COLLECTIONS,
+  UID_PREFIXED_COLLECTIONS,
+  uidOfPrefixedId,
+} from './plan';
 
 const SCAN_PAGE_SIZE = 5000;
 
@@ -57,6 +61,10 @@ export async function collectDataOwnerUids(db: Firestore): Promise<string[]> {
   for (const collection of UID_KEYED_COLLECTIONS) {
     const refs = await db.collection(collection).listDocuments();
     for (const ref of refs) uids.add(ref.id);
+  }
+  for (const collection of UID_PREFIXED_COLLECTIONS) {
+    const refs = await db.collection(collection).listDocuments();
+    for (const ref of refs) uids.add(uidOfPrefixedId(ref.id));
   }
   await scanField(db, 'exerciseEntries', 'userId', uids);
   await scanField(db, 'workouts', 'ownerId', uids);

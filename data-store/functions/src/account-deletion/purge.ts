@@ -1,4 +1,8 @@
-import type { Firestore, Query } from 'firebase-admin/firestore';
+import {
+  FieldPath,
+  type Firestore,
+  type Query,
+} from 'firebase-admin/firestore';
 
 import { userPhotoPrefix } from '../profile/photo-storage';
 import {
@@ -6,6 +10,8 @@ import {
   challengeWithoutUser,
   OWNED_QUERIES,
   UID_KEYED_COLLECTIONS,
+  UID_PREFIX_SEPARATOR,
+  UID_PREFIXED_COLLECTIONS,
 } from './plan';
 import { markAccountDeleted } from './tombstone';
 
@@ -114,6 +120,17 @@ export async function purgeUserData(
     deletedDocs += await deleteMatches(
       db,
       db.collection(collection).where(field, op, uid)
+    );
+  }
+
+  const prefix = `${uid}${UID_PREFIX_SEPARATOR}`;
+  for (const collection of UID_PREFIXED_COLLECTIONS) {
+    deletedDocs += await deleteMatches(
+      db,
+      db
+        .collection(collection)
+        .where(FieldPath.documentId(), '>=', prefix)
+        .where(FieldPath.documentId(), '<', `${prefix}\uf8ff`)
     );
   }
 

@@ -29,6 +29,7 @@ describe('collectDataOwnerUids', () => {
     const fake = new FakeFirestore()
       .seed('userConfigs/config-owner', {})
       .seed('pushSubscriptions/push-owner/subs/s-1', {})
+      .seed('motivationQuotes/quote-owner__de', {})
       .seed('notifications/inbox-owner/inbox/n-1', {})
       .seed('exerciseEntries/e-1', { userId: 'entry-owner' })
       .seed('exerciseEntries/e-2', { userId: null })
@@ -46,6 +47,7 @@ describe('collectDataOwnerUids', () => {
       'friend-b',
       'inbox-owner',
       'push-owner',
+      'quote-owner',
       'workout-owner',
     ]);
   });

@@ -1,6 +1,10 @@
 import { describe, expect, it } from '@jest/globals';
 
-import { challengeWithoutUser, UID_KEYED_COLLECTIONS } from './plan';
+import {
+  challengeWithoutUser,
+  UID_KEYED_COLLECTIONS,
+  uidOfPrefixedId,
+} from './plan';
 
 describe('challengeWithoutUser', () => {
   it('should leave a challenge alone the user has nothing to do with', () => {
@@ -62,5 +66,12 @@ describe('UID_KEYED_COLLECTIONS', () => {
 
     // then they are the ones the entry triggers write
     expect(last).toEqual(['userStats', 'adminUserActivity']);
+  });
+});
+
+describe('uidOfPrefixedId', () => {
+  it('should read the uid from a `{uid}__{suffix}` document id', () => {
+    // given / when / then
+    expect(uidOfPrefixedId('abc123__de')).toBe('abc123');
   });
 });

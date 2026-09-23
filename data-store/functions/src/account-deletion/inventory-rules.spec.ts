@@ -6,6 +6,7 @@ import {
   ANONYMIZED_QUERIES,
   OWNED_QUERIES,
   UID_KEYED_COLLECTIONS,
+  UID_PREFIXED_COLLECTIONS,
 } from './plan';
 
 const RULES_PATH = join(__dirname, '..', '..', '..', 'firestore.rules');
@@ -34,6 +35,8 @@ describe('account purge inventory ⇄ firestore.rules', () => {
     const collections = topLevelCollections(readFileSync(RULES_PATH, 'utf8'));
     const covered = new Set<string>([
       ...UID_KEYED_COLLECTIONS,
+      ...UID_PREFIXED_COLLECTIONS,
+      ...UID_PREFIXED_COLLECTIONS,
       ...OWNED_QUERIES.map((q) => q.collection),
       ...ANONYMIZED_QUERIES.map((q) => q.collection),
       ...SPECIAL_CASED,

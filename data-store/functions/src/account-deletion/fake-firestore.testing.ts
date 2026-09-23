@@ -2,9 +2,10 @@ import type { Firestore } from 'firebase-admin/firestore';
 
 type Data = Record<string, unknown>;
 
+/** A string field name, or `FieldPath.documentId()` for the doc id. */
 interface Filter {
-  field: string;
-  op: '==' | 'array-contains';
+  field: unknown;
+  op: '==' | 'array-contains' | '>=' | '<';
   value: unknown;
 }
 
@@ -103,7 +104,7 @@ class FakeQuery {
     return new FakeDocRef(this.db, `${this.path}/${id}`);
   }
 
-  where(field: string, op: Filter['op'], value: unknown): FakeQuery {
+  where(field: unknown, op: Filter['op'], value: unknown): FakeQuery {
     const filters = [...this.filters, { field, op, value }];
     return new FakeQuery(this.db, this.path, filters, this.max, this.afterId);
   }
@@ -142,7 +143,9 @@ class FakeQuery {
         ref: new FakeDocRef(this.db, p),
         data: this.db.docs.get(p) as Data,
       }))
-      .filter(({ data }) => this.filters.every((f) => matches(data, f)))
+      .filter(({ ref, data }) =>
+        this.filters.every((f) => matches(ref.id, data, f))
+      )
       .filter(({ ref }) => this.afterId === null || ref.id > this.afterId)
       .slice(0, this.max)
       .map(({ ref, data }) => ({
@@ -155,8 +158,17 @@ class FakeQuery {
   }
 }
 
-function matches(data: Data, filter: Filter): boolean {
-  const value = data[filter.field];
-  if (filter.op === '==') return value === filter.value;
-  return Array.isArray(value) && value.includes(filter.value);
+function matches(id: string, data: Data, filter: Filter): boolean {
+  const value =
+    typeof filter.field === 'string' ? data[filter.field] : (id as unknown);
+  switch (filter.op) {
+    case '==':
+      return value === filter.value;
+    case 'array-contains':
+      return Array.isArray(value) && value.includes(filter.value);
+    case '>=':
+      return String(value) >= String(filter.value);
+    case '<':
+      return String(value) < String(filter.value);
+  }
 }
