@@ -14415,5 +14415,11 @@ Aktiv:         </target>
         <target>Konto konnte nicht gelöscht werden. Bitte versuche es erneut.</target>
       </segment>
     </unit>
+    <unit id="admin.bulk.remaining">
+      <segment state="initial">
+        <source>Noch offen (erneut ausführen):</source>
+        <target>Noch offen (erneut ausführen):</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

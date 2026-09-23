@@ -183,7 +183,7 @@ export class AdminPageComponent {
     try {
       const fn = this.callables.call<
         { inactiveDays: number },
-        { deleted: number; skipped: number }
+        BulkDeleteResult
       >('adminBulkDeleteInactiveAnonymous');
       const result = await fn({ inactiveDays: this.inactiveDays() });
       this.bulkResult.set(result.data);

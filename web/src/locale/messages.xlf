@@ -11,7 +11,7 @@
     </unit>
     <unit id="auth.error.popupClosed">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:39</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:43</note>
       </notes>
       <segment>
         <source>Google-Anmeldung abgebrochen. Das Anmelde-Fenster wurde geschlossen.</source>
@@ -19,7 +19,7 @@
     </unit>
     <unit id="auth.error.popupBlocked">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:40</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:44</note>
       </notes>
       <segment>
         <source>Pop-up wurde blockiert. Bitte Pop-ups erlauben und erneut versuchen.</source>
@@ -27,7 +27,7 @@
     </unit>
     <unit id="auth.error.network">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:41</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:45</note>
       </notes>
       <segment>
         <source>Netzwerkfehler. Bitte Internetverbindung prüfen und erneut versuchen.</source>
@@ -35,7 +35,7 @@
     </unit>
     <unit id="auth.error.invalidCredential">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:42</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:46</note>
       </notes>
       <segment>
         <source>E-Mail oder Passwort ist nicht korrekt.</source>
@@ -43,7 +43,7 @@
     </unit>
     <unit id="auth.error.invalidEmail">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:43</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:47</note>
       </notes>
       <segment>
         <source>Bitte eine gültige E-Mail-Adresse eingeben.</source>
@@ -51,7 +51,7 @@
     </unit>
     <unit id="auth.error.userDisabled">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:44</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:48</note>
       </notes>
       <segment>
         <source>Dieses Konto ist deaktiviert.</source>
@@ -59,7 +59,7 @@
     </unit>
     <unit id="auth.error.userNotFound">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:45</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:49</note>
       </notes>
       <segment>
         <source>Kein Konto mit dieser E-Mail gefunden.</source>
@@ -67,7 +67,7 @@
     </unit>
     <unit id="auth.error.wrongPassword">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:46</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:50</note>
       </notes>
       <segment>
         <source>E-Mail oder Passwort ist nicht korrekt.</source>
@@ -75,7 +75,7 @@
     </unit>
     <unit id="auth.error.emailInUse">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:47</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:51</note>
       </notes>
       <segment>
         <source>Für diese E-Mail existiert bereits ein Konto.</source>
@@ -83,7 +83,7 @@
     </unit>
     <unit id="auth.error.weakPassword">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:48</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:52</note>
       </notes>
       <segment>
         <source>Das Passwort ist zu schwach (mindestens 6 Zeichen).</source>
@@ -91,7 +91,7 @@
     </unit>
     <unit id="auth.error.tooManyRequests">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:49</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:53</note>
       </notes>
       <segment>
         <source>Zu viele Versuche. Bitte kurz warten und erneut versuchen.</source>
@@ -99,7 +99,7 @@
     </unit>
     <unit id="auth.error.internalError">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:50</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:54</note>
       </notes>
       <segment>
         <source>Ein technischer Fehler ist aufgetreten. Bitte gleich erneut versuchen.</source>
@@ -107,7 +107,7 @@
     </unit>
     <unit id="auth.error.requiresRecentLogin">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:51</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:55</note>
       </notes>
       <segment>
         <source>Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.</source>
@@ -3275,9 +3275,17 @@
         <source>Übersprungen:</source>
       </segment>
     </unit>
+    <unit id="admin.bulk.remaining">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.html:86,88</note>
+      </notes>
+      <segment>
+        <source>Noch offen (erneut ausführen):</source>
+      </segment>
+    </unit>
     <unit id="admin.filter.anonymous">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:100,102</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:107,109</note>
       </notes>
       <segment>
         <source> Nur anonyme Benutzer </source>
@@ -3285,7 +3293,7 @@
     </unit>
     <unit id="admin.col.uid">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:126,127</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:133,134</note>
       </notes>
       <segment>
         <source>UID</source>
@@ -3293,7 +3301,7 @@
     </unit>
     <unit id="admin.col.name">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:141,142</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:148,149</note>
       </notes>
       <segment>
         <source>Name</source>
@@ -3301,7 +3309,7 @@
     </unit>
     <unit id="admin.col.email">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:152,153</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:159,160</note>
       </notes>
       <segment>
         <source>E-Mail</source>
@@ -3309,7 +3317,7 @@
     </unit>
     <unit id="admin.col.anon">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:163,164</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:170,171</note>
       </notes>
       <segment>
         <source>Anon</source>
@@ -3317,7 +3325,7 @@
     </unit>
     <unit id="admin.col.entries">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:180,182</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:187,189</note>
       </notes>
       <segment>
         <source>Einträge</source>
@@ -3325,7 +3333,7 @@
     </unit>
     <unit id="admin.col.lastEntry">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:191,193</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:198,200</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -3333,7 +3341,7 @@
     </unit>
     <unit id="admin.col.createdAt">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:204,206</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:211,213</note>
       </notes>
       <segment>
         <source>Erstellt</source>
@@ -14019,7 +14027,7 @@
     </unit>
     <unit id="settings.deleteAccountFailed">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings.facade.ts:190</note>
+        <note category="location">web/src/app/stats/shell/settings.facade.ts:189</note>
       </notes>
       <segment>
         <source>Konto konnte nicht gelöscht werden. Bitte versuche es erneut.</source>

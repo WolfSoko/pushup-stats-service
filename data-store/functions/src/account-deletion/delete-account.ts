@@ -1,5 +1,4 @@
 import { purgeUserData, type PurgeDeps, type PurgeResult } from './purge';
-import { DELETED_ACCOUNTS_COLLECTION } from './tombstone';
 
 export interface AuthDeleter {
   deleteUser(uid: string): Promise<void>;
@@ -17,6 +16,19 @@ export interface DeleteAccountDeps extends PurgeDeps {
  */
 export const RECENT_LOGIN_WINDOW_SEC = 5 * 60;
 
+/**
+ * Whether the caller may delete their account right now. Guests are
+ * exempt from the recent-login rule: an anonymous account cannot sign in
+ * again, so the rule would lock its data in for good.
+ */
+export function mayDeleteOwnAccount(
+  token: { auth_time?: unknown; firebase?: { sign_in_provider?: unknown } },
+  nowMs: number
+): boolean {
+  if (token.firebase?.sign_in_provider === 'anonymous') return true;
+  return isRecentLogin(token.auth_time, nowMs);
+}
+
 export function isRecentLogin(authTimeSec: unknown, nowMs: number): boolean {
   if (typeof authTimeSec !== 'number' || !Number.isFinite(authTimeSec)) {
     return false;
@@ -29,10 +41,10 @@ function isUserNotFound(err: unknown): boolean {
 }
 
 /**
- * Purges the data first and deletes the Auth user last: if the purge
- * fails, the account still exists and the user (or admin) can simply try
- * again. If only the Auth deletion fails, the tombstone is withdrawn so the
- * surviving account's future entry deletions keep updating its stats.
+ * Purges the data first and deletes the Auth user last: if anything fails,
+ * the account still exists and the user (or admin) can simply try again.
+ * The purge's tombstone expires on its own, so a surviving account gets its
+ * normal entry-trigger behaviour back.
  */
 export async function deleteAccountWithData(
   deps: DeleteAccountDeps,
@@ -43,7 +55,6 @@ export async function deleteAccountWithData(
     await deps.auth.deleteUser(uid);
   } catch (err) {
     if (isUserNotFound(err)) return result;
-    await deps.db.collection(DELETED_ACCOUNTS_COLLECTION).doc(uid).delete();
     throw err;
   }
   return result;

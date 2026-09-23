@@ -4,6 +4,7 @@ import {
   type AuthDeleter,
   deleteAccountWithData,
   isRecentLogin,
+  mayDeleteOwnAccount,
   RECENT_LOGIN_WINDOW_SEC,
 } from './delete-account';
 import { FakeFirestore } from './fake-firestore.testing';
@@ -39,6 +40,30 @@ describe('isRecentLogin', () => {
     // given / when / then
     expect(isRecentLogin(undefined, NOW_MS)).toBe(false);
     expect(isRecentLogin('123', NOW_MS)).toBe(false);
+  });
+});
+
+describe('mayDeleteOwnAccount', () => {
+  it('should let a guest delete regardless of the sign-in age', () => {
+    // given an anonymous token signed in a day ago
+    const token = {
+      auth_time: NOW_MS / 1000 - 24 * 60 * 60,
+      firebase: { sign_in_provider: 'anonymous' },
+    };
+
+    // when / then
+    expect(mayDeleteOwnAccount(token, NOW_MS)).toBe(true);
+  });
+
+  it('should require a recent sign-in for a real account', () => {
+    // given a Google token signed in a day ago
+    const token = {
+      auth_time: NOW_MS / 1000 - 24 * 60 * 60,
+      firebase: { sign_in_provider: 'google.com' },
+    };
+
+    // when / then
+    expect(mayDeleteOwnAccount(token, NOW_MS)).toBe(false);
   });
 });
 
@@ -79,7 +104,7 @@ describe('deleteAccountWithData', () => {
     expect(fake.docs.has(`${DELETED_ACCOUNTS_COLLECTION}/u1`)).toBe(true);
   });
 
-  it('should withdraw the tombstone and rethrow when the auth deletion fails', async () => {
+  it('should rethrow when the auth deletion fails', async () => {
     // given an auth backend that errors
     const fake = new FakeFirestore();
     const auth = {
@@ -88,10 +113,9 @@ describe('deleteAccountWithData', () => {
       },
     };
 
-    // when / then — the account survives, so its entry triggers must work
+    // when / then — the account survives and can be deleted again
     await expect(deleteAccountWithData(deps(fake, auth), 'u1')).rejects.toThrow(
       'boom'
     );
-    expect(fake.docs.has(`${DELETED_ACCOUNTS_COLLECTION}/u1`)).toBe(false);
   });
 });

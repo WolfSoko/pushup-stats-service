@@ -4,7 +4,7 @@ import { HttpsError, onCall } from 'firebase-functions/v2/https';
 
 import {
   deleteAccountWithData,
-  isRecentLogin,
+  mayDeleteOwnAccount,
 } from './account-deletion/delete-account';
 import { liveDeleteAccountDeps } from './account-deletion/live-deps';
 import {
@@ -34,7 +34,7 @@ export const deleteOwnAccount = onCall(
     }
     // The message carries the Firebase Auth code so the client maps it to
     // the same "please sign in again" hint a client-side deletion shows.
-    if (!isRecentLogin(request.auth?.token?.auth_time, Date.now())) {
+    if (!mayDeleteOwnAccount(request.auth?.token ?? {}, Date.now())) {
       throw new HttpsError('failed-precondition', 'auth/requires-recent-login');
     }
 
@@ -46,9 +46,9 @@ export const deleteOwnAccount = onCall(
 
 // Cleans up the data junk of accounts deleted without a purge: before it
 // existed (settings used to only anonymize `userConfigs`, the admin
-// callables left most collections behind) or through the Firebase console. Runs from the admin migrations
-// page with the uniform `{ dryRun }` contract; only an explicit
-// `dryRun: false` deletes anything.
+// callables left most collections behind) or through the Firebase console.
+// Runs from the admin migrations page with the uniform `{ dryRun }`
+// contract; only an explicit `dryRun: false` deletes anything.
 export const cleanupOrphanedUserData = onCall(
   { region: 'europe-west3', timeoutSeconds: 540, memory: '512MiB' },
   async (request) => {
