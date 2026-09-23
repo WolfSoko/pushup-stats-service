@@ -106,7 +106,7 @@ Kein Ticket aus **Phase 2 und später** startet, bevor dieses Gate geschlossen i
 
 Ein Kandidat muss **alle** erfüllen:
 
-1. **Übungsneutral, mindestens** — trägt Liegestütze bis Cardio und Mobility, ohne eine Übung zu bevorzugen. **Verschärfung vom 2026-09-22, siehe 3.7:** Wenn das Produkt sich zu „zähl irgendetwas und behalte die Statistik“ öffnet, muss der Name **domänenneutral** sein — er muss Liegestütze _und_ Kaffeetassen _und_ gelesene Seiten tragen. Ob diese Öffnung Absicht oder bloße Möglichkeit ist, ist **nicht entschieden** (offener Punkt 6). Solange das offen ist, gilt die schärfere Lesart als Filter, weil ein Name, der beides trägt, in beiden Welten funktioniert — umgekehrt nicht.
+1. **Übungsneutral, mindestens** — trägt Liegestütze bis Cardio und Mobility, ohne eine Übung zu bevorzugen. **Verschärfung vom 2026-09-22, siehe 3.7:** Wenn das Produkt sich zu „zähl irgendetwas und behalte die Statistik“ öffnet, muss der Name **domänenneutral** sein — er muss Liegestütze _und_ Kaffeetassen _und_ gelesene Seiten tragen. Ob diese Öffnung Absicht oder bloße Möglichkeit ist, ist **nicht entschieden** (offener Punkt 7). Solange das offen ist, gilt die schärfere Lesart als Filter, weil ein Name, der beides trägt, in beiden Welten funktioniert — umgekehrt nicht.
 2. **DE und EN tragfähig** — Quelle ist Deutsch, ausgeliefert wird in 9 Sprachen. Kein Wortspiel, das nur in einer Sprache funktioniert.
 3. **Play-Titel-Budget** — max. 30 Zeichen inkl. Untertitel. Zum Vergleich der heutige Titel: „Pushup Tracker: Liegestütze“ = 27 Zeichen, also praktisch am Limit. Ein Name über ~14 Zeichen lässt keinen Untertitel mehr zu.
 4. **Domain frei** — `.com` bevorzugt, `.de` als Ergänzung (der Bestand hat beide).
@@ -280,7 +280,7 @@ Nach dem Merge von #762 sind drei Dinge dazugekommen, die das Feld aus 3.6 volls
 | Holdspan         | Fällt, jetzt dreifach belastet                                                                           |
 | Tallyspan        | Wurde kurzzeitig Favorit (_tally_ = Strichliste über irgendetwas), dann verworfen                        |
 
-**2. Zwei Geschmacksentscheidungen.** Deutsche Namen scheiden aus (Stetwerk, Kerbstrich, Tagpensum, Zählwerk-Familie); der Stamm _tally_ scheidet aus. Damit fallen zusätzlich Tallyslate, Sticktally, Wolftally und Tallyo. Beides sind Setzungen des Auftraggebers, keine Kriterienbefunde — hier dokumentiert, damit spätere Runden die Namen nicht erneut vorschlagen.
+**2. Zwei Geschmacksentscheidungen.** Deutsche Namen scheiden aus (Stetwerk, Kerbstrich, Tagpensum, Zählwerk-Familie); der Stamm _tally_ scheidet aus. Damit fallen zusätzlich Tallyspan, Tallyslate, Sticktally, Wolftally und Tallyo — Tallyspan ausdrücklich mitgenannt, obwohl es oben in der Tabelle steht, damit die Ausschlussliste vollständig ist. Beides sind Setzungen des Auftraggebers, keine Kriterienbefunde — hier dokumentiert, damit spätere Runden die Namen nicht erneut vorschlagen.
 
 **3. Ein belegter Store-Treffer.** _RepVision_ wurde vorgeschlagen und ist **vergeben**: „RepVision – PushUps Tracker“ (`com.hpt.repvision`) bei Google Play zählt laut Eintrag Liegestütze und Kniebeugen per Kamera-KI. Derselbe Name für dasselbe Produkt, inklusive Kamera-Autozähler — der eindeutigste Kriterium-6-Verstoß dieser ganzen Suche. Unabhängig davon wäre „Rep“ ohnehin gefallen: derselbe Grund, aus dem _Repora_ in 3.4 abgewertet und _RepStack_ ausgeschlossen wurde.
 
@@ -288,7 +288,7 @@ Nach dem Merge von #762 sind drei Dinge dazugekommen, die das Feld aus 3.6 volls
 
 #### Store-Check der verbliebenen fünf
 
-Erstmals in diesem Plan für alle Kandidaten einer Runde gefahren, per Websuche:
+Per Websuche, für alle fünf. (3.4 beansprucht dieselbe Abdeckung für seine Runde — „erstmals“ wäre also falsch. Neu ist hier nur, dass der Check die Rangfolge umgeworfen hat.)
 
 | Kandidat      |  Z. | Bild                                                     | Befund                                                                                                                                                                              |
 | ------------- | --: | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -317,7 +317,9 @@ Erstmals in diesem Plan für alle Kandidaten einer Runde gefahren, per Websuche:
 
 #### Was das Verfahren lehrt
 
-Die Kollisionsprüfung hat die Rangfolge in dieser Runde **zum zweiten Mal** korrigiert: Erst hob die Produktaussage Tallyspan von Platz 2 auf Platz 1, dann hob der Store-Check Notchcard von Platz 3 auf Platz 1. Beide Male hatte ich zuvor nach Klang und Bild sortiert. **Klang rankt, Kollision entscheidet** — die Reihenfolge der Prüfungen gehört umgedreht: erst Store, dann Ästhetik.
+Die Rangfolge ist in dieser Runde **zweimal** umgeworfen worden, aber aus zwei verschiedenen Richtungen: Erst hob eine **Produktaussage** Tallyspan von Platz 2 auf Platz 1, dann hob der **Store-Check** Notchcard von Platz 3 auf Platz 1. Nur das zweite ist eine Kollisionsprüfung.
+
+Gemeinsam ist beiden, was sie verdrängt haben: eine Sortierung nach Klang und Bild. **Ästhetik ist das schwächste Kriterium und wird zuerst geprüft** — richtig wäre die Reihenfolge Produktpassung, Kollision, Klang.
 
 ### 3.8 Ablauf
 
@@ -522,12 +524,23 @@ Gate 0 (Name + Domain + Play-Option)
 | Markenrechtlicher Konflikt beim neuen Namen     | Erzwungener zweiter Rename — Totalschaden                                                                                          | Gate-0-Kriterium 5 ist blockierend, nicht optional                                                                                  |
 | Neue Domain nicht in `NG_ALLOWED_HOSTS`         | SSR liefert 403, Seite komplett tot                                                                                                | Schritt 2 der Phase-4-Reihenfolge, vor dem Canonical-Umzug                                                                          |
 | Push-Subscriptions sind origin-gebunden         | Erinnerungen können nach dem Origin-Wechsel ausfallen; Altbestand in Firestore ist über das normale Abmelden nicht mehr erreichbar | Subscriptions zum Cutover serverseitig aufräumen; auf dem neuen Origin gezielt zur Neuanmeldung auffordern; Spec dafür. Siehe unten |
+| Gast-Konten verlieren ihre Identität            | Anonyme uid liegt origin-gebunden in der Auth-Persistenz; nach dem Wechsel sind die Einträge des Gasts unerreichbar                | Übernahmepfad vor dem Cutover: zur Kontoerstellung auffordern, oder uid-Migration per Einmal-Token. Siehe unten                     |
 
 **Zum Push-Risiko.** `libs/push/src/lib/push-subscription.store.ts` liest die Subscription aus der Service-Worker-Registrierung und schickt nur den `endpoint` an den Server; beim **normalen** Abmelden löscht die App genau den Endpoint, den sie **lokal** lesen kann. Ein Domainwechsel ist ein Origin-Wechsel: Auf dem neuen Origin gibt es keine Registrierung, also sehen alle Nutzer „nicht abonniert“.
 
 Ein vollständiger Weg existiert allerdings: Das Callable `unsubscribeAllPushDevices` (`data-store/functions/src/functions-push.ts`) löscht über `deleteAllPushSubscriptions` sämtliche `pushSubscriptions/{uid}/subs` samt Elterndokument, und die Erinnerungsseite ruft es auf (`web/src/app/reminders/shell/reminders-page.component.ts`). Alte Endpoints bleiben also **nicht zwangsläufig** liegen — sie bleiben, solange dieser Weg nicht gegangen wird, und ein Nutzer, dem die App „nicht abonniert“ anzeigt, hat keinen Anlass dazu. `dispatchPushReminders` schickt derweil weiter dorthin. Ob dabei doppelt zugestellt wird, hängt daran, wie lange die alte SW-Registrierung im Browser überlebt; das ist zu testen, nicht anzunehmen. Dass der Store eine eigene `.invalid`-Zombie-Behandlung hat, zeigt, dass Endpoint-Rotation hier schon einmal teuer war.
 
-Origin-gebunden sind außerdem `localStorage`, IndexedDB und die Firebase-Auth-Persistenz. Das ist bewusst **nicht** als Risiko geführt: Die Inhalte dort sind Theme, Coachmark-Flag, Zitat-Cache und ein laufender Workout-Run — alles, was zählt, liegt in Firestore.
+**Origin-gebundener Speicher — differenziert.** `localStorage`, IndexedDB und die Firebase-Auth-Persistenz sind ebenfalls origin-gebunden. Das ist nicht durchgehend harmlos:
+
+| Inhalt                                                                                                                | Bewertung                                                                                                     |
+| --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Theme, Coachmark-Flag, Tuning-Panel, Zitat-Cache, laufender Workout-Run                                               | **Egal.** Komfort; was zählt, liegt in Firestore                                                              |
+| Ausstehender Referral-Code (`referral.service.ts`), ausstehender Freundes-Einladungscode (`friend-invite.service.ts`) | **Kleiner Verlust.** Eine vor dem Cutover geöffnete Einladung, die danach abgeschlossen wird, fällt still weg |
+| **Gast-Sitzungen (anonyme Auth)**                                                                                     | **Datenverlust.** Siehe unten                                                                                 |
+
+**Gäste sind der ernste Fall.** Das Produkt kennt anonyme Konten (`isAnonymous` / `isGuest`, in `auth.guard.ts` eigens behandelt), und diese schreiben echte Einträge unter einer anonymen uid. Die uid liegt in der Firebase-Auth-Persistenz, also origin-gebunden in IndexedDB — ein `setPersistence`-Aufruf existiert im Repo nirgends, es gilt also der Standard. Nach dem Domainwechsel bekommt ein wiederkehrender Gast eine **neue** anonyme uid; seine bisherigen Daten bleiben in Firestore liegen, ohne dass er noch an sie herankommt.
+
+Das ist kein Speicherkomfort, sondern Datenverlust für eine Nutzergruppe, die nie ein Konto angelegt hat und deshalb auch keinen Wiederherstellungsweg besitzt. **Offen:** Braucht der Cutover einen Übernahmepfad für Gäste (Einladung zur Kontoerstellung vor dem Wechsel, oder uid-Migration über einen Einmal-Token)?
 
 ---
 
@@ -556,6 +569,7 @@ Origin-gebunden sind außerdem `localStorage`, IndexedDB und die Firebase-Auth-P
 3. **Play-Lifetime-Installs** — nur bei null Installs gäbe Google die ID nach einer Löschung wieder frei. Das ist die einzige Zahl, die Option B noch günstiger machen könnte; ansonsten bleibt es bei Option A.
 4. **Kontaktadresse** — `contact@<neue-domain>` einrichten; alte Adresse für die Übergangszeit weiterleiten (steht in Impressum und Datenschutz, also rechtlich relevant). **Entkoppelbar:** Der Bestand enthält bereits `wolsok.de`; eine Adresse dort löst diesen Punkt unabhängig vom Namensentscheid.
 5. **Push-Subscriptions beim Origin-Wechsel** — siehe Risikotabelle. Braucht eine Entscheidung _vor_ Phase 4: serverseitig zum Cutover aufräumen, oder Altbestand auslaufen lassen und doppelte Zustellung in Kauf nehmen.
-6. **Produktrichtung** — ist „zähl irgendetwas und halte die Statistik fest“ **Absicht** oder **Möglichkeit**? Davon hängt Kriterium 1 ab (siehe 3.1) und damit, ob ein domänenneutraler Name den schwächeren Fitness-Verkauf wert ist. **Unbeantwortet.**
-7. **Logo-Richtung** — soll die Formsprache des alten Icons erkennbar bleiben (sanfterer Übergang) oder bewusst brechen?
-8. **Route-Slug `/wiki/liegestuetz-typen`** — Empfehlung ist behalten; falls doch neutral, muss es in Phase 4 mit.
+6. **Gast-Konten beim Origin-Wechsel** — anonyme uids liegen origin-gebunden in der Auth-Persistenz. Nach dem Wechsel kommt ein Gast nicht mehr an seine Einträge. Braucht eine Entscheidung _vor_ Phase 4: Übernahmepfad anbieten (Kontoerstellung vor dem Cutover bewerben, oder uid-Migration per Einmal-Token) oder den Verlust bewusst hinnehmen und offen kommunizieren.
+7. **Produktrichtung** — ist „zähl irgendetwas und halte die Statistik fest“ **Absicht** oder **Möglichkeit**? Davon hängt Kriterium 1 ab (siehe 3.1) und damit, ob ein domänenneutraler Name den schwächeren Fitness-Verkauf wert ist. **Unbeantwortet.**
+8. **Logo-Richtung** — soll die Formsprache des alten Icons erkennbar bleiben (sanfterer Übergang) oder bewusst brechen?
+9. **Route-Slug `/wiki/liegestuetz-typen`** — Empfehlung ist behalten; falls doch neutral, muss es in Phase 4 mit.
