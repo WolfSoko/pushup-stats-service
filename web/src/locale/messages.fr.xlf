@@ -15263,5 +15263,35 @@
         <target>Konto konnte nicht gelöscht werden. Bitte versuche es erneut.</target>
       </segment>
     </unit>
+    <unit id="achievement.dialog.eyebrow">
+      <segment state="initial">
+        <source>Neues Abzeichen</source>
+        <target>Neues Abzeichen</target>
+      </segment>
+    </unit>
+    <unit id="achievement.dialog.note">
+      <segment state="initial">
+        <source>Ab jetzt glänzt es in deiner Sammlung. Weiter so!</source>
+        <target>Ab jetzt glänzt es in deiner Sammlung. Weiter so!</target>
+      </segment>
+    </unit>
+    <unit id="achievement.dialog.closeAria">
+      <segment state="initial">
+        <source>Schließen</source>
+        <target>Schließen</target>
+      </segment>
+    </unit>
+    <unit id="achievement.dialog.snap">
+      <segment state="initial">
+        <source>Snap!</source>
+        <target>Snap!</target>
+      </segment>
+    </unit>
+    <unit id="achievement.dialog.snapAria">
+      <segment state="initial">
+        <source>Abzeichen vaporisieren</source>
+        <target>Abzeichen vaporisieren</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

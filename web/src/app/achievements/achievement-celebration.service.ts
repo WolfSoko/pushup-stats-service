@@ -5,7 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserAchievementsApiService } from '@pu-stats/data-access';
 
 import { UserContextService } from '@pu-auth/auth';
-import { BRAND_URL } from '@pu-stats/models';
+import { BRAND_URL, SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
+import { UserConfigStore } from '../core/user-config.store';
 import { resolveAchievementBadge } from '../public-profile/achievement-badge';
 import {
   markCelebrated,
@@ -13,6 +14,7 @@ import {
   readCelebrated,
 } from './achievement-celebration';
 import {
+  ACHIEVEMENT_DIALOG_TITLE_ID,
   AchievementDialogComponent,
   type AchievementDialogData,
 } from './achievement-dialog.component';
@@ -37,6 +39,7 @@ export class AchievementCelebrationService {
   private readonly dialog = inject(MatDialog);
   private readonly api = inject(UserAchievementsApiService);
   private readonly user = inject(UserContextService);
+  private readonly userConfig = inject(UserConfigStore);
   private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
@@ -71,8 +74,17 @@ export class AchievementCelebrationService {
     if (!badge) return;
 
     this.dialog.open(AchievementDialogComponent, {
-      data: { badge, shareUrl: BRAND_URL } satisfies AchievementDialogData,
+      data: {
+        badge,
+        shareUrl: BRAND_URL,
+        maxParticleCount: SNAP_QUALITY_PARTICLES[this.userConfig.snapQuality()],
+      } satisfies AchievementDialogData,
+      panelClass: 'achievement-dialog-panel',
       autoFocus: 'dialog',
+      restoreFocus: true,
+      ariaLabelledBy: ACHIEVEMENT_DIALOG_TITLE_ID,
+      width: 'min(92vw, 420px)',
+      maxWidth: '92vw',
     });
   }
 }

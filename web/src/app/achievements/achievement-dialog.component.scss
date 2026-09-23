@@ -1,0 +1,370 @@
+// The card is rasterised by html2canvas on snap: plain rgb()/rgba()/hex
+// only, no conic-gradient (html2canvas throws on it) and no Material
+// components that pull in Material 3 color() tokens.
+:host {
+  display: block;
+}
+
+.badge-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.75rem 1.5rem 1.5rem;
+  text-align: center;
+  border-radius: 20px;
+  overflow: hidden;
+  color: rgb(246, 242, 255);
+  animation: card-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+
+  // Frame on a pseudo-element so the snap can fade and expand it without
+  // shifting the content html2canvas already captured.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background:
+      radial-gradient(
+        circle at 50% 38%,
+        rgba(255, 214, 102, 0.38),
+        transparent 55%
+      ),
+      linear-gradient(160deg, rgb(58, 36, 120), rgb(24, 16, 58));
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 214, 102, 0.35),
+      0 16px 40px rgba(0, 0, 0, 0.35);
+    transform-origin: bottom left;
+    transform: scale(calc(1 + 0.3 * var(--snap-progress, 0)));
+    opacity: calc(1 - var(--snap-progress, 0));
+  }
+
+  &.is-snapping {
+    overflow: visible;
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgb(246, 242, 255);
+  transition: background-color 120ms ease;
+
+  &:hover:not([disabled]) {
+    background: rgba(255, 255, 255, 0.24);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px rgb(246, 242, 255),
+      0 0 0 4px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.close-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.eyebrow {
+  padding: 0.25rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(255, 214, 102, 0.16);
+  color: rgb(255, 222, 130);
+  box-shadow: inset 0 0 0 1px rgba(255, 214, 102, 0.45);
+}
+
+.stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 200px;
+  margin: -0.5rem 0 -0.75rem;
+}
+
+.rays {
+  position: absolute;
+  inset: 0;
+  animation: rays-spin 18s linear infinite;
+}
+
+.ray {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  width: 18px;
+  height: 100px;
+  margin-left: -9px;
+  transform-origin: 50% 100%;
+  background: linear-gradient(
+    to top,
+    rgba(255, 214, 102, 0),
+    rgba(255, 214, 102, 0.28) 55%,
+    rgba(255, 214, 102, 0)
+  );
+  border-radius: 50%;
+}
+
+.medal {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 116px;
+  height: 116px;
+  border-radius: 50%;
+  background: linear-gradient(
+    145deg,
+    rgb(255, 236, 160),
+    rgb(240, 180, 40) 45%,
+    rgb(178, 110, 10)
+  );
+  box-shadow:
+    0 0 0 4px rgba(255, 236, 160, 0.35),
+    0 0 36px rgba(255, 200, 70, 0.6),
+    0 8px 18px rgba(0, 0, 0, 0.35);
+  animation:
+    medal-pop 700ms cubic-bezier(0.34, 1.56, 0.64, 1) 120ms both,
+    medal-glow 2.4s ease-in-out 900ms infinite;
+}
+
+.medal-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, rgb(214, 140, 16), rgb(255, 214, 102));
+  box-shadow:
+    inset 0 2px 6px rgba(120, 70, 0, 0.55),
+    inset 0 -2px 4px rgba(255, 245, 210, 0.6);
+}
+
+.medal-icon {
+  font-size: 54px;
+  line-height: 1;
+  color: rgb(255, 252, 240);
+  filter: drop-shadow(0 2px 3px rgba(110, 60, 0, 0.6));
+}
+
+.sparkle {
+  position: absolute;
+  line-height: 1;
+  color: rgb(255, 230, 150);
+  text-shadow: 0 0 8px rgba(255, 214, 102, 0.9);
+  animation: twinkle 1.8s ease-in-out infinite both;
+}
+
+.sparkle-1 {
+  top: 18px;
+  left: 30px;
+  font-size: 20px;
+}
+
+.sparkle-2 {
+  top: 34px;
+  right: 22px;
+  font-size: 14px;
+  animation-delay: 300ms;
+}
+
+.sparkle-3 {
+  bottom: 30px;
+  left: 18px;
+  font-size: 16px;
+  animation-delay: 700ms;
+}
+
+.sparkle-4 {
+  bottom: 22px;
+  right: 34px;
+  font-size: 22px;
+  animation-delay: 1100ms;
+}
+
+.sparkle-5 {
+  top: 4px;
+  right: 70px;
+  font-size: 12px;
+  animation-delay: 1500ms;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: rgb(255, 255, 255);
+}
+
+.badge-label {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: rgb(255, 222, 130);
+}
+
+.note {
+  margin: 0;
+  max-width: 30ch;
+  font-size: 0.95rem;
+  color: rgba(246, 242, 255, 0.82);
+}
+
+.actions {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+}
+
+%pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.3rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  transition:
+    transform 100ms ease,
+    background-color 120ms ease;
+
+  &:hover:not([disabled]) {
+    transform: translateY(-1px);
+  }
+
+  &:active:not([disabled]) {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 3px rgb(246, 242, 255),
+      0 0 0 6px rgba(0, 0, 0, 0.5);
+  }
+
+  &[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.share-btn {
+  @extend %pill-btn;
+  border: 2px solid rgba(246, 242, 255, 0.85);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgb(246, 242, 255);
+
+  &:hover:not([disabled]) {
+    background: rgba(255, 255, 255, 0.18);
+  }
+}
+
+.snap-btn {
+  @extend %pill-btn;
+  border: none;
+  background: linear-gradient(145deg, rgb(255, 228, 140), rgb(240, 176, 36));
+  color: rgb(70, 36, 0);
+  box-shadow: 0 4px 14px rgba(240, 176, 36, 0.45);
+}
+
+.btn-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+@keyframes card-in {
+  from {
+    transform: scale(0.85) translateY(12px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes medal-pop {
+  0% {
+    transform: scale(0.2) rotate(-35deg);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.12) rotate(6deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes medal-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 4px rgba(255, 236, 160, 0.35),
+      0 0 36px rgba(255, 200, 70, 0.6),
+      0 8px 18px rgba(0, 0, 0, 0.35);
+  }
+  50% {
+    box-shadow:
+      0 0 0 6px rgba(255, 236, 160, 0.5),
+      0 0 56px rgba(255, 200, 70, 0.85),
+      0 8px 18px rgba(0, 0, 0, 0.35);
+  }
+}
+
+@keyframes rays-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.25;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .badge-card,
+  .rays,
+  .medal,
+  .sparkle {
+    animation: none;
+  }
+}

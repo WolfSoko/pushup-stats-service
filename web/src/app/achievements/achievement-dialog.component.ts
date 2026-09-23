@@ -1,15 +1,23 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { isPlatformBrowser } from '@angular/common';
 import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef,
-} from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EnvironmentInjector,
+  inject,
+  PLATFORM_ID,
+  signal,
+  viewChild,
+} from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { BRAND_NAME } from '@pu-stats/models';
 
 import { ShareService } from '../core/share.service';
+import { snapElement } from '../core/snap-element';
 import type { AchievementBadge } from '../public-profile/achievement-badge';
+
+export const ACHIEVEMENT_SNAP_DURATION_MS = 4000;
+export const ACHIEVEMENT_DIALOG_TITLE_ID = 'achievement-dialog-title';
 
 export interface AchievementDialogData {
   readonly badge: AchievementBadge;
@@ -20,83 +28,74 @@ export interface AchievementDialogData {
    * users still share their profile from the profile page itself.
    */
   readonly shareUrl: string;
+  /** The user's snap-quality preset; the project default when omitted. */
+  readonly maxParticleCount?: number;
 }
+
+const RAY_COUNT = 12;
 
 @Component({
   selector: 'app-achievement-dialog',
-  standalone: true,
-  imports: [MatButtonModule, MatDialogModule, MatIconModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <div class="achievement-dialog">
-      <mat-icon class="badge-icon" aria-hidden="true">{{
-        data.badge.icon
-      }}</mat-icon>
-      <h2 mat-dialog-title>{{ headline }}</h2>
-      <p class="badge-label">{{ data.badge.label }}</p>
-      <div mat-dialog-actions class="actions">
-        <button mat-button (click)="close()">{{ closeLabel }}</button>
-        <button
-          mat-flat-button
-          color="primary"
-          data-testid="achievement-share"
-          (click)="share()"
-        >
-          <mat-icon>share</mat-icon>
-          <span>{{ shareLabel }}</span>
-        </button>
-      </div>
-    </div>
-  `,
-  styles: [
-    `
-      .achievement-dialog {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 8px 4px 0;
-      }
-      .badge-icon {
-        --mat-icon-color: var(--mat-sys-primary);
-        color: var(--mat-sys-primary);
-        font-size: 56px;
-        width: 56px;
-        height: 56px;
-        margin-bottom: 4px;
-      }
-      .badge-label {
-        margin: 0 0 8px;
-        font-size: 1.05rem;
-        color: var(--mat-sys-on-surface-variant);
-      }
-      .actions {
-        display: flex;
-        justify-content: center;
-        gap: 8px;
-      }
-    `,
-  ],
+  // No Material components: the card is rasterised by html2canvas on snap,
+  // which cannot parse the color() functions in Material 3 tokens.
+  imports: [],
+  templateUrl: './achievement-dialog.component.html',
+  styleUrl: './achievement-dialog.component.scss',
 })
 export class AchievementDialogComponent {
   protected readonly data = inject<AchievementDialogData>(MAT_DIALOG_DATA);
   private readonly dialogRef = inject(MatDialogRef<AchievementDialogComponent>);
   private readonly shareService = inject(ShareService);
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly envInjector = inject(EnvironmentInjector);
 
+  protected readonly cardRef =
+    viewChild.required<ElementRef<HTMLElement>>('card');
+  protected readonly snapping = signal(false);
+
+  protected readonly titleId = ACHIEVEMENT_DIALOG_TITLE_ID;
+  protected readonly rays = Array.from(
+    { length: RAY_COUNT },
+    (_, i) => (360 / RAY_COUNT) * i
+  );
+
+  protected readonly eyebrow = $localize`:@@achievement.dialog.eyebrow:Neues Abzeichen`;
   protected readonly headline = $localize`:@@achievement.dialog.headline:Geschafft!`;
-  protected readonly closeLabel = $localize`:@@achievement.dialog.close:Weiter`;
+  protected readonly note = $localize`:@@achievement.dialog.note:Ab jetzt glänzt es in deiner Sammlung. Weiter so!`;
+  protected readonly closeAriaLabel = $localize`:@@achievement.dialog.closeAria:Schließen`;
   protected readonly shareLabel = $localize`:@@achievement.dialog.share:Teilen`;
+  protected readonly snapLabel = $localize`:@@achievement.dialog.snap:Snap!`;
+  protected readonly snapAriaLabel = $localize`:@@achievement.dialog.snapAria:Abzeichen vaporisieren`;
 
   protected close(): void {
+    if (this.snapping()) return;
     this.dialogRef.close();
   }
 
   protected async share(): Promise<void> {
+    if (this.snapping()) return;
     await this.shareService.share({
       title: $localize`:@@achievement.share.title:${BRAND_NAME}:brand:`,
       text: $localize`:@@achievement.share.text:${this.data.badge.label}:badge: — geschafft! 💪`,
       url: this.data.shareUrl,
     });
     this.dialogRef.close();
+  }
+
+  protected async snap(): Promise<void> {
+    if (this.snapping()) return;
+    if (!isPlatformBrowser(this.platformId)) {
+      this.dialogRef.close();
+      return;
+    }
+    this.snapping.set(true);
+    await snapElement(this.cardRef().nativeElement, {
+      injector: this.envInjector,
+      durationMs: ACHIEVEMENT_SNAP_DURATION_MS,
+      name: 'achievement-thanos',
+      maxParticleCount: this.data.maxParticleCount,
+      onDone: () => this.dialogRef.close(),
+    });
   }
 }

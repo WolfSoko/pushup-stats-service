@@ -2780,33 +2780,65 @@
         <source>Zwei Wochen aktive Erholung: tägliche Mobility-, Yoga- und Stretching-Einheiten mit leichtem Liegestütze-Volumen. Ideal als Deload zwischen zwei harten Plänen oder zum Wiedereinstieg nach einer Trainingspause.</source>
       </segment>
     </unit>
+    <unit id="achievement.dialog.eyebrow">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:63</note>
+      </notes>
+      <segment>
+        <source>Neues Abzeichen</source>
+      </segment>
+    </unit>
     <unit id="achievement.dialog.headline">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:86</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:64</note>
       </notes>
       <segment>
         <source>Geschafft!</source>
       </segment>
     </unit>
-    <unit id="achievement.dialog.close">
+    <unit id="achievement.dialog.note">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:87</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:65</note>
       </notes>
       <segment>
-        <source>Weiter</source>
+        <source>Ab jetzt glänzt es in deiner Sammlung. Weiter so!</source>
+      </segment>
+    </unit>
+    <unit id="achievement.dialog.closeAria">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:66</note>
+      </notes>
+      <segment>
+        <source>Schließen</source>
       </segment>
     </unit>
     <unit id="achievement.dialog.share">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:88</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:67</note>
       </notes>
       <segment>
         <source>Teilen</source>
       </segment>
     </unit>
+    <unit id="achievement.dialog.snap">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:68</note>
+      </notes>
+      <segment>
+        <source>Snap!</source>
+      </segment>
+    </unit>
+    <unit id="achievement.dialog.snapAria">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:69</note>
+      </notes>
+      <segment>
+        <source>Abzeichen vaporisieren</source>
+      </segment>
+    </unit>
     <unit id="achievement.share.title">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:96</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:79</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -2814,7 +2846,7 @@
     </unit>
     <unit id="achievement.share.text">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:97</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:80</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="badge" disp="this.data.badge.label"/> — geschafft! 💪</source>
@@ -11672,7 +11704,7 @@
     </unit>
     <unit id="goalReached.snapAria">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:110</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:104</note>
       </notes>
       <segment>
         <source>Erfolg vaporisieren</source>
@@ -11680,7 +11712,7 @@
     </unit>
     <unit id="goalReached.snap">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:111</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:105</note>
       </notes>
       <segment>
         <source>Snap!</source>
@@ -11688,7 +11720,7 @@
     </unit>
     <unit id="goalReached.closeAria">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:112</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:106</note>
       </notes>
       <segment>
         <source>Schließen</source>
@@ -11696,7 +11728,7 @@
     </unit>
     <unit id="goalReached.shareAria">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:113</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:107</note>
       </notes>
       <segment>
         <source>Erfolg teilen</source>
@@ -11704,7 +11736,7 @@
     </unit>
     <unit id="goalReached.share">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:114</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:108</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -11712,7 +11744,7 @@
     </unit>
     <unit id="goalReached.plan.heading">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:115</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:109</note>
       </notes>
       <segment>
         <source>Deine Planziele heute</source>
@@ -11720,7 +11752,7 @@
     </unit>
     <unit id="goalReached.plan.done">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:116</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:110</note>
       </notes>
       <segment>
         <source>erledigt</source>
@@ -11728,7 +11760,7 @@
     </unit>
     <unit id="goalReached.plan.open">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:117</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:111</note>
       </notes>
       <segment>
         <source>offen</source>

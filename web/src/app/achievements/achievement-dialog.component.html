@@ -1,0 +1,73 @@
+<div
+  #card
+  class="badge-card"
+  [class.is-snapping]="snapping()"
+  data-testid="achievement-card"
+>
+  <button
+    type="button"
+    class="close-btn"
+    data-testid="achievement-close"
+    [attr.aria-label]="closeAriaLabel"
+    [disabled]="snapping()"
+    (click)="close()"
+  >
+    <span aria-hidden="true" class="material-icons close-icon">close</span>
+  </button>
+
+  <span class="eyebrow">{{ eyebrow }}</span>
+
+  <div class="stage" aria-hidden="true">
+    <div class="rays">
+      @for (angle of rays; track angle) {
+        <span class="ray" [style.transform]="'rotate(' + angle + 'deg)'"></span>
+      }
+    </div>
+    <span class="sparkle sparkle-1">✦</span>
+    <span class="sparkle sparkle-2">✦</span>
+    <span class="sparkle sparkle-3">✧</span>
+    <span class="sparkle sparkle-4">✦</span>
+    <span class="sparkle sparkle-5">✧</span>
+    <div class="medal">
+      <div class="medal-inner">
+        <span
+          class="material-icons medal-icon"
+          data-testid="achievement-icon"
+          >{{ data.badge.icon }}</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <h2 class="title" [id]="titleId">{{ headline }}</h2>
+  <p class="badge-label" data-testid="achievement-label">
+    {{ data.badge.label }}
+  </p>
+  <p class="note">{{ note }}</p>
+
+  <div class="actions">
+    <button
+      type="button"
+      class="share-btn"
+      data-testid="achievement-share"
+      [disabled]="snapping()"
+      (click)="share()"
+    >
+      <span aria-hidden="true" class="material-icons btn-icon">share</span>
+      <span>{{ shareLabel }}</span>
+    </button>
+    <button
+      type="button"
+      class="snap-btn"
+      data-testid="achievement-snap"
+      [disabled]="snapping()"
+      [attr.aria-label]="snapAriaLabel"
+      (click)="snap()"
+    >
+      <span aria-hidden="true" class="material-icons btn-icon"
+        >auto_awesome</span
+      >
+      <span>{{ snapLabel }}</span>
+    </button>
+  </div>
+</div>

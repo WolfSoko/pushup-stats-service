@@ -2,24 +2,18 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  createEnvironmentInjector,
   ElementRef,
   EnvironmentInjector,
   inject,
   PLATFORM_ID,
-  runInInjectionContext,
   signal,
   viewChild,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {
-  BRAND_URL,
-  DEFAULT_SNAP_QUALITY,
-  SNAP_QUALITY_PARTICLES,
-} from '@pu-stats/models';
-import { finalize } from 'rxjs';
+import { BRAND_URL } from '@pu-stats/models';
 import { ShareService } from '../../../core/share.service';
+import { snapElement } from '../../../core/snap-element';
 import {
   type GoalCopy,
   type GoalKind,
@@ -141,59 +135,12 @@ export class GoalReachedDialogComponent {
       return;
     }
     this.snapping.set(true);
-    try {
-      const el = this.cardRef().nativeElement;
-      const {
-        WsThanosService,
-        WS_THANOS_OPTIONS_TOKEN,
-        createWsThanosOptions,
-      } = await import('@wolsok/thanos');
-      // Build a child environment injector so the user's snap-quality
-      // preset is honoured per-dialog without touching the root
-      // WsThanosService instance (whose options are frozen at first use).
-      const maxParticleCount =
-        this.data.maxParticleCount ??
-        SNAP_QUALITY_PARTICLES[DEFAULT_SNAP_QUALITY];
-      const childEnv = createEnvironmentInjector(
-        [
-          WsThanosService,
-          {
-            provide: WS_THANOS_OPTIONS_TOKEN,
-            useValue: createWsThanosOptions({
-              animationLength: GOAL_SNAP_DURATION_MS,
-              maxParticleCount,
-            }),
-          },
-        ],
-        this.envInjector,
-        'goal-reached-thanos'
-      );
-      runInInjectionContext(childEnv, () => {
-        inject(WsThanosService)
-          .vaporize(el)
-          // Close on completion AND on error (html2canvas can throw on
-          // unsupported CSS like modern color() functions) — single teardown
-          // path via finalize keeps both branches in sync.
-          .pipe(
-            finalize(() => {
-              childEnv.destroy();
-              this.dialogRef.close();
-            })
-          )
-          .subscribe({
-            // Drive the frame's transform/opacity off the actual particle
-            // progress instead of a parallel CSS transition. Clamped to
-            // 0..1 because the last frame can emit animationT slightly > 1
-            // before the stream completes.
-            next: (state) => {
-              const t = Math.min(1, Math.max(0, state.animationT));
-              el.style.setProperty('--snap-progress', String(t));
-            },
-            error: () => undefined,
-          });
-      });
-    } catch {
-      this.dialogRef.close();
-    }
+    await snapElement(this.cardRef().nativeElement, {
+      injector: this.envInjector,
+      durationMs: GOAL_SNAP_DURATION_MS,
+      name: 'goal-reached-thanos',
+      maxParticleCount: this.data.maxParticleCount,
+      onDone: () => this.dialogRef.close(),
+    });
   }
 }
