@@ -1,0 +1,75 @@
+<section class="wr-section">
+  <div class="wr-content">
+    <p class="eyebrow" i18n="@@landing.workoutReminders.eyebrow">
+      Neu · Session-Erinnerungen
+    </p>
+    <h2 i18n="@@landing.workoutReminders.headline">
+      Deine Session meldet sich — genau dann, wenn du trainieren willst.
+    </h2>
+    <p class="wr-desc" i18n="@@landing.workoutReminders.desc">
+      Gib jeder Session ihren eigenen Rhythmus: alle zwei Tage um 15:00 oder
+      jeden Montag, Mittwoch und Freitag. Zur gewählten Zeit kommt eine
+      Push-Benachrichtigung aufs Handy — ein Tipp, und die Session startet.
+    </p>
+
+    <ul class="wr-chips">
+      <li>
+        <mat-icon aria-hidden="true">event_repeat</mat-icon>
+        <span i18n="@@landing.workoutReminders.chip.rhythm"
+          >Alle paar Tage oder an festen Wochentagen</span
+        >
+      </li>
+      <li>
+        <mat-icon aria-hidden="true">schedule</mat-icon>
+        <span i18n="@@landing.workoutReminders.chip.time"
+          >Deine Uhrzeit, auch bei Zeitumstellung</span
+        >
+      </li>
+      <li>
+        <mat-icon aria-hidden="true">notifications_active</mat-icon>
+        <span i18n="@@landing.workoutReminders.chip.push"
+          >Push aufs Handy — ein Tipp startet die Session</span
+        >
+      </li>
+    </ul>
+
+    <a
+      mat-flat-button
+      color="primary"
+      routerLink="/workouts"
+      (click)="ctaClick.emit()"
+      i18n="@@landing.workoutReminders.cta"
+      >Erinnerung einrichten</a
+    >
+  </div>
+
+  <div class="wr-mock-wrap" aria-hidden="true">
+    <mat-card class="wr-mock">
+      <mat-card-header>
+        <mat-card-title i18n="@@landing.workoutReminders.mock.title"
+          >⏰ Ganzkörper kurz</mat-card-title
+        >
+        <mat-card-subtitle i18n="@@landing.workoutReminders.mock.subtitle"
+          >Alle 2 Tage</mat-card-subtitle
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <p class="mock-time">15:00</p>
+        <ul class="mock-list">
+          <li>
+            <mat-icon aria-hidden="true">notifications</mat-icon>
+            <span i18n="@@landing.workoutReminders.mock.body"
+              >Zeit für deine Session. Tippe, um direkt loszulegen.</span
+            >
+          </li>
+        </ul>
+        <p class="mock-action">
+          <mat-icon aria-hidden="true">play_arrow</mat-icon>
+          <span i18n="@@landing.workoutReminders.mock.action"
+            >Session starten</span
+          >
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>

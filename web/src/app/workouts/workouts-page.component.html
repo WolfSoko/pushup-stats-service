@@ -71,7 +71,9 @@
       <app-workout-card
         [workout]="workout"
         [busyKeys]="store.busyKeys()"
+        [reminder]="reminders.reminderFor(workout.id)"
         (share)="share($event)"
+        (reminderEdit)="editReminder($event)"
         (toggleProfile)="toggleProfile($event)"
         (remove)="remove($event)"
       />

@@ -1,0 +1,155 @@
+<h2 mat-dialog-title i18n="@@workouts.reminder.title">Erinnerung</h2>
+<mat-dialog-content class="content">
+  <p class="subject" data-testid="workout-reminder-subject">
+    {{ data.title }}
+  </p>
+
+  <mat-slide-toggle
+    data-testid="workout-reminder-enabled"
+    [checked]="form().enabled"
+    (change)="patch({ enabled: $event.checked })"
+    i18n="@@workouts.reminder.enabled"
+    >Erinnerung aktiv</mat-slide-toggle
+  >
+
+  <mat-button-toggle-group
+    class="kind"
+    data-testid="workout-reminder-kind"
+    aria-label="Rhythmus"
+    i18n-aria-label="@@workouts.reminder.kind.aria"
+    [value]="form().kind"
+    (change)="patch({ kind: $event.value })"
+  >
+    <mat-button-toggle value="interval" i18n="@@workouts.reminder.kind.interval"
+      >Alle paar Tage</mat-button-toggle
+    >
+    <mat-button-toggle value="weekdays" i18n="@@workouts.reminder.kind.weekdays"
+      >Wochentage</mat-button-toggle
+    >
+  </mat-button-toggle-group>
+
+  @if (form().kind === 'interval') {
+    <div class="row">
+      <mat-form-field appearance="outline" class="every">
+        <mat-label i18n="@@workouts.reminder.everyDays">Alle … Tage</mat-label>
+        <input
+          matInput
+          type="number"
+          inputmode="numeric"
+          min="1"
+          [max]="maxEveryDays"
+          data-testid="workout-reminder-every"
+          [value]="form().everyDays"
+          (input)="patch({ everyDays: numberFrom($event) })"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="start">
+        <mat-label i18n="@@workouts.reminder.startDate">Ab</mat-label>
+        <input
+          matInput
+          type="date"
+          data-testid="workout-reminder-start"
+          [value]="form().startDate"
+          (change)="patch({ startDate: valueFrom($event) })"
+        />
+      </mat-form-field>
+    </div>
+  } @else {
+    <mat-button-toggle-group
+      multiple
+      class="weekdays"
+      data-testid="workout-reminder-weekdays"
+      aria-label="Wochentage"
+      i18n-aria-label="@@reminder.weekdays.aria"
+      [value]="form().weekdays"
+      (change)="patch({ weekdays: $event.value })"
+    >
+      @for (day of weekdayOptions; track day.value) {
+        <mat-button-toggle [value]="day.value">{{
+          day.label
+        }}</mat-button-toggle>
+      }
+    </mat-button-toggle-group>
+  }
+
+  <mat-form-field appearance="outline" class="time">
+    <mat-label i18n="@@workouts.reminder.time">Uhrzeit</mat-label>
+    <input
+      matInput
+      type="time"
+      data-testid="workout-reminder-time"
+      [value]="form().time"
+      (change)="patch({ time: valueFrom($event) })"
+    />
+  </mat-form-field>
+
+  @if (nextLabel(); as next) {
+    <p class="next" data-testid="workout-reminder-next">
+      <mat-icon aria-hidden="true">event</mat-icon>
+      <span i18n="@@workouts.reminder.next"
+        >Nächste Erinnerung: {{ next }}</span
+      >
+    </p>
+  }
+
+  @if (pushOff()) {
+    <div class="push-off" data-testid="workout-reminder-push-off">
+      <p i18n="@@workouts.reminder.pushOff">
+        Push ist auf diesem Gerät aus. Dann erinnert dich die App nur, solange
+        sie geöffnet ist.
+      </p>
+      @if (push.status() === 'not-subscribed' || push.status() === 'error') {
+        <button
+          mat-stroked-button
+          type="button"
+          data-testid="workout-reminder-enable-push"
+          [puBusy]="subscribing.busy()"
+          (click)="enablePush()"
+        >
+          <mat-icon>notifications_active</mat-icon>
+          <span i18n="@@workouts.reminder.enablePush">Push aktivieren</span>
+        </button>
+      }
+    </div>
+  }
+
+  @if (failed()) {
+    <p class="error" role="alert" i18n="@@workouts.reminder.failed">
+      Das hat nicht geklappt. Bitte versuch es noch einmal.
+    </p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  @if (existing) {
+    <button
+      mat-button
+      type="button"
+      class="remove"
+      data-testid="workout-reminder-remove"
+      [puBusy]="isBusy('remove')"
+      (click)="remove()"
+      i18n="@@workouts.reminder.remove"
+    >
+      Entfernen
+    </button>
+  }
+  <button
+    mat-button
+    type="button"
+    mat-dialog-close
+    i18n="@@workouts.reminder.cancel"
+  >
+    Abbrechen
+  </button>
+  <button
+    mat-flat-button
+    type="button"
+    data-testid="workout-reminder-save"
+    [disabled]="!valid()"
+    [puBusy]="isBusy('save')"
+    (click)="save()"
+    i18n="@@workouts.reminder.save"
+  >
+    Speichern
+  </button>
+</mat-dialog-actions>
