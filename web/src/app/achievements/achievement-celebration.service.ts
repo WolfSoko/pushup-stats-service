@@ -5,7 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserAchievementsApiService } from '@pu-stats/data-access';
 
 import { UserContextService } from '@pu-auth/auth';
-import { BRAND_URL } from '@pu-stats/models';
+import { BRAND_URL, SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
+import { UserConfigStore } from '../core/user-config.store';
 import { resolveAchievementBadge } from '../public-profile/achievement-badge';
 import {
   markCelebrated,
@@ -16,6 +17,8 @@ import {
   AchievementDialogComponent,
   type AchievementDialogData,
 } from './achievement-dialog.component';
+
+let nextDialogTitleId = 0;
 
 /**
  * Opens a celebration dialog the first time the user sees a badge.
@@ -37,6 +40,7 @@ export class AchievementCelebrationService {
   private readonly dialog = inject(MatDialog);
   private readonly api = inject(UserAchievementsApiService);
   private readonly user = inject(UserContextService);
+  private readonly userConfig = inject(UserConfigStore);
   private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
@@ -70,9 +74,20 @@ export class AchievementCelebrationService {
       .find((entry) => entry !== null);
     if (!badge) return;
 
+    const titleId = `achievement-dialog-title-${nextDialogTitleId++}`;
     this.dialog.open(AchievementDialogComponent, {
-      data: { badge, shareUrl: BRAND_URL } satisfies AchievementDialogData,
+      data: {
+        titleId,
+        badge,
+        shareUrl: BRAND_URL,
+        maxParticleCount: SNAP_QUALITY_PARTICLES[this.userConfig.snapQuality()],
+      } satisfies AchievementDialogData,
+      panelClass: 'achievement-dialog-panel',
       autoFocus: 'dialog',
+      restoreFocus: true,
+      ariaLabelledBy: titleId,
+      width: 'min(92vw, 420px)',
+      maxWidth: '92vw',
     });
   }
 }
