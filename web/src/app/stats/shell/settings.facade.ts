@@ -97,6 +97,7 @@ export class SettingsFacade implements OnDestroy {
   readonly deletingAccount = signal(false);
   readonly deletePhraseInput = signal('');
   readonly deleteDialogError = signal('');
+  readonly deleteAccountError = signal('');
 
   private readonly deleteConfirmationPhrase = $localize`:@@settings.delete.confirmPlaceholder:löschen`;
 
@@ -178,18 +179,18 @@ export class SettingsFacade implements OnDestroy {
     await this.autoSave.drain();
 
     this.deletingAccount.set(true);
+    this.deleteAccountError.set('');
 
     try {
-      await this.userConfigStore.save({
-        displayName: $localize`:@@settings.anonymizedName:Gelöschter Benutzer`,
-        email: null,
-        ui: {
-          hideFromLeaderboard: true,
-        },
-      });
       await this.pushService.unsubscribe();
-      await this.auth.deleteAccount();
-      this.trackAnalytics('account_anonymized_and_deleted', { success: true });
+      if (!(await this.auth.deleteAccount())) {
+        this.deleteAccountError.set(
+          this.auth.error()?.message ??
+            $localize`:@@settings.deleteAccountFailed:Konto konnte nicht gelöscht werden. Bitte versuche es erneut.`
+        );
+        return;
+      }
+      this.trackAnalytics('account_deleted', { success: true });
       await this.router.navigateByUrl('/');
     } catch {
       this.autoSave.reportError();

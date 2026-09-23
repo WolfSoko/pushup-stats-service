@@ -4,6 +4,7 @@ import { logger } from 'firebase-functions';
 import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 
 import { sanitizeSetsArray } from './entry-sanitize';
+import { isPurgedEntryDeletion } from './account-deletion/tombstone';
 import { db } from './firebase-app';
 import { applyDelta, rebuildFromEntries } from './user-stats-delta';
 
@@ -27,6 +28,7 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
       logger.warn('updateExerciseStatsOnEntryWrite: no userId found, skipping');
       return;
     }
+    if (await isPurgedEntryDeletion(db, beforeData, afterData)) return;
 
     const exerciseId = (afterData?.exerciseId ?? beforeData?.exerciseId) as
       | string

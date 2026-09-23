@@ -80,6 +80,13 @@
           {{ bulkResult()!.deleted }},
           <span i18n="@@admin.bulk.skipped">Übersprungen:</span>
           {{ bulkResult()!.skipped }}
+          @if (bulkResult()!.remaining > 0) {
+            ,
+            <span i18n="@@admin.bulk.remaining"
+              >Noch offen (erneut ausführen):</span
+            >
+            {{ bulkResult()!.remaining }}
+          }
         </p>
       </mat-card-content>
     }

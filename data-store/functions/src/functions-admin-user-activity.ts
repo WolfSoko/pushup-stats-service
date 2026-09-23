@@ -13,6 +13,7 @@ import {
   nextActivityAggregate,
   type UserActivityAggregate,
 } from './admin/user-entry-activity';
+import { isPurgedEntryDeletion } from './account-deletion/tombstone';
 import { db } from './firebase-app';
 import { assertAdmin } from './functions-admin';
 
@@ -44,6 +45,7 @@ export const updateAdminUserActivityOnEntryWrite = onDocumentWritten(
       logger.warn('updateAdminUserActivityOnEntryWrite: no userId, skipping');
       return;
     }
+    if (await isPurgedEntryDeletion(db, beforeData, afterData)) return;
 
     const before = timestampField(beforeData);
     const after = timestampField(afterData);

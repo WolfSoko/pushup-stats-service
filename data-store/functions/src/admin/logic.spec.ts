@@ -413,13 +413,13 @@ describe('admin/logic', () => {
     it('should accept a valid {id, completed} payload', () => {
       // given / when
       const result = validateSetMigrationStatusPayload({
-        id: 'reminder-snooze-cleanup',
+        id: 'orphaned-user-data-cleanup',
         completed: true,
       });
       // then
       expect(result).toEqual({
         valid: true,
-        id: 'reminder-snooze-cleanup',
+        id: 'orphaned-user-data-cleanup',
         completed: true,
       });
     });

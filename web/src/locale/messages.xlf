@@ -11,7 +11,7 @@
     </unit>
     <unit id="auth.error.popupClosed">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:39</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:43</note>
       </notes>
       <segment>
         <source>Google-Anmeldung abgebrochen. Das Anmelde-Fenster wurde geschlossen.</source>
@@ -19,7 +19,7 @@
     </unit>
     <unit id="auth.error.popupBlocked">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:40</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:44</note>
       </notes>
       <segment>
         <source>Pop-up wurde blockiert. Bitte Pop-ups erlauben und erneut versuchen.</source>
@@ -27,7 +27,7 @@
     </unit>
     <unit id="auth.error.network">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:41</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:45</note>
       </notes>
       <segment>
         <source>Netzwerkfehler. Bitte Internetverbindung prüfen und erneut versuchen.</source>
@@ -35,7 +35,7 @@
     </unit>
     <unit id="auth.error.invalidCredential">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:42</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:46</note>
       </notes>
       <segment>
         <source>E-Mail oder Passwort ist nicht korrekt.</source>
@@ -43,7 +43,7 @@
     </unit>
     <unit id="auth.error.invalidEmail">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:43</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:47</note>
       </notes>
       <segment>
         <source>Bitte eine gültige E-Mail-Adresse eingeben.</source>
@@ -51,7 +51,7 @@
     </unit>
     <unit id="auth.error.userDisabled">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:44</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:48</note>
       </notes>
       <segment>
         <source>Dieses Konto ist deaktiviert.</source>
@@ -59,7 +59,7 @@
     </unit>
     <unit id="auth.error.userNotFound">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:45</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:49</note>
       </notes>
       <segment>
         <source>Kein Konto mit dieser E-Mail gefunden.</source>
@@ -67,7 +67,7 @@
     </unit>
     <unit id="auth.error.wrongPassword">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:46</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:50</note>
       </notes>
       <segment>
         <source>E-Mail oder Passwort ist nicht korrekt.</source>
@@ -75,7 +75,7 @@
     </unit>
     <unit id="auth.error.emailInUse">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:47</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:51</note>
       </notes>
       <segment>
         <source>Für diese E-Mail existiert bereits ein Konto.</source>
@@ -83,7 +83,7 @@
     </unit>
     <unit id="auth.error.weakPassword">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:48</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:52</note>
       </notes>
       <segment>
         <source>Das Passwort ist zu schwach (mindestens 6 Zeichen).</source>
@@ -91,7 +91,7 @@
     </unit>
     <unit id="auth.error.tooManyRequests">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:49</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:53</note>
       </notes>
       <segment>
         <source>Zu viele Versuche. Bitte kurz warten und erneut versuchen.</source>
@@ -99,10 +99,18 @@
     </unit>
     <unit id="auth.error.internalError">
       <notes>
-        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:50</note>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:54</note>
       </notes>
       <segment>
         <source>Ein technischer Fehler ist aufgetreten. Bitte gleich erneut versuchen.</source>
+      </segment>
+    </unit>
+    <unit id="auth.error.requiresRecentLogin">
+      <notes>
+        <note category="location">libs/auth/src/lib/core/state/auth.store.ts:55</note>
+      </notes>
+      <segment>
+        <source>Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.</source>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.error.saveFailed">
@@ -189,7 +197,7 @@
         <note category="location">libs/auth/src/lib/ui/login/google-onboarding-dialog/google-onboarding-dialog.component.html:67,69</note>
         <note category="location">libs/auth/src/lib/ui/register/register.component.html:317,318</note>
         <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:96,97</note>
-        <note category="location">web/src/app/settings/settings-privacy.component.html:122,123</note>
+        <note category="location">web/src/app/settings/settings-privacy.component.html:131,132</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:154,155</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:44,46</note>
       </notes>
@@ -598,7 +606,7 @@
     </unit>
     <unit id="pushup.validation.reps.outOfRange">
       <notes>
-        <note category="location">libs/data-access/src/lib/api/pushup-firestore.service.ts:21</note>
+        <note category="location">libs/data-access/src/lib/api/pushup-firestore.service.ts:20</note>
       </notes>
       <segment>
         <source>Reps müssen zwischen <ph id="0" equiv="min" disp="PUSHUP_REPS_MIN"/> und <ph id="1" equiv="max" disp="PUSHUP_REPS_MAX"/> liegen.</source>
@@ -606,7 +614,7 @@
     </unit>
     <unit id="pushup.validation.reps.notInteger">
       <notes>
-        <note category="location">libs/data-access/src/lib/api/pushup-firestore.service.ts:24</note>
+        <note category="location">libs/data-access/src/lib/api/pushup-firestore.service.ts:23</note>
       </notes>
       <segment>
         <source>Reps muss eine ganze Zahl sein.</source>
@@ -614,7 +622,7 @@
     </unit>
     <unit id="pushup.validation.generic">
       <notes>
-        <note category="location">libs/data-access/src/lib/api/pushup-firestore.service.ts:27</note>
+        <note category="location">libs/data-access/src/lib/api/pushup-firestore.service.ts:26</note>
       </notes>
       <segment>
         <source>Eintrag konnte nicht gespeichert werden.</source>
@@ -3267,9 +3275,17 @@
         <source>Übersprungen:</source>
       </segment>
     </unit>
+    <unit id="admin.bulk.remaining">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.html:86,88</note>
+      </notes>
+      <segment>
+        <source>Noch offen (erneut ausführen):</source>
+      </segment>
+    </unit>
     <unit id="admin.filter.anonymous">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:100,102</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:107,109</note>
       </notes>
       <segment>
         <source> Nur anonyme Benutzer </source>
@@ -3277,7 +3293,7 @@
     </unit>
     <unit id="admin.col.uid">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:126,127</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:133,134</note>
       </notes>
       <segment>
         <source>UID</source>
@@ -3285,7 +3301,7 @@
     </unit>
     <unit id="admin.col.name">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:141,142</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:148,149</note>
       </notes>
       <segment>
         <source>Name</source>
@@ -3293,7 +3309,7 @@
     </unit>
     <unit id="admin.col.email">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:152,153</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:159,160</note>
       </notes>
       <segment>
         <source>E-Mail</source>
@@ -3301,7 +3317,7 @@
     </unit>
     <unit id="admin.col.anon">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:163,164</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:170,171</note>
       </notes>
       <segment>
         <source>Anon</source>
@@ -3309,7 +3325,7 @@
     </unit>
     <unit id="admin.col.entries">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:180,182</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:187,189</note>
       </notes>
       <segment>
         <source>Einträge</source>
@@ -3317,7 +3333,7 @@
     </unit>
     <unit id="admin.col.lastEntry">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:191,193</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:198,200</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -3325,7 +3341,7 @@
     </unit>
     <unit id="admin.col.createdAt">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:204,206</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:211,213</note>
       </notes>
       <segment>
         <source>Erstellt</source>
@@ -3653,23 +3669,23 @@
     </unit>
     <unit id="admin.delete.title">
       <notes>
-        <note category="location">web/src/app/admin/delete-user-dialog.component.ts:22,24</note>
+        <note category="location">web/src/app/admin/delete-user-dialog.component.ts:15,17</note>
       </notes>
       <segment>
         <source>Benutzer löschen</source>
       </segment>
     </unit>
-    <unit id="admin.delete.anonymize">
+    <unit id="admin.delete.purgeInfo">
       <notes>
-        <note category="location">web/src/app/admin/delete-user-dialog.component.ts:35,37</note>
+        <note category="location">web/src/app/admin/delete-user-dialog.component.ts:24,26</note>
       </notes>
       <segment>
-        <source>Daten anonymisieren (Pushups behalten)</source>
+        <source> Das Konto und alle zugehörigen Daten werden endgültig gelöscht. </source>
       </segment>
     </unit>
     <unit id="admin.delete.cancel">
       <notes>
-        <note category="location">web/src/app/admin/delete-user-dialog.component.ts:41,43</note>
+        <note category="location">web/src/app/admin/delete-user-dialog.component.ts:29,31</note>
       </notes>
       <segment>
         <source> Abbrechen </source>
@@ -3677,7 +3693,7 @@
     </unit>
     <unit id="admin.delete.confirm">
       <notes>
-        <note category="location">web/src/app/admin/delete-user-dialog.component.ts:49,51</note>
+        <note category="location">web/src/app/admin/delete-user-dialog.component.ts:37,39</note>
       </notes>
       <segment>
         <source> Löschen </source>
@@ -3749,20 +3765,20 @@
         <source>Rückgängig</source>
       </segment>
     </unit>
-    <unit id="admin.migrations.reminderSnoozeCleanup.title">
+    <unit id="admin.migrations.orphanedUserData.title">
       <notes>
         <note category="location">web/src/app/admin/migrations/migration-descriptors.ts:62</note>
       </notes>
       <segment>
-        <source>Snooze-Reste aus reminderDispatchState entfernen</source>
+        <source>Datenmüll gelöschter Konten entfernen</source>
       </segment>
     </unit>
-    <unit id="admin.migrations.reminderSnoozeCleanup.description">
+    <unit id="admin.migrations.orphanedUserData.description">
       <notes>
         <note category="location">web/src/app/admin/migrations/migration-descriptors.ts:63</note>
       </notes>
       <segment>
-        <source>Löscht „snoozedUntil“, „snoozedAt“ und „snoozeMinutes“ aus „reminderDispatchState/{uid}“. Die Snooze-Aktion der Erinnerung wurde entfernt, die Felder werden von niemandem mehr gelesen. Idempotent, nicht umkehrbar — erst den Probelauf ausführen.</source>
+        <source>Sucht Daten von Nutzern ohne Firebase-Auth-Konto (Einträge, Statistiken, Pläne, Workouts, Freundschaften, Push-Abos, Nachrichten, Profilfotos …) und löscht sie wie bei einer Kontolöschung. Bis zu 25 Konten pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Nicht umkehrbar — erst den Probelauf ausführen.</source>
       </segment>
     </unit>
     <unit id="admin.migrations.subtitle">
@@ -10694,12 +10710,12 @@
         <note category="location">web/src/app/settings/settings-privacy.component.html:65,68</note>
       </notes>
       <segment>
-        <source> Konto löschen entfernt dein Konto. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
+        <source> Konto löschen entfernt dein Konto und alle gespeicherten Daten: Trainingseinträge, Statistiken, Pläne, Workouts, Freundschaften, Nachrichten und dein Profilfoto. </source>
       </segment>
     </unit>
     <unit id="settings.deleteAccount">
       <notes>
-        <note category="location">web/src/app/settings/settings-privacy.component.html:79,82</note>
+        <note category="location">web/src/app/settings/settings-privacy.component.html:80,83</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Konto löschen </source>
@@ -10707,7 +10723,7 @@
     </unit>
     <unit id="settings.deletingAccount">
       <notes>
-        <note category="location">web/src/app/settings/settings-privacy.component.html:84,87</note>
+        <note category="location">web/src/app/settings/settings-privacy.component.html:85,88</note>
       </notes>
       <segment>
         <source>Konto wird gelöscht…</source>
@@ -10715,7 +10731,7 @@
     </unit>
     <unit id="settings.deleteDialogTitle">
       <notes>
-        <note category="location">web/src/app/settings/settings-privacy.component.html:92,94</note>
+        <note category="location">web/src/app/settings/settings-privacy.component.html:100,102</note>
       </notes>
       <segment>
         <source> Account wirklich löschen? </source>
@@ -10723,7 +10739,7 @@
     </unit>
     <unit id="settings.deleteDialogWarning">
       <notes>
-        <note category="location">web/src/app/settings/settings-privacy.component.html:96,98</note>
+        <note category="location">web/src/app/settings/settings-privacy.component.html:104,106</note>
       </notes>
       <segment>
         <source> Achtung: Diese Aktion ist nicht rückgängig. </source>
@@ -10731,15 +10747,15 @@
     </unit>
     <unit id="settings.deleteDialogInfo">
       <notes>
-        <note category="location">web/src/app/settings/settings-privacy.component.html:99,102</note>
+        <note category="location">web/src/app/settings/settings-privacy.component.html:107,111</note>
       </notes>
       <segment>
-        <source> Dein Konto wird gelöscht. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
+        <source> Dein Konto und alle zugehörigen Daten werden endgültig gelöscht — auch deine Trainingseinträge. Gesendetes Feedback bleibt ohne Bezug zu dir erhalten. </source>
       </segment>
     </unit>
     <unit id="settings.deleteDialogPhraseLabel">
       <notes>
-        <note category="location">web/src/app/settings/settings-privacy.component.html:104,107</note>
+        <note category="location">web/src/app/settings/settings-privacy.component.html:113,116</note>
       </notes>
       <segment>
         <source>Bestätigungswort eingeben</source>
@@ -10747,8 +10763,8 @@
     </unit>
     <unit id="settings.delete.confirmPlaceholder">
       <notes>
-        <note category="location">web/src/app/settings/settings-privacy.component.html:112,113</note>
-        <note category="location">web/src/app/stats/shell/settings.facade.ts:101</note>
+        <note category="location">web/src/app/settings/settings-privacy.component.html:121,122</note>
+        <note category="location">web/src/app/stats/shell/settings.facade.ts:102</note>
       </notes>
       <segment>
         <source>löschen</source>
@@ -10756,7 +10772,7 @@
     </unit>
     <unit id="settings.deleteDialogPhraseHint">
       <notes>
-        <note category="location">web/src/app/settings/settings-privacy.component.html:114,117</note>
+        <note category="location">web/src/app/settings/settings-privacy.component.html:123,126</note>
       </notes>
       <segment>
         <source>Bitte exakt „löschen“ eingeben.</source>
@@ -10764,7 +10780,7 @@
     </unit>
     <unit id="settings.deleteConfirmFinal">
       <notes>
-        <note category="location">web/src/app/settings/settings-privacy.component.html:129,131</note>
+        <note category="location">web/src/app/settings/settings-privacy.component.html:138,140</note>
       </notes>
       <segment>
         <source> Final löschen </source>
@@ -14091,7 +14107,7 @@
     </unit>
     <unit id="settings.publicProfile.share.title">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings.facade.ts:143</note>
+        <note category="location">web/src/app/stats/shell/settings.facade.ts:144</note>
       </notes>
       <segment>
         <source>Mein <ph id="0" equiv="brand" disp="BRAND_NAME"/> Profil</source>
@@ -14099,7 +14115,7 @@
     </unit>
     <unit id="settings.publicProfile.share.text">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings.facade.ts:144</note>
+        <note category="location">web/src/app/stats/shell/settings.facade.ts:145</note>
       </notes>
       <segment>
         <source>Schau dir mein Pushup-Profil an:</source>
@@ -14107,18 +14123,18 @@
     </unit>
     <unit id="settings.delete.error">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings.facade.ts:172</note>
+        <note category="location">web/src/app/stats/shell/settings.facade.ts:173</note>
       </notes>
       <segment>
         <source>Bitte exakt „löschen“ eingeben.</source>
       </segment>
     </unit>
-    <unit id="settings.anonymizedName">
+    <unit id="settings.deleteAccountFailed">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings.facade.ts:184</note>
+        <note category="location">web/src/app/stats/shell/settings.facade.ts:189</note>
       </notes>
       <segment>
-        <source>Gelöschter Benutzer</source>
+        <source>Konto konnte nicht gelöscht werden. Bitte versuche es erneut.</source>
       </segment>
     </unit>
     <unit id="dashboardTitle">

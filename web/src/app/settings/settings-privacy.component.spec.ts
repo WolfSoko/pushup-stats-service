@@ -5,12 +5,16 @@ import { vi } from 'vitest';
 import { SettingsFacade } from '../stats/shell/settings.facade';
 import { SettingsPrivacyComponent } from './settings-privacy.component';
 
-async function setup(deletingAccount = signal(false)) {
+async function setup(
+  deletingAccount = signal(false),
+  deleteAccountError = signal('')
+) {
   const facade = {
     adsConsentDraft: signal(false),
     deletingAccount,
     deletePhraseInput: signal(''),
     deleteDialogError: signal<string | null>(null),
+    deleteAccountError,
     asValue: (event: Event) => (event.target as HTMLInputElement).value,
     openDeleteDialog: vi.fn(),
     confirmDeleteFromDialog: vi.fn(),
@@ -56,5 +60,29 @@ describe('SettingsPrivacyComponent', () => {
 
     // then
     expect(button.getAttribute('aria-busy')).toBeNull();
+  });
+
+  it('should show why the account could not be deleted', async () => {
+    // given
+    const deleteAccountError = signal('');
+    const { view } = await setup(signal(false), deleteAccountError);
+    expect(screen.queryByTestId('settings-delete-account-error')).toBeNull();
+
+    // when
+    deleteAccountError.set('Bitte ab- und wieder anmelden');
+    view.fixture.detectChanges();
+
+    // then
+    expect(
+      screen.getByTestId('settings-delete-account-error').textContent
+    ).toContain('Bitte ab- und wieder anmelden');
+  });
+
+  it('should tell the user that all their data is deleted', async () => {
+    // given / when
+    await setup();
+
+    // then
+    expect(screen.getByText(/alle gespeicherten Daten/)).toBeTruthy();
   });
 });

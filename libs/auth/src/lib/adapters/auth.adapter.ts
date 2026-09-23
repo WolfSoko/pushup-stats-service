@@ -11,7 +11,6 @@ import {
   Auth,
   authState,
   createUserWithEmailAndPassword,
-  deleteUser,
   EmailAuthProvider,
   GoogleAuthProvider,
   idToken,
@@ -140,10 +139,25 @@ export class AuthAdapter {
     return signOut(this.auth);
   }
 
+  /**
+   * Deletes the account through the `deleteOwnAccount` Cloud Function, which
+   * purges every stored document before it removes the Auth user — a plain
+   * client-side `deleteUser` would leave all data behind. The local session
+   * is then dropped, since its user no longer exists.
+   */
   async deleteUser(): Promise<void> {
-    if (this.auth.currentUser) {
-      return await deleteUser(this.auth.currentUser);
+    if (!this.auth.currentUser) return;
+    if (!this.functions) {
+      throw new Error('Cloud Functions not available');
     }
+    const callable = httpsCallable<unknown, { ok: boolean }>(
+      this.functions,
+      'deleteOwnAccount',
+      // Large histories take a while to purge; the default is 70 s.
+      { timeout: 540_000 }
+    );
+    await callable({});
+    await signOut(this.auth);
   }
 
   /**

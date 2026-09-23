@@ -12,7 +12,6 @@
  *   makeUserProfilePortMock(overrides?) – UserProfilePort stub
  *
  * ## Data-access mocks
- *   makePushupFirestoreMock(overrides?)  – Partial<PushupFirestoreService>
  *   makeUserConfigMock(overrides?)       – Partial<UserConfigApiService>
  *   makeStatsApiMock(overrides?)         – Partial<StatsApiService>
  *   makeLeaderboardMock(overrides?)      – Partial<LeaderboardService>

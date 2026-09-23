@@ -3248,8 +3248,8 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="settings.dangerZoneBody">
-      <segment state="translated">
-        <source> Konto löschen entfernt dein Konto. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
+      <segment state="initial">
+        <source> Konto löschen entfernt dein Konto und alle gespeicherten Daten: Trainingseinträge, Statistiken, Pläne, Workouts, Freundschaften, Nachrichten und dein Profilfoto. </source>
         <target> Sletting av kontoen din fjerner kontoen din. Treningsdata forblir anonymisert for statistisk analyse. </target>
       </segment>
     </unit>
@@ -3290,8 +3290,8 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogInfo">
-      <segment state="translated">
-        <source> Dein Konto wird gelöscht. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
+      <segment state="initial">
+        <source> Dein Konto und alle zugehörigen Daten werden endgültig gelöscht — auch deine Trainingseinträge. Gesendetes Feedback bleibt ohne Bezug zu dir erhalten. </source>
         <target> Kontoen din vil bli slettet. Treningsdata forblir anonymisert for statistisk analyse. </target>
       </segment>
     </unit>
@@ -3887,12 +3887,6 @@ Aktiv:         </target>
       <segment state="translated">
         <source> Schließen </source>
         <target> Lukk </target>
-      </segment>
-    </unit>
-    <unit id="admin.delete.anonymize">
-      <segment state="translated">
-        <source>Daten anonymisieren (Pushups behalten)</source>
-        <target>Anonymiser data (behold armhevninger)</target>
       </segment>
     </unit>
     <unit id="admin.delete.cancel">
@@ -9093,18 +9087,6 @@ Aktiv:         </target>
         <target>Angre</target>
       </segment>
     </unit>
-    <unit id="admin.migrations.pushupUnification.title">
-      <segment state="translated">
-        <source>Liegestütze vereinheitlichen (pushups → exerciseEntries)</source>
-        <target>Samle push-ups (pushups → exerciseEntries)</target>
-      </segment>
-    </unit>
-    <unit id="admin.migrations.pushupUnification.description">
-      <segment state="translated">
-        <source>Kopiert die Legacy-„pushups“-Collection nach „exerciseEntries“ (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotent, lässt die Quelle unangetastet und ist über „Rückgängig“ reversibel. Immer erst den Probelauf ausführen und die Zahlen gegen das Runbook prüfen.</source>
-        <target>Kopierer den eldre «pushups»-samlingen til «exerciseEntries» (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotent, lar kilden være uberørt og er reversibel via «Angre». Kjør alltid prøvekjøringen først og kontroller tallene mot kjøreboken.</target>
-      </segment>
-    </unit>
     <unit id="admin.migrations.status.completed">
       <segment state="translated">
         <source>Abgeschlossen</source>
@@ -9139,18 +9121,6 @@ Aktiv:         </target>
       <segment state="translated">
         <source>Zurück zum Admin-Bereich</source>
         <target>Tilbake til administrasjonsområdet</target>
-      </segment>
-    </unit>
-    <unit id="admin.migrations.pushupBackfill.title">
-      <segment state="translated">
-        <source>Pushup-Aggregat backfillen (perExercise/pushup)</source>
-        <target>Tilbakefyll pushup-aggregat (perExercise/pushup)</target>
-      </segment>
-    </unit>
-    <unit id="admin.migrations.pushupBackfill.description">
-      <segment state="translated">
-        <source>Baut „userStats/{uid}/perExercise/pushup” aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</source>
-        <target>Gjenoppbygger «userStats/{uid}/perExercise/pushup» fra migrerte pushup-oppføringer slik at dashbordet viser korrekte pushup-totaler og -serier umiddelbart etter overgangen. Kjør etter unifikasjonsmigrasjonen. Idempotent.</target>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.title">
@@ -9199,12 +9169,6 @@ Aktiv:         </target>
       <segment state="translated">
         <source>Bitte exakt „löschen“ eingeben.</source>
         <target>Skriv inn nøyaktig «slett».</target>
-      </segment>
-    </unit>
-    <unit id="settings.anonymizedName">
-      <segment state="translated">
-        <source>Gelöschter Benutzer</source>
-        <target>Slettet bruker</target>
       </segment>
     </unit>
     <unit id="trainingPlans.photoCredit.unsplash">
@@ -11425,18 +11389,6 @@ Aktiv:         </target>
       <segment state="translated">
         <source>Gewichtsübungen</source>
         <target>Vektøvelser</target>
-      </segment>
-    </unit>
-    <unit id="admin.migrations.reminderSnoozeCleanup.title">
-      <segment state="translated">
-        <source>Snooze-Reste aus reminderDispatchState entfernen</source>
-        <target>Fjern snooze-rester fra reminderDispatchState</target>
-      </segment>
-    </unit>
-    <unit id="admin.migrations.reminderSnoozeCleanup.description">
-      <segment state="translated">
-        <source>Löscht „snoozedUntil“, „snoozedAt“ und „snoozeMinutes“ aus „reminderDispatchState/{uid}“. Die Snooze-Aktion der Erinnerung wurde entfernt, die Felder werden von niemandem mehr gelesen. Idempotent, nicht umkehrbar — erst den Probelauf ausführen.</source>
-        <target>Sletter «snoozedUntil», «snoozedAt» og «snoozeMinutes» fra «reminderDispatchState/{uid}». Snooze-handlingen for påminnelsen er fjernet, feltene blir ikke lenger lest av noen. Idempotent, ikke reversibel — kjør alltid prøvekjøringen først.</target>
       </segment>
     </unit>
         <unit id="reminder.goalPause.label">
@@ -14695,6 +14647,42 @@ Aktiv:         </target>
       <segment state="initial">
         <source>Erinnerung einrichten</source>
         <target>Erinnerung einrichten</target>
+      </segment>
+    </unit>
+    <unit id="auth.error.requiresRecentLogin">
+      <segment state="initial">
+        <source>Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.</source>
+        <target>Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.</target>
+      </segment>
+    </unit>
+    <unit id="admin.bulk.remaining">
+      <segment state="initial">
+        <source>Noch offen (erneut ausführen):</source>
+        <target>Noch offen (erneut ausführen):</target>
+      </segment>
+    </unit>
+    <unit id="admin.delete.purgeInfo">
+      <segment state="initial">
+        <source> Das Konto und alle zugehörigen Daten werden endgültig gelöscht. </source>
+        <target> Das Konto und alle zugehörigen Daten werden endgültig gelöscht. </target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.orphanedUserData.title">
+      <segment state="initial">
+        <source>Datenmüll gelöschter Konten entfernen</source>
+        <target>Datenmüll gelöschter Konten entfernen</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.orphanedUserData.description">
+      <segment state="initial">
+        <source>Sucht Daten von Nutzern ohne Firebase-Auth-Konto (Einträge, Statistiken, Pläne, Workouts, Freundschaften, Push-Abos, Nachrichten, Profilfotos …) und löscht sie wie bei einer Kontolöschung. Bis zu 25 Konten pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Nicht umkehrbar — erst den Probelauf ausführen.</source>
+        <target>Sucht Daten von Nutzern ohne Firebase-Auth-Konto (Einträge, Statistiken, Pläne, Workouts, Freundschaften, Push-Abos, Nachrichten, Profilfotos …) und löscht sie wie bei einer Kontolöschung. Bis zu 25 Konten pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Nicht umkehrbar — erst den Probelauf ausführen.</target>
+      </segment>
+    </unit>
+    <unit id="settings.deleteAccountFailed">
+      <segment state="initial">
+        <source>Konto konnte nicht gelöscht werden. Bitte versuche es erneut.</source>
+        <target>Konto konnte nicht gelöscht werden. Bitte versuche es erneut.</target>
       </segment>
     </unit>
 </file>

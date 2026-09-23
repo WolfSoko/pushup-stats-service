@@ -45,8 +45,7 @@ export class ExerciseValidationError extends Error {
 
 /**
  * Wraps validation errors in a cold Observable so callers see them in
- * `subscribe({ error })` instead of as a synchronous throw — same pattern
- * as `PushupFirestoreService`.
+ * `subscribe({ error })` instead of as a synchronous throw.
  */
 function violationObservable<T>(
   exerciseId: string,
@@ -82,8 +81,7 @@ export class ExerciseFirestoreService {
    * Lists entries for a user, optionally restricted to a single exercise
    * or a small set of catalog exercises (Firestore `in` queries are
    * capped at 30 — fine for the Phase-0 catalog and any realistic
-   * category size). Mirrors `PushupFirestoreService.listPushups` so the
-   * dashboard sections can reuse the same date-window filtering.
+   * category size).
    */
   listEntries(
     userId: string,

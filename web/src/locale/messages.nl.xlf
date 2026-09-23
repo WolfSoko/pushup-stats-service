@@ -1223,15 +1223,6 @@
         <target>Gebruiker verwijderen</target>
       </segment>
     </unit>
-    <unit id="admin.delete.anonymize">
-      <notes>
-        <note category="location">web/src/app/admin/delete-user-dialog.component.ts:35,37</note>
-      </notes>
-      <segment state="translated">
-        <source>Daten anonymisieren (Pushups behalten)</source>
-        <target>Gegevens anonimiseren (push-ups behouden)</target>
-      </segment>
-    </unit>
     <unit id="admin.delete.cancel">
       <notes>
         <note category="location">web/src/app/admin/delete-user-dialog.component.ts:41,43</note>
@@ -5620,8 +5611,8 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:277,279</note>
       </notes>
-      <segment state="translated">
-        <source> Konto löschen entfernt dein Konto. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
+      <segment state="initial">
+        <source> Konto löschen entfernt dein Konto und alle gespeicherten Daten: Trainingseinträge, Statistiken, Pläne, Workouts, Freundschaften, Nachrichten und dein Profilfoto. </source>
         <target> Account verwijderen verwijdert uw account. Trainingsgegevens blijven anoniem voor statistische analyse. </target>
       </segment>
     </unit>
@@ -5665,8 +5656,8 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:307,309</note>
       </notes>
-      <segment state="translated">
-        <source> Dein Konto wird gelöscht. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
+      <segment state="initial">
+        <source> Dein Konto und alle zugehörigen Daten werden endgültig gelöscht — auch deine Trainingseinträge. Gesendetes Feedback bleibt ohne Bezug zu dir erhalten. </source>
         <target> Uw account wordt verwijderd. Trainingsgegevens blijven anoniem voor statistische analyse. </target>
       </segment>
     </unit>
@@ -9796,18 +9787,6 @@
         <target>Ongedaan maken</target>
       </segment>
     </unit>
-    <unit id="admin.migrations.pushupUnification.title">
-      <segment state="translated">
-        <source>Liegestütze vereinheitlichen (pushups → exerciseEntries)</source>
-        <target>Push-ups samenvoegen (pushups → exerciseEntries)</target>
-      </segment>
-    </unit>
-    <unit id="admin.migrations.pushupUnification.description">
-      <segment state="translated">
-        <source>Kopiert die Legacy-„pushups“-Collection nach „exerciseEntries“ (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotent, lässt die Quelle unangetastet und ist über „Rückgängig“ reversibel. Immer erst den Probelauf ausführen und die Zahlen gegen das Runbook prüfen.</source>
-        <target>Kopieert de verouderde «pushups»-collectie naar «exerciseEntries» (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotent, laat de bron onaangeroerd en is omkeerbaar via «Ongedaan maken». Voer altijd eerst de droogloop uit en controleer de getallen aan de hand van het runbook.</target>
-      </segment>
-    </unit>
     <unit id="admin.migrations.status.completed">
       <segment state="translated">
         <source>Abgeschlossen</source>
@@ -9842,18 +9821,6 @@
       <segment state="translated">
         <source>Zurück zum Admin-Bereich</source>
         <target>Terug naar beheergebied</target>
-      </segment>
-    </unit>
-    <unit id="admin.migrations.pushupBackfill.title">
-      <segment state="translated">
-        <source>Pushup-Aggregat backfillen (perExercise/pushup)</source>
-        <target>Pushup-aggregaat terugvullen (perExercise/pushup)</target>
-      </segment>
-    </unit>
-    <unit id="admin.migrations.pushupBackfill.description">
-      <segment state="translated">
-        <source>Baut „userStats/{uid}/perExercise/pushup” aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</source>
-        <target>Herbouwt «userStats/{uid}/perExercise/pushup» vanuit de gemigreerde pushup-invoeren zodat het dashboard na de overschakeling direct correcte pushup-totalen en -reeksen toont. Uitvoeren na de unificatiemigratie. Idempotent.</target>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.title">
@@ -9902,12 +9869,6 @@
       <segment state="translated">
         <source>Bitte exakt „löschen“ eingeben.</source>
         <target>Voer precies “verwijderen” in.</target>
-      </segment>
-    </unit>
-    <unit id="settings.anonymizedName">
-      <segment state="translated">
-        <source>Gelöschter Benutzer</source>
-        <target>Verwijderde gebruiker</target>
       </segment>
     </unit>
     <unit id="trainingPlans.photoCredit.unsplash">
@@ -12128,18 +12089,6 @@
       <segment state="translated">
         <source>Gewichtsübungen</source>
         <target>Gewichtsoefeningen</target>
-      </segment>
-    </unit>
-    <unit id="admin.migrations.reminderSnoozeCleanup.title">
-      <segment state="translated">
-        <source>Snooze-Reste aus reminderDispatchState entfernen</source>
-        <target>Snooze-restanten verwijderen uit reminderDispatchState</target>
-      </segment>
-    </unit>
-    <unit id="admin.migrations.reminderSnoozeCleanup.description">
-      <segment state="translated">
-        <source>Löscht „snoozedUntil“, „snoozedAt“ und „snoozeMinutes“ aus „reminderDispatchState/{uid}“. Die Snooze-Aktion der Erinnerung wurde entfernt, die Felder werden von niemandem mehr gelesen. Idempotent, nicht umkehrbar — erst den Probelauf ausführen.</source>
-        <target>Verwijdert «snoozedUntil», «snoozedAt» en «snoozeMinutes» uit «reminderDispatchState/{uid}». De snooze-actie van de herinnering is verwijderd, deze velden worden door niemand meer gelezen. Idempotent, niet omkeerbaar — voer altijd eerst de droogloop uit.</target>
       </segment>
     </unit>
         <unit id="reminder.goalPause.label">
@@ -15404,6 +15353,42 @@
       <segment state="initial">
         <source>Erinnerung einrichten</source>
         <target>Erinnerung einrichten</target>
+      </segment>
+    </unit>
+    <unit id="auth.error.requiresRecentLogin">
+      <segment state="initial">
+        <source>Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.</source>
+        <target>Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.</target>
+      </segment>
+    </unit>
+    <unit id="admin.bulk.remaining">
+      <segment state="initial">
+        <source>Noch offen (erneut ausführen):</source>
+        <target>Noch offen (erneut ausführen):</target>
+      </segment>
+    </unit>
+    <unit id="admin.delete.purgeInfo">
+      <segment state="initial">
+        <source> Das Konto und alle zugehörigen Daten werden endgültig gelöscht. </source>
+        <target> Das Konto und alle zugehörigen Daten werden endgültig gelöscht. </target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.orphanedUserData.title">
+      <segment state="initial">
+        <source>Datenmüll gelöschter Konten entfernen</source>
+        <target>Datenmüll gelöschter Konten entfernen</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.orphanedUserData.description">
+      <segment state="initial">
+        <source>Sucht Daten von Nutzern ohne Firebase-Auth-Konto (Einträge, Statistiken, Pläne, Workouts, Freundschaften, Push-Abos, Nachrichten, Profilfotos …) und löscht sie wie bei einer Kontolöschung. Bis zu 25 Konten pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Nicht umkehrbar — erst den Probelauf ausführen.</source>
+        <target>Sucht Daten von Nutzern ohne Firebase-Auth-Konto (Einträge, Statistiken, Pläne, Workouts, Freundschaften, Push-Abos, Nachrichten, Profilfotos …) und löscht sie wie bei einer Kontolöschung. Bis zu 25 Konten pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Nicht umkehrbar — erst den Probelauf ausführen.</target>
+      </segment>
+    </unit>
+    <unit id="settings.deleteAccountFailed">
+      <segment state="initial">
+        <source>Konto konnte nicht gelöscht werden. Bitte versuche es erneut.</source>
+        <target>Konto konnte nicht gelöscht werden. Bitte versuche es erneut.</target>
       </segment>
     </unit>
 </file>

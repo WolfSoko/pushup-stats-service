@@ -71,6 +71,8 @@ export interface AdminAutoCountFeedback {
 export interface BulkDeleteResult {
   deleted: number;
   skipped: number;
+  /** Eligible accounts left for the next run (per-run limit). */
+  remaining: number;
 }
 
 export interface AdminActivePlan {

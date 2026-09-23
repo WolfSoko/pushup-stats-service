@@ -56,23 +56,74 @@ describe('AuthAdapter', () => {
     expect(mockAuth.signOut).toHaveBeenCalled();
   });
 
-  it('should call deleteUser if currentUser exists', async () => {
-    const { fixture } = await render('', {
-      providers: [{ provide: Auth, useValue: mockAuth }, AuthAdapter],
-    });
-    const adapter = fixture.debugElement.injector.get(AuthAdapter);
-    await adapter.deleteUser();
-    expect(deleteUserMock).toHaveBeenCalledWith(mockAuth.currentUser);
-  });
+  describe('deleteUser', () => {
+    it('should delete the account through the purging callable and sign out', async () => {
+      // given
+      const callable = jest.fn().mockResolvedValue({ data: { ok: true } });
+      httpsCallableMock.mockReturnValue(
+        callable as unknown as ReturnType<typeof httpsCallable>
+      );
+      const { fixture } = await render('', {
+        providers: [
+          { provide: Auth, useValue: mockAuth },
+          { provide: Functions, useValue: {} },
+          AuthAdapter,
+        ],
+      });
+      const adapter = fixture.debugElement.injector.get(AuthAdapter);
 
-  it('should not call deleteUser if no currentUser', async () => {
-    Object.defineProperty(mockAuth, 'currentUser', { value: undefined });
-    const { fixture } = await render('', {
-      providers: [{ provide: Auth, useValue: mockAuth }, AuthAdapter],
+      // when
+      await adapter.deleteUser();
+
+      // then — never the client-side deleteUser, which would skip the purge
+      expect(httpsCallableMock).toHaveBeenCalledWith(
+        expect.anything(),
+        'deleteOwnAccount',
+        expect.objectContaining({ timeout: expect.any(Number) })
+      );
+      expect(callable).toHaveBeenCalledWith({});
+      expect(mockAuth.signOut).toHaveBeenCalled();
+      expect(deleteUserMock).not.toHaveBeenCalled();
     });
-    const adapter = fixture.debugElement.injector.get(AuthAdapter);
-    await adapter.deleteUser();
-    expect(deleteUserMock).not.toHaveBeenCalled();
+
+    it('should not call anything without a current user', async () => {
+      // given
+      Object.defineProperty(mockAuth, 'currentUser', { value: undefined });
+      const { fixture } = await render('', {
+        providers: [
+          { provide: Auth, useValue: mockAuth },
+          { provide: Functions, useValue: {} },
+          AuthAdapter,
+        ],
+      });
+      const adapter = fixture.debugElement.injector.get(AuthAdapter);
+
+      // when
+      await adapter.deleteUser();
+
+      // then
+      expect(httpsCallableMock).not.toHaveBeenCalled();
+    });
+
+    it('should keep the session when the callable fails', async () => {
+      // given
+      const callable = jest.fn().mockRejectedValue(new Error('denied'));
+      httpsCallableMock.mockReturnValue(
+        callable as unknown as ReturnType<typeof httpsCallable>
+      );
+      const { fixture } = await render('', {
+        providers: [
+          { provide: Auth, useValue: mockAuth },
+          { provide: Functions, useValue: {} },
+          AuthAdapter,
+        ],
+      });
+      const adapter = fixture.debugElement.injector.get(AuthAdapter);
+
+      // when / then
+      await expect(adapter.deleteUser()).rejects.toThrow('denied');
+      expect(mockAuth.signOut).not.toHaveBeenCalled();
+    });
   });
 
   describe('unsubscribeAllPushDevices', () => {

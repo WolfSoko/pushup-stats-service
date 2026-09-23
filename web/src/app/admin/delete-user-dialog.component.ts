@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  signal,
-} from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import {
   MAT_DIALOG_DATA,
   MatDialogModule,
@@ -17,7 +10,7 @@ import { AdminUser } from './admin-page.models';
 @Component({
   selector: 'app-delete-user-dialog',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, MatButtonModule, MatCheckboxModule, MatDialogModule],
+  imports: [MatButtonModule, MatDialogModule],
   template: `
     <h2 mat-dialog-title i18n="@@admin.delete.title">Benutzer löschen</h2>
     <mat-dialog-content>
@@ -27,14 +20,9 @@ import { AdminUser } from './admin-page.models';
           ({{ user.email }})
         }
       </p>
-      <mat-checkbox
-        [ngModel]="anonymize()"
-        (ngModelChange)="anonymize.set($event)"
-      >
-        <span i18n="@@admin.delete.anonymize"
-          >Daten anonymisieren (Pushups behalten)</span
-        >
-      </mat-checkbox>
+      <p i18n="@@admin.delete.purgeInfo">
+        Das Konto und alle zugehörigen Daten werden endgültig gelöscht.
+      </p>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
       <button mat-button mat-dialog-close i18n="@@admin.delete.cancel">
@@ -55,10 +43,7 @@ export class DeleteUserDialogComponent {
   readonly user = inject<AdminUser>(MAT_DIALOG_DATA);
   private readonly dialogRef = inject(MatDialogRef<DeleteUserDialogComponent>);
 
-  // Default: anonymize for non-anonymous users, hard-delete for anonymous
-  readonly anonymize = signal(!this.user.anonymous);
-
   confirm(): void {
-    this.dialogRef.close({ anonymize: this.anonymize() });
+    this.dialogRef.close(true);
   }
 }

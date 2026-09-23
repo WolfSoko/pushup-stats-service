@@ -48,7 +48,7 @@ Push-Benachrichtigungen mit Intervall, Ruhephasen, Wochentagen und Zeitzone — 
 Übungs-Wiki mit sauberer Ausführung und typischen Fehlern, dazu ein Blog.
 
 🔒 DEINE DATEN
-Als Gast ausprobieren, ganz ohne Konto. DSGVO-konform mit anpassbarer Cookie-Zustimmung. Konto jederzeit löschbar, Trainingsdaten bleiben nur anonymisiert. Datenbank in Frankfurt.
+Als Gast ausprobieren, ganz ohne Konto. DSGVO-konform mit anpassbarer Cookie-Zustimmung. Konto jederzeit löschbar – samt aller Trainingsdaten. Datenbank in Frankfurt.
 
 📱 ANDROID + WEB
 Gleiche Daten auf Phone und im Browser, Echtzeit-Sync über alle Geräte. Login per Google oder E-Mail. Offline nutzbar — Einträge synchronisieren, sobald du online bist. Helles und dunkles Design.

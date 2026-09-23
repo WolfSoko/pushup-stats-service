@@ -82,11 +82,11 @@ bleiben `Pushups`: der Launcher schneidet längere Labels ohnehin ab.
 - **Datenbank in Frankfurt** — Firestore-Region `europe-west3`, siehe
   `docs/ci-cd.md`
 - **Konto-Löschung** — `confirmDeleteFromDialog()` in
-  `web/src/app/stats/shell/settings-page.component.ts` anonymisiert die
-  User-Config und löscht den Auth-User; die Trainingseinträge bleiben
-  anonymisiert bestehen (so sagt es auch der Dialog unter
-  `@@settings.deleteDialogInfo`). Das Listing darf deshalb **keine**
-  vollständige Löschung aller Einträge versprechen.
+  `web/src/app/stats/shell/settings.facade.ts` ruft den Callable
+  `deleteOwnAccount` auf, der erst alle Daten inkl. Trainingseinträgen und
+  dann den Auth-User löscht (siehe `docs/cloud-functions.md` → „Account
+  deletion“).
+  Gesendetes Feedback bleibt ohne Personenbezug erhalten.
 - **Sechs Schnellaktionen insgesamt** — `MAX_QUICK_ADDS = 6` in
   `libs/stats/src/lib/models/user-config.models.ts`. Die sechs Slots teilen
   sich alle Übungen, es sind keine sechs Presets _pro_ Übung.

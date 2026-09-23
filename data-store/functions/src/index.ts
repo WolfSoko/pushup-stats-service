@@ -11,6 +11,11 @@
 import './firebase-app';
 
 export {
+  cleanupOrphanedUserData,
+  deleteOwnAccount,
+} from './functions-account-deletion';
+
+export {
   adminBulkDeleteInactiveAnonymous,
   adminDeleteUser,
   adminListUsers,
@@ -71,8 +76,6 @@ export {
 } from './functions-push';
 
 export { reminderAction } from './functions-reminder-action';
-
-export { cleanupReminderSnoozeState } from './functions-reminder-snooze-cleanup';
 
 export { getFriendsLeaderboard } from './functions-friends-leaderboard';
 export {

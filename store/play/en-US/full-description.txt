@@ -48,7 +48,7 @@ Push notifications with your own interval, quiet hours, weekdays and time zone �
 An exercise wiki with clean form, technique cues and the mistakes everyone makes, plus a blog.
 
 🔒 YOUR DATA
-Try it as a guest, no account needed. Adjustable cookie consent — personalized ads only with your OK. Delete your account any time; training data is kept only in anonymized form. Database hosted in Frankfurt, Germany.
+Try it as a guest, no account needed. Adjustable cookie consent — personalized ads only with your OK. Delete your account any time, along with all your training data. Database hosted in Frankfurt, Germany.
 
 📱 ANDROID + WEB
 The same data on your phone and in the browser, synced live across every device. Sign in with Google or email. Works offline too — entries sync as soon as you are back online. Light and dark themes.

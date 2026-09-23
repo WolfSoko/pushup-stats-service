@@ -2064,14 +2064,6 @@
         <source>Benutzer löschen</source>
       <target>删除用户</target></segment>
     </unit>
-    <unit id="admin.delete.anonymize">
-      <notes>
-        <note category="location">web/src/app/admin/delete-user-dialog.component.ts:35,37</note>
-      </notes>
-      <segment state="translated">
-        <source>Daten anonymisieren (Pushups behalten)</source>
-      <target>数据匿名处理（保留俯卧撑记录）</target></segment>
-    </unit>
     <unit id="admin.delete.cancel">
       <notes>
         <note category="location">web/src/app/admin/delete-user-dialog.component.ts:41,43</note>
@@ -6221,8 +6213,8 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:404,406</note>
       </notes>
-      <segment state="translated">
-        <source> Konto löschen entfernt dein Konto. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
+      <segment state="initial">
+        <source> Konto löschen entfernt dein Konto und alle gespeicherten Daten: Trainingseinträge, Statistiken, Pläne, Workouts, Freundschaften, Nachrichten und dein Profilfoto. </source>
       <target> 删除账户将删除你的账户。训练数据将被匿名保留用于统计分析。 </target></segment>
     </unit>
     <unit id="settings.deleteAccount">
@@ -6263,8 +6255,8 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:437,440</note>
       </notes>
-      <segment state="translated">
-        <source> Dein Konto wird gelöscht. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
+      <segment state="initial">
+        <source> Dein Konto und alle zugehörigen Daten werden endgültig gelöscht — auch deine Trainingseinträge. Gesendetes Feedback bleibt ohne Bezug zu dir erhalten. </source>
       <target> 你的账户将被删除。训练数据将被匿名保留用于统计分析。 </target></segment>
     </unit>
     <unit id="settings.deleteDialogPhraseLabel">
@@ -9305,18 +9297,6 @@
         <target>撤销</target>
       </segment>
     </unit>
-    <unit id="admin.migrations.pushupUnification.title">
-      <segment state="translated">
-        <source>Liegestütze vereinheitlichen (pushups → exerciseEntries)</source>
-        <target>统一俯卧撑数据 (pushups → exerciseEntries)</target>
-      </segment>
-    </unit>
-    <unit id="admin.migrations.pushupUnification.description">
-      <segment state="translated">
-        <source>Kopiert die Legacy-„pushups“-Collection nach „exerciseEntries“ (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotent, lässt die Quelle unangetastet und ist über „Rückgängig“ reversibel. Immer erst den Probelauf ausführen und die Zahlen gegen das Runbook prüfen.</source>
-        <target>将旧版“pushups”集合复制到“exerciseEntries”（exerciseId:&quot;pushup&quot;，migratedFrom:&quot;pushups&quot;）。幂等操作，不会更改源数据，可通过“撤销”回滚。始终先执行试运行，并对照运行手册检查数字。</target>
-      </segment>
-    </unit>
     <unit id="admin.migrations.status.completed">
       <segment state="translated">
         <source>Abgeschlossen</source>
@@ -9351,18 +9331,6 @@
       <segment state="translated">
         <source>Zurück zum Admin-Bereich</source>
         <target>返回管理区域</target>
-      </segment>
-    </unit>
-    <unit id="admin.migrations.pushupBackfill.title">
-      <segment state="translated">
-        <source>Pushup-Aggregat backfillen (perExercise/pushup)</source>
-        <target>回填俯卧撑聚合数据 (perExercise/pushup)</target>
-      </segment>
-    </unit>
-    <unit id="admin.migrations.pushupBackfill.description">
-      <segment state="translated">
-        <source>Baut „userStats/{uid}/perExercise/pushup” aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</source>
-        <target>从已迁移的俯卧撑条目重建«userStats/{uid}/perExercise/pushup»，使仪表板在切换后立即显示正确的俯卧撑总数和连续记录。在统一迁移后运行。幂等操作。</target>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.title">
@@ -9411,12 +9379,6 @@
       <segment state="translated">
         <source>Bitte exakt „löschen“ eingeben.</source>
         <target>请准确输入“删除”。</target>
-      </segment>
-    </unit>
-    <unit id="settings.anonymizedName">
-      <segment state="translated">
-        <source>Gelöschter Benutzer</source>
-        <target>已删除用户</target>
       </segment>
     </unit>
     <unit id="trainingPlans.photoCredit.unsplash">
@@ -11637,18 +11599,6 @@
       <segment state="translated">
         <source>Gewichtsübungen</source>
         <target>负重动作</target>
-      </segment>
-    </unit>
-    <unit id="admin.migrations.reminderSnoozeCleanup.title">
-      <segment state="translated">
-        <source>Snooze-Reste aus reminderDispatchState entfernen</source>
-        <target>从 reminderDispatchState 中移除贪睡残留数据</target>
-      </segment>
-    </unit>
-    <unit id="admin.migrations.reminderSnoozeCleanup.description">
-      <segment state="translated">
-        <source>Löscht „snoozedUntil“, „snoozedAt“ und „snoozeMinutes“ aus „reminderDispatchState/{uid}“. Die Snooze-Aktion der Erinnerung wurde entfernt, die Felder werden von niemandem mehr gelesen. Idempotent, nicht umkehrbar — erst den Probelauf ausführen.</source>
-        <target>删除“reminderDispatchState/{uid}”中的“snoozedUntil”、“snoozedAt”和“snoozeMinutes”字段。提醒的贪睡操作已被移除，这些字段不再被任何人读取。幂等操作，不可逆——请务必先执行试运行。</target>
       </segment>
     </unit>
         <unit id="reminder.goalPause.label">
@@ -14913,6 +14863,42 @@
       <segment state="initial">
         <source>Erinnerung einrichten</source>
         <target>Erinnerung einrichten</target>
+      </segment>
+    </unit>
+    <unit id="auth.error.requiresRecentLogin">
+      <segment state="initial">
+        <source>Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.</source>
+        <target>Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.</target>
+      </segment>
+    </unit>
+    <unit id="admin.bulk.remaining">
+      <segment state="initial">
+        <source>Noch offen (erneut ausführen):</source>
+        <target>Noch offen (erneut ausführen):</target>
+      </segment>
+    </unit>
+    <unit id="admin.delete.purgeInfo">
+      <segment state="initial">
+        <source> Das Konto und alle zugehörigen Daten werden endgültig gelöscht. </source>
+        <target> Das Konto und alle zugehörigen Daten werden endgültig gelöscht. </target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.orphanedUserData.title">
+      <segment state="initial">
+        <source>Datenmüll gelöschter Konten entfernen</source>
+        <target>Datenmüll gelöschter Konten entfernen</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.orphanedUserData.description">
+      <segment state="initial">
+        <source>Sucht Daten von Nutzern ohne Firebase-Auth-Konto (Einträge, Statistiken, Pläne, Workouts, Freundschaften, Push-Abos, Nachrichten, Profilfotos …) und löscht sie wie bei einer Kontolöschung. Bis zu 25 Konten pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Nicht umkehrbar — erst den Probelauf ausführen.</source>
+        <target>Sucht Daten von Nutzern ohne Firebase-Auth-Konto (Einträge, Statistiken, Pläne, Workouts, Freundschaften, Push-Abos, Nachrichten, Profilfotos …) und löscht sie wie bei einer Kontolöschung. Bis zu 25 Konten pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Nicht umkehrbar — erst den Probelauf ausführen.</target>
+      </segment>
+    </unit>
+    <unit id="settings.deleteAccountFailed">
+      <segment state="initial">
+        <source>Konto konnte nicht gelöscht werden. Bitte versuche es erneut.</source>
+        <target>Konto konnte nicht gelöscht werden. Bitte versuche es erneut.</target>
       </segment>
     </unit>
 </file>

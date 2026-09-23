@@ -270,6 +270,55 @@ describe('AdminPageComponent', () => {
     });
   });
 
+  describe('bulkDelete', () => {
+    it('should ask for another run while accounts remain', async () => {
+      // given a run that hit the per-run limit
+      await createComponent(
+        [],
+        [
+          {
+            name: 'adminBulkDeleteInactiveAnonymous',
+            impl: async () => ({
+              data: { deleted: 25, skipped: 1, remaining: 7 },
+            }),
+          },
+        ]
+      );
+
+      // when
+      await component.bulkDelete();
+      fixture.detectChanges();
+
+      // then
+      const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
+      expect(text).toContain('Noch offen (erneut ausführen):');
+      expect(text).toContain('7');
+    });
+
+    it('should not mention remaining accounts when the run finished them all', async () => {
+      // given
+      await createComponent(
+        [],
+        [
+          {
+            name: 'adminBulkDeleteInactiveAnonymous',
+            impl: async () => ({
+              data: { deleted: 3, skipped: 0, remaining: 0 },
+            }),
+          },
+        ]
+      );
+
+      // when
+      await component.bulkDelete();
+      fixture.detectChanges();
+
+      // then
+      const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
+      expect(text).not.toContain('Noch offen');
+    });
+  });
+
   describe('busy state', () => {
     it('should mark the bulk-delete button busy while the callable is pending', async () => {
       // given
@@ -282,7 +331,7 @@ describe('AdminPageComponent', () => {
             impl: () =>
               new Promise<{ data: unknown }>((resolve) => {
                 resolveBulk = () =>
-                  resolve({ data: { deleted: 0, skipped: 0 } });
+                  resolve({ data: { deleted: 0, skipped: 0, remaining: 0 } });
               }),
           },
         ]
@@ -314,19 +363,17 @@ describe('AdminPageComponent', () => {
     it('should flag the deleted user while adminDeleteUser is pending', async () => {
       // given
       let resolveDelete!: () => void;
+      const deleteImpl = vi.fn(
+        () =>
+          new Promise<{ data: unknown }>((resolve) => {
+            resolveDelete = () => resolve({ data: { ok: true } });
+          })
+      );
       await createComponent(
         [sampleUser],
-        [
-          {
-            name: 'adminDeleteUser',
-            impl: () =>
-              new Promise<{ data: unknown }>((resolve) => {
-                resolveDelete = () => resolve({ data: { ok: true } });
-              }),
-          },
-        ]
+        [{ name: 'adminDeleteUser', impl: deleteImpl }]
       );
-      dialogOpenSpy.mockReturnValue(stubDialogRef({ anonymize: false }));
+      dialogOpenSpy.mockReturnValue(stubDialogRef(true));
 
       // when
       const run = component.openDeleteDialog(sampleUser);
@@ -341,9 +388,10 @@ describe('AdminPageComponent', () => {
       resolveDelete();
       await run;
 
-      // then
+      // then — only the uid is sent, the server purges the data
       expect(component.deletingUser.busy()).toBe(false);
       expect(component.users()).toEqual([]);
+      expect(deleteImpl).toHaveBeenCalledWith({ uid: sampleUser.uid });
     });
   });
 });

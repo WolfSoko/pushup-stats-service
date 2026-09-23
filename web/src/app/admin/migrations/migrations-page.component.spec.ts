@@ -42,7 +42,7 @@ describe('MigrationsPageComponent', () => {
         impl: async () => ({
           data: {
             statuses: {
-              'reminder-snooze-cleanup': {
+              'orphaned-user-data-cleanup': {
                 completed: true,
                 completedAt: '2026-06-04T10:00:00.000Z',
                 completedBy: 'admin-uid',
@@ -54,7 +54,7 @@ describe('MigrationsPageComponent', () => {
     ]);
 
     // then the page exposes it to the cards
-    expect(component.statuses()['reminder-snooze-cleanup']?.completed).toBe(
+    expect(component.statuses()['orphaned-user-data-cleanup']?.completed).toBe(
       true
     );
     expect(callablesMock.call).toHaveBeenCalledWith('getMigrationStatuses');
@@ -74,7 +74,7 @@ describe('MigrationsPageComponent', () => {
           setArg = data;
           return {
             data: {
-              id: 'reminder-snooze-cleanup',
+              id: 'orphaned-user-data-cleanup',
               completed: true,
               completedAt: '2026-06-04T10:00:00.000Z',
               completedBy: 'admin-uid',
@@ -85,12 +85,15 @@ describe('MigrationsPageComponent', () => {
     ]);
 
     // when a card requests completion
-    await component.setStatus('reminder-snooze-cleanup', true);
+    await component.setStatus('orphaned-user-data-cleanup', true);
     fixture.detectChanges();
 
     // then the callable is invoked and local state updates
-    expect(setArg).toEqual({ id: 'reminder-snooze-cleanup', completed: true });
-    expect(component.statuses()['reminder-snooze-cleanup']?.completed).toBe(
+    expect(setArg).toEqual({
+      id: 'orphaned-user-data-cleanup',
+      completed: true,
+    });
+    expect(component.statuses()['orphaned-user-data-cleanup']?.completed).toBe(
       true
     );
     expect(component.busyId()).toBeNull();
