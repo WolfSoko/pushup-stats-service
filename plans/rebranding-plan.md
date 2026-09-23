@@ -538,7 +538,14 @@ Ein vollständiger Weg existiert allerdings: Das Callable `unsubscribeAllPushDev
 | Ausstehender Referral-Code (`referral.service.ts`), ausstehender Freundes-Einladungscode (`friend-invite.service.ts`) | **Kleiner Verlust.** Eine vor dem Cutover geöffnete Einladung, die danach abgeschlossen wird, fällt still weg |
 | **Gast-Sitzungen (anonyme Auth)**                                                                                     | **Datenverlust.** Siehe unten                                                                                 |
 
-**Gäste sind der ernste Fall.** Das Produkt kennt anonyme Konten (`isAnonymous` / `isGuest`, in `auth.guard.ts` eigens behandelt), und diese schreiben echte Einträge unter einer anonymen uid. Die uid liegt in der Firebase-Auth-Persistenz, also origin-gebunden in IndexedDB — ein `setPersistence`-Aufruf existiert im Repo nirgends, es gilt also der Standard. Nach dem Domainwechsel bekommt ein wiederkehrender Gast eine **neue** anonyme uid; seine bisherigen Daten bleiben in Firestore liegen, ohne dass er noch an sie herankommt.
+**Gäste sind der ernste Fall**, und der Mechanismus ist im Code belegt, nicht gefolgert:
+
+- Das Produkt kennt anonyme Konten (`isAnonymous` / `isGuest`, in `auth.guard.ts` eigens behandelt), und diese schreiben echte Einträge unter einer anonymen uid.
+- `AuthService.signInGuestIfNeeded()` wartet auf `authStateReady()`, prüft `currentUser` und legt bei `null` **automatisch** ein anonymes Konto an. Aufgerufen wird es beim App-Start (`web/src/app/app.ts`) und auf der Landing Page.
+- Der Doc-Kommentar dieser Methode nennt die Abhängigkeit selbst: Firebase stellt die Sitzung **aus IndexedDB** wieder her, und ohne das Abwarten würde eine anonyme Anmeldung die echte Sitzung überschreiben.
+- Ein `setPersistence`-Aufruf existiert im Repo nirgends, es gilt also der Standard — origin-gebunden.
+
+Nach dem Domainwechsel ist IndexedDB auf dem neuen Origin leer, `currentUser` also `null`. Ein wiederkehrender Gast bekommt damit **automatisch eine neue anonyme uid**; seine bisherigen Daten bleiben in Firestore liegen, ohne dass er noch an sie herankommt.
 
 Das ist kein Speicherkomfort, sondern Datenverlust für eine Nutzergruppe, die nie ein Konto angelegt hat und deshalb auch keinen Wiederherstellungsweg besitzt. **Offen:** Braucht der Cutover einen Übernahmepfad für Gäste (Einladung zur Kontoerstellung vor dem Wechsel, oder uid-Migration über einen Einmal-Token)?
 
