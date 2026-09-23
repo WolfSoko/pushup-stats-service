@@ -11,7 +11,7 @@
 
   // Scroll-driven reveals (animation-timeline: view()) need scroll runway below
   // the last animated section, otherwise the bottom cards stay stuck mid-reveal
-  // (faded/translated/scaled) because the page can't scroll far enough to push
+  // (blurred/translated/scaled) because the page can't scroll far enough to push
   // them through the `cover` range. Tracks the largest cover-end used below
   // (`cover 84%` in `.feature-grid.scroll-reveal-stagger`).
   @supports (animation-timeline: view()) {
@@ -649,9 +649,8 @@ mat-card-header mat-icon {
 // Scroll-driven reveal animations.
 // Pure CSS via `animation-timeline: view()` — no JS, no IntersectionObserver.
 // Override the per-element CSS variables to vary the entrance for each section.
-// No blur: sections that rest partly in view (e.g. just below the fold on
-// load) would stay smeared, and nested reveals (section + its card grid)
-// compound the blur until text is unreadable.
+// Keep the blur subtle: sections just below the fold rest mid-reveal on load,
+// and nested reveals (section + its card grid) compound their blur.
 .scroll-reveal {
   --reveal-opacity-from: 0;
   --reveal-opacity-to: 1;
@@ -659,6 +658,7 @@ mat-card-header mat-icon {
   --reveal-translate-x: 0px;
   --reveal-scale: 1;
   --reveal-rotate: 0deg;
+  --reveal-blur: 2px;
   --reveal-range-start: entry 0%;
   --reveal-range-end: cover 70%;
   --reveal-easing: cubic-bezier(0.2, 0.7, 0.3, 1);
@@ -676,10 +676,12 @@ mat-card-header mat-icon {
     transform: translateY(var(--reveal-translate-y))
       translateX(var(--reveal-translate-x)) scale(var(--reveal-scale))
       rotate(var(--reveal-rotate));
+    filter: blur(var(--reveal-blur));
   }
   to {
     opacity: var(--reveal-opacity-to);
     transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+    filter: blur(0);
   }
 }
 
@@ -689,6 +691,7 @@ mat-card-header mat-icon {
   --reveal-translate-y: 80px;
   --reveal-rotate: -4deg;
   --reveal-scale: 0.9;
+  --reveal-blur: 3px;
 }
 
 // Modifier: slide in from the right edge.
@@ -697,12 +700,14 @@ mat-card-header mat-icon {
   --reveal-translate-y: 80px;
   --reveal-rotate: 4deg;
   --reveal-scale: 0.9;
+  --reveal-blur: 3px;
 }
 
 // Modifier: cinematic zoom-and-focus reveal — used for the big preview screenshot.
 .scroll-reveal--zoom {
   --reveal-scale: 0.6;
   --reveal-translate-y: 140px;
+  --reveal-blur: 8px;
   --reveal-range-end: cover 75%;
 }
 
@@ -723,6 +728,7 @@ mat-card-header mat-icon {
       --reveal-translate-y: 160px;
       --reveal-translate-x: 0px;
       --reveal-scale: 0.85;
+      --reveal-blur: 2px;
       --reveal-easing: cubic-bezier(0.2, 0.7, 0.3, 1);
 
       animation: scroll-reveal var(--reveal-easing) forwards;
@@ -747,12 +753,19 @@ mat-card-header mat-icon {
   }
 }
 
+// A stagger grid inside a revealed section already inherits the section's
+// blur — don't stack a second one on top.
+.scroll-reveal .scroll-reveal-stagger > * {
+  --reveal-blur: 0px;
+}
+
 // Per-section flavour overrides.
 .friends-feature.scroll-reveal {
   --reveal-translate-x: 260px;
   --reveal-translate-y: 100px;
   --reveal-rotate: 3deg;
   --reveal-scale: 0.9;
+  --reveal-blur: 3px;
   --reveal-range-end: cover 70%;
 }
 
@@ -761,6 +774,7 @@ mat-card-header mat-icon {
   --reveal-translate-y: 100px;
   --reveal-rotate: -3deg;
   --reveal-scale: 0.9;
+  --reveal-blur: 3px;
   --reveal-range-end: cover 70%;
 }
 
@@ -772,6 +786,7 @@ mat-card-header mat-icon {
       --reveal-translate-y: 100px;
       --reveal-rotate: -5deg;
       --reveal-scale: 0.85;
+      --reveal-blur: 3px;
     }
     > :nth-child(4n + 2) {
       animation-range: entry 4% cover 68%;
@@ -779,6 +794,7 @@ mat-card-header mat-icon {
       --reveal-translate-y: 100px;
       --reveal-rotate: 5deg;
       --reveal-scale: 0.85;
+      --reveal-blur: 3px;
     }
     > :nth-child(4n + 3) {
       animation-range: entry 8% cover 76%;
@@ -786,6 +802,7 @@ mat-card-header mat-icon {
       --reveal-translate-y: 160px;
       --reveal-rotate: -2deg;
       --reveal-scale: 0.75;
+      --reveal-blur: 3px;
     }
     > :nth-child(4n + 4) {
       animation-range: entry 12% cover 84%;
@@ -793,6 +810,7 @@ mat-card-header mat-icon {
       --reveal-translate-y: 160px;
       --reveal-rotate: 2deg;
       --reveal-scale: 0.75;
+      --reveal-blur: 3px;
     }
   }
 }
@@ -800,6 +818,7 @@ mat-card-header mat-icon {
 .preview.scroll-reveal {
   --reveal-scale: 0.55;
   --reveal-translate-y: 200px;
+  --reveal-blur: 8px;
   --reveal-rotate: -1deg;
   --reveal-range-end: cover 80%;
 }
@@ -807,6 +826,7 @@ mat-card-header mat-icon {
 .trust-bar.scroll-reveal {
   --reveal-translate-y: 60px;
   --reveal-scale: 0.85;
+  --reveal-blur: 1px;
   --reveal-range-end: cover 50%;
 }
 
