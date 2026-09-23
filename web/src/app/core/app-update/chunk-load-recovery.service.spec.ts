@@ -101,6 +101,23 @@ describe('ChunkLoadRecoveryService', () => {
     expect(reload).toHaveBeenCalledTimes(1);
   });
 
+  it('should not reload when the loop protection cannot be stored', async () => {
+    // given
+    const setItem = vitest
+      .spyOn(Storage.prototype, 'setItem')
+      .mockImplementation(() => {
+        throw new DOMException('blocked', 'SecurityError');
+      });
+    const router = await setup();
+
+    // when
+    await router.navigateByUrl('/lazy').catch(() => undefined);
+
+    // then
+    expect(reload).not.toHaveBeenCalled();
+    setItem.mockRestore();
+  });
+
   it('should ignore navigation errors that are not chunk failures', async () => {
     // given
     loadError = new Error('Permission denied');

@@ -14,7 +14,7 @@ Everything lives in `web/src/app/core/app-update/`:
 - **`activateUpdate()` before reloading.** A waiting ngsw version only takes over once every client of the old one is gone; a plain `location.reload()` is just another navigation against the old worker, so the user would reload into the same stale build. `PageReloadService` is the only place that reloads — go through it.
 - **ngsw never re-checks on its own** (one check at registration, `registerWhenStable:2000`). Installed PWA/TWA sessions get resumed, not restarted, so the service polls every 30 min and on `visibilitychange → visible` (throttled to one check per 5 min) — background tabs throttle timers, the visibility hook is what reaches a resumed app.
 - **`SwUpdate.unrecoverable`** (ngsw lost the cached version) gets the same banner with its own text and no "Später"; a later `VERSION_READY` must not downgrade it.
-- **Stale lazy chunks without a SW** (first visit, private mode): the first lazy route after a deploy fails with `Failed to fetch dynamically imported module`. `ChunkLoadRecoveryService` reloads into the target URL once, guarded by a `sessionStorage` timestamp so a genuinely broken deploy cannot loop.
+- **Stale lazy chunks without a SW** (first visit, private mode): the first lazy route after a deploy fails with `Failed to fetch dynamically imported module`. `ChunkLoadRecoveryService` reloads into the target URL once, guarded by a `sessionStorage` timestamp so a genuinely broken deploy cannot loop; with storage blocked it does not reload at all, since nothing could stop the loop.
 
 ## Browser API quirks
 

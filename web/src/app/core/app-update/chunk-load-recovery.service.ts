@@ -43,7 +43,9 @@ export class ChunkLoadRecoveryService {
     // not a stale page — reloading again would loop.
     const now = Date.now();
     if (now - readLastReloadAt() < CHUNK_RELOAD_MIN_INTERVAL_MS) return;
-    writeLastReloadAt(now);
+    // Without a stored timestamp nothing would stop the next page from
+    // reloading again, so an unprotected reload is worse than none.
+    if (!writeLastReloadAt(now)) return;
     void this.reloader.reload(url);
   }
 }
@@ -56,10 +58,11 @@ function readLastReloadAt(): number {
   }
 }
 
-function writeLastReloadAt(at: number): void {
+function writeLastReloadAt(at: number): boolean {
   try {
     sessionStorage.setItem(CHUNK_RELOAD_STORAGE_KEY, String(at));
+    return true;
   } catch {
-    // Storage blocked: recover anyway — worst case one extra reload.
+    return false;
   }
 }
