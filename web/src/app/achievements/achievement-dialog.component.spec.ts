@@ -207,6 +207,51 @@ describe('AchievementDialogComponent', () => {
     );
   });
 
+  it('should close without vaporizing when the user prefers reduced motion', async () => {
+    // given — the particle burst is the most intense motion in the dialog
+    const original = globalThis.matchMedia;
+    globalThis.matchMedia = vi.fn(() => ({ matches: true }) as MediaQueryList);
+    const { close } = await setup();
+
+    // when
+    await userEvent.click(screen.getByTestId('achievement-snap'));
+
+    // then
+    expect(mocks.vaporizeSpy).not.toHaveBeenCalled();
+    expect(close).toHaveBeenCalledTimes(1);
+    globalThis.matchMedia = original;
+  });
+
+  it('should not close after a share that settles while a snap is running', async () => {
+    // given — the clipboard fallback resolves late
+    let settleShare: () => void = () => undefined;
+    const { share, close, view } = await setup();
+    share.mockImplementation(
+      () => new Promise<void>((resolve) => (settleShare = resolve))
+    );
+    await userEvent.click(screen.getByTestId('achievement-share'));
+    await userEvent.click(screen.getByTestId('achievement-snap'));
+    await view.fixture.whenStable();
+
+    // when
+    settleShare();
+    await view.fixture.whenStable();
+
+    // then
+    expect(mocks.vaporizeSpy).toHaveBeenCalledTimes(1);
+    expect(close).not.toHaveBeenCalled();
+  });
+
+  it('should keep the visible label at the start of the snap button name', async () => {
+    // when
+    await setup();
+
+    // then — speech input users say what they see
+    expect(
+      screen.getByTestId('achievement-snap').getAttribute('aria-label')
+    ).toMatch(/^Snap!/);
+  });
+
   it('should close without vaporizing on the server', async () => {
     // given
     const { close } = await setup({ platform: 'server' });

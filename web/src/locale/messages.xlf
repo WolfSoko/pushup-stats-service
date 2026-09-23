@@ -2782,7 +2782,7 @@
     </unit>
     <unit id="achievement.dialog.eyebrow">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:63</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:72</note>
       </notes>
       <segment>
         <source>Neues Abzeichen</source>
@@ -2790,7 +2790,7 @@
     </unit>
     <unit id="achievement.dialog.headline">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:64</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:73</note>
       </notes>
       <segment>
         <source>Geschafft!</source>
@@ -2798,7 +2798,7 @@
     </unit>
     <unit id="achievement.dialog.note">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:65</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:74</note>
       </notes>
       <segment>
         <source>Ab jetzt glänzt es in deiner Sammlung. Weiter so!</source>
@@ -2806,7 +2806,7 @@
     </unit>
     <unit id="achievement.dialog.closeAria">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:66</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:75</note>
       </notes>
       <segment>
         <source>Schließen</source>
@@ -2814,7 +2814,7 @@
     </unit>
     <unit id="achievement.dialog.share">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:67</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:76</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -2822,7 +2822,7 @@
     </unit>
     <unit id="achievement.dialog.snap">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:68</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:77</note>
       </notes>
       <segment>
         <source>Snap!</source>
@@ -2830,15 +2830,15 @@
     </unit>
     <unit id="achievement.dialog.snapAria">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:69</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:78</note>
       </notes>
       <segment>
-        <source>Abzeichen vaporisieren</source>
+        <source>Snap! – Abzeichen vaporisieren</source>
       </segment>
     </unit>
     <unit id="achievement.share.title">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:79</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:88</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -2846,7 +2846,7 @@
     </unit>
     <unit id="achievement.share.text">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:80</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:89</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="badge" disp="this.data.badge.label"/> — geschafft! 💪</source>

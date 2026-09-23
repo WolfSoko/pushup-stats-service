@@ -14925,10 +14925,10 @@
         <target>Snap!</target>
       </segment>
     </unit>
-    <unit id="achievement.dialog.snapAria">
+        <unit id="achievement.dialog.snapAria">
       <segment state="initial">
-        <source>Abzeichen vaporisieren</source>
-        <target>Abzeichen vaporisieren</target>
+        <source>Snap! – Abzeichen vaporisieren</source>
+        <target>Snap! – Abzeichen vaporisieren</target>
       </segment>
     </unit>
 </file>

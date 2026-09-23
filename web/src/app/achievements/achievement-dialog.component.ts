@@ -38,6 +38,12 @@ export interface AchievementDialogData {
 
 const RAY_COUNT = 12;
 
+function prefersReducedMotion(): boolean {
+  return (
+    globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
+  );
+}
+
 @Component({
   selector: 'app-achievement-dialog',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -69,7 +75,7 @@ export class AchievementDialogComponent {
   protected readonly closeAriaLabel = $localize`:@@achievement.dialog.closeAria:Schließen`;
   protected readonly shareLabel = $localize`:@@achievement.dialog.share:Teilen`;
   protected readonly snapLabel = $localize`:@@achievement.dialog.snap:Snap!`;
-  protected readonly snapAriaLabel = $localize`:@@achievement.dialog.snapAria:Abzeichen vaporisieren`;
+  protected readonly snapAriaLabel = $localize`:@@achievement.dialog.snapAria:Snap! – Abzeichen vaporisieren`;
 
   protected close(): void {
     if (this.snapping()) return;
@@ -83,12 +89,15 @@ export class AchievementDialogComponent {
       text: $localize`:@@achievement.share.text:${this.data.badge.label}:badge: — geschafft! 💪`,
       url: this.data.shareUrl,
     });
+    // The clipboard fallback keeps the dialog interactive while it awaits;
+    // closing now would cut off a snap started in the meantime.
+    if (this.snapping()) return;
     this.dialogRef.close();
   }
 
   protected async snap(): Promise<void> {
     if (this.snapping()) return;
-    if (!isPlatformBrowser(this.platformId)) {
+    if (!isPlatformBrowser(this.platformId) || prefersReducedMotion()) {
       this.dialogRef.close();
       return;
     }
