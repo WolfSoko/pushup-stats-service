@@ -106,7 +106,7 @@ Kein Ticket aus **Phase 2 und später** startet, bevor dieses Gate geschlossen i
 
 Ein Kandidat muss **alle** erfüllen:
 
-1. **Übungsneutral** — trägt Liegestütze bis Cardio und Mobility, ohne eine Übung zu bevorzugen.
+1. **Übungsneutral, mindestens** — trägt Liegestütze bis Cardio und Mobility, ohne eine Übung zu bevorzugen. **Verschärfung vom 2026-09-22, siehe 3.7:** Wenn das Produkt sich zu „zähl irgendetwas und behalte die Statistik“ öffnet, muss der Name **domänenneutral** sein — er muss Liegestütze _und_ Kaffeetassen _und_ gelesene Seiten tragen. Ob diese Öffnung Absicht oder bloße Möglichkeit ist, ist **nicht entschieden** (offener Punkt 6). Solange das offen ist, gilt die schärfere Lesart als Filter, weil ein Name, der beides trägt, in beiden Welten funktioniert — umgekehrt nicht.
 2. **DE und EN tragfähig** — Quelle ist Deutsch, ausgeliefert wird in 9 Sprachen. Kein Wortspiel, das nur in einer Sprache funktioniert.
 3. **Play-Titel-Budget** — max. 30 Zeichen inkl. Untertitel. Zum Vergleich der heutige Titel: „Pushup Tracker: Liegestütze“ = 27 Zeichen, also praktisch am Limit. Ein Name über ~14 Zeichen lässt keinen Untertitel mehr zu.
 4. **Domain frei** — `.com` bevorzugt, `.de` als Ergänzung (der Bestand hat beide).
@@ -266,9 +266,60 @@ Bei diesen 54 löst weder `.com` noch `.app` auf. Das ist **keine** Freigabe —
 
 **Einschätzung.** _Movepath_ liest sich am natürlichsten und ist als einziges klar übungsneutral — jede Übung ist Bewegung. _Tallyspan_ ist inhaltlich richtig (zusammenzählen über eine Spanne), klingt aber sperriger. _Holdspan_ hat die schönste Doppelbedeutung — der Halte-Timer wörtlich, die Streak übertragen — scheitert aber an den beiden Punkten oben; es steht nur noch hinten in der Reihe, falls die Markenrecherche die anderen beiden kippt.
 
-**Nächster Schritt:** Domain-Verfügbarkeit dieser drei beim Registrar bestätigen, dann Markenrecherche (Klassen 9, 41, 42). Erst danach ist Gate 0 entscheidbar.
+**Überholt.** Alle drei Kandidaten dieses Abschnitts sind in **3.7** ausgeschieden. Der Abschnitt bleibt stehen, weil die Verfahrensbefunde daraus — DNS als reiner Ausschlusstest, ungleiche Strenge beim Sieben, Domain-Kriterium C — weiter gelten.
 
-### 3.7 Ablauf
+### 3.7 Die Runde nach dem Merge — Stand 2026-09-23
+
+Nach dem Merge von #762 sind drei Dinge dazugekommen, die das Feld aus 3.6 vollständig geräumt haben.
+
+**1. Die Produktrichtung hat sich geweitet.** „Langfristig wird die App evtl. zu einer ‚ich zähle irgendetwas in meinem Leben und halte die Statistik fest‘.“ Das trifft Kriterium 1 an der Wurzel und kehrt die Reihenfolge aus 3.6 um:
+
+| Kandidat aus 3.6 | Stand                                                                                                    |
+| ---------------- | -------------------------------------------------------------------------------------------------------- |
+| Movepath         | **Fällt.** Seine ganze Begründung war „jede Übung ist Bewegung“ — eine gelesene Seite ist keine Bewegung |
+| Holdspan         | Fällt, jetzt dreifach belastet                                                                           |
+| Tallyspan        | Wurde kurzzeitig Favorit (_tally_ = Strichliste über irgendetwas), dann verworfen                        |
+
+**2. Zwei Geschmacksentscheidungen.** Deutsche Namen scheiden aus (Stetwerk, Kerbstrich, Tagpensum, Zählwerk-Familie); der Stamm _tally_ scheidet aus. Damit fallen zusätzlich Tallyslate, Sticktally, Wolftally und Tallyo. Beides sind Setzungen des Auftraggebers, keine Kriterienbefunde — hier dokumentiert, damit spätere Runden die Namen nicht erneut vorschlagen.
+
+**3. Ein belegter Store-Treffer.** _RepVision_ wurde vorgeschlagen und ist **vergeben**: „RepVision – PushUps Tracker“ (`com.hpt.repvision`) bei Google Play zählt laut Eintrag Liegestütze und Kniebeugen per Kamera-KI. Derselbe Name für dasselbe Produkt, inklusive Kamera-Autozähler — der eindeutigste Kriterium-6-Verstoß dieser ganzen Suche. Unabhängig davon wäre „Rep“ ohnehin gefallen: derselbe Grund, aus dem _Repora_ in 3.4 abgewertet und _RepStack_ ausgeschlossen wurde.
+
+**Regel 1 aus 3.5 hat dabei einen zweiten, härteren Beleg bekommen.** `repcount.com` löst **nicht** auf — die App **RepCount** existiert trotzdem, unter `repcountapp.com`, in beiden Stores. Domain- und Store-Prüfung sind unabhängig, und keine ersetzt die andere. Talvio und Vantio waren der erste Beleg, RepCount ist der deutlichere.
+
+#### Store-Check der verbliebenen fünf
+
+Erstmals in diesem Plan für alle Kandidaten einer Runde gefahren, per Websuche:
+
+| Kandidat      |  Z. | Bild                                                     | Befund                                                                                                                                                                              |
+| ------------- | --: | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Notchcard** |   9 | die Stempelkarte, die man einkerbt                       | **Kein Treffer.** Keine App, keine Marke, kein Unternehmen, kein benachbarter Stamm                                                                                                 |
+| **Wolfsten**  |   8 | _wolf_ + _sten_ — Wolfram und tungsten, dasselbe Element | Store und Marke sauber; **offen: Wolfenstein**, ZeniMax Media, Reg. #4653929, live/registered, Computer & Software Products (Klasse 9)                                              |
+| Cairnmark     |   9 | „leg deinen Stein dazu“                                  | **Cairn** existiert als Wander-Sicherheits-App mit Tourenaufzeichnung und Streckenstatistik — benachbarte Warenklasse. Dieselbe Stammnähe, wegen der Holdspan an Holdfast scheitert |
+| Onerung       |   7 | „eine Sprosse nach der anderen“                          | **ONE running** bei Play, **ONE RUN** unter `onerun.app` — wer „Onerung“ hört, tippt „onerun“                                                                                       |
+| Wolfstone     |   9 | Wolfsstein, lesbarer als Wolfsten                        | **Wolfstone**, schottische Celtic-Rock-Band seit 1989, eigenes Label, `wolfstone.co.uk` — Klasse 41, eine unserer drei. Dazu `.com` vergeben                                        |
+
+**Etymologie zu Wolfsten**, weil sie die Markengeschichte trägt und belegbar ist: _tungsten_ kommt aus dem Schwedischen, _tung sten_ = schwerer Stein. Der deutsche Name desselben Elements ist **Wolfram**, von mittelalterlichen Bergleuten so genannt, weil das Erz das Zinn fraß „wie ein Wolf die Schafe“. Element 74 hat den höchsten Schmelzpunkt aller Metalle. Der Name ist damit zugleich der Vorname des Autors, ein Tier und ein Werkstoff — und als **willkürliche Marke** (kein beschreibender Bezug zur Ware) die durchsetzungsstärkste Kategorie für Kriterium 5. Genau das ist auch sein Preis: Er erklärt nichts, der Untertitel muss die Arbeit machen.
+
+#### Aktuelles Feld
+
+| Name          |  Z. | `.com` | `.de` | `.app` | Play-Titel mit `: Count & Track` |
+| ------------- | --: | ------ | ----- | ------ | -------------------------------: |
+| **Notchcard** |   9 | frei?  | frei? | frei?  |                               24 |
+| **Wolfsten**  |   8 | frei?  | frei? | frei?  |                               23 |
+
+„frei?“ heißt unverändert: keine DNS-Auflösung, kein Freigabebeweis.
+
+#### Drei Grenzen dieser Prüfung, ausdrücklich
+
+1. **Das Suchwerkzeug ist US-beschränkt.** Bei neun Sprachmärkten kann eine deutsche oder europäische App durchgerutscht sein.
+2. **Eine Websuche ist keine Markenrecherche.** DPMA und EUIPO sind weiterhin nicht abgefragt; der Wolfenstein-Fund stammt aus dem US-Register.
+3. **Kein Treffer ist kein Beweis.** Bei RepVision hat die Suche sofort angeschlagen — das belegt, dass sie greift, nicht dass Schweigen Freiheit bedeutet.
+
+#### Was das Verfahren lehrt
+
+Die Kollisionsprüfung hat die Rangfolge in dieser Runde **zum zweiten Mal** korrigiert: Erst hob die Produktaussage Tallyspan von Platz 2 auf Platz 1, dann hob der Store-Check Notchcard von Platz 3 auf Platz 1. Beide Male hatte ich zuvor nach Klang und Bild sortiert. **Klang rankt, Kollision entscheidet** — die Reihenfolge der Prüfungen gehört umgedreht: erst Store, dann Ästhetik.
+
+### 3.8 Ablauf
 
 1. Pro Richtung 5–8 Kandidaten sammeln.
 2. Gegen Kriterien 1–3 filtern (Schreibtischarbeit, keine externen Abfragen).
@@ -460,16 +511,21 @@ Gate 0 (Name + Domain + Play-Option)
 
 ## 6. Risiken
 
-| Risiko                                          | Wirkung                                        | Gegenmaßnahme                                                                                       |
-| ----------------------------------------------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| SEO-Einbruch nach Domain-Wechsel                | Organischer Traffic auf 837 URLs               | 301 statt 302, pfadgleich, Search-Console-Adressänderung, alte Domains ≥12 Monate halten            |
-| Play-Package-ID ist bereits gebunden            | Marke und ID dauerhaft auseinander             | Option A: Listing umbenennen, ID behalten — die ID ist nach außen unsichtbar                        |
-| TWA-Verifikation bricht nach Domain-Wechsel     | App öffnet mit Browser-Chrome statt fullscreen | `assetlinks.json` auf neuer Domain **vor** dem APK-Update ausliefern; Redirect-Ausnahme testen      |
-| Halber Rename (Name neu, Logo/Store alt)        | Wirkt wie Bug, beschädigt Vertrauen            | Phase 2+3 zusammen releasen; Phase 4+5 dicht hintereinander                                         |
-| 8 Locales laufen der deutschen Quelle hinterher | Fremdsprach-UI mischt alte und neue Marke      | `sync-xliff-locales.mjs`-Fallbacks halten den Build grün; Routine-Lauf **vor** dem Release abwarten |
-| Bestandsnutzer erkennen die App nicht wieder    | Deinstallationen, schlechte Reviews            | Announcement-Dialog (Phase 6) + Blog-Artikel; Icon-Formsprache erkennbar überführen                 |
-| Markenrechtlicher Konflikt beim neuen Namen     | Erzwungener zweiter Rename — Totalschaden      | Gate-0-Kriterium 5 ist blockierend, nicht optional                                                  |
-| Neue Domain nicht in `NG_ALLOWED_HOSTS`         | SSR liefert 403, Seite komplett tot            | Schritt 2 der Phase-4-Reihenfolge, vor dem Canonical-Umzug                                          |
+| Risiko                                          | Wirkung                                                                                     | Gegenmaßnahme                                                                                                                       |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| SEO-Einbruch nach Domain-Wechsel                | Organischer Traffic auf 837 URLs                                                            | 301 statt 302, pfadgleich, Search-Console-Adressänderung, alte Domains ≥12 Monate halten                                            |
+| Play-Package-ID ist bereits gebunden            | Marke und ID dauerhaft auseinander                                                          | Option A: Listing umbenennen, ID behalten — die ID ist nach außen unsichtbar                                                        |
+| TWA-Verifikation bricht nach Domain-Wechsel     | App öffnet mit Browser-Chrome statt fullscreen                                              | `assetlinks.json` auf neuer Domain **vor** dem APK-Update ausliefern; Redirect-Ausnahme testen                                      |
+| Halber Rename (Name neu, Logo/Store alt)        | Wirkt wie Bug, beschädigt Vertrauen                                                         | Phase 2+3 zusammen releasen; Phase 4+5 dicht hintereinander                                                                         |
+| 8 Locales laufen der deutschen Quelle hinterher | Fremdsprach-UI mischt alte und neue Marke                                                   | `sync-xliff-locales.mjs`-Fallbacks halten den Build grün; Routine-Lauf **vor** dem Release abwarten                                 |
+| Bestandsnutzer erkennen die App nicht wieder    | Deinstallationen, schlechte Reviews                                                         | Announcement-Dialog (Phase 6) + Blog-Artikel; Icon-Formsprache erkennbar überführen                                                 |
+| Markenrechtlicher Konflikt beim neuen Namen     | Erzwungener zweiter Rename — Totalschaden                                                   | Gate-0-Kriterium 5 ist blockierend, nicht optional                                                                                  |
+| Neue Domain nicht in `NG_ALLOWED_HOSTS`         | SSR liefert 403, Seite komplett tot                                                         | Schritt 2 der Phase-4-Reihenfolge, vor dem Canonical-Umzug                                                                          |
+| Push-Subscriptions sind origin-gebunden         | Erinnerungen brechen still; Altbestand in Firestore ist aus der App nicht mehr abbestellbar | Subscriptions zum Cutover serverseitig aufräumen; auf dem neuen Origin gezielt zur Neuanmeldung auffordern; Spec dafür. Siehe unten |
+
+**Zum Push-Risiko.** `libs/push/src/lib/push-subscription.store.ts` liest die Subscription aus der Service-Worker-Registrierung und schickt nur den `endpoint` an den Server; beim Abmelden löscht die App genau den Endpoint, den sie **lokal** lesen kann. Ein Domainwechsel ist ein Origin-Wechsel: Auf dem neuen Origin gibt es keine Registrierung, also sehen alle Nutzer „nicht abonniert“ — und die alten Endpoints bleiben in Firestore, ohne dass die App sie noch kennt. `dispatchPushReminders` schickt weiter dorthin. Ob dabei doppelt zugestellt wird, hängt daran, wie lange die alte SW-Registrierung im Browser überlebt; das ist zu testen, nicht anzunehmen. Dass der Store eine eigene `.invalid`-Zombie-Behandlung hat, zeigt, dass Endpoint-Rotation hier schon einmal teuer war.
+
+Origin-gebunden sind außerdem `localStorage`, IndexedDB und die Firebase-Auth-Persistenz. Das ist bewusst **nicht** als Risiko geführt: Die Inhalte dort sind Theme, Coachmark-Flag, Zitat-Cache und ein laufender Workout-Run — alles, was zählt, liegt in Firestore.
 
 ---
 
@@ -490,9 +546,14 @@ Gate 0 (Name + Domain + Play-Option)
 
 ## 8. Offene Punkte für Gate 0
 
-1. **Name** — Kandidaten aus 3.6 in dieser Reihenfolge: **Movepath**, **Tallyspan**, danach **Holdspan** (belastet durch Kriterium 1 und die Holdfast-Marke, siehe 3.6). Alle drei ohne DNS-Auflösung auf `.com`, `.app` und `.de`, ohne Store-Treffer, im Play-Titel-Budget. Zurückgestellt: Tallyo (`.app`/`.de` vergeben) und Everspan (US-Marke, DPMA/EUIPO offen). Offen: Bestätigung beim Registrar und die Markenrecherche.
+1. **Name** — Kandidaten aus **3.7**: **Notchcard** und **Wolfsten**, beide ohne DNS-Auflösung auf allen drei TLDs und ohne Store-Treffer. Notchcard ist der unbelastete, Wolfsten der mit der stärkeren Geschichte und der offenen Wolfenstein-Frage. Das Feld aus 3.6 (Movepath, Tallyspan, Holdspan) ist vollständig ausgeschieden, Gründe in 3.7. Offen: Bestätigung beim Registrar und die Markenrecherche in den Klassen 9, 41, 42.
 2. **Domain** — Verfügbarkeit prüfen und registrieren, **bevor** Phase 2 startet. Welche TLD, entscheidet der Registrar-Befund: Primär ist `.app` (Entscheidung aus 3.6), die `.com` wird mitgenommen, wenn sie frei ist, `.de` ergänzend nach Kriterium 4. Muss beim Registrar geschehen: RDAP war aus der Arbeitsumgebung nicht erreichbar, eine Verfügbarkeitsaussage von dort wäre geraten.
+
+   **Geprüft und verworfen: eine Subdomain unter dem vorhandenen `wolsok.de`.** Der TWA-Wrapper verbirgt zwar die Adresszeile — aber nur, solange Digital Asset Links verifizieren, und die Android-App ist ohnehin der Wrapper, nicht das Produkt. Die Domain steht als **sichtbarer Text** in `profile-labels.ts` (CTA auf jedem öffentlichen Profil: „Selbst tracken – <domain>“) und in `public-profile-seo.ts` (Meta-Description, also das Google-Snippet) — genau auf den beiden Flächen, die Akquise und Empfehlung tragen. Dazu ist `.de` ein Geo-Signal und arbeitet gegen die EN-first-Positionierung aus 3.2. Gespart wären 10–50 €/Jahr; die SEO-Migration aus Phase 4 spart eine frische Subdomain **nicht**.
+
 3. **Play-Lifetime-Installs** — nur bei null Installs gäbe Google die ID nach einer Löschung wieder frei. Das ist die einzige Zahl, die Option B noch günstiger machen könnte; ansonsten bleibt es bei Option A.
-4. **Kontaktadresse** — `contact@<neue-domain>` einrichten; alte Adresse für die Übergangszeit weiterleiten (steht in Impressum und Datenschutz, also rechtlich relevant).
-5. **Logo-Richtung** — soll die Formsprache des alten Icons erkennbar bleiben (sanfterer Übergang) oder bewusst brechen?
-6. **Route-Slug `/wiki/liegestuetz-typen`** — Empfehlung ist behalten; falls doch neutral, muss es in Phase 4 mit.
+4. **Kontaktadresse** — `contact@<neue-domain>` einrichten; alte Adresse für die Übergangszeit weiterleiten (steht in Impressum und Datenschutz, also rechtlich relevant). **Entkoppelbar:** Der Bestand enthält bereits `wolsok.de`; eine Adresse dort löst diesen Punkt unabhängig vom Namensentscheid.
+5. **Push-Subscriptions beim Origin-Wechsel** — siehe Risikotabelle. Braucht eine Entscheidung _vor_ Phase 4: serverseitig zum Cutover aufräumen, oder Altbestand auslaufen lassen und doppelte Zustellung in Kauf nehmen.
+6. **Produktrichtung** — ist „zähl irgendetwas und halte die Statistik fest“ **Absicht** oder **Möglichkeit**? Davon hängt Kriterium 1 ab (siehe 3.1) und damit, ob ein domänenneutraler Name den schwächeren Fitness-Verkauf wert ist. **Unbeantwortet.**
+7. **Logo-Richtung** — soll die Formsprache des alten Icons erkennbar bleiben (sanfterer Übergang) oder bewusst brechen?
+8. **Route-Slug `/wiki/liegestuetz-typen`** — Empfehlung ist behalten; falls doch neutral, muss es in Phase 4 mit.
