@@ -6385,7 +6385,7 @@
     </unit>
     <unit id="challenges.ended">
       <notes>
-        <note category="location">web/src/app/friends/challenge-card.component.ts:44,45</note>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:46,47</note>
       </notes>
       <segment>
         <source>Beendet</source>
@@ -6393,7 +6393,7 @@
     </unit>
     <unit id="challenges.invitation">
       <notes>
-        <note category="location">web/src/app/friends/challenge-card.component.ts:53,55</note>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:55,57</note>
       </notes>
       <segment>
         <source> Du bist eingeladen. Nimmst du an, sehen die Teilnehmer deine Wiederholungen dieser Übung im Challenge-Zeitraum – und du ihre. </source>
@@ -6401,7 +6401,7 @@
     </unit>
     <unit id="challenges.progressUnavailable">
       <notes>
-        <note category="location">web/src/app/friends/challenge-card.component.ts:63,66</note>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:65,68</note>
       </notes>
       <segment>
         <source> Der Fortschritt konnte gerade nicht gelesen werden – die Zahlen unten sind unvollständig. </source>
@@ -6409,7 +6409,7 @@
     </unit>
     <unit id="challenges.stillInvited">
       <notes>
-        <note category="location">web/src/app/friends/challenge-card.component.ts:82,84</note>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:96,98</note>
       </notes>
       <segment>
         <source>Noch eingeladen:</source>
@@ -6417,7 +6417,7 @@
     </unit>
     <unit id="challenges.decline">
       <notes>
-        <note category="location">web/src/app/friends/challenge-card.component.ts:98,100</note>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:112,114</note>
       </notes>
       <segment>
         <source> Ablehnen </source>
@@ -6425,7 +6425,7 @@
     </unit>
     <unit id="challenges.accept">
       <notes>
-        <note category="location">web/src/app/friends/challenge-card.component.ts:109,111</note>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:123,125</note>
       </notes>
       <segment>
         <source> Mitmachen </source>
@@ -6433,7 +6433,7 @@
     </unit>
     <unit id="challenges.leave">
       <notes>
-        <note category="location">web/src/app/friends/challenge-card.component.ts:120,121</note>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:134,135</note>
       </notes>
       <segment>
         <source> Verlassen </source>
@@ -6441,7 +6441,7 @@
     </unit>
     <unit id="challenges.lastDay">
       <notes>
-        <note category="location">web/src/app/friends/challenge-card.component.ts:186</note>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:208</note>
       </notes>
       <segment>
         <source>Letzter Tag</source>
@@ -6449,7 +6449,7 @@
     </unit>
     <unit id="challenges.daysLeft">
       <notes>
-        <note category="location">web/src/app/friends/challenge-card.component.ts:187</note>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:209</note>
       </notes>
       <segment>
         <source>Noch <ph id="0" equiv="days" disp="days"/> Tage</source>
@@ -6457,13 +6457,13 @@
     </unit>
     <unit id="friends.anonymous">
       <notes>
-        <note category="location">web/src/app/friends/challenge-card.component.ts:190</note>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:217</note>
         <note category="location">web/src/app/friends/challenge-create-dialog.component.ts:152</note>
         <note category="location">web/src/app/friends/friend-requests.component.ts:81</note>
-        <note category="location">web/src/app/friends/friends-board.component.ts:262</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:271</note>
         <note category="location">web/src/app/friends/friends-list.component.ts:124</note>
         <note category="location">web/src/app/friends/friends-page.component.ts:230</note>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:225</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:241</note>
         <note category="location">web/src/app/workouts/workout-card.component.ts:204</note>
         <note category="location">web/src/app/workouts/workout-share-dialog.component.ts:122</note>
       </notes>
@@ -6473,9 +6473,9 @@
     </unit>
     <unit id="friends.board.you">
       <notes>
-        <note category="location">web/src/app/friends/challenge-card.component.ts:197</note>
-        <note category="location">web/src/app/friends/friends-board.component.ts:261</note>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:224</note>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:224</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:270</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:240</note>
       </notes>
       <segment>
         <source>Du</source>
@@ -6609,6 +6609,58 @@
         <source> Noch keine Challenge. Fordere deine Freunde heraus: ein Ziel, ein paar Tage, alle zusammen. </source>
       </segment>
     </unit>
+    <unit id="friends.cheer.done">
+      <notes>
+        <note category="location">web/src/app/friends/cheer-button.component.ts:91</note>
+      </notes>
+      <segment>
+        <source>Heute angefeuert</source>
+      </segment>
+    </unit>
+    <unit id="friends.board.cheer">
+      <notes>
+        <note category="location">web/src/app/friends/cheer-button.component.ts:92</note>
+        <note category="location">web/src/app/friends/cheer-button.component.ts:107</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:249</note>
+      </notes>
+      <segment>
+        <source>Anfeuern</source>
+      </segment>
+    </unit>
+    <unit id="friends.board.cheering">
+      <notes>
+        <note category="location">web/src/app/friends/cheer-button.component.ts:97</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:251</note>
+      </notes>
+      <segment>
+        <source>Anfeuerung wird gesendet</source>
+      </segment>
+    </unit>
+    <unit id="friends.cheer.doneFor">
+      <notes>
+        <note category="location">web/src/app/friends/cheer-button.component.ts:102</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="name" disp="name"/> heute schon angefeuert</source>
+      </segment>
+    </unit>
+    <unit id="friends.board.cheered">
+      <notes>
+        <note category="location">web/src/app/friends/cheer-button.component.ts:103</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:250</note>
+      </notes>
+      <segment>
+        <source>Heute schon angefeuert</source>
+      </segment>
+    </unit>
+    <unit id="friends.cheer.for">
+      <notes>
+        <note category="location">web/src/app/friends/cheer-button.component.ts:106</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="name" disp="name"/> anfeuern</source>
+      </segment>
+    </unit>
     <unit id="friends.invite.title">
       <notes>
         <note category="location">web/src/app/friends/friend-invite-dialog.component.ts:48,49</note>
@@ -6723,7 +6775,7 @@
     </unit>
     <unit id="friends.board.compare">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:61,63</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:63,65</note>
       </notes>
       <segment>
         <source>Vergleich</source>
@@ -6731,7 +6783,7 @@
     </unit>
     <unit id="friends.board.metric.days">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:68,70</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:70,72</note>
       </notes>
       <segment>
         <source>Trainingstage</source>
@@ -6739,7 +6791,7 @@
     </unit>
     <unit id="friends.board.metric.streak">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:71,73</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:73,75</note>
       </notes>
       <segment>
         <source>Streak</source>
@@ -6747,7 +6799,7 @@
     </unit>
     <unit id="friends.board.metric.reps">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:75,77</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:77,79</note>
       </notes>
       <segment>
         <source>Wiederholungen</source>
@@ -6755,7 +6807,7 @@
     </unit>
     <unit id="friends.board.periodAria">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:89,90</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:91,92</note>
       </notes>
       <segment>
         <source>Zeitraum</source>
@@ -6763,7 +6815,7 @@
     </unit>
     <unit id="friends.board.daily">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:94,96</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:96,98</note>
       </notes>
       <segment>
         <source>Heute</source>
@@ -6771,7 +6823,7 @@
     </unit>
     <unit id="friends.board.week">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:98,100</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:100,102</note>
       </notes>
       <segment>
         <source>7 Tage</source>
@@ -6779,7 +6831,7 @@
     </unit>
     <unit id="friends.board.month">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:101,103</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:103,105</note>
       </notes>
       <segment>
         <source>30 Tage</source>
@@ -6787,39 +6839,15 @@
     </unit>
     <unit id="friends.board.allTime">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:104,106</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:106,108</note>
       </notes>
       <segment>
         <source>Gesamt</source>
       </segment>
     </unit>
-    <unit id="friends.board.cheer">
-      <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:245</note>
-      </notes>
-      <segment>
-        <source>Anfeuern</source>
-      </segment>
-    </unit>
-    <unit id="friends.board.cheered">
-      <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:246</note>
-      </notes>
-      <segment>
-        <source>Heute schon angefeuert</source>
-      </segment>
-    </unit>
-    <unit id="friends.board.cheering">
-      <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:247</note>
-      </notes>
-      <segment>
-        <source>Anfeuerung wird gesendet</source>
-      </segment>
-    </unit>
     <unit id="friends.board.cheersTodayOne">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:267</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:276</note>
       </notes>
       <segment>
         <source>Eine Anfeuerung heute</source>
@@ -6827,7 +6855,7 @@
     </unit>
     <unit id="friends.board.cheersToday">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:268</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:277</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="count" disp="count"/> Anfeuerungen heute</source>
@@ -6852,7 +6880,7 @@
     <unit id="invite.action">
       <notes>
         <note category="location">web/src/app/friends/friends-list.component.ts:61,63</note>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:118,119</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:129,130</note>
         <note category="location">web/src/app/public-profile/public-profile-page.component.html:194,195</note>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:51,52</note>
       </notes>
@@ -7082,7 +7110,7 @@
     </unit>
     <unit id="dashboard.friends.title">
       <notes>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:55,57</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:57,59</note>
       </notes>
       <segment>
         <source>Freunde</source>
@@ -7090,7 +7118,7 @@
     </unit>
     <unit id="dashboard.friends.empty">
       <notes>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:103,105</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:114,116</note>
       </notes>
       <segment>
         <source> Trainier mit Freunden: vergleicht euch, feuert euch an und startet gemeinsame Challenges. </source>
@@ -7098,7 +7126,7 @@
     </unit>
     <unit id="dashboard.friends.open">
       <notes>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:126,127</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:137,138</note>
       </notes>
       <segment>
         <source>Zu den Freunden</source>

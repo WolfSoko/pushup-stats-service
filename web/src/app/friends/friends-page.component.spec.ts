@@ -500,12 +500,13 @@ describe('FriendsPageComponent', () => {
       await fixture.whenStable();
       fixture.detectChanges();
 
-      // then — it comes to rest, and only then
+      // then — it comes to rest, and only then, lit even though this
+      // mock's re-read still says "not cheered"
       expect(
         screen.getByTestId('board-cheer').getAttribute('aria-busy')
       ).toBeNull();
       expect(screen.getByTestId('board-cheer').textContent).toContain(
-        'whatshot'
+        'local_fire_department'
       );
     });
 

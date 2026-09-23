@@ -139,6 +139,7 @@ export function buildPublicProfile(
     isPrivate: !isPublic,
     viewerIsOwner,
     viewerIsFriend,
+    viewerCheeredToday: viewerIsFriend && extras.viewerCheeredToday === true,
     hidden: viewerIsOwner ? hidden : [],
     visibility: viewerIsOwner ? visibility : {},
     updatedAt: typeof stats?.updatedAt === 'string' ? stats.updatedAt : '',

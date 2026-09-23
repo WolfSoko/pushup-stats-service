@@ -59,6 +59,7 @@ describe('FriendsTeaserCardComponent', () => {
           : Promise.resolve(lists)
       ),
       board: vitest.fn().mockResolvedValue(options.board ?? []),
+      cheer: vitest.fn().mockResolvedValue({ ok: true }),
     };
     const challengesApi = {
       list: vitest.fn().mockResolvedValue(options.challenges ?? []),
@@ -172,6 +173,34 @@ describe('FriendsTeaserCardComponent', () => {
         .getAllByTestId('dashboard-friends-name')
         .map((a) => a.getAttribute('href'))
     ).toEqual(['/u/b', '/u/me']);
+  });
+
+  it('should let the viewer cheer a friend from the mini board', async () => {
+    // given
+    const { api, fixture } = await renderCard({
+      friends: [friend],
+      board: [
+        entry({ uid: 'b', displayName: 'Bob', value: 900 }),
+        entry({ uid: 'me', displayName: 'Me', value: 300, isViewer: true }),
+        entry({ uid: 'c', displayName: 'Cy', value: 100, cheered: true }),
+      ],
+    });
+    const buttons = () =>
+      screen.getAllByTestId('cheer-button') as HTMLButtonElement[];
+    expect(buttons().map((b) => b.getAttribute('aria-label'))).toEqual([
+      'Bob anfeuern',
+      'Cy heute schon angefeuert',
+    ]);
+    expect(buttons()[1].disabled).toBe(true);
+
+    // when
+    buttons()[0].click();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(api.cheer).toHaveBeenCalledWith('b');
+    expect(buttons()[0].disabled).toBe(true);
   });
 
   it('should say so when the user leads', async () => {

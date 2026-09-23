@@ -13,7 +13,12 @@ import { UserConfigStore } from '../core/user-config.store';
 import { ProfilePhotoService } from '../core/profile-photo.service';
 import { signal } from '@angular/core';
 import { FriendsStore } from '../friends/friends.store';
+import { FriendsApiService } from '../friends/friends-api.service';
 import { InviteService } from '../core/invite.service';
+
+const friendsApiMock = {
+  cheer: vitest.fn(),
+};
 
 const firebaseAppMock = {
   options: { projectId: 'pushup-stats' },
@@ -43,6 +48,7 @@ const sampleProfile: PublicProfile = {
   hidden: [],
   visibility: {},
   viewerIsFriend: false,
+  viewerCheeredToday: false,
   updatedAt: '2026-04-29T08:30:00.000Z',
 };
 
@@ -108,6 +114,7 @@ describe('PublicProfilePageComponent', () => {
         { provide: FirebaseApp, useValue: firebaseAppMock },
         { provide: UserConfigStore, useValue: configMock },
         { provide: ProfilePhotoService, useValue: photosMock },
+        { provide: FriendsApiService, useValue: friendsApiMock },
         // Pin the locale so the share-URL assertion below is deterministic
         // (the unit-test default differs per Angular setup; pinning here
         // documents which prefix the share builder should pick).
@@ -1298,6 +1305,53 @@ describe('PublicProfilePageComponent', () => {
         document.querySelector('[data-testid="public-profile-add-friend"]')
       ).toBeNull();
       expect(document.body.textContent).toContain('Ihr seid Freunde');
+    });
+  });
+
+  describe('Cheering a friend from their profile', () => {
+    const friendProfile: PublicProfile = {
+      ...sampleProfile,
+      viewerIsOwner: false,
+      viewerIsFriend: true,
+    };
+    const cheerButton = () =>
+      document.querySelector<HTMLButtonElement>('[data-testid="cheer-button"]');
+
+    it('should let a friend cheer, once', async () => {
+      // given
+      friendsApiMock.cheer.mockResolvedValue({ ok: true });
+      await setup({ resolve: friendProfile });
+      expect(cheerButton()?.textContent).toContain('Anfeuern');
+
+      // when
+      cheerButton()?.click();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then
+      expect(friendsApiMock.cheer).toHaveBeenCalledWith(friendProfile.uid);
+      expect(cheerButton()?.disabled).toBe(true);
+      expect(cheerButton()?.textContent).toContain('Heute angefeuert');
+    });
+
+    it('should show a cheer already sent today as done', async () => {
+      // given
+      await setup({ resolve: { ...friendProfile, viewerCheeredToday: true } });
+
+      // then
+      expect(cheerButton()?.disabled).toBe(true);
+    });
+
+    it('should offer no cheer to a visitor or the owner', async () => {
+      // given
+      await setup({ resolve: { ...sampleProfile, viewerIsFriend: false } });
+      expect(cheerButton()).toBeNull();
+
+      // when — the owner previewing as a friend
+      await setup({ resolve: { ...sampleProfile, viewerIsOwner: true } });
+
+      // then
+      expect(cheerButton()).toBeNull();
     });
   });
 

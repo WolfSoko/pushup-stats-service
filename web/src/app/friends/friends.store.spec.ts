@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { FriendsApiService, type FriendRow } from './friends-api.service';
+import { CheerStore } from './cheer.store';
 import { FriendsStore } from './friends.store';
 
 describe('FriendsStore', () => {
@@ -213,6 +214,7 @@ describe('FriendsStore', () => {
     expect(api.cheer).toHaveBeenCalledWith('b');
     expect(api.board).toHaveBeenCalledWith('daily', { metric: 'days' });
     expect(api.list).not.toHaveBeenCalled();
+    expect(TestBed.inject(CheerStore).hasCheered('b')).toBe(true);
   });
 
   it('should keep the tapped friend busy until the board is re-read', async () => {

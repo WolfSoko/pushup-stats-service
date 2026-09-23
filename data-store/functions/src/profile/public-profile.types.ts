@@ -142,6 +142,8 @@ export interface PublicProfileProjection {
   visibility: Partial<Record<ProfileSection, ProfileSectionVisibility>>;
   /** True when the viewer is a confirmed friend of this profile's owner. */
   viewerIsFriend: boolean;
+  /** A friend already cheered the owner today; always `false` for anyone else. */
+  viewerCheeredToday: boolean;
   updatedAt: string;
 }
 
@@ -171,4 +173,6 @@ export interface PublicProfileExtras {
    * must never be derived from request data.
    */
   readonly viewerIsFriend?: boolean;
+  /** Read alongside the friendship; ignored unless the viewer is a friend. */
+  readonly viewerCheeredToday?: boolean;
 }

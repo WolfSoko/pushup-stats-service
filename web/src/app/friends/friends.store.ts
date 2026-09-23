@@ -17,6 +17,7 @@ import {
   type FriendsBoardPeriod,
   type FriendsBoardComparison,
 } from './friends-api.service';
+import { CheerStore } from './cheer.store';
 import { runStoreAction } from './store-action';
 
 type FriendsState = {
@@ -55,6 +56,7 @@ export const FriendsStore = signalStore(
   withState(initialState),
   withProps(() => ({
     _api: inject(FriendsApiService),
+    _cheers: inject(CheerStore),
     /** The reload in flight, so two consumers mounting at once share one call. */
     _reloading: null as Promise<void> | null,
     /**
@@ -153,15 +155,17 @@ export const FriendsStore = signalStore(
           runStoreAction(store, () => _api.remove(id), reload)
         ),
       // A cheer changes the board (the count, and the button that sent
-      // it), not the lists.
+      // it), not the lists — and the flames elsewhere, via the cheer store.
       cheer: (uid: string) =>
-        _busy.run(`cheer:${uid}`, () =>
-          runStoreAction(
+        _busy.run(`cheer:${uid}`, async () => {
+          const ok = await runStoreAction(
             store,
             () => _api.cheer(uid),
             () => loadBoard()
-          )
-        ),
+          );
+          if (ok) store._cheers.markCheered(uid);
+          return ok;
+        }),
     };
   })
 );

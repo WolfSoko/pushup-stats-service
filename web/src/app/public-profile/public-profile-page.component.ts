@@ -38,6 +38,7 @@ import { ProfileWorkoutsComponent } from './profile-workouts.component';
 import { PublicProfileSkeletonComponent } from './public-profile-skeleton.component';
 import { InviteService } from '../core/invite.service';
 import { FriendsStore } from '../friends/friends.store';
+import { CheerButtonComponent } from '../friends/cheer-button.component';
 import { BusyDirective, createBusyState } from '@pu-stats/ui';
 
 type LoadState =
@@ -61,6 +62,7 @@ type LoadState =
     ProfileWorkoutsComponent,
     PublicProfileSkeletonComponent,
     BusyDirective,
+    CheerButtonComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [PublicProfileSeo],
