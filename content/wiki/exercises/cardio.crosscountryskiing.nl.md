@@ -26,7 +26,7 @@ tips:
 </p>
 <p>
   Voor beiden geldt gewichtsverschuiving: wie niet volledig naar de glijdende ski overschakelt, duwt
-  beide ski''s tegelijk en komt nauwelijks vooruit. Dit is het punt waar de meeste beginners blijven
+  beide ski's tegelijk en komt nauwelijks vooruit. Dit is het punt waar de meeste beginners blijven
   steken — en het punt dat meestal één trainingsles oplost.
 </p>
 <h2>Waarvoor het bijzonder geschikt is</h2>

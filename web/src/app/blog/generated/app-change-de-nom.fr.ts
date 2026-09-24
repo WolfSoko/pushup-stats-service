@@ -18,7 +18,7 @@ export const POST: BlogPost = {
     "changement de nom application",
     "Bodyweight Tracker",
     "application entraînement corps entier",
-    "suivi d''entraînement"
+    "suivi d'entraînement"
   ],
   "alternateSlugs": {
     "de": "neuer-name-kommt",

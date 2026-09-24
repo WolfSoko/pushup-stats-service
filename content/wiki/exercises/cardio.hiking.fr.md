@@ -33,7 +33,7 @@ tips:
 <ul>
   <li><strong>Endurance fondamentale sans charge de course.</strong> Travail zone 2 pendant des heures, sans que les articulations ne subissent l'impact de la course.</li>
   <li><strong>Force des jambes en descente.</strong> Charge excentrique pendant des heures, qu'aucune série de squats ne reproduit.</li>
-  <li><strong>Entraînement qui n''a pas l''air d''entraînement.</strong> La raison principale pour laquelle les gens continuent.</li>
+  <li><strong>Entraînement qui n'a pas l'air d'entraînement.</strong> La raison principale pour laquelle les gens continuent.</li>
 </ul>
 <h2>Dosage</h2>
 <p>

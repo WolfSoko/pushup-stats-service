@@ -24,7 +24,7 @@ keywords:
   trekken, squats, heupscharnier, longes, romp, cardio en mobiliteit.
 </p>
 <p>
-  Het duidelijkst wordt het met de trainingsschema''s. Er zijn tien – en in de helft daarvan is de
+  Het duidelijkst wordt het met de trainingsschema's. Er zijn tien – en in de helft daarvan is de
   opdruk niet langer het doel, maar slechts één oefening onder veel:
 </p>
 <ul>

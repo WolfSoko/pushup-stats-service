@@ -107,17 +107,19 @@ describe('exercise wiki catalog', () => {
         },
       };
 
-      // when
-      const localized = localizeExerciseWiki(entry, 'fr');
+      try {
+        // when
+        const localized = localizeExerciseWiki(entry, 'fr');
 
-      // then — frontmatter falls back, the article does not: inheriting
-      // it would make `exercise-detail.component.ts` advertise an
-      // English duplicate as indexable French, and the sitemap (which
-      // resolves per locale) would not list it.
-      expect(localized?.name).toBe('Hiking');
-      expect(localized?.article).toBeUndefined();
-
-      delete (EXERCISE_WIKI_CONTENT as Record<string, unknown>)[id];
+        // then — frontmatter falls back, the article does not: inheriting
+        // it would make `exercise-detail.component.ts` advertise an
+        // English duplicate as indexable French, and the sitemap (which
+        // resolves per locale) would not list it.
+        expect(localized?.name).toBe('Hiking');
+        expect(localized?.article).toBeUndefined();
+      } finally {
+        delete (EXERCISE_WIKI_CONTENT as Record<string, unknown>)[id];
+      }
     });
 
     it('should keep the body for a locale that has its own copy', () => {

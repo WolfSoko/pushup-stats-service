@@ -8,7 +8,7 @@ keywords:
   - changement de nom application
   - Bodyweight Tracker
   - application entraînement corps entier
-  - suivi d''entraînement
+  - suivi d'entraînement
 ---
 
 <h2>Le nom promet moins que ce que fait l'application</h2>
