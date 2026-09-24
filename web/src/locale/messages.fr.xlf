@@ -2465,18 +2465,18 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:6,7</note>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:8,9</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> Logo</source>
-        <target>Logo du tracker Pushup</target>
+        <target>Logo <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></target>
       </segment>
     </unit>
     <unit id="landing.eyebrow">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:10,11</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></source>
-        <target>Suivi des pompes</target>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></target>
       </segment>
     </unit>
     <unit id="landing.free.badge">
@@ -3119,9 +3119,9 @@
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:131</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="brand" disp="BRAND_NAME"/> Profil</source>
-        <target>Profil de suivi des pompes</target>
+        <target>Profil <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.notFound.title">
@@ -4951,9 +4951,9 @@
       <notes>
         <note category="location">web/src/app/stats/dashboard.store.ts:446</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
-        <target>Suivi des pompes</target>
+        <target><ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="analysis.weekTrendTitle">
@@ -5699,9 +5699,9 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:12,13</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></source>
-        <target>Statistiques de pompes</target>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></target>
       </segment>
     </unit>
     <unit id="dashboardTitle">
