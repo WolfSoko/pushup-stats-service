@@ -2902,15 +2902,15 @@
     </unit>
     <unit id="achievements.tile.progress">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-tile.component.ts:29,32</note>
+        <note category="location">web/src/app/achievements/achievement-tile.component.ts:30,32</note>
       </notes>
       <segment>
-        <source><ph id="0" equiv="INTERPOLATION" disp="{{ progress.current }}"/>:current: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.target }}"/>:target:</source>
+        <source><ph id="0" equiv="CURRENT" disp="{{ progress.current // i18n(ph=&quot;current&quot;) }}"/> von <ph id="1" equiv="TARGET" disp="{{ progress.target // i18n(ph=&quot;target&quot;) }}"/></source>
       </segment>
     </unit>
     <unit id="achievements.page.title">
       <notes>
-        <note category="location">web/src/app/achievements/achievements-page.component.ts:22,24</note>
+        <note category="location">web/src/app/achievements/achievements-page.component.ts:23,25</note>
       </notes>
       <segment>
         <source>Deine Abzeichen</source>
@@ -2918,15 +2918,15 @@
     </unit>
     <unit id="achievements.page.count">
       <notes>
-        <note category="location">web/src/app/achievements/achievements-page.component.ts:27,30</note>
+        <note category="location">web/src/app/achievements/achievements-page.component.ts:28,30</note>
       </notes>
       <segment>
-        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ store.collection().earnedCount }}"/>:earned: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ store.collection().totalCount }}"/>:total: freigeschaltet </source>
+        <source> <ph id="0" equiv="EARNED" disp="{{ store.collection().earnedCount // i18n(ph=&quot;earned&quot;) }}"/> von <ph id="1" equiv="TOTAL" disp="{{ store.collection().totalCount // i18n(ph=&quot;total&quot;) }}"/> freigeschaltet </source>
       </segment>
     </unit>
     <unit id="achievements.page.next">
       <notes>
-        <note category="location">web/src/app/achievements/achievements-page.component.ts:50,51</note>
+        <note category="location">web/src/app/achievements/achievements-page.component.ts:52,53</note>
       </notes>
       <segment>
         <source>Als Nächstes</source>
@@ -2934,7 +2934,7 @@
     </unit>
     <unit id="achievements.group.planDays">
       <notes>
-        <note category="location">web/src/app/achievements/achievements-page.component.ts:125</note>
+        <note category="location">web/src/app/achievements/achievements-page.component.ts:131</note>
       </notes>
       <segment>
         <source>Trainingstage</source>
@@ -2942,7 +2942,7 @@
     </unit>
     <unit id="achievements.group.planCompleted">
       <notes>
-        <note category="location">web/src/app/achievements/achievements-page.component.ts:128</note>
+        <note category="location">web/src/app/achievements/achievements-page.component.ts:134</note>
       </notes>
       <segment>
         <source>Abgeschlossene Pläne</source>
@@ -2950,7 +2950,7 @@
     </unit>
     <unit id="achievements.group.invites">
       <notes>
-        <note category="location">web/src/app/achievements/achievements-page.component.ts:130</note>
+        <note category="location">web/src/app/achievements/achievements-page.component.ts:136</note>
       </notes>
       <segment>
         <source>Eingeladene Freunde</source>

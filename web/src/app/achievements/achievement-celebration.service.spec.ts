@@ -94,28 +94,23 @@ describe('AchievementCelebrationService', () => {
     expect(first.data.titleId).not.toBe(second.data.titleId);
   });
 
-  it('should open a preview without marking the badge celebrated', () => {
-    // given — the admin preview must not suppress the real celebration
+  it('should show a badge on demand without marking it celebrated', () => {
+    // given — a replay or admin preview must not suppress the real celebration
     const { service, open } = setup({});
 
     // when
-    service.preview('plan-days-10');
+    service.show({
+      id: 'plan-completed-core-4w-v1',
+      label: 'Kraft-Grundlagen abgeschlossen',
+      icon: 'emoji_events',
+    });
 
     // then
     expect(open).toHaveBeenCalledTimes(1);
-    expect(open.mock.calls[0][1].data.badge.id).toBe('plan-days-10');
+    expect(open.mock.calls[0][1].data.badge.label).toBe(
+      'Kraft-Grundlagen abgeschlossen'
+    );
     expect(globalThis.localStorage?.getItem(STORAGE_KEY)).toBeNull();
-  });
-
-  it('should ignore a preview for an unknown badge id', () => {
-    // given
-    const { service, open } = setup({});
-
-    // when
-    service.preview('no-such-badge');
-
-    // then
-    expect(open).not.toHaveBeenCalled();
   });
 
   it('should not reopen for a badge already celebrated', () => {

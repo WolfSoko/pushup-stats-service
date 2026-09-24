@@ -1,7 +1,10 @@
 import { signal } from '@angular/core';
-import { render } from '@testing-library/angular';
+import { render, screen } from '@testing-library/angular';
+import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 
 import type { AchievementCollectionView } from './achievement-collection';
+import { AchievementCelebrationService } from './achievement-celebration.service';
 import { AchievementsPageComponent } from './achievements-page.component';
 import { AchievementsStore } from './achievements.store';
 
@@ -41,8 +44,10 @@ const LOADED: AchievementCollectionView = {
 async function setup() {
   const loading = signal(true);
   const collection = signal<AchievementCollectionView>(EMPTY);
+  const show = vi.fn();
   const view = await render(AchievementsPageComponent, {
     providers: [
+      { provide: AchievementCelebrationService, useValue: { show } },
       {
         provide: AchievementsStore,
         useValue: {
@@ -52,7 +57,7 @@ async function setup() {
       },
     ],
   });
-  return { view, loading, collection };
+  return { view, loading, collection, show };
 }
 
 describe('AchievementsPageComponent', () => {
@@ -92,6 +97,44 @@ describe('AchievementsPageComponent', () => {
     expect(view.container.textContent).toContain('freigeschaltet');
     expect(view.container.querySelectorAll('app-achievement-tile').length).toBe(
       2
+    );
+  });
+
+  it('should show the earned and total counts as plain numbers', async () => {
+    // given
+    const { view, loading, collection } = await setup();
+
+    // when
+    collection.set(LOADED);
+    loading.set(false);
+    view.fixture.detectChanges();
+    await view.fixture.whenStable();
+
+    // then — template i18n takes no `:name:` placeholder syntax; it used to
+    // leak into the text as "1:earned: von 2:total:"
+    const count = view.container.querySelector('.count')?.textContent ?? '';
+    expect(count.replace(/\s+/g, ' ').trim()).toBe('1 von 2 freigeschaltet');
+    expect(view.container.textContent).toContain('4 von 10');
+    expect(view.container.textContent).not.toMatch(
+      /:(earned|total|current|target):/
+    );
+  });
+
+  it('should reopen the badge dialog when an earned badge is clicked', async () => {
+    // given
+    const { view, loading, collection, show } = await setup();
+    collection.set(LOADED);
+    loading.set(false);
+    view.fixture.detectChanges();
+    await view.fixture.whenStable();
+
+    // when
+    await userEvent.click(screen.getByTestId('achievement-tile-open'));
+
+    // then — only the earned tile is a button; the locked "next" one is not
+    expect(screen.getAllByTestId('achievement-tile-open')).toHaveLength(1);
+    expect(show).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'plan-days-1', label: '1 Trainingstag' })
     );
   });
 });

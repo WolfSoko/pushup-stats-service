@@ -1,5 +1,10 @@
-import { DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { DatePipe, NgTemplateOutlet } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output,
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
@@ -7,14 +12,10 @@ import type { AchievementTileView } from './achievement-collection';
 
 @Component({
   selector: 'app-achievement-tile',
-  imports: [DatePipe, MatIconModule, MatProgressBarModule],
+  imports: [DatePipe, MatIconModule, MatProgressBarModule, NgTemplateOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div
-      class="tile"
-      [class.earned]="tile().earnedAt"
-      [class.next]="!!tile().progress"
-    >
+    <ng-template #content>
       <mat-icon>{{ tile().icon }}</mat-icon>
       <span class="label">{{ tile().label }}</span>
 
@@ -26,11 +27,31 @@ import type { AchievementTileView } from './achievement-collection';
           [value]="(progress.current / progress.target) * 100"
         />
         <span class="meta" i18n="@@achievements.tile.progress"
-          >{{ progress.current }}:current: von
-          {{ progress.target }}:target:</span
+          >{{
+            progress.current // i18n(ph="current")
+          }}
+          von
+          {{
+            progress.target // i18n(ph="target")
+          }}</span
         >
       }
-    </div>
+    </ng-template>
+
+    @if (tile().earnedAt) {
+      <button
+        type="button"
+        class="tile earned"
+        data-testid="achievement-tile-open"
+        (click)="opened.emit()"
+      >
+        <ng-container [ngTemplateOutlet]="content" />
+      </button>
+    } @else {
+      <div class="tile" [class.next]="!!tile().progress">
+        <ng-container [ngTemplateOutlet]="content" />
+      </div>
+    }
   `,
   styles: `
     .tile {
@@ -58,10 +79,34 @@ import type { AchievementTileView } from './achievement-collection';
     }
 
     .tile.earned {
+      width: 100%;
+      font: inherit;
+      cursor: pointer;
       opacity: 1;
       filter: none;
-      background: color-mix(in srgb, var(--mat-sys-primary) 14%, transparent);
+      border: 1px solid rgba(255, 214, 102, 0.45);
+      background:
+        radial-gradient(
+          circle at 50% 20%,
+          rgba(255, 214, 102, 0.28),
+          transparent 65%
+        ),
+        linear-gradient(
+          160deg,
+          rgba(240, 180, 40, 0.18),
+          rgba(178, 110, 10, 0.08)
+        );
       color: var(--mat-sys-on-surface);
+    }
+
+    .tile.earned:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(240, 176, 36, 0.25);
+    }
+
+    .tile.earned:focus-visible {
+      outline: 2px solid rgb(240, 180, 40);
+      outline-offset: 2px;
     }
 
     .tile.next {
@@ -79,7 +124,8 @@ import type { AchievementTileView } from './achievement-collection';
     }
 
     .tile.earned mat-icon {
-      color: var(--mat-sys-primary);
+      color: rgb(240, 180, 40);
+      filter: drop-shadow(0 0 8px rgba(255, 200, 70, 0.55));
     }
 
     .label {
@@ -99,4 +145,5 @@ import type { AchievementTileView } from './achievement-collection';
 })
 export class AchievementTileComponent {
   readonly tile = input.required<AchievementTileView>();
+  readonly opened = output<void>();
 }

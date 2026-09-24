@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import type { AchievementKind } from '@pu-stats/models';
 import { SkeletonComponent } from '@pu-stats/ui';
 
+import { AchievementCelebrationService } from './achievement-celebration.service';
 import { AchievementTileComponent } from './achievement-tile.component';
 import { AchievementTileSkeletonComponent } from './achievement-tile-skeleton.component';
 import { AchievementsStore } from './achievements.store';
@@ -24,8 +25,14 @@ const SKELETON_TILES = [0, 1, 2, 3, 4, 5];
           <pu-skeleton class="count" width="180px" />
         } @else {
           <p class="count" i18n="@@achievements.page.count">
-            {{ store.collection().earnedCount }}:earned: von
-            {{ store.collection().totalCount }}:total: freigeschaltet
+            {{
+              store.collection().earnedCount // i18n(ph="earned")
+            }}
+            von
+            {{
+              store.collection().totalCount // i18n(ph="total")
+            }}
+            freigeschaltet
           </p>
         }
       </header>
@@ -57,7 +64,10 @@ const SKELETON_TILES = [0, 1, 2, 3, 4, 5];
           <h2>{{ groupTitle(group.kind) }}</h2>
           <div class="grid">
             @for (tile of group.tiles; track tile.id) {
-              <app-achievement-tile [tile]="tile" />
+              <app-achievement-tile
+                [tile]="tile"
+                (opened)="celebration.show(tile)"
+              />
             }
           </div>
         </section>
@@ -118,6 +128,7 @@ const SKELETON_TILES = [0, 1, 2, 3, 4, 5];
 })
 export class AchievementsPageComponent {
   protected readonly store = inject(AchievementsStore);
+  protected readonly celebration = inject(AchievementCelebrationService);
   protected readonly skeletonTiles = SKELETON_TILES;
 
   protected groupTitle(kind: AchievementKind): string {

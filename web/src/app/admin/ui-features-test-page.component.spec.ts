@@ -9,17 +9,17 @@ import { UiFeaturesTestPageComponent } from './ui-features-test-page.component';
 describe('UiFeaturesTestPageComponent', () => {
   let fixture: ComponentFixture<UiFeaturesTestPageComponent>;
   const play = vitest.fn();
-  const preview = vitest.fn();
+  const show = vitest.fn();
 
   beforeEach(async () => {
     play.mockClear();
-    preview.mockClear();
+    show.mockClear();
     await TestBed.configureTestingModule({
       imports: [UiFeaturesTestPageComponent],
       providers: [
         provideRouter([]),
         { provide: CheerAnimationStore, useValue: { play } },
-        { provide: AchievementCelebrationService, useValue: { preview } },
+        { provide: AchievementCelebrationService, useValue: { show } },
       ],
     }).compileComponents();
     fixture = TestBed.createComponent(UiFeaturesTestPageComponent);
@@ -49,7 +49,9 @@ describe('UiFeaturesTestPageComponent', () => {
     button.click();
 
     // then
-    expect(preview).toHaveBeenCalledWith('plan-days-1');
+    expect(show).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'plan-days-1' })
+    );
   });
 
   it('should preview the badge picked in the select', async () => {
@@ -73,6 +75,8 @@ describe('UiFeaturesTestPageComponent', () => {
     ).click();
 
     // then
-    expect(preview).toHaveBeenCalledWith('plan-completed-preview');
+    expect(show).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'plan-completed-preview' })
+    );
   });
 });
