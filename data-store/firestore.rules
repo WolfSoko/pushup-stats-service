@@ -567,6 +567,35 @@ service cloud.firestore {
     // `userStats`. Owners may read their own badges; the public profile
     // reads them through the `getPublicProfile` callable, which bypasses
     // these rules via the Admin SDK.
+    // XP is derived server-side (`bookXpOnEntryWrite`,
+    // `aggregateXpOnLedgerWrite`) and feeds levels, badges and the public
+    // leaderboards, so — like `userStats` — only the Admin SDK writes it.
+    match /userXp/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if false;
+
+      match /xpLedger/{entryId} {
+        allow read: if request.auth != null && request.auth.uid == userId;
+        allow write: if false;
+      }
+    }
+
+    // XP rates per exercise. Publicly readable because the wiki shows
+    // them to signed-out visitors; writable only by admins. The trigger
+    // re-validates every rate, so the map shape here is a coarse guard.
+    match /xpConfig/{docId} {
+      allow read: if true;
+      allow create, update: if request.auth != null
+                   && request.auth.token.admin == true
+                   && docId == 'current'
+                   && request.resource.data.keys().hasOnly(['rates', 'updatedBy', 'updatedAt'])
+                   && request.resource.data.rates is map
+                   && request.resource.data.rates.size() <= 200
+                   && request.resource.data.updatedBy == request.auth.uid
+                   && request.resource.data.updatedAt is timestamp;
+      allow delete: if false;
+    }
+
     match /userAchievements/{userId} {
       allow read: if request.auth != null && request.auth.uid == userId;
       allow write: if false;

@@ -15,6 +15,7 @@ const RULES_PATH = join(__dirname, '..', '..', '..', 'firestore.rules');
 const NOT_USER_DATA = new Set([
   'leaderboards',
   'autoCountProfiles',
+  'xpConfig',
   'deletedAccounts',
 ]);
 

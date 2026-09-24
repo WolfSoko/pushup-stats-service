@@ -105,3 +105,10 @@ export { awardAchievementsOnPlanWrite } from './functions-achievements';
 export { notifyGoalReachedOnStatsWrite } from './functions-goal-reached';
 
 export { archiveDeletedExerciseEntry } from './functions-entry-trash';
+
+export {
+  aggregateXpOnLedgerWrite,
+  bookXpOnEntryWrite,
+  refreshXpLeaderboardOnLedgerWrite,
+} from './functions-xp';
+export { backfillXp } from './functions-xp-backfill';

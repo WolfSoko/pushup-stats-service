@@ -10,11 +10,11 @@
 /**
  * Collections whose document id IS the uid. Deleted recursively, so
  * subcollections go with them (`userStats/{uid}/perExercise`,
- * `userTrainingPlans/{uid}/history`, `pushSubscriptions/{uid}/subs`,
+ * `userTrainingPlans/{uid}/history`, `userXp/{uid}/xpLedger`, `pushSubscriptions/{uid}/subs`,
  * `notifications/{uid}/inbox`) — including parents that exist only as a
  * path because nothing was ever written to the parent document itself.
  *
- * `userStats` and `adminUserActivity` come last on purpose: the entry
+ * `userStats`, `userXp` and `adminUserActivity` come last on purpose: the entry
  * triggers write them, so deleting them after the entries leaves nothing
  * for a late trigger to have re-created before the purge finished.
  */
@@ -27,6 +27,7 @@ export const UID_KEYED_COLLECTIONS = [
   'pushSubscriptions',
   'notifications',
   'userStats',
+  'userXp',
   'adminUserActivity',
 ] as const;
 
