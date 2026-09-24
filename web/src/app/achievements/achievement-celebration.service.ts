@@ -7,7 +7,10 @@ import { UserAchievementsApiService } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
 import { BRAND_URL, SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
 import { UserConfigStore } from '../core/user-config.store';
-import { resolveAchievementBadge } from '../public-profile/achievement-badge';
+import {
+  type AchievementBadge,
+  resolveAchievementBadge,
+} from '../public-profile/achievement-badge';
 import {
   markCelebrated,
   pendingCelebrations,
@@ -72,8 +75,20 @@ export class AchievementCelebrationService {
     const badge = pending
       .map(resolveAchievementBadge)
       .find((entry) => entry !== null);
-    if (!badge) return;
+    if (badge) this.open(badge);
+  }
 
+  /**
+   * Opens the celebration for any catalog badge without touching the
+   * celebrated set — the admin preview must neither need an earned badge
+   * nor suppress the real celebration later.
+   */
+  preview(badgeId: string): void {
+    const badge = resolveAchievementBadge(badgeId);
+    if (badge) this.open(badge);
+  }
+
+  private open(badge: AchievementBadge): void {
     const titleId = `achievement-dialog-title-${nextDialogTitleId++}`;
     this.dialog.open(AchievementDialogComponent, {
       data: {

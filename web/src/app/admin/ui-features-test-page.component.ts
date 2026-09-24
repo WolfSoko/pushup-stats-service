@@ -1,9 +1,23 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 import { RouterLink } from '@angular/router';
+import {
+  INVITE_ACHIEVEMENTS,
+  PLAN_DAY_ACHIEVEMENTS,
+  planCompletedAchievementId,
+} from '@pu-stats/models';
+import { AchievementCelebrationService } from '../achievements/achievement-celebration.service';
 import { CheerAnimationStore } from '../core/cheer-animation.store';
+import { resolveAchievementBadges } from '../public-profile/achievement-badge';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 
 /**
@@ -18,7 +32,9 @@ import { PageHeaderComponent } from '../core/page-header/page-header.component';
   imports: [
     MatButtonModule,
     MatCardModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatSelectModule,
     RouterLink,
     PageHeaderComponent,
   ],
@@ -64,6 +80,47 @@ import { PageHeaderComponent } from '../core/page-header/page-header.component';
           </button>
         </mat-card-actions>
       </mat-card>
+
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title i18n="@@admin.uiFeatures.badge.title"
+            >Abzeichen-Dialog</mat-card-title
+          >
+        </mat-card-header>
+        <mat-card-content>
+          <p i18n="@@admin.uiFeatures.badge.description">
+            Öffnet den Dialog, der beim Verdienen eines Abzeichens erscheint —
+            inklusive Snap. Die Vorschau zählt nicht als gefeiert.
+          </p>
+          <mat-form-field class="badge-select">
+            <mat-label i18n="@@admin.uiFeatures.badge.select"
+              >Abzeichen</mat-label
+            >
+            <mat-select
+              data-testid="preview-badge-select"
+              [value]="selectedBadgeId()"
+              (selectionChange)="selectedBadgeId.set($event.value)"
+            >
+              @for (badge of previewBadges; track badge.id) {
+                <mat-option [value]="badge.id">{{ badge.label }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+          <button
+            mat-flat-button
+            type="button"
+            data-testid="preview-badge-dialog"
+            (click)="previewBadgeDialog()"
+          >
+            <mat-icon>workspace_premium</mat-icon>
+            <span i18n="@@admin.uiFeatures.badge.preview"
+              >Vorschau starten</span
+            >
+          </button>
+        </mat-card-actions>
+      </mat-card>
     </div>
   `,
   styles: `
@@ -74,14 +131,31 @@ import { PageHeaderComponent } from '../core/page-header/page-header.component';
       display: grid;
       gap: 1rem;
     }
+    .badge-select {
+      width: 100%;
+      max-width: 360px;
+    }
   `,
 })
 export class UiFeaturesTestPageComponent {
   private readonly cheerAnimation = inject(CheerAnimationStore);
+  private readonly achievements = inject(AchievementCelebrationService);
 
   private readonly previewSender = $localize`:@@admin.uiFeatures.cheer.previewSender:Vorschau`;
 
+  // Plan-completed labels are generic, so any plan id previews that badge.
+  protected readonly previewBadges = resolveAchievementBadges([
+    ...PLAN_DAY_ACHIEVEMENTS.map((a) => a.id),
+    planCompletedAchievementId('preview'),
+    ...INVITE_ACHIEVEMENTS.map((a) => a.id),
+  ]);
+  protected readonly selectedBadgeId = signal(this.previewBadges[0].id);
+
   previewCheerAnimation(): void {
     this.cheerAnimation.play(this.previewSender);
+  }
+
+  previewBadgeDialog(): void {
+    this.achievements.preview(this.selectedBadgeId());
   }
 }
