@@ -1,4 +1,4 @@
-<section class="step" [class.busy]="busy()">
+<section class="step" [class.busy]="anyBusy()">
   <p class="step-position">
     @if (row().roundTotal > 1) {
       <span
@@ -19,6 +19,16 @@
 
   <mat-icon class="step-icon" aria-hidden="true">{{ row().icon }}</mat-icon>
   <h2 class="step-name">{{ row().name }}</h2>
+  <button
+    mat-button
+    type="button"
+    class="step-guide"
+    data-testid="session-step-guide"
+    (click)="openGuide()"
+  >
+    <mat-icon>help_outline</mat-icon>
+    <span>{{ guideLabel }}</span>
+  </button>
 
   @if (row().quantified) {
     <p class="step-target">
@@ -49,7 +59,7 @@
       mat-flat-button
       class="step-primary"
       data-testid="session-capture"
-      [disabled]="busy()"
+      [puBusy]="busyKeys().has('capture')"
       (click)="capture.emit()"
     >
       <mat-icon>{{ toolIcon() }}</mat-icon>
@@ -60,7 +70,7 @@
       <button
         mat-stroked-button
         data-testid="session-by-hand"
-        [disabled]="busy()"
+        [puBusy]="busyKeys().has('byHand')"
         (click)="enterByHand.emit()"
       >
         <mat-icon>edit</mat-icon>
@@ -72,7 +82,7 @@
       <button
         mat-stroked-button
         data-testid="session-log-prescribed"
-        [disabled]="busy()"
+        [puBusy]="busyKeys().has('prescribed')"
         (click)="logAsPrescribed.emit()"
       >
         <mat-icon>playlist_add_check</mat-icon>
@@ -85,7 +95,7 @@
     <button
       mat-button
       data-testid="session-check-off"
-      [disabled]="busy()"
+      [puBusy]="busyKeys().has('checkOff')"
       (click)="checkOff.emit()"
     >
       <mat-icon>check</mat-icon>
@@ -94,7 +104,7 @@
     <button
       mat-button
       data-testid="session-skip"
-      [disabled]="busy()"
+      [disabled]="anyBusy()"
       (click)="skip.emit()"
     >
       <mat-icon>skip_next</mat-icon>

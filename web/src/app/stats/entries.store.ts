@@ -84,6 +84,11 @@ export const EntriesStore = signalStore(
         .sort((a, b) => a.timestamp.localeCompare(b.timestamp))
     ),
     entriesLoaded: computed(() => store._live.connected()),
+    /** First load only: a listener error keeps the rows on screen. */
+    loading: computed(
+      () =>
+        !store._live.connected() && store._live.exerciseEntries().length === 0
+    ),
   })),
   withComputed((store) => ({
     sourceOptions: computed(() =>

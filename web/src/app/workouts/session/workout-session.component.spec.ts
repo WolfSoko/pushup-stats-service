@@ -134,6 +134,37 @@ describe('WorkoutSessionComponent', () => {
     expect(screen.getByText(/Übung 2 von 2/)).toBeTruthy();
   });
 
+  it('should show the prescribed button busy until the entry is written', async () => {
+    // given — an entry write that has not settled yet
+    let settle: (result: { status: string; value: number }) => void = () =>
+      undefined;
+    const { logPrescribed } = await setup();
+    logPrescribed.mockReturnValue(
+      new Promise((resolve) => {
+        settle = resolve;
+      })
+    );
+    const user = userEvent.setup();
+    await user.click(screen.getByTestId('session-start'));
+
+    // when
+    await user.click(screen.getByTestId('session-log-prescribed'));
+
+    // then
+    expect(
+      screen.getByTestId('session-log-prescribed').getAttribute('aria-busy')
+    ).toBe('true');
+    expect(
+      screen.getByTestId('session-capture').getAttribute('aria-busy')
+    ).toBeNull();
+
+    // when
+    settle({ status: 'captured', value: 999 });
+
+    // then
+    expect(await screen.findByText(/Übung 2 von 2/)).toBeTruthy();
+  });
+
   it('should tick a step off into the run and finish back on the list', async () => {
     // given
     const { state, navigateByUrl } = await setup();
@@ -158,5 +189,23 @@ describe('WorkoutSessionComponent', () => {
   it('should say so when the workout does not exist', async () => {
     await setup({ id: 'gone' });
     expect(screen.getByText('Diese Session gibt es nicht.')).toBeTruthy();
+    expect(screen.queryByTestId('session-loading')).toBeNull();
+  });
+
+  it('should hold the session card as a skeleton until the list has delivered', async () => {
+    // given / when
+    await setup({ id: 'gone', loaded: false });
+
+    // then
+    const loading = screen.getByTestId('session-loading');
+    expect(loading.getAttribute('aria-busy')).toBe('true');
+    expect(loading.closest('app-session-skeleton')).not.toBeNull();
+    expect(
+      loading.querySelector('.pu-visually-hidden[role="status"]')?.textContent
+    ).toContain('Session wird geladen …');
+    expect(loading.querySelectorAll('pu-skeleton').length).toBeGreaterThan(0);
+    expect(document.querySelector('mat-spinner')).toBeNull();
+    expect(screen.queryByText('Diese Session gibt es nicht.')).toBeNull();
+    expect(screen.queryByTestId('session-start')).toBeNull();
   });
 });

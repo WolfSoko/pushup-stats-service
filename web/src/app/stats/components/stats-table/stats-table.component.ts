@@ -18,13 +18,18 @@ import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UserContextService } from '@pu-auth/auth';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { UnifiedEntry } from '@pu-stats/models';
+import {
+  BusyDirective,
+  createBusyState,
+  SkeletonComponent,
+  SkeletonTableComponent,
+} from '@pu-stats/ui';
 import { firstValueFrom } from 'rxjs';
 import { ExerciseRefComponent } from '../../../core/exercise-ref/exercise-ref.component';
 import { TrainingEntryDialogComponent } from '../training-entry-dialog/training-entry-dialog.component';
@@ -55,7 +60,6 @@ import {
   selector: 'app-stats-table',
   imports: [
     MatCardModule,
-    MatProgressSpinnerModule,
     DatePipe,
     NgTemplateOutlet,
     MatDialogModule,
@@ -67,6 +71,9 @@ import {
     MatTooltipModule,
     ScrollingModule,
     ExerciseRefComponent,
+    BusyDirective,
+    SkeletonComponent,
+    SkeletonTableComponent,
   ],
   templateUrl: './stats-table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -92,6 +99,7 @@ export class StatsTableComponent {
   readonly highlightEntryId = input<string | null>(null);
 
   readonly entries = input<UnifiedEntry[]>([]);
+  readonly loading = input(false);
   readonly readOnly = input(false);
   readonly busyAction = input<'create' | 'update' | 'delete' | null>(null);
   readonly busyId = input<string | null>(null);
@@ -104,6 +112,7 @@ export class StatsTableComponent {
   private readonly userConfigApi = inject(UserConfigApiService);
 
   readonly showSourceColumn = signal(false);
+  readonly togglingSource = createBusyState();
 
   readonly showExerciseColumn = computed(() =>
     spansMultipleExercises(this.unifiedEntries())
@@ -220,10 +229,12 @@ export class StatsTableComponent {
     if (!this.isBrowser) return;
 
     try {
-      await firstValueFrom(
-        this.userConfigApi.updateConfig(this.user.userIdSafe(), {
-          ui: { showSourceColumn: next },
-        })
+      await this.togglingSource.run(() =>
+        firstValueFrom(
+          this.userConfigApi.updateConfig(this.user.userIdSafe(), {
+            ui: { showSourceColumn: next },
+          })
+        )
       );
     } catch {
       // If saving fails, keep UI responsive; we'll try again on next toggle.

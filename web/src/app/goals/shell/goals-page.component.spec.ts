@@ -18,11 +18,13 @@ describe('GoalsPageComponent', () => {
     typeof vitest.fn<(goals: ComplexGoals) => Promise<unknown>>
   >;
   let goalsSignal: ReturnType<typeof signal<ComplexGoals>>;
+  let loadedSignal: ReturnType<typeof signal<boolean>>;
 
   function setup(
     initial: ComplexGoals = { daily: [], weekly: [], monthly: [] }
   ): void {
     goalsSignal = signal<ComplexGoals>(initial);
+    loadedSignal = signal(true);
     saveGoalsSpy = vitest.fn(() => Promise.resolve({ userId: 'u1' }));
 
     TestBed.configureTestingModule({
@@ -32,6 +34,7 @@ describe('GoalsPageComponent', () => {
           provide: UserConfigStore,
           useValue: {
             goals: goalsSignal.asReadonly(),
+            loaded: loadedSignal.asReadonly(),
             dailyGoalEntries: signal(initial.daily ?? []),
             weeklyGoalEntries: signal(initial.weekly ?? []),
             monthlyGoalEntries: signal(initial.monthly ?? []),
@@ -62,6 +65,45 @@ describe('GoalsPageComponent', () => {
   async function flushMicrotasks(): Promise<void> {
     for (let i = 0; i < 5; i++) await Promise.resolve();
   }
+
+  it('should show skeleton goal rows instead of the empty text until the config has loaded', async () => {
+    // given
+    setup();
+    loadedSignal.set(false);
+    fixture.detectChanges();
+    const root = fixture.nativeElement as HTMLElement;
+
+    // then
+    expect(
+      root.querySelectorAll('[data-testid="goals-skeleton-daily"]')
+    ).toHaveLength(2);
+    expect(
+      root.querySelectorAll('[data-testid="goals-skeleton-daily"] pu-skeleton')
+    ).toHaveLength(6);
+    expect(
+      root
+        .querySelector('[data-testid="goals-section-daily"] mat-card-content')
+        ?.getAttribute('aria-busy')
+    ).toBe('true');
+    expect(root.querySelector('[data-testid="goals-empty-daily"]')).toBeNull();
+    expect(root.textContent).not.toContain('Noch keine Ziele angelegt');
+
+    // when
+    loadedSignal.set(true);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    // then
+    expect(root.querySelector('pu-skeleton')).toBeNull();
+    expect(
+      root
+        .querySelector('[data-testid="goals-section-daily"] mat-card-content')
+        ?.getAttribute('aria-busy')
+    ).toBeNull();
+    expect(
+      root.querySelector('[data-testid="goals-empty-daily"]')?.textContent
+    ).toContain('Noch keine Ziele angelegt');
+  });
 
   it('Renders one card per scope', () => {
     setup();

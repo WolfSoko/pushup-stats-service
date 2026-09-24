@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { FriendInviteApiService } from '../../core/friend-invite-api.service';
 import { StatsDashboardComponent } from './stats-dashboard.component';
 import {
@@ -826,6 +826,38 @@ describe('StatsDashboardComponent', () => {
       });
     });
 
+    describe('When a slot write is still pending', () => {
+      it('should keep only the pressed quick button busy until the write lands', async () => {
+        // given
+        const component = fixture.componentInstance;
+        vi.clearAllMocks();
+        const write = new Subject<{ _id: string }>();
+        exerciseCreateSpy.mockReturnValueOnce(write.asObservable());
+
+        // when
+        const run = component.addQuickEntryFromConfig({
+          key: 'reps:abs.situps:20',
+          mode: 'reps',
+          exerciseId: 'abs.situps',
+          reps: 20,
+          exerciseLabel: 'Sit-ups',
+          label: '+20 Sit-ups',
+        });
+
+        // then
+        expect(component.quickBusy.isBusy('reps:abs.situps:20')).toBe(true);
+        expect(component.quickBusy.isBusy('reps:pushup:12')).toBe(false);
+
+        // when
+        write.next({ _id: 'ex-2' });
+        write.complete();
+        await run;
+
+        // then
+        expect(component.quickBusy.busy()).toBe(false);
+      });
+    });
+
     describe('When the slot is configured for auto-count', () => {
       it('Then it opens the auto-count dialog with the catalog exercise preselected', async () => {
         const component = fixture.componentInstance;
@@ -1292,6 +1324,59 @@ describe('StatsDashboardComponent', () => {
         // Then
         expect(serviceMock.createPushup).not.toHaveBeenCalled();
       });
+    });
+  });
+
+  describe('Given the live feed has not connected yet', () => {
+    beforeEach(async () => {
+      liveEntries.set([]);
+      liveExerciseEntries.set([]);
+      liveConnected.set(false);
+      await fixture.whenStable();
+    });
+
+    it('should reserve the layout with skeletons instead of zeros and empty states', async () => {
+      // given
+      const root = fixture.nativeElement as HTMLElement;
+
+      // then
+      expect(
+        root.querySelector('[data-testid="dashboard-today-total-skeleton"]')
+      ).toBeTruthy();
+      expect(
+        root.querySelector('[data-testid="dashboard-goal-skeleton"]')
+      ).toBeTruthy();
+      expect(
+        root.querySelector('[data-testid="dashboard-last-entry-skeleton"]')
+      ).toBeTruthy();
+      expect(root.querySelector('app-recent-exercises-skeleton')).toBeTruthy();
+      expect(
+        root.querySelectorAll('app-all-time-badges pu-skeleton')
+      ).toHaveLength(4);
+      expect(
+        root.querySelector('.today-focus')?.getAttribute('aria-busy')
+      ).toBe('true');
+      expect(root.textContent).not.toContain('Noch kein Eintrag.');
+    });
+
+    it('should swap the skeletons for the real content once the feed connects', async () => {
+      // given
+      const root = fixture.nativeElement as HTMLElement;
+
+      // when
+      liveConnected.set(true);
+      await fixture.whenStable();
+
+      // then
+      expect(root.querySelector('pu-skeleton')).toBeNull();
+      expect(root.querySelector('app-recent-exercises-skeleton')).toBeNull();
+      expect(root.querySelector('.focus-number')?.textContent?.trim()).toBe(
+        '0'
+      );
+      expect(root.textContent).toContain('Noch kein Eintrag.');
+      expect(
+        root.querySelector('.today-focus')?.getAttribute('aria-busy')
+      ).toBeNull();
     });
   });
 

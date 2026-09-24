@@ -9,7 +9,6 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
@@ -24,6 +23,7 @@ import type {
   AdminAutoCountReport,
   AdminAutoCountSummary,
 } from './admin-page.models';
+import { BusyDirective, SkeletonTableComponent } from '@pu-stats/ui';
 import { CallableFunctionsService } from './callable-functions.service';
 
 /**
@@ -36,12 +36,13 @@ import { CallableFunctionsService } from './callable-functions.service';
   selector: 'app-admin-auto-count-section',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    SkeletonTableComponent,
+    BusyDirective,
     DatePipe,
     PercentPipe,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatProgressSpinnerModule,
     MatTableModule,
     MatTooltipModule,
   ],

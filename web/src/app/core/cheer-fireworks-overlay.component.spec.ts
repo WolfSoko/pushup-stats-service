@@ -98,7 +98,7 @@ describe('CheerFireworksOverlayComponent', () => {
     });
 
     it.each([
-      ['sending', true],
+      ['sending', false],
       ['sent', true],
       ['already', true],
       ['error', false],
@@ -117,7 +117,7 @@ describe('CheerFireworksOverlayComponent', () => {
       }
     );
 
-    it('should spin the flame icon only while sending', () => {
+    it('should mark the button busy only while sending', () => {
       // given
       activeCheerFrom.set('friend-1');
       cheerBackStatus.set('sending');
@@ -126,9 +126,15 @@ describe('CheerFireworksOverlayComponent', () => {
       fixture.detectChanges();
 
       // then
-      expect(
-        cheerBackButton().querySelector('.cheer-back-icon.is-sending')
-      ).toBeTruthy();
+      expect(cheerBackButton().getAttribute('aria-busy')).toBe('true');
+      expect(cheerBackButton().disabled).toBe(false);
+
+      // when
+      cheerBackStatus.set('sent');
+      fixture.detectChanges();
+
+      // then
+      expect(cheerBackButton().getAttribute('aria-busy')).toBeNull();
     });
   });
 });

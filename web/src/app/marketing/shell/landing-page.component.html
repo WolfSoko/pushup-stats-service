@@ -7,7 +7,7 @@
       <img
         class="hero-logo"
         src="assets/pushup-logo.png"
-        alt="Pushup Tracker Logo"
+        alt="{{ brandName }} Logo"
         i18n-alt="@@brandLogoAlt"
         width="160"
         height="160"
@@ -16,7 +16,7 @@
       />
     </picture>
     <div class="hero-text">
-      <p class="eyebrow" i18n="@@landing.eyebrow">Pushup Tracker</p>
+      <p class="eyebrow" i18n="@@landing.eyebrow">{{ brandName }}</p>
       <span class="free-badge" i18n="@@landing.free.badge">kostenlos</span>
       <h1 i18n="@@landing.title">Dein Training. Klar visualisiert.</h1>
       <p class="subtitle" i18n="@@landing.subtitle">
@@ -69,6 +69,7 @@
           <button
             mat-button
             type="button"
+            [puBusy]="guestSignIn.busy()"
             (click)="onTryAsGuest()"
             i18n="@@landing.cta.guest"
           >
@@ -287,6 +288,13 @@
       class="scroll-reveal scroll-reveal--from-left"
       (ctaClick)="onWorkoutsCtaClick()"
     ></app-workouts-feature-section>
+  }
+
+  @defer (hydrate on viewport) {
+    <app-workout-reminders-feature-section
+      class="scroll-reveal scroll-reveal--from-right"
+      (ctaClick)="onWorkoutRemindersCtaClick()"
+    ></app-workout-reminders-feature-section>
   }
 
   @defer (hydrate on viewport) {

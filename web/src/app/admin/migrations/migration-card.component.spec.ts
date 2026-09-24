@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { nextMacrotask } from '@pu-stats/testing';
 import { CallableFunctionsService } from '../callable-functions.service';
 import {
   CallableRecord,
@@ -11,11 +12,11 @@ import { MigrationDescriptor } from './migration-descriptors';
 const { callablesMock, setupCallables } = createCallablesMock();
 
 const WITH_ROLLBACK: MigrationDescriptor = {
-  id: 'reminder-snooze-cleanup',
+  id: 'orphaned-user-data-cleanup',
   title: 'Liegestütze vereinheitlichen',
   description: 'Kopiert pushups nach exerciseEntries.',
-  migrate: { callable: 'cleanupReminderSnoozeState' },
-  rollback: { callable: 'rollbackReminderSnoozeCleanup' },
+  migrate: { callable: 'cleanupOrphanedUserData' },
+  rollback: { callable: 'rollbackExampleMigration' },
 };
 
 describe('MigrationCardComponent', () => {
@@ -67,7 +68,7 @@ describe('MigrationCardComponent', () => {
     // given a migration whose dry-run reports what it would copy
     await createComponent(WITH_ROLLBACK, [
       {
-        name: 'cleanupReminderSnoozeState',
+        name: 'cleanupOrphanedUserData',
         impl: async () => ({
           data: { dryRun: true, wouldCopy: 12, wouldSkipExisting: 0 },
         }),
@@ -79,7 +80,7 @@ describe('MigrationCardComponent', () => {
 
     // then the callable is invoked with dryRun:true and counters render
     expect(callablesMock.call).toHaveBeenCalledWith(
-      'cleanupReminderSnoozeState',
+      'cleanupOrphanedUserData',
       expect.objectContaining({ timeout: expect.any(Number) })
     );
     const text = fixture.nativeElement.textContent ?? '';
@@ -92,7 +93,7 @@ describe('MigrationCardComponent', () => {
     const calls: boolean[] = [];
     await createComponent(WITH_ROLLBACK, [
       {
-        name: 'cleanupReminderSnoozeState',
+        name: 'cleanupOrphanedUserData',
         impl: async (data) => {
           calls.push((data as { dryRun: boolean }).dryRun);
           return { data: { copied: 12 } };
@@ -120,7 +121,7 @@ describe('MigrationCardComponent', () => {
     // given a callable that rejects
     await createComponent(WITH_ROLLBACK, [
       {
-        name: 'cleanupReminderSnoozeState',
+        name: 'cleanupOrphanedUserData',
         impl: async () => {
           throw new Error('permission-denied');
         },
@@ -138,7 +139,7 @@ describe('MigrationCardComponent', () => {
     // given a descriptor with a rollback callable
     await createComponent(WITH_ROLLBACK, [
       {
-        name: 'rollbackReminderSnoozeCleanup',
+        name: 'rollbackExampleMigration',
         impl: async () => ({ data: { dryRun: true, wouldDelete: 5 } }),
       },
     ]);
@@ -154,7 +155,7 @@ describe('MigrationCardComponent', () => {
 
     // then the rollback callable is invoked and its counter renders
     expect(callablesMock.call).toHaveBeenCalledWith(
-      'rollbackReminderSnoozeCleanup',
+      'rollbackExampleMigration',
       expect.objectContaining({ timeout: expect.any(Number) })
     );
     expect(fixture.nativeElement.textContent).toContain('wouldDelete');
@@ -166,11 +167,11 @@ describe('MigrationCardComponent', () => {
       id: 'one-way',
       title: 'Einbahn-Migration',
       description: 'Keine Umkehr.',
-      migrate: { callable: 'cleanupReminderSnoozeState' },
+      migrate: { callable: 'cleanupOrphanedUserData' },
     };
     await createComponent(noRollback, [
       {
-        name: 'cleanupReminderSnoozeState',
+        name: 'cleanupOrphanedUserData',
         impl: async () => ({ data: { copied: 1 } }),
       },
     ]);
@@ -216,5 +217,37 @@ describe('MigrationCardComponent', () => {
 
     // then it requests reopening
     expect(emitted).toEqual([false]);
+  });
+
+  it('should spin only the pressed run button and lock its counterpart meanwhile', async () => {
+    // given a callable that answers when the test says so
+    let resolveRun!: () => void;
+    await createComponent(WITH_ROLLBACK, [
+      {
+        name: 'cleanupOrphanedUserData',
+        impl: () =>
+          new Promise<{ data: unknown }>((resolve) => {
+            resolveRun = () => resolve({ data: { copied: 1 } });
+          }),
+      },
+    ]);
+
+    // when
+    await clickButton('Probelauf');
+
+    // then
+    expect(buttonByLabel('Probelauf').getAttribute('aria-busy')).toBe('true');
+    expect(buttonByLabel('Ausführen').getAttribute('aria-busy')).toBeNull();
+    expect(buttonByLabel('Ausführen').disabled).toBe(true);
+
+    // when
+    resolveRun();
+    await nextMacrotask();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(buttonByLabel('Probelauf').getAttribute('aria-busy')).toBeNull();
+    expect(buttonByLabel('Ausführen').disabled).toBe(false);
   });
 });

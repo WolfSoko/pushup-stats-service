@@ -34,7 +34,9 @@
         <mat-row *matRowDef="let row; columns: columns()"></mat-row>
       </mat-table>
     } @placeholder {
-      <div class="trend-placeholder" aria-hidden="true"></div>
+      <div class="trend-skeleton" aria-busy="true">
+        <pu-skeleton-table [rows]="8" [columns]="3" />
+      </div>
     }
   </mat-card-content>
 </mat-card>

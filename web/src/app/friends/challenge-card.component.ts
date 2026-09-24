@@ -10,8 +10,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { challengeDaysLeft, challengePercent } from '@pu-stats/models';
 import { toBerlinIsoDate } from '@pu-stats/date';
+import { BusyDirective } from '@pu-stats/ui';
 
 import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
+import { CheerButtonComponent } from './cheer-button.component';
 import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
 
 /**
@@ -21,7 +23,13 @@ import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
 @Component({
   selector: 'app-challenge-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonModule, MatCardModule, MatProgressBarModule],
+  imports: [
+    BusyDirective,
+    CheerButtonComponent,
+    MatButtonModule,
+    MatCardModule,
+    MatProgressBarModule,
+  ],
   template: `
     <mat-card
       class="challenge-card"
@@ -62,12 +70,24 @@ import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
             <div
               class="participant"
               [class.is-viewer]="entry.isViewer"
+              [class.has-cheer]="hasCheers()"
               data-testid="challenge-participant"
             >
               <span class="participant-name">{{ label(entry) }}</span>
               <span class="participant-value"
                 >{{ entry.value }} / {{ challenge().target }}</span
               >
+              @if (hasCheers()) {
+                <span class="cheer-slot">
+                  @if (entry.canCheer) {
+                    <app-cheer-button
+                      [uid]="entry.uid"
+                      [cheered]="entry.cheered"
+                      [name]="entry.displayName"
+                    />
+                  }
+                </span>
+              }
               <mat-progress-bar mode="determinate" [value]="percent(entry)" />
             </div>
           }
@@ -85,6 +105,7 @@ import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
             mat-stroked-button
             type="button"
             data-testid="challenge-decline"
+            [puBusy]="isBusy('decline')"
             (click)="decline.emit(challenge().id)"
             i18n="@@challenges.decline"
           >
@@ -95,6 +116,7 @@ import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
             type="button"
             data-testid="challenge-accept"
             [disabled]="challenge().status === 'ended'"
+            [puBusy]="isBusy('accept')"
             (click)="accept.emit(challenge().id)"
             i18n="@@challenges.accept"
           >
@@ -105,6 +127,7 @@ import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
             mat-button
             type="button"
             data-testid="challenge-leave"
+            [puBusy]="isBusy('leave')"
             (click)="leave.emit(challenge().id)"
             i18n="@@challenges.leave"
           >
@@ -130,8 +153,16 @@ import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
       gap: 2px 8px;
       padding: 6px 0;
     }
+    .participant.has-cheer {
+      grid-template-columns: 1fr auto 48px;
+      align-items: center;
+    }
     .participant mat-progress-bar {
       grid-column: 1 / -1;
+    }
+    .cheer-slot {
+      display: inline-flex;
+      justify-content: center;
     }
     .participant.is-viewer .participant-name {
       font-weight: 600;
@@ -151,6 +182,8 @@ import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
 })
 export class ChallengeCardComponent {
   readonly challenge = input.required<ChallengeView>();
+  /** The store's busy keys: `<action>:<id>` spins that button. */
+  readonly busyKeys = input<ReadonlySet<string>>(new Set());
   readonly accept = output<string>();
   readonly decline = output<string>();
   readonly leave = output<string>();
@@ -176,7 +209,16 @@ export class ChallengeCardComponent {
       : $localize`:@@challenges.daysLeft:Noch ${days}:days: Tage`;
   });
 
+  /** Keeps the value column aligned when only some rows get a flame. */
+  protected readonly hasCheers = computed(() =>
+    this.challenge().entries.some((entry) => entry.canCheer)
+  );
+
   private readonly anonymous = $localize`:@@friends.anonymous:Ohne Namen`;
+
+  protected isBusy(action: 'accept' | 'decline' | 'leave'): boolean {
+    return this.busyKeys().has(`${action}:${this.challenge().id}`);
+  }
 
   protected label(entry: ChallengeEntry): string {
     if (entry.isViewer) return $localize`:@@friends.board.you:Du`;

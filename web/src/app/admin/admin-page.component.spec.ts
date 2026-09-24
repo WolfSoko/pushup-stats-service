@@ -93,6 +93,43 @@ describe('AdminPageComponent', () => {
   });
 
   describe('user list initialization', () => {
+    it('should render a skeleton table instead of a spinner while the users load', async () => {
+      // given
+      await createComponent([]);
+      let resolve: (value: { data: AdminUser[] }) => void = () => undefined;
+      const pending = new Promise<{ data: AdminUser[] }>((r) => {
+        resolve = r;
+      });
+      setupCallables([
+        { name: 'adminListUsers', impl: () => pending },
+        { name: 'adminListFeedback', impl: async () => ({ data: [] }) },
+      ]);
+      const host = fixture.nativeElement as HTMLElement;
+
+      // when
+      const load = component.loadUsers();
+      fixture.detectChanges();
+
+      // then
+      const skeleton = host.querySelector(
+        '[data-testid="admin-users-skeleton"]'
+      );
+      expect(skeleton?.getAttribute('aria-busy')).toBe('true');
+      expect(skeleton?.querySelector('pu-skeleton-table')).toBeTruthy();
+      expect(host.querySelector('mat-spinner')).toBeNull();
+      expect(host.querySelector('mat-table')).toBeNull();
+
+      // when
+      resolve({ data: [sampleUser] });
+      await load;
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then
+      expect(host.querySelector('pu-skeleton-table')).toBeNull();
+      expect(host.querySelector('mat-table')).toBeTruthy();
+    });
+
     it('should load users on init via the adminListUsers callable', async () => {
       // given / when
       await createComponent([sampleUser]);
@@ -230,6 +267,131 @@ describe('AdminPageComponent', () => {
         DeleteUserDialogComponent,
         expect.anything()
       );
+    });
+  });
+
+  describe('bulkDelete', () => {
+    it('should ask for another run while accounts remain', async () => {
+      // given a run that hit the per-run limit
+      await createComponent(
+        [],
+        [
+          {
+            name: 'adminBulkDeleteInactiveAnonymous',
+            impl: async () => ({
+              data: { deleted: 25, skipped: 1, remaining: 7 },
+            }),
+          },
+        ]
+      );
+
+      // when
+      await component.bulkDelete();
+      fixture.detectChanges();
+
+      // then
+      const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
+      expect(text).toContain('Noch offen (erneut ausführen):');
+      expect(text).toContain('7');
+    });
+
+    it('should not mention remaining accounts when the run finished them all', async () => {
+      // given
+      await createComponent(
+        [],
+        [
+          {
+            name: 'adminBulkDeleteInactiveAnonymous',
+            impl: async () => ({
+              data: { deleted: 3, skipped: 0, remaining: 0 },
+            }),
+          },
+        ]
+      );
+
+      // when
+      await component.bulkDelete();
+      fixture.detectChanges();
+
+      // then
+      const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
+      expect(text).not.toContain('Noch offen');
+    });
+  });
+
+  describe('busy state', () => {
+    it('should mark the bulk-delete button busy while the callable is pending', async () => {
+      // given
+      let resolveBulk!: () => void;
+      await createComponent(
+        [],
+        [
+          {
+            name: 'adminBulkDeleteInactiveAnonymous',
+            impl: () =>
+              new Promise<{ data: unknown }>((resolve) => {
+                resolveBulk = () =>
+                  resolve({ data: { deleted: 0, skipped: 0, remaining: 0 } });
+              }),
+          },
+        ]
+      );
+      const bulkButton = Array.from(
+        fixture.nativeElement.querySelectorAll(
+          'button'
+        ) as NodeListOf<HTMLButtonElement>
+      ).find((b) => b.textContent?.includes('Inaktive löschen'));
+      expect(bulkButton).toBeTruthy();
+
+      // when
+      const run = component.bulkDelete();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then
+      expect(bulkButton?.getAttribute('aria-busy')).toBe('true');
+
+      // when
+      resolveBulk();
+      await run;
+      fixture.detectChanges();
+
+      // then
+      expect(bulkButton?.getAttribute('aria-busy')).toBeNull();
+    });
+
+    it('should flag the deleted user while adminDeleteUser is pending', async () => {
+      // given
+      let resolveDelete!: () => void;
+      const deleteImpl = vi.fn(
+        () =>
+          new Promise<{ data: unknown }>((resolve) => {
+            resolveDelete = () => resolve({ data: { ok: true } });
+          })
+      );
+      await createComponent(
+        [sampleUser],
+        [{ name: 'adminDeleteUser', impl: deleteImpl }]
+      );
+      dialogOpenSpy.mockReturnValue(stubDialogRef(true));
+
+      // when
+      const run = component.openDeleteDialog(sampleUser);
+      for (let i = 0; i < 10 && !component.deletingUser.busy(); i++) {
+        await Promise.resolve();
+      }
+
+      // then
+      expect(component.deletingUser.isBusy(sampleUser.uid)).toBe(true);
+
+      // when
+      resolveDelete();
+      await run;
+
+      // then — only the uid is sent, the server purges the data
+      expect(component.deletingUser.busy()).toBe(false);
+      expect(component.users()).toEqual([]);
+      expect(deleteImpl).toHaveBeenCalledWith({ uid: sampleUser.uid });
     });
   });
 });

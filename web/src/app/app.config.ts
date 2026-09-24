@@ -1,4 +1,8 @@
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
 import {
   ApplicationConfig,
   ErrorHandler,
@@ -40,7 +44,6 @@ import {
   withEmulator as withFirestoreEmulator,
 } from '@pu-stats/data-access';
 import { UserProfileSyncHook } from './core/auth/user-profile-sync.hook';
-import { GuestDataMigrationHook } from './core/auth/guest-data-migration.hook';
 import { ReferralClaimHook } from './core/auth/referral-claim.hook';
 import { adsConfig } from '../env/ads.config';
 import { firebaseRuntime } from '../env/firebase-runtime';
@@ -55,11 +58,15 @@ import { appRoutes } from './app.routes';
 import { createAppRouterFeatures } from './app.router-features';
 import { DeferredSentryErrorHandler } from './core/observability/sentry';
 import { ReminderGoalService } from './core/reminder-goal.service';
+import { pendingRequestsInterceptor } from './core/pending-requests.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(withFetch()),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([pendingRequestsInterceptor])
+    ),
     provideRouter(appRoutes, ...createAppRouterFeatures()),
     // Sentry error monitoring – production only (not in dev mode or emulator).
     // The handler buffers errors until the Sentry SDK is lazily initialised
@@ -84,7 +91,6 @@ export const appConfig: ApplicationConfig = {
     // Auth ↔ Data-Access wiring: ports & adapters
     { provide: USER_PROFILE_PORT, useExisting: UserConfigApiService },
     { provide: POST_AUTH_HOOKS, useClass: UserProfileSyncHook, multi: true },
-    { provide: POST_AUTH_HOOKS, useClass: GuestDataMigrationHook, multi: true },
     { provide: POST_AUTH_HOOKS, useClass: ReferralClaimHook, multi: true },
     { provide: VAPID_PUBLIC_KEY, useValue: firebaseRuntime.vapidPublicKey },
     // Wire the reminders → push port: skip in-app notifications when server

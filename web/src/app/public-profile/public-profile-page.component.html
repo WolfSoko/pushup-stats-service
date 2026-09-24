@@ -1,8 +1,13 @@
 <main class="container" data-testid="public-profile-page">
   @switch (state().kind) {
     @case ('loading') {
-      <div class="status-card" role="status" aria-live="polite">
-        <mat-spinner diameter="36"></mat-spinner>
+      <div
+        role="status"
+        aria-live="polite"
+        aria-busy="true"
+        data-testid="public-profile-loading"
+      >
+        <app-public-profile-skeleton />
       </div>
     }
     @case ('not-found') {
@@ -28,7 +33,12 @@
           <p>{{ labels.errorBody }}</p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-stroked-button type="button" (click)="reload()">
+          <button
+            mat-stroked-button
+            type="button"
+            [puBusy]="state().kind === 'loading'"
+            (click)="reload()"
+          >
             {{ labels.retry }}
           </button>
         </mat-card-actions>
@@ -114,7 +124,7 @@
               type="button"
               class="avatar avatar-button"
               data-testid="profile-photo-edit"
-              [disabled]="photos.busy()"
+              [puBusy]="photos.busy()"
               [attr.aria-label]="labels.photoEdit"
               (click)="photoInput.click()"
             >
@@ -177,6 +187,7 @@
                 type="button"
                 class="share-btn"
                 data-testid="public-profile-invite"
+                [puBusy]="inviting.busy()"
                 (click)="inviteFriend()"
               >
                 <mat-icon>person_add</mat-icon>
@@ -190,6 +201,7 @@
                 class="share-btn"
                 data-testid="public-profile-add-friend"
                 [disabled]="friendRequestSent() || audience.isOwner()"
+                [puBusy]="addingFriend.busy()"
                 (click)="addFriend()"
               >
                 <mat-icon>person_add</mat-icon>
@@ -204,6 +216,13 @@
                 <mat-icon aria-hidden="true">group</mat-icon>
                 <span i18n="@@friends.already">Ihr seid Freunde</span>
               </span>
+              @if (p.viewerIsFriend && !audience.isOwner()) {
+                <app-cheer-button
+                  [uid]="p.uid"
+                  [cheered]="p.viewerCheeredToday"
+                  [labeled]="true"
+                />
+              }
             }
           </div>
         </header>

@@ -21,6 +21,7 @@
         <button
           mat-stroked-button
           type="button"
+          [puBusy]="loading()"
           (click)="load()"
           i18n="@@admin.network.retry"
         >
@@ -31,7 +32,12 @@
   }
 
   @if (loading()) {
-    <div class="centered"><mat-spinner diameter="40" /></div>
+    <mat-card aria-busy="true" data-testid="network-skeleton">
+      <mat-card-content class="skeleton">
+        <pu-skeleton shape="rect" height="clamp(220px, 45vw, 480px)" />
+        <pu-skeleton-table [rows]="5" [columns]="3" />
+      </mat-card-content>
+    </mat-card>
   } @else if (graph().nodes.length === 0 && !error()) {
     <mat-card class="notice">
       <mat-card-content>

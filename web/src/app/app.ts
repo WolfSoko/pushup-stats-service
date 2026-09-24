@@ -29,10 +29,12 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
+import { BRAND_NAME } from '@pu-stats/models';
 import { AuthService, AuthStore, UserMenuComponent } from '@pu-auth/auth';
 
 import { AvatarService } from './core/avatar.service';
 import { CheerFireworksOverlayComponent } from './core/cheer-fireworks-overlay.component';
+import { PendingRequestIndicatorComponent } from './core/pending-request-indicator.component';
 import { NotificationBellComponent } from './notifications/notification-bell.component';
 import { NotificationStore } from './notifications/notification.store';
 import { filter } from 'rxjs';
@@ -60,7 +62,9 @@ import { ThemeToggleComponent } from './core/theme';
 import { ReminderOrchestrationService } from './core/reminder-orchestration.service';
 import { AndroidTestInviteOrchestrationService } from './core/android-test-invite-orchestration.service';
 import { FeatureAnnouncementService } from './core/feature-announcement.service';
-import { SwUpdateService } from './core/sw-update.service';
+import { AppUpdateBannerComponent } from './core/app-update/app-update-banner.component';
+import { AppUpdateService } from './core/app-update/app-update.service';
+import { ChunkLoadRecoveryService } from './core/app-update/chunk-load-recovery.service';
 import { AppDataFacade } from './core/app-data.facade';
 import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';
 import { AchievementCelebrationService } from './achievements/achievement-celebration.service';
@@ -99,19 +103,15 @@ import {
     OverlayModule,
     CheerFireworksOverlayComponent,
     NotificationBellComponent,
+    PendingRequestIndicatorComponent,
+    AppUpdateBannerComponent,
   ],
   templateUrl: './app.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './app.scss',
 })
 export class App {
-  private readonly swUpdate = inject(SwUpdateService);
   protected readonly avatar = inject(AvatarService);
-  /** Drives the persistent "new version" button in the toolbar. */
-  readonly swUpdateAvailable = this.swUpdate.updateAvailable;
-  readonly swUpdateUnrecoverable = this.swUpdate.unrecoverable;
-  protected readonly swUpdateAriaLabel = $localize`:@@sw.update.buttonAria:Neue Version verfügbar – jetzt neu laden`;
-  protected readonly swUpdateRecoverAriaLabel = $localize`:@@sw.update.recoverButtonAria:App-Daten beschädigt – jetzt neu laden`;
   private readonly snackBar = inject(MatSnackBar);
   private readonly dialog = inject(MatDialog);
   private readonly firebaseAuth = inject(Auth, { optional: true });
@@ -218,6 +218,10 @@ export class App {
   // Eager-inject so the "what's new" walkthrough fires once the dashboard
   // is up, whichever page the user signed in from.
   private readonly _announcements = inject(FeatureAnnouncementService);
+  // Eager-inject so update detection and the navigation fallback run from
+  // the first page on, not only once the banner has something to show.
+  private readonly _appUpdate = inject(AppUpdateService);
+  private readonly _chunkLoadRecovery = inject(ChunkLoadRecoveryService);
 
   // Delegate to facade
   readonly quickAddSuggestions = this.appData.quickAddSuggestions;
@@ -271,7 +275,7 @@ export class App {
   closeGoalDetails(): void {
     this.goalOverlay.hide();
   }
-  readonly fillToGoalInFlight = this.quickAdd.fillToGoalInFlight;
+  readonly quickAddBusyKeys = this.quickAdd.busyKeys;
 
   private readonly goalActions = inject(DailyGoalActionsService);
   /** Daily goals rendered as the speed dial's goal submenu. */
@@ -321,7 +325,7 @@ export class App {
         };
 
         const title =
-          data.seoTitle ?? $localize`:@@seo.default.title:Pushup Tracker`;
+          data.seoTitle ?? $localize`:@@seo.default.title:${BRAND_NAME}:brand:`;
         const description =
           data.seoDescription ??
           $localize`:@@seo.default.description:Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.`;
@@ -332,16 +336,12 @@ export class App {
       });
   }
 
-  applyServiceWorkerUpdate(): void {
-    void this.swUpdate.applyUpdate();
-  }
-
   handleQuickAdd(suggestion: QuickAddSuggestion): void {
-    this.quickAdd.addSuggestion(suggestion);
+    void this.quickAdd.addSuggestion(suggestion);
   }
 
   handleOpenDialog(): void {
-    this.quickAdd.openDialog();
+    void this.quickAdd.openDialog();
   }
 
   handleOpenAutoCount(): void {
@@ -357,7 +357,7 @@ export class App {
   }
 
   handleFillToGoal(): void {
-    this.quickAdd.fillToGoal();
+    void this.quickAdd.fillToGoal();
   }
 
   handleFabOpened(): void {

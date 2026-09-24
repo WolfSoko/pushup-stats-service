@@ -10,13 +10,7 @@ import {
   photoSource,
   type UserConfigForPublicProfile,
 } from './profile';
-
-const PHOTO_BUCKET = 'pushup-stats-profile-photos';
-const PHOTO_PREFIX = 'profile-photos';
-
-function photoObjectPath(uid: string): string {
-  return `${PHOTO_PREFIX}/${uid}/avatar`;
-}
+import { PHOTO_BUCKET, photoObjectPath } from './profile/photo-storage';
 
 /** Owner preview of a private photo is inlined; cap keeps the payload sane. */
 const MAX_INLINE_PHOTO_BYTES = 512 * 1024;

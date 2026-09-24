@@ -30,6 +30,7 @@
           <button
             type="button"
             mat-stroked-button
+            [puBusy]="facade.saveStatus() === 'saving'"
             (click)="facade.retrySave()"
             i18n="@@settings.status.retry"
           >

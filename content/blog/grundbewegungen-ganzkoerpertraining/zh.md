@@ -124,7 +124,7 @@ heroImageCredit: '图片：Pushup Tracker'
 <aside class="plan-cta">
   <h3>Full Body Strong——6 周全身训练计划</h3>
   <p>
-    该计划以每周三次训练覆盖全部六大模式,自动提升负荷,并在分析中显示推和拉是否保持平衡。
+    该计划以每周三次训练覆盖六大模式中的四项——推、深蹲、髋铰链和核心——并自动提升负荷。拉和耐力需要你自己补充:前者可在桌下做划船,或选择「Push &amp; Pull Balance」;后者可以跑步或跳绳。
   </p>
   <p>
     <a href="/training-plans/full-body-6w">开始全身训练计划 &rarr;</a>

@@ -25,6 +25,7 @@
             [class.active]="isActiveExercise(chip.id)"
             [attr.aria-pressed]="isActiveExercise(chip.id)"
             [attr.data-testid]="'leaderboard-exercise-chip-' + chip.id"
+            [puBusy]="isExerciseBusy(chip.id)"
             (click)="selectExercise(chip.id)"
           >
             <mat-icon aria-hidden="true">{{ chip.icon }}</mat-icon>
@@ -36,6 +37,9 @@
           type="button"
           class="exercise-chip exercise-more"
           [class.active]="isOverflowSelection()"
+          [puBusy]="
+            isOverflowSelection() && isExerciseBusy(selectedExerciseId())
+          "
           [matMenuTriggerFor]="exerciseMenu"
           data-testid="leaderboard-exercise-more"
         >
@@ -135,34 +139,51 @@
         </p>
       }
 
-      <div class="leaderboard-list-scroll">
+      <div
+        class="leaderboard-list-scroll"
+        [attr.aria-busy]="listLoading() ? 'true' : null"
+      >
         <ol data-testid="leaderboard-list">
           @for (entry of leaderboardSlots(); track entry.rank) {
-            <li>
-              <span class="rank">#{{ entry.rank }}</span>
-              <!-- Link the alias to /u/<uid> when the row carries a uid.
+            @if (listLoading()) {
+              <li data-testid="leaderboard-skeleton-row">
+                <span class="rank">#{{ entry.rank }}</span>
+                <pu-skeleton [width]="skeletonAliasWidth(entry.rank)" />
+                <pu-skeleton width="4rem" />
+              </li>
+            } @else {
+              <li>
+                <span class="rank">#{{ entry.rank }}</span>
+                <!-- Link the alias to /u/<uid> when the row carries a uid.
                    The ranker now requires the full publicProfile opt-in,
                    so every fresh row has a uid. uid-less rows can only
                    come from older cached snapshots and stay plain text
                    for forward-compat. -->
-              @if (entry.uid) {
-                <a
-                  class="alias alias-link"
-                  [routerLink]="['/u', entry.uid]"
-                  [attr.data-testid]="'leaderboard-link-' + entry.rank"
-                >
-                  {{ entry.alias }}
-                </a>
-              } @else {
-                <span class="alias">{{ entry.alias }}</span>
-              }
-              <strong>{{ formatValue(entry.reps) }}</strong>
-            </li>
+                @if (entry.uid) {
+                  <a
+                    class="alias alias-link"
+                    [routerLink]="['/u', entry.uid]"
+                    [attr.data-testid]="'leaderboard-link-' + entry.rank"
+                  >
+                    {{ entry.alias }}
+                  </a>
+                } @else {
+                  <span class="alias">{{ entry.alias }}</span>
+                }
+                <strong>{{ formatValue(entry.reps) }}</strong>
+              </li>
+            }
           }
         </ol>
       </div>
 
-      @if (currentUserEntry(); as me) {
+      @if (listLoading() && isLoggedIn()) {
+        <pu-skeleton
+          class="own-rank"
+          width="14rem"
+          data-testid="leaderboard-own-rank-skeleton"
+        />
+      } @else if (currentUserEntry(); as me) {
         @if (me.uid) {
           <a
             class="own-rank own-rank--link"

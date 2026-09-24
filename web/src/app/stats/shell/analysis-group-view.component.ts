@@ -7,6 +7,8 @@ import {
 } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
+import { LiveDataStore } from '@pu-stats/data-access-state';
+import { SkeletonComponent } from '@pu-stats/ui';
 import { HeatmapComponent } from '../components/heatmap/heatmap.component';
 import type { HeatmapMode } from '../components/heatmap/heatmap.utils';
 import { AnalysisStore } from '../analysis.store';
@@ -31,6 +33,7 @@ import {
   imports: [
     MatButtonToggleModule,
     MatCardModule,
+    SkeletonComponent,
     HeatmapComponent,
     AnalysisSegmentViewComponent,
   ],
@@ -40,6 +43,11 @@ import {
 })
 export class AnalysisGroupViewComponent {
   readonly store = inject(AnalysisStore);
+  private readonly live = inject(LiveDataStore);
+  /** A listener error drops `connected` but keeps the rows; those still render. */
+  readonly loaded = computed(
+    () => this.live.connected() || this.live.exerciseEntries().length > 0
+  );
   readonly heatmapMode = signal<HeatmapMode>('primary');
 
   readonly hasMultipleSegments = computed(

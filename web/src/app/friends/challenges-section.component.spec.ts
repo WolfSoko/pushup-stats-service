@@ -30,8 +30,22 @@ describe('ChallengesSectionComponent', () => {
     to: '2099-12-31',
     status: 'active',
     entries: [
-      { uid: 'b', displayName: 'Bob', value: 320, isViewer: false },
-      { uid: 'me', displayName: 'Me', value: 100, isViewer: true },
+      {
+        uid: 'b',
+        displayName: 'Bob',
+        value: 320,
+        isViewer: false,
+        canCheer: false,
+        cheered: false,
+      },
+      {
+        uid: 'me',
+        displayName: 'Me',
+        value: 100,
+        isViewer: true,
+        canCheer: false,
+        cheered: false,
+      },
     ],
     invited: [],
     viewerInvited: false,
@@ -93,6 +107,46 @@ describe('ChallengesSectionComponent', () => {
 
     // then
     expect(api.list).toHaveBeenCalledTimes(1);
+  });
+
+  it('should hold a card-shaped skeleton and no empty text while the first list is read', async () => {
+    // given — the re-read hangs, nothing has arrived yet
+    let answer: (list: ChallengeView[]) => void = () => undefined;
+    const { api, fixture } = await renderSection([]);
+    api.list.mockReturnValue(
+      new Promise((resolve) => {
+        answer = resolve;
+      })
+    );
+
+    // when
+    void fixture.debugElement.injector.get(ChallengesStore).reload();
+    fixture.detectChanges();
+
+    // then
+    const loading = screen.getByTestId('challenges-loading');
+    expect(loading.tagName.toLowerCase()).toBe('mat-card');
+    expect(loading.getAttribute('aria-busy')).toBe('true');
+    expect(loading.querySelector('mat-card-title pu-skeleton')).not.toBeNull();
+    expect(
+      loading.querySelector('mat-card-subtitle pu-skeleton')
+    ).not.toBeNull();
+    expect(loading.querySelectorAll('.participant')).toHaveLength(2);
+    expect(loading.querySelectorAll('.participant pu-skeleton')).toHaveLength(
+      4
+    );
+    expect(document.body.querySelector('mat-spinner')).toBeNull();
+    expect(document.body.textContent).not.toContain('Noch keine Challenge');
+
+    // when
+    answer([]);
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(screen.queryByTestId('challenges-loading')).toBeNull();
+    expect(document.body.querySelector('pu-skeleton')).toBeNull();
+    expect(document.body.textContent).toContain('Noch keine Challenge');
   });
 
   it('should say so and offer a retry when the list could not be loaded', async () => {
@@ -200,5 +254,111 @@ describe('ChallengesSectionComponent', () => {
 
     // then
     expect(document.body.textContent).toContain('schon vorbei');
+  });
+  it('should show the pressed answer button busy until the re-read lands', async () => {
+    // given — an answer the server has not confirmed yet
+    let answer: (result: { ok: boolean }) => void = () => undefined;
+    const { api, fixture } = await renderSection([invitation]);
+    api.respond.mockReturnValue(
+      new Promise((resolve) => {
+        answer = resolve;
+      })
+    );
+
+    // when
+    screen.getByTestId('challenge-decline').click();
+    fixture.detectChanges();
+
+    // then — decline spins, accept on the same card does not
+    expect(
+      screen.getByTestId('challenge-decline').getAttribute('aria-busy')
+    ).toBe('true');
+    expect(
+      screen.getByTestId('challenge-accept').getAttribute('aria-busy')
+    ).toBeNull();
+
+    // when
+    answer({ ok: true });
+    await new Promise((resolve) => setTimeout(resolve));
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(
+      screen.getByTestId('challenge-decline').getAttribute('aria-busy')
+    ).toBeNull();
+  });
+
+  it('should show the start button busy while the challenge is created', async () => {
+    // given — the dialog answers at once, the server does not
+    let answer: (result: { ok: boolean }) => void = () => undefined;
+    const input = {
+      friendUids: ['b'],
+      exerciseId: 'pushup',
+      exerciseName: 'Liegestütze',
+      target: 500,
+      days: 7,
+    };
+    const { api, fixture } = await renderSection([], [friend], input);
+    api.create.mockReturnValue(
+      new Promise((resolve) => {
+        answer = resolve;
+      })
+    );
+
+    // when — the dialog is dynamic-imported, so wait for the call itself
+    screen.getByTestId('challenge-start').click();
+    await vitest.waitFor(() => expect(api.create).toHaveBeenCalledWith(input), {
+      timeout: 10000,
+    });
+    fixture.detectChanges();
+
+    // then
+    expect(
+      screen.getByTestId('challenge-start').getAttribute('aria-busy')
+    ).toBe('true');
+
+    // when
+    answer({ ok: true });
+    await new Promise((resolve) => setTimeout(resolve));
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(
+      screen.getByTestId('challenge-start').getAttribute('aria-busy')
+    ).toBeNull();
+  });
+
+  it('should show the retry button busy while the list is re-read', async () => {
+    // given — the first read fails, the retry hangs
+    let answer: (list: ChallengeView[]) => void = () => undefined;
+    const { api, fixture } = await renderSection([challenge]);
+    api.list.mockRejectedValueOnce(new Error('offline'));
+    await fixture.debugElement.injector.get(ChallengesStore).reload();
+    fixture.detectChanges();
+    api.list.mockReturnValue(
+      new Promise((resolve) => {
+        answer = resolve;
+      })
+    );
+
+    // when
+    screen.getByTestId('challenges-retry').click();
+    fixture.detectChanges();
+
+    // then
+    expect(
+      screen.getByTestId('challenges-retry').getAttribute('aria-busy')
+    ).toBe('true');
+
+    // when
+    answer([challenge]);
+    await new Promise((resolve) => setTimeout(resolve));
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(screen.queryByTestId('challenges-load-failed')).toBeNull();
   });
 });

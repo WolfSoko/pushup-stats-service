@@ -9,6 +9,8 @@ import type { SessionStepRow } from './training-session.rows';
 function row(overrides: Partial<SessionStepRow> = {}): SessionStepRow {
   return {
     itemIndex: 0,
+    exerciseId: 'pushup',
+    variantId: null,
     name: 'Plank',
     icon: 'horizontal_rule',
     target: '0:50',

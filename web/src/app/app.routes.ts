@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { BRAND_NAME } from '@pu-stats/models';
 import {
   adminGuard,
   authGuard,
@@ -8,6 +9,7 @@ import {
 } from '@pu-auth/auth';
 import { AI_ASSISTANT_ROUTE } from './ai/ai-assistant.config';
 import { aiAssistantEnabledGuard } from './ai/ai-assistant.guard';
+import { blocksAppUpdateData } from './core/app-update/app-update-route-data';
 import { SettingsFacade } from './stats/shell/settings.facade';
 
 export const appRoutes: Routes = [
@@ -27,7 +29,7 @@ export const appRoutes: Routes = [
     path: 'app',
     canActivate: [authGuard],
     data: {
-      seoTitle: $localize`:@@seo.dashboard.title:Dashboard – Pushup Tracker`,
+      seoTitle: $localize`:@@seo.dashboard.title:Dashboard – ${BRAND_NAME}:brand:`,
       seoDescription: $localize`:@@seo.dashboard.description:Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert.`,
     },
     loadComponent: () =>
@@ -44,7 +46,7 @@ export const appRoutes: Routes = [
     path: 'login',
     canActivate: [publicOnlyGuard],
     data: {
-      seoTitle: $localize`:@@seo.login.title:Login – Pushup Tracker`,
+      seoTitle: $localize`:@@seo.login.title:Login – ${BRAND_NAME}:brand:`,
       seoDescription: $localize`:@@seo.login.description:Melde dich an und tracke dein Pushup-Training über alle Geräte.`,
       noindex: true,
     },
@@ -54,7 +56,7 @@ export const appRoutes: Routes = [
     path: 'register',
     canActivate: [publicOnlyGuard],
     data: {
-      seoTitle: $localize`:@@seo.register.title:Registrierung – Pushup Tracker`,
+      seoTitle: $localize`:@@seo.register.title:Registrierung – ${BRAND_NAME}:brand:`,
       seoDescription: $localize`:@@seo.register.description:Erstelle dein Konto und richte Profil, Tagesziel und Einwilligungen ein.`,
       noindex: true,
     },
@@ -64,7 +66,7 @@ export const appRoutes: Routes = [
     path: 'history',
     canActivate: [authGuard],
     data: {
-      seoTitle: $localize`:@@seo.history.title:Historie – Pushup Tracker`,
+      seoTitle: $localize`:@@seo.history.title:Historie – ${BRAND_NAME}:brand:`,
       seoDescription: $localize`:@@seo.history.description:Durchsuche deine Trainingshistorie, filtere nach Zeitraum und behalte den Überblick.`,
     },
     loadComponent: () =>
@@ -76,7 +78,7 @@ export const appRoutes: Routes = [
     path: 'analysis',
     canActivate: [authGuard],
     data: {
-      seoTitle: $localize`:@@seo.analysis.title:Analyse – Pushup Tracker`,
+      seoTitle: $localize`:@@seo.analysis.title:Analyse – ${BRAND_NAME}:brand:`,
       seoDescription: $localize`:@@seo.analysis.description:Analysiere Trends, Verteilungen und Streaks deines Trainings.`,
     },
     loadComponent: () =>
@@ -91,7 +93,7 @@ export const appRoutes: Routes = [
     // the autosave debounce or drop an in-flight write.
     providers: [SettingsFacade],
     data: {
-      seoTitle: $localize`:@@seo.settings.title:Einstellungen – Pushup Tracker`,
+      seoTitle: $localize`:@@seo.settings.title:Einstellungen – ${BRAND_NAME}:brand:`,
       seoDescription: $localize`:@@seo.settings.description:Verwalte Profil, Leaderboard-Sichtbarkeit und Tagesziel-Einstellungen.`,
     },
     loadComponent: () =>
@@ -110,7 +112,7 @@ export const appRoutes: Routes = [
       {
         path: 'ziele',
         data: {
-          seoTitle: $localize`:@@seo.goals.title:Tagesziele – Pushup Tracker`,
+          seoTitle: $localize`:@@seo.goals.title:Tagesziele – ${BRAND_NAME}:brand:`,
           seoDescription: $localize`:@@seo.goals.description:Plane verschiedene Übungen pro Tag, pro Woche und pro Monat – mit Wochentag-Filter.`,
         },
         loadComponent: () =>
@@ -121,7 +123,7 @@ export const appRoutes: Routes = [
       {
         path: 'erinnerungen',
         data: {
-          seoTitle: $localize`:@@seo.reminders.title:Erinnerungen – Pushup Tracker`,
+          seoTitle: $localize`:@@seo.reminders.title:Erinnerungen – ${BRAND_NAME}:brand:`,
           seoDescription: $localize`:@@seo.reminders.description:Konfiguriere Liegestütz-Erinnerungen und Push-Benachrichtigungen.`,
         },
         loadComponent: () =>
@@ -148,7 +150,7 @@ export const appRoutes: Routes = [
   {
     path: 'training-plans',
     data: {
-      seoTitle: $localize`:@@seo.trainingPlans.title:Trainingspläne – Pushup Tracker`,
+      seoTitle: $localize`:@@seo.trainingPlans.title:Trainingspläne – ${BRAND_NAME}:brand:`,
       seoDescription: $localize`:@@seo.trainingPlans.description:Strukturierte Liegestütz-Trainingspläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung.`,
     },
     loadComponent: () =>
@@ -160,6 +162,7 @@ export const appRoutes: Routes = [
     // Ahead of `training-plans/:slug` so the session page wins the more
     // specific URL instead of being swallowed by the detail route.
     path: 'training-plans/:slug/session',
+    data: blocksAppUpdateData,
     loadComponent: () =>
       import('./training-plans/session/training-session.component').then(
         (m) => m.TrainingSessionComponent
@@ -176,7 +179,7 @@ export const appRoutes: Routes = [
     path: 'workouts',
     canActivate: [authGuard],
     data: {
-      seoTitle: $localize`:@@seo.workouts.title:Meine Sessions – Pushup Tracker`,
+      seoTitle: $localize`:@@seo.workouts.title:Meine Sessions – ${BRAND_NAME}:brand:`,
       seoDescription: $localize`:@@seo.workouts.description:Eigene Trainingssessions zusammenstellen, geführt durchführen und mit Freunden teilen.`,
       noindex: true,
     },
@@ -188,7 +191,7 @@ export const appRoutes: Routes = [
   {
     path: 'workouts/new',
     canActivate: [authGuard],
-    data: { noindex: true },
+    data: { noindex: true, ...blocksAppUpdateData },
     loadComponent: () =>
       import('./workouts/workout-editor.component').then(
         (m) => m.WorkoutEditorComponent
@@ -197,7 +200,7 @@ export const appRoutes: Routes = [
   {
     path: 'workouts/:id/edit',
     canActivate: [authGuard],
-    data: { noindex: true },
+    data: { noindex: true, ...blocksAppUpdateData },
     loadComponent: () =>
       import('./workouts/workout-editor.component').then(
         (m) => m.WorkoutEditorComponent
@@ -206,7 +209,7 @@ export const appRoutes: Routes = [
   {
     path: 'workouts/:id/run',
     canActivate: [authGuard],
-    data: { noindex: true },
+    data: { noindex: true, ...blocksAppUpdateData },
     loadComponent: () =>
       import('./workouts/session/workout-session.component').then(
         (m) => m.WorkoutSessionComponent
@@ -219,7 +222,7 @@ export const appRoutes: Routes = [
         path: '',
         pathMatch: 'full',
         data: {
-          seoTitle: $localize`:@@seo.wiki.pushupTypes.title:Liegestütztypen erklärt – Pushup Tracker`,
+          seoTitle: $localize`:@@seo.wiki.pushupTypes.title:Liegestütztypen erklärt – ${BRAND_NAME}:brand:`,
           seoDescription: $localize`:@@seo.wiki.pushupTypes.description:Saubere Ausführung der wichtigsten Liegestütz-Varianten – Standard, Knie, Diamant, Archer, einarmig und mehr.`,
         },
         loadComponent: () =>
@@ -243,8 +246,8 @@ export const appRoutes: Routes = [
         path: '',
         pathMatch: 'full',
         data: {
-          seoTitle: $localize`:@@seo.wiki.exercises.title:Übungen erklärt – Pushup Tracker`,
-          seoDescription: $localize`:@@seo.wiki.exercises.description:Saubere Ausführung der Übungen, die du in Pushup Tracker mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.`,
+          seoTitle: $localize`:@@seo.wiki.exercises.title:Übungen erklärt – ${BRAND_NAME}:brand:`,
+          seoDescription: $localize`:@@seo.wiki.exercises.description:Saubere Ausführung der Übungen, die du in ${BRAND_NAME}:brand: mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.`,
         },
         loadComponent: () =>
           import('./wiki/exercises-page.component').then(
@@ -264,7 +267,7 @@ export const appRoutes: Routes = [
     path: 'freunde',
     canActivate: [authGuard],
     data: {
-      seoTitle: $localize`:@@seo.friends.title:Freunde – Pushup Tracker`,
+      seoTitle: $localize`:@@seo.friends.title:Freunde – ${BRAND_NAME}:brand:`,
       seoDescription: $localize`:@@seo.friends.description:Freunde bestätigen, Anfragen beantworten und gemeinsam trainieren.`,
       noindex: true,
     },
@@ -277,7 +280,7 @@ export const appRoutes: Routes = [
     path: 'nachrichten',
     canActivate: [authGuard],
     data: {
-      seoTitle: $localize`:@@seo.notifications.title:Nachrichten – Pushup Tracker`,
+      seoTitle: $localize`:@@seo.notifications.title:Nachrichten – ${BRAND_NAME}:brand:`,
       seoDescription: $localize`:@@seo.notifications.description:Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen an einem Ort.`,
       noindex: true,
     },
@@ -290,7 +293,7 @@ export const appRoutes: Routes = [
     path: 'abzeichen',
     canActivate: [authGuard],
     data: {
-      seoTitle: $localize`:@@seo.achievements.title:Abzeichen – Pushup Tracker`,
+      seoTitle: $localize`:@@seo.achievements.title:Abzeichen – ${BRAND_NAME}:brand:`,
       seoDescription: $localize`:@@seo.achievements.description:Deine verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist.`,
       noindex: true,
     },
@@ -302,7 +305,7 @@ export const appRoutes: Routes = [
   {
     path: 'leaderboard',
     data: {
-      seoTitle: $localize`:@@seo.leaderboard.title:Bestenliste – Pushup Tracker`,
+      seoTitle: $localize`:@@seo.leaderboard.title:Bestenliste – ${BRAND_NAME}:brand:`,
       seoDescription: $localize`:@@seo.leaderboard.description:Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.`,
     },
     loadComponent: () =>
@@ -313,7 +316,7 @@ export const appRoutes: Routes = [
   {
     path: 'u/:uid',
     data: {
-      seoTitle: $localize`:@@seo.publicProfile.title:Profil – Pushup Tracker`,
+      seoTitle: $localize`:@@seo.publicProfile.title:Profil – ${BRAND_NAME}:brand:`,
       seoDescription: $localize`:@@seo.publicProfile.description:Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.`,
     },
     loadComponent: () =>
@@ -328,7 +331,7 @@ export const appRoutes: Routes = [
         path: '',
         pathMatch: 'full',
         data: {
-          seoTitle: $localize`:@@seo.blog.title:Blog – Liegestütze Tipps & Guides | Pushup Tracker`,
+          seoTitle: $localize`:@@seo.blog.title:Blog – Liegestütze Tipps & Guides | ${BRAND_NAME}:brand:`,
           seoDescription: $localize`:@@seo.blog.description:Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten.`,
         },
         loadComponent: () =>
@@ -346,8 +349,8 @@ export const appRoutes: Routes = [
   {
     path: 'ueber-uns',
     data: {
-      seoTitle: $localize`:@@seo.about.title:Über uns – Pushup Tracker`,
-      seoDescription: $localize`:@@seo.about.description:Wer hinter Pushup Tracker steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.`,
+      seoTitle: $localize`:@@seo.about.title:Über uns – ${BRAND_NAME}:brand:`,
+      seoDescription: $localize`:@@seo.about.description:Wer hinter ${BRAND_NAME}:brand: steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.`,
     },
     loadComponent: () =>
       import('./marketing/about/ueber-uns-page.component').then(
@@ -357,8 +360,8 @@ export const appRoutes: Routes = [
   {
     path: 'impressum',
     data: {
-      seoTitle: $localize`:@@seo.impressum.title:Impressum – Pushup Tracker`,
-      seoDescription: $localize`:@@seo.impressum.description:Impressum und Anbieterkennzeichnung von Pushup Tracker.`,
+      seoTitle: $localize`:@@seo.impressum.title:Impressum – ${BRAND_NAME}:brand:`,
+      seoDescription: $localize`:@@seo.impressum.description:Impressum und Anbieterkennzeichnung von ${BRAND_NAME}:brand:.`,
     },
     loadComponent: () =>
       import('./marketing/legal/impressum-page.component').then(
@@ -368,8 +371,8 @@ export const appRoutes: Routes = [
   {
     path: 'datenschutz',
     data: {
-      seoTitle: $localize`:@@seo.datenschutz.title:Datenschutzerklärung – Pushup Tracker`,
-      seoDescription: $localize`:@@seo.datenschutz.description:Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.`,
+      seoTitle: $localize`:@@seo.datenschutz.title:Datenschutzerklärung – ${BRAND_NAME}:brand:`,
+      seoDescription: $localize`:@@seo.datenschutz.description:Datenschutzerklärung von ${BRAND_NAME}:brand: – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.`,
     },
     loadComponent: () =>
       import('./marketing/legal/datenschutz-page.component').then(

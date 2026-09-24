@@ -21,6 +21,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthStore } from '@pu-auth/auth';
 import { findPlanBySlug, localizeTrainingPlanContent } from '@pu-stats/models';
+import { BusyDirective } from '@pu-stats/ui';
 import { previewDayProgress } from './training-plan-detail.exercises';
 import { ExerciseRefComponent } from '../core/exercise-ref/exercise-ref.component';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
@@ -52,6 +53,7 @@ import { DayRow } from './training-plan-detail.models';
 @Component({
   selector: 'app-training-plan-detail',
   imports: [
+    BusyDirective,
     DatePipe,
     MatCardModule,
     MatButtonModule,

@@ -1,14 +1,14 @@
-A push-up counter and workout tracker that turns push-ups and 41 more exercises into a game you want to win.
+A push-up counter and workout tracker that turns push-ups and 46 more exercises into a game you want to win.
 
-Whether you are starting from zero or already past your first hundred, this app keeps you going. Your camera counts reps automatically, curated training plans tell you exactly what to do today, and friends and the leaderboard push you without nagging.
+Your camera counts reps automatically, curated training plans tell you exactly what to do today, and friends and the leaderboard push you without nagging.
 
 📷 AUTOMATIC REP COUNTING
 Prop up your phone, open the auto counter, start moving: the AI recognizes push-ups, squats, pull-ups and sit-ups in real time and counts every clean rep. Planks and hollow holds get an automatic hold timer instead. Detection runs on your device — no video ever leaves your phone.
 
 🏋️ MORE THAN PUSH-UPS
 • 13 push-up variations: standard, knee, incline, decline, wide, diamond, pike, archer, all the way to one-arm — each with technique instructions
-• 42 exercises across 9 categories: push-ups, push, pull, squat, hinge, lunge, core, cardio, mobility
-• Pull-ups, dips, squats, lunges, planks, hollow holds, burpees, jump rope, yoga, stretching and more
+• 47 exercises across 9 categories: push-ups, push, pull, squat, hinge, lunge, core, cardio, mobility
+• Pull-ups, dips, squats, lunges, planks, burpees, yoga and more
 • Distance and time cardio: running, cycling, rowing, swimming — pace included
 
 ⚡ LOGGING IN TWO SECONDS
@@ -25,7 +25,7 @@ Prop up your phone, open the auto counter, start moving: the AI recognizes push-
 Five plans open with a max test and rescale every daily target to your result — no 3×20 when you can do 8. Rest days, light days and test days included. Completed days tick themselves off, and you can share your active plan by link.
 
 🧩 YOUR OWN SESSIONS
-Build your own workout: exercises, targets and sets in your order. The app walks you through it. Show your sessions on your profile or send them straight to friends — everyone gets their own copy.
+Build your own workout: exercises, targets and sets in your order. The app walks you through it. Show your sessions on your profile or send them straight to friends — everyone gets their own copy. Each session can remind you itself — e.g. every 2 days at 3 pm via push.
 
 🎯 GOALS, STREAKS & STATS
 • Daily, weekly and monthly goals — per exercise, with a weekday filter
@@ -48,7 +48,7 @@ Push notifications with your own interval, quiet hours, weekdays and time zone �
 An exercise wiki with clean form, technique cues and the mistakes everyone makes, plus a blog.
 
 🔒 YOUR DATA
-Try it as a guest, no account needed. Adjustable cookie consent — personalized ads only with your OK. Delete your account any time; training data is kept only in anonymized form. Database hosted in Frankfurt, Germany.
+Try it as a guest, no account needed. Adjustable cookie consent — personalized ads only with your OK. Delete your account any time, along with all your training data. Database hosted in Frankfurt, Germany.
 
 📱 ANDROID + WEB
 The same data on your phone and in the browser, synced live across every device. Sign in with Google or email. Works offline too — entries sync as soon as you are back online. Light and dark themes.

@@ -26,7 +26,6 @@ import { App } from './app';
 import { TrainingPlanStore } from './training-plans/training-plan.store';
 import { GoalReachedNotificationService } from './core/goal-reached-notification.service';
 import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';
-import { SwUpdateService } from './core/sw-update.service';
 import { FriendsApiService } from './friends/friends-api.service';
 import { ChallengesApiService } from './friends/challenges-api.service';
 
@@ -1044,114 +1043,6 @@ describe('App (testing-library)', () => {
     });
   });
 
-  // The reload prompt used to live only in a MatSnackBar, which any other
-  // toast dismisses for good — VERSION_READY never fires twice. The toolbar
-  // button is the durable half of the notice; SwUpdateService owns the
-  // snackbar half and is covered in core/sw-update.service.spec.ts.
-  describe('service worker update indicator', () => {
-    function renderWithSwUpdate(swUpdateService: {
-      updateAvailable: () => boolean;
-      unrecoverable?: () => boolean;
-      applyUpdate: () => Promise<void>;
-    }) {
-      const service = {
-        unrecoverable: () => false,
-        ...swUpdateService,
-      };
-      return render(App, {
-        providers: [
-          provideRouter([]),
-          { provide: PLATFORM_ID, useValue: 'browser' },
-          {
-            provide: UserContextService,
-            useValue: {
-              userNameSafe: userNameSignal.asReadonly(),
-              userIdSafe: () => 'u1',
-              accountPhotoUrl: () => null,
-              isAdmin: () => false,
-              isGuest: () => false,
-            },
-          },
-          { provide: AuthStore, useValue: authMock },
-          { provide: AuthService, useValue: authServiceMock },
-          { provide: Auth, useValue: firebaseAuthMock },
-          { provide: UserConfigApiService, useValue: userConfigApiMock },
-          { provide: StatsApiService, useValue: statsApiMock },
-          { provide: AdsStore, useValue: adsStoreMock },
-          { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
-          { provide: FriendsApiService, useValue: friendsApiMock },
-          { provide: ChallengesApiService, useValue: challengesApiMock },
-          {
-            provide: ExerciseFirestoreService,
-            useValue: exerciseFirestoreMock,
-          },
-          {
-            provide: LiveDataStore,
-            useValue: {
-              connected: liveConnectedSignal,
-              exerciseEntries: liveEntriesSignal,
-              exerciseEntriesLoaded: liveConnectedSignal,
-              updateTick: signal(0),
-            },
-          },
-          { provide: SwUpdateService, useValue: service },
-        ],
-      });
-    }
-
-    it('should hide the reload button while no update is pending', async () => {
-      // given / when
-      await renderWithSwUpdate({
-        updateAvailable: () => false,
-        applyUpdate: vitest.fn().mockResolvedValue(undefined),
-      });
-
-      // then
-      expect(
-        screen.queryByRole('button', {
-          name: /Neue Version verf\u00fcgbar/i,
-        })
-      ).toBeNull();
-    });
-
-    it('should apply the update when the toolbar reload button is clicked', async () => {
-      // given
-      const applyUpdate = vitest.fn().mockResolvedValue(undefined);
-      const pending = signal(true);
-      await renderWithSwUpdate({
-        updateAvailable: pending,
-        applyUpdate,
-      });
-
-      // when
-      await userEvent.click(
-        screen.getByRole('button', { name: /Neue Version verf\u00fcgbar/i })
-      );
-
-      // then
-      expect(applyUpdate).toHaveBeenCalledTimes(1);
-    });
-
-    // A corrupted ngsw cache is not "a new version is ready" — screen readers
-    // must not announce it as one.
-    it('should announce the corrupted-cache state instead of a new version', async () => {
-      // given / when
-      await renderWithSwUpdate({
-        updateAvailable: () => true,
-        unrecoverable: () => true,
-        applyUpdate: vitest.fn().mockResolvedValue(undefined),
-      });
-
-      // then
-      expect(
-        screen.getByRole('button', { name: /App-Daten besch\u00e4digt/i })
-      ).toBeTruthy();
-      expect(
-        screen.queryByRole('button', { name: /Neue Version verf\u00fcgbar/i })
-      ).toBeNull();
-    });
-  });
-
   it('keeps base document title when no seo route data is active', async () => {
     await render(App, {
       providers: [
@@ -1293,7 +1184,7 @@ describe('App (testing-library)', () => {
               fillToGoal: vitest.fn(),
               openDialog: vitest.fn(),
               openAutoCount,
-              fillToGoalInFlight: signal(false).asReadonly(),
+              busyKeys: signal(new Set<string>()).asReadonly(),
             },
           },
         ],
@@ -1353,7 +1244,7 @@ describe('App (testing-library)', () => {
               openDialog: vitest.fn(),
               openAutoCount: vitest.fn(),
               openExerciseTimer,
-              fillToGoalInFlight: signal(false).asReadonly(),
+              busyKeys: signal(new Set<string>()).asReadonly(),
             },
           },
         ],

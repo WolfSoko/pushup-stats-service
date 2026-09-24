@@ -66,17 +66,11 @@
       <button
         mat-flat-button
         color="warn"
-        [disabled]="bulkLoading()"
+        [puBusy]="bulkLoading()"
         (click)="bulkDelete()"
       >
-        @if (bulkLoading()) {
-          <mat-spinner diameter="20" />
-        } @else {
-          <ng-container>
-            <mat-icon>delete_sweep</mat-icon>
-            <span i18n="@@admin.bulk.button">Inaktive löschen</span>
-          </ng-container>
-        }
+        <mat-icon>delete_sweep</mat-icon>
+        <span i18n="@@admin.bulk.button">Inaktive löschen</span>
       </button>
     </mat-card-actions>
     @if (bulkResult()) {
@@ -86,6 +80,13 @@
           {{ bulkResult()!.deleted }},
           <span i18n="@@admin.bulk.skipped">Übersprungen:</span>
           {{ bulkResult()!.skipped }}
+          @if (bulkResult()!.remaining > 0) {
+            ,
+            <span i18n="@@admin.bulk.remaining"
+              >Noch offen (erneut ausführen):</span
+            >
+            {{ bulkResult()!.remaining }}
+          }
         </p>
       </mat-card-content>
     }
@@ -107,6 +108,7 @@
     </mat-slide-toggle>
     <button
       mat-icon-button
+      [puBusy]="loading()"
       (click)="loadUsers()"
       [matTooltip]="refreshTooltip"
       [attr.aria-label]="refreshTooltip"
@@ -116,9 +118,9 @@
   </div>
 
   @if (loading()) {
-    <div class="spinner-container">
-      <mat-spinner />
-    </div>
+    <mat-card aria-busy="true" data-testid="admin-users-skeleton">
+      <pu-skeleton-table [rows]="8" [columns]="7" />
+    </mat-card>
   } @else if (error()) {
     <p class="error-text">{{ error() }}</p>
   } @else {
@@ -228,6 +230,7 @@
               <button
                 mat-icon-button
                 color="warn"
+                [puBusy]="deletingUser.isBusy(u.uid)"
                 (click)="openDeleteDialog(u)"
                 [matTooltip]="deleteUserTooltip"
                 [attr.aria-label]="deleteUserTooltip"

@@ -22,6 +22,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { RouterLink } from '@angular/router';
 import { UserContextService } from '@pu-auth/auth';
+import { BusyDirective, SkeletonComponent } from '@pu-stats/ui';
 import {
   type ComplexGoalEntry,
   type ComplexGoals,
@@ -48,6 +49,8 @@ import {
   selector: 'app-goals-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
+    SkeletonComponent,
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
@@ -70,6 +73,8 @@ export class GoalsPageComponent implements OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
 
   readonly isGuest = this.user.isGuest;
+  readonly configLoaded = this.userConfigStore.loaded;
+  readonly skeletonRows = [0, 1];
   readonly exerciseOptions = buildExerciseOptions();
   readonly weekdays = WEEKDAYS;
   readonly scopes = GOAL_SCOPES;

@@ -136,7 +136,50 @@ describe('WorkoutsStore', () => {
     // then
     expect(ok).toBe(false);
     expect(store.lastRejection()).toBe('failed');
-    expect(store.busy()).toBe(false);
+    expect(store.isBusy('remove:w1')).toBe(false);
+  });
+
+  it('should keep only the pressed action busy until its write settles', async () => {
+    // given — a delete Firestore has not acknowledged yet
+    let settle: () => void = () => undefined;
+    const { store, api } = setup();
+    await flush();
+    api.deleteWorkout.mockReturnValue(
+      new Promise<void>((resolve) => {
+        settle = resolve;
+      })
+    );
+
+    // when
+    const done = store.remove('w1');
+
+    // then — this card's delete spins; its other buttons and other cards do not
+    expect(store.isBusy('remove:w1')).toBe(true);
+    expect(store.busyKeys().has('remove:w1')).toBe(true);
+    expect(store.isBusy('share:w1')).toBe(false);
+    expect(store.isBusy('remove:w2')).toBe(false);
+
+    // when
+    settle();
+    await done;
+
+    // then
+    expect(store.isBusy('remove:w1')).toBe(false);
+    expect(store.busyKeys().size).toBe(0);
+  });
+
+  it('should key a create and an update apart from each other', async () => {
+    // given
+    const { store, api } = setup();
+    await flush();
+    api.createWorkout.mockReturnValue(new Promise(() => undefined));
+
+    // when
+    void store.create(VALID_INPUT);
+
+    // then
+    expect(store.isBusy('create')).toBe(true);
+    expect(store.isBusy('update:w1')).toBe(false);
   });
 
   it('should share through the callable and remember how many got it', async () => {

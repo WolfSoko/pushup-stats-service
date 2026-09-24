@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { BusyDirective } from '@pu-stats/ui';
 
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { ChallengesSectionComponent } from './challenges-section.component';
@@ -33,6 +34,7 @@ import type { FriendsBoardPeriod } from './friends-api.service';
   selector: 'app-friends-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
@@ -76,6 +78,7 @@ import type { FriendsBoardPeriod } from './friends-api.service';
         <section>
           <app-friend-requests
             [rows]="store.incoming()"
+            [busyKeys]="store.busyKeys()"
             (accept)="store.accept($event)"
             (decline)="store.decline($event)"
           />
@@ -89,7 +92,7 @@ import type { FriendsBoardPeriod } from './friends-api.service';
             [entries]="store.board()"
             [period]="store.boardPeriod()"
             [comparison]="store.boardComparison()"
-            [cheering]="store.cheering()"
+            [busyKeys]="store.busyKeys()"
             (periodChange)="changePeriod($event)"
             (comparisonChange)="store.compareBy($event)"
             (cheer)="store.cheer($event)"
@@ -107,6 +110,7 @@ import type { FriendsBoardPeriod } from './friends-api.service';
         <app-friends-list
           [rows]="store.friends()"
           [loading]="store.loading() && store.isEmpty()"
+          [busyKeys]="store.busyKeys()"
           (remove)="store.remove($event)"
           (invite)="invite()"
         />
@@ -125,6 +129,8 @@ import type { FriendsBoardPeriod } from './friends-api.service';
                 <button
                   mat-stroked-button
                   type="button"
+                  data-testid="friend-withdraw"
+                  [puBusy]="store.isBusy('remove:' + row.id)"
                   (click)="store.remove(row.id)"
                   i18n="@@friends.withdraw"
                 >

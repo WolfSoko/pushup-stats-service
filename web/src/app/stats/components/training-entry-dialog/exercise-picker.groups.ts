@@ -10,6 +10,11 @@ import {
   exerciseDisplayName,
 } from '../../i18n/exercise-display-names';
 import {
+  matchesTokens,
+  normalizeSearch,
+  searchTokens,
+} from '../../../core/search-text';
+import {
   ExercisePickerGroup,
   ExercisePickerOption,
   ExerciseSuggestions,
@@ -89,13 +94,13 @@ export function filterExercisePickerGroups(
   query: string,
   groups: ReadonlyArray<ExercisePickerGroup>
 ): ExercisePickerGroup[] {
-  const tokens = normalizeSearch(query).split(' ').filter(Boolean);
+  const tokens = searchTokens(query);
   if (tokens.length === 0) return [...groups];
   return groups
     .map((group) => ({
       ...group,
       options: group.options.filter((option) =>
-        tokens.every((token) => option.searchText.includes(token))
+        matchesTokens(tokens, option.searchText)
       ),
     }))
     .filter((group) => group.options.length > 0);
@@ -132,21 +137,6 @@ function measurementFilter(
     const measurement = findExerciseDefinition(id)?.measurement;
     return measurement !== undefined && measurements.includes(measurement);
   };
-}
-
-/**
- * Case- and diacritic-insensitive search key. Users type "kniebeuge" or
- * "russian twist" without umlauts far more often than not, and the
- * catalog mixes German and English names.
- */
-export function normalizeSearch(value: string): string {
-  return value
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/ß/g, 'ss')
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, ' ');
 }
 
 function knownIds(ids: readonly string[] | undefined): string[] {

@@ -1,7 +1,7 @@
 import { PLATFORM_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { StatsTableComponent } from './stats-table.component';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
@@ -702,6 +702,129 @@ describe('StatsTableComponent', () => {
     expect(component.isBusy('update', '1')).toBe(false);
   });
 
+  describe('busy CTAs', () => {
+    const entries = [
+      { _id: 'a', timestamp: '2026-02-11T10:00:00', reps: 12, source: 'web' },
+      { _id: 'b', timestamp: '2026-02-11T11:00:00', reps: 8, source: 'web' },
+    ];
+
+    async function renderRows(): Promise<
+      ComponentFixture<StatsTableComponent>
+    > {
+      // The virtual viewport has no height in jsdom; the server fallback
+      // renders every row.
+      TestBed.resetTestingModule();
+      await TestBed.configureTestingModule({
+        imports: [StatsTableComponent],
+        providers: [
+          { provide: PLATFORM_ID, useValue: 'server' },
+          { provide: UserContextService, useValue: userMock },
+          { provide: UserConfigApiService, useValue: userConfigApiMock },
+        ],
+      }).compileComponents();
+      const rowsFixture = TestBed.createComponent(StatsTableComponent);
+      rowsFixture.componentRef.setInput('entries', entries);
+      await rowsFixture.whenStable();
+      return rowsFixture;
+    }
+
+    function rowButtons(host: HTMLElement, id: string) {
+      const buttons = host.querySelectorAll(
+        `#entry-${id} mat-cell.actions button`
+      );
+      return {
+        edit: buttons[0] as HTMLButtonElement,
+        remove: buttons[1] as HTMLButtonElement,
+      };
+    }
+
+    it('should mark only the deleting row busy and keep it enabled', async () => {
+      // given
+      const rowsFixture = await renderRows();
+
+      // when
+      rowsFixture.componentRef.setInput('busyAction', 'delete');
+      rowsFixture.componentRef.setInput('busyId', 'b');
+      await rowsFixture.whenStable();
+
+      // then
+      const host = rowsFixture.nativeElement as HTMLElement;
+      expect(rowButtons(host, 'b').remove.getAttribute('aria-busy')).toBe(
+        'true'
+      );
+      expect(rowButtons(host, 'b').remove.disabled).toBe(false);
+      expect(rowButtons(host, 'b').edit.getAttribute('aria-busy')).toBeNull();
+      expect(rowButtons(host, 'a').remove.getAttribute('aria-busy')).toBeNull();
+      expect(host.querySelector('mat-spinner')).toBeNull();
+
+      // when
+      rowsFixture.componentRef.setInput('busyAction', null);
+      rowsFixture.componentRef.setInput('busyId', null);
+      await rowsFixture.whenStable();
+
+      // then
+      expect(rowButtons(host, 'b').remove.getAttribute('aria-busy')).toBeNull();
+    });
+
+    it('should mark the edit button of the updating row busy', async () => {
+      // given
+      const rowsFixture = await renderRows();
+
+      // when
+      rowsFixture.componentRef.setInput('busyAction', 'update');
+      rowsFixture.componentRef.setInput('busyId', 'a');
+      await rowsFixture.whenStable();
+
+      // then
+      const host = rowsFixture.nativeElement as HTMLElement;
+      expect(rowButtons(host, 'a').edit.getAttribute('aria-busy')).toBe('true');
+      expect(rowButtons(host, 'a').remove.getAttribute('aria-busy')).toBeNull();
+    });
+
+    it('should mark the add button busy while an entry is being created', async () => {
+      // given
+      const rowsFixture = await renderRows();
+      const addButton = (
+        rowsFixture.nativeElement as HTMLElement
+      ).querySelector('.add-btn') as HTMLButtonElement;
+
+      // when
+      rowsFixture.componentRef.setInput('busyAction', 'create');
+      await rowsFixture.whenStable();
+
+      // then
+      expect(addButton.getAttribute('aria-busy')).toBe('true');
+    });
+
+    it('should mark the source toggle busy until the config write settles', async () => {
+      // given
+      const write = new Subject<unknown>();
+      (
+        userConfigApiMock.updateConfig as ReturnType<typeof vitest.fn>
+      ).mockReturnValueOnce(write.asObservable());
+      await fixture.whenStable();
+      const toggle = (fixture.nativeElement as HTMLElement).querySelector(
+        '.toggle-source'
+      ) as HTMLButtonElement;
+
+      // when
+      toggle.click();
+      await fixture.whenStable();
+
+      // then
+      expect(toggle.getAttribute('aria-busy')).toBe('true');
+
+      // when
+      write.next({});
+      write.complete();
+      await new Promise((resolve) => setTimeout(resolve));
+      await fixture.whenStable();
+
+      // then
+      expect(toggle.getAttribute('aria-busy')).toBeNull();
+    });
+  });
+
   describe('formatSets', () => {
     it('Given uniform sets When formatSets is called Then returns "count×reps"', () => {
       const component = fixture.componentInstance;
@@ -762,6 +885,45 @@ describe('StatsTableComponent', () => {
       });
 
       expect(removeSpy).toHaveBeenCalledWith({ kind: 'exercise', id: 'ex-9' });
+    });
+  });
+
+  describe('loading skeleton', () => {
+    it('should render a skeleton table and no empty text while the entries are loading', async () => {
+      // given
+      fixture.componentRef.setInput('entries', []);
+
+      // when
+      fixture.componentRef.setInput('loading', true);
+      await fixture.whenStable();
+
+      // then
+      const host = fixture.nativeElement as HTMLElement;
+      expect(
+        host.querySelector(
+          '[data-testid="stats-table-skeleton"] pu-skeleton-table'
+        )
+      ).toBeTruthy();
+      expect(
+        host.querySelector('mat-card-content')?.getAttribute('aria-busy')
+      ).toBe('true');
+      expect(host.querySelector('.empty')).toBeNull();
+      expect(host.querySelector('mat-table')).toBeNull();
+      expect(host.textContent).not.toContain('Einträge');
+
+      // when
+      fixture.componentRef.setInput('loading', false);
+      await fixture.whenStable();
+
+      // then
+      expect(host.querySelector('pu-skeleton-table')).toBeNull();
+      expect(
+        host.querySelector('mat-card-content')?.getAttribute('aria-busy')
+      ).toBeNull();
+      expect(host.querySelector('.empty')?.textContent).toContain(
+        'Keine Einträge im gewählten Zeitraum.'
+      );
+      expect(host.textContent).toContain('0 Einträge');
     });
   });
 

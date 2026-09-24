@@ -60,7 +60,8 @@
             "onlyDependOnLibsWithTags": [
               "scope:models",
               "scope:date",
-              "scope:testing"
+              "scope:testing",
+              "scope:ui"
             ],
             "bannedExternalImports": ["@firebase/*"]
           },
@@ -79,7 +80,8 @@
             "onlyDependOnLibsWithTags": [
               "scope:models",
               "scope:date",
-              "scope:data-access"
+              "scope:data-access",
+              "scope:ui"
             ],
             "bannedExternalImports": ["@firebase/*"]
           },
@@ -92,7 +94,8 @@
               "scope:data-access-state",
               "scope:motivation",
               "scope:push",
-              "scope:testing"
+              "scope:testing",
+              "scope:ui"
             ],
             "bannedExternalImports": ["@firebase/*"]
           },
@@ -103,7 +106,8 @@
               "scope:date",
               "scope:data-access",
               "scope:auth",
-              "scope:testing"
+              "scope:testing",
+              "scope:ui"
             ],
             "bannedExternalImports": ["@firebase/*"]
           },
@@ -112,7 +116,8 @@
             "onlyDependOnLibsWithTags": [
               "scope:models",
               "scope:date",
-              "scope:testing"
+              "scope:testing",
+              "scope:ui"
             ],
             "bannedExternalImports": ["@firebase/*"]
           },
@@ -156,6 +161,11 @@
             "bannedExternalImports": ["@firebase/*"]
           },
           {
+            "sourceTag": "scope:ui",
+            "onlyDependOnLibsWithTags": [],
+            "bannedExternalImports": ["@firebase/*"]
+          },
+          {
             "sourceTag": "scope:app",
             "onlyDependOnLibsWithTags": [
               "scope:auth",
@@ -169,7 +179,8 @@
               "scope:ads",
               "scope:motivation",
               "scope:auto-count",
-              "scope:testing"
+              "scope:testing",
+              "scope:ui"
             ],
             "bannedExternalImports": ["@firebase/*"]
           }

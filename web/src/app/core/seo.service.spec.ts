@@ -1,5 +1,6 @@
 import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { BRAND_NAME, BRAND_OG_IMAGE_URL } from '@pu-stats/models';
 import { SeoService } from './seo.service';
 
 const BASE_URL = 'https://pushup-stats.com';
@@ -218,20 +219,50 @@ describe('SeoService', () => {
       );
     });
 
-    it('removes stale image tags when a subsequent update has no image', () => {
+    it('should use the site-wide share image when a page brings none', () => {
+      // given a page that passes no imageUrl
+      const seo = setup('de');
+
+      // when it updates the tags
+      seo.update('Title', 'Description', '/');
+
+      // then the card still has a picture — `index.html` states
+      // og:image:width/height/type unconditionally, so leaving og:image out
+      // would advertise dimensions for an image that is not there
+      expect(getMetaContent('meta[property="og:image"]')).toBe(
+        BRAND_OG_IMAGE_URL
+      );
+      expect(getMetaContent('meta[name="twitter:image"]')).toBe(
+        BRAND_OG_IMAGE_URL
+      );
+    });
+
+    it('should describe the fallback image by the brand, not the page', () => {
+      // given a page with a title of its own but no image
+      const seo = setup('de');
+
+      // when it updates the tags
+      seo.update('Great Title', 'Description', '/');
+
+      // then the alt text describes what the picture actually shows
+      expect(getMetaContent('meta[property="og:image:alt"]')).toBe(BRAND_NAME);
+      expect(getMetaContent('meta[name="twitter:image:alt"]')).toBe(BRAND_NAME);
+    });
+
+    it('should drop a stale image when a subsequent update has none', () => {
+      // given a page that set its own image
       const seo = setup('de');
       seo.update('Title', 'Description', '/blog/hello', {
         imageUrl: IMAGE_URL,
         imageAlt: IMAGE_ALT,
       });
+
+      // when a page without one follows
       seo.update('Title 2', 'Description', '/');
 
-      expect(
-        document.head.querySelector('meta[property="og:image"]')
-      ).toBeNull();
-      expect(
-        document.head.querySelector('meta[name="twitter:image"]')
-      ).toBeNull();
+      // then the previous page's image is gone rather than carried over
+      expect(getMetaContent('meta[property="og:image"]')).not.toBe(IMAGE_URL);
+      expect(getMetaContent('meta[name="twitter:image"]')).not.toBe(IMAGE_URL);
     });
   });
 

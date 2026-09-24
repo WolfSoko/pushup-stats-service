@@ -26,6 +26,7 @@ import {
 } from '@pu-stats/models';
 import { exerciseDisplayName } from '../../i18n/exercise-display-names';
 import { UserConfigStore } from '../../../core/user-config.store';
+import { BusyDirective } from '@pu-stats/ui';
 
 interface DraftRow {
   reps: number | null;
@@ -52,6 +53,7 @@ interface ExerciseOption {
     MatSelectModule,
     MatTooltipModule,
     RouterLink,
+    BusyDirective,
   ],
   template: `
     <h2 mat-dialog-title i18n="@@quickAddConfig.title">
@@ -154,7 +156,7 @@ interface ExerciseOption {
         mat-flat-button
         type="button"
         data-testid="quick-add-config-save"
-        [disabled]="saving()"
+        [puBusy]="saving()"
         (click)="save()"
         i18n="@@save"
       >

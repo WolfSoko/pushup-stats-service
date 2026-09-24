@@ -60,21 +60,18 @@ Ziel: Themen konsequent abarbeiten, mit klaren Definition-of-Done (DoD) und Gege
 
 ---
 
-## 3) Danger Zone: Delete Account => Anonymisierung
+## 3) Danger Zone: Delete Account => vollständige Löschung
 
-### ToDos
-
-- [ ] Danger Zone UI in Settings
-- [ ] Confirm-Dialog + irreversible copy
-- [ ] Backend/Service-Flow: Anonymisierung statt Löschen
-- [ ] Daten bleiben für Statistik erhalten
+Ursprünglich als Anonymisierung umgesetzt; inzwischen löscht der Callable
+`deleteOwnAccount` alle Nutzerdaten (siehe
+`docs/cloud-functions.md` → „Account deletion“).
 
 ### DoD
 
-- [ ] Kein Hard-Delete von Trainingsdaten
-- [ ] Userbezug ist anonymisiert
-- [ ] Prozess ist reproduzierbar getestet
-- [ ] Fehlerpfade sauber behandelt
+- [x] Danger Zone UI in Settings + Confirm-Dialog mit irreversibler Copy
+- [x] Alle Nutzerdaten werden serverseitig gelöscht, Feedback anonymisiert
+- [x] Prozess ist reproduzierbar getestet
+- [x] Fehlerpfade (z. B. `requires-recent-login`) werden angezeigt
 
 ---
 

@@ -23,6 +23,20 @@ function step(overrides: Partial<SessionStep> = {}): SessionStep {
 }
 
 describe('buildSessionRows', () => {
+  it('should carry the exercise and variant ids for the guide', () => {
+    // given
+    const s = step({
+      exercise: { exerciseId: 'legs.squats', variantId: 'sumo', target: 15 },
+    });
+
+    // when
+    const [row] = buildSessionRows([s]);
+
+    // then
+    expect(row.exerciseId).toBe('legs.squats');
+    expect(row.variantId).toBe('sumo');
+  });
+
   it('should format a rep target in reps', () => {
     // given / when
     const [row] = buildSessionRows([step()]);

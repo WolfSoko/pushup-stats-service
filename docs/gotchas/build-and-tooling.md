@@ -194,6 +194,22 @@ mkdir /tmp/x && (cd /tmp/x && npm init -y > /dev/null && npm i --silent <pkgs>) 
 
 See `tools/src/generate-logo-assets.js` for a real example.
 
+## Running a subset of `web`'s specs
+
+`web:test` is the `@angular/build:unit-test` builder, not a bare Vitest run, so the usual ways to narrow it all fail:
+
+- positional args (`pnpm nx test web -- foo.spec.ts`) → `Schema does not support positional arguments`
+- Jest's flag (`--testPathPattern=…`) → `'testPathPattern' is not found in schema`
+- calling Vitest directly (`npx vitest run --config web/vitest.config.ts`) → `describe is not defined` / `$localize is not defined`. `web/vitest.config.ts` is only a timeout overlay; the builder supplies the Angular transform and `setupFiles`.
+
+Use the builder's own `--include`, and keep the glob loose — a `src/`-rooted one matches nothing:
+
+```bash
+pnpm nx test web --coverage=false --include='**/stats-chart/*.spec.ts'
+```
+
+`--coverage=false` skips the workspace-wide coverage pass, which dominates the runtime of a narrow run.
+
 ## pnpm via corepack, not `pnpm/action-setup`
 
 CI uses `corepack enable` to pick up the exact pnpm pinned in `package.json`'s `packageManager` field (currently pnpm 11.x) instead of `pnpm/action-setup@v6`, which resolves its own version independently and can drift from the pin. See `pnpm/action-setup#228`. (pnpm 11's lockfile can be a multi-document YAML file; Nx 23+ parses that fine — the risk `action-setup` posed was picking a version this repo hadn't validated yet, not the format itself.)
@@ -278,3 +294,45 @@ Linting is oxlint (`.oxlintrc.json` at the root, no per-project configs) and for
 - **oxlint exits 1 when it is handed no lintable file** ("No files found to lint"). lint-staged therefore scopes `oxlint --fix` to script extensions and the Husky hook runs it with `--concurrent false`, because lint-staged starts every glob's tasks in parallel and `oxlint --fix` and `oxfmt` would otherwise race on the same file; a bare `'*'` glob makes every commit that stages only manifests, JSON or Markdown fail the pre-commit hook. oxfmt has `--no-error-on-unmatched-pattern` for the same situation.
 - **Rule ids use oxlint's plugin prefixes** (`typescript/no-explicit-any`, `unicorn/no-useless-spread`), but existing `// eslint-disable-next-line @typescript-eslint/...` directives keep working — oxlint honours both spellings.
 - **The scope of `ignorePatterns` differs from `.prettierignore`.** oxfmt still reads `.gitignore`, but ignore entries now live in the config and resolve relative to it; `generated-content-paths.spec.js` pins the generated content files there.
+
+## GitHub Actions: comment-triggered workflows and `gh` pitfalls
+
+Four generic rules; the concrete instance is the staging-preview checkbox
+in [`ci-cd.md`](../ci-cd.md#pr-previews-on-request).
+
+**Never check out a PR-derived ref in a job that runs with secrets.**
+`issue_comment`, `pull_request_target` and `workflow_run` jobs get the
+repository's secrets and a `GITHUB_TOKEN` with write scopes, so
+`actions/checkout` with a `ref` taken from the PR is CodeQL
+`actions/untrusted-checkout/critical` — even when the job verifies
+same-repo and write access first, because CodeQL cannot see the guard.
+Keep the privileged job checkout-free (verify, then
+`POST …/actions/workflows/<file>/dispatches` with `ref=<head branch>`) and
+do the build in a `workflow_dispatch` workflow that checks out the branch
+it was dispatched on. Note that the `workflow_dispatch` half then runs the
+branch's copy of its file, while the `issue_comment` half always runs the
+copy on the default branch.
+
+**`gh api --paginate --jq` applies the filter per page.** A count is one
+number per page, so the test breaks silently once the list exceeds one
+page:
+
+```bash
+# prints "0\n0" after 100 comments — [ "$n" != "0" ] is then true
+n=$(gh api …/comments --paginate --jq '[.[] | select(…)] | length')
+
+# emit matches, test for any output
+ids=$(gh api …/comments --paginate --jq '.[] | select(…) | .id')
+[ -n "$ids" ]
+```
+
+**Comment bodies edited in the web UI come back with CRLF.** A body the
+API created with `-f body=` stays LF; after the first web edit (a checkbox
+tick, a typo fix) `--jq .body` returns `\r\n`. Line-anchored `sed` still
+matches, but the `\r`-only lines survive `$(…)` trimming and every rewrite
+adds a blank line. Always strip first: `sed 's/\r$//'`.
+
+**Events created with `GITHUB_TOKEN` do not start workflows** — except
+`workflow_dispatch` and `repository_dispatch`. A workflow editing the bot's
+own comment therefore never re-fires `issue_comment`, which is what makes
+"untick the box first, then act" safe.

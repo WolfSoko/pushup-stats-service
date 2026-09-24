@@ -1,6 +1,7 @@
 import { inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Functions, httpsCallable } from '@angular/fire/functions';
+import { PendingRequestsService } from '@pu-stats/data-access';
 import {
   patchState,
   signalStore,
@@ -45,6 +46,7 @@ export const PushSubscriptionStore = signalStore(
       ? inject(Functions, { optional: true })
       : null,
     _vapidPublicKey: inject(VAPID_PUBLIC_KEY),
+    _pending: inject(PendingRequestsService),
     _pushSwRegistration: inject(PushSwRegistrationService),
   })),
   withMethods((store) => {
@@ -297,7 +299,12 @@ export const PushSubscriptionStore = signalStore(
               return false;
             }
 
-            const { deviceCount } = await saveSubscription(subToSave);
+            // Only the user's own click is tracked: the re-sync in `init()`
+            // and the SW bridge run in the background and must not show the
+            // global spinner on every launch.
+            const { deviceCount } = await store._pending.track(
+              saveSubscription(subToSave)
+            );
             patchState(store, { status: 'subscribed', deviceCount });
             return true;
           } catch (err) {
@@ -321,7 +328,9 @@ export const PushSubscriptionStore = signalStore(
           if (sub) {
             const endpoint = sub.endpoint;
             await sub.unsubscribe();
-            const { deviceCount } = await deleteSubscription(endpoint);
+            const { deviceCount } = await store._pending.track(
+              deleteSubscription(endpoint)
+            );
             // Always not-subscribed on this device, deviceCount shows other devices
             patchState(store, { status: 'not-subscribed', deviceCount });
             return;

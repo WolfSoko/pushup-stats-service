@@ -99,7 +99,7 @@ export class SettingsAutoSaveController {
 
   /**
    * Cancel the debounce timer and await any in-flight save before returning.
-   * Callers that issue a competing write (e.g. account anonymisation) use this
+   * Callers that issue a competing write (e.g. account deletion) use this
    * to avoid racing the auto-save round trip.
    */
   async drain(): Promise<void> {

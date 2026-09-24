@@ -6,6 +6,8 @@ import type { SessionStepRow } from './training-session.rows';
 
 const NEXT: SessionStepRow = {
   itemIndex: 1,
+  exerciseId: 'abs.russiantwist',
+  variantId: null,
   name: 'Russian Twist',
   icon: 'sports_gymnastics',
   target: '20',

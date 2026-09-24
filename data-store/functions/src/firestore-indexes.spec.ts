@@ -206,6 +206,7 @@ describe('Firestore TTL policies', () => {
     ['challenges', 'expiresAt'],
     ['friendInvites', 'expiresAt'],
     ['inbox', 'expiresAt'],
+    ['deletedAccounts', 'expiresAt'],
   ];
 
   function ttlOverrides(): Array<FieldOverride & { ttl?: boolean }> {
@@ -254,6 +255,22 @@ describe('firestore.indexes.json ⇄ workouts queries', () => {
     const declared = hasIndex(indexes, 'workouts', [
       ['ownerId', 'ASCENDING'],
       ['updatedAt', 'DESCENDING'],
+    ]);
+
+    // then
+    expect(declared).toBe(true);
+  });
+});
+
+describe('firestore.indexes.json ⇄ workoutReminders queries', () => {
+  const { indexes } = loadConfig();
+
+  it('should declare the (enabled ASC, nextAt ASC) index the reminder dispatcher reads from', () => {
+    // given `dispatchWorkoutReminders`:
+    // where('enabled','==',true).where('nextAt','<=',now)
+    const declared = hasIndex(indexes, 'workoutReminders', [
+      ['enabled', 'ASCENDING'],
+      ['nextAt', 'ASCENDING'],
     ]);
 
     // then

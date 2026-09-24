@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { BRAND_NAME } from '@pu-stats/models';
 import { PublicProfileApiService } from '@pu-stats/data-access';
 
 import { ReferralService } from './referral.service';
@@ -36,12 +37,12 @@ import { ReferralService } from './referral.service';
                  default), which glued the name to the verb. A single message
                  also lets a translation move the name. -->
             <span i18n="@@invite.banner.invitedBy"
-              ><strong>{{ name }}</strong> hat dich zu Pushup Tracker
-              eingeladen.</span
+              ><strong>{{ name }}</strong> hat dich zu
+              {{ brandName }} eingeladen.</span
             >
           } @else {
             <span i18n="@@invite.banner.anonymous">
-              Du wurdest zu Pushup Tracker eingeladen.
+              Du wurdest zu {{ brandName }} eingeladen.
             </span>
           }
         </mat-card-content>
@@ -61,6 +62,7 @@ import { ReferralService } from './referral.service';
   `,
 })
 export class InviteBannerComponent {
+  protected readonly brandName = BRAND_NAME;
   protected readonly referral = inject(ReferralService);
   /**
    * Resolved lazily rather than as a field: `PublicProfileApiService`

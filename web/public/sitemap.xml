@@ -5015,6 +5015,14 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog/liegestuetze-varianten"/>
   </url>
   <url>
+    <loc>https://pushup-stats.com/de/blog/neuer-name-kommt</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/blog/neuer-name-kommt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog/neuer-name-kommt"/>
+  </url>
+  <url>
     <loc>https://pushup-stats.com/de/blog/rumpftraining-plank-dead-bug</loc>
     <lastmod>2026-09-02</lastmod>
     <changefreq>monthly</changefreq>
@@ -8156,6 +8164,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen/burpees"/>
   </url>
   <url>
+    <loc>https://pushup-stats.com/de/wiki/uebungen/cross-country-skiing</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen/cross-country-skiing"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen/cross-country-skiing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen/cross-country-skiing"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/en/wiki/uebungen/cross-country-skiing</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen/cross-country-skiing"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen/cross-country-skiing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen/cross-country-skiing"/>
+  </url>
+  <url>
     <loc>https://pushup-stats.com/de/wiki/uebungen/cycling</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -8291,6 +8315,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen/cycling"/>
   </url>
   <url>
+    <loc>https://pushup-stats.com/de/wiki/uebungen/elliptical-trainer</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen/elliptical-trainer"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen/elliptical-trainer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen/elliptical-trainer"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/en/wiki/uebungen/elliptical-trainer</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen/elliptical-trainer"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen/elliptical-trainer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen/elliptical-trainer"/>
+  </url>
+  <url>
     <loc>https://pushup-stats.com/de/wiki/uebungen/high-knees</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -8424,6 +8464,38 @@
     <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/uebungen/high-knees"/>
     <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/uebungen/high-knees"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen/high-knees"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/de/wiki/uebungen/hiking</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen/hiking"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen/hiking"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen/hiking"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/en/wiki/uebungen/hiking</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen/hiking"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen/hiking"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen/hiking"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/de/wiki/uebungen/inline-skating</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen/inline-skating"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen/inline-skating"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen/inline-skating"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/en/wiki/uebungen/inline-skating</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen/inline-skating"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen/inline-skating"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen/inline-skating"/>
   </url>
   <url>
     <loc>https://pushup-stats.com/de/wiki/uebungen/jumping-jacks</loc>
@@ -8694,6 +8766,22 @@
     <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/uebungen/jump-rope"/>
     <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/uebungen/jump-rope"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen/jump-rope"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/de/wiki/uebungen/nordic-walking</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen/nordic-walking"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen/nordic-walking"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen/nordic-walking"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/en/wiki/uebungen/nordic-walking</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen/nordic-walking"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen/nordic-walking"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen/nordic-walking"/>
   </url>
   <url>
     <loc>https://pushup-stats.com/de/wiki/uebungen/rowing-machine</loc>

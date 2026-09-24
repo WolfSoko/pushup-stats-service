@@ -17,11 +17,15 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {
+  BusyDirective,
+  SkeletonTableComponent,
+  createKeyedBusyState,
+} from '@pu-stats/ui';
 import { CallableFunctionsService } from './callable-functions.service';
 import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';
@@ -40,6 +44,8 @@ import {
   selector: 'app-admin-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    SkeletonTableComponent,
+    BusyDirective,
     DatePipe,
     FormsModule,
     MatButtonModule,
@@ -48,7 +54,6 @@ import {
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatProgressSpinnerModule,
     MatSortModule,
     MatTableModule,
     MatTooltipModule,
@@ -88,6 +93,7 @@ export class AdminPageComponent {
   readonly showOnlyAnonymous = signal(false);
   readonly inactiveDays = signal(20);
   readonly bulkLoading = signal(false);
+  readonly deletingUser = createKeyedBusyState<string>();
   readonly bulkError = signal<string | null>(null);
   readonly bulkResult = signal<BulkDeleteResult | null>(null);
 
@@ -158,12 +164,12 @@ export class AdminPageComponent {
       width: '420px',
     });
 
-    const result = await firstValueFrom(ref.afterClosed());
-    if (!result) return;
+    const confirmed = await firstValueFrom(ref.afterClosed());
+    if (!confirmed) return;
 
     try {
       const fn = this.callables.call('adminDeleteUser');
-      await fn({ uid: user.uid, anonymize: result.anonymize });
+      await this.deletingUser.run(user.uid, () => fn({ uid: user.uid }));
       this.users.update((list) => list.filter((u) => u.uid !== user.uid));
     } catch (err) {
       this.error.set(errorMessage(err));
@@ -177,7 +183,7 @@ export class AdminPageComponent {
     try {
       const fn = this.callables.call<
         { inactiveDays: number },
-        { deleted: number; skipped: number }
+        BulkDeleteResult
       >('adminBulkDeleteInactiveAnonymous');
       const result = await fn({ inactiveDays: this.inactiveDays() });
       this.bulkResult.set(result.data);

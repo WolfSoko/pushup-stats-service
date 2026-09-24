@@ -1,12 +1,19 @@
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
-import { SessionStepComponent } from './session-step.component';
+import { ExerciseGuideService } from '../../core/exercise-ref/exercise-guide.service';
+
+import {
+  SessionStepComponent,
+  type SessionStepAction,
+} from './session-step.component';
 import type { SessionStepRow } from './training-session.rows';
 
 function row(overrides: Partial<SessionStepRow> = {}): SessionStepRow {
   return {
     itemIndex: 0,
+    exerciseId: 'pushup',
+    variantId: null,
     name: 'Liegestütze',
     icon: 'fitness_center',
     target: '15',
@@ -23,23 +30,42 @@ function row(overrides: Partial<SessionStepRow> = {}): SessionStepRow {
   };
 }
 
-async function setup(overrides: Partial<SessionStepRow> = {}, busy = false) {
+async function setup(
+  overrides: Partial<SessionStepRow> = {},
+  busyKeys: ReadonlySet<SessionStepAction> = new Set()
+) {
   const capture = vitest.fn();
   const enterByHand = vitest.fn();
   const logAsPrescribed = vitest.fn();
   const checkOff = vitest.fn();
   const skip = vitest.fn();
+  const guide = { open: vitest.fn().mockResolvedValue(undefined) };
   await render(SessionStepComponent, {
-    inputs: { row: row(overrides), position: 2, total: 3, busy },
+    inputs: { row: row(overrides), position: 2, total: 3, busyKeys },
     on: { capture, enterByHand, logAsPrescribed, checkOff, skip },
+    providers: [{ provide: ExerciseGuideService, useValue: guide }],
   });
-  return { capture, enterByHand, logAsPrescribed, checkOff, skip };
+  return { capture, enterByHand, logAsPrescribed, checkOff, skip, guide };
 }
 
 const byTestId = (id: string): HTMLElement =>
   document.querySelector(`[data-testid="${id}"]`) as HTMLElement;
 
 describe('SessionStepComponent', () => {
+  it('should open the guide for the exercise and variant in focus', async () => {
+    // given
+    const { guide } = await setup({
+      exerciseId: 'legs.squats',
+      variantId: 'sumo',
+    });
+
+    // when
+    await userEvent.click(byTestId('session-step-guide'));
+
+    // then
+    expect(guide.open).toHaveBeenCalledWith('legs.squats', 'sumo');
+  });
+
   it('should render the exercise, its target and the position in the day', async () => {
     // given / when
     await setup();
@@ -181,13 +207,29 @@ describe('SessionStepComponent', () => {
     expect(byTestId('session-log-prescribed')).toBeNull();
   });
 
-  it('should disable every action while a capture is in flight', async () => {
+  it('should show only the pressed action busy and lock skipping while it runs', async () => {
     // given / when
-    await setup({}, true);
+    await setup({}, new Set(['capture']));
 
     // then
-    expect(byTestId('session-capture').hasAttribute('disabled')).toBe(true);
+    expect(byTestId('session-capture').getAttribute('aria-busy')).toBe('true');
+    expect(byTestId('session-capture').hasAttribute('disabled')).toBe(false);
+    expect(
+      byTestId('session-log-prescribed').getAttribute('aria-busy')
+    ).toBeNull();
+    expect(byTestId('session-check-off').getAttribute('aria-busy')).toBeNull();
     expect(byTestId('session-skip').hasAttribute('disabled')).toBe(true);
+  });
+
+  it('should show the check-off button busy for its own write', async () => {
+    // given / when
+    await setup({}, new Set(['checkOff']));
+
+    // then
+    expect(byTestId('session-check-off').getAttribute('aria-busy')).toBe(
+      'true'
+    );
+    expect(byTestId('session-capture').getAttribute('aria-busy')).toBeNull();
   });
 
   it('should show the round instead of the exercise position in a circuit', async () => {

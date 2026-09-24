@@ -71,6 +71,7 @@
       color="primary"
       type="button"
       [disabled]="!loginUiStore.googleConsentAccepted()"
+      [puBusy]="finishing.busy()"
       (click)="finish()"
       i18n="@@auth.onboarding.google.finish"
     >

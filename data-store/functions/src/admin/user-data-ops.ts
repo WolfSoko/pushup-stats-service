@@ -1,33 +1,6 @@
 import { db } from '../firebase-app';
 import { type UserActivityAggregate } from './user-entry-activity';
 
-// Hard-delete a user's exercise history. Post-cutover writes land in
-// `exerciseEntries`, but the pushup unification migration deliberately
-// left the legacy `pushups` source intact — so a full erasure must purge
-// both collections, otherwise pre-cutover rows outlive the deleted uid.
-// Pages through the results (`limit` + re-query) so a user with a huge
-// history never materialises more than one batch of docs at a time.
-export async function deleteUserExerciseData(uid: string): Promise<void> {
-  const BATCH_SIZE = 500;
-  for (const collection of ['exerciseEntries', 'pushups']) {
-    for (;;) {
-      const snap = await db
-        .collection(collection)
-        .where('userId', '==', uid)
-        .limit(BATCH_SIZE)
-        .get();
-      if (snap.empty) break;
-      const batch = db.batch();
-      for (const doc of snap.docs) {
-        batch.delete(doc.ref);
-      }
-      // Non-atomic: if this commit throws, earlier pages are permanently deleted with no rollback.
-      await batch.commit();
-      if (snap.size < BATCH_SIZE) break;
-    }
-  }
-}
-
 // Read the precomputed `adminUserActivity/{uid}` aggregates for the given
 // uids via `getAll` (fetch-by-reference, no 10-item `in`-query cap), so it
 // stays O(#uids) rather than scanning the whole `exerciseEntries`

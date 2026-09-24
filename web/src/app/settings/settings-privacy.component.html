@@ -62,8 +62,9 @@
       >Danger Zone</mat-card-title
     >
     <mat-card-subtitle i18n="@@settings.dangerZoneBody">
-      Konto löschen entfernt dein Konto. Trainingsdaten bleiben für statistische
-      Auswertung anonymisiert erhalten.
+      Konto löschen entfernt dein Konto und alle gespeicherten Daten:
+      Trainingseinträge, Statistiken, Pläne, Workouts, Freundschaften,
+      Nachrichten und dein Profilfoto.
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-actions>
@@ -71,7 +72,8 @@
       type="button"
       mat-stroked-button
       color="warn"
-      [disabled]="facade.deletingAccount()"
+      [puBusy]="facade.deletingAccount()"
+      data-testid="settings-delete-account"
       (click)="facade.openDeleteDialog(deleteDialogTpl)"
       i18n="@@settings.deleteAccount"
     >
@@ -84,6 +86,13 @@
       >
     }
   </mat-card-actions>
+  @if (facade.deleteAccountError()) {
+    <mat-card-content>
+      <p class="error" role="alert" data-testid="settings-delete-account-error">
+        {{ facade.deleteAccountError() }}
+      </p>
+    </mat-card-content>
+  }
 </mat-card>
 
 <ng-template #deleteDialogTpl>
@@ -95,8 +104,9 @@
       Achtung: Diese Aktion ist nicht rückgängig.
     </p>
     <p i18n="@@settings.deleteDialogInfo">
-      Dein Konto wird gelöscht. Trainingsdaten bleiben für statistische
-      Auswertung anonymisiert erhalten.
+      Dein Konto und alle zugehörigen Daten werden endgültig gelöscht — auch
+      deine Trainingseinträge. Gesendetes Feedback bleibt ohne Bezug zu dir
+      erhalten.
     </p>
     <mat-form-field appearance="outline">
       <mat-label i18n="@@settings.deleteDialogPhraseLabel"

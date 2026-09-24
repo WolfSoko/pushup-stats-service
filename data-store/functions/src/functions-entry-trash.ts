@@ -1,6 +1,7 @@
 import { Timestamp } from 'firebase-admin/firestore';
 import { onDocumentDeleted } from 'firebase-functions/v2/firestore';
 import * as logger from 'firebase-functions/logger';
+import { isPurgedEntryDeletion } from './account-deletion/tombstone';
 import { db } from './firebase-app';
 import { buildTrashRecord, TRASH_COLLECTION } from './entry-trash/logic';
 
@@ -29,6 +30,8 @@ export const archiveDeletedExerciseEntry = onDocumentDeleted(
       });
       return;
     }
+    // A purged account's entries are gone for good, not recoverable trash.
+    if (await isPurgedEntryDeletion(db, data, undefined)) return;
 
     const { deletedAtMs, expiresAtMs, ...record } = buildTrashRecord(
       event.params.entryId,

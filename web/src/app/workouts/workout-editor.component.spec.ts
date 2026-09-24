@@ -5,6 +5,7 @@ import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { BehaviorSubject, of } from 'rxjs';
 
+import { ExerciseGuideService } from '../core/exercise-ref/exercise-guide.service';
 import { WorkoutEditorComponent } from './workout-editor.component';
 import { WorkoutsStore } from './workouts.store';
 
@@ -20,13 +21,21 @@ const WORKOUT: Workout = {
 };
 
 async function setup(
-  options: { id?: string; workouts?: Workout[]; loaded?: boolean } = {}
+  options: {
+    id?: string;
+    workouts?: Workout[];
+    loaded?: boolean;
+    query?: Record<string, string>;
+  } = {}
 ) {
   const params = options.id ? { id: options.id } : {};
+  const guide = { open: vitest.fn().mockResolvedValue(undefined) };
   const paramMap$ = new BehaviorSubject(convertToParamMap(params));
+  const busyKeys = signal<ReadonlySet<string>>(new Set());
   const store = {
     loaded: signal(options.loaded ?? true),
-    busy: signal(false),
+    busyKeys,
+    isBusy: (key: string) => busyKeys().has(key),
     lastRejection: signal<string | undefined>(undefined),
     workoutById: (id: string) =>
       (options.workouts ?? [WORKOUT]).find((w) => w.id === id) ?? null,
@@ -34,13 +43,16 @@ async function setup(
     update: vitest.fn().mockResolvedValue(true),
   };
   const navigateByUrl = vitest.fn().mockResolvedValue(true);
-  await render(WorkoutEditorComponent, {
+  const { fixture } = await render(WorkoutEditorComponent, {
     providers: [
       {
         provide: ActivatedRoute,
         useValue: {
           paramMap: paramMap$.asObservable(),
-          snapshot: { paramMap: convertToParamMap(params) },
+          snapshot: {
+            paramMap: convertToParamMap(params),
+            queryParamMap: convertToParamMap(options.query ?? {}),
+          },
         },
       },
       {
@@ -53,12 +65,92 @@ async function setup(
         },
       },
       { provide: WorkoutsStore, useValue: store },
+      { provide: ExerciseGuideService, useValue: guide },
     ],
   });
-  return { store, navigateByUrl, paramMap$ };
+  return { store, navigateByUrl, paramMap$, fixture, busyKeys, guide };
 }
 
+const exerciseInput = (): HTMLInputElement =>
+  screen
+    .getByTestId('workout-line-exercise')
+    .querySelector('input') as HTMLInputElement;
+
 describe('WorkoutEditorComponent', () => {
+  it('should start on the exercise the wiki handed over', async () => {
+    // given / when
+    const { fixture } = await setup({ query: { exercise: 'legs.squats' } });
+    await fixture.whenStable();
+
+    // then
+    expect(exerciseInput().value).toBe('Kniebeugen');
+  });
+
+  it('should ignore an exercise from the link that a workout cannot hold', async () => {
+    // given / when
+    const { fixture } = await setup({ query: { exercise: 'nope' } });
+    await fixture.whenStable();
+
+    // then
+    expect(exerciseInput().value).toBe('Liegestütze');
+  });
+
+  it('should find an exercise by typing part of its name', async () => {
+    // given
+    const { store } = await setup();
+    const user = userEvent.setup();
+
+    // when
+    await user.type(exerciseInput(), 'kniebeu');
+    await user.click(await screen.findByRole('option', { name: 'Kniebeugen' }));
+    await user.type(screen.getByTestId('workout-title'), 'Beine');
+    await user.click(screen.getByTestId('workout-save'));
+
+    // then
+    expect(store.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        exercises: [expect.objectContaining({ exerciseId: 'legs.squats' })],
+      })
+    );
+  });
+
+  it('should keep the variant when the same exercise is picked again', async () => {
+    // given
+    const { store } = await setup({
+      query: { exercise: 'legs.squats', variant: 'bodyweight' },
+    });
+    const user = userEvent.setup();
+
+    // when
+    await user.click(exerciseInput());
+    await user.click(await screen.findByRole('option', { name: 'Kniebeugen' }));
+    await user.type(screen.getByTestId('workout-title'), 'Beine');
+    await user.click(screen.getByTestId('workout-save'));
+
+    // then
+    expect(store.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        exercises: [
+          expect.objectContaining({
+            exerciseId: 'legs.squats',
+            variantId: 'bodyweight',
+          }),
+        ],
+      })
+    );
+  });
+
+  it('should open the guide for a line without leaving the form', async () => {
+    // given
+    const { guide } = await setup({ query: { exercise: 'legs.squats' } });
+
+    // when
+    await userEvent.click(screen.getByTestId('workout-line-guide'));
+
+    // then
+    expect(guide.open).toHaveBeenCalledWith('legs.squats', null);
+  });
+
   it('should start a new session with one pushup line', async () => {
     // given
     await setup();
@@ -87,6 +179,52 @@ describe('WorkoutEditorComponent', () => {
       onProfile: false,
     });
     expect(navigateByUrl).toHaveBeenCalledWith('/workouts');
+  });
+
+  it('should show the save button busy while the new workout is written', async () => {
+    // given
+    const { busyKeys, fixture } = await setup();
+
+    // when
+    busyKeys.set(new Set(['create']));
+    fixture.detectChanges();
+
+    // then
+    expect(screen.getByTestId('workout-save').getAttribute('aria-busy')).toBe(
+      'true'
+    );
+
+    // when
+    busyKeys.set(new Set());
+    fixture.detectChanges();
+
+    // then
+    expect(
+      screen.getByTestId('workout-save').getAttribute('aria-busy')
+    ).toBeNull();
+  });
+
+  it('should show the save button busy only for the workout being edited', async () => {
+    // given
+    const { busyKeys, fixture } = await setup({ id: 'w1' });
+
+    // when — another workout's update, then this one's
+    busyKeys.set(new Set(['update:w2', 'create']));
+    fixture.detectChanges();
+
+    // then
+    expect(
+      screen.getByTestId('workout-save').getAttribute('aria-busy')
+    ).toBeNull();
+
+    // when
+    busyKeys.set(new Set(['update:w1']));
+    fixture.detectChanges();
+
+    // then
+    expect(screen.getByTestId('workout-save').getAttribute('aria-busy')).toBe(
+      'true'
+    );
   });
 
   it('should fill the target from the typed sets', async () => {
@@ -199,5 +337,47 @@ describe('WorkoutEditorComponent', () => {
     await setup({ id: 'w1', loaded: false, workouts: [] });
     expect(screen.queryByTestId('workout-editor-missing')).toBeNull();
     expect(screen.getByText('Session wird geladen …')).toBeTruthy();
+  });
+
+  it('should hold a form-shaped skeleton with a hidden status text while the workout loads', async () => {
+    // given / when
+    const { fixture } = await setup({ id: 'w1', loaded: false, workouts: [] });
+
+    // then
+    const loading = screen.getByTestId('workout-editor-loading');
+    expect(loading.getAttribute('aria-busy')).toBe('true');
+    expect(loading.querySelectorAll('pu-skeleton')).toHaveLength(4);
+    expect(
+      loading.querySelector('.pu-visually-hidden[role="status"]')?.textContent
+    ).toContain('Session wird geladen …');
+    expect(fixture.nativeElement.querySelector('mat-spinner')).toBeNull();
+    expect(screen.queryByTestId('workout-title')).toBeNull();
+  });
+
+  it('should swap the skeleton for the form once the list is there', async () => {
+    // given
+    const { store, fixture } = await setup({ id: 'w1', loaded: false });
+
+    // when
+    store.loaded.set(true);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    // then
+    expect(screen.queryByTestId('workout-editor-loading')).toBeNull();
+    expect(fixture.nativeElement.querySelector('pu-skeleton')).toBeNull();
+    expect(
+      (screen.getByTestId('workout-title') as HTMLInputElement).value
+    ).toBe('Beine');
+  });
+
+  it('should not show the skeleton for a new session', async () => {
+    // given / when
+    const { fixture } = await setup({ loaded: false });
+
+    // then
+    expect(screen.queryByTestId('workout-editor-loading')).toBeNull();
+    expect(fixture.nativeElement.querySelector('pu-skeleton')).toBeNull();
+    expect(screen.getByTestId('workout-title')).toBeTruthy();
   });
 });

@@ -334,4 +334,40 @@ describe('UserEntriesTableComponent', () => {
       expect(refreshSpy).toHaveBeenCalled();
     });
   });
+
+  describe('busy state', () => {
+    it('should flag only the deleted row while its callable is pending', async () => {
+      // given
+      let resolveDelete!: () => void;
+      const deleteCallable = vi.fn(
+        () =>
+          new Promise<{ data: unknown }>((resolve) => {
+            resolveDelete = () => resolve({ data: { deleted: 1, skipped: 0 } });
+          })
+      );
+      await createComponent(
+        [entryOne, entryTwo],
+        [{ name: 'adminDeleteUserEntries', impl: deleteCallable }]
+      );
+      dialogOpenSpy.mockReturnValue(stubDialogRef(true));
+
+      // when
+      const run = component.deleteOne(entryOne);
+      for (let i = 0; i < 10 && !deleteCallable.mock.calls.length; i++) {
+        await Promise.resolve();
+      }
+
+      // then
+      expect(component.deleting.isBusy('entry-1')).toBe(true);
+      expect(component.deleting.isBusy('entry-2')).toBe(false);
+      expect(component.deleting.isBusy(component['SELECTED'])).toBe(false);
+
+      // when
+      resolveDelete();
+      await run;
+
+      // then
+      expect(component.deleting.busy()).toBe(false);
+    });
+  });
 });

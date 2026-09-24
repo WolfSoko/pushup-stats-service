@@ -16,7 +16,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   resolveAchievementBadges,
@@ -36,8 +35,11 @@ import { UserConfigStore } from '../core/user-config.store';
 import { ProfilePhotoService } from '../core/profile-photo.service';
 import { InviteBannerComponent } from '../core/invite-banner.component';
 import { ProfileWorkoutsComponent } from './profile-workouts.component';
+import { PublicProfileSkeletonComponent } from './public-profile-skeleton.component';
 import { InviteService } from '../core/invite.service';
 import { FriendsStore } from '../friends/friends.store';
+import { CheerButtonComponent } from '../friends/cheer-button.component';
+import { BusyDirective, createBusyState } from '@pu-stats/ui';
 
 type LoadState =
   | { kind: 'loading' }
@@ -55,10 +57,12 @@ type LoadState =
     MatIconModule,
     MatButtonModule,
     MatButtonToggleModule,
-    MatProgressSpinnerModule,
     MatTooltipModule,
     InviteBannerComponent,
     ProfileWorkoutsComponent,
+    PublicProfileSkeletonComponent,
+    BusyDirective,
+    CheerButtonComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [PublicProfileSeo],
@@ -173,13 +177,15 @@ export class PublicProfilePageComponent {
   );
 
   protected readonly friendRequestSent = signal(false);
+  protected readonly addingFriend = createBusyState();
+  protected readonly inviting = createBusyState();
 
   protected async addFriend(): Promise<void> {
     const uid = this.profile()?.uid;
     if (!uid) return;
     const friends = this.injector.get(FriendsStore, null);
     if (!friends) return;
-    const ok = await friends.requestFriend(uid);
+    const ok = await this.addingFriend.run(() => friends.requestFriend(uid));
     if (ok) {
       this.friendRequestSent.set(true);
       return;
@@ -192,7 +198,8 @@ export class PublicProfilePageComponent {
   }
 
   protected inviteFriend(): void {
-    void this.injector.get(InviteService, null)?.inviteFriend();
+    const invites = this.injector.get(InviteService, null);
+    if (invites) void this.inviting.run(() => invites.inviteFriend());
   }
 
   protected shareProfile(): void {

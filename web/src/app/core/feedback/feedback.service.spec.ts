@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Firestore } from '@angular/fire/firestore';
 import { FeedbackService } from './feedback.service';
+import { PendingRequestsService } from '@pu-stats/data-access';
 
 describe('FeedbackService', () => {
   let service: FeedbackService;
@@ -85,5 +86,30 @@ describe('FeedbackService', () => {
         userId: null,
       })
     );
+  });
+
+  it('should count the write as a pending request until it lands', async () => {
+    // given
+    const pending = TestBed.inject(PendingRequestsService);
+    let resolveWrite!: () => void;
+    mockAddDoc.mockReturnValue(
+      new Promise<void>((resolve) => (resolveWrite = resolve))
+    );
+
+    // when
+    const submit = service.submit(
+      { name: '', email: '', message: 'Hi', anonymous: true },
+      'user-123'
+    );
+
+    // then
+    expect(pending.pending()).toBe(1);
+
+    // when
+    resolveWrite();
+    await submit;
+
+    // then
+    expect(pending.pending()).toBe(0);
   });
 });

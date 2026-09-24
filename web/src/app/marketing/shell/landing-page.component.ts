@@ -4,8 +4,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
+import { BRAND_NAME } from '@pu-stats/models';
 import { AdSlotComponent, AdsStore } from '@pu-stats/ads';
 import { AuthService, AuthStore } from '@pu-auth/auth';
+import { BusyDirective, createBusyState } from '@pu-stats/ui';
 import {
   AI_ASSISTANT_CONFIG,
   AI_ASSISTANT_ROUTE,
@@ -16,6 +18,7 @@ import { ReminderFeatureSectionComponent } from '../components/reminder-feature-
 import { SessionFeatureSectionComponent } from '../components/session-feature-section/session-feature-section.component';
 import { InboxFeatureSectionComponent } from '../components/inbox-feature-section/inbox-feature-section.component';
 import { WorkoutsFeatureSectionComponent } from '../components/workouts-feature-section/workouts-feature-section.component';
+import { WorkoutRemindersFeatureSectionComponent } from '../components/workout-reminders-feature-section/workout-reminders-feature-section.component';
 import { InviteBannerComponent } from '../../core/invite-banner.component';
 
 // Each string is 7 characters — one per day, top-to-bottom.
@@ -45,6 +48,7 @@ const HEATMAP_PATTERN: readonly string[] = [
   selector: 'app-landing-page',
   imports: [
     RouterLink,
+    BusyDirective,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
@@ -53,6 +57,7 @@ const HEATMAP_PATTERN: readonly string[] = [
     ReminderFeatureSectionComponent,
     SessionFeatureSectionComponent,
     WorkoutsFeatureSectionComponent,
+    WorkoutRemindersFeatureSectionComponent,
     InboxFeatureSectionComponent,
   ],
   templateUrl: './landing-page.component.html',
@@ -60,6 +65,7 @@ const HEATMAP_PATTERN: readonly string[] = [
   styleUrl: './landing-page.component.scss',
 })
 export class LandingPageComponent {
+  protected readonly brandName = BRAND_NAME;
   private readonly analytics = inject(Analytics, { optional: true });
   private readonly adsStore = inject(AdsStore);
   private readonly authService = inject(AuthService);
@@ -97,10 +103,14 @@ export class LandingPageComponent {
     this.track('landing_cta_click', { target });
   }
 
+  readonly guestSignIn = createBusyState();
+
   async onTryAsGuest(): Promise<void> {
     this.track('landing_cta_click', { target: 'guest' });
-    await this.authService.signInGuestIfNeeded();
-    await this.router.navigate(['/app']);
+    await this.guestSignIn.run(async () => {
+      await this.authService.signInGuestIfNeeded();
+      await this.router.navigate(['/app']);
+    });
   }
 
   onDiscoverCardClick(target: 'leaderboard' | 'blog'): void {
@@ -129,6 +139,10 @@ export class LandingPageComponent {
 
   onWorkoutsCtaClick(): void {
     this.track('landing_workouts_cta_click', { target: 'workouts' });
+  }
+
+  onWorkoutRemindersCtaClick(): void {
+    this.track('landing_workout_reminders_cta_click', { target: 'workouts' });
   }
 
   onInboxCtaClick(): void {

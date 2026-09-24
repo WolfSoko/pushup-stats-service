@@ -121,3 +121,7 @@ gcloud firestore fields ttls list --collection-group=cheers --project=pushup-sta
 gcloud firestore operations list --project=pushup-stats --limit=10 \
   --format="value(metadata.field, metadata.state, metadata.ttlConfigDelta.changeType)"
 ```
+
+## No 1st-gen functions — the runtime is `nodejs24`
+
+`firebase-functions/v1` still compiles and bundles fine, but every function in this codebase deploys with the `nodejs24` runtime, which GCF 1st gen does not support: the deploy fails with `Runtime "nodejs24" is not supported on GCF Gen1` (seen on the staging preview; production would have failed the same way). This rules out every trigger that only exists in 1st gen — most notably Auth `user().onDelete`. Account deletion therefore runs as the `deleteOwnAccount` callable (see [`docs/cloud-functions.md`](../cloud-functions.md#account-deletion-data-purge)). Tests and `nx build` do not catch this; only a real deploy does, so tick the staging preview for any new trigger type.

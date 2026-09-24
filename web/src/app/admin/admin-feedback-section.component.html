@@ -3,6 +3,7 @@
 <div class="filter-row">
   <button
     mat-icon-button
+    [puBusy]="feedbackLoading()"
     (click)="loadFeedback()"
     [matTooltip]="refreshTooltip"
     [attr.aria-label]="refreshTooltip"
@@ -12,9 +13,9 @@
 </div>
 
 @if (feedbackLoading()) {
-  <div class="spinner-container">
-    <mat-spinner />
-  </div>
+  <mat-card aria-busy="true" data-testid="admin-feedback-skeleton">
+    <pu-skeleton-table [rows]="6" [columns]="6" />
+  </mat-card>
 } @else if (feedbackError()) {
   <p class="error-text">{{ feedbackError() }}</p>
 } @else if (feedbackList().length === 0) {
@@ -94,7 +95,8 @@
             mat-icon-button
             [attr.aria-label]="f.read ? markUnreadTooltip : markReadTooltip"
             [matTooltip]="f.read ? markUnreadTooltip : markReadTooltip"
-            [disabled]="isFeedbackActionLoading(f.id)"
+            [disabled]="otherActionBusy(f.id, 'read')"
+            [puBusy]="feedbackAction.isBusy(f.id + ':read')"
             (click)="markFeedbackRead(f, !f.read)"
           >
             <mat-icon>{{
@@ -117,7 +119,8 @@
               mat-icon-button
               [attr.aria-label]="createIssueTooltip"
               [matTooltip]="createIssueTooltip"
-              [disabled]="isFeedbackActionLoading(f.id)"
+              [disabled]="otherActionBusy(f.id, 'issue')"
+              [puBusy]="feedbackAction.isBusy(f.id + ':issue')"
               (click)="createGithubIssue(f)"
             >
               <mat-icon>bug_report</mat-icon>
@@ -128,7 +131,8 @@
             color="warn"
             [attr.aria-label]="deleteFeedbackTooltip"
             [matTooltip]="deleteFeedbackTooltip"
-            [disabled]="isFeedbackActionLoading(f.id)"
+            [disabled]="otherActionBusy(f.id, 'delete')"
+            [puBusy]="feedbackAction.isBusy(f.id + ':delete')"
             (click)="deleteFeedback(f)"
           >
             <mat-icon>delete</mat-icon>

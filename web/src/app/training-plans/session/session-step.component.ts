@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  inject,
   input,
   output,
 } from '@angular/core';
@@ -9,8 +10,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { BusyDirective } from '@pu-stats/ui';
+
+import { ExerciseGuideService } from '../../core/exercise-ref/exercise-guide.service';
 
 import { SessionStepRow } from './training-session.rows';
+
+/** The step actions that write something, each with its own busy flag. */
+export type SessionStepAction =
+  | 'capture'
+  | 'byHand'
+  | 'prescribed'
+  | 'checkOff';
 
 /**
  * The exercise currently in focus. Purely presentational — the page owns
@@ -24,6 +35,7 @@ import { SessionStepRow } from './training-session.rows';
 @Component({
   selector: 'app-session-step',
   imports: [
+    BusyDirective,
     MatButtonModule,
     MatIconModule,
     MatProgressBarModule,
@@ -34,18 +46,22 @@ import { SessionStepRow } from './training-session.rows';
   styleUrl: './session-step.component.css',
 })
 export class SessionStepComponent {
+  private readonly guide = inject(ExerciseGuideService);
+
   readonly row = input.required<SessionStepRow>();
   /** 1-based position for the "Übung 2 von 3" line. */
   readonly position = input.required<number>();
   readonly total = input.required<number>();
-  /** Blocks every action while a capture or write is in flight. */
-  readonly busy = input(false);
+  /** The actions in flight; each button spins for its own. */
+  readonly busyKeys = input<ReadonlySet<SessionStepAction>>(new Set());
 
   readonly capture = output<void>();
   readonly enterByHand = output<void>();
   readonly logAsPrescribed = output<void>();
   readonly checkOff = output<void>();
   readonly skip = output<void>();
+
+  protected readonly guideLabel = $localize`:@@session.step.guide:Anleitung`;
 
   protected readonly toolLabel = computed(() => {
     switch (this.row().tool) {
@@ -72,10 +88,22 @@ export class SessionStepComponent {
     }
   });
 
+  /**
+   * Skipping stays locked while a write is out: the write closes the
+   * current step when it lands, which would be the wrong one by then.
+   */
+  protected readonly anyBusy = computed(() => this.busyKeys().size > 0);
+
   /** The entry dialog is the primary action already — don't offer it twice. */
   protected readonly showByHand = computed(() => this.row().tool !== 'manual');
 
   protected readonly hasProgress = computed(
     () => this.row().quantified && this.row().percent > 0
   );
+
+  /** Opens the wiki's how-to over the session instead of leaving it. */
+  protected openGuide(): void {
+    const { exerciseId, variantId } = this.row();
+    void this.guide.open(exerciseId, variantId);
+  }
 }

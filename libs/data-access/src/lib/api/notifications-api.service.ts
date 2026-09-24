@@ -13,6 +13,7 @@ import {
 } from '@angular/fire/firestore';
 import type { UserNotification } from '@pu-stats/models';
 import { Observable, of } from 'rxjs';
+import { PendingRequestsService } from '../pending-requests.service';
 
 export interface StoredNotification extends UserNotification {
   readonly id: string;
@@ -32,6 +33,7 @@ export const INBOX_LIMIT = 50;
 export class NotificationsApiService {
   private readonly firestore = inject(Firestore, { optional: true });
   private readonly auth = inject(Auth, { optional: true });
+  private readonly pending = inject(PendingRequestsService);
 
   watch(userId: string): Observable<ReadonlyArray<StoredNotification>> {
     const uid = this.auth?.currentUser?.uid ?? userId;
@@ -46,6 +48,16 @@ export class NotificationsApiService {
     );
   }
 
+  async remove(userId: string, ids: ReadonlyArray<string>): Promise<void> {
+    const uid = this.auth?.currentUser?.uid ?? userId;
+    if (!this.firestore || !uid || ids.length === 0) return;
+    const batch = writeBatch(this.firestore);
+    for (const id of ids) {
+      batch.delete(doc(this.firestore, `notifications/${uid}/inbox/${id}`));
+    }
+    await this.pending.track(batch.commit());
+  }
+
   async markRead(userId: string, ids: ReadonlyArray<string>): Promise<void> {
     const uid = this.auth?.currentUser?.uid ?? userId;
     if (!this.firestore || !uid || ids.length === 0) return;
@@ -56,6 +68,6 @@ export class NotificationsApiService {
         readAt,
       });
     }
-    await batch.commit();
+    await this.pending.track(batch.commit());
   }
 }

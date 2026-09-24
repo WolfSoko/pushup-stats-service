@@ -26,6 +26,7 @@ import {
   LEADERBOARD_PUSHUP_ID,
   LeaderboardService,
 } from './leaderboard.service';
+import { PendingRequestsService } from '../pending-requests.service';
 
 const getDoc = firestoreFns.getDoc as unknown as jest.Mock;
 const getDocs = firestoreFns.getDocs as unknown as jest.Mock;
@@ -430,5 +431,28 @@ describe('LeaderboardService — load() merging', () => {
       // Then — both routes return the same daily top.
       expect(defaulted.daily.top).toEqual(explicit.daily.top);
     });
+  });
+});
+
+describe('LeaderboardService — pending-request tracking', () => {
+  it('should track the snapshot read as a pending request', async () => {
+    // given
+    jest.clearAllMocks();
+    TestBed.configureTestingModule({
+      providers: [
+        LeaderboardService,
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: null } },
+      ],
+    });
+    const service = TestBed.inject(LeaderboardService);
+    const track = jest.spyOn(TestBed.inject(PendingRequestsService), 'track');
+    getDoc.mockResolvedValue(makeSnapshot(null));
+
+    // when
+    await service.load(LEADERBOARD_PUSHUP_ID);
+
+    // then
+    expect(track).toHaveBeenCalledTimes(1);
   });
 });

@@ -19,6 +19,7 @@ Angular 21 / Nx monorepo for tracking pushup statistics with Firebase backend.
 - **Issue work → feature branch + PR.** When implementing a tracked issue (e.g. `claude/implement-NNN-*` branches), open a PR proactively once the change is pushed and CI-ready, without waiting for an explicit ask. Link the issue with `Closes #ID`.
 - **Ad-hoc trunk changes still go straight to `main`.** Only open a PR when there is an issue, when the change is risky/large, or when the user requests one.
 - **After opening the PR, subscribe to its activity** via `subscribe_pr_activity` so review comments and CI failures are addressed in the same session without prompting.
+- **Staging preview only on request.** PRs are not deployed to staging automatically; the bot comment on the PR carries a checkbox (`Preview auf Staging deployen`) that triggers the deploy + staging E2E run. Tick it when a change touches rules, callables, indexes or anything the emulator run cannot vouch for; the result lands in the same comment. Details: [`docs/ci-cd.md`](docs/ci-cd.md#pr-previews-on-request).
 - **Trigger the CodeRabbit review yourself.** The repo gets no automatic reviews (CodeRabbit skips repos under 10 stars), so post `@coderabbitai review` as a PR comment right after opening the PR and after every substantive push. If CodeRabbit (or any other review bot) reports a usage limit, skips, or does not answer within a few minutes, run the review yourself with the `/code-review` skill against the PR and treat its findings like review comments. A PR is not merge-ready until one of the two reviews has been worked through.
 - **Merge proactively once CI is green, a review (CodeRabbit or your own) has been worked through, and review threads are resolved** — no need to wait for an explicit "merge it" from the user. Squash by default; preserve the issue link in the squash body. Stop only on an unresolvable review comment or a CI failure outside the change's scope, in which case report and wait.
 
@@ -69,7 +70,11 @@ More test pitfalls: [`docs/gotchas/testing.md`](docs/gotchas/testing.md).
 - **No `@angular/animations`** — it is deprecated and not a project dependency. Use CSS animations/transitions instead.
 - **State management:** see [`docs/architecture.md`](docs/architecture.md) for the signal-store / API-service split and where state belongs. Short version: stores own state, components only bind, services are stateless.
 - **Exercises & categories — one source:** `EXERCISE_CATALOG` / `EXERCISE_CATEGORIES` in `@pu-stats/models` are the only list of available exercises/categories. Goals, entries, analysis, the Cloud Function leaderboard rebuild, and training plans (`TrainingPlanDay.exerciseId`, default `'pushup'`) all read from it. Consumers that can't import it — the `firestore.rules` allowlists and the `$localize` display-name registry — are pinned to the catalog by guard tests, so adding/renaming an exercise fails CI until they match. The `firestore.rules` allowlists are **generated** (run `pnpm nx run cloud-functions:generate-exercise-rules` after changing the catalog; a drift-guard test enforces it). The `$localize` display-name registry is the one remaining consumer that needs a manual edit. Details: [`docs/architecture.md`](docs/architecture.md) → "Single source of truth: exercises & categories".
+- **Per-user data must be purgeable.** Account deletion (`deleteOwnAccount` callable, admin callables) purges server-side from the inventory in `data-store/functions/src/account-deletion/plan.ts`. A new collection that stores anything about a user goes into that inventory in the same change — a guard test fails for any `firestore.rules` collection it does not know. Details: [`docs/cloud-functions.md`](docs/cloud-functions.md#account-deletion-data-purge).
 - **No RxJS for state** — RxJS is allowed only inside the data-access layer for Firestore Observables, then bridged via `toSignal()`.
+- **CTAs that start async work show an inline spinner.** Bind `[puBusy]` (`@pu-stats/ui`) to a `createBusyState()` / `createKeyedBusyState()` flag that wraps the promise; never a bare `[disabled]` while saving, never a hand-rolled `<mat-spinner>` inside a button. Details: [`docs/architecture.md`](docs/architecture.md#busy-ctas-pubusy).
+- **Content that loads asynchronously shows a skeleton, not zeros or an empty state.** Branch on the store's loading flag and render `<pu-skeleton>` / `<pu-skeleton-table>` (`@pu-stats/ui`) in the same container the loaded content uses; gate empty-state texts on the loaded flag. Details: [`docs/architecture.md`](docs/architecture.md#loading-skeletons-pu-skeleton).
+- **Every promise-based request in `data-access`, `data-access-state`, `push` and `web` is tracked.** Wrap Firestore writes, transactions, one-off reads, Storage calls and callables in `PendingRequestsService.track()` (in `web`, callables already go through `CallableFunctionsService`); live listeners and passive background loads (`resource` loaders, sync on app start) stay untracked. `auth` and `motivation` may not import `@pu-stats/data-access` and keep their own per-action loading state — their requests never show the global spinner. Details: [`docs/architecture.md`](docs/architecture.md#global-pending-request-indicator).
 - **Never import `@copilotkit/angular` outside `web/src/app/ai/`.** The package does not tree-shake — a single symbol pulls ~5 MB into whatever chunk imports it, so the whole surface stays behind the lazy `assistant` route. Details: [`docs/ai-assistant.md`](docs/ai-assistant.md).
 - **Don't introduce backwards-compatibility shims** for code paths you are certain are unused — delete instead. No `// removed`, no re-exports of removed types, no renamed `_unused` vars.
 - **Keep prod source files small — target ≤ 250 LOC.** A file over ~250 lines is a smell that it owns too much; split it into focused units **as part of the change that grows it** (don't let it grow first and refactor "later"): extract child components, sub-stores/feature slices, pure helper modules, or per-concern services. This applies to **prod source** — components, stores, services, logic, Cloud Functions. **Excluded:** `*.spec.ts`/tests, `*.generated.ts`, and static data catalogs (e.g. `*.catalog.ts`, `*-content.ts`) where the length is just data, not logic. If a file genuinely can't be split below the limit, that's a signal to rethink its responsibilities — not to silently exceed it.
@@ -145,25 +150,27 @@ Detailed reference material lives in [`docs/`](docs/). **Read the relevant doc b
 | Play-Store-Text: Quelldateien, Publish-Script, Setup                    | [`docs/play-store-publishing.md`](docs/play-store-publishing.md), [`docs/playstore-listing.md`](docs/playstore-listing.md)     |
 | Android Closed-Test: Kandidaten-Scan, Invite-Popup, Tester-Rekrutierung | [`docs/android-test-program.md`](docs/android-test-program.md)                                                                 |
 | TWA-Wrapper: Bubblewrap-Regeneration, AGP/R8-Handarbeit, CI-Build       | [`docs/android-twa-wrapper.md`](docs/android-twa-wrapper.md)                                                                   |
+| graphify: Code-Knowledge-Graph für Agents (query/path/explain, Hooks)   | [`docs/graphify.md`](docs/graphify.md)                                                                                         |
 
 ### Push notifications
 
 - **Two-tier reminder system:** In-app (`ReminderService` with `setInterval`) + server-side (`dispatchPushReminders` Cloud Function every 5 min via Web Push).
+- **Session reminders** (`workoutReminders/{workoutId}`, `dispatchWorkoutReminders`) are a separate schedule per workout with the same two tiers — see [`docs/architecture.md`](docs/architecture.md) → "Custom workouts".
 - Browser API quirks, VAPID keys, subscription vs reminder toggle, Cloud Function lease handling — see [`docs/gotchas/push-and-service-workers.md`](docs/gotchas/push-and-service-workers.md).
 
 ### Gotchas & pitfalls
 
-| Area                                                         | File                                                                                   |
-| ------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
-| Angular signals (`toSignal`, same-reference emissions)       | [`docs/gotchas/signals.md`](docs/gotchas/signals.md)                                   |
-| Tests (mocks, spies, `resource.reload`, Jest/Vitest quirks)  | [`docs/gotchas/testing.md`](docs/gotchas/testing.md)                                   |
-| Cloud Functions (secrets IAM, delta aggregation, versioning) | [`docs/gotchas/cloud-functions.md`](docs/gotchas/cloud-functions.md)                   |
-| Push notifications & Service Workers                         | [`docs/gotchas/push-and-service-workers.md`](docs/gotchas/push-and-service-workers.md) |
-| i18n (XLIFF, locale switching, `LOCALE_ID`)                  | [`docs/gotchas/i18n.md`](./docs/gotchas/i18n.md)                                       |
-| Build & tooling (font flakes, pnpm dlx, Nx Cloud agents)     | [`docs/gotchas/build-and-tooling.md`](docs/gotchas/build-and-tooling.md)               |
-| Precomputed data (period-key staleness, timestamp formats)   | [`docs/gotchas/precomputed-data.md`](docs/gotchas/precomputed-data.md)                 |
-| Firestore client (`setDoc({merge:true})` nested-map clobber) | [`docs/gotchas/firestore.md`](docs/gotchas/firestore.md)                               |
-| UI interaction (scroll-snap vs scripted scroll, drag-click)  | [`docs/gotchas/ui-interaction.md`](docs/gotchas/ui-interaction.md)                     |
+| Area                                                                                       | File                                                                                   |
+| ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| Angular signals (`toSignal`, same-reference emissions)                                     | [`docs/gotchas/signals.md`](docs/gotchas/signals.md)                                   |
+| Tests (mocks, spies, `resource.reload`, Jest/Vitest quirks)                                | [`docs/gotchas/testing.md`](docs/gotchas/testing.md)                                   |
+| Cloud Functions (secrets IAM, delta aggregation, versioning)                               | [`docs/gotchas/cloud-functions.md`](docs/gotchas/cloud-functions.md)                   |
+| Push notifications & Service Workers                                                       | [`docs/gotchas/push-and-service-workers.md`](docs/gotchas/push-and-service-workers.md) |
+| i18n (XLIFF, locale switching, `LOCALE_ID`)                                                | [`docs/gotchas/i18n.md`](./docs/gotchas/i18n.md)                                       |
+| Build & tooling (font flakes, pnpm dlx, Nx Cloud agents, comment-triggered Actions + `gh`) | [`docs/gotchas/build-and-tooling.md`](docs/gotchas/build-and-tooling.md)               |
+| Precomputed data (period-key staleness, timestamp formats)                                 | [`docs/gotchas/precomputed-data.md`](docs/gotchas/precomputed-data.md)                 |
+| Firestore client (`setDoc({merge:true})` nested-map clobber)                               | [`docs/gotchas/firestore.md`](docs/gotchas/firestore.md)                               |
+| UI interaction (scroll-snap vs scripted scroll, drag-click)                                | [`docs/gotchas/ui-interaction.md`](docs/gotchas/ui-interaction.md)                     |
 
 ## Workflow
 
@@ -195,3 +202,14 @@ Detailed reference material lives in [`docs/`](docs/). **Read the relevant doc b
 - The `nx-generate` skill handles generator discovery internally - don't call nx_docs just to look up generator syntax
 
 <!-- nx configuration end-->
+
+## graphify
+
+This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships. `graphify-out/` is gitignored — if it is missing, build it with `graphify update .` (install: `uv tool install graphifyy`). Details: [`docs/graphify.md`](docs/graphify.md).
+
+Rules:
+
+- For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
+- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
+- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
+- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).

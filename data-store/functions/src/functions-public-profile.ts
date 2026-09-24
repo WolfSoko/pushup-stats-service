@@ -21,6 +21,7 @@ import {
 } from '@pu-stats/models';
 
 import { berlinDateParts } from './datetime';
+import { hasCheered } from './friends/cheers-read';
 import { db } from './firebase-app';
 import { periodKeys } from './user-stats-delta';
 import { resolvePhotoUrl } from './functions-profile-photo';
@@ -206,13 +207,19 @@ async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
   // Skip the extra read entirely when the viewer may not see the section.
   const shows = (section: ProfileSection): boolean =>
     isSectionVisibleTo(sectionVisibility(config?.ui, section), viewer);
-  const [photoURL, exercises, recent, plan, workouts] = await Promise.all([
-    resolvePhotoUrl(uid, config ?? {}, viewerIsOwner),
-    readExerciseTotals(uid),
-    shows('recent') ? readRecentEntries(uid) : Promise.resolve([]),
-    shows('plan') ? readActivePlan(uid, parts.isoDate) : Promise.resolve(null),
-    shows('workouts') ? readProfileWorkouts(uid) : Promise.resolve([]),
-  ]);
+  const [photoURL, exercises, recent, plan, workouts, viewerCheeredToday] =
+    await Promise.all([
+      resolvePhotoUrl(uid, config ?? {}, viewerIsOwner),
+      readExerciseTotals(uid),
+      shows('recent') ? readRecentEntries(uid) : Promise.resolve([]),
+      shows('plan')
+        ? readActivePlan(uid, parts.isoDate)
+        : Promise.resolve(null),
+      shows('workouts') ? readProfileWorkouts(uid) : Promise.resolve([]),
+      viewerIsFriend
+        ? hasCheered(viewerUid, uid, parts.isoDate)
+        : Promise.resolve(false),
+    ]);
   return buildPublicProfile(uid, config, stats, {
     achievements,
     photoURL,
@@ -224,6 +231,7 @@ async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
     currentMonthlyKey: keys.monthlyKey,
     viewerIsOwner,
     viewerIsFriend,
+    viewerCheeredToday,
   });
 }
 

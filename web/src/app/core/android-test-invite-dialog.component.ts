@@ -6,7 +6,8 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { BRAND_NAME } from '@pu-stats/models';
+import { BusyDirective, createBusyState } from '@pu-stats/ui';
 import { CallableFunctionsService } from '../admin/callable-functions.service';
 import { UserConfigStore } from './user-config.store';
 
@@ -22,7 +23,7 @@ type InviteDialogState = 'ask' | 'thanks';
 @Component({
   selector: 'app-android-test-invite-dialog',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonModule, MatDialogModule, MatProgressSpinnerModule],
+  imports: [MatButtonModule, MatDialogModule, BusyDirective],
   styles: `
     mat-dialog-content {
       display: grid;
@@ -40,7 +41,7 @@ type InviteDialogState = 'ask' | 'thanks';
       </h2>
       <mat-dialog-content>
         <p i18n="@@androidTest.invite.body">
-          Wir bauen gerade die Pushup Tracker Android-App und suchen Tester.
+          Wir bauen gerade die {{ brandName }} Android-App und suchen Tester.
           Hast du Lust, sie vor allen anderen auszuprobieren?
         </p>
         @if (error()) {
@@ -51,7 +52,8 @@ type InviteDialogState = 'ask' | 'thanks';
         <button
           type="button"
           mat-button
-          [disabled]="loading()"
+          data-testid="android-test-invite-dismiss"
+          [puBusy]="dismissing.busy()"
           (click)="dismiss()"
           i18n="@@androidTest.invite.notNow"
         >
@@ -60,15 +62,12 @@ type InviteDialogState = 'ask' | 'thanks';
         <button
           type="button"
           mat-flat-button
-          [disabled]="loading()"
+          data-testid="android-test-invite-join"
+          [puBusy]="optingIn.busy()"
           (click)="optIn()"
           i18n="@@androidTest.invite.join"
         >
-          @if (loading()) {
-            <mat-spinner diameter="18"></mat-spinner>
-          } @else {
-            Ich bin dabei
-          }
+          Ich bin dabei
         </button>
       </mat-dialog-actions>
     } @else {
@@ -93,6 +92,7 @@ type InviteDialogState = 'ask' | 'thanks';
   `,
 })
 export class AndroidTestInviteDialogComponent {
+  protected readonly brandName = BRAND_NAME;
   private readonly dialogRef = inject(
     MatDialogRef<AndroidTestInviteDialogComponent>
   );
@@ -100,22 +100,20 @@ export class AndroidTestInviteDialogComponent {
   private readonly userConfig = inject(UserConfigStore);
 
   readonly state = signal<InviteDialogState>('ask');
-  readonly loading = signal(false);
+  readonly optingIn = createBusyState();
+  readonly dismissing = createBusyState();
   readonly error = signal<string | null>(null);
 
   async optIn(): Promise<void> {
-    this.loading.set(true);
     this.error.set(null);
     try {
       const callable = this.callables.call('optInAndroidTest');
-      await callable();
+      await this.optingIn.run(() => callable());
       this.state.set('thanks');
     } catch {
       this.error.set(
         $localize`:@@androidTest.invite.error:Das hat leider nicht geklappt. Bitte versuch es später erneut.`
       );
-    } finally {
-      this.loading.set(false);
     }
   }
 
@@ -127,9 +125,11 @@ export class AndroidTestInviteDialogComponent {
       // Read-modify-write of the whole `ui` map — see
       // docs/gotchas/firestore.md on partial `ui` patches.
       const currentUi = this.userConfig.config()?.ui ?? {};
-      await this.userConfig.save({
-        ui: { ...currentUi, androidTestPopupDismissedUntil: until },
-      });
+      await this.dismissing.run(() =>
+        this.userConfig.save({
+          ui: { ...currentUi, androidTestPopupDismissedUntil: until },
+        })
+      );
     } catch {
       // Persisting the snooze is best-effort: failing to save it must not
       // trap the user in a dialog they explicitly dismissed. The popup is

@@ -19,6 +19,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { type ExerciseEntry } from '@pu-stats/models';
+import { BusyDirective, createKeyedBusyState } from '@pu-stats/ui';
 import { CallableFunctionsService } from './callable-functions.service';
 import { errorMessage, toggleSetMember } from './admin-page.helpers';
 import { type BulkDeleteResult } from './admin-page.models';
@@ -36,6 +37,7 @@ import {
 // `data-store/functions/src/admin/user-entries.ts` (a Firestore `WriteBatch`
 // caps at 500 operations). The entries page loads up to 1000 rows, so
 // "select all" can exceed this — chunk the request rather than fail.
+const SELECTED_KEY = 'selected';
 const MAX_DELETE_BATCH_SIZE = 500;
 
 /**
@@ -51,6 +53,7 @@ const MAX_DELETE_BATCH_SIZE = 500;
   selector: 'app-user-entries-table',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     DatePipe,
     MatButtonModule,
     MatCheckboxModule,
@@ -90,7 +93,9 @@ export class UserEntriesTableComponent {
   readonly valueDisplay = entryValueDisplay;
 
   readonly selectedIds = signal<ReadonlySet<string>>(new Set());
-  readonly deleting = signal(false);
+  /** Keyed by entry id, or {@link SELECTED} for the bulk bar. */
+  readonly deleting = createKeyedBusyState<string>();
+  protected readonly SELECTED = SELECTED_KEY;
   readonly error = signal<string | null>(null);
 
   readonly hasSelection = computed(() => this.selectedIds().size > 0);
@@ -132,14 +137,17 @@ export class UserEntriesTableComponent {
   }
 
   async deleteOne(entry: ExerciseEntry): Promise<void> {
-    await this.confirmAndDelete([entry._id]);
+    await this.confirmAndDelete(entry._id, [entry._id]);
   }
 
   async deleteSelected(): Promise<void> {
-    await this.confirmAndDelete([...this.selectedIds()]);
+    await this.confirmAndDelete(SELECTED_KEY, [...this.selectedIds()]);
   }
 
-  private async confirmAndDelete(entryIds: string[]): Promise<void> {
+  private async confirmAndDelete(
+    busyKey: string,
+    entryIds: string[]
+  ): Promise<void> {
     if (entryIds.length === 0) return;
 
     const ref = this.dialog.open<
@@ -153,21 +161,21 @@ export class UserEntriesTableComponent {
     const confirmed = await firstValueFrom(ref.afterClosed());
     if (!confirmed) return;
 
-    this.deleting.set(true);
     this.error.set(null);
     const fn = this.callables.call<
       { uid: string; entryIds: string[] },
       BulkDeleteResult
     >('adminDeleteUserEntries');
     try {
-      for (let i = 0; i < entryIds.length; i += MAX_DELETE_BATCH_SIZE) {
-        const chunk = entryIds.slice(i, i + MAX_DELETE_BATCH_SIZE);
-        await fn({ uid: this.uid(), entryIds: chunk });
-      }
+      await this.deleting.run(busyKey, async () => {
+        for (let i = 0; i < entryIds.length; i += MAX_DELETE_BATCH_SIZE) {
+          const chunk = entryIds.slice(i, i + MAX_DELETE_BATCH_SIZE);
+          await fn({ uid: this.uid(), entryIds: chunk });
+        }
+      });
     } catch (err) {
       this.error.set(errorMessage(err));
     } finally {
-      this.deleting.set(false);
       // Unconditional: a rejected call may still have deleted rows, because
       // the callable commits a request in several batches and a failure in a
       // later batch leaves the earlier ones committed. Tracking which calls

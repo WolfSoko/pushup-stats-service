@@ -9,7 +9,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
 import { sectionVisibility, type Workout } from '@pu-stats/models';
@@ -21,7 +20,9 @@ import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { ownProfilePath } from '../core/profile-share-url';
 import { UserConfigStore } from '../core/user-config.store';
 import { WorkoutCardComponent } from './workout-card.component';
+import { WorkoutCardSkeletonComponent } from './workout-card-skeleton.component';
 import { workoutRejectionMessage } from './workouts-messages';
+import { WorkoutRemindersStore } from './reminders/workout-reminders.store';
 import { WorkoutsStore } from './workouts.store';
 
 /**
@@ -35,16 +36,18 @@ import { WorkoutsStore } from './workouts.store';
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatProgressSpinnerModule,
     PageHeaderComponent,
     RouterLink,
     WorkoutCardComponent,
+    WorkoutCardSkeletonComponent,
   ],
   templateUrl: './workouts-page.component.html',
   styleUrl: './workouts-page.component.css',
 })
 export class WorkoutsPageComponent {
   protected readonly store = inject(WorkoutsStore);
+  protected readonly reminders = inject(WorkoutRemindersStore);
+  protected readonly skeletonRows = [0, 1, 2];
   private readonly config = inject(UserConfigStore);
   private readonly user = inject(UserContextService);
   private readonly dialog = inject(MatDialog);
@@ -117,6 +120,18 @@ export class WorkoutsPageComponent {
       autoFocus: 'dialog',
     });
     if ((await firstValueFrom(ref.afterClosed())) !== true) return;
-    await this.store.remove(workout.id);
+    if (await this.store.remove(workout.id)) {
+      await this.reminders.remove(workout.id);
+    }
+  }
+
+  protected async editReminder(workout: Workout): Promise<void> {
+    const { WorkoutReminderDialogComponent } =
+      await import('./reminders/workout-reminder-dialog.component');
+    if (this.destroyed) return;
+    this.dialog.open(WorkoutReminderDialogComponent, {
+      data: { workoutId: workout.id, title: workout.title },
+      autoFocus: 'dialog',
+    });
   }
 }

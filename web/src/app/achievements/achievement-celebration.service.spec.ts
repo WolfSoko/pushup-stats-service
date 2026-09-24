@@ -3,9 +3,11 @@ import { TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { UserContextService } from '@pu-auth/auth';
 import { UserAchievementsApiService } from '@pu-stats/data-access';
+import { SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
 import { of, Subject } from 'rxjs';
 import { vi } from 'vitest';
 
+import { UserConfigStore } from '../core/user-config.store';
 import { STORAGE_KEY } from './achievement-celebration';
 import { AchievementCelebrationService } from './achievement-celebration.service';
 
@@ -14,6 +16,7 @@ function setup(options: {
   stream?: Subject<Array<{ id: string; awardedAt: string }>>;
   userId?: string | null;
   platform?: string;
+  snapQuality?: 'low' | 'middle' | 'high';
 }) {
   const open = vi.fn();
   const watchEarned = vi.fn(() => options.stream ?? of(options.earned ?? []));
@@ -22,6 +25,10 @@ function setup(options: {
       { provide: PLATFORM_ID, useValue: options.platform ?? 'browser' },
       { provide: MatDialog, useValue: { open } },
       { provide: UserAchievementsApiService, useValue: { watchEarned } },
+      {
+        provide: UserConfigStore,
+        useValue: { snapQuality: () => options.snapQuality ?? 'low' },
+      },
       {
         provide: UserContextService,
         useValue: {
@@ -50,6 +57,41 @@ describe('AchievementCelebrationService', () => {
 
     // then
     expect(open).toHaveBeenCalledTimes(1);
+  });
+
+  it('should hand the snap-quality preset and a transparent panel to the dialog', () => {
+    // when
+    const { open } = setup({
+      earned: [{ id: 'plan-days-1', awardedAt: '2026-01-02T00:00:00.000Z' }],
+      snapQuality: 'high',
+    });
+
+    // then — the card paints its own frame and the snap particles flow
+    // past the dialog edges, so Material's surface has to stay invisible
+    const config = open.mock.calls[0][1];
+    expect(config.panelClass).toBe('achievement-dialog-panel');
+    expect(config.data.maxParticleCount).toBe(SNAP_QUALITY_PARTICLES.high);
+    expect(config.data.badge.id).toBe('plan-days-1');
+  });
+
+  it('should give each dialog its own title id', () => {
+    // given — a second badge can sync while the first dialog is still open;
+    // a shared id would point its aria-labelledby at the wrong heading
+    const stream = new Subject<Array<{ id: string; awardedAt: string }>>();
+    const { open } = setup({ stream });
+
+    // when
+    stream.next([{ id: 'plan-days-1', awardedAt: '2026-01-02T00:00:00.000Z' }]);
+    stream.next([
+      { id: 'plan-days-1', awardedAt: '2026-01-02T00:00:00.000Z' },
+      { id: 'plan-days-10', awardedAt: '2026-01-11T00:00:00.000Z' },
+    ]);
+
+    // then
+    const [first, second] = open.mock.calls.map((call) => call[1]);
+    expect(first.ariaLabelledBy).toBe(first.data.titleId);
+    expect(second.ariaLabelledBy).toBe(second.data.titleId);
+    expect(first.data.titleId).not.toBe(second.data.titleId);
   });
 
   it('should not reopen for a badge already celebrated', () => {

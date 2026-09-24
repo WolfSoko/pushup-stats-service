@@ -24,6 +24,7 @@ import { ExerciseFirestoreService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import { UserContextService } from '@pu-auth/auth';
 import {
+  BRAND_NAME,
   findExerciseDefinition,
   formatEntryDisplay,
   isAutoCountQuickAddExerciseId,
@@ -43,6 +44,11 @@ import { DailyGoalChecklistComponent } from '../../core/daily-goal/daily-goal-ch
 import { registerDashboardDeepLinks } from './stats-dashboard.deep-links';
 import { AdSlotComponent } from '@pu-stats/ads';
 import { AllTimeBadgesComponent } from '../dashboard/all-time-badges.component';
+import {
+  AnalysisTeaserSkeletonComponent,
+  RecentExercisesSkeletonComponent,
+} from '../dashboard/dashboard-skeletons.component';
+import { SkeletonComponent } from '@pu-stats/ui';
 import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { TrainingEntryDialogComponent } from '../components/training-entry-dialog/training-entry-dialog.component';
@@ -57,6 +63,11 @@ import { NotificationStore } from '../../notifications/notification.store';
 import { pickMotivationSlot } from '../motivation-slot';
 import type { QuickAddButtonViewModel } from '../dashboard/quick-add-view-model';
 import { InviteService } from '../../core/invite.service';
+import {
+  BusyDirective,
+  createBusyState,
+  createKeyedBusyState,
+} from '@pu-stats/ui';
 import { ChallengeSpotlightComponent } from '../../friends/challenge-spotlight.component';
 import { FriendsTeaserCardComponent } from '../../friends/friends-teaser-card.component';
 import {
@@ -74,6 +85,7 @@ import {
 @Component({
   selector: 'app-stats-dashboard',
   imports: [
+    BusyDirective,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -82,6 +94,9 @@ import {
     DatePipe,
     AllTimeBadgesComponent,
     AnalysisTeaserCardComponent,
+    AnalysisTeaserSkeletonComponent,
+    RecentExercisesSkeletonComponent,
+    SkeletonComponent,
     ChallengeSpotlightComponent,
     FriendsTeaserCardComponent,
     DailyGoalChecklistComponent,
@@ -96,6 +111,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatsDashboardComponent {
+  protected readonly brandName = BRAND_NAME;
   private readonly exerciseService = inject(ExerciseFirestoreService);
   private readonly userContext = inject(UserContextService);
   private readonly dialog = inject(MatDialog);
@@ -216,6 +232,12 @@ export class StatsDashboardComponent {
    * "fill to goal" action when a plan is active.
    */
   private readonly planToday = planTodayView(this.trainingPlans);
+  readonly planTodayBusyKeys = computed<ReadonlySet<string>>(() => {
+    const dayIndex = this.planToday.dayIndex();
+    return dayIndex === null
+      ? new Set()
+      : this.trainingPlans.dayBusyKeys(dayIndex);
+  });
   readonly planTodayExerciseRows = this.planToday.exerciseRows;
   readonly planTodayFulfilled = this.planToday.fulfilled;
 
@@ -246,8 +268,11 @@ export class StatsDashboardComponent {
   /** In-flight guard for the plan-aware "fill to goal" action — the store
    *  has no public signal for `logTodayPlanDay`, so tracked locally like
    *  `QuickAddOrchestrationService.fillToGoalInFlight`. */
-  private readonly _planFillInFlight = signal(false);
-  readonly planFillInFlight = this._planFillInFlight.asReadonly();
+  readonly planFill = createBusyState();
+  readonly planFillInFlight = this.planFill.busy;
+  /** One flag per quick button (`vm.key`), so only the pressed one spins. */
+  readonly quickBusy = createKeyedBusyState<string>();
+  readonly inviting = createBusyState();
 
   constructor() {
     let viewReady = false;
@@ -298,17 +323,14 @@ export class StatsDashboardComponent {
    */
   async fillToGoal(): Promise<void> {
     if (this.planActive() && !this.isPlanRestDay()) {
-      if (this._planFillInFlight()) return;
-      this._planFillInFlight.set(true);
-      try {
+      if (this.planFill.busy()) return;
+      await this.planFill.run(async () => {
         await logPlanToday(this.trainingPlans, this.snackbar);
         this.refreshAfterPlanWrite();
-      } finally {
-        this._planFillInFlight.set(false);
-      }
+      });
       return;
     }
-    this.quickAdd.fillToGoal();
+    await this.quickAdd.fillToGoal();
   }
 
   /** One-click log for a single exercise of today's plan day. */
@@ -402,7 +424,7 @@ export class StatsDashboardComponent {
   readonly invitedCount = this.invites.invitedCount;
 
   inviteFriend(): void {
-    void this.invites.inviteFriend();
+    void this.inviting.run(() => this.invites.inviteFriend());
   }
 
   shareDay(): void {
@@ -494,10 +516,14 @@ export class StatsDashboardComponent {
    * analytics breakdown can distinguish dashboard quick-adds from the
    * manual entry dialog.
    */
-  async addQuickEntryFromConfig(vm: QuickAddButtonViewModel): Promise<void> {
+  addQuickEntryFromConfig(vm: QuickAddButtonViewModel): Promise<void> {
+    return this.quickBusy.run(vm.key, () => this.performQuickEntry(vm));
+  }
+
+  private async performQuickEntry(vm: QuickAddButtonViewModel): Promise<void> {
     if (vm.mode === 'auto-count') {
       if (!isAutoCountQuickAddExerciseId(vm.exerciseId)) return;
-      void this.quickAdd.openAutoCount(vm.exerciseId);
+      await this.quickAdd.openAutoCount(vm.exerciseId);
       return;
     }
     if (vm.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID) {

@@ -17,13 +17,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { GoogleOnboardingDialogComponent } from './google-onboarding-dialog/google-onboarding-dialog.component';
 import { LoginUiStore } from './login-ui.store';
 import { FormsModule } from '@angular/forms';
+import { BRAND_NAME } from '@pu-stats/models';
+import { BusyDirective, createBusyState } from '@pu-stats/ui';
 export { hasStrongPasswordPolicy } from '../password-policy';
 
 @Component({
@@ -34,7 +35,7 @@ export { hasStrongPasswordPolicy } from '../password-policy';
     MatCardModule,
     MatIconModule,
     MatInputModule,
-    MatProgressSpinnerModule,
+    BusyDirective,
     FormField,
     FormsModule,
   ],
@@ -44,12 +45,15 @@ export { hasStrongPasswordPolicy } from '../password-policy';
   providers: [LoginUiStore],
 })
 export class LoginComponent {
+  protected readonly brandName = BRAND_NAME;
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly dialog = inject(MatDialog);
   private readonly injector = inject(Injector);
   private readonly snackBar = inject(MatSnackBar);
   readonly loginUiStore = inject(LoginUiStore);
+  readonly emailSignIn = createBusyState();
+  readonly googleSignIn = createBusyState();
 
   private readonly loginData = signal({ email: '', password: '' });
   readonly loginForm = form(
@@ -80,13 +84,18 @@ export class LoginComponent {
     if (this.loginForm.email().invalid() || this.loginForm.password().invalid())
       return;
     const { email, password } = this.loginForm().value();
-    if (await this.loginUiStore.signInWithEmail(email, password)) {
-      await this.showSuccessToastAndNavigate();
-    }
+    await this.emailSignIn.run(async () => {
+      if (await this.loginUiStore.signInWithEmail(email, password)) {
+        await this.showSuccessToastAndNavigate();
+      }
+    });
   }
 
   async signInWithGoogle(): Promise<void> {
-    if (!(await this.loginUiStore.signInWithGoogle())) return;
+    const signedIn = await this.googleSignIn.run(() =>
+      this.loginUiStore.signInWithGoogle()
+    );
+    if (!signedIn) return;
     if (await this.loginUiStore.isGoogleOnboardingRequired()) {
       this.loginUiStore.resetWizard(this.loginUiStore.currentUserDisplayName());
       const dialogRef = this.dialog.open(GoogleOnboardingDialogComponent, {
@@ -100,7 +109,7 @@ export class LoginComponent {
         return;
       }
     }
-    await this.showSuccessToastAndNavigate();
+    await this.googleSignIn.run(() => this.showSuccessToastAndNavigate());
   }
 
   private async showSuccessToastAndNavigate(): Promise<void> {

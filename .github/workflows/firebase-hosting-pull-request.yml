@@ -1,182 +1,156 @@
-# Deploy PR preview to staging Firebase project.
-# Deploys: Hosting preview, Cloud Functions, Firestore rules & indexes.
-# Uses the staging Firebase project (pushup-stats-staging-867b7) so PRs
-# never affect production data or functions.
+# Staging preview on request: the handshake half.
+#
+# When a PR opens, `request_preview` posts one comment carrying a checkbox.
+# Ticking the box edits that comment, which fires `issue_comment` and runs
+# `trigger_preview`: it unticks the box (so it can be ticked again for a
+# fresh deploy), checks that the PR head is same-repo and the requester has
+# write access, and dispatches firebase-hosting-staging-preview.yml on the
+# PR branch. That workflow does the build, the deploy and the staging E2E
+# and writes the result back into the same comment.
+#
+# The job here never checks out code: `issue_comment` workflows run with
+# secrets, and checking out a PR head in that context is what CodeQL's
+# untrusted-checkout rule flags. The dispatched workflow runs on the PR
+# branch like any push-triggered workflow would, so it also picks up
+# changes to the deploy steps from the PR itself.
 name: Deploy to Firebase Staging on PR
-on: pull_request
+on:
+  pull_request:
+    types: [opened, reopened]
+  issue_comment:
+    types: [edited]
 permissions:
-  checks: write
   contents: read
   pull-requests: write
-  # Required so the runner can mint a GitHub OIDC token for keyless
-  # Workload Identity Federation auth to the staging GCP project.
-  id-token: write
-# Staging is one shared Firebase project: this workflow deploys rules,
-# indexes and functions to it and then runs the critical-path suite
-# against exactly that deployment. Two pull requests deploying at once
-# would swap the backend out from under each other's suite, so the whole
-# workflow is serialised. Queued runs are not cancelled; a run superseded
-# while still pending can be restarted from the Actions tab.
-concurrency:
-  group: firebase-staging-preview
-  cancel-in-progress: false
 env:
-  # Für PRs nur Read-Token, für main Pushes Write-Token.
-  # Bei Fork-PRs sind Secrets automatisch nicht verfügbar.
-  NX_CLOUD_ACCESS_TOKEN: >-
-    ${{
-      github.event.pull_request.head.repo.full_name == github.repository
-        && secrets.NX_CLOUD_ACCESS_TOKEN_WRITE
-      || secrets.NX_CLOUD_ACCESS_TOKEN_READ
-    }}
-  # More heap for Angular SSR build + Playwright webServer in CI.
-  NODE_OPTIONS: --max-old-space-size=6144
+  PREVIEW_MARKER: '<!-- staging-preview-request -->'
+  PREVIEW_CHECKBOX: 'Preview auf Staging deployen'
+  PREVIEW_WORKFLOW: firebase-hosting-staging-preview.yml
 jobs:
-  build_and_preview:
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+  # Skipped for fork PRs (no WIF access, and GITHUB_TOKEN is read-only
+  # there) and for Dependabot PRs (read-only token as well, and a
+  # dependency bump does not need a staging cycle).
+  request_preview:
+    if: >-
+      ${{
+        github.event_name == 'pull_request'
+          && github.event.pull_request.head.repo.full_name == github.repository
+          && github.event.pull_request.user.login != 'dependabot[bot]'
+      }}
     runs-on: ubuntu-latest
-    # Build, deploy and the staging suite in sequence. The suite's own
-    # ceiling is the step timeout below, which has to stay under whatever
-    # is left of this budget for Playwright to report before the runner
-    # pulls the plug.
-    timeout-minutes: 50
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v7
-
-      - name: Setup Node
-        uses: actions/setup-node@v7
-        with:
-          node-version-file: .nvmrc
-
-      # Use corepack to install the exact pnpm version from package.json's
-      # `packageManager` field. See ci.yml for background on why we avoid
-      # pnpm/action-setup@v6.
-      - name: Enable corepack
-        env:
-          COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
-        run: |
-          corepack enable
-          pnpm --version
-
-      - name: Get pnpm store path
-        id: pnpm-store
-        run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
-
-      - name: Cache pnpm store
-        uses: actions/cache@v6
-        with:
-          path: ${{ steps.pnpm-store.outputs.path }}
-          key: pnpm-store-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: pnpm-store-${{ runner.os }}-
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-      - name: Build web app (staging config)
-        run: pnpm nx run web:build -c staging
-      - name: Build Cloud Functions
-        run: pnpm nx run cloud-functions:build
-      # Mirrors the merge workflow: Nx esbuild emits package.json +
-      # pnpm-lock.yaml into functions-dist with firebase-functions left
-      # external, and firebase-tools resolves the SDK from that dir. Without
-      # node_modules here the staging deploy fails with "Failed to find
-      # location of Firebase Functions SDK".
-      # --no-frozen-lockfile: the lockfile was just generated in the build
-      # step above, but --ignore-workspace hides the root pnpm-workspace.yaml
-      # `overrides` from pnpm's config, so a frozen install here always trips
-      # ERR_PNPM_LOCKFILE_CONFIG_MISMATCH even though nothing actually drifted.
-      - name: Install Cloud Functions runtime dependencies
-        working-directory: data-store/functions-dist
-        run: pnpm install --no-frozen-lockfile --ignore-workspace --ignore-scripts
-      - name: Prepare Hosting artifact
-        run: |
-          rm -rf data-store/hosting-public
-          mkdir -p data-store/hosting-public
-          cp -R dist/web/browser/. data-store/hosting-public/
-          find data-store/hosting-public -type f -name 'index.csr.html' -print0 | while IFS= read -r -d '' f; do
-            cp "$f" "${f%index.csr.html}index.html"
-          done
-      # Keyless auth via Workload Identity Federation. The action writes an
-      # external-account credential file and exports GOOGLE_APPLICATION_CREDENTIALS
-      # (consumed by firebase-tools) and CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE
-      # (consumed by gcloud), so neither needs an explicit key file.
-      # vars.WIF_PROVIDER_STAGING / vars.WIF_DEPLOY_SA_STAGING are set by infra/setup-wif.sh.
-      # Pinned to the v3.0.0 commit per GitHub's third-party-action hardening guidance.
-      - name: Authenticate to Google Cloud (keyless, WIF)
-        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
-        with:
-          project_id: pushup-stats-staging-867b7
-          workload_identity_provider: ${{ vars.WIF_PROVIDER_STAGING }}
-          service_account: ${{ vars.WIF_DEPLOY_SA_STAGING }}
-      - name: Ensure GITHUB_TOKEN secret exists in staging
-        run: |
-          gcloud secrets describe GITHUB_TOKEN --project=pushup-stats-staging-867b7 2>/dev/null || \
-            echo -n "placeholder-not-configured" | \
-            gcloud secrets create GITHUB_TOKEN --data-file=- --project=pushup-stats-staging-867b7 --quiet
-      # firebase-tools re-runs the OIDC→STS→impersonation token exchange on each
-      # invocation and surfaces any transient hop as "Failed to authenticate".
-      # Retry a few times before giving up; a genuine failure still fails the job.
-      - name: Deploy Cloud Functions + Firestore rules & indexes to staging
-        working-directory: data-store
-        run: |
-          for attempt in 1 2 3 4; do
-            pnpm exec firebase deploy --only functions,firestore --project staging --force && exit 0
-            echo "::warning::firebase deploy attempt $attempt failed; retrying in 15s (transient WIF token exchange)"
-            sleep 15
-          done
-          echo "::error::firebase deploy failed after 4 attempts"
-          exit 1
-      - name: Deploy Hosting preview channel
-        id: preview
-        working-directory: data-store
-        run: |
-          DEPLOY_JSON=""
-          for attempt in 1 2 3 4; do
-            if DEPLOY_JSON=$(pnpm exec firebase hosting:channel:deploy "pr-${{ github.event.pull_request.number }}" \
-              --expires 7d --project staging --json); then
-              break
-            fi
-            echo "::warning::channel deploy attempt $attempt failed; retrying in 15s (transient WIF token exchange)"
-            DEPLOY_JSON=""
-            sleep 15
-          done
-          if [ -z "$DEPLOY_JSON" ]; then echo "::error::channel deploy failed after 4 attempts"; exit 1; fi
-          echo "$DEPLOY_JSON"
-          URL=$(printf '%s' "$DEPLOY_JSON" | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{const m=d.match(/\{[\s\S]*\}/);if(!m)process.exit(0);const r=JSON.parse(m[0]).result||{};const c=Object.values(r)[0]||{};process.stdout.write(c.url||'')})")
-          echo "url=$URL" >> "$GITHUB_OUTPUT"
-      - name: Comment preview URL on PR
-        if: steps.preview.outputs.url != ''
+      - name: Post preview request comment (once per PR)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          gh pr comment "${{ github.event.pull_request.number }}" --repo "${{ github.repository }}" \
-            --body "🚀 Staging preview deployed: ${{ steps.preview.outputs.url }} (expires in 7 days)"
+          # --paginate runs the jq filter per page, so emit matching ids
+          # instead of a per-page count and test for any output.
+          existing=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --paginate \
+            --jq ".[] | select(.user.login == \"github-actions[bot]\" and (.body | contains(\"$PREVIEW_MARKER\"))) | .id")
+          if [ -n "$existing" ]; then
+            echo "Request comment already present, nothing to do."
+            exit 0
+          fi
+          body=$(cat <<BODY
+          $PREVIEW_MARKER
+          ### 🚀 Staging-Preview
 
-      # The critical-path suite, this time against the deployment that was
-      # just made: real rules, real callables, real indexes — the part the
-      # emulator run in ci.yml cannot vouch for. Auth for the Admin SDK is
-      # the keyless WIF credential the deploy step already exported via
-      # GOOGLE_APPLICATION_CREDENTIALS, so no extra secret is involved.
-      # Accounts the run creates are removed again in the suite's teardown
-      # (see web/web-e2e-emulator/support/cleanup.ts).
-      - name: Playwright-Browser installieren
-        if: steps.preview.outputs.url != ''
-        run: pnpm exec playwright install --with-deps chromium
+          Das Preview-Deployment (Hosting-Channel, Cloud Functions, Firestore-Regeln & -Indizes im Staging-Projekt, danach Critical-Path-E2E) läuft nicht automatisch. Zum Auslösen die Checkbox anhaken – sie wird nach dem Start wieder geleert und kann für ein weiteres Deployment erneut angehakt werden.
 
-      - name: E2E gegen die Staging-Preview
-        if: steps.preview.outputs.url != ''
-        # Above Playwright's own globalTimeout (20 min) so a pathological
-        # run ends as a report naming the tests that hung.
-        timeout-minutes: 25
+          - [ ] $PREVIEW_CHECKBOX
+
+          _Status: noch kein Deployment angefordert._
+          BODY
+          )
+          gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" -f body="$body" --silent
+
+  trigger_preview:
+    if: >-
+      ${{
+        github.event_name == 'issue_comment'
+          && github.event.issue.pull_request
+          && github.event.comment.user.login == 'github-actions[bot]'
+          && contains(github.event.comment.body, '<!-- staging-preview-request -->')
+          && contains(github.event.comment.body, '- [x] Preview auf Staging deployen')
+      }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write
+      # gh api …/dispatches
+      actions: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PR_NUMBER: ${{ github.event.issue.number }}
+      COMMENT_ID: ${{ github.event.comment.id }}
+      SENDER: ${{ github.event.sender.login }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    steps:
+      # Untick first: our own edits never re-trigger the workflow (GITHUB_TOKEN
+      # events don't), and a still-ticked box could not be ticked again.
+      - name: Untick checkbox and mark request as accepted
+        run: |
+          # GitHub stores comment bodies with CRLF; drop the CR so the
+          # status line is replaced cleanly and no blank lines pile up.
+          body=$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" --jq .body \
+            | sed -e 's/\r$//' -e "s/- \[[xX]\] $PREVIEW_CHECKBOX/- [ ] $PREVIEW_CHECKBOX/" -e '/^_Status: /d')
+          printf '%s\n\n_Status: ⏳ Deployment wird gestartet (angefordert von @%s)._\n' "$body" "$SENDER" > /tmp/comment-body.md
+          gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" -F body=@/tmp/comment-body.md --silent
+
+      # Fork heads never get deployed (the dispatched workflow would run
+      # foreign code with the WIF credential), and the person ticking the
+      # box has to have write access — GitHub already restricts checkbox
+      # toggles that way, this keeps it explicit.
+      - name: Resolve PR head and dispatch the preview workflow
+        id: dispatch
+        run: |
+          refuse() { echo "reason=$1" >> "$GITHUB_OUTPUT"; echo "::error::$1"; exit 1; }
+          pr=$(gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json headRefName,isCrossRepository,state)
+          if [ "$(printf '%s' "$pr" | jq -r .isCrossRepository)" != "false" ]; then
+            refuse "Preview-Deployments gibt es nur für PRs aus diesem Repository (kein Fork)"
+          fi
+          if [ "$(printf '%s' "$pr" | jq -r .state)" != "OPEN" ]; then
+            refuse "PR #$PR_NUMBER ist nicht offen"
+          fi
+          perm=$(gh api "repos/$GITHUB_REPOSITORY/collaborators/$SENDER/permission" --jq .permission)
+          case "$perm" in
+            admin|write) ;;
+            *) refuse "@$SENDER hat kein Schreibrecht im Repository ($perm)" ;;
+          esac
+          head_ref=$(printf '%s' "$pr" | jq -r .headRefName)
+          # A run that is still queued or in progress for this branch will
+          # deploy the same head; a second one would only block staging.
+          active=$(gh api -X GET "repos/$GITHUB_REPOSITORY/actions/workflows/$PREVIEW_WORKFLOW/runs" \
+            -f branch="$head_ref" -f per_page=20 \
+            --jq '[.workflow_runs[] | select(.status == "queued" or .status == "in_progress" or .status == "waiting") | .html_url] | first // empty')
+          if [ -n "$active" ]; then
+            echo "already_running=$active" >> "$GITHUB_OUTPUT"
+            echo "A preview run is already active for $head_ref: $active"
+            exit 0
+          fi
+          gh api -X POST "repos/$GITHUB_REPOSITORY/actions/workflows/$PREVIEW_WORKFLOW/dispatches" \
+            -f ref="$head_ref" \
+            -f "inputs[pr_number]=$PR_NUMBER" \
+            -f "inputs[comment_id]=$COMMENT_ID" \
+            -f "inputs[requested_by]=$SENDER"
+
+      - name: Point to the run that is already active
+        if: steps.dispatch.outputs.already_running != ''
         env:
-          E2E_TARGET: staging
-          E2E_BASE_URL: ${{ steps.preview.outputs.url }}
-          E2E_RUN_ID: ${{ github.run_id }}
-        run: pnpm exec nx run web-e2e-emulator:e2e-staging --outputStyle=stream
+          ACTIVE_RUN: ${{ steps.dispatch.outputs.already_running }}
+        run: |
+          body=$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" --jq .body | sed -e 's/\r$//' -e '/^_Status: /d')
+          printf '%s\n\n_Status: ⏳ Ein Deployment für diesen Branch läuft bereits ([Run](%s)); es deployt den aktuellen Head._\n' "$body" "$ACTIVE_RUN" > /tmp/comment-body.md
+          gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" -F body=@/tmp/comment-body.md --silent
 
-      - name: Report hochladen
+      - name: Report a failed start in the request comment
         if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: e2e-staging-report
-          path: dist/.playwright/web/web-e2e-emulator
-          retention-days: 7
+        env:
+          REASON: ${{ steps.dispatch.outputs.reason || format('Dispatch fehlgeschlagen – enthält der PR-Branch `.github/workflows/{0}`? (main mergen)', env.PREVIEW_WORKFLOW) }}
+        run: |
+          body=$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" --jq .body | sed -e 's/\r$//' -e '/^_Status: /d')
+          printf '%s\n\n_Status: ❌ Deployment nicht gestartet: %s ([Run](%s))._\n' "$body" "$REASON" "$RUN_URL" > /tmp/comment-body.md
+          gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" -F body=@/tmp/comment-body.md --silent

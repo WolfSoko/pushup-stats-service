@@ -307,4 +307,35 @@ describe('RegisterComponent', () => {
       expect(router.navigateByUrl).toHaveBeenCalledWith('/app');
     });
   });
+
+  it('should mark only the cancel button busy while the guest session is signed out', async () => {
+    // given
+    authStoreMock.isAuthenticated.set(true);
+    let resolveLogout!: () => void;
+    authStoreMock.logout.mockImplementation(
+      () => new Promise<void>((resolve) => (resolveLogout = resolve))
+    );
+    const view = await renderRegister();
+    const router = view.fixture.debugElement.injector.get(Router);
+    jest.spyOn(router, 'navigateByUrl').mockResolvedValue(true);
+    const component = view.fixture.componentInstance;
+
+    // when
+    const leaving = component.goToLogin();
+    await view.fixture.whenStable();
+
+    // then
+    expect(component.leaving.busy()).toBe(true);
+    expect(component.submitting.busy()).toBe(false);
+    expect(component.googleRegistration.busy()).toBe(false);
+
+    // when
+    resolveLogout();
+    await leaving;
+
+    // then
+    expect(component.leaving.busy()).toBe(false);
+    authStoreMock.isAuthenticated.set(false);
+    authStoreMock.logout.mockReset();
+  });
 });

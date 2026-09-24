@@ -66,6 +66,8 @@ interface Options {
   mode?: SessionMode;
   activePlan?: UserTrainingPlan | null;
   authenticated?: boolean;
+  authResolved?: boolean;
+  planLoaded?: boolean;
   slug?: string;
   capture?: Partial<SessionCaptureService>;
 }
@@ -117,7 +119,7 @@ async function setup(options: Options = {}) {
         provide: AuthStore,
         useValue: {
           isAuthenticated: signal(options.authenticated ?? true),
-          authResolved: signal(true),
+          authResolved: signal(options.authResolved ?? true),
         },
       },
       {
@@ -127,7 +129,7 @@ async function setup(options: Options = {}) {
           todayDay: signal(DAY),
           activeCatalog: signal(null),
           activePlan: signal(activePlan),
-          activePlanLoaded: signal(true),
+          activePlanLoaded: signal(options.planLoaded ?? true),
           dayProgress: () =>
             options.progress ?? [
               item(0, PLANK),
@@ -186,6 +188,41 @@ describe('TrainingSessionComponent', () => {
     expect(screen.getByText('Plank')).toBeTruthy();
     expect(screen.getByText('Russian Twist')).toBeTruthy();
     expect(byTestId('session-start')).toBeTruthy();
+  });
+
+  it('should hold the session card as a skeleton while the plan is still loading', async () => {
+    // given / when
+    await setup({ planLoaded: false });
+
+    // then
+    const loading = byTestId('session-loading');
+    expect(loading).toBeTruthy();
+    expect(loading.getAttribute('aria-busy')).toBe('true');
+    expect(loading.closest('app-session-skeleton')).not.toBeNull();
+    expect(
+      loading.querySelector('.pu-visually-hidden[role="status"]')?.textContent
+    ).toContain('Session wird geladen …');
+    expect(loading.querySelectorAll('pu-skeleton').length).toBeGreaterThan(0);
+    expect(document.querySelector('mat-spinner')).toBeNull();
+    expect(byTestId('session-start')).toBeNull();
+    expect(
+      screen.queryByText(
+        /Für eine geführte Session muss dieser Plan aktiv sein/
+      )
+    ).toBeNull();
+  });
+
+  it('should hold the skeleton until the auth state is resolved', async () => {
+    // given / when
+    await setup({ authenticated: false, authResolved: false });
+
+    // then
+    expect(byTestId('session-loading')).toBeTruthy();
+    expect(
+      screen.queryByText(
+        /Für eine geführte Session muss dieser Plan aktiv sein/
+      )
+    ).toBeNull();
   });
 
   it('should refuse a session for a plan that is not active', async () => {
@@ -300,6 +337,34 @@ describe('TrainingSessionComponent', () => {
     // then
     expect(logPlanExercise).toHaveBeenCalledWith(3, 0);
     expect(screen.getByText(/Als Nächstes/)).toBeTruthy();
+  });
+
+  it('should show the pressed step button busy until its write settles', async () => {
+    // given — a plan write Firestore has not acknowledged yet
+    let settle: (result: string) => void = () => undefined;
+    const { logPlanExercise } = await setup();
+    logPlanExercise.mockReturnValue(
+      new Promise((resolve) => {
+        settle = resolve;
+      })
+    );
+    await userEvent.click(byTestId('session-start'));
+
+    // when
+    await userEvent.click(byTestId('session-log-prescribed'));
+
+    // then — only that button spins; the capture button stays still
+    expect(byTestId('session-log-prescribed').getAttribute('aria-busy')).toBe(
+      'true'
+    );
+    expect(byTestId('session-capture').getAttribute('aria-busy')).toBeNull();
+    expect(byTestId('session-skip').hasAttribute('disabled')).toBe(true);
+
+    // when
+    settle('logged');
+
+    // then — moved on; the next step's buttons are at rest
+    expect(await screen.findByText(/Als Nächstes/)).toBeTruthy();
   });
 
   it('should keep the user on the exercise when the plan write did not go through', async () => {

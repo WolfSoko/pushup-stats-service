@@ -13,3 +13,8 @@
   gap: 10px;
   flex-wrap: wrap;
 }
+
+.workouts-loading {
+  display: grid;
+  gap: 16px;
+}

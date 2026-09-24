@@ -1,14 +1,14 @@
-Pushup Tracker macht aus Liegestützen und 41 weiteren Übungen ein Spiel, das du gewinnen willst.
+Pushup Tracker macht aus Liegestützen und 46 weiteren Übungen ein Spiel, das du gewinnen willst.
 
-Ob Einsteiger oder schon beim ersten Hundert — diese App hält dich dran. Die Kamera zählt deine Wiederholungen automatisch, kuratierte Trainingspläne geben dir jeden Tag eine klare Vorgabe, Freunde und Bestenliste motivieren ohne zu nerven.
+Die Kamera zählt deine Wiederholungen automatisch, kuratierte Trainingspläne geben dir jeden Tag eine klare Vorgabe, Freunde und Bestenliste motivieren ohne zu nerven.
 
 📷 REPS AUTOMATISCH ZÄHLEN
 Handy hinstellen, Auto-Zähler öffnen, loslegen: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit und zählt jede saubere Wiederholung. Für Plank und Hollow Hold läuft stattdessen ein automatischer Halte-Timer. Die Erkennung läuft auf deinem Gerät — kein Video verlässt dein Handy.
 
 🏋️ MEHR ALS NUR LIEGESTÜTZE
 • 13 Liegestütz-Varianten: Knie, Incline, Decline, Wide, Diamant, Pike, Archer bis zur einarmigen — mit Anleitung pro Typ
-• 42 Übungen in 9 Kategorien: Liegestütze, Push, Pull, Squat, Hinge, Lunge, Core, Cardio, Mobility
-• Klimmzüge, Dips, Kniebeugen, Ausfallschritte, Plank, Hollow Hold, Burpees, Seilspringen, Yoga, Dehnen und mehr
+• 47 Übungen in 9 Kategorien: Liegestütze, Push, Pull, Squat, Hinge, Lunge, Core, Cardio, Mobility
+• Klimmzüge, Dips, Kniebeugen, Ausfallschritte, Plank, Burpees, Yoga und mehr
 • Ausdauer mit Distanz und Zeit: Laufen, Radfahren, Rudern, Schwimmen — inklusive Pace
 
 ⚡ ERFASSEN IN ZWEI SEKUNDEN
@@ -25,7 +25,7 @@ Handy hinstellen, Auto-Zähler öffnen, loslegen: Die KI erkennt Liegestütze, K
 Jeden Tag die passende Vorgabe — mit Ruhe-, leichten und Test-Tagen. Fünf Pläne rechnen nach dem Maximaltest jede Tagesvorgabe auf dein Ergebnis um: keine 3×20, wenn du 8 schaffst. Erledigte Tage markieren sich automatisch, und deinen aktiven Plan kannst du teilen.
 
 🧩 EIGENE SESSIONS
-Stell dir dein Workout selbst zusammen: Übungen, Ziele und Sätze in deiner Reihenfolge. Die App führt dich hindurch. Zeig deine Sessions auf dem Profil oder schick sie direkt an Freunde.
+Stell dir dein Workout selbst zusammen: Übungen, Ziele und Sätze in deiner Reihenfolge. Die App führt dich hindurch. Zeig deine Sessions auf dem Profil oder schick sie direkt an Freunde. Auf Wunsch erinnert dich jede Session selbst — z. B. alle 2 Tage um 15:00 per Push.
 
 🎯 ZIELE, STREAKS & STATISTIKEN
 • Tages-, Wochen- und Monatsziele — pro Übung, mit Wochentag-Filter
@@ -48,7 +48,7 @@ Push-Benachrichtigungen mit Intervall, Ruhephasen, Wochentagen und Zeitzone — 
 Übungs-Wiki mit sauberer Ausführung und typischen Fehlern, dazu ein Blog.
 
 🔒 DEINE DATEN
-Als Gast ausprobieren, ganz ohne Konto. DSGVO-konform mit anpassbarer Cookie-Zustimmung. Konto jederzeit löschbar, Trainingsdaten bleiben nur anonymisiert. Datenbank in Frankfurt.
+Als Gast ausprobieren, ganz ohne Konto. DSGVO-konform mit anpassbarer Cookie-Zustimmung. Konto jederzeit löschbar – samt aller Trainingsdaten. Datenbank in Frankfurt.
 
 📱 ANDROID + WEB
 Gleiche Daten auf Phone und im Browser, Echtzeit-Sync über alle Geräte. Login per Google oder E-Mail. Offline nutzbar — Einträge synchronisieren, sobald du online bist. Helles und dunkles Design.

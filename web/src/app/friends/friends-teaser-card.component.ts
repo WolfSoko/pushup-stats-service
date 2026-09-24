@@ -12,10 +12,19 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { UserContextService } from '@pu-auth/auth';
+import { BusyDirective, createBusyState } from '@pu-stats/ui';
 
 import { InviteService } from '../core/invite.service';
 import { boardValueLabel } from './board-value-label';
 import { ChallengesStore } from './challenges.store';
+import { CheerButtonComponent } from './cheer-button.component';
+import {
+  challengesLabel,
+  invitationsLabel,
+  pendingLabel,
+  standingLabel,
+} from './friends-teaser-labels';
+import { FriendsTeaserSkeletonComponent } from './friends-teaser-skeleton.component';
 import { FriendsStore } from './friends.store';
 
 const TOP_ROWS = 3;
@@ -30,7 +39,15 @@ const TOP_ROWS = 3;
 @Component({
   selector: 'app-friends-teaser-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonModule, MatCardModule, MatIconModule, RouterLink],
+  imports: [
+    BusyDirective,
+    CheerButtonComponent,
+    FriendsTeaserSkeletonComponent,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    RouterLink,
+  ],
   template: `
     @if (visible()) {
       <mat-card class="friends-card" data-testid="dashboard-friends-card">
@@ -60,7 +77,9 @@ const TOP_ROWS = 3;
           }
         </mat-card-header>
         <mat-card-content>
-          @if (hasBoard()) {
+          @if (loading()) {
+            <app-friends-teaser-skeleton />
+          } @else if (hasBoard()) {
             <p class="standing" data-testid="dashboard-friends-standing">
               {{ standingLabel() }}
             </p>
@@ -78,6 +97,15 @@ const TOP_ROWS = 3;
                     >{{ label(entry) }}</a
                   >
                   <strong>{{ valueLabel(entry) }}</strong>
+                  <span class="cheer-slot">
+                    @if (!entry.isViewer) {
+                      <app-cheer-button
+                        [uid]="entry.uid"
+                        [cheered]="entry.cheered"
+                        [name]="entry.displayName"
+                      />
+                    }
+                  </span>
                 </li>
               }
             </ol>
@@ -89,11 +117,12 @@ const TOP_ROWS = 3;
           }
         </mat-card-content>
         <mat-card-actions align="end">
-          @if (friends.friendCount() === 0) {
+          @if (!loading() && friends.friendCount() === 0) {
             <button
               mat-flat-button
               type="button"
               data-testid="dashboard-friends-invite"
+              [puBusy]="inviting.busy()"
               (click)="invite()"
             >
               <mat-icon>person_add</mat-icon>
@@ -112,6 +141,7 @@ const TOP_ROWS = 3;
       </mat-card>
     }
   `,
+  styleUrl: './friends-mini-board.scss',
   styles: `
     .friends-card mat-card-header {
       align-items: center;
@@ -131,24 +161,10 @@ const TOP_ROWS = 3;
       margin: 0 0 8px;
       font-weight: 500;
     }
-    .mini-board {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 4px;
-    }
     .mini-board li {
-      display: grid;
-      grid-template-columns: 1.5rem 1fr auto;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 8px;
-      background: rgba(0, 0, 0, 0.04);
-    }
-    :host-context(.dark-theme) .mini-board li {
-      background: rgba(255, 255, 255, 0.05);
+      grid-template-columns: 1.5rem 1fr auto 40px;
+      padding-block: 0;
+      min-height: 44px;
     }
     .mini-board li.is-viewer {
       outline: 2px solid var(--mat-sys-primary, #3f51b5);
@@ -180,9 +196,16 @@ export class FriendsTeaserCardComponent implements OnInit {
   private readonly user = inject(UserContextService);
   private readonly invites = inject(InviteService);
   private readonly platformId = inject(PLATFORM_ID);
+  protected readonly inviting = createBusyState();
 
   protected readonly visible = computed(
     () => !!this.user.userIdSafe() && !this.user.isGuest()
+  );
+
+  /** The first read only — a refresh keeps the lists on screen, and the
+   *  invite CTA must not flash at someone whose friends are a moment away. */
+  protected readonly loading = computed(
+    () => this.friends.loading() && this.friends.isEmpty()
   );
 
   /** A board of one is not a comparison. */
@@ -192,15 +215,13 @@ export class FriendsTeaserCardComponent implements OnInit {
     this.friends.board().slice(0, TOP_ROWS)
   );
 
-  protected readonly standingLabel = computed(() => {
-    const board = this.friends.board();
-    const rank = board.findIndex((entry) => entry.isViewer) + 1;
-    const total = board.length;
-    if (rank === 1) {
-      return $localize`:@@dashboard.friends.leading:Du führst diese Woche unter ${total}:total: Freunden.`;
-    }
-    return $localize`:@@dashboard.friends.rank:Du bist diese Woche auf Platz ${rank}:rank: von ${total}:total:.`;
-  });
+  protected readonly standingLabel = computed(() =>
+    standingLabel(this.friends.board())
+  );
+
+  protected readonly pendingLabel = pendingLabel;
+  protected readonly invitationsLabel = invitationsLabel;
+  protected readonly challengesLabel = challengesLabel;
 
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId) || !this.visible()) return;
@@ -220,25 +241,7 @@ export class FriendsTeaserCardComponent implements OnInit {
     return entry.displayName ?? $localize`:@@friends.anonymous:Ohne Namen`;
   }
 
-  protected pendingLabel(count: number): string {
-    return count === 1
-      ? $localize`:@@dashboard.friends.pendingOne:Eine Anfrage wartet auf dich`
-      : $localize`:@@dashboard.friends.pending:${count}:count: Anfragen warten auf dich`;
-  }
-
-  protected invitationsLabel(count: number): string {
-    return count === 1
-      ? $localize`:@@dashboard.friends.invitationOne:Eine Challenge-Einladung wartet`
-      : $localize`:@@dashboard.friends.invitations:${count}:count: Challenge-Einladungen warten`;
-  }
-
-  protected challengesLabel(count: number): string {
-    return count === 1
-      ? $localize`:@@dashboard.friends.activeChallengeOne:Eine Challenge läuft`
-      : $localize`:@@dashboard.friends.activeChallenges:${count}:count: Challenges laufen`;
-  }
-
   protected invite(): void {
-    void this.invites.inviteFriend();
+    void this.inviting.run(() => this.invites.inviteFriend());
   }
 }

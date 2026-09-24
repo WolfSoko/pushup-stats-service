@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, LOCALE_ID, signal } from '@angular/core';
 import { UserContextService } from '@pu-auth/auth';
-import { invitedCount } from '@pu-stats/models';
+import { BRAND_NAME, invitedCount } from '@pu-stats/models';
 
 import { FriendInviteApiService } from './friend-invite-api.service';
 import { buildInviteUrl } from './profile-share-url';
@@ -70,7 +70,7 @@ export class InviteService {
   async inviteFriend(): Promise<ShareResult> {
     await this.ensureToken();
     return this.share.share({
-      title: $localize`:@@invite.share.title:Pushup Tracker`,
+      title: $localize`:@@invite.share.title:${BRAND_NAME}:brand:`,
       text: $localize`:@@invite.share.text:Trainier mit mir: Reps per Kamera zählen, uns gegenseitig anfeuern und gemeinsame Challenges starten. Kostenlos:`,
       url: this.inviteUrl(),
     });

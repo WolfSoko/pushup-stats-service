@@ -52,6 +52,7 @@
       </a>
       <span class="app-title" i18n="@@app.title">Pushups</span>
       <span class="spacer"></span>
+      <app-pending-request-indicator />
       @if (hasAnyDailyGoal()) {
       <div
         class="goal-pill-wrap"
@@ -112,18 +113,6 @@
           </p>
         </div>
       </ng-template>
-      } @if (swUpdateAvailable()) {
-      <button
-        mat-icon-button
-        class="sw-update-button"
-        data-testid="sw-update-button"
-        [attr.aria-label]="
-          swUpdateUnrecoverable() ? swUpdateRecoverAriaLabel : swUpdateAriaLabel
-        "
-        (click)="applyServiceWorkerUpdate()"
-      >
-        <mat-icon>system_update_alt</mat-icon>
-      </button>
       }
       <app-theme-toggle />
       <app-ai-assistant-nav-button />
@@ -144,6 +133,8 @@
         [unreadNotifications]="unreadNotifications()"
       />
     </mat-toolbar>
+
+    <app-update-banner />
 
     <main class="app-content">
       <router-outlet />
@@ -186,7 +177,7 @@
   [suggestions]="quickAddSuggestions()"
   [remainingToGoal]="remainingToGoal()"
   [goalReached]="goalReached()"
-  [fillToGoalInFlight]="fillToGoalInFlight()"
+  [busyKeys]="quickAddBusyKeys()"
   [autoCountEnabled]="autoCountEnabled()"
   [goalItems]="goalDialItems()"
   (quickAdd)="handleQuickAdd($event)"

@@ -7,6 +7,7 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
+import { createKeyedBusyState } from '@pu-stats/ui';
 
 import {
   FriendsApiService,
@@ -16,6 +17,7 @@ import {
   type FriendsBoardPeriod,
   type FriendsBoardComparison,
 } from './friends-api.service';
+import { CheerStore } from './cheer.store';
 import { runStoreAction } from './store-action';
 
 type FriendsState = {
@@ -28,13 +30,6 @@ type FriendsState = {
   board: ReadonlyArray<FriendsBoardEntry>;
   boardPeriod: FriendsBoardPeriod;
   boardComparison: FriendsBoardComparison;
-  /**
-   * The friend whose cheer is in flight, so the board can turn the flame
-   * that was tapped. A cheer is two round trips — send, then re-read the
-   * board — long enough that a still flame reads as a tap that did not
-   * land, and invites a second one.
-   */
-  cheering: string | null;
 };
 
 const initialState: FriendsState = {
@@ -46,7 +41,6 @@ const initialState: FriendsState = {
   board: [],
   boardPeriod: 'week',
   boardComparison: { metric: 'days' },
-  cheering: null,
 };
 
 /**
@@ -62,10 +56,18 @@ export const FriendsStore = signalStore(
   withState(initialState),
   withProps(() => ({
     _api: inject(FriendsApiService),
+    _cheers: inject(CheerStore),
     /** The reload in flight, so two consumers mounting at once share one call. */
     _reloading: null as Promise<void> | null,
+    /**
+     * One flag per pressed CTA (`accept:<id>`, `cheer:<uid>`, …). It stays
+     * up through the re-read that follows the call, so a flame or button
+     * comes to rest on the new state rather than a moment before it.
+     */
+    _busy: createKeyedBusyState<string>(),
   })),
   withComputed((store) => ({
+    busyKeys: store._busy.busyKeys,
     friendCount: computed(() => store.friends().length),
     /** Requests waiting for this user — what the nav badge counts. */
     pendingCount: computed(() => store.incoming().length),
@@ -130,34 +132,40 @@ export const FriendsStore = signalStore(
       return loadBoard();
     }
 
+    const { _busy } = store;
     return {
       reload,
       loadBoard,
       compareBy,
+      isBusy: (key: string) => _busy.isBusy(key),
       requestFriend: (uid: string) =>
-        runStoreAction(store, () => _api.request(uid), reload),
+        _busy.run(`request:${uid}`, () =>
+          runStoreAction(store, () => _api.request(uid), reload)
+        ),
       accept: (id: string) =>
-        runStoreAction(store, () => _api.respond(id, true), reload),
+        _busy.run(`accept:${id}`, () =>
+          runStoreAction(store, () => _api.respond(id, true), reload)
+        ),
       decline: (id: string) =>
-        runStoreAction(store, () => _api.respond(id, false), reload),
+        _busy.run(`decline:${id}`, () =>
+          runStoreAction(store, () => _api.respond(id, false), reload)
+        ),
       remove: (id: string) =>
-        runStoreAction(store, () => _api.remove(id), reload),
+        _busy.run(`remove:${id}`, () =>
+          runStoreAction(store, () => _api.remove(id), reload)
+        ),
       // A cheer changes the board (the count, and the button that sent
-      // it), not the lists. `cheering` is cleared only once the re-read
-      // is in too, so the flame stops turning on the lit icon rather than
-      // coming to rest on the unlit one and lighting a moment later.
-      cheer: async (uid: string) => {
-        patchState(store, { cheering: uid });
-        try {
-          return await runStoreAction(
+      // it), not the lists — and the flames elsewhere, via the cheer store.
+      cheer: (uid: string) =>
+        _busy.run(`cheer:${uid}`, async () => {
+          const ok = await runStoreAction(
             store,
             () => _api.cheer(uid),
             () => loadBoard()
           );
-        } finally {
-          patchState(store, { cheering: null });
-        }
-      },
+          if (ok) store._cheers.markCheered(uid);
+          return ok;
+        }),
     };
   })
 );

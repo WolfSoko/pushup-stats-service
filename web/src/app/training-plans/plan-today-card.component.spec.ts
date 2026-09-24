@@ -27,7 +27,8 @@ function row(overrides: Partial<DayRow> = {}): DayRow {
 
 async function setup(
   overrides: Partial<DayRow> = {},
-  offersSession = true
+  offersSession = true,
+  busyKeys: ReadonlySet<string> = new Set()
 ): Promise<void> {
   await render(PlanTodayCardComponent, {
     inputs: {
@@ -35,6 +36,7 @@ async function setup(
       sessionLink: ['/training-plans', 'challenge-30d', 'session'],
       interactive: true,
       offersSession,
+      busyKeys,
     },
     providers: [provideRouter([])],
   });
@@ -61,6 +63,38 @@ describe('PlanTodayCardComponent', () => {
 
     // then
     expect(screen.getByText('Zirkel für den ganzen Körper')).toBeTruthy();
+  });
+
+  it("should hand the day's busy keys on to the exercise list", async () => {
+    // given — the first exercise's write is in flight
+    await setup(
+      {
+        exercises: [
+          {
+            itemIndex: 0,
+            exerciseId: 'pushup',
+            variantId: null,
+            name: 'Liegestütze',
+            target: '30',
+            logged: '0',
+            sets: '',
+            percent: 0,
+            quantified: true,
+            done: false,
+            auto: false,
+          },
+        ],
+      },
+      true,
+      new Set(['item:0'])
+    );
+
+    // then
+    expect(
+      (document.querySelector('.exercise-log') as HTMLElement).getAttribute(
+        'aria-busy'
+      )
+    ).toBe('true');
   });
 
   it('should link into the guided session', async () => {

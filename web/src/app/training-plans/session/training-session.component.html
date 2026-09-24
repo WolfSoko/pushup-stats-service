@@ -14,11 +14,7 @@
   </app-page-header>
 
   @if (!authResolved() || !planLoaded()) {
-    <mat-card class="session-card">
-      <p class="session-note" i18n="@@session.loading">
-        Session wird geladen …
-      </p>
-    </mat-card>
+    <app-session-skeleton />
   } @else if (!isAuthenticated() || !isThisPlanActive()) {
     <mat-card class="session-card">
       <p class="session-note" i18n="@@session.inactivePlan">
@@ -75,7 +71,7 @@
               [row]="row"
               [position]="session.stepIndex() + 1"
               [total]="session.stepsTotal()"
-              [busy]="busy()"
+              [busyKeys]="busy.busyKeys()"
               (capture)="captureCurrent()"
               (enterByHand)="enterByHand()"
               (logAsPrescribed)="logAsPrescribed()"

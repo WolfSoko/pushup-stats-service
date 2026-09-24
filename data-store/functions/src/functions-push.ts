@@ -27,7 +27,7 @@ import { logFailedSends } from './push/deliver-user';
 import { pushLocaleFromConfig } from './push/user-locale';
 import { configureWebPush, VAPID_SECRETS } from './push/vapid';
 
-export async function deleteAllPushSubscriptions(uid: string) {
+async function deleteAllPushSubscriptions(uid: string) {
   const userRef = db.collection('pushSubscriptions').doc(uid);
   const subs = await userRef.collection('subs').listDocuments();
   const batch = db.batch();

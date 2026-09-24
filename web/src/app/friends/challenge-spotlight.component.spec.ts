@@ -20,8 +20,22 @@ describe('ChallengeSpotlightComponent', () => {
     to: '2099-12-31',
     status: 'active',
     entries: [
-      { uid: 'me', displayName: 'Me', value: 120, isViewer: true },
-      { uid: 'b', displayName: 'Bob', value: 80, isViewer: false },
+      {
+        uid: 'me',
+        displayName: 'Me',
+        value: 120,
+        isViewer: true,
+        canCheer: false,
+        cheered: false,
+      },
+      {
+        uid: 'b',
+        displayName: 'Bob',
+        value: 80,
+        isViewer: false,
+        canCheer: false,
+        cheered: false,
+      },
     ],
     invited: [],
     viewerInvited: false,
@@ -150,5 +164,40 @@ describe('ChallengeSpotlightComponent', () => {
 
     // then
     expect(api.list).not.toHaveBeenCalled();
+  });
+  it('should show the accept button busy until the answer and the re-read are in', async () => {
+    // given — an answer the server has not confirmed yet
+    let answer: (result: { ok: boolean }) => void = () => undefined;
+    const { api, fixture } = await renderSpotlight([invitation]);
+    api.respond.mockReturnValue(
+      new Promise((resolve) => {
+        answer = resolve;
+      })
+    );
+
+    // when
+    screen.getByTestId('challenge-accept').click();
+    fixture.detectChanges();
+
+    // then
+    expect(
+      screen.getByTestId('challenge-accept').getAttribute('aria-busy')
+    ).toBe('true');
+    expect(
+      screen.getByTestId('challenge-decline').getAttribute('aria-busy')
+    ).toBeNull();
+
+    // when — confirmed; the list is re-read and the invitation is gone
+    api.list.mockResolvedValue([running]);
+    answer({ ok: true });
+    await new Promise((resolve) => setTimeout(resolve));
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(screen.queryByTestId('challenge-accept')).toBeNull();
+    expect(
+      screen.getByTestId('challenge-leave').getAttribute('aria-busy')
+    ).toBeNull();
   });
 });

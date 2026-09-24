@@ -33,6 +33,7 @@
         [fields]="test.fields"
         [scalesPlan]="test.scalesPlan"
         [interactive]="interactive()"
+        [busyKeys]="busyKeys()"
         (submitResult)="recordTest.emit($event)"
         (clearResult)="clearTest.emit($event)"
       />
@@ -42,6 +43,7 @@
       <app-plan-day-exercises
         [exercises]="row().exercises"
         [interactive]="interactive()"
+        [busyKeys]="busyKeys()"
         (logExercise)="logExercise.emit($event)"
         (toggleExercise)="toggleExercise.emit($event)"
         (resetExercise)="resetExercise.emit($event)"

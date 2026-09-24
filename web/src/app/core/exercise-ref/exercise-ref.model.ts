@@ -44,11 +44,35 @@ export function exerciseRefTooltip(
   return ref.summary ? `${ref.summary} — ${WIKI_CTA}` : WIKI_CTA;
 }
 
+/**
+ * The reference plus the how-to itself — the steps and tips of the wiki
+ * article — for surfaces that show the instructions in place instead of
+ * sending the user away (the session, the workout editor). Both lists are
+ * empty when the exercise has no wiki entry.
+ */
+export interface ExerciseGuideData extends ExerciseRefData {
+  readonly instructions: ReadonlyArray<string>;
+  readonly tips: ReadonlyArray<string>;
+}
+
 export function resolveExerciseRef(
   exerciseId: string,
   variantId: string | null | undefined,
   locale: string
 ): ExerciseRefData {
+  const { name, summary, wikiLink } = resolveExerciseGuide(
+    exerciseId,
+    variantId,
+    locale
+  );
+  return { name, summary, wikiLink };
+}
+
+export function resolveExerciseGuide(
+  exerciseId: string,
+  variantId: string | null | undefined,
+  locale: string
+): ExerciseGuideData {
   if (exerciseId === 'pushup') {
     const type = findPushupTypeByStoredValue(variantId);
     if (!type) {
@@ -56,6 +80,8 @@ export function resolveExerciseRef(
         name: exerciseDisplayName('pushup'),
         summary: null,
         wikiLink: ['/wiki/liegestuetz-typen'],
+        instructions: [],
+        tips: [],
       };
     }
     const localized = localizePushupType(type, locale);
@@ -66,6 +92,8 @@ export function resolveExerciseRef(
         '/wiki/liegestuetz-typen',
         localizePushupTypeSlug(type, locale),
       ],
+      instructions: localized.instructions,
+      tips: localized.tips,
     };
   }
 
@@ -78,12 +106,20 @@ export function resolveExerciseRef(
 
   const wikiEntry = findExerciseWikiEntry(exerciseId);
   if (!wikiEntry) {
-    return { name, summary: null, wikiLink: ['/wiki/uebungen'] };
+    return {
+      name,
+      summary: null,
+      wikiLink: ['/wiki/uebungen'],
+      instructions: [],
+      tips: [],
+    };
   }
   const localized = localizeExerciseWiki(wikiEntry, locale);
   return {
     name,
     summary: localized?.summary ?? null,
     wikiLink: ['/wiki/uebungen', wikiEntry.slug],
+    instructions: localized?.instructions ?? [],
+    tips: localized?.tips ?? [],
   };
 }

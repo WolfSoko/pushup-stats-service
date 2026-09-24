@@ -263,7 +263,7 @@ export class PushupTypeDetailComponent implements OnInit {
     // suffix is a single translatable phrase so we don't need a
     // $localize placeholder per dynamic name. The dash separator is
     // pure punctuation, so we keep it out of the translation string.
-    const titleSuffix = $localize`:@@seo.wiki.pushupType.titleSuffix:Anleitung & Technik | Pushup Tracker`;
+    const titleSuffix = $localize`:@@seo.wiki.pushupType.titleSuffix:Anleitung & Technik | ${BRAND_NAME}:brand:`;
     const seoTitle = `${this.name} – ${titleSuffix}`;
 
     // Per-locale slug map → hreflang alternates that point at every

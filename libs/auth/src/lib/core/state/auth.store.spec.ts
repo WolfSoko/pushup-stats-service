@@ -39,7 +39,7 @@ describe('AuthStore – signInWithEmail return value', () => {
       isAuthenticated: (() => false) as Signal<boolean>,
       idToken: (() => null) as Signal<string | null | undefined>,
       userDbSyncState: signal('idle' as const),
-      signInWithEmailAndMigrateGuest: () =>
+      signInWithEmail: () =>
         Promise.reject(new Error('auth/invalid-credential')),
     };
   }
@@ -58,7 +58,7 @@ describe('AuthStore – signInWithEmail return value', () => {
       isAuthenticated: (() => true) as Signal<boolean>,
       idToken: (() => 'token') as Signal<string | null | undefined>,
       userDbSyncState: signal('success' as const),
-      signInWithEmailAndMigrateGuest: () => Promise.resolve(),
+      signInWithEmail: () => Promise.resolve(),
     };
   }
 
@@ -110,7 +110,7 @@ describe('AuthStore – clearError', () => {
             isAuthenticated: (() => false) as Signal<boolean>,
             idToken: (() => null) as Signal<string | null | undefined>,
             userDbSyncState: signal('idle' as const),
-            signInWithEmailAndMigrateGuest: () =>
+            signInWithEmail: () =>
               Promise.reject(new Error('auth/invalid-credential')),
           },
         },
@@ -253,5 +253,79 @@ describe('AuthStore – isGuest', () => {
     });
     const store = fixture.debugElement.injector.get(AuthStore);
     expect(store.isGuest()).toBe(false);
+  });
+});
+
+describe('AuthStore – deleteAccount', () => {
+  function storeWith(deleteAccount: () => Promise<void>) {
+    return render('', {
+      providers: [
+        AuthStore,
+        {
+          provide: AuthService,
+          useValue: {
+            user: (() => null) as Signal<ReturnType<AuthService['user']>>,
+            isAuthenticated: (() => true) as Signal<boolean>,
+            idToken: (() => null) as Signal<string | null | undefined>,
+            userDbSyncState: signal('idle' as const),
+            deleteAccount,
+          },
+        },
+        { provide: Auth, useValue: {} },
+      ],
+    }).then(({ fixture }) => fixture.debugElement.injector.get(AuthStore));
+  }
+
+  it('should return true when the account was deleted', async () => {
+    // given
+    const store = await storeWith(() => Promise.resolve());
+
+    // when
+    const result = await store.deleteAccount();
+
+    // then
+    expect(result).toBe(true);
+    expect(store.error()).toBeNull();
+  });
+
+  it('should return false and ask for a fresh login when Firebase demands one', async () => {
+    // given
+    const store = await storeWith(() =>
+      Promise.reject(
+        Object.assign(
+          new Error('Firebase: Error (auth/requires-recent-login).'),
+          {
+            code: 'auth/requires-recent-login',
+          }
+        )
+      )
+    );
+
+    // when
+    const result = await store.deleteAccount();
+
+    // then
+    expect(result).toBe(false);
+    expect(store.error()?.message).toContain('wieder anmelden');
+    expect(store.loading()).toBe(false);
+  });
+
+  it('should map a callable rejection carrying the auth code to the re-login hint', async () => {
+    // given — `deleteOwnAccount` reports `functions/failed-precondition`
+    // with the Auth code in the message
+    const store = await storeWith(() =>
+      Promise.reject(
+        Object.assign(new Error('auth/requires-recent-login'), {
+          code: 'functions/failed-precondition',
+        })
+      )
+    );
+
+    // when
+    const result = await store.deleteAccount();
+
+    // then
+    expect(result).toBe(false);
+    expect(store.error()?.message).toContain('wieder anmelden');
   });
 });

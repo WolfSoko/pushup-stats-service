@@ -1,7 +1,9 @@
 import {
   buildLegendItems,
+  defaultHiddenSeries,
   exerciseLegendId,
   parseLegendId,
+  resolveHiddenSeries,
   seriesLegendId,
   type ChartSeriesKey,
   type LegendItemsInput,
@@ -187,5 +189,66 @@ describe('buildLegendItems ordering', () => {
     expect(ids(['b'])).toEqual(expected);
     expect(ids(['a', 'c'])).toEqual(expected);
     expect(ids(['a', 'b', 'c'])).toEqual(expected);
+  });
+});
+
+describe('defaultHiddenSeries', () => {
+  it('should start with the cumulative line switched off', () => {
+    // given / when
+    const hidden = defaultHiddenSeries(false);
+
+    // then
+    expect([...hidden]).toEqual(['secondary']);
+  });
+
+  it('should draw the secondary slot from the start in pace mode', () => {
+    // given / when
+    const hidden = defaultHiddenSeries(true);
+
+    // then
+    expect(hidden.size).toBe(0);
+  });
+});
+
+describe('resolveHiddenSeries', () => {
+  it('should show a defaulted-off series once its legend entry was clicked', () => {
+    // given
+    const defaults = defaultHiddenSeries(false);
+
+    // when
+    const hidden = resolveHiddenSeries(
+      defaults,
+      new Set<ChartSeriesKey>(['secondary'])
+    );
+
+    // then
+    expect(hidden.has('secondary')).toBe(false);
+  });
+
+  it('should hide a defaulted-on series once its legend entry was clicked', () => {
+    // given
+    const defaults = defaultHiddenSeries(false);
+
+    // when
+    const hidden = resolveHiddenSeries(
+      defaults,
+      new Set<ChartSeriesKey>(['movingAvg'])
+    );
+
+    // then
+    expect(hidden.has('movingAvg')).toBe(true);
+    expect(hidden.has('secondary')).toBe(true);
+  });
+
+  it('should leave the defaults untouched when nothing was clicked', () => {
+    // given
+    const defaults = defaultHiddenSeries(false);
+
+    // when
+    const hidden = resolveHiddenSeries(defaults, new Set<ChartSeriesKey>());
+
+    // then
+    expect([...hidden]).toEqual(['secondary']);
+    expect(hidden).not.toBe(defaults);
   });
 });

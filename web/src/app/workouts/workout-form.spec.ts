@@ -10,7 +10,8 @@ import {
   setsTotal,
   targetUnitLabel,
   variantOptions,
-  workoutExerciseGroups,
+  formForExercise,
+  isWorkoutExercise,
 } from './workout-form';
 
 const WORKOUT: Workout = {
@@ -108,15 +109,41 @@ describe('emptyLine', () => {
   });
 });
 
-describe('workoutExerciseGroups', () => {
-  it('should offer every category with the pushups first', () => {
-    // when
-    const groups = workoutExerciseGroups();
+describe('isWorkoutExercise', () => {
+  it('should admit rep, time and distance exercises', () => {
+    expect(isWorkoutExercise('pushup')).toBe(true);
+    expect(isWorkoutExercise('plank.standard')).toBe(true);
+  });
+
+  it('should refuse unknown ids', () => {
+    expect(isWorkoutExercise('nope')).toBe(false);
+  });
+});
+
+describe('formForExercise', () => {
+  it('should open a new workout on the picked exercise and variant', () => {
+    // given / when
+    const form = formForExercise('legs.squats', 'bodyweight');
 
     // then
-    expect(groups[0].options.map((o) => o.id)).toContain('pushup');
-    expect(groups.length).toBeGreaterThan(3);
-    expect(groups.every((g) => g.options.length > 0)).toBe(true);
+    expect(form.lines).toEqual([
+      { ...emptyLine('legs.squats'), variantId: 'bodyweight' },
+    ]);
+    expect(form.title).toBe('');
+  });
+
+  it('should drop a variant the exercise does not know', () => {
+    // given / when
+    const form = formForExercise('legs.squats', 'made-up');
+
+    // then
+    expect(form.lines[0].variantId).toBe('');
+  });
+
+  it('should fall back to the blank form for an unknown exercise', () => {
+    // given / when / then
+    expect(formForExercise('nope', null)).toEqual(emptyForm());
+    expect(formForExercise(null, null)).toEqual(emptyForm());
   });
 });
 

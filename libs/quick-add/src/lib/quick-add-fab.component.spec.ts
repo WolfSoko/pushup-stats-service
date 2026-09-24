@@ -5,6 +5,7 @@ import {
   QuickAddFabComponent,
   type QuickAddGoalItem,
   type QuickAddSuggestion,
+  suggestionBusyKey,
 } from './quick-add-fab.component';
 
 function pushupSuggestion(reps: number): QuickAddSuggestion {
@@ -22,7 +23,7 @@ describe('QuickAddFabComponent — goal dial item', () => {
     suggestions?: QuickAddSuggestion[];
     remainingToGoal?: number;
     goalReached?: boolean;
-    fillToGoalInFlight?: boolean;
+    busyKeys?: ReadonlySet<string>;
     autoCountEnabled?: boolean;
     goalItems?: QuickAddGoalItem[];
   }) {
@@ -48,7 +49,7 @@ describe('QuickAddFabComponent — goal dial item', () => {
           inputs.suggestions ?? [5, 10, 15].map((r) => pushupSuggestion(r)),
         remainingToGoal: inputs.remainingToGoal ?? 0,
         goalReached: inputs.goalReached ?? false,
-        fillToGoalInFlight: inputs.fillToGoalInFlight ?? false,
+        busyKeys: inputs.busyKeys ?? new Set<string>(),
         autoCountEnabled: inputs.autoCountEnabled ?? false,
         goalItems: inputs.goalItems ?? [],
       },
@@ -124,19 +125,64 @@ describe('QuickAddFabComponent — goal dial item', () => {
     expect(screen.queryByText(/Ziel erreicht/)).toBeNull();
   });
 
-  it('Given fillToGoalInFlight=true, Then the goal item is disabled', async () => {
+  it('should mark the goal item busy but enabled while the fill is in flight', async () => {
+    // given
     const { user, fillToGoal } = await renderFab({
       remainingToGoal: 42,
-      fillToGoalInFlight: true,
+      busyKeys: new Set(['fillToGoal']),
     });
-
     const button = screen.getByRole('button', {
       name: /Liegestütze bis zum Tagesziel/i,
     });
-    expect((button as HTMLButtonElement).disabled).toBe(true);
+
+    // when
     await user.click(button);
+
+    // then
+    expect(button.getAttribute('aria-busy')).toBe('true');
+    expect((button as HTMLButtonElement).disabled).toBe(false);
     expect(fillToGoal).not.toHaveBeenCalled();
   });
+
+  it('should mark only the suggestion whose key is busy', async () => {
+    // given
+    const { user, quickAdd } = await renderFab({
+      suggestions: [5, 10].map((r) => pushupSuggestion(r)),
+      busyKeys: new Set([suggestionBusyKey(pushupSuggestion(10))]),
+    });
+    const busy = screen.getByRole('button', {
+      name: /10 Liegestütze hinzufügen/i,
+    });
+    const idle = screen.getByRole('button', {
+      name: /5 Liegestütze hinzufügen/i,
+    });
+
+    // when
+    await user.click(busy);
+
+    // then
+    expect(busy.getAttribute('aria-busy')).toBe('true');
+    expect(idle.getAttribute('aria-busy')).toBeNull();
+    expect(quickAdd).not.toHaveBeenCalled();
+  });
+
+  it.each([
+    ['autoCount', /Liegestütze automatisch zählen/i],
+    ['exerciseTimer', /Halteübungs-Timer öffnen/i],
+    ['stopwatch', /Stoppuhr öffnen/i],
+    ['customDialog', /Eigenen Wert eingeben/i],
+  ] as const)(
+    'should mark the %s dial item busy while its key is set',
+    async (key, name) => {
+      // given / when
+      await renderFab({ autoCountEnabled: true, busyKeys: new Set([key]) });
+
+      // then
+      expect(
+        screen.getByRole('button', { name }).getAttribute('aria-busy')
+      ).toBe('true');
+    }
+  );
 
   it('Given suggestions, Then the three quick-rep items still render', async () => {
     await renderFab({
@@ -293,7 +339,6 @@ describe('QuickAddFabComponent — goal submenu', () => {
         suggestions: [],
         remainingToGoal: 0,
         goalReached: false,
-        fillToGoalInFlight: false,
         autoCountEnabled: false,
         goalItems,
       },
@@ -312,6 +357,7 @@ describe('QuickAddFabComponent — goal submenu', () => {
       ariaLabel: '40 Liegestütze bis zum Tagesziel hinzufügen',
       reached: false,
       disabled: false,
+      busy: false,
       ...overrides,
     };
   }
@@ -369,6 +415,27 @@ describe('QuickAddFabComponent — goal submenu', () => {
     expect(fillGoalItem).not.toHaveBeenCalled();
   });
 
+  it('should mark a goal whose write is in flight busy but enabled', async () => {
+    // given
+    const { user, fillGoalItem } = await renderWithGoals([
+      goal({ busy: true }),
+      goal({ id: 'g2', label: 'Kniebeugen +20', ariaLabel: '20 Kniebeugen' }),
+    ]);
+    await user.click(screen.getByTestId('quick-add-goal-menu-toggle'));
+    const [busy, idle] = screen.getAllByTestId(
+      'quick-add-goal-submenu-item'
+    ) as HTMLButtonElement[];
+
+    // when
+    await user.click(busy);
+
+    // then
+    expect(busy.getAttribute('aria-busy')).toBe('true');
+    expect(busy.disabled).toBe(false);
+    expect(idle.getAttribute('aria-busy')).toBeNull();
+    expect(fillGoalItem).not.toHaveBeenCalled();
+  });
+
   it("should fill the day's only goal in its own measurement", async () => {
     // given exactly one goal, and no pushup gap of its own
     const fillGoalItem = jest.fn();
@@ -381,7 +448,6 @@ describe('QuickAddFabComponent — goal submenu', () => {
         suggestions: [],
         remainingToGoal: 0,
         goalReached: false,
-        fillToGoalInFlight: false,
         autoCountEnabled: false,
         goalItems: [goal({ id: 'squats', label: 'Kniebeugen +20' })],
       },
@@ -410,7 +476,6 @@ describe('QuickAddFabComponent — goal submenu', () => {
         suggestions: [],
         remainingToGoal: 42,
         goalReached: false,
-        fillToGoalInFlight: false,
         autoCountEnabled: false,
         goalItems: [],
       },

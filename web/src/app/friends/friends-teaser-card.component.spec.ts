@@ -1,6 +1,7 @@
 import { PLATFORM_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { UserContextService } from '@pu-auth/auth';
+import { nextMacrotask } from '@pu-stats/testing';
 import { render, screen } from '@testing-library/angular';
 
 import { InviteService } from '../core/invite.service';
@@ -40,14 +41,25 @@ describe('FriendsTeaserCardComponent', () => {
     challenges?: unknown[];
     guest?: boolean;
     uid?: string;
+    /** Hold the friends list back until `answerList` is called. */
+    listPending?: boolean;
   }) {
+    const lists = {
+      friends: options.friends ?? [],
+      incoming: options.incoming ?? [],
+      outgoing: [],
+    };
+    let answerList: () => void = () => undefined;
     const api = {
-      list: vitest.fn().mockResolvedValue({
-        friends: options.friends ?? [],
-        incoming: options.incoming ?? [],
-        outgoing: [],
-      }),
+      list: vitest.fn(() =>
+        options.listPending
+          ? new Promise<typeof lists>((resolve) => {
+              answerList = () => resolve(lists);
+            })
+          : Promise.resolve(lists)
+      ),
       board: vitest.fn().mockResolvedValue(options.board ?? []),
+      cheer: vitest.fn().mockResolvedValue({ ok: true }),
     };
     const challengesApi = {
       list: vitest.fn().mockResolvedValue(options.challenges ?? []),
@@ -71,8 +83,46 @@ describe('FriendsTeaserCardComponent', () => {
     });
     await fixture.whenStable();
     fixture.detectChanges();
-    return { api, challengesApi, invite, fixture };
+    return {
+      api,
+      challengesApi,
+      invite,
+      fixture,
+      answerList: () => answerList(),
+    };
   }
+
+  it('should hold the card body as a skeleton and no invite CTA while the lists load', async () => {
+    // given / when
+    const { fixture } = await renderCard({ listPending: true });
+
+    // then
+    const loading = screen.getByTestId('dashboard-friends-loading');
+    expect(loading.tagName.toLowerCase()).toBe('app-friends-teaser-skeleton');
+    expect(loading.getAttribute('aria-busy')).toBe('true');
+    expect(loading.querySelectorAll('pu-skeleton').length).toBeGreaterThan(0);
+    expect(fixture.nativeElement.querySelector('mat-spinner')).toBeNull();
+    expect(screen.queryByTestId('dashboard-friends-invite')).toBeNull();
+    expect(document.body.textContent).not.toContain('Trainier mit Freunden');
+    expect(screen.getByTestId('dashboard-friends-link')).toBeTruthy();
+  });
+
+  it('should swap the skeleton for the invite CTA once the empty lists arrive', async () => {
+    // given
+    const { fixture, answerList } = await renderCard({ listPending: true });
+
+    // when
+    answerList();
+    await nextMacrotask();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(screen.queryByTestId('dashboard-friends-loading')).toBeNull();
+    expect(fixture.nativeElement.querySelector('pu-skeleton')).toBeNull();
+    expect(screen.getByTestId('dashboard-friends-invite')).toBeTruthy();
+    expect(document.body.textContent).toContain('Trainier mit Freunden');
+  });
 
   it('should invite when the user has no friends yet', async () => {
     // given
@@ -123,6 +173,34 @@ describe('FriendsTeaserCardComponent', () => {
         .getAllByTestId('dashboard-friends-name')
         .map((a) => a.getAttribute('href'))
     ).toEqual(['/u/b', '/u/me']);
+  });
+
+  it('should let the viewer cheer a friend from the mini board', async () => {
+    // given
+    const { api, fixture } = await renderCard({
+      friends: [friend],
+      board: [
+        entry({ uid: 'b', displayName: 'Bob', value: 900 }),
+        entry({ uid: 'me', displayName: 'Me', value: 300, isViewer: true }),
+        entry({ uid: 'c', displayName: 'Cy', value: 100, cheered: true }),
+      ],
+    });
+    const buttons = () =>
+      screen.getAllByTestId('cheer-button') as HTMLButtonElement[];
+    expect(buttons().map((b) => b.getAttribute('aria-label'))).toEqual([
+      'Bob anfeuern',
+      'Cy heute schon angefeuert',
+    ]);
+    expect(buttons()[1].disabled).toBe(true);
+
+    // when
+    buttons()[0].click();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(api.cheer).toHaveBeenCalledWith('b');
+    expect(buttons()[0].disabled).toBe(true);
   });
 
   it('should say so when the user leads', async () => {
@@ -202,5 +280,35 @@ describe('FriendsTeaserCardComponent', () => {
     // then
     expect(screen.queryByTestId('dashboard-friends-card')).toBeNull();
     expect(api.list).not.toHaveBeenCalled();
+  });
+  it('should show the invite button busy until the invite link is shared', async () => {
+    // given — the invite token is still being minted
+    let answer: (result: string) => void = () => undefined;
+    const { invite, fixture } = await renderCard({});
+    invite.inviteFriend.mockReturnValue(
+      new Promise((resolve) => {
+        answer = resolve;
+      })
+    );
+
+    // when
+    screen.getByTestId('dashboard-friends-invite').click();
+    fixture.detectChanges();
+
+    // then
+    expect(
+      screen.getByTestId('dashboard-friends-invite').getAttribute('aria-busy')
+    ).toBe('true');
+
+    // when
+    answer('native');
+    await nextMacrotask();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(
+      screen.getByTestId('dashboard-friends-invite').getAttribute('aria-busy')
+    ).toBeNull();
   });
 });

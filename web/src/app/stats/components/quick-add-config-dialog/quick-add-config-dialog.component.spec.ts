@@ -7,6 +7,7 @@ import {
   QuickAddConfig,
   UserConfigUpdate,
 } from '@pu-stats/models';
+import { nextMacrotask } from '@pu-stats/testing';
 import { QuickAddConfigDialogComponent } from './quick-add-config-dialog.component';
 import { UserConfigStore } from '../../../core/user-config.store';
 import { signal } from '@angular/core';
@@ -110,6 +111,37 @@ describe('QuickAddConfigDialogComponent', () => {
         { reps: 15, inSpeedDial: false, exerciseId: 'pushup', mode: 'reps' },
         { reps: 40, inSpeedDial: false, exerciseId: 'pushup', mode: 'reps' },
       ]);
+      expect(closeSpy).toHaveBeenCalled();
+    });
+
+    it('should mark the save button busy until the config write settles', async () => {
+      // given
+      let resolveSave: (value: unknown) => void = () => undefined;
+      setup(
+        [],
+        () =>
+          new Promise((resolve) => {
+            resolveSave = resolve;
+          })
+      );
+      const saveBtn = fixture.nativeElement.querySelector(
+        '[data-testid="quick-add-config-save"]'
+      ) as HTMLButtonElement;
+
+      // when
+      saveBtn.click();
+      await fixture.whenStable();
+
+      // then
+      expect(saveBtn.getAttribute('aria-busy')).toBe('true');
+      expect(saveBtn.disabled).toBe(false);
+
+      // when
+      resolveSave({ userId: 'u1' });
+      await nextMacrotask();
+      await fixture.whenStable();
+
+      // then
       expect(closeSpy).toHaveBeenCalled();
     });
 

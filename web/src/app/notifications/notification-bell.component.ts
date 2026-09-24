@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
+import { BusyDirective } from '@pu-stats/ui';
 
 import type { InboxRow } from './inbox-rows';
 import { NotificationItemComponent } from './notification-item.component';
@@ -17,6 +18,7 @@ const PANEL_ROWS = 10;
     MatIconModule,
     MatMenuModule,
     NotificationItemComponent,
+    BusyDirective,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
@@ -47,6 +49,8 @@ const PANEL_ROWS = 10;
             <button
               mat-button
               type="button"
+              data-testid="notification-panel-mark-all"
+              [puBusy]="store.markingAllRead.busy()"
               (click)="store.markAllRead()"
               i18n="@@notifications.panel.markAll"
             >
@@ -56,10 +60,16 @@ const PANEL_ROWS = 10;
         </header>
 
         @for (row of visible(); track row.id) {
-          <app-notification-item [row]="row" (open)="open($event)" />
+          <app-notification-item
+            [row]="row"
+            [opening]="store.rowBusy.isBusy('open:' + row.id)"
+            [removing]="store.rowBusy.isBusy('remove:' + row.id)"
+            (open)="open($event)"
+            (remove)="store.remove($event)"
+          />
         } @empty {
-          <p class="empty" i18n="@@notifications.panel.empty">
-            Noch keine Nachrichten.
+          <p class="empty" i18n="@@notifications.panel.allRead">
+            Alles gelesen.
           </p>
         }
 
@@ -131,7 +141,7 @@ export class NotificationBellComponent {
   private readonly router = inject(Router);
 
   protected visible(): ReadonlyArray<InboxRow> {
-    return this.store.rows().slice(0, PANEL_ROWS);
+    return this.store.unreadRows().slice(0, PANEL_ROWS);
   }
 
   protected ariaLabel(): string {

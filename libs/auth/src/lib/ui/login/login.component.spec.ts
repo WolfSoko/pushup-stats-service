@@ -6,7 +6,10 @@ import { LoginOnboardingStore } from '../../core/state/login-onboarding.store';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
-  const renderLogin = (error: Error | null = null) => {
+  const renderLogin = (
+    error: Error | null = null,
+    authOverrides: Record<string, unknown> = {}
+  ) => {
     const errorSignal: WritableSignal<Error | null> = signal(error);
     const clearError = jest.fn(() => errorSignal.set(null));
     const navigateByUrl = jest.fn().mockResolvedValue(true);
@@ -29,6 +32,7 @@ describe('LoginComponent', () => {
             signInWithEmail: jest.fn(),
             login: jest.fn(),
             logout: jest.fn(),
+            ...authOverrides,
           },
         },
         {
@@ -80,5 +84,33 @@ describe('LoginComponent', () => {
     expect(clearError).toHaveBeenCalled();
     expect(navigateByUrl).toHaveBeenCalledWith('/register');
     expect(screen.queryByText(message)).not.toBeInTheDocument();
+  });
+
+  it('should mark the Google button busy while the sign-in is pending', async () => {
+    // given
+    let resolveLogin!: (ok: boolean) => void;
+    const login = jest.fn(
+      () => new Promise<boolean>((resolve) => (resolveLogin = resolve))
+    );
+    const { fixture } = await renderLogin(null, { login });
+    const button = screen.getByRole('button', { name: /Google/ });
+
+    // when
+    fireEvent.click(button);
+    await fixture.whenStable();
+
+    // then
+    expect(button.getAttribute('aria-busy')).toBe('true');
+    expect(
+      screen.getByRole('button', { name: /Anmelden/ }).getAttribute('aria-busy')
+    ).toBeNull();
+
+    // when
+    resolveLogin(false);
+    await new Promise<void>((resolve) => setTimeout(resolve));
+    fixture.detectChanges();
+
+    // then
+    expect(button.getAttribute('aria-busy')).toBeNull();
   });
 });

@@ -17,6 +17,7 @@ import {
   LeaderboardPeriod,
 } from '@pu-stats/data-access';
 import { LeaderboardStore } from '@pu-stats/data-access-state';
+import { BusyDirective, SkeletonComponent } from '@pu-stats/ui';
 import {
   EXERCISE_CATEGORIES,
   type ExerciseCategoryInfo,
@@ -68,6 +69,8 @@ const POPULAR_EXERCISE_IDS: ReadonlyArray<string> = [
     MatMenuModule,
     RouterLink,
     PageHeaderComponent,
+    BusyDirective,
+    SkeletonComponent,
   ],
   templateUrl: './leaderboard-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -157,6 +160,11 @@ export class LeaderboardPageComponent {
   );
   readonly lastUpdated = this.store.lastUpdatedFor(this.selectedExerciseId);
 
+  /** First load of the selection: no cached rows to show yet, so the slots are skeletons. */
+  readonly listLoading = computed(
+    () => this.store.loading() && this.leaderboardEntries().length === 0
+  );
+
   readonly leaderboardSlots = computed(() => {
     const top = this.leaderboardEntries();
     return Array.from({ length: 25 }, (_, index) => {
@@ -189,6 +197,10 @@ export class LeaderboardPageComponent {
     return formatExerciseValue(value, def.unit);
   };
 
+  skeletonAliasWidth(rank: number): string {
+    return `${45 + ((rank * 7) % 30)}%`;
+  }
+
   selectExercise(id: string): void {
     this.selectedExerciseId.set(id);
     void this.store.load(id);
@@ -196,6 +208,10 @@ export class LeaderboardPageComponent {
 
   isActiveExercise(id: string): boolean {
     return this.selectedExerciseId() === id;
+  }
+
+  isExerciseBusy(id: string): boolean {
+    return this.store.busy.isBusy(id);
   }
 
   /**

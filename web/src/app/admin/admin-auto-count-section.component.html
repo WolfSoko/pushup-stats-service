@@ -3,6 +3,7 @@
 <div class="filter-row">
   <button
     mat-icon-button
+    [puBusy]="loading()"
     (click)="load()"
     [matTooltip]="refreshTooltip"
     [attr.aria-label]="refreshTooltip"
@@ -17,8 +18,14 @@
 </div>
 
 @if (loading()) {
-  <div class="spinner-container">
-    <mat-spinner />
+  <div aria-busy="true" data-testid="admin-auto-count-skeleton">
+    <mat-card>
+      <pu-skeleton-table [rows]="5" [columns]="6" />
+    </mat-card>
+    <h3 i18n="@@admin.autoCount.recentTitle">Letzte Rückmeldungen</h3>
+    <mat-card>
+      <pu-skeleton-table [rows]="5" [columns]="6" />
+    </mat-card>
   </div>
 } @else if (error()) {
   <p class="error-text">{{ error() }}</p>

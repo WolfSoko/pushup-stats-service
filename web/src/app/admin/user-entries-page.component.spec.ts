@@ -17,6 +17,7 @@ import {
   CallableRecord,
   createCallablesMock,
 } from './callable-functions.testing';
+import { nextMacrotask } from '@pu-stats/testing';
 import { TrainingEntryDialogComponent } from '../stats/components/training-entry-dialog/training-entry-dialog.component';
 import { AdminUserDetails } from './admin-page.models';
 
@@ -86,6 +87,112 @@ describe('UserEntriesPageComponent', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+
+  it('should render the details and table skeletons on first load and swap each once its request lands', async () => {
+    // given — both callables still pending when the page is created
+    let resolveEntries: (value: { data: ExerciseEntry[] }) => void = () =>
+      undefined;
+    let resolveDetails: (value: { data: AdminUserDetails }) => void = () =>
+      undefined;
+    const pendingEntries = new Promise<{ data: ExerciseEntry[] }>((r) => {
+      resolveEntries = r;
+    });
+    const pendingDetails = new Promise<{ data: AdminUserDetails }>((r) => {
+      resolveDetails = r;
+    });
+    setupCallables([
+      { name: 'adminListUserEntries', impl: () => pendingEntries },
+      { name: 'adminGetUserDetails', impl: () => pendingDetails },
+    ]);
+    await TestBed.configureTestingModule({
+      imports: [UserEntriesPageComponent, MatDialogModule],
+      providers: [
+        { provide: CallableFunctionsService, useValue: callablesMock },
+        provideRouter([]),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: { paramMap: convertToParamMap({ uid: 'user-1' }) },
+          },
+        },
+      ],
+    }).compileComponents();
+    fixture = TestBed.createComponent(UserEntriesPageComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    const host = fixture.nativeElement as HTMLElement;
+
+    // then
+    const details = host.querySelector('[data-testid="user-details-skeleton"]');
+    const table = host.querySelector('[data-testid="user-entries-skeleton"]');
+    expect(details?.getAttribute('aria-busy')).toBe('true');
+    expect(details?.querySelectorAll('pu-skeleton')).toHaveLength(4);
+    expect(table?.querySelector('pu-skeleton-table')).toBeTruthy();
+    expect(host.querySelector('mat-spinner')).toBeNull();
+    expect(host.querySelector('.user-head')).toBeNull();
+    expect(host.textContent).not.toContain('Keine Einträge vorhanden.');
+
+    // when — the entries answer first, the details are still on their way
+    resolveEntries({ data: [] });
+    await nextMacrotask();
+    fixture.detectChanges();
+
+    // then
+    expect(
+      host.querySelector('[data-testid="user-entries-skeleton"]')
+    ).toBeNull();
+    expect(host.textContent).toContain('Keine Einträge vorhanden.');
+    expect(
+      host.querySelector('[data-testid="user-details-skeleton"]')
+    ).toBeTruthy();
+    expect(host.querySelector('.user-head')).toBeNull();
+
+    // when
+    resolveDetails({ data: sampleDetails });
+    await nextMacrotask();
+    fixture.detectChanges();
+
+    // then
+    expect(host.querySelector('pu-skeleton')).toBeNull();
+    expect(host.querySelector('.user-head')).toBeTruthy();
+  });
+
+  it('should keep the header card and table in place while the entries refresh', async () => {
+    // given
+    await createComponent([sampleEntry]);
+    let resolve: (value: { data: ExerciseEntry[] }) => void = () => undefined;
+    setupCallables([
+      {
+        name: 'adminListUserEntries',
+        impl: () =>
+          new Promise<{ data: ExerciseEntry[] }>((r) => {
+            resolve = r;
+          }),
+      },
+      {
+        name: 'adminGetUserDetails',
+        impl: async () => ({ data: sampleDetails }),
+      },
+    ]);
+    const host = fixture.nativeElement as HTMLElement;
+
+    // when
+    const load = component.loadEntries();
+    fixture.detectChanges();
+
+    // then
+    expect(host.querySelector('pu-skeleton')).toBeNull();
+    expect(host.querySelector('.user-head')).toBeTruthy();
+    expect(host.querySelector('app-user-entries-table')).toBeTruthy();
+
+    // when
+    resolve({ data: [sampleEntry] });
+    await load;
+    fixture.detectChanges();
+
+    // then
+    expect(host.querySelector('app-user-entries-table')).toBeTruthy();
   });
 
   it('should read the uid from the route and load that user’s entries', async () => {

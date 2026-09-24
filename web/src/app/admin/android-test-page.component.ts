@@ -10,7 +10,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
 import {
   ANDROID_TEST_THRESHOLD_LIMITS,
@@ -25,18 +24,25 @@ import {
   groupByAndroidTestStatus,
   manualAddMatches,
 } from './android-test-page.helpers';
+import {
+  BusyDirective,
+  SkeletonComponent,
+  createKeyedBusyState,
+  otherKeyBusy,
+} from '@pu-stats/ui';
 import { CallableFunctionsService } from './callable-functions.service';
 
 @Component({
   selector: 'app-android-test-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    SkeletonComponent,
+    BusyDirective,
     FormsModule,
     MatButtonModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatProgressSpinnerModule,
     RouterLink,
     PageHeaderComponent,
   ],
@@ -47,9 +53,20 @@ export class AndroidTestPageComponent {
   private readonly callables = inject(CallableFunctionsService);
 
   readonly loading = signal(false);
+  readonly skeletonRows = [0, 1, 2, 3];
   readonly error = signal<string | null>(null);
   readonly users = signal<AdminUser[]>([]);
-  readonly busyUid = signal<string | null>(null);
+  /** Keyed `<uid>:<confirm|decline|added>`, one flag per row action. */
+  readonly busyUser = createKeyedBusyState<string>();
+
+  /** A row's other buttons stay locked while one of its actions runs. */
+  otherActionBusy(uid: string, action: string): boolean {
+    return otherKeyBusy(
+      this.busyUser.busyKeys(),
+      `${uid}:`,
+      `${uid}:${action}`
+    );
+  }
   readonly scanning = signal(false);
   readonly scanResult = signal<number | null>(null);
   readonly emailsCopied = signal(false);
@@ -111,19 +128,19 @@ export class AndroidTestPageComponent {
   }
 
   async confirm(uid: string, confirmed: boolean): Promise<void> {
-    this.busyUid.set(uid);
     this.error.set(null);
     try {
       const fn = this.callables.call<
         { uid: string; confirmed: boolean },
         { ok: boolean }
       >('adminConfirmAndroidTestCandidate');
-      await fn({ uid, confirmed });
+      await this.busyUser.run(
+        `${uid}:${confirmed ? 'confirm' : 'decline'}`,
+        () => fn({ uid, confirmed })
+      );
       await this.loadUsers();
     } catch (err) {
       this.error.set(errorMessage(err));
-    } finally {
-      this.busyUid.set(null);
     }
   }
 
@@ -138,14 +155,13 @@ export class AndroidTestPageComponent {
   }
 
   async markAdded(uid: string): Promise<void> {
-    this.busyUid.set(uid);
     this.error.set(null);
     try {
       const fn = this.callables.call<
         { uid: string },
         { ok: boolean; pushSent: boolean }
       >('adminMarkAndroidTesterAdded');
-      const result = await fn({ uid });
+      const result = await this.busyUser.run(`${uid}:added`, () => fn({ uid }));
       // `loadUsers()` resets `error` on entry, so the pushSent warning must be
       // set *after* it resolves — otherwise the refresh silently clears it.
       await this.loadUsers();
@@ -156,8 +172,6 @@ export class AndroidTestPageComponent {
       }
     } catch (err) {
       this.error.set(errorMessage(err));
-    } finally {
-      this.busyUid.set(null);
     }
   }
 

@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { RouterLink } from '@angular/router';
 import type { TrainingPlanDay } from '@pu-stats/models';
+import { BusyDirective } from '@pu-stats/ui';
 
 /** The plan list's summary of the plan the user is running. */
 export interface ActivePlanView {
@@ -31,6 +32,7 @@ export interface ActivePlanView {
   selector: 'app-active-plan-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
@@ -101,6 +103,7 @@ export interface ActivePlanView {
           mat-stroked-button
           type="button"
           color="warn"
+          [puBusy]="busyKeys().has('abandon')"
           (click)="abandon.emit()"
           i18n="@@trainingPlans.abandon"
         >
@@ -112,6 +115,7 @@ export interface ActivePlanView {
             mat-flat-button
             type="button"
             color="primary"
+            [puBusy]="busyKeys().has('resume')"
             (click)="resumePlan.emit()"
             i18n="@@trainingPlans.resume"
           >
@@ -122,6 +126,7 @@ export interface ActivePlanView {
           <button
             mat-stroked-button
             type="button"
+            [puBusy]="busyKeys().has('pause')"
             (click)="pausePlan.emit()"
             i18n="@@trainingPlans.pause"
           >
@@ -136,6 +141,7 @@ export interface ActivePlanView {
                 mat-flat-button
                 type="button"
                 color="primary"
+                [puBusy]="busyKeys().has('day:' + dayIndex())"
                 (click)="logToday.emit()"
               >
                 <mat-icon>play_circle</mat-icon>
@@ -225,6 +231,8 @@ export class ActivePlanCardComponent {
   readonly completionPercent = input<number>(0);
   readonly today = input<TrainingPlanDay | null>(null);
   readonly todayDone = input<boolean>(false);
+  /** The store's busy keys: `abandon`, `pause`, `resume`, `day:<today>`. */
+  readonly busyKeys = input<ReadonlySet<string>>(new Set());
   readonly abandon = output<void>();
   readonly pausePlan = output<void>();
   readonly resumePlan = output<void>();

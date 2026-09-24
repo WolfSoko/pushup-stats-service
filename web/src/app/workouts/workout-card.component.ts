@@ -10,8 +10,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
-import type { Workout } from '@pu-stats/models';
+import type { Workout, WorkoutReminder } from '@pu-stats/models';
+import { BusyDirective } from '@pu-stats/ui';
 
+import { workoutReminderSummary } from './reminders/workout-reminder-summary';
 import { workoutSummary } from './workout-summary';
 
 /** One workout in the list: what it asks for, where it came from, and the actions. */
@@ -19,6 +21,7 @@ import { workoutSummary } from './workout-summary';
   selector: 'app-workout-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
@@ -42,6 +45,12 @@ import { workoutSummary } from './workout-summary';
             <span class="badge" data-testid="workout-source">
               <mat-icon aria-hidden="true">redeem</mat-icon>
               <span i18n="@@workouts.card.from">Von {{ sourceName() }}</span>
+            </span>
+          }
+          @if (reminderText(); as text) {
+            <span class="badge" data-testid="workout-reminder-badge">
+              <mat-icon aria-hidden="true">alarm</mat-icon>
+              <span>{{ text }}</span>
             </span>
           }
           @if (workout().onProfile) {
@@ -74,10 +83,20 @@ import { workoutSummary } from './workout-summary';
         <button
           mat-icon-button
           type="button"
+          data-testid="workout-reminder"
+          [matTooltip]="reminderLabel()"
+          [attr.aria-label]="reminderLabel()"
+          (click)="reminderEdit.emit(workout())"
+        >
+          <mat-icon>{{ reminderText() ? 'alarm_on' : 'alarm_add' }}</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          type="button"
           data-testid="workout-share"
           [matTooltip]="shareLabel"
           [attr.aria-label]="shareLabel"
-          [disabled]="busy()"
+          [puBusy]="isBusy('share')"
           (click)="share.emit(workout().id)"
         >
           <mat-icon>send</mat-icon>
@@ -89,7 +108,7 @@ import { workoutSummary } from './workout-summary';
           [matTooltip]="profileLabel()"
           [attr.aria-label]="profileLabel()"
           [attr.aria-pressed]="workout().onProfile"
-          [disabled]="busy()"
+          [puBusy]="isBusy('profile')"
           (click)="toggleProfile.emit(workout())"
         >
           <mat-icon>{{
@@ -102,7 +121,7 @@ import { workoutSummary } from './workout-summary';
           data-testid="workout-delete"
           [matTooltip]="deleteLabel"
           [attr.aria-label]="deleteLabel"
-          [disabled]="busy()"
+          [puBusy]="isBusy('remove')"
           (click)="remove.emit(workout())"
         >
           <mat-icon>delete</mat-icon>
@@ -148,11 +167,14 @@ import { workoutSummary } from './workout-summary';
 })
 export class WorkoutCardComponent {
   readonly workout = input.required<Workout>();
-  readonly busy = input(false);
+  /** The store's busy keys: `<action>:<id>` spins that button. */
+  readonly busyKeys = input<ReadonlySet<string>>(new Set());
+  readonly reminder = input<WorkoutReminder | null>(null);
 
   readonly share = output<string>();
   readonly toggleProfile = output<Workout>();
   readonly remove = output<Workout>();
+  readonly reminderEdit = output<Workout>();
 
   protected readonly shareLabel = $localize`:@@workouts.card.share:An Freunde schicken`;
   protected readonly deleteLabel = $localize`:@@workouts.card.delete:Löschen`;
@@ -160,6 +182,21 @@ export class WorkoutCardComponent {
   protected readonly summary = computed(() =>
     workoutSummary(this.workout().exercises)
   );
+
+  protected readonly reminderText = computed(() => {
+    const reminder = this.reminder();
+    return reminder?.enabled ? workoutReminderSummary(reminder) : null;
+  });
+
+  protected readonly reminderLabel = computed(() =>
+    this.reminderText()
+      ? $localize`:@@workouts.card.reminderEdit:Erinnerung ändern`
+      : $localize`:@@workouts.card.reminderAdd:Erinnerung einrichten`
+  );
+
+  protected isBusy(action: 'share' | 'profile' | 'remove'): boolean {
+    return this.busyKeys().has(`${action}:${this.workout().id}`);
+  }
 
   protected readonly sourceName = computed(
     () =>

@@ -5,6 +5,7 @@ import { TestBed } from '@angular/core/testing';
 import { firstValueFrom, of } from 'rxjs';
 
 import { WorkoutsApiService } from './workouts-api.service';
+import { PendingRequestsService } from '../pending-requests.service';
 
 jest.mock('@angular/fire/auth', () => ({
   Auth: jest.fn(),
@@ -180,6 +181,41 @@ describe('WorkoutsApiService', () => {
       const service = setup();
       await service.deleteWorkout('u1', '');
       expect(firestoreFns.deleteDoc).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('pending-request tracking', () => {
+    const input = {
+      title: 'Beine',
+      description: '',
+      exercises: [{ exerciseId: 'legs.squats', target: 30 }],
+      onProfile: false,
+    };
+
+    it.each([
+      [
+        'createWorkout',
+        (s: WorkoutsApiService) => s.createWorkout('u1', input),
+      ],
+      [
+        'updateWorkout',
+        (s: WorkoutsApiService) => s.updateWorkout('u1', 'w1', input),
+      ],
+      [
+        'setOnProfile',
+        (s: WorkoutsApiService) => s.setOnProfile('u1', 'w1', true),
+      ],
+      ['deleteWorkout', (s: WorkoutsApiService) => s.deleteWorkout('u1', 'w1')],
+    ])('should track %s as a pending request', async (_name, call) => {
+      // given
+      const service = setup();
+      const track = jest.spyOn(TestBed.inject(PendingRequestsService), 'track');
+
+      // when
+      await call(service);
+
+      // then
+      expect(track).toHaveBeenCalledTimes(1);
     });
   });
 });

@@ -25,6 +25,7 @@ import {
   validateExerciseEntry,
 } from '@pu-stats/models';
 import { from, map, Observable, throwError } from 'rxjs';
+import { PendingRequestsService } from '../pending-requests.service';
 
 const EXERCISE_ENTRIES_COLLECTION = 'exerciseEntries';
 
@@ -44,8 +45,7 @@ export class ExerciseValidationError extends Error {
 
 /**
  * Wraps validation errors in a cold Observable so callers see them in
- * `subscribe({ error })` instead of as a synchronous throw — same pattern
- * as `PushupFirestoreService`.
+ * `subscribe({ error })` instead of as a synchronous throw.
  */
 function violationObservable<T>(
   exerciseId: string,
@@ -75,13 +75,13 @@ function violationObservable<T>(
 @Injectable({ providedIn: 'root' })
 export class ExerciseFirestoreService {
   private readonly firestore = inject(Firestore);
+  private readonly pending = inject(PendingRequestsService);
 
   /**
    * Lists entries for a user, optionally restricted to a single exercise
    * or a small set of catalog exercises (Firestore `in` queries are
    * capped at 30 — fine for the Phase-0 catalog and any realistic
-   * category size). Mirrors `PushupFirestoreService.listPushups` so the
-   * dashboard sections can reuse the same date-window filtering.
+   * category size).
    */
   listEntries(
     userId: string,
@@ -127,7 +127,7 @@ export class ExerciseFirestoreService {
 
     const q = query(ref, ...constraints);
 
-    return from(getDocs(q)).pipe(
+    return from(this.pending.track(getDocs(q))).pipe(
       map((snapshot) =>
         snapshot.docs
           .map((d) => {
@@ -212,7 +212,9 @@ export class ExerciseFirestoreService {
       firestoreData['intervalDurationsSec'] = payload.intervalDurationsSec;
     }
 
-    return from(setDoc(newRef, firestoreData)).pipe(map(() => record));
+    return from(this.pending.track(setDoc(newRef, firestoreData))).pipe(
+      map(() => record)
+    );
   }
 
   /**
@@ -296,15 +298,19 @@ export class ExerciseFirestoreService {
       cleanPayload[k] = v;
     }
     return from(
-      updateDoc(rowRef, {
-        ...cleanPayload,
-        updatedAt: new Date().toISOString(),
-      })
+      this.pending.track(
+        updateDoc(rowRef, {
+          ...cleanPayload,
+          updatedAt: new Date().toISOString(),
+        })
+      )
     ).pipe(map(() => void 0));
   }
 
   deleteEntry(id: string): Observable<{ ok: true }> {
     const rowRef = doc(this.firestore, EXERCISE_ENTRIES_COLLECTION, id);
-    return from(deleteDoc(rowRef)).pipe(map(() => ({ ok: true as const })));
+    return from(this.pending.track(deleteDoc(rowRef))).pipe(
+      map(() => ({ ok: true as const }))
+    );
   }
 }

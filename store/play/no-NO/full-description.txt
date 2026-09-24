@@ -1,4 +1,4 @@
-Pushup Tracker gjør armhevninger og 41 andre øvelser til et spill du vil vinne.
+Pushup Tracker gjør armhevninger og 46 andre øvelser til et spill du vil vinne.
 
 Enten du starter på null eller allerede er på ditt første hundre: denne appen holder deg i gang. Kameraet teller repetisjonene automatisk, treningsplanene gir deg en klar oppgave hver dag, og venner og resultatlista motiverer uten å mase.
 
@@ -7,8 +7,8 @@ Sett fra deg telefonen, åpne autotelleren og sett i gang: KI-en gjenkjenner arm
 
 🏋️ MER ENN BARE ARMHEVNINGER
 • 13 varianter av armhevning: kne, incline, decline, bred, diamant, pike, archer og helt til énarmet — med instruksjon per type
-• 42 øvelser i 9 kategorier: armhevninger, push, pull, knebøy, hinge, utfall, kjerne, kondisjon, mobilitet
-• Pullups, dips, knebøy, utfall, planke, hollow hold, burpees, hoppetau, yoga, uttøying og mer
+• 47 øvelser i 9 kategorier: armhevninger, push, pull, knebøy, hinge, utfall, kjerne, kondisjon, mobilitet
+• Pullups, dips, knebøy, utfall, planke, burpees, yoga og mer
 • Utholdenhet på distanse og tid: løping, sykling, roing, svømming — med tempo
 
 ⚡ REGISTRERING PÅ TO SEKUNDER
@@ -25,7 +25,7 @@ Sett fra deg telefonen, åpne autotelleren og sett i gang: KI-en gjenkjenner arm
 Hver dag den oppgaven som passer, med hviledager, lette dager og testdager. Fem planer regner hver dagsoppgave om etter makstesten din: ingen 3×20 hvis du klarer 8. Fullførte dager krysses av selv, og den aktive planen kan du dele.
 
 🧩 EGNE ØKTER
-Sett sammen din egen økt: øvelser, mål og sett i din rekkefølge. Appen leder deg gjennom den steg for steg. Vis øktene på profilen din eller send dem rett til venner — alle får sin egen kopi.
+Sett sammen din egen økt: øvelser, mål og sett i din rekkefølge. Appen leder deg gjennom den steg for steg. Vis øktene på profilen din eller send dem rett til venner — alle får sin egen kopi. Hver økt kan minne deg på seg selv — f.eks. hver 2. dag kl. 15:00 med push.
 
 🎯 MÅL, STREAKS OG STATISTIKK
 • Dags-, uke- og månedsmål — per øvelse, med ukedagsfilter
@@ -48,7 +48,7 @@ Varsler med intervall, stilletid, ukedager og tidssone — også når appen er l
 Øvelses-wiki med ren utførelse og de typiske feilene, i tillegg til en blogg.
 
 🔒 DINE DATA
-Prøv som gjest, helt uten konto. GDPR-klar med justerbart samtykke til cookies. Kontoen kan slettes når som helst, treningsdata blir bare liggende anonymisert. Database i Frankfurt.
+Prøv som gjest, helt uten konto. GDPR-klar med justerbart samtykke til cookies. Kontoen kan slettes når som helst, sammen med alle treningsdata. Database i Frankfurt.
 
 📱 ANDROID + WEB
 Samme data på telefonen og i nettleseren, synkronisert i sanntid på alle enheter. Logg inn med Google eller e-post. Fungerer også offline — oppføringer synkroniseres så snart du er på nett igjen. Lyst og mørkt tema.

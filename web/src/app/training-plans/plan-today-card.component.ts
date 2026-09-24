@@ -51,6 +51,8 @@ export class PlanTodayCardComponent {
   readonly interactive = input(false);
   /** Whether the guided session is worth offering for this day. */
   readonly offersSession = input(false);
+  /** The day's busy keys from the store, handed on to the exercise list and test form. */
+  readonly busyKeys = input<ReadonlySet<string>>(new Set());
 
   readonly logExercise = output<number>();
   readonly toggleExercise = output<ExerciseToggle>();

@@ -7,13 +7,11 @@ import {
   validateAdminAccess,
   validateLeaderboardExclusionPayload,
 } from './admin';
-import {
-  deleteUserExerciseData,
-  hasEntrySince,
-  readUserActivity,
-} from './admin/user-data-ops';
+import { deleteAccountWithData } from './account-deletion/delete-account';
+import { liveDeleteAccountDeps } from './account-deletion/live-deps';
+import { deleteInactiveAccounts } from './admin/bulk-delete';
+import { hasEntrySince, readUserActivity } from './admin/user-data-ops';
 import { db, DEMO_USER_ID } from './firebase-app';
-import { deleteAllPushSubscriptions } from './functions-push';
 
 export function assertAdmin(request: {
   auth?: { uid: string; token: Record<string, unknown> };
@@ -72,12 +70,11 @@ export const adminListUsers = onCall(
 );
 
 export const adminDeleteUser = onCall(
-  { region: 'europe-west3', timeoutSeconds: 120 },
+  { region: 'europe-west3', timeoutSeconds: 540, memory: '512MiB' },
   async (request) => {
     assertAdmin(request);
 
     const uid = String(request.data?.uid || '').trim();
-    const anonymize = Boolean(request.data?.anonymize ?? true);
 
     if (!uid) throw new HttpsError('invalid-argument', 'uid erforderlich.');
     if (uid === DEMO_USER_ID) {
@@ -87,28 +84,9 @@ export const adminDeleteUser = onCall(
       );
     }
 
-    await getAuth().deleteUser(uid);
+    const result = await deleteAccountWithData(liveDeleteAccountDeps(), uid);
 
-    if (anonymize) {
-      await db
-        .collection('userConfigs')
-        .doc(uid)
-        .set(
-          {
-            displayName: 'Gelöschter Benutzer',
-            email: null,
-            ui: { hideFromLeaderboard: true },
-          },
-          { merge: true }
-        );
-    } else {
-      await db.collection('userConfigs').doc(uid).delete();
-      await deleteUserExerciseData(uid);
-    }
-
-    await deleteAllPushSubscriptions(uid);
-
-    logger.info('adminDeleteUser', { uid, anonymize, by: request.auth?.uid });
+    logger.info('adminDeleteUser', { uid, ...result, by: request.auth?.uid });
     return { ok: true };
   }
 );
@@ -151,8 +129,15 @@ export const adminSetLeaderboardExclusion = onCall(
   }
 );
 
+/**
+ * Accounts deleted per bulk run. Each deletion purges the user's data, so an
+ * unbounded run would outlast the timeout; the admin re-runs until
+ * `remaining` is 0.
+ */
+export const BULK_DELETE_LIMIT = 25;
+
 export const adminBulkDeleteInactiveAnonymous = onCall(
-  { region: 'europe-west3', timeoutSeconds: 300 },
+  { region: 'europe-west3', timeoutSeconds: 540, memory: '512MiB' },
   async (request) => {
     assertAdmin(request);
 
@@ -179,39 +164,30 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
     // date-only `cutoff`, so the comparison is exact.
     const activity = await readUserActivity(anonymousUsers);
 
-    let deleted = 0;
-    let skipped = 0;
-
-    for (const uid of anonymousUsers) {
-      const aggregate = activity.get(uid);
-      if (aggregate) {
-        if (aggregate.lastEntry && aggregate.lastEntry >= cutoff) {
-          skipped++;
-          continue;
-        }
-      } else if (await hasEntrySince(uid, cutoff)) {
+    const { deleted, skipped, remaining } = await deleteInactiveAccounts({
+      uids: anonymousUsers,
+      limit: BULK_DELETE_LIMIT,
+      isActive: async (uid) => {
+        const aggregate = activity.get(uid);
+        if (aggregate)
+          return !!aggregate.lastEntry && aggregate.lastEntry >= cutoff;
         // No aggregate yet (e.g. the post-deploy window before the backfill
         // ran) — fall back to a bounded source check so an active user is
         // never deleted.
-        skipped++;
-        continue;
-      }
-
-      await getAuth().deleteUser(uid);
-      await db.collection('userConfigs').doc(uid).delete();
-      await deleteUserExerciseData(uid);
-
-      await deleteAllPushSubscriptions(uid);
-      deleted++;
-    }
+        return hasEntrySince(uid, cutoff);
+      },
+      deleteAccount: (uid) =>
+        deleteAccountWithData(liveDeleteAccountDeps(), uid),
+    });
 
     logger.info('adminBulkDeleteInactiveAnonymous', {
       inactiveDays,
       cutoff,
       deleted,
       skipped,
+      remaining,
       by: request.auth?.uid,
     });
-    return { deleted, skipped };
+    return { deleted, skipped, remaining };
   }
 );

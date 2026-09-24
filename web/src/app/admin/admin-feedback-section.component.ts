@@ -12,29 +12,31 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {
+  BusyDirective,
+  SkeletonTableComponent,
+  createKeyedBusyState,
+  otherKeyBusy,
+} from '@pu-stats/ui';
 import { CallableFunctionsService } from './callable-functions.service';
 import { DeleteFeedbackDialogComponent } from './delete-feedback-dialog.component';
 import { AdminFeedback } from './admin-page.models';
-import {
-  adminFeedbackSortValue,
-  errorMessage,
-  toggleSetMember,
-} from './admin-page.helpers';
+import { adminFeedbackSortValue, errorMessage } from './admin-page.helpers';
 
 @Component({
   selector: 'app-admin-feedback-section',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    SkeletonTableComponent,
+    BusyDirective,
     DatePipe,
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
     MatIconModule,
-    MatProgressSpinnerModule,
     MatSortModule,
     MatTableModule,
     MatTooltipModule,
@@ -65,7 +67,16 @@ export class AdminFeedbackSectionComponent {
   readonly feedbackLoading = signal(false);
   readonly feedbackError = signal<string | null>(null);
   readonly feedbackList = signal<AdminFeedback[]>([]);
-  readonly feedbackActionLoading = signal<Set<string>>(new Set());
+  /** Keyed `<feedbackId>:<read|issue|delete>`, so one row's actions stay independent. */
+  readonly feedbackAction = createKeyedBusyState<string>();
+
+  otherActionBusy(id: string, action: string): boolean {
+    return otherKeyBusy(
+      this.feedbackAction.busyKeys(),
+      `${id}:`,
+      `${id}:${action}`
+    );
+  }
   readonly feedbackActionError = signal<string | null>(null);
 
   readonly feedbackDataSource = new MatTableDataSource<AdminFeedback>([]);
@@ -99,30 +110,21 @@ export class AdminFeedbackSectionComponent {
     }
   }
 
-  isFeedbackActionLoading(id: string): boolean {
-    return this.feedbackActionLoading().has(id);
-  }
-
-  private setFeedbackLoading(id: string, loading: boolean): void {
-    this.feedbackActionLoading.update((s) => toggleSetMember(s, id, loading));
-  }
-
   async markFeedbackRead(
     feedback: AdminFeedback,
     read: boolean
   ): Promise<void> {
-    this.setFeedbackLoading(feedback.id, true);
     this.feedbackActionError.set(null);
     try {
       const fn = this.callables.call('adminMarkFeedbackRead');
-      await fn({ feedbackId: feedback.id, read });
+      await this.feedbackAction.run(`${feedback.id}:read`, () =>
+        fn({ feedbackId: feedback.id, read })
+      );
       this.feedbackList.update((list) =>
         list.map((f) => (f.id === feedback.id ? { ...f, read } : f))
       );
     } catch (err) {
       this.feedbackActionError.set(errorMessage(err));
-    } finally {
-      this.setFeedbackLoading(feedback.id, false);
     }
   }
 
@@ -139,30 +141,30 @@ export class AdminFeedbackSectionComponent {
     const confirmed = await firstValueFrom(ref.afterClosed());
     if (!confirmed) return;
 
-    this.setFeedbackLoading(feedback.id, true);
     this.feedbackActionError.set(null);
     try {
       const fn = this.callables.call('adminDeleteFeedback');
-      await fn({ feedbackId: feedback.id });
+      await this.feedbackAction.run(`${feedback.id}:delete`, () =>
+        fn({ feedbackId: feedback.id })
+      );
       this.feedbackList.update((list) =>
         list.filter((f) => f.id !== feedback.id)
       );
     } catch (err) {
       this.feedbackActionError.set(errorMessage(err));
-    } finally {
-      this.setFeedbackLoading(feedback.id, false);
     }
   }
 
   async createGithubIssue(feedback: AdminFeedback): Promise<void> {
-    this.setFeedbackLoading(feedback.id, true);
     this.feedbackActionError.set(null);
     try {
       const fn = this.callables.call<
         unknown,
         { ok: boolean; issueUrl: string }
       >('adminCreateGithubIssue');
-      const result = await fn({ feedbackId: feedback.id });
+      const result = await this.feedbackAction.run(`${feedback.id}:issue`, () =>
+        fn({ feedbackId: feedback.id })
+      );
       this.feedbackList.update((list) =>
         list.map((f) =>
           f.id === feedback.id
@@ -172,8 +174,6 @@ export class AdminFeedbackSectionComponent {
       );
     } catch (err) {
       this.feedbackActionError.set(errorMessage(err));
-    } finally {
-      this.setFeedbackLoading(feedback.id, false);
     }
   }
 }

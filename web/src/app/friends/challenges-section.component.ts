@@ -9,7 +9,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {
+  BusyDirective,
+  createBusyState,
+  SkeletonComponent,
+} from '@pu-stats/ui';
 import { firstValueFrom } from 'rxjs';
 
 import { ChallengeCardComponent } from './challenge-card.component';
@@ -28,11 +32,12 @@ import { challengeRejectionMessage } from './friends-messages';
   selector: 'app-challenges-section',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     ChallengeCardComponent,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatProgressSpinnerModule,
+    SkeletonComponent,
   ],
   template: `
     <div class="section-head">
@@ -42,6 +47,7 @@ import { challengeRejectionMessage } from './friends-messages';
         type="button"
         data-testid="challenge-start"
         [disabled]="friends().length === 0"
+        [puBusy]="opening.busy() || store.isBusy('create')"
         (click)="start()"
       >
         <mat-icon>flag</mat-icon>
@@ -69,6 +75,7 @@ import { challengeRejectionMessage } from './friends-messages';
             mat-button
             type="button"
             data-testid="challenges-retry"
+            [puBusy]="store.loading()"
             (click)="store.reload()"
             i18n="@@challenges.retry"
           >
@@ -80,7 +87,26 @@ import { challengeRejectionMessage } from './friends-messages';
 
     @if (store.challenges().length === 0) {
       @if (store.loading()) {
-        <mat-spinner diameter="32" data-testid="challenges-loading" />
+        <mat-card
+          class="challenge-skeleton"
+          aria-busy="true"
+          data-testid="challenges-loading"
+        >
+          <mat-card-header>
+            <mat-card-title
+              ><pu-skeleton shape="title" width="45%"
+            /></mat-card-title>
+            <mat-card-subtitle><pu-skeleton width="30%" /></mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            @for (row of skeletonRows; track row) {
+              <div class="participant">
+                <pu-skeleton width="40%" />
+                <pu-skeleton shape="rect" height="4px" />
+              </div>
+            }
+          </mat-card-content>
+        </mat-card>
       } @else {
         <p class="muted" i18n="@@challenges.empty">
           Noch keine Challenge. Fordere deine Freunde heraus: ein Ziel, ein paar
@@ -92,6 +118,7 @@ import { challengeRejectionMessage } from './friends-messages';
     @for (challenge of ordered(); track challenge.id) {
       <app-challenge-card
         [challenge]="challenge"
+        [busyKeys]="store.busyKeys()"
         (accept)="store.accept($event)"
         (decline)="store.decline($event)"
         (leave)="store.leave($event)"
@@ -118,6 +145,18 @@ import { challengeRejectionMessage } from './friends-messages';
     .muted {
       opacity: 0.7;
     }
+    .challenge-skeleton mat-card-subtitle {
+      margin-top: 6px;
+    }
+    .challenge-skeleton mat-card-content {
+      display: grid;
+      gap: 12px;
+      padding-top: 12px;
+    }
+    .participant {
+      display: grid;
+      gap: 6px;
+    }
   `,
 })
 export class ChallengesSectionComponent {
@@ -126,6 +165,11 @@ export class ChallengesSectionComponent {
 
   /** Confirmed friends — the people a new challenge can invite. */
   readonly friends = input.required<ReadonlyArray<FriendRow>>();
+
+  /** The dialog chunk on its way; the create itself is the store's flag. */
+  protected readonly opening = createBusyState();
+
+  protected readonly skeletonRows = [0, 1];
 
   protected readonly rejection = computed(() =>
     challengeRejectionMessage(this.store.lastRejection())
@@ -142,8 +186,9 @@ export class ChallengesSectionComponent {
   ]);
 
   protected async start(): Promise<void> {
-    const { ChallengeCreateDialogComponent } =
-      await import('./challenge-create-dialog.component');
+    const { ChallengeCreateDialogComponent } = await this.opening.run(
+      () => import('./challenge-create-dialog.component')
+    );
     const ref = this.dialog.open(ChallengeCreateDialogComponent, {
       data: { friends: this.friends() },
       autoFocus: 'dialog',

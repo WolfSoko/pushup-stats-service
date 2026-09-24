@@ -43,14 +43,10 @@
     <button
       type="button"
       mat-flat-button
-      [disabled]="scanning()"
+      [puBusy]="scanning()"
       (click)="computeCandidates()"
     >
-      @if (scanning()) {
-        <mat-spinner diameter="18"></mat-spinner>
-      } @else {
-        <span i18n="@@admin.androidTest.scan">Kandidaten ermitteln</span>
-      }
+      <span i18n="@@admin.androidTest.scan">Kandidaten ermitteln</span>
     </button>
     <!-- `!== null`, not truthiness: a scan that finds 0 must still report back. -->
     @if (scanResult() !== null) {
@@ -65,7 +61,15 @@
       Kandidaten ({{ groups().candidates.length }})
     </h2>
     @if (loading()) {
-      <mat-spinner diameter="24"></mat-spinner>
+      <div aria-busy="true" data-testid="android-test-skeleton">
+        @for (row of skeletonRows; track row) {
+          <div class="user-row">
+            <pu-skeleton class="user-label" width="60%" />
+            <pu-skeleton shape="rect" width="112px" height="36px" />
+            <pu-skeleton shape="rect" width="96px" height="36px" />
+          </div>
+        }
+      </div>
     } @else if (groups().candidates.length === 0) {
       <p i18n="@@admin.androidTest.noCandidates">Keine offenen Kandidaten.</p>
     } @else {
@@ -78,7 +82,8 @@
           <button
             type="button"
             mat-stroked-button
-            [disabled]="busyUid() === user.uid"
+            [disabled]="otherActionBusy(user.uid, 'confirm')"
+            [puBusy]="busyUser.isBusy(user.uid + ':confirm')"
             (click)="confirm(user.uid, true)"
             i18n="@@admin.androidTest.confirm"
           >
@@ -87,7 +92,8 @@
           <button
             type="button"
             mat-button
-            [disabled]="busyUid() === user.uid"
+            [disabled]="otherActionBusy(user.uid, 'decline')"
+            [puBusy]="busyUser.isBusy(user.uid + ':decline')"
             (click)="confirm(user.uid, false)"
             i18n="@@admin.androidTest.decline"
           >
@@ -122,7 +128,8 @@
         <button
           type="button"
           mat-stroked-button
-          [disabled]="busyUid() === user.uid"
+          [disabled]="otherActionBusy(user.uid, 'confirm')"
+          [puBusy]="busyUser.isBusy(user.uid + ':confirm')"
           (click)="addManually(user.uid)"
           i18n="@@admin.androidTest.manualAdd"
         >
@@ -145,7 +152,8 @@
           <button
             type="button"
             mat-button
-            [disabled]="busyUid() === user.uid"
+            [disabled]="otherActionBusy(user.uid, 'decline')"
+            [puBusy]="busyUser.isBusy(user.uid + ':decline')"
             (click)="confirm(user.uid, false)"
             i18n="@@admin.androidTest.withdraw"
           >
@@ -180,7 +188,8 @@
           <button
             type="button"
             mat-stroked-button
-            [disabled]="busyUid() === user.uid"
+            [disabled]="otherActionBusy(user.uid, 'added')"
+            [puBusy]="busyUser.isBusy(user.uid + ':added')"
             (click)="markAdded(user.uid)"
             i18n="@@admin.androidTest.markAdded"
           >

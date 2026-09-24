@@ -24,6 +24,7 @@ import {
 } from '@pu-stats/models';
 import { from, map, Observable, of } from 'rxjs';
 import { nextSkippedDays } from './user-training-plan.jump';
+import { PendingRequestsService } from '../pending-requests.service';
 
 const COLLECTION = 'userTrainingPlans';
 /** Subcollection holding the progress of plans the user switched away from. */
@@ -62,6 +63,7 @@ function patchedPlan(
 export class UserTrainingPlanApiService {
   private readonly firestore = inject(Firestore, { optional: true });
   private readonly auth = inject(Auth, { optional: true });
+  private readonly pending = inject(PendingRequestsService);
 
   getActivePlan(userId: string): Observable<UserTrainingPlan | null> {
     const effectiveUserId = this.resolveUserId(userId);
@@ -88,7 +90,7 @@ export class UserTrainingPlanApiService {
       userId: effectiveUserId,
       updatedAt: new Date().toISOString(),
     };
-    return from(setDoc(ref, payload, { merge: true })).pipe(
+    return from(this.pending.track(setDoc(ref, payload, { merge: true }))).pipe(
       map(() => patchedPlan(effectiveUserId, patch))
     );
   }
@@ -177,25 +179,13 @@ export class UserTrainingPlanApiService {
       nonRestDaysBeforeTarget: ReadonlyArray<number>;
     }
   ): Observable<void> {
-    const effectiveUserId = this.resolveUserId(userId);
-    if (!effectiveUserId || !this.firestore) return of(void 0);
-    const ref = this.docRef(effectiveUserId);
-    const firestore = this.firestore;
-    return from(
-      runTransaction(firestore, async (tx) => {
-        const snap = await tx.get(ref);
-        const data = (snap.data() as UserTrainingPlan | undefined) ?? null;
-        const nowIso = new Date().toISOString();
-        tx.update(ref, {
-          startDate: args.newStartDate,
-          skippedDays: nextSkippedDays(data, args),
-          // Re-anchoring can shift the day now mapped to today's date away
-          // from whichever day already claimed it — see `dayActivatedAt`.
-          dayActivatedAt: nowIso,
-          updatedAt: nowIso,
-        });
-      })
-    ).pipe(map(() => void 0));
+    return this.transact(userId, (data, nowIso) => ({
+      startDate: args.newStartDate,
+      skippedDays: nextSkippedDays(data, args),
+      // Re-anchoring can shift the day now mapped to today's date away
+      // from whichever day already claimed it — see `dayActivatedAt`.
+      dayActivatedAt: nowIso,
+    }));
   }
 
   /**
@@ -235,28 +225,17 @@ export class UserTrainingPlanApiService {
     itemIndex: number,
     next: (withoutField: string[]) => string[]
   ): Observable<void> {
-    const effectiveUserId = this.resolveUserId(userId);
-    if (!effectiveUserId || !this.firestore) return of(void 0);
-    const ref = this.docRef(effectiveUserId);
-    const firestore = this.firestore;
-    return from(
-      runTransaction(firestore, async (tx) => {
-        const snap = await tx.get(ref);
-        const data = (snap.data() as UserTrainingPlan | undefined) ?? null;
-        const withoutField = (data?.testResults ?? []).filter((id) => {
-          const parsed = parsePlanTestResultId(id);
-          return (
-            !parsed ||
-            parsed.dayIndex !== dayIndex ||
-            parsed.itemIndex !== itemIndex
-          );
-        });
-        tx.update(ref, {
-          testResults: next(withoutField),
-          updatedAt: new Date().toISOString(),
-        });
-      })
-    ).pipe(map(() => void 0));
+    return this.transact(userId, (data) => {
+      const withoutField = (data?.testResults ?? []).filter((id) => {
+        const parsed = parsePlanTestResultId(id);
+        return (
+          !parsed ||
+          parsed.dayIndex !== dayIndex ||
+          parsed.itemIndex !== itemIndex
+        );
+      });
+      return { testResults: next(withoutField) };
+    });
   }
 
   /**
@@ -313,7 +292,9 @@ export class UserTrainingPlanApiService {
       createdAt: plan.createdAt ?? nowIso,
       updatedAt: nowIso,
     };
-    return from(setDoc(ref, payload)).pipe(map(() => payload));
+    return from(this.pending.track(setDoc(ref, payload))).pipe(
+      map(() => payload)
+    );
   }
 
   /**
@@ -324,7 +305,9 @@ export class UserTrainingPlanApiService {
   parkPlan(userId: string, parked: ParkedTrainingPlan): Observable<void> {
     const ref = this.historyRef(userId, parked.planId);
     if (!ref) return of(void 0);
-    return from(setDoc(ref, parked)).pipe(map(() => void 0));
+    return from(this.pending.track(setDoc(ref, parked))).pipe(
+      map(() => void 0)
+    );
   }
 
   /** A plan's parked progress, or null when it has none. */
@@ -334,7 +317,7 @@ export class UserTrainingPlanApiService {
   ): Observable<ParkedTrainingPlan | null> {
     const ref = this.historyRef(userId, planId);
     if (!ref) return of(null);
-    return from(getDoc(ref)).pipe(
+    return from(this.pending.track(getDoc(ref))).pipe(
       map((snap) => (snap.exists() ? snap.data() : null))
     );
   }
@@ -343,7 +326,7 @@ export class UserTrainingPlanApiService {
   deleteParkedPlan(userId: string, planId: string): Observable<void> {
     const ref = this.historyRef(userId, planId);
     if (!ref) return of(void 0);
-    return from(deleteDoc(ref)).pipe(map(() => void 0));
+    return from(this.pending.track(deleteDoc(ref))).pipe(map(() => void 0));
   }
 
   private historyRef(
@@ -361,6 +344,30 @@ export class UserTrainingPlanApiService {
     ) as DocumentReference<ParkedTrainingPlan>;
   }
 
+  /** Read-modify-write in one transaction with the `updatedAt` stamp, or a
+   *  no-op when there is no resolvable user / Firestore provider. */
+  private transact(
+    userId: string,
+    fields: (
+      data: UserTrainingPlan | null,
+      nowIso: string
+    ) => Record<string, unknown>
+  ): Observable<void> {
+    const effectiveUserId = this.resolveUserId(userId);
+    if (!effectiveUserId || !this.firestore) return of(void 0);
+    const ref = this.docRef(effectiveUserId);
+    return from(
+      this.pending.track(
+        runTransaction(this.firestore, async (tx) => {
+          const snap = await tx.get(ref);
+          const data = (snap.data() as UserTrainingPlan | undefined) ?? null;
+          const nowIso = new Date().toISOString();
+          tx.update(ref, { ...fields(data, nowIso), updatedAt: nowIso });
+        })
+      )
+    ).pipe(map(() => void 0));
+  }
+
   /** Field-level `updateDoc` with the `updatedAt` stamp, or a no-op when
    *  there is no resolvable user / Firestore provider. */
   private patch(
@@ -370,10 +377,12 @@ export class UserTrainingPlanApiService {
     const effectiveUserId = this.resolveUserId(userId);
     if (!effectiveUserId || !this.firestore) return of(void 0);
     return from(
-      updateDoc(this.docRef(effectiveUserId), {
-        ...fields,
-        updatedAt: new Date().toISOString(),
-      })
+      this.pending.track(
+        updateDoc(this.docRef(effectiveUserId), {
+          ...fields,
+          updatedAt: new Date().toISOString(),
+        })
+      )
     ).pipe(map(() => void 0));
   }
 

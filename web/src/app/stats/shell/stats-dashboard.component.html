@@ -5,14 +5,14 @@
     <img
       class="brand-logo"
       src="assets/pushup-logo.webp"
-      alt="Pushup Tracker Logo"
+      alt="{{ brandName }} Logo"
       i18n-alt="@@brandLogoAlt"
       width="74"
       height="74"
       decoding="async"
     />
     <div class="header-text">
-      <p class="eyebrow" i18n="@@eyebrowTitle">Pushup Tracker</p>
+      <p class="eyebrow" i18n="@@eyebrowTitle">{{ brandName }}</p>
       <h1 i18n="@@dashboardTitle">Meine Trainingsübersicht</h1>
       <p class="subtitle" i18n="@@dashboardSubtitle">
         Behalte Training, Volumen und Verlauf im Blick – klar, schnell und mobil
@@ -44,6 +44,7 @@
         type="button"
         class="header-share"
         data-testid="dashboard-invite"
+        [puBusy]="inviting.busy()"
         (click)="inviteFriend()"
       >
         <mat-icon>person_add</mat-icon>
@@ -62,6 +63,7 @@
     [days]="allTimeDays()"
     [entries]="allTimeEntries()"
     [avg]="allTimeAvg()"
+    [loading]="loading()"
   />
 
   <app-challenge-spotlight />
@@ -171,6 +173,7 @@
           [attr.data-testid]="'dashboard-quick-add-' + i"
           [attr.data-mode]="vm.mode"
           [attr.data-exercise]="vm.exerciseId"
+          [puBusy]="quickBusy.isBusy(vm.key)"
           (click)="addQuickEntryFromConfig(vm)"
         >
           @if (vm.mode === 'auto-count') {
@@ -190,7 +193,8 @@
           mat-flat-button
           class="quick-btn quick-btn--goal"
           data-testid="dashboard-quick-actions-goal-fill"
-          [disabled]="planTodayFulfilled() || planFillInFlight()"
+          [disabled]="planTodayFulfilled()"
+          [puBusy]="planFillInFlight()"
           (click)="fillToGoal()"
         >
           <mat-icon>{{ planTodayFulfilled() ? 'check' : 'flag' }}</mat-icon>
@@ -212,7 +216,8 @@
           mat-flat-button
           class="quick-btn quick-btn--goal"
           data-testid="dashboard-quick-actions-goal-fill"
-          [disabled]="goalReached() || fillToGoalInFlight()"
+          [disabled]="goalReached()"
+          [puBusy]="fillToGoalInFlight()"
           (click)="fillToGoal()"
         >
           <mat-icon>{{ goalReached() ? 'check' : 'flag' }}</mat-icon>
@@ -249,6 +254,7 @@
     class="today-focus"
     aria-label="Tagesfokus"
     i18n-aria-label="@@todayFocusAria"
+    [attr.aria-busy]="loading() ? 'true' : null"
   >
     <mat-card>
       <mat-card-header>
@@ -257,7 +263,16 @@
         >
       </mat-card-header>
       <mat-card-content>
-        <p class="focus-number">{{ todayTotal() }}</p>
+        @if (loading()) {
+          <pu-skeleton
+            shape="title"
+            width="3em"
+            height="2.4rem"
+            data-testid="dashboard-today-total-skeleton"
+          />
+        } @else {
+          <p class="focus-number">{{ todayTotal() }}</p>
+        }
       </mat-card-content>
     </mat-card>
 
@@ -279,86 +294,91 @@
         </a>
       </mat-card-header>
       <mat-card-content>
-        @if (isPlanRestDay()) {
-          <div class="goal-row">
-            <small i18n="@@dashboard.dailyGoalLabel">Tag</small>
-            <strong
-              class="rest-day-badge"
-              data-testid="dashboard-rest-day-target"
-            >
-              <mat-icon class="rest-day-badge-icon" aria-hidden="true"
-                >self_improvement</mat-icon
-              >
-              <span i18n="@@trainingPlans.kind.rest">Ruhetag</span>
-            </strong>
-          </div>
-          @if (userConfiguredDailyGoal() > 0) {
-            <p
-              class="rest-day-config-hint"
-              data-testid="dashboard-rest-day-config-hint"
-            >
-              <span i18n="@@dashboard.restDay.configuredGoalHint"
-                >Konfiguriertes Tagesziel:</span
-              >
-              <span class="rest-day-config-hint-value"
-                >{{ userConfiguredDailyGoal() }}
-                <span i18n="@@trainingPlans.reps">Wdh.</span></span
-              >
-            </p>
-          }
-        } @else if (planActive()) {
-          <p class="goal-subhead" i18n="@@dashboard.dailyGoalLabel">Tag</p>
-          <app-plan-day-exercises
-            [exercises]="planTodayExerciseRows()"
-            [interactive]="true"
-            data-testid="dashboard-plan-exercises"
-            (logExercise)="logPlanExercise($event)"
-            (toggleExercise)="togglePlanExercise($event)"
-            (resetExercise)="resetPlanExercise($event)"
-          />
-        } @else if (dailyGoalBreakdown().length > 0) {
-          <p class="goal-subhead" i18n="@@dashboard.dailyGoalLabel">Tag</p>
-          <app-daily-goal-checklist
-            [items]="dailyGoalBreakdown()"
-            [interactive]="true"
-            [pending]="dailyGoalPending()"
-            testId="dashboard-daily-goal-item"
-            (complete)="completeDailyGoal($event)"
-          />
+        @if (loading()) {
+          <pu-skeleton lines="3" data-testid="dashboard-goal-skeleton" />
         } @else {
+          @if (isPlanRestDay()) {
+            <div class="goal-row">
+              <small i18n="@@dashboard.dailyGoalLabel">Tag</small>
+              <strong
+                class="rest-day-badge"
+                data-testid="dashboard-rest-day-target"
+              >
+                <mat-icon class="rest-day-badge-icon" aria-hidden="true"
+                  >self_improvement</mat-icon
+                >
+                <span i18n="@@trainingPlans.kind.rest">Ruhetag</span>
+              </strong>
+            </div>
+            @if (userConfiguredDailyGoal() > 0) {
+              <p
+                class="rest-day-config-hint"
+                data-testid="dashboard-rest-day-config-hint"
+              >
+                <span i18n="@@dashboard.restDay.configuredGoalHint"
+                  >Konfiguriertes Tagesziel:</span
+                >
+                <span class="rest-day-config-hint-value"
+                  >{{ userConfiguredDailyGoal() }}
+                  <span i18n="@@trainingPlans.reps">Wdh.</span></span
+                >
+              </p>
+            }
+          } @else if (planActive()) {
+            <p class="goal-subhead" i18n="@@dashboard.dailyGoalLabel">Tag</p>
+            <app-plan-day-exercises
+              [exercises]="planTodayExerciseRows()"
+              [interactive]="true"
+              [busyKeys]="planTodayBusyKeys()"
+              data-testid="dashboard-plan-exercises"
+              (logExercise)="logPlanExercise($event)"
+              (toggleExercise)="togglePlanExercise($event)"
+              (resetExercise)="resetPlanExercise($event)"
+            />
+          } @else if (dailyGoalBreakdown().length > 0) {
+            <p class="goal-subhead" i18n="@@dashboard.dailyGoalLabel">Tag</p>
+            <app-daily-goal-checklist
+              [items]="dailyGoalBreakdown()"
+              [interactive]="true"
+              [pending]="dailyGoalPending()"
+              testId="dashboard-daily-goal-item"
+              (complete)="completeDailyGoal($event)"
+            />
+          } @else {
+            <div class="goal-row">
+              <small i18n="@@dashboard.dailyGoalLabel">Tag</small>
+              <span>{{ todayTotal() }} / {{ dailyGoal() }}</span>
+            </div>
+            <mat-progress-bar
+              mode="determinate"
+              [value]="goalProgressPercent()"
+            ></mat-progress-bar>
+          }
+
           <div class="goal-row">
-            <small i18n="@@dashboard.dailyGoalLabel">Tag</small>
-            <span>{{ todayTotal() }} / {{ dailyGoal() }}</span>
+            <small i18n="@@dashboard.weeklyGoalLabel">Woche</small>
+            <span>{{ weekReps() }} / {{ weeklyGoal() }}</span>
           </div>
           <mat-progress-bar
             mode="determinate"
-            [value]="goalProgressPercent()"
+            [value]="weeklyGoalProgressPercent()"
           ></mat-progress-bar>
-        }
 
-        <div class="goal-row">
-          <small i18n="@@dashboard.weeklyGoalLabel">Woche</small>
-          <span>{{ weekReps() }} / {{ weeklyGoal() }}</span>
-        </div>
-        <mat-progress-bar
-          mode="determinate"
-          [value]="weeklyGoalProgressPercent()"
-        ></mat-progress-bar>
+          <div class="goal-row">
+            <small i18n="@@dashboard.monthlyGoalLabel">Monat</small>
+            <span>{{ monthReps() }} / {{ monthlyGoal() }}</span>
+          </div>
+          <mat-progress-bar
+            mode="determinate"
+            [value]="monthlyGoalProgressPercent()"
+          ></mat-progress-bar>
 
-        <div class="goal-row">
-          <small i18n="@@dashboard.monthlyGoalLabel">Monat</small>
-          <span>{{ monthReps() }} / {{ monthlyGoal() }}</span>
-        </div>
-        <mat-progress-bar
-          mode="determinate"
-          [value]="monthlyGoalProgressPercent()"
-        ></mat-progress-bar>
-
-        @if (motivationSlot(); as slot) {
-          <p class="motivational-quote" [class.personal]="slot.personal">
-            <mat-icon class="ai-icon">{{ slot.icon }}</mat-icon>
-            {{ slot.text }}
-          </p>
+          @if (motivationSlot(); as slot) {
+            <p class="motivational-quote" [class.personal]="slot.personal">
+              <mat-icon class="ai-icon">{{ slot.icon }}</mat-icon>
+              {{ slot.text }}
+            </p>
+          }
         }
       </mat-card-content>
     </mat-card>
@@ -384,6 +404,8 @@
             {{ exerciseEntryLabel(latest) }}
           </p>
           <small>{{ latest.timestamp | date: 'short' }}</small>
+        } @else if (loading()) {
+          <pu-skeleton lines="2" data-testid="dashboard-last-entry-skeleton" />
         } @else {
           <p i18n="@@dashboard.noEntryYet">Noch kein Eintrag.</p>
         }
@@ -400,16 +422,19 @@
       [weeklyGoal]="weeklyGoal()"
       [refreshTrigger]="refreshCounter()"
     />
+  } @placeholder {
+    <app-analysis-teaser-skeleton />
   }
 
   @if (loading()) {
-    <section
-      class="status-banner loading"
+    <p
+      class="pu-visually-hidden"
+      role="status"
       aria-live="polite"
       i18n="@@loadingStats"
     >
       Lade Statistikdaten…
-    </section>
+    </p>
   }
 
   <section class="latest-entries teaser-card">
@@ -455,6 +480,10 @@
           </a>
         }
       </div>
+    } @else if (loading()) {
+      <app-recent-exercises-skeleton
+        data-testid="dashboard-recent-exercises-skeleton"
+      />
     } @else {
       <p class="recent-exercises-empty" i18n="@@dashboard.noEntryYet">
         Noch kein Eintrag.

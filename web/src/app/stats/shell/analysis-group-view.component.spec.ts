@@ -214,7 +214,99 @@ describe('AnalysisGroupViewComponent', () => {
   });
 
   afterEach(() => {
+    liveMock.connected.set(true);
     vitest.useRealTimers();
+  });
+
+  it('should show chart skeletons instead of the chart until the live feed has connected', async () => {
+    // given — the feed has neither connected nor delivered a row yet
+    const host: HTMLElement = fixture.nativeElement;
+    expect(
+      host.querySelector('[data-testid="analysis-chart-reps"]')
+    ).toBeTruthy();
+    const seeded = liveExerciseEntries();
+
+    // when
+    liveMock.connected.set(false);
+    liveExerciseEntries.set([]);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(
+      host.querySelector(
+        '[data-testid="analysis-group-view-loading"] pu-skeleton'
+      )
+    ).toBeTruthy();
+    expect(host.querySelector('app-stats-chart')).toBeNull();
+    expect(
+      host.querySelector('[data-testid="segment-chart-placeholder-reps"]')
+    ).toBeNull();
+    expect(host.querySelector('.heatmap-full')).toBeNull();
+
+    // when
+    liveMock.connected.set(true);
+    liveExerciseEntries.set(seeded);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then — only the deferred blocks' placeholders may remain
+    expect(
+      host.querySelector('[data-testid="analysis-group-view-loading"]')
+    ).toBeNull();
+    expect(
+      host.querySelector('[data-testid^="segment-chart-skeleton-"]')
+    ).toBeNull();
+    expect(
+      host.querySelector('[data-testid="analysis-chart-reps"]')
+    ).toBeTruthy();
+    expect(host.querySelector('.heatmap-full')).toBeTruthy();
+  });
+
+  it('should hold back the "Keine Einträge" notice until the live feed has connected', async () => {
+    // given — a category without entries, feed not connected and empty yet
+    const seeded = liveExerciseEntries();
+    liveMock.connected.set(false);
+    liveExerciseEntries.set([]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+
+    // when
+    store.setActiveView('mobility');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    const host: HTMLElement = fixture.nativeElement;
+    expect(
+      host.querySelector('[data-testid="analysis-group-view-empty"]')
+    ).toBeNull();
+    expect(
+      host
+        .querySelector('[data-testid="analysis-group-view-loading"]')
+        ?.getAttribute('aria-busy')
+    ).toBe('true');
+
+    // when
+    liveMock.connected.set(true);
+    liveExerciseEntries.set(seeded);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(
+      host.querySelector('[data-testid="analysis-group-view-loading"]')
+    ).toBeNull();
+    expect(
+      host.querySelector('[data-testid="analysis-group-view-empty"]')
+        ?.textContent
+    ).toContain('Keine Einträge im gewählten Zeitraum');
   });
 
   it('renders fixed-window labels for trend cards', () => {

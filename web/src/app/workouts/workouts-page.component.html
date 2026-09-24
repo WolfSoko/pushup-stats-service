@@ -28,7 +28,15 @@
   }
 
   @if (!store.loaded()) {
-    <mat-spinner diameter="32" />
+    <div
+      class="workouts-loading"
+      aria-busy="true"
+      data-testid="workouts-loading"
+    >
+      @for (row of skeletonRows; track row) {
+        <app-workout-card-skeleton />
+      }
+    </div>
   } @else if (store.workouts().length === 0) {
     <mat-card class="workouts-empty" data-testid="workouts-empty">
       <mat-card-content>
@@ -62,8 +70,10 @@
     @for (workout of store.workouts(); track workout.id) {
       <app-workout-card
         [workout]="workout"
-        [busy]="store.busy()"
+        [busyKeys]="store.busyKeys()"
+        [reminder]="reminders.reminderFor(workout.id)"
         (share)="share($event)"
+        (reminderEdit)="editReminder($event)"
         (toggleProfile)="toggleProfile($event)"
         (remove)="remove($event)"
       />

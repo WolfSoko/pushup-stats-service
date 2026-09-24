@@ -12,10 +12,12 @@
  *   makeUserProfilePortMock(overrides?) – UserProfilePort stub
  *
  * ## Data-access mocks
- *   makePushupFirestoreMock(overrides?)  – Partial<PushupFirestoreService>
  *   makeUserConfigMock(overrides?)       – Partial<UserConfigApiService>
  *   makeStatsApiMock(overrides?)         – Partial<StatsApiService>
  *   makeLeaderboardMock(overrides?)      – Partial<LeaderboardService>
+ *
+ * ## Async helpers
+ *   nextMacrotask() – await before asserting a busy flag has cleared
  *
  * ## Pushup fixtures
  *   makePushupRecord(overrides?)       – single PushupRecord with defaults
@@ -34,3 +36,4 @@
 export * from './lib/auth-mocks';
 export * from './lib/data-access-mocks';
 export * from './lib/pushup-fixtures';
+export * from './lib/settle';

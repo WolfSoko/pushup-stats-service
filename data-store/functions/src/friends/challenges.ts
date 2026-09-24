@@ -20,6 +20,10 @@ export interface ChallengeParticipantEntry {
   readonly displayName: string | null;
   readonly value: number;
   readonly isViewer: boolean;
+  /** A confirmed friend of the viewer in a running challenge — the cheer button's cue. */
+  readonly canCheer: boolean;
+  /** The viewer already cheered them today. */
+  readonly cheered: boolean;
 }
 
 export interface ChallengeInvitee {
@@ -115,16 +119,30 @@ export function sanitizeExerciseName(raw: unknown, exerciseId: string): string {
  * invitee has not agreed to share theirs, so they get the framing (who,
  * what, how long) and nothing else until they accept.
  */
+export interface ChallengeViewExtras {
+  /** Participants whose sum could not be read. */
+  readonly failedSums?: ReadonlySet<string>;
+  /**
+   * The viewer's confirmed friends. Participants are the creator's
+   * friends, not necessarily each other's, and only a friend may cheer.
+   */
+  readonly friendUids?: ReadonlySet<string>;
+  /** Whom the viewer already cheered today. */
+  readonly cheeredByViewer?: ReadonlySet<string>;
+}
+
 export function buildChallengeView(
   doc: ChallengeDoc,
   sums: ReadonlyMap<string, number>,
   names: ReadonlyMap<string, string>,
   viewerUid: string,
   todayIso: string,
-  failedSums: ReadonlySet<string> = new Set()
+  extras: ChallengeViewExtras = {}
 ): ChallengeView {
+  const failedSums = extras.failedSums ?? new Set<string>();
   const invited = invitedOf(doc);
   const viewerInvited = invited.includes(viewerUid);
+  const status = challengeStatus(doc, todayIso);
   const entries = viewerInvited
     ? []
     : doc.participants
@@ -133,6 +151,11 @@ export function buildChallengeView(
           displayName: names.get(uid) ?? null,
           value: Math.round(sums.get(uid) ?? 0),
           isViewer: uid === viewerUid,
+          canCheer:
+            status === 'active' &&
+            uid !== viewerUid &&
+            extras.friendUids?.has(uid) === true,
+          cheered: extras.cheeredByViewer?.has(uid) === true,
         }))
         .sort(
           (a, b) =>
@@ -146,7 +169,7 @@ export function buildChallengeView(
     target: doc.target,
     from: doc.from,
     to: doc.to,
-    status: challengeStatus(doc, todayIso),
+    status,
     entries,
     invited: invited.map((uid) => ({
       uid,

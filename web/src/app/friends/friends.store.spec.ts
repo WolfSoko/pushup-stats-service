@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { FriendsApiService, type FriendRow } from './friends-api.service';
+import { CheerStore } from './cheer.store';
 import { FriendsStore } from './friends.store';
 
 describe('FriendsStore', () => {
@@ -213,6 +214,72 @@ describe('FriendsStore', () => {
     expect(api.cheer).toHaveBeenCalledWith('b');
     expect(api.board).toHaveBeenCalledWith('daily', { metric: 'days' });
     expect(api.list).not.toHaveBeenCalled();
+    expect(TestBed.inject(CheerStore).hasCheered('b')).toBe(true);
+  });
+
+  it('should keep the tapped friend busy until the board is re-read', async () => {
+    // given — a send the server has not answered yet
+    let answer: (result: { ok: boolean }) => void = () => undefined;
+    const { store, api } = setup();
+    api.cheer.mockReturnValue(
+      new Promise((resolve) => {
+        answer = resolve;
+      })
+    );
+
+    // when
+    const done = store.cheer('b');
+
+    // then — only Bob's flame is busy
+    expect(store.isBusy('cheer:b')).toBe(true);
+    expect(store.busyKeys().has('cheer:b')).toBe(true);
+    expect(store.isBusy('cheer:c')).toBe(false);
+
+    // when — the server answers and the board is re-read
+    answer({ ok: true });
+    await done;
+
+    // then
+    expect(api.board).toHaveBeenCalledTimes(1);
+    expect(store.isBusy('cheer:b')).toBe(false);
+  });
+
+  it('should keep the answered request busy until the lists are re-read', async () => {
+    // given
+    let answer: (result: { ok: boolean }) => void = () => undefined;
+    const { store, api } = setup({ incoming: [friend] });
+    api.respond.mockReturnValue(
+      new Promise((resolve) => {
+        answer = resolve;
+      })
+    );
+
+    // when
+    const done = store.accept('a__b');
+
+    // then — accept is busy, decline of the same row is not
+    expect(store.isBusy('accept:a__b')).toBe(true);
+    expect(store.isBusy('decline:a__b')).toBe(false);
+
+    // when
+    answer({ ok: true });
+    await done;
+
+    // then
+    expect(store.isBusy('accept:a__b')).toBe(false);
+  });
+
+  it('should clear the busy flag when the action fails', async () => {
+    // given
+    const { store, api } = setup({ friends: [friend] });
+    api.remove.mockRejectedValue(new Error('offline'));
+
+    // when
+    await store.remove('a__b');
+
+    // then
+    expect(store.lastRejection()).toBe('failed');
+    expect(store.isBusy('remove:a__b')).toBe(false);
   });
 
   it('should keep the reason a cheer was refused', async () => {

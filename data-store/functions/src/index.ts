@@ -11,6 +11,11 @@
 import './firebase-app';
 
 export {
+  cleanupOrphanedUserData,
+  deleteOwnAccount,
+} from './functions-account-deletion';
+
+export {
   adminBulkDeleteInactiveAnonymous,
   adminDeleteUser,
   adminListUsers,
@@ -72,8 +77,6 @@ export {
 
 export { reminderAction } from './functions-reminder-action';
 
-export { cleanupReminderSnoozeState } from './functions-reminder-snooze-cleanup';
-
 export { getFriendsLeaderboard } from './functions-friends-leaderboard';
 export {
   listFriends,
@@ -88,6 +91,7 @@ export {
 export { notifyFriendshipWrite } from './functions-friends-notify';
 export { sendCheer } from './functions-cheers';
 export { shareWorkout } from './functions-workouts';
+export { dispatchWorkoutReminders } from './functions-workout-reminders';
 export {
   createChallenge,
   leaveChallenge,

@@ -3,12 +3,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { provideRouter } from '@angular/router';
 import { UserContextService } from '@pu-auth/auth';
-import type { Workout } from '@pu-stats/models';
+import type { Workout, WorkoutReminder } from '@pu-stats/models';
 import { render, screen, waitFor } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { of } from 'rxjs';
 
 import { UserConfigStore } from '../core/user-config.store';
+import { WorkoutRemindersStore } from './reminders/workout-reminders.store';
 import { WorkoutsPageComponent } from './workouts-page.component';
 import { WorkoutsStore } from './workouts.store';
 
@@ -34,6 +35,7 @@ async function setup(
     sectionLevel?: string;
     full?: number;
     canAddMore?: boolean;
+    reminder?: WorkoutReminder;
   } = {}
 ) {
   const workouts = signal<ReadonlyArray<Workout>>(
@@ -42,7 +44,7 @@ async function setup(
   const store = {
     workouts,
     loaded: signal(options.loaded ?? true),
-    busy: signal(false),
+    busyKeys: signal<ReadonlySet<string>>(new Set()),
     lastRejection: signal(undefined),
     lastShared: signal(1),
     lastShareFull: signal(options.full ?? 0),
@@ -51,14 +53,21 @@ async function setup(
     setOnProfile: vitest.fn().mockResolvedValue(true),
     remove: vitest.fn().mockResolvedValue(true),
   };
+  const reminders = {
+    reminderFor: vitest.fn((id: string) =>
+      options.reminder?.workoutId === id ? options.reminder : null
+    ),
+    remove: vitest.fn().mockResolvedValue(true),
+  };
   const dialog = {
     open: vitest.fn(() => ({ afterClosed: () => of(options.dialogResult) })),
   };
   const snackbar = { open: vitest.fn() };
-  await render(WorkoutsPageComponent, {
+  const { fixture } = await render(WorkoutsPageComponent, {
     providers: [
       provideRouter([]),
       { provide: WorkoutsStore, useValue: store },
+      { provide: WorkoutRemindersStore, useValue: reminders },
       { provide: MatDialog, useValue: dialog },
       { provide: MatSnackBar, useValue: snackbar },
       {
@@ -76,10 +85,41 @@ async function setup(
       { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
     ],
   });
-  return { store, dialog, snackbar };
+  return { store, reminders, dialog, snackbar, fixture };
 }
 
 describe('WorkoutsPageComponent', () => {
+  it('should hold three card skeletons and no empty card while the list loads', async () => {
+    // given / when
+    const { fixture } = await setup({ workouts: [], loaded: false });
+
+    // then
+    const loading = screen.getByTestId('workouts-loading');
+    expect(loading.getAttribute('aria-busy')).toBe('true');
+    expect(loading.querySelectorAll('app-workout-card-skeleton')).toHaveLength(
+      3
+    );
+    expect(loading.querySelector('pu-skeleton')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('mat-spinner')).toBeNull();
+    expect(screen.queryByTestId('workouts-empty')).toBeNull();
+    expect(screen.queryByTestId('workout-card')).toBeNull();
+  });
+
+  it('should swap the skeletons for the empty card once the list is there', async () => {
+    // given
+    const { store, fixture } = await setup({ workouts: [], loaded: false });
+
+    // when
+    store.loaded.set(true);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    // then
+    expect(screen.queryByTestId('workouts-loading')).toBeNull();
+    expect(fixture.nativeElement.querySelector('pu-skeleton')).toBeNull();
+    expect(screen.getByTestId('workouts-empty')).toBeTruthy();
+  });
+
   it('should invite the user to create their first session when there is none', async () => {
     // given
     await setup({ workouts: [] });
@@ -189,7 +229,123 @@ describe('WorkoutsPageComponent', () => {
     await user.click(screen.getByTestId('workout-delete'));
 
     // then
-    await waitFor(() => expect(store.remove).toHaveBeenCalledWith('w1'));
+    await waitFor(() => expect(store.remove).toHaveBeenCalledWith('w1'), {
+      timeout: 3000,
+    });
+  });
+
+  it('should drop the session’s reminder together with the session', async () => {
+    // given
+    const { reminders } = await setup({ dialogResult: true });
+    const user = userEvent.setup();
+
+    // when
+    await user.click(screen.getByTestId('workout-delete'));
+
+    // then
+    await waitFor(() => expect(reminders.remove).toHaveBeenCalledWith('w1'), {
+      timeout: 3000,
+    });
+  });
+
+  it('should keep the reminder when deleting the session failed', async () => {
+    // given
+    const { store, reminders } = await setup({ dialogResult: true });
+    store.remove.mockResolvedValue(false);
+    const user = userEvent.setup();
+
+    // when
+    await user.click(screen.getByTestId('workout-delete'));
+
+    // then
+    await waitFor(() => expect(store.remove).toHaveBeenCalled(), {
+      timeout: 3000,
+    });
+    expect(reminders.remove).not.toHaveBeenCalled();
+  });
+
+  it('should show the reminder rhythm on the card', async () => {
+    // given / when
+    await setup({
+      reminder: {
+        workoutId: 'w1',
+        ownerId: 'u1',
+        enabled: true,
+        time: '15:00',
+        repeat: { kind: 'interval', everyDays: 2, startDate: '2026-09-23' },
+        timezone: 'Europe/Berlin',
+        nextAt: '2026-09-23T13:00:00.000Z',
+        updatedAt: '2026-09-23T10:00:00.000Z',
+      },
+    });
+
+    // then
+    expect(screen.getByTestId('workout-reminder-badge').textContent).toContain(
+      'Alle 2 Tage · 15:00'
+    );
+    expect(
+      screen.getByTestId('workout-reminder').getAttribute('aria-label')
+    ).toBe('Erinnerung ändern');
+  });
+
+  it('should offer to set up a reminder on a card without one', async () => {
+    // given / when
+    await setup();
+
+    // then
+    expect(screen.queryByTestId('workout-reminder-badge')).toBeNull();
+    expect(
+      screen.getByTestId('workout-reminder').getAttribute('aria-label')
+    ).toBe('Erinnerung einrichten');
+  });
+
+  it('should open the reminder dialog for the card’s session', async () => {
+    // given
+    const { dialog } = await setup();
+    const user = userEvent.setup();
+
+    // when
+    await user.click(screen.getByTestId('workout-reminder'));
+
+    // then
+    await waitFor(() =>
+      expect(dialog.open).toHaveBeenCalledWith(expect.anything(), {
+        data: { workoutId: 'w1', title: 'Ganzkörper kurz' },
+        autoFocus: 'dialog',
+      })
+    );
+  });
+
+  it('should show only the pressed card action busy while it runs', async () => {
+    // given
+    const { store, fixture } = await setup({
+      workouts: [WORKOUT, { ...WORKOUT, id: 'w2', title: 'Lang' }],
+    });
+
+    // when
+    store.busyKeys.set(new Set(['remove:w1']));
+    fixture.detectChanges();
+
+    // then — this card's delete spins, its neighbours and the other card stay still
+    const deletes = screen.getAllByTestId('workout-delete');
+    expect(deletes[0].getAttribute('aria-busy')).toBe('true');
+    expect((deletes[0] as HTMLButtonElement).disabled).toBe(false);
+    expect(deletes[1].getAttribute('aria-busy')).toBeNull();
+    expect(
+      screen.getAllByTestId('workout-share')[0].getAttribute('aria-busy')
+    ).toBeNull();
+    expect(
+      screen
+        .getAllByTestId('workout-toggle-profile')[0]
+        .getAttribute('aria-busy')
+    ).toBeNull();
+
+    // when
+    store.busyKeys.set(new Set());
+    fixture.detectChanges();
+
+    // then
+    expect(deletes[0].getAttribute('aria-busy')).toBeNull();
   });
 
   it('should point at the profile switch while a listed workout is invisible', async () => {

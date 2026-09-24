@@ -1,18 +1,13 @@
 import {
-  EXERCISE_CATEGORIES,
   type ExerciseDefinition,
-  exercisesByCategory,
   findExerciseDefinition,
+  type MeasurementType,
   type TrainingPlanExercise,
   type Workout,
   type WorkoutInput,
 } from '@pu-stats/models';
 
-import {
-  categoryDisplayName,
-  exerciseDisplayName,
-  variantDisplayName,
-} from '../stats/i18n/exercise-display-names';
+import { variantDisplayName } from '../stats/i18n/exercise-display-names';
 
 /**
  * The editor's form state and its translation to and from a workout.
@@ -124,29 +119,42 @@ export interface ExerciseOption {
   readonly label: string;
 }
 
-export interface ExerciseOptionGroup {
-  readonly label: string;
-  readonly options: ReadonlyArray<ExerciseOption>;
+/**
+ * What a workout may name: everything but weight-measured exercises,
+ * which `workoutRejection` refuses. Handed to the shared exercise picker.
+ */
+export const WORKOUT_MEASUREMENTS: readonly MeasurementType[] = [
+  'reps',
+  'time',
+  'distance',
+  'distance-time',
+];
+
+/** Whether an exercise id may appear in a workout at all. */
+export function isWorkoutExercise(exerciseId: string): boolean {
+  const measurement = findExerciseDefinition(exerciseId)?.measurement;
+  return (
+    measurement !== undefined && WORKOUT_MEASUREMENTS.includes(measurement)
+  );
 }
 
-/** Every exercise a workout may name, grouped by category for the select. */
-export function workoutExerciseGroups(): ExerciseOptionGroup[] {
-  const byCategory = exercisesByCategory();
-  const groups: ExerciseOptionGroup[] = [];
-  for (const category of EXERCISE_CATEGORIES) {
-    const defs = (byCategory.get(category.id) ?? []).filter(
-      (def) => def.measurement !== 'weight'
-    );
-    if (defs.length === 0) continue;
-    groups.push({
-      label: categoryDisplayName(category.id),
-      options: defs.map((def) => ({
-        id: def.id,
-        label: exerciseDisplayName(def.id),
-      })),
-    });
-  }
-  return groups;
+/**
+ * A new workout opened from the wiki ("Als Session anlegen"): one line
+ * with that exercise, and its variant when the catalog knows it. Ids from
+ * the URL are untrusted — anything a workout can't hold falls back to the
+ * blank form rather than a line the save would refuse.
+ */
+export function formForExercise(
+  exerciseId: string | null,
+  variantId: string | null
+): WorkoutFormState {
+  if (!exerciseId || !isWorkoutExercise(exerciseId)) return emptyForm();
+  const known = variantOptions(exerciseId).some((v) => v.id === variantId);
+  const line = emptyLine(exerciseId);
+  return {
+    ...emptyForm(),
+    lines: [known && variantId ? { ...line, variantId } : line],
+  };
 }
 
 /** Variant choices for one exercise; empty when it has none to pick from. */

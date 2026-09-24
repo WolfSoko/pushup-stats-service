@@ -7,6 +7,8 @@ Detailed architecture reference for the Pushup Stats Service. CLAUDE.md keeps th
 ```
 @pu-stats/models                (pure types, zero dependencies)
 @pu-stats/date                  (date/time helpers, standalone leaf — zero dependencies)
+@pu-stats/ui                    (BusyDirective + busy-state helpers, standalone leaf —
+                                 Angular/Material only, importable by every lib)
     ^
     |--- @pu-stats/data-access        (stateless Firestore API services)
     |        ^
@@ -30,14 +32,15 @@ Detailed architecture reference for the Pushup Stats Service. CLAUDE.md keeps th
 Enforced via `@nx/enforce-module-boundaries` in `.oxlintrc.json` (the ESLint rule runs inside oxlint through the `@nx/oxlint/boundaries-plugin` bridge):
 
 - `scope:date` -> nothing (standalone leaf — pure date/time helpers, no library deps)
-- `scope:auth` -> `scope:models`, `scope:date` only (no data-access!)
+- `scope:ui` -> nothing (standalone leaf — `BusyDirective`, `createBusyState()`; Angular + Material only)
+- `scope:auth` -> `scope:models`, `scope:date`, `scope:ui` only (no data-access!)
 - `scope:motivation` -> `scope:models`, `scope:date` only (no auth!)
 - `scope:data-access` -> `scope:models`, `scope:date` only
-- `scope:data-access-state` -> `scope:models`, `scope:data-access`, `scope:date`
+- `scope:data-access-state` -> `scope:models`, `scope:data-access`, `scope:date`, `scope:ui`
 - `scope:auto-count` -> `scope:models`, `scope:date` only
 - `scope:cloud-functions` -> `scope:models`, `scope:date` only
-- `scope:push` -> `scope:models`, `scope:data-access`, `scope:date` (no auth, no reminders!)
-- `scope:reminders` -> `scope:models`, `scope:data-access`, `scope:data-access-state`, `scope:motivation`, `scope:push`, `scope:date` (no auth!)
+- `scope:push` -> `scope:models`, `scope:data-access`, `scope:date`, `scope:ui` (no auth, no reminders!)
+- `scope:reminders` -> `scope:models`, `scope:data-access`, `scope:data-access-state`, `scope:motivation`, `scope:push`, `scope:date`, `scope:ui` (no auth!)
 - `scope:sw-push` -> nothing (standalone service-worker bundle; bundling anything else would bloat the SW)
 - `scope:app` -> everything
 
@@ -50,6 +53,7 @@ Enforced via `@nx/enforce-module-boundaries` in `.oxlintrc.json` (the ESLint rul
 | data-access-state | `stats-data-access-state` |
 | models/stats      | `stats-models`            |
 | date              | `stats-date`              |
+| ui                | `pus-ui`                  |
 | motivation        | `pus-motivation`          |
 | reminders         | `pus-reminders`           |
 | push              | `pus-push`                |
@@ -68,7 +72,7 @@ Enforced via `@nx/enforce-module-boundaries` in `.oxlintrc.json` (the ESLint rul
 ### Ports & Adapters (Auth <-> Data-Access)
 
 - Auth defines `PostAuthHook` interface and `USER_PROFILE_PORT` token
-- Concrete implementations (`UserProfileSyncHook`, `GuestDataMigrationHook`) live at app level
+- Concrete implementations (`UserProfileSyncHook`, `ReferralClaimHook`) live at app level
 - Wired in `app.config.ts` via DI providers
 - Auth has ZERO imports from `@pu-stats/data-access`
 
@@ -119,6 +123,34 @@ UI Component  →  Signal Store  →  API Service
 - Components only do template binding + user event delegation
 - Stores own all state, resources, computed signals, and domain logic
 - API services are pure data access with no state
+
+### Busy CTAs (`[puBusy]`)
+
+Every button whose click starts async work (a Firestore write, a callable, auth, Storage, an `HttpClient` call) shows its own inline spinner while that work runs. The pieces live in `@pu-stats/ui`, a leaf lib every other lib may import:
+
+- **`BusyDirective`** — `<button mat-flat-button [puBusy]="saving()" (click)="save()">`. While busy the host gets `aria-busy="true"`, the `pu-busy` class, a `currentColor` spinner as its first child (it replaces a leading `mat-icon`, or precedes the label; icon-only buttons get it centred) and swallows further clicks, so a double tap cannot fire the action twice. The host stays enabled: a disabled Material button turns grey and reads as "not allowed", a busy one is doing what the user asked. Don't bind `[disabled]` to the same flag. Styles: `libs/ui/src/lib/busy/busy.scss`, pulled in once by `web/src/styles.scss`.
+- **`createBusyState()`** — `readonly saving = createBusyState(); … this.saving.run(() => this.api.save(...))`; the template binds `saving.busy()`. Stores and components own the state, the directive only renders it.
+- **`createKeyedBusyState<K>()`** — one flag per row (`isBusy(entry.id)`), for lists where each row has its own action.
+- The global toolbar indicator below is orthogonal: it reacts to the request itself, the busy flag to the CTA the user pressed. Both usually fire together.
+
+### Loading skeletons (`pu-skeleton`)
+
+Content that arrives asynchronously (a Firestore listener, a `resource`, a callable) reserves its layout while it loads instead of rendering zeros, a bare `mat-spinner` or an empty state that later turns out to be wrong. `@pu-stats/ui` provides:
+
+- **`SkeletonComponent`** — `<pu-skeleton />` renders one shimmer bar the size of a text line; `shape="title" | "circle" | "rect"` change the proportions, `width` / `height` take any CSS length, `lines="3"` stacks bars like a paragraph. Colours derive from `--mat-sys-on-surface`, so it works in both themes; `prefers-reduced-motion` stops the shimmer.
+- **`SkeletonTableComponent`** — `<pu-skeleton-table [rows]="8" [columns]="6" />` for tables and lists.
+- **Pattern:** branch on the store's loading flag (`loading()`, `!loaded()`, `resource.isLoading()`) and render skeletons in the _same_ container the loaded content uses (same grid, same card), so nothing shifts when the data lands. Mirror the loaded shape (a title bar, three text lines, a 40px circle for an avatar) rather than one big grey block. Skeletons are `aria-hidden`; put `aria-busy="true"` on the region while it loads and keep an existing `role="status"` text if one exists.
+- **Announce, don't hide.** When a loading region had a visible text before ("Session wird geladen …"), keep it as `<p class="pu-visually-hidden" role="status">` next to the skeleton so screen readers still hear it and the i18n unit stays in use. The class is global (`libs/ui/src/lib/skeleton/skeleton.scss`, pulled in by `web/src/styles.scss`).
+- **Never flash an empty state** (`Noch kein Eintrag.`, `Keine Einträge …`) before the data has loaded: gate it on the loaded flag, show the skeleton until then.
+
+### Global pending-request indicator
+
+Firestore and Cloud Functions bypass `HttpClient`, so there is no interceptor that sees every request. Instead `PendingRequestsService` (`@pu-stats/data-access`) counts in-flight requests, and the app shell renders `PendingRequestIndicatorComponent` — a small toolbar spinner — once a request has been pending for 300 ms (then for at least 500 ms so it never flickers).
+
+- **Every promise-based request goes through `pending.track(promise)` at the API-service layer:** Firestore writes (`setDoc`/`updateDoc`/`deleteDoc`/`batch.commit()`/`runTransaction`), one-off reads (`getDoc`/`getDocs`), Storage calls (`uploadBytes`/`deleteObject`) and callables — in `data-access`, `data-access-state`, `push` and `web`. In `web`, callables are covered centrally by `CallableFunctionsService`; `HttpClient` requests by `pendingRequestsInterceptor`.
+- **Live listeners and passive background loads stay untracked.** `docData`/`collectionData`/`onSnapshot` are streams, not actions; the indicator would never go away. The same goes for work nobody asked for right now — a `resource` loader such as the avatar download, or the push subscription re-sync on app start — which would otherwise show the spinner on every launch.
+- Libs that may not import `@pu-stats/data-access` (`auth`, `motivation`) keep their own per-action loading state.
+- The service exposes `begin()`/`end()` for non-promise sources (the interceptor) and readonly `pending()`/`visible()` signals; the indicator only binds `visible()`.
 
 ### App Root Delegation
 
@@ -187,6 +219,9 @@ A workout is a training session the user composed themselves — a named list of
 - **A run, not a document.** A workout has no plan document to hold ticks and a start, so `WorkoutRunStore` keeps a `WorkoutRunState` (`startedAt`, hand-ticked `checked` items) in `localStorage` per workout. Entries before `startedAt` don't count (the `dayActivatedAt` cutoff, same as a plan's `jumpToDay`), a run from another day is discarded on open, and finishing clears it. "Wie vorgegeben" writes the remainder on every round — there is no item to tick, the entry closes the step.
 - **Two ways to share.** `onProfile` lists a workout in the profile's `workouts` section, whose audience the owner sets like every other section (`off` by default, see below); a visitor takes a copy with `WorkoutsStore.importWorkout`, a client-side create with `sharedBy` set. `shareWorkout` (`functions-workouts.ts`) sends a copy straight to confirmed friends — the one write into someone else's list, hence server-side: it validates with `workoutShareRejection`, skips recipients already at `MAX_WORKOUTS` (`splitByRoom`) instead of failing the share, batch-writes `copyWorkout()` copies and pushes `kind: 'workout'`. A copy is always private (`onProfile: false`) until the recipient says otherwise.
 - **Announced once per account.** `FeatureAnnouncementService` (app root, next to the Android-test popup) opens `WorkoutsIntroDialogComponent` — a three-step walkthrough ending in the editor — the first time a signed-in user reaches the dashboard, and records the id in `ui.seenAnnouncements` when the dialog closes, so the walkthrough follows the account rather than the device. It waits for `/app` on purpose: a dialog over the login form or over a shared profile the user just opened would interrupt what they came for. New features get a fresh id; ids are never reused. The landing page pitches the feature in `WorkoutsFeatureSectionComponent`, and the Play listing (`store/play/*/full-description.txt`) carries a section for it.
+- **Wired to the exercise wiki both ways.** A wiki card or detail page offers "Als Session anlegen" → `/workouts/new?exercise=<id>`; `formForExercise` seeds the first line from it and falls back to the blank form for anything `isWorkoutExercise` refuses — the query is untrusted. The other way, the editor lines and the session step open `ExerciseGuideDialogComponent` (steps and tips via `resolveExerciseGuide`) through `ExerciseGuideService`, which imports the dialog on demand so the generated wiki content stays out of their chunks. The guide is a dialog, not a link, because leaving the page would abandon a half-edited form or a running session.
+- **One exercise search.** The editor reuses the entry dialog's `app-exercise-picker` (type-ahead over the catalog, narrowed to `WORKOUT_MEASUREMENTS`, `[wikiLink]="false"` because its link closes a dialog). The wiki list (`exercises-page.search.ts`) filters by name, category and summary and also lists matching pushup types from their own wiki. Both match through `core/search-text.ts` — every token must occur, case- and diacritic-insensitive.
+- **Reminders live beside the workout, not in it.** `workoutReminders/{workoutId}` (`workout-reminder.models.ts`, schedule math in `workout-reminder-schedule.ts`) holds one schedule per workout — every N days from a start date, or fixed weekdays, at an `HH:MM` in the owner's zone — so copies, the profile projection and `isValidWorkout` never see it. Day arithmetic runs on calendar dates and converts to an instant last, so "every 2 days at 15:00" stays at 15:00 across DST. The client writes the whole document with `nextAt` resolved from now; `dispatchWorkoutReminders` (every 5 min) queries `enabled == true && nextAt <= now` (composite index), claims the occurrence by moving `nextAt` on inside a transaction _before_ sending — at most once, a lost send beats a duplicate — and skips occurrences older than `WORKOUT_REMINDER_GRACE_MS`. The push opens `/workouts/:id/run`. Without push on the device, `WorkoutReminderInAppService` (started by `ReminderOrchestrationService`) shows the notification while the app is open; it computes its own occurrence with `previousWorkoutReminderAt` instead of reading `nextAt`, because the dispatcher advances `nextAt` whether or not a device had push. Deleting a workout deletes its reminder; the dispatcher drops any orphan it still finds. The rules only let the workout's owner write one and keep `lastSentAt` server-side.
 - **The list page reads `ownerId == uid` ordered by `updatedAt`** — a composite index guarded by `firestore-indexes.spec.ts`. The profile read is two equality filters (`ownerId`, `onProfile`) with the sort and the `MAX_PROFILE_WORKOUTS` cap in `profileWorkouts()`, so it needs none.
 
 ### Invitations — the return path of the sharing loop

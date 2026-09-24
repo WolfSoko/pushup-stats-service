@@ -12,6 +12,10 @@ export interface ChallengeEntry {
   readonly displayName: string | null;
   readonly value: number;
   readonly isViewer: boolean;
+  /** A friend of the viewer in a running challenge — gets a cheer button. */
+  readonly canCheer: boolean;
+  /** The viewer already cheered them today. */
+  readonly cheered: boolean;
 }
 
 export interface ChallengeInvitee {

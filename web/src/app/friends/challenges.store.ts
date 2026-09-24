@@ -7,6 +7,7 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
+import { createKeyedBusyState } from '@pu-stats/ui';
 
 import {
   ChallengesApiService,
@@ -46,8 +47,11 @@ export const ChallengesStore = signalStore(
     _reloadSeq: 0,
     /** The reload in flight, so several badges asking at once share one call. */
     _inFlight: null as { progress: boolean; promise: Promise<void> } | null,
+    /** One flag per pressed CTA (`create`, `accept:<id>`, …), up through the re-read. */
+    _busy: createKeyedBusyState<string>(),
   })),
   withComputed((store) => ({
+    busyKeys: store._busy.busyKeys,
     /** Asked, not yet answered — these want a decision first. */
     invitations: computed(() =>
       store.challenges().filter((c) => c.viewerInvited)
@@ -103,16 +107,26 @@ export const ChallengesStore = signalStore(
     }
 
     const refresh = () => reload();
+    const { _busy } = store;
     return {
       reload,
+      isBusy: (key: string) => _busy.isBusy(key),
       create: (input: CreateChallengeInput) =>
-        runStoreAction(store, () => _api.create(input), refresh),
+        _busy.run('create', () =>
+          runStoreAction(store, () => _api.create(input), refresh)
+        ),
       accept: (id: string) =>
-        runStoreAction(store, () => _api.respond(id, true), refresh),
+        _busy.run(`accept:${id}`, () =>
+          runStoreAction(store, () => _api.respond(id, true), refresh)
+        ),
       decline: (id: string) =>
-        runStoreAction(store, () => _api.respond(id, false), refresh),
+        _busy.run(`decline:${id}`, () =>
+          runStoreAction(store, () => _api.respond(id, false), refresh)
+        ),
       leave: (id: string) =>
-        runStoreAction(store, () => _api.leave(id), refresh),
+        _busy.run(`leave:${id}`, () =>
+          runStoreAction(store, () => _api.leave(id), refresh)
+        ),
     };
   })
 );

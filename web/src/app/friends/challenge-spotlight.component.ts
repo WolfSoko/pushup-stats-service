@@ -47,6 +47,7 @@ import { onEntriesChanged } from './on-entries-changed';
         </h2>
         <app-challenge-card
           [challenge]="challenge"
+          [busyKeys]="store.busyKeys()"
           (accept)="store.accept($event)"
           (decline)="store.decline($event)"
           (leave)="store.leave($event)"

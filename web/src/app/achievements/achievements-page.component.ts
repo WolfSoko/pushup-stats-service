@@ -1,26 +1,48 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import type { AchievementKind } from '@pu-stats/models';
+import { SkeletonComponent } from '@pu-stats/ui';
 
 import { AchievementTileComponent } from './achievement-tile.component';
+import { AchievementTileSkeletonComponent } from './achievement-tile-skeleton.component';
 import { AchievementsStore } from './achievements.store';
+
+const SKELETON_TILES = [0, 1, 2, 3, 4, 5];
 
 @Component({
   selector: 'app-achievements-page',
-  imports: [AchievementTileComponent, MatProgressBarModule],
+  imports: [
+    AchievementTileComponent,
+    AchievementTileSkeletonComponent,
+    SkeletonComponent,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <section class="page">
+    <section class="page" [attr.aria-busy]="store.loading() ? true : null">
       <header>
         <h1 i18n="@@achievements.page.title">Deine Abzeichen</h1>
-        <p class="count" i18n="@@achievements.page.count">
-          {{ store.collection().earnedCount }}:earned: von
-          {{ store.collection().totalCount }}:total: freigeschaltet
-        </p>
+        @if (store.loading()) {
+          <pu-skeleton class="count" width="180px" />
+        } @else {
+          <p class="count" i18n="@@achievements.page.count">
+            {{ store.collection().earnedCount }}:earned: von
+            {{ store.collection().totalCount }}:total: freigeschaltet
+          </p>
+        }
       </header>
 
       @if (store.loading()) {
-        <mat-progress-bar mode="indeterminate" />
+        <div class="next">
+          <pu-skeleton width="96px" />
+          <app-achievement-tile-skeleton />
+        </div>
+        <section class="group">
+          <pu-skeleton shape="title" width="160px" class="group-title" />
+          <div class="grid">
+            @for (tile of skeletonTiles; track tile) {
+              <app-achievement-tile-skeleton />
+            }
+          </div>
+        </section>
       }
 
       @if (store.collection().next; as next) {
@@ -73,13 +95,18 @@ import { AchievementsStore } from './achievements.store';
       color: var(--mat-sys-primary);
     }
 
-    .next app-achievement-tile {
+    .next app-achievement-tile,
+    .next app-achievement-tile-skeleton {
       width: min(220px, 100%);
     }
 
     .group h2 {
       font-size: 1.05rem;
       margin: 0 0 12px;
+    }
+
+    .group-title {
+      margin-bottom: 12px;
     }
 
     .grid {
@@ -91,6 +118,7 @@ import { AchievementsStore } from './achievements.store';
 })
 export class AchievementsPageComponent {
   protected readonly store = inject(AchievementsStore);
+  protected readonly skeletonTiles = SKELETON_TILES;
 
   protected groupTitle(kind: AchievementKind): string {
     if (kind === 'plan-days') {

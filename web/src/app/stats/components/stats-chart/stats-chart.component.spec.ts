@@ -185,7 +185,48 @@ describe('StatsChartComponent', () => {
 
     it('Given the same series is clicked twice, Then it is drawn again', () => {
       // given / when
-      component.onLegendToggle('series:secondary');
+      component.onLegendToggle('series:movingAvg');
+      component.onLegendToggle('series:movingAvg');
+      fixture.detectChanges();
+
+      // then
+      expect(
+        component.legendItems().find((item) => item.id === 'series:movingAvg')
+          ?.active
+      ).toBe(true);
+    });
+
+    it('Given a freshly rendered chart, Then the cumulative line is listed but switched off', () => {
+      // given / when
+      const secondary = component
+        .legendItems()
+        .find((item) => item.id === 'series:secondary');
+
+      // then — the ring stays so the line is one click away
+      expect(secondary).toBeDefined();
+      expect(secondary?.active).toBe(false);
+    });
+
+    it('Given a pace view, Then the secondary slot is drawn from the start', () => {
+      // given — the pace line is the reason a distance chart exists, so
+      // the cumulative line's default-off does not apply to it
+      fixture.componentRef.setInput('measurement', 'distance-time');
+      fixture.componentRef.setInput('paceSeries', [
+        { bucket: '2026-02-10', pace: 5.5 },
+      ] satisfies PaceSeriesEntry[]);
+
+      // when
+      fixture.detectChanges();
+
+      // then
+      expect(
+        component.legendItems().find((item) => item.id === 'series:secondary')
+          ?.active
+      ).toBe(true);
+    });
+
+    it('Given the cumulative entry is clicked, Then the line is drawn', () => {
+      // given / when
       component.onLegendToggle('series:secondary');
       fixture.detectChanges();
 

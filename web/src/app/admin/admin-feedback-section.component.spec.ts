@@ -83,6 +83,41 @@ describe('AdminFeedbackSectionComponent', () => {
   });
 
   describe('feedback list initialization', () => {
+    it('should render a skeleton table instead of the empty text while the feedback loads', async () => {
+      // given
+      await createComponent([]);
+      let resolve: (value: { data: typeof baseFeedback }) => void = () =>
+        undefined;
+      const pending = new Promise<{ data: typeof baseFeedback }>((r) => {
+        resolve = r;
+      });
+      setupCallables([{ name: 'adminListFeedback', impl: () => pending }]);
+      const host = fixture.nativeElement as HTMLElement;
+
+      // when
+      const load = component.loadFeedback();
+      fixture.detectChanges();
+
+      // then
+      const skeleton = host.querySelector(
+        '[data-testid="admin-feedback-skeleton"]'
+      );
+      expect(skeleton?.getAttribute('aria-busy')).toBe('true');
+      expect(skeleton?.querySelector('pu-skeleton-table')).toBeTruthy();
+      expect(host.querySelector('mat-spinner')).toBeNull();
+      expect(host.textContent).not.toContain('Noch kein Feedback vorhanden.');
+
+      // when
+      resolve({ data: [] });
+      await load;
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then
+      expect(host.querySelector('pu-skeleton-table')).toBeNull();
+      expect(host.textContent).toContain('Noch kein Feedback vorhanden.');
+    });
+
     it('should load feedback on init via the adminListFeedback callable', async () => {
       // given / when
       await createComponent();
@@ -169,7 +204,7 @@ describe('AdminFeedbackSectionComponent', () => {
       // then
       expect(component.feedbackActionError()).toBe('permission-denied');
       expect(component.feedbackList().length).toBe(2);
-      expect(component.isFeedbackActionLoading('fb-1')).toBe(false);
+      expect(component.feedbackAction.isBusy('fb-1:delete')).toBe(false);
     });
 
     it('should reset the per-row loading state after a successful delete', async () => {
@@ -184,7 +219,7 @@ describe('AdminFeedbackSectionComponent', () => {
       await component.deleteFeedback(baseFeedback[0]);
 
       // then
-      expect(component.isFeedbackActionLoading('fb-1')).toBe(false);
+      expect(component.feedbackAction.isBusy('fb-1:delete')).toBe(false);
     });
   });
 
@@ -225,6 +260,39 @@ describe('AdminFeedbackSectionComponent', () => {
       expect(createCallable).toHaveBeenCalledWith({ feedbackId: 'fb-2' });
       const updated = component.feedbackList().find((f) => f.id === 'fb-2');
       expect(updated?.githubIssueUrl).toBe('https://github.com/x/y/issues/1');
+    });
+  });
+
+  describe('busy state', () => {
+    it('should keep the other actions of a row free while one is pending', async () => {
+      // given
+      let resolveRead!: () => void;
+      await createComponent(baseFeedback, [
+        {
+          name: 'adminMarkFeedbackRead',
+          impl: () =>
+            new Promise<{ data: unknown }>((resolve) => {
+              resolveRead = () => resolve({ data: { ok: true } });
+            }),
+        },
+      ]);
+
+      // when
+      const run = component.markFeedbackRead(baseFeedback[0], true);
+
+      // then
+      expect(component.feedbackAction.isBusy('fb-1:read')).toBe(true);
+      expect(component.feedbackAction.isBusy('fb-1:delete')).toBe(false);
+      expect(component.feedbackAction.isBusy('fb-1:issue')).toBe(false);
+      expect(component.otherActionBusy('fb-1', 'delete')).toBe(true);
+      expect(component.otherActionBusy('fb-1', 'read')).toBe(false);
+
+      // when
+      resolveRead();
+      await run;
+
+      // then
+      expect(component.feedbackAction.busy()).toBe(false);
     });
   });
 });

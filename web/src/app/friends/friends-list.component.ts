@@ -7,8 +7,8 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
+import { BusyDirective, SkeletonComponent } from '@pu-stats/ui';
 
 import { FriendAvatarComponent } from './friend-avatar.component';
 import type { FriendRow } from './friends-api.service';
@@ -18,17 +18,30 @@ import type { FriendRow } from './friends-api.service';
   selector: 'app-friends-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    BusyDirective,
     FriendAvatarComponent,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatProgressSpinnerModule,
     RouterLink,
+    SkeletonComponent,
   ],
   template: `
     <h2 i18n="@@friends.list">Deine Freunde</h2>
     @if (loading()) {
-      <mat-spinner diameter="32" />
+      <div aria-busy="true" data-testid="friends-loading">
+        @for (row of skeletonRows; track row) {
+          <mat-card class="friend-card">
+            <mat-card-content>
+              <pu-skeleton shape="circle" />
+              <pu-skeleton width="140px" />
+            </mat-card-content>
+            <mat-card-actions align="end">
+              <pu-skeleton shape="rect" width="110px" height="36px" />
+            </mat-card-actions>
+          </mat-card>
+        }
+      </div>
     } @else if (rows().length === 0) {
       <mat-card class="friends-empty">
         <mat-card-content>
@@ -64,6 +77,7 @@ import type { FriendRow } from './friends-api.service';
               mat-stroked-button
               type="button"
               data-testid="friend-remove"
+              [puBusy]="busyKeys().has('remove:' + row.id)"
               (click)="remove.emit(row.id)"
               i18n="@@friends.remove"
             >
@@ -98,8 +112,12 @@ import type { FriendRow } from './friends-api.service';
 export class FriendsListComponent {
   readonly rows = input.required<ReadonlyArray<FriendRow>>();
   readonly loading = input(false);
+  /** The store's busy keys: `remove:<id>` spins that row's button. */
+  readonly busyKeys = input<ReadonlySet<string>>(new Set());
   readonly remove = output<string>();
   readonly invite = output<void>();
+
+  protected readonly skeletonRows = [0, 1, 2];
 
   /** A friend who never set a display name still needs a label. */
   protected name(displayName: string | null): string {

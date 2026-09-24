@@ -15,6 +15,7 @@ import { RouterLink } from '@angular/router';
 import { AuthStore } from '@pu-auth/auth';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { ActivePlanCardComponent } from './active-plan-card.component';
+import { ActivePlanCardSkeletonComponent } from './active-plan-card-skeleton.component';
 import { PlanPauseService } from './plan-pause.service';
 import { PlanShareService } from './plan-share.service';
 import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
@@ -28,6 +29,7 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
     MatChipsModule,
     MatSnackBarModule,
     ActivePlanCardComponent,
+    ActivePlanCardSkeletonComponent,
     PageHeaderComponent,
     RouterLink,
   ],
@@ -80,7 +82,11 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
         </mat-card>
       }
 
-      @if (activeView(); as active) {
+      @if (
+        (!authResolved() || isAuthenticated()) && !store.activePlanLoaded()
+      ) {
+        <app-active-plan-card-skeleton />
+      } @else if (activeView(); as active) {
         <app-active-plan-card
           [view]="active"
           [paused]="store.hasPausedPlan()"
@@ -88,6 +94,7 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
           [completionPercent]="store.completionPercent()"
           [today]="todayLocalized()"
           [todayDone]="store.todayDone()"
+          [busyKeys]="store.busyKeys()"
           (abandon)="abandon()"
           (pausePlan)="pause()"
           (resumePlan)="resume()"

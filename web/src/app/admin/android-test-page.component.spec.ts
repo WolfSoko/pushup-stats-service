@@ -57,6 +57,41 @@ describe('AndroidTestPageComponent', () => {
     vi.clearAllMocks();
   });
 
+  it('should render skeleton rows instead of the empty text while the candidates load', async () => {
+    // given
+    await createComponent([]);
+    let resolve: (value: { data: AdminUser[] }) => void = () => undefined;
+    const pending = new Promise<{ data: AdminUser[] }>((r) => {
+      resolve = r;
+    });
+    setupCallables([{ name: 'adminListUsers', impl: () => pending }]);
+    const host = fixture.nativeElement as HTMLElement;
+
+    // when
+    const load = component.loadUsers();
+    fixture.detectChanges();
+
+    // then
+    const skeleton = host.querySelector(
+      '[data-testid="android-test-skeleton"]'
+    );
+    expect(skeleton?.getAttribute('aria-busy')).toBe('true');
+    expect(skeleton?.querySelectorAll('.user-row')).toHaveLength(4);
+    expect(skeleton?.querySelectorAll('pu-skeleton')).toHaveLength(12);
+    expect(host.querySelector('mat-spinner')).toBeNull();
+    expect(host.textContent).not.toContain('Keine offenen Kandidaten.');
+
+    // when
+    resolve({ data: [] });
+    await load;
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(host.querySelector('pu-skeleton')).toBeNull();
+    expect(host.textContent).toContain('Keine offenen Kandidaten.');
+  });
+
   it('should load users on init and group them by androidTest status', async () => {
     // given / when
     await createComponent([
@@ -233,5 +268,39 @@ describe('AndroidTestPageComponent', () => {
     await component.loadUsers();
     // then
     expect(component.error()).toBe('boom');
+  });
+
+  it('should mark only the pressed row action busy while its callable is pending', async () => {
+    // given
+    await createComponent([user({ uid: 'c1' })]);
+    let resolveConfirm!: () => void;
+    setupCallables([
+      { name: 'adminListUsers', impl: async () => ({ data: [] }) },
+      {
+        name: 'adminConfirmAndroidTestCandidate',
+        impl: () =>
+          new Promise<{ data: unknown }>((resolve) => {
+            resolveConfirm = () => resolve({ data: { ok: true } });
+          }),
+      },
+    ]);
+
+    // when
+    const run = component.confirm('c1', true);
+
+    // then
+    expect(component.busyUser.isBusy('c1:confirm')).toBe(true);
+    expect(component.busyUser.isBusy('c1:decline')).toBe(false);
+    expect(component.busyUser.isBusy('c1:added')).toBe(false);
+    expect(component.otherActionBusy('c1', 'decline')).toBe(true);
+    expect(component.otherActionBusy('c1', 'confirm')).toBe(false);
+    expect(component.otherActionBusy('c2', 'confirm')).toBe(false);
+
+    // when
+    resolveConfirm();
+    await run;
+
+    // then
+    expect(component.busyUser.busy()).toBe(false);
   });
 });

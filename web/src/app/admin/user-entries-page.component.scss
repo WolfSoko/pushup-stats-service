@@ -19,6 +19,10 @@
 .user-card {
   margin-bottom: 16px;
 }
+.user-card-skeleton {
+  display: grid;
+  gap: 10px;
+}
 .user-head {
   display: flex;
   flex-wrap: wrap;
@@ -80,12 +84,6 @@
 }
 .muted {
   color: var(--mat-sys-on-surface-variant);
-}
-
-.spinner-container {
-  display: flex;
-  justify-content: center;
-  padding: 48px;
 }
 
 .error-text {

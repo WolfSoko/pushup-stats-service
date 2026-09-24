@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { PUSHUP_REPS_MAX, PUSHUP_REPS_MIN } from '@pu-stats/models';
 
 export class PushupValidationError extends Error {
@@ -29,20 +28,3 @@ export function pushupValidationMessage(err: unknown): string {
 
 /** Re-exported so callers can read the cap without importing from `@pu-stats/models`. */
 export { PUSHUP_REPS_MAX, PUSHUP_REPS_MIN };
-
-/**
- * Legacy pushup Firestore service. All read/write operations have been
- * removed post-Phase-7 cutover. Pushup entries now live in
- * `exerciseEntries` with `exerciseId:'pushup'` and are managed by
- * `ExerciseFirestoreService`.
- *
- * Client-side migration of pushup documents between different userIds is
- * intentionally disabled. Any cross-user migration must be performed in a
- * trusted backend (e.g. Cloud Function / Admin SDK).
- */
-@Injectable({ providedIn: 'root' })
-export class PushupFirestoreService {
-  async migrateUserData(_fromUserId: string, _toUserId: string): Promise<void> {
-    // No-op by design. See class comment.
-  }
-}

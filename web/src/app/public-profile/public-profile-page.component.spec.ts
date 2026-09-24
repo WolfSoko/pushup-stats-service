@@ -13,6 +13,12 @@ import { UserConfigStore } from '../core/user-config.store';
 import { ProfilePhotoService } from '../core/profile-photo.service';
 import { signal } from '@angular/core';
 import { FriendsStore } from '../friends/friends.store';
+import { FriendsApiService } from '../friends/friends-api.service';
+import { InviteService } from '../core/invite.service';
+
+const friendsApiMock = {
+  cheer: vitest.fn(),
+};
 
 const firebaseAppMock = {
   options: { projectId: 'pushup-stats' },
@@ -42,6 +48,7 @@ const sampleProfile: PublicProfile = {
   hidden: [],
   visibility: {},
   viewerIsFriend: false,
+  viewerCheeredToday: false,
   updatedAt: '2026-04-29T08:30:00.000Z',
 };
 
@@ -77,11 +84,14 @@ describe('PublicProfilePageComponent', () => {
       uid?: string | null;
       resolve?: PublicProfile | null;
       reject?: unknown;
+      pending?: Promise<PublicProfile | null>;
       extraProviders?: unknown[];
     } = {}
   ): Promise<void> {
     vitest.clearAllMocks();
-    if (options.reject !== undefined) {
+    if (options.pending) {
+      apiMock.getProfile.mockReturnValue(options.pending);
+    } else if (options.reject !== undefined) {
       apiMock.getProfile.mockRejectedValue(options.reject);
     } else {
       apiMock.getProfile.mockResolvedValue(options.resolve ?? null);
@@ -104,6 +114,7 @@ describe('PublicProfilePageComponent', () => {
         { provide: FirebaseApp, useValue: firebaseAppMock },
         { provide: UserConfigStore, useValue: configMock },
         { provide: ProfilePhotoService, useValue: photosMock },
+        { provide: FriendsApiService, useValue: friendsApiMock },
         // Pin the locale so the share-URL assertion below is deterministic
         // (the unit-test default differs per Angular setup; pinning here
         // documents which prefix the share builder should pick).
@@ -172,6 +183,48 @@ describe('PublicProfilePageComponent', () => {
       );
       expect(payload.text).toContain('Wolfi');
       expect(payload.text).toContain('5000');
+    });
+  });
+
+  describe('Given the profile request is still pending', () => {
+    it('should render the page skeleton without a spinner until the profile lands', async () => {
+      // given
+      let resolve: (profile: PublicProfile | null) => void = () => undefined;
+      const pending = new Promise<PublicProfile | null>((r) => {
+        resolve = r;
+      });
+      await setup({ pending });
+      const root = fixture.nativeElement as HTMLElement;
+
+      // then
+      const loading = root.querySelector(
+        '[data-testid="public-profile-loading"]'
+      );
+      expect(loading?.getAttribute('role')).toBe('status');
+      expect(loading?.getAttribute('aria-busy')).toBe('true');
+      expect(
+        loading?.querySelectorAll('app-public-profile-skeleton pu-skeleton')
+          .length
+      ).toBeGreaterThan(5);
+      expect(root.querySelector('mat-spinner')).toBeNull();
+      expect(
+        root.querySelector('[data-testid="public-profile-name"]')
+      ).toBeNull();
+
+      // when
+      resolve(sampleProfile);
+      await pending;
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then
+      expect(
+        root.querySelector('[data-testid="public-profile-loading"]')
+      ).toBeNull();
+      expect(root.querySelector('pu-skeleton')).toBeNull();
+      expect(
+        root.querySelector('[data-testid="public-profile-name"]')?.textContent
+      ).toContain('Wolfi');
     });
   });
 
@@ -1193,6 +1246,44 @@ describe('PublicProfilePageComponent', () => {
       expect(friends.requestFriend).toHaveBeenCalledWith(visitorProfile.uid);
     });
 
+    it('should mark the button busy until the request settles', async () => {
+      // given
+      let resolveRequest: (ok: boolean) => void = () => undefined;
+      const friends = {
+        requestFriend: vitest.fn(
+          () =>
+            new Promise<boolean>((resolve) => {
+              resolveRequest = resolve;
+            })
+        ),
+        lastRejection: () => undefined,
+      };
+      await setup({
+        resolve: visitorProfile,
+        extraProviders: [{ provide: FriendsStore, useValue: friends }],
+      });
+      const button = document.querySelector(
+        '[data-testid="public-profile-add-friend"]'
+      ) as HTMLButtonElement;
+
+      // when
+      button.click();
+      await fixture.whenStable();
+
+      // then
+      expect(button.getAttribute('aria-busy')).toBe('true');
+      expect(button.disabled).toBe(false);
+
+      // when
+      resolveRequest(true);
+      await new Promise((resolve) => setTimeout(resolve));
+      await fixture.whenStable();
+
+      // then
+      expect(button.getAttribute('aria-busy')).toBeNull();
+      expect(button.disabled).toBe(true);
+    });
+
     it('should not offer it on your own profile', async () => {
       // given
       await setup({ resolve: { ...sampleProfile, viewerIsOwner: true } });
@@ -1214,6 +1305,112 @@ describe('PublicProfilePageComponent', () => {
         document.querySelector('[data-testid="public-profile-add-friend"]')
       ).toBeNull();
       expect(document.body.textContent).toContain('Ihr seid Freunde');
+    });
+  });
+
+  describe('Cheering a friend from their profile', () => {
+    const friendProfile: PublicProfile = {
+      ...sampleProfile,
+      viewerIsOwner: false,
+      viewerIsFriend: true,
+    };
+    const cheerButton = () =>
+      document.querySelector<HTMLButtonElement>('[data-testid="cheer-button"]');
+
+    it('should let a friend cheer, once', async () => {
+      // given
+      friendsApiMock.cheer.mockResolvedValue({ ok: true });
+      await setup({ resolve: friendProfile });
+      expect(cheerButton()?.textContent).toContain('Anfeuern');
+
+      // when
+      cheerButton()?.click();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then
+      expect(friendsApiMock.cheer).toHaveBeenCalledWith(friendProfile.uid);
+      expect(cheerButton()?.disabled).toBe(true);
+      expect(cheerButton()?.textContent).toContain('Heute angefeuert');
+    });
+
+    it('should show a cheer already sent today as done', async () => {
+      // given
+      await setup({ resolve: { ...friendProfile, viewerCheeredToday: true } });
+
+      // then
+      expect(cheerButton()?.disabled).toBe(true);
+    });
+
+    it('should offer no cheer to a visitor or the owner', async () => {
+      // given
+      await setup({ resolve: { ...sampleProfile, viewerIsFriend: false } });
+      expect(cheerButton()).toBeNull();
+
+      // when — the owner previewing as a friend
+      await setup({ resolve: { ...sampleProfile, viewerIsOwner: true } });
+
+      // then
+      expect(cheerButton()).toBeNull();
+    });
+  });
+
+  describe('Owner actions while a request is in flight', () => {
+    const ownerProfile = { ...sampleProfile, viewerIsOwner: true };
+
+    it('should mark the invite button busy until the invite link is shared', async () => {
+      // given
+      let resolveInvite: (value: string) => void = () => undefined;
+      const invites = {
+        inviteFriend: vitest.fn(
+          () =>
+            new Promise<string>((resolve) => {
+              resolveInvite = resolve;
+            })
+        ),
+      };
+      await setup({
+        resolve: ownerProfile,
+        extraProviders: [{ provide: InviteService, useValue: invites }],
+      });
+      const button = document.querySelector(
+        '[data-testid="public-profile-invite"]'
+      ) as HTMLButtonElement;
+
+      // when
+      button.click();
+      await fixture.whenStable();
+
+      // then
+      expect(invites.inviteFriend).toHaveBeenCalled();
+      expect(button.getAttribute('aria-busy')).toBe('true');
+
+      // when
+      resolveInvite('native');
+      await new Promise((resolve) => setTimeout(resolve));
+      await fixture.whenStable();
+
+      // then
+      expect(button.getAttribute('aria-busy')).toBeNull();
+    });
+
+    it('should mark the photo button busy while an upload runs', async () => {
+      // given
+      await setup({ resolve: ownerProfile });
+      const button = document.querySelector(
+        '[data-testid="profile-photo-edit"]'
+      ) as HTMLButtonElement;
+
+      // when
+      photosMock.busy.set(true);
+      fixture.detectChanges();
+
+      // then
+      expect(button.getAttribute('aria-busy')).toBe('true');
+      expect(button.disabled).toBe(false);
+
+      // cleanup
+      photosMock.busy.set(false);
     });
   });
 });

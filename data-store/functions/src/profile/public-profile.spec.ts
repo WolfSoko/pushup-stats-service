@@ -145,6 +145,7 @@ describe('buildPublicProfile', () => {
       isPrivate: false,
       viewerIsOwner: false,
       viewerIsFriend: false,
+      viewerCheeredToday: false,
       hidden: [],
       visibility: {},
       updatedAt: '',
@@ -187,6 +188,7 @@ describe('buildPublicProfile', () => {
       isPrivate: false,
       viewerIsOwner: false,
       viewerIsFriend: false,
+      viewerCheeredToday: false,
       hidden: [],
       visibility: {},
       updatedAt: '2026-04-29T08:30:00.000Z',
@@ -310,6 +312,7 @@ describe('buildPublicProfile', () => {
       'isPrivate',
       'viewerIsOwner',
       'viewerIsFriend',
+      'viewerCheeredToday',
       'hidden',
       'visibility',
       'bestSingleEntry',
@@ -321,6 +324,31 @@ describe('buildPublicProfile', () => {
     expect(
       Object.keys(result ?? {}).filter((key) => !allowed.has(key))
     ).toEqual([]);
+  });
+});
+
+describe('buildPublicProfile viewerCheeredToday', () => {
+  const config = { displayName: 'Wolfi', ui: { publicProfile: true } };
+
+  it('should pass the cheer state through for a friend', () => {
+    // when
+    const result = buildPublicProfile('u1', config, null, {
+      viewerIsFriend: true,
+      viewerCheeredToday: true,
+    });
+
+    // then
+    expect(result?.viewerCheeredToday).toBe(true);
+  });
+
+  it('should never report a cheer to someone who is not a friend', () => {
+    // when
+    const result = buildPublicProfile('u1', config, null, {
+      viewerCheeredToday: true,
+    });
+
+    // then
+    expect(result?.viewerCheeredToday).toBe(false);
   });
 });
 

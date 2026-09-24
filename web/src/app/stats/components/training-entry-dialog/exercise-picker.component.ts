@@ -75,6 +75,11 @@ export class ExercisePickerComponent {
   );
   /** Edit mode: the entry's exercise is fixed, so the field is read-only. */
   readonly locked = input<boolean>(false);
+  /**
+   * The trailing wiki link closes the surrounding dialog on the way out.
+   * Hosts outside a dialog turn it off and offer their own help instead.
+   */
+  readonly wikiLink = input<boolean>(true);
 
   readonly exerciseIdChange = output<string>();
 
@@ -95,12 +100,12 @@ export class ExercisePickerComponent {
 
   /** Pushup entries get their type-specific wiki link from the type row. */
   readonly showWikiLink = computed(
-    () => this.exerciseId() !== PUSHUP_EXERCISE_ID
+    () => this.wikiLink() && this.exerciseId() !== PUSHUP_EXERCISE_ID
   );
   private readonly exerciseRef = computed(() =>
     resolveExerciseRef(this.exerciseId(), undefined, this.locale)
   );
-  readonly wikiLink = computed(() => this.exerciseRef().wikiLink);
+  readonly wikiRoute = computed(() => this.exerciseRef().wikiLink);
   readonly wikiTooltip = computed(() => exerciseRefTooltip(this.exerciseRef()));
 
   readonly displayExercise = (id: string | null | undefined): string =>

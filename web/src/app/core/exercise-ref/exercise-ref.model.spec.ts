@@ -1,4 +1,4 @@
-import { resolveExerciseRef } from './exercise-ref.model';
+import { resolveExerciseGuide, resolveExerciseRef } from './exercise-ref.model';
 
 describe('resolveExerciseRef', () => {
   it('should resolve a catalog exercise with a wiki entry to its name, summary and detail link', () => {
@@ -41,5 +41,32 @@ describe('resolveExerciseRef', () => {
     expect(ref.name).toBe('Liegestütze');
     expect(ref.summary).toBeNull();
     expect(ref.wikiLink).toEqual(['/wiki/liegestuetz-typen']);
+  });
+});
+
+describe('resolveExerciseGuide', () => {
+  it('should carry the wiki steps and tips of a catalog exercise', () => {
+    // given / when
+    const guide = resolveExerciseGuide('legs.squats', undefined, 'de');
+    // then
+    expect(guide.name).toBe('Kniebeugen');
+    expect(guide.instructions.length).toBeGreaterThan(0);
+    expect(guide.wikiLink).toEqual(['/wiki/uebungen', 'squats']);
+  });
+
+  it('should carry the steps of a pushup type', () => {
+    // given / when
+    const guide = resolveExerciseGuide('pushup', 'diamond', 'de');
+    // then
+    expect(guide.name).toBe('Diamant-Liegestütze');
+    expect(guide.instructions.length).toBeGreaterThan(0);
+  });
+
+  it('should have no steps for an exercise without a wiki entry', () => {
+    // given / when
+    const guide = resolveExerciseGuide('does.not.exist', undefined, 'de');
+    // then
+    expect(guide.instructions).toEqual([]);
+    expect(guide.tips).toEqual([]);
   });
 });

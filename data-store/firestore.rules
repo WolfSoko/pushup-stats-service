@@ -59,7 +59,7 @@ service cloud.firestore {
       return [
         // BEGIN GENERATED isDistanceTimeExerciseId (source: EXERCISE_CATALOG; run: pnpm nx run cloud-functions:generate-exercise-rules)
         // cardio
-        'cardio.cycling', 'cardio.rowing', 'cardio.running', 'cardio.swimming', 'cardio.walking'
+        'cardio.crosscountryskiing', 'cardio.cycling', 'cardio.elliptical', 'cardio.hiking', 'cardio.inlineskating', 'cardio.nordicwalking', 'cardio.rowing', 'cardio.running', 'cardio.swimming', 'cardio.walking'
         // END GENERATED isDistanceTimeExerciseId
       ].hasAny([id]);
     }
@@ -173,8 +173,7 @@ service cloud.firestore {
       allow read, update, delete: if false;
     }
 
-    // Generic exercise entries (sit-ups, squats, plank, …). New
-    // collection that co-exists with `pushups` while we migrate. Caps
+    // Exercise entries (pushups, sit-ups, squats, plank, …). Caps
     // mirror the catalog in
     // `libs/stats/src/lib/models/exercise.catalog.ts`. Custom
     // user-defined exercises are NOT yet allowed — the `exerciseId`
@@ -449,6 +448,70 @@ service cloud.firestore {
                     && resource.data.ownerId == request.auth.uid;
     }
 
+    // Session reminders — one per workout, id = the workout's id. Only the
+    // workout's owner may schedule one, so nobody can aim pushes at a
+    // session they cannot see. `dispatchWorkoutReminders` (Admin SDK)
+    // moves `nextAt` on and stamps `lastSentAt`; a client save may keep
+    // or drop `lastSentAt`, never set it.
+    function isValidWorkoutReminderRepeat(repeat) {
+      return repeat is map
+             && ((repeat.keys().hasOnly(['kind', 'everyDays', 'startDate'])
+                  && repeat.kind == 'interval'
+                  && repeat.everyDays is int
+                  && repeat.everyDays >= 1
+                  && repeat.everyDays <= 30
+                  && repeat.startDate is string
+                  && repeat.startDate.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$'))
+                 || (repeat.keys().hasOnly(['kind', 'weekdays'])
+                  && repeat.kind == 'weekdays'
+                  && repeat.weekdays is list
+                  && repeat.weekdays.size() >= 1
+                  && repeat.weekdays.size() <= 7));
+    }
+
+    function isValidWorkoutReminder(data, workoutId) {
+      return data.keys().hasOnly([
+               'ownerId', 'workoutId', 'enabled', 'time', 'repeat',
+               'timezone', 'nextAt', 'updatedAt', 'lastSentAt'
+             ])
+             && data.workoutId == workoutId
+             && data.enabled is bool
+             && data.time is string
+             && data.time.matches('^([01][0-9]|2[0-3]):[0-5][0-9]$')
+             && isValidWorkoutReminderRepeat(data.repeat)
+             && data.timezone is string
+             && data.timezone.size() >= 1
+             && data.timezone.size() <= 64
+             && data.nextAt is string
+             && data.nextAt.size() <= 32
+             && data.updatedAt is string
+             && data.updatedAt.size() <= 32;
+    }
+
+    function ownsWorkout(workoutId) {
+      return get(/databases/$(database)/documents/workouts/$(workoutId)).data.ownerId
+             == request.auth.uid;
+    }
+
+    match /workoutReminders/{workoutId} {
+      allow read: if request.auth != null
+                  && resource.data.ownerId == request.auth.uid;
+      allow create: if request.auth != null
+                    && request.resource.data.ownerId == request.auth.uid
+                    && !('lastSentAt' in request.resource.data.keys())
+                    && isValidWorkoutReminder(request.resource.data, workoutId)
+                    && ownsWorkout(workoutId);
+      allow update: if request.auth != null
+                    && resource.data.ownerId == request.auth.uid
+                    && request.resource.data.ownerId == request.auth.uid
+                    && request.resource.data.get('lastSentAt', null)
+                       in [null, resource.data.get('lastSentAt', null)]
+                    && isValidWorkoutReminder(request.resource.data, workoutId)
+                    && ownsWorkout(workoutId);
+      allow delete: if request.auth != null
+                    && resource.data.ownerId == request.auth.uid;
+    }
+
     // Friendships — one doc per pair, id `<loUid>__<hiUid>`. Participants
     // read their own records (the friends screen queries
     // `array-contains` on `users`); every write goes through the
@@ -516,7 +579,12 @@ service cloud.firestore {
     // Records self-destruct through the `expiresAt` TTL policy.
     match /notifications/{userId}/inbox/{itemId} {
       allow read: if request.auth != null && request.auth.uid == userId;
-      allow create, delete: if false;
+      allow create: if false;
+      // Owners may throw their own messages away. Deleting is the only
+      // way out of the list before the TTL fires, and it affects nothing
+      // but their own history — the cheer, badge or friendship the entry
+      // describes lives in its own collection and is untouched.
+      allow delete: if request.auth != null && request.auth.uid == userId;
       allow update: if request.auth != null
                     && request.auth.uid == userId
                     && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['readAt']);
@@ -588,6 +656,14 @@ service cloud.firestore {
       // rather than by decision. Resetting a profile writes an empty
       // `values` map, it does not remove the document.
       allow delete: if false;
+    }
+
+    // Tombstones of deleted accounts — written by the account purge via
+    // the Admin SDK so the entry triggers stand down while the purge
+    // deletes the entries. Server-only; expire through the `expiresAt`
+    // TTL policy.
+    match /deletedAccounts/{uid} {
+      allow read, write: if false;
     }
 
     // Deny everything else by default.

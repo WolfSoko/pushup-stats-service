@@ -13,6 +13,9 @@ import {
 /** View-model for one exercise as the session presents it. */
 export interface SessionStepRow {
   itemIndex: number;
+  /** Catalog id and prescribed variant, for the in-place exercise guide. */
+  exerciseId: string;
+  variantId: string | null;
   /** Localized exercise name, including the variant when one is prescribed. */
   name: string;
   /** Material icon of the exercise, for the step card and the overview. */
@@ -62,6 +65,8 @@ export function buildSessionRows(
     );
     return {
       itemIndex: step.itemIndex,
+      exerciseId: exercise.exerciseId,
+      variantId: exercise.variantId ?? null,
       name: variant ? `${base} · ${variantDisplayName(variant)}` : base,
       icon: def?.icon ?? DEFAULT_ICON,
       target: step.quantified ? formatExerciseValue(step.target, unit) : '',
