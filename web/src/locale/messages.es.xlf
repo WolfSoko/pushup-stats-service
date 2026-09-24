@@ -4958,9 +4958,9 @@
       <notes>
         <note category="location">web/src/app/stats/dashboard.store.ts:446</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
-        <target>Rastreador de flexiones</target>
+        <target><ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="analysis.weekTrendTitle">
@@ -5706,9 +5706,9 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:12,13</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></source>
-        <target>Estadísticas de flexiones</target>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></target>
       </segment>
     </unit>
     <unit id="dashboardTitle">
@@ -11566,9 +11566,9 @@
       </segment>
     </unit>
     <unit id="achievement.share.title">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
-        <target>Rastreador de flexiones</target>
+        <target><ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="achievement.share.text">
@@ -14866,573 +14866,573 @@
       </segment>
     </unit>
     <unit id="notifications.panel.allRead">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alles gelesen. </source>
-        <target> Alles gelesen. </target>
+        <target> Todo leído. </target>
       </segment>
     </unit>
     <unit id="rebrandIntro.badge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu</source>
-        <target>Neu</target>
+        <target>Nuevo</target>
       </segment>
     </unit>
     <unit id="rebrandIntro.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wir benennen uns um</source>
-        <target>Wir benennen uns um</target>
+        <target>Nos cambiamos de nombre</target>
       </segment>
     </unit>
     <unit id="rebrandIntro.stepCount">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
-        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+        <target> Paso <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> de <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
       </segment>
     </unit>
     <unit id="rebrandIntro.later">
-      <segment state="initial">
+      <segment state="translated">
         <source> Später </source>
-        <target> Später </target>
+        <target> Más tarde </target>
       </segment>
     </unit>
     <unit id="rebrandIntro.back">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück</source>
-        <target>Zurück</target>
+        <target>Atrás</target>
       </segment>
     </unit>
     <unit id="rebrandIntro.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beitrag lesen</source>
-        <target>Beitrag lesen</target>
+        <target>Leer publicación</target>
       </segment>
     </unit>
     <unit id="rebrandIntro.next">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiter</source>
-        <target>Weiter</target>
+        <target>Siguiente</target>
       </segment>
     </unit>
     <unit id="rebrandIntro.step1.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ein neuer Name kommt</source>
-        <target>Ein neuer Name kommt</target>
+        <target>Llega un nuevo nombre</target>
       </segment>
     </unit>
     <unit id="rebrandIntro.step1.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Angefangen hat alles mit Liegestützen. Inzwischen zählt die Kamera auch Kniebeugen und Klimmzüge, es gibt zehn Trainingspläne und ein Übungs-Wiki – der Name wird dem nicht mehr gerecht.</source>
-        <target>Angefangen hat alles mit Liegestützen. Inzwischen zählt die Kamera auch Kniebeugen und Klimmzüge, es gibt zehn Trainingspläne und ein Übungs-Wiki – der Name wird dem nicht mehr gerecht.</target>
+        <target>Todo empezó con las flexiones. Desde entonces, la cámara también cuenta sentadillas y dominadas, hay diez planes de entrenamiento y un wiki de ejercicios – el nombre ya no le hace justicia.</target>
       </segment>
     </unit>
     <unit id="rebrandIntro.step2.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dein Fortschritt bleibt</source>
-        <target>Dein Fortschritt bleibt</target>
+        <target>Tu progreso se mantiene</target>
       </segment>
     </unit>
     <unit id="rebrandIntro.step2.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Konto, Einträge, Streak und Abzeichen bleiben unverändert – du musst nichts tun. Welcher Name es wird, steht noch nicht fest; wir sagen rechtzeitig Bescheid.</source>
-        <target>Konto, Einträge, Streak und Abzeichen bleiben unverändert – du musst nichts tun. Welcher Name es wird, steht noch nicht fest; wir sagen rechtzeitig Bescheid.</target>
+        <target>Cuenta, entradas, racha e insignias siguen igual – no tienes que hacer nada. Todavía no hemos decidido el nuevo nombre; te avisaremos a tiempo.</target>
       </segment>
     </unit>
     <unit id="announcements.rebrand">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese App bekommt einen neuen Namen</source>
-        <target>Diese App bekommt einen neuen Namen</target>
+        <target>Esta app tendrá un nuevo nombre</target>
       </segment>
     </unit>
     <unit id="pendingRequest.indicatorAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfrage wird verarbeitet</source>
-        <target>Anfrage wird verarbeitet</target>
+        <target>Procesando solicitud</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.hiking.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wandern</source>
-        <target>Wandern</target>
+        <target>Senderismo</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.nordicwalking.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nordic Walking</source>
-        <target>Nordic Walking</target>
+        <target>Marcha nórdica</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.elliptical.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Crosstrainer</source>
-        <target>Crosstrainer</target>
+        <target>Elíptica</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.inlineskating.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Inline-Skaten</source>
-        <target>Inline-Skaten</target>
+        <target>Patinaje en línea</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.crosscountryskiing.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Skilanglauf</source>
-        <target>Skilanglauf</target>
+        <target>Esquí de fondo</target>
       </segment>
     </unit>
     <unit id="exerciseGuide.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Für diese Übung gibt es noch keine Anleitung. </source>
-        <target> Für diese Übung gibt es noch keine Anleitung. </target>
+        <target> Todavía no hay una guía para este ejercicio. </target>
       </segment>
     </unit>
     <unit id="exerciseGuide.toWiki">
-      <segment state="initial">
+      <segment state="translated">
         <source>Im Wiki öffnen</source>
-        <target>Im Wiki öffnen</target>
+        <target>Abrir en el wiki</target>
       </segment>
     </unit>
     <unit id="exerciseGuide.close">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verstanden </source>
-        <target> Verstanden </target>
+        <target> Entendido </target>
       </segment>
     </unit>
     <unit id="session.step.guide">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anleitung</source>
-        <target>Anleitung</target>
+        <target>Guía</target>
       </segment>
     </unit>
     <unit id="wiki.exercise.newSession">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als Session anlegen</source>
-        <target>Als Session anlegen</target>
+        <target>Crear como sesión</target>
       </segment>
     </unit>
     <unit id="wiki.exercises.search.label">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung suchen</source>
-        <target>Übung suchen</target>
+        <target>Buscar ejercicio</target>
       </segment>
     </unit>
     <unit id="wiki.exercises.search.placeholder">
-      <segment state="initial">
+      <segment state="translated">
         <source>z. B. Kniebeuge, Rücken, Plank</source>
-        <target>z. B. Kniebeuge, Rücken, Plank</target>
+        <target>p. ej. sentadilla, espalda, plancha</target>
       </segment>
     </unit>
     <unit id="wiki.exercises.search.clear">
-      <segment state="initial">
+      <segment state="translated">
         <source>Suche leeren</source>
-        <target>Suche leeren</target>
+        <target>Borrar búsqueda</target>
       </segment>
     </unit>
     <unit id="wiki.exercises.search.count">
-      <segment state="initial">
+      <segment state="translated">
         <source>{VAR_PLURAL, plural, =0 {Keine Übung gefunden} =1 {Eine Übung gefunden} other {<ph id="0" equiv="INTERPOLATION"/> Übungen gefunden}}</source>
-        <target>{VAR_PLURAL, plural, =0 {Keine Übung gefunden} =1 {Eine Übung gefunden} other {<ph id="0" equiv="INTERPOLATION"/> Übungen gefunden}}</target>
+        <target>{VAR_PLURAL, plural, =0 {Ningún ejercicio encontrado} =1 {Un ejercicio encontrado} other {<ph id="0" equiv="INTERPOLATION"/> ejercicios encontrados}}</target>
       </segment>
     </unit>
     <unit id="wiki.exercises.search.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Keine Übung passt zu „<ph id="0" equiv="INTERPOLATION" disp="{{ query() }}"/>“. </source>
-        <target> Keine Übung passt zu „<ph id="0" equiv="INTERPOLATION" disp="{{ query() }}"/>“. </target>
+        <target> Ningún ejercicio coincide con «<ph id="0" equiv="INTERPOLATION" disp="{{ query() }}"/>». </target>
       </segment>
     </unit>
     <unit id="wiki.exercises.search.reset">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alle Übungen zeigen </source>
-        <target> Alle Übungen zeigen </target>
+        <target> Mostrar todos los ejercicios </target>
       </segment>
     </unit>
     <unit id="wiki.exercises.search.pushupHits">
-      <segment state="initial">
+      <segment state="translated">
         <source>Passende Varianten</source>
-        <target>Passende Varianten</target>
+        <target>Variantes coincidentes</target>
       </segment>
     </unit>
     <unit id="workouts.editor.guide">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anleitung ansehen</source>
-        <target>Anleitung ansehen</target>
+        <target>Ver guía</target>
       </segment>
     </unit>
     <unit id="announcements.exerciseSearch">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu: Übungssuche und Anleitungen direkt in deinen Sessions</source>
-        <target>Neu: Übungssuche und Anleitungen direkt in deinen Sessions</target>
+        <target>Novedad: búsqueda de ejercicios y guías directamente en tus sesiones</target>
       </segment>
     </unit>
     <unit id="appUpdate.banner.unrecoverable">
-      <segment state="initial">
+      <segment state="translated">
         <source>App-Daten sind veraltet – bitte neu laden.</source>
-        <target>App-Daten sind veraltet – bitte neu laden.</target>
+        <target>Los datos de la app están desactualizados – recarga la página.</target>
       </segment>
     </unit>
     <unit id="appUpdate.banner.ready">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine neue Version ist verfügbar.</source>
-        <target>Eine neue Version ist verfügbar.</target>
+        <target>Hay una nueva versión disponible.</target>
       </segment>
     </unit>
     <unit id="appUpdate.banner.later">
-      <segment state="initial">
+      <segment state="translated">
         <source> Später </source>
-        <target> Später </target>
+        <target> Más tarde </target>
       </segment>
     </unit>
     <unit id="appUpdate.banner.reload">
-      <segment state="initial">
+      <segment state="translated">
         <source> Neu laden </source>
-        <target> Neu laden </target>
+        <target> Recargar </target>
       </segment>
     </unit>
     <unit id="announcements.workoutReminders">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu: Erinnerungen für deine Sessions</source>
-        <target>Neu: Erinnerungen für deine Sessions</target>
+        <target>Novedad: recordatorios para tus sesiones</target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source> Neu · Session-Erinnerungen </source>
-        <target> Neu · Session-Erinnerungen </target>
+        <target> Novedad · Recordatorios de sesión </target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.headline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Deine Session meldet sich — genau dann, wenn du trainieren willst. </source>
-        <target> Deine Session meldet sich — genau dann, wenn du trainieren willst. </target>
+        <target> Tu sesión te avisa — justo cuando quieres entrenar. </target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source> Gib jeder Session ihren eigenen Rhythmus: alle zwei Tage um 15:00 oder jeden Montag, Mittwoch und Freitag. Zur gewählten Zeit kommt eine Push-Benachrichtigung aufs Handy — ein Tipp, und die Session startet. </source>
-        <target> Gib jeder Session ihren eigenen Rhythmus: alle zwei Tage um 15:00 oder jeden Montag, Mittwoch und Freitag. Zur gewählten Zeit kommt eine Push-Benachrichtigung aufs Handy — ein Tipp, und die Session startet. </target>
+        <target> Dale a cada sesión su propio ritmo: cada dos días a las 15:00 o cada lunes, miércoles y viernes. A la hora elegida llega una notificación push a tu móvil — un toque, y la sesión empieza. </target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.chip.rhythm">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle paar Tage oder an festen Wochentagen</source>
-        <target>Alle paar Tage oder an festen Wochentagen</target>
+        <target>Cada pocos días o en días fijos de la semana</target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.chip.time">
-      <segment state="initial">
+      <segment state="translated">
         <source>Deine Uhrzeit, auch bei Zeitumstellung</source>
-        <target>Deine Uhrzeit, auch bei Zeitumstellung</target>
+        <target>Tu hora, incluso con el cambio de horario</target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.chip.push">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push aufs Handy — ein Tipp startet die Session</source>
-        <target>Push aufs Handy — ein Tipp startet die Session</target>
+        <target>Push al móvil — un toque inicia la sesión</target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erinnerung einrichten</source>
-        <target>Erinnerung einrichten</target>
+        <target>Configurar recordatorio</target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.mock.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>⏰ Ganzkörper kurz</source>
-        <target>⏰ Ganzkörper kurz</target>
+        <target>⏰ Cuerpo completo corto</target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.mock.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle 2 Tage</source>
-        <target>Alle 2 Tage</target>
+        <target>Cada 2 días</target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.mock.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zeit für deine Session. Tippe, um direkt loszulegen.</source>
-        <target>Zeit für deine Session. Tippe, um direkt loszulegen.</target>
+        <target>Hora de tu sesión. Toca para empezar directamente.</target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.mock.action">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session starten</source>
-        <target>Session starten</target>
+        <target>Empezar sesión</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erinnerung</source>
-        <target>Erinnerung</target>
+        <target>Recordatorio</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.enabled">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erinnerung aktiv</source>
-        <target>Erinnerung aktiv</target>
+        <target>Recordatorio activo</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.kind.aria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rhythmus</source>
-        <target>Rhythmus</target>
+        <target>Ritmo</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.kind.interval">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle paar Tage</source>
-        <target>Alle paar Tage</target>
+        <target>Cada pocos días</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.kind.weekdays">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wochentage</source>
-        <target>Wochentage</target>
+        <target>Días de la semana</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.everyDays">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle … Tage</source>
-        <target>Alle … Tage</target>
+        <target>Cada … días</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.startDate">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ab</source>
-        <target>Ab</target>
+        <target>Desde</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.time">
-      <segment state="initial">
+      <segment state="translated">
         <source>Uhrzeit</source>
-        <target>Uhrzeit</target>
+        <target>Hora</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.next">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nächste Erinnerung: <ph id="0" equiv="INTERPOLATION" disp="{{ next }}"/></source>
-        <target>Nächste Erinnerung: <ph id="0" equiv="INTERPOLATION" disp="{{ next }}"/></target>
+        <target>Próximo recordatorio: <ph id="0" equiv="INTERPOLATION" disp="{{ next }}"/></target>
       </segment>
     </unit>
     <unit id="workouts.reminder.pushOff">
-      <segment state="initial">
+      <segment state="translated">
         <source> Push ist auf diesem Gerät aus. Dann erinnert dich die App nur, solange sie geöffnet ist. </source>
-        <target> Push ist auf diesem Gerät aus. Dann erinnert dich die App nur, solange sie geöffnet ist. </target>
+        <target> Push está desactivado en este dispositivo. Entonces la app solo te avisa mientras está abierta. </target>
       </segment>
     </unit>
     <unit id="workouts.reminder.enablePush">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push aktivieren</source>
-        <target>Push aktivieren</target>
+        <target>Activar push</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.failed">
-      <segment state="initial">
+      <segment state="translated">
         <source> Das hat nicht geklappt. Bitte versuch es noch einmal. </source>
-        <target> Das hat nicht geklappt. Bitte versuch es noch einmal. </target>
+        <target> Eso no funcionó. Inténtalo de nuevo. </target>
       </segment>
     </unit>
     <unit id="workouts.reminder.remove">
-      <segment state="initial">
+      <segment state="translated">
         <source> Entfernen </source>
-        <target> Entfernen </target>
+        <target> Quitar </target>
       </segment>
     </unit>
     <unit id="workouts.reminder.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> Cancelar </target>
       </segment>
     </unit>
     <unit id="workouts.reminder.save">
-      <segment state="initial">
+      <segment state="translated">
         <source> Speichern </source>
-        <target> Speichern </target>
+        <target> Guardar </target>
       </segment>
     </unit>
     <unit id="workouts.reminder.notificationBody">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zeit für deine Session. Tippe, um direkt loszulegen.</source>
-        <target>Zeit für deine Session. Tippe, um direkt loszulegen.</target>
+        <target>Hora de tu sesión. Toca para empezar directamente.</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.daily">
-      <segment state="initial">
+      <segment state="translated">
         <source>Täglich</source>
-        <target>Täglich</target>
+        <target>Diario</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.badge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu</source>
-        <target>Neu</target>
+        <target>Nuevo</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session-Erinnerungen</source>
-        <target>Session-Erinnerungen</target>
+        <target>Recordatorios de sesión</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.stepCount">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
-        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+        <target> Paso <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> de <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.later">
-      <segment state="initial">
+      <segment state="translated">
         <source> Später </source>
-        <target> Später </target>
+        <target> Más tarde </target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.back">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück</source>
-        <target>Zurück</target>
+        <target>Atrás</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu meinen Sessions</source>
-        <target>Zu meinen Sessions</target>
+        <target>A mis sesiones</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.next">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiter</source>
-        <target>Weiter</target>
+        <target>Siguiente</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.step1.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erinnerungen für deine Sessions</source>
-        <target>Erinnerungen für deine Sessions</target>
+        <target>Recordatorios para tus sesiones</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.step1.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Jede Session kann dich jetzt ans Training erinnern — zum Beispiel alle 2 Tage um 15:00 oder jeden Montag, Mittwoch und Freitag.</source>
-        <target>Jede Session kann dich jetzt ans Training erinnern — zum Beispiel alle 2 Tage um 15:00 oder jeden Montag, Mittwoch und Freitag.</target>
+        <target>Cada sesión puede recordarte ahora entrenar — por ejemplo cada 2 días a las 15:00 o cada lunes, miércoles y viernes.</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.step2.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>So richtest du sie ein</source>
-        <target>So richtest du sie ein</target>
+        <target>Así los configuras</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.step2.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tippe auf der Session-Karte auf das Wecker-Symbol, wähle den Rhythmus und die Uhrzeit — fertig.</source>
-        <target>Tippe auf der Session-Karte auf das Wecker-Symbol, wähle den Rhythmus und die Uhrzeit — fertig.</target>
+        <target>Toca el icono del despertador en la tarjeta de la sesión, elige el ritmo y la hora — listo.</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.step3.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push aufs Handy</source>
-        <target>Push aufs Handy</target>
+        <target>Push al móvil</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.step3.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zur gewählten Zeit kommt eine Push-Benachrichtigung, ein Tipp startet die Session. Ohne Push erinnert dich die App, solange sie geöffnet ist.</source>
-        <target>Zur gewählten Zeit kommt eine Push-Benachrichtigung, ein Tipp startet die Session. Ohne Push erinnert dich die App, solange sie geöffnet ist.</target>
+        <target>A la hora elegida llega una notificación push, un toque inicia la sesión. Sin push, la app solo te avisa mientras está abierta.</target>
       </segment>
     </unit>
     <unit id="workouts.card.reminderEdit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erinnerung ändern</source>
-        <target>Erinnerung ändern</target>
+        <target>Editar recordatorio</target>
       </segment>
     </unit>
     <unit id="workouts.card.reminderAdd">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erinnerung einrichten</source>
-        <target>Erinnerung einrichten</target>
+        <target>Configurar recordatorio</target>
       </segment>
     </unit>
     <unit id="auth.error.requiresRecentLogin">
-      <segment state="initial">
+      <segment state="translated">
         <source>Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.</source>
-        <target>Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.</target>
+        <target>Por motivos de seguridad, cierra sesión y vuelve a iniciarla, y luego inténtalo de nuevo.</target>
       </segment>
     </unit>
     <unit id="admin.bulk.remaining">
-      <segment state="initial">
+      <segment state="translated">
         <source>Noch offen (erneut ausführen):</source>
-        <target>Noch offen (erneut ausführen):</target>
+        <target>Aún pendiente (volver a ejecutar):</target>
       </segment>
     </unit>
     <unit id="admin.delete.purgeInfo">
-      <segment state="initial">
+      <segment state="translated">
         <source> Das Konto und alle zugehörigen Daten werden endgültig gelöscht. </source>
-        <target> Das Konto und alle zugehörigen Daten werden endgültig gelöscht. </target>
+        <target> La cuenta y todos los datos asociados se eliminarán definitivamente. </target>
       </segment>
     </unit>
     <unit id="admin.migrations.orphanedUserData.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Datenmüll gelöschter Konten entfernen</source>
-        <target>Datenmüll gelöschter Konten entfernen</target>
+        <target>Eliminar datos residuales de cuentas eliminadas</target>
       </segment>
     </unit>
     <unit id="admin.migrations.orphanedUserData.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sucht Daten von Nutzern ohne Firebase-Auth-Konto (Einträge, Statistiken, Pläne, Workouts, Freundschaften, Push-Abos, Nachrichten, Profilfotos …) und löscht sie wie bei einer Kontolöschung. Bis zu 25 Konten pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Nicht umkehrbar — erst den Probelauf ausführen.</source>
-        <target>Sucht Daten von Nutzern ohne Firebase-Auth-Konto (Einträge, Statistiken, Pläne, Workouts, Freundschaften, Push-Abos, Nachrichten, Profilfotos …) und löscht sie wie bei einer Kontolöschung. Bis zu 25 Konten pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Nicht umkehrbar — erst den Probelauf ausführen.</target>
+        <target>Busca datos de usuarios sin cuenta de Firebase Auth (entradas, estadísticas, planes, entrenamientos, amistades, suscripciones push, mensajes, fotos de perfil …) y los elimina como en una eliminación de cuenta. Hasta 25 cuentas por ejecución — repite hasta que «remaining» sea 0. No es reversible — ejecuta primero el simulacro.</target>
       </segment>
     </unit>
     <unit id="settings.deleteAccountFailed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Konto konnte nicht gelöscht werden. Bitte versuche es erneut.</source>
-        <target>Konto konnte nicht gelöscht werden. Bitte versuche es erneut.</target>
+        <target>No se pudo eliminar la cuenta. Inténtalo de nuevo.</target>
       </segment>
     </unit>
     <unit id="friends.cheer.done">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute angefeuert</source>
-        <target>Heute angefeuert</target>
+        <target>Animado hoy</target>
       </segment>
     </unit>
     <unit id="friends.cheer.doneFor">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="name"/> heute schon angefeuert</source>
-        <target><ph id="0" equiv="name" disp="name"/> heute schon angefeuert</target>
+        <target>Ya animaste a <ph id="0" equiv="name" disp="name"/> hoy</target>
       </segment>
     </unit>
     <unit id="friends.cheer.for">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="name"/> anfeuern</source>
-        <target><ph id="0" equiv="name" disp="name"/> anfeuern</target>
+        <target>Animar a <ph id="0" equiv="name" disp="name"/></target>
       </segment>
     </unit>
     <unit id="achievement.dialog.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neues Abzeichen</source>
-        <target>Neues Abzeichen</target>
+        <target>Nueva insignia</target>
       </segment>
     </unit>
     <unit id="achievement.dialog.note">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ab jetzt glänzt es in deiner Sammlung. Weiter so!</source>
-        <target>Ab jetzt glänzt es in deiner Sammlung. Weiter so!</target>
+        <target>A partir de ahora brilla en tu colección. ¡Sigue así!</target>
       </segment>
     </unit>
     <unit id="achievement.dialog.closeAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schließen</source>
-        <target>Schließen</target>
+        <target>Cerrar</target>
       </segment>
     </unit>
     <unit id="achievement.dialog.snap">
-      <segment state="initial">
+      <segment state="translated">
         <source>Snap!</source>
-        <target>Snap!</target>
+        <target>¡Snap!</target>
       </segment>
     </unit>
     <unit id="achievement.dialog.snapAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Snap! – Abzeichen vaporisieren</source>
-        <target>Snap! – Abzeichen vaporisieren</target>
+        <target>¡Snap! – Vaporizar insignia</target>
       </segment>
     </unit>
 </file>

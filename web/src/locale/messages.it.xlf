@@ -257,9 +257,9 @@
       <notes>
         <note category="location">libs/auth/src/lib/ui/login/login.component.html:5,7</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Willkommen bei <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></source>
-        <target>Benvenuto in Statistiche PushUp</target>
+        <target>Benvenuto in <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></target>
       </segment>
     </unit>
     <unit id="auth.login.subtitle">
@@ -2465,9 +2465,9 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:6,7</note>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:8,9</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> Logo</source>
-        <target>Logo del tracker pushup</target>
+        <target>Logo di <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></target>
       </segment>
     </unit>
     <unit id="landing.eyebrow">
