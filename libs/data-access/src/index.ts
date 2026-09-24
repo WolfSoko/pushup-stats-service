@@ -11,6 +11,7 @@ export * from './lib/api/public-profile-api.service';
 export * from './lib/api/pushup-firestore.service';
 export * from './lib/api/exercise-firestore.service';
 export * from './lib/api/leaderboard.service';
+export * from './lib/api/xp-api.service';
 export * from './lib/provide-firestore';
 export * from './lib/pending-requests.service';
 export * from './lib/demo-user.token';

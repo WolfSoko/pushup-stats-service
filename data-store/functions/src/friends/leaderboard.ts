@@ -19,12 +19,14 @@ export type FriendsLeaderboardPeriod = 'daily' | 'week' | 'month' | 'allTime';
  * anyone does — the fair default among friends with different favourites;
  * `reps` is one exercise's count, for those who want to race.
  */
-export type FriendsBoardMetric = 'days' | 'streak' | 'reps';
+export type FriendsBoardMetric = 'days' | 'streak' | 'reps' | 'xp';
 
 export function isFriendsBoardMetric(
   value: unknown
 ): value is FriendsBoardMetric {
-  return value === 'days' || value === 'streak' || value === 'reps';
+  return (
+    value === 'days' || value === 'streak' || value === 'reps' || value === 'xp'
+  );
 }
 
 export function isFriendsLeaderboardPeriod(
@@ -44,7 +46,8 @@ export interface FriendStatsRow {
   readonly displayName: string | null;
   /**
    * `userStats/{uid}/perExercise/{exerciseId}` for `reps`, the root
-   * `userStats/{uid}` for `days` and `streak`; null when absent.
+   * `userStats/{uid}` for `days` and `streak`, `userXp/{uid}` mapped by
+   * {@link xpStatsOf} for `xp`; null when absent.
    */
   readonly stats: {
     total?: unknown;
@@ -144,11 +147,29 @@ export function metricValue(
   period: FriendsLeaderboardPeriod,
   keys: PeriodKeys
 ): number {
-  if (metric === 'reps') return periodValue(row, period, keys);
+  if (metric === 'reps' || metric === 'xp') {
+    return periodValue(row, period, keys);
+  }
   if (metric === 'streak') return streakValue(row, keys.dailyKey);
   if (period === 'allTime') return numberOrZero(row.stats?.totalDays);
   if (period === 'daily') return periodValue(row, 'daily', keys) > 0 ? 1 : 0;
   return row.days ?? 0;
+}
+
+/** Maps a `userXp/{uid}` doc onto the period-bucket shape of the stats. */
+export function xpStatsOf(
+  data: Record<string, unknown> | undefined
+): FriendStatsRow['stats'] {
+  if (!data) return null;
+  return {
+    total: data['total'],
+    dailyReps: data['dailyXp'],
+    dailyKey: data['dailyKey'],
+    weeklyReps: data['weeklyXp'],
+    weeklyKey: data['weeklyKey'],
+    monthlyReps: data['monthlyXp'],
+    monthlyKey: data['monthlyKey'],
+  };
 }
 
 /** First day of the period holding `todayIso`: the ISO week's Monday, or the 1st. */
