@@ -1,5 +1,5 @@
 ---
-name: Skaten
+name: Langlaufen
 summary: De meest volledige vorm van uithoudingsvermogen — armen, benen en romp werken tegelijkertijd, zonder enige schokbelasting.
 instructions:
   - "Verplaats het gewicht volledig naar de glijdende ski; twee belaste ski's tegelijk betekent stilstand."
@@ -13,8 +13,8 @@ tips:
 
 <h2>De meest volledige uithoudingsbelasting</h2>
 <p>
-  Skaten belast benen, romp en bovenklinker tegelijk en levert daarmee de hoogste gemeten zuurstofopnamewaarden
-  van alle ausdauersportarten. De reden is simpel spiermassa: terwijl hardlopen vooral de benen belast,
+  Langlaufen belast benen, romp en bovenlichaam tegelijk en levert daarmee de hoogste gemeten zuurstofopnamewaarden
+  van alle duursporten. De reden is simpel spiermassa: terwijl hardlopen vooral de benen belast,
   zijn hier brede rugspier, triceps en romp bij elke stokafdruk betrokken. En dat bij nul schokbelasting,
   omdat de ski de sneeuw nooit verlaat.
 </p>
@@ -32,11 +32,11 @@ tips:
 <h2>Waarvoor het bijzonder geschikt is</h2>
 <ul>
   <li><strong>Maximale hart-vaatstelsel-prikkel.</strong> Meer betrokken spieren dan enige andere uithoudingsvorm.</li>
-  <li><strong>Bovenklinker-uithoudingsvermogen.</strong> De stokafdruk traint trekkrachtige spieren uren in plaats van sets.</li>
+  <li><strong>Bovenlichaam-uithoudingsvermogen.</strong> De stokafdruk traint trekkrachtige spieren uren in plaats van sets.</li>
   <li><strong>Gewrichtsbescherming.</strong> Glijdende beweging zonder impact, het hele jaar relevant als wintervariant op hardlopen.</li>
 </ul>
 <h2>Dosering</h2>
 <p>
   60 tot 120 minuten ontspannen in de loipe. Omdat zoveel spieren betrokken zijn, voelt een matig tempo
-  lichter aan dan het hart-vaatstelsel-wise is — de eerste sessies eerder korter aanleggen dan gepland.
+  lichter aan dan het cardiovasculair gezien is — de eerste sessies eerder korter aanleggen dan gepland.
 </p>

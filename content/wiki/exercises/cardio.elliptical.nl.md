@@ -30,7 +30,7 @@ tips:
 <h2>Waarvoor het bijzonder geschikt is</h2>
 <ul>
   <li><strong>Vervanging voor hardloopsessies.</strong> Vergelijkbare hart-vaatstelsel-prikkel, aanzienlijk minder gewrichtspanning.</li>
-  <li><strong>Weerafhankelijke basis.</strong> Zone-2-arbeid die niet van duisternis of glibberigheid afhangt.</li>
+  <li><strong>Weeronafhankelijke basis.</strong> Zone-2-arbeid die niet van duisternis of glibberigheid afhangt.</li>
   <li><strong>Intervallen met schone weerstandssprong.</strong> De wissel gaat sneller en nauwkeuriger dan op enige helling buiten.</li>
 </ul>
 <h2>Dosering</h2>
