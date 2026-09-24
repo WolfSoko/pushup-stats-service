@@ -102,7 +102,11 @@ export class AchievementDialogComponent {
       return;
     }
     this.snapping.set(true);
-    await snapElement(this.cardRef().nativeElement, {
+    const card = this.cardRef().nativeElement;
+    // Set synchronously: html2canvas clones the card right away, before the
+    // signal-driven class binding has necessarily rendered.
+    card.classList.add('is-snapping');
+    await snapElement(card, {
       injector: this.envInjector,
       durationMs: ACHIEVEMENT_SNAP_DURATION_MS,
       name: 'achievement-thanos',

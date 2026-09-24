@@ -42,8 +42,17 @@
     opacity: calc(1 - var(--snap-progress, 0));
   }
 
+  // html2canvas re-runs CSS animations in its cloned document, so the
+  // entrance keyframes would be captured at opacity 0 (no particles), and
+  // a filled `opacity` keyframe would override the inline fade-out the
+  // vaporize relies on. Snapping therefore freezes every animation.
   &.is-snapping {
     overflow: visible;
+
+    &,
+    * {
+      animation: none !important;
+    }
   }
 }
 

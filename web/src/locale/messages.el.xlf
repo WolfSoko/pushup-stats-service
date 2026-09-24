@@ -14451,8 +14451,8 @@
     </unit>
     <unit id="achievements.tile.progress">
       <segment state="translated">
-        <source><ph id="0" equiv="INTERPOLATION" disp="{{ progress.current }}"/>:current: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.target }}"/>:target:</source>
-        <target><ph id="0" equiv="INTERPOLATION" disp="{{ progress.current }}"/>:current: από <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.target }}"/>:target:</target>
+        <source><ph id="0" equiv="CURRENT" disp="{{ progress.current // i18n(ph=&quot;current&quot;) }}"/> von <ph id="1" equiv="TARGET" disp="{{ progress.target // i18n(ph=&quot;target&quot;) }}"/></source>
+        <target><ph id="0" equiv="CURRENT" disp="{{ progress.current // i18n(ph=&quot;current&quot;) }}"/> από <ph id="1" equiv="TARGET" disp="{{ progress.target // i18n(ph=&quot;target&quot;) }}"/></target>
       </segment>
     </unit>
     <unit id="achievements.page.title">
@@ -14463,8 +14463,8 @@
     </unit>
     <unit id="achievements.page.count">
       <segment state="translated">
-        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ store.collection().earnedCount }}"/>:earned: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ store.collection().totalCount }}"/>:total: freigeschaltet </source>
-        <target><ph id="0" equiv="INTERPOLATION" disp="{{ store.collection().earnedCount }}"/>:earned: από <ph id="1" equiv="INTERPOLATION_1" disp="{{ store.collection().totalCount }}"/>:total: ξεκλειδωμένα</target>
+        <source> <ph id="0" equiv="EARNED" disp="{{ store.collection().earnedCount // i18n(ph=&quot;earned&quot;) }}"/> von <ph id="1" equiv="TOTAL" disp="{{ store.collection().totalCount // i18n(ph=&quot;total&quot;) }}"/> freigeschaltet </source>
+        <target><ph id="0" equiv="EARNED" disp="{{ store.collection().earnedCount // i18n(ph=&quot;earned&quot;) }}"/> από <ph id="1" equiv="TOTAL" disp="{{ store.collection().totalCount // i18n(ph=&quot;total&quot;) }}"/> ξεκλειδωμένα</target>
       </segment>
     </unit>
     <unit id="achievements.page.next">

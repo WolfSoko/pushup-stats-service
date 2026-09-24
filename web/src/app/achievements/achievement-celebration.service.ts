@@ -75,20 +75,15 @@ export class AchievementCelebrationService {
     const badge = pending
       .map(resolveAchievementBadge)
       .find((entry) => entry !== null);
-    if (badge) this.open(badge);
+    if (badge) this.show(badge);
   }
 
   /**
-   * Opens the celebration for any catalog badge without touching the
-   * celebrated set — the admin preview must neither need an earned badge
-   * nor suppress the real celebration later.
+   * Opens the celebration on demand — replaying an earned badge, or the
+   * admin preview — without touching the celebrated set, so a preview
+   * never suppresses the real celebration later.
    */
-  preview(badgeId: string): void {
-    const badge = resolveAchievementBadge(badgeId);
-    if (badge) this.open(badge);
-  }
-
-  private open(badge: AchievementBadge): void {
+  show(badge: AchievementBadge): void {
     const titleId = `achievement-dialog-title-${nextDialogTitleId++}`;
     this.dialog.open(AchievementDialogComponent, {
       data: {

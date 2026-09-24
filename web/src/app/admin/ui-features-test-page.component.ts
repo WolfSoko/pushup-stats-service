@@ -156,6 +156,9 @@ export class UiFeaturesTestPageComponent {
   }
 
   previewBadgeDialog(): void {
-    this.achievements.preview(this.selectedBadgeId());
+    const badge = this.previewBadges.find(
+      (entry) => entry.id === this.selectedBadgeId()
+    );
+    if (badge) this.achievements.show(badge);
   }
 }
