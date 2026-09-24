@@ -3202,17 +3202,17 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:6,7</note>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:8,9</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> Logo</source>
-      <target>俯卧撑追踪器标志</target></segment>
+      <target><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> 标志</target></segment>
     </unit>
     <unit id="landing.eyebrow">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:10,11</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></source>
-      <target>俯卧撑追踪器</target></segment>
+      <target><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></target></segment>
     </unit>
     <unit id="landing.free.badge">
       <notes>
@@ -3792,9 +3792,9 @@
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:131</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="brand" disp="BRAND_NAME"/> Profil</source>
-      <target>俯卧撑追踪器资料</target></segment>
+      <target><ph id="0" equiv="brand" disp="BRAND_NAME"/> 个人主页</target></segment>
     </unit>
     <unit id="publicProfile.seo.notFound.title">
       <notes>
@@ -5521,9 +5521,9 @@
       <notes>
         <note category="location">web/src/app/stats/dashboard.store.ts:444</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
-      <target>俯卧撑追踪器</target></segment>
+      <target><ph id="0" equiv="brand" disp="BRAND_NAME"/></target></segment>
     </unit>
     <unit id="analysis.weekTrendTitle">
       <notes>
@@ -6303,9 +6303,9 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:12,13</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></source>
-      <target>俯卧撑统计</target></segment>
+      <target><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></target></segment>
     </unit>
     <unit id="dashboardTitle">
       <notes>
@@ -11080,9 +11080,9 @@
       </segment>
     </unit>
     <unit id="achievement.share.title">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
-        <target>俯卧撑追踪器</target>
+        <target><ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="achievement.share.text">
@@ -14380,573 +14380,573 @@
       </segment>
     </unit>
     <unit id="notifications.panel.allRead">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alles gelesen. </source>
-        <target> Alles gelesen. </target>
+        <target> 全部已读。 </target>
       </segment>
     </unit>
     <unit id="rebrandIntro.badge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu</source>
-        <target>Neu</target>
+        <target>新</target>
       </segment>
     </unit>
     <unit id="rebrandIntro.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wir benennen uns um</source>
-        <target>Wir benennen uns um</target>
+        <target>我们即将更名</target>
       </segment>
     </unit>
     <unit id="rebrandIntro.stepCount">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
-        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+        <target> 第 <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> 步，共 <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> 步 </target>
       </segment>
     </unit>
     <unit id="rebrandIntro.later">
-      <segment state="initial">
+      <segment state="translated">
         <source> Später </source>
-        <target> Später </target>
+        <target> 稍后 </target>
       </segment>
     </unit>
     <unit id="rebrandIntro.back">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück</source>
-        <target>Zurück</target>
+        <target>返回</target>
       </segment>
     </unit>
     <unit id="rebrandIntro.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beitrag lesen</source>
-        <target>Beitrag lesen</target>
+        <target>阅读文章</target>
       </segment>
     </unit>
     <unit id="rebrandIntro.next">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiter</source>
-        <target>Weiter</target>
+        <target>下一步</target>
       </segment>
     </unit>
     <unit id="rebrandIntro.step1.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ein neuer Name kommt</source>
-        <target>Ein neuer Name kommt</target>
+        <target>新名字即将到来</target>
       </segment>
     </unit>
     <unit id="rebrandIntro.step1.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Angefangen hat alles mit Liegestützen. Inzwischen zählt die Kamera auch Kniebeugen und Klimmzüge, es gibt zehn Trainingspläne und ein Übungs-Wiki – der Name wird dem nicht mehr gerecht.</source>
-        <target>Angefangen hat alles mit Liegestützen. Inzwischen zählt die Kamera auch Kniebeugen und Klimmzüge, es gibt zehn Trainingspläne und ein Übungs-Wiki – der Name wird dem nicht mehr gerecht.</target>
+        <target>一切都从俯卧撑开始。现在摄像头还能识别深蹲和引体向上，我们有十种训练计划和一个动作维基——这个名字已经不能代表现在的一切了。</target>
       </segment>
     </unit>
     <unit id="rebrandIntro.step2.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dein Fortschritt bleibt</source>
-        <target>Dein Fortschritt bleibt</target>
+        <target>你的进度不会丢失</target>
       </segment>
     </unit>
     <unit id="rebrandIntro.step2.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Konto, Einträge, Streak und Abzeichen bleiben unverändert – du musst nichts tun. Welcher Name es wird, steht noch nicht fest; wir sagen rechtzeitig Bescheid.</source>
-        <target>Konto, Einträge, Streak und Abzeichen bleiben unverändert – du musst nichts tun. Welcher Name es wird, steht noch nicht fest; wir sagen rechtzeitig Bescheid.</target>
+        <target>账户、记录、连续天数和徽章都不会改变——你不需要做任何事。新名字还没定下来，我们会及时通知你。</target>
       </segment>
     </unit>
     <unit id="announcements.rebrand">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese App bekommt einen neuen Namen</source>
-        <target>Diese App bekommt einen neuen Namen</target>
+        <target>这个应用将更换新名字</target>
       </segment>
     </unit>
     <unit id="pendingRequest.indicatorAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfrage wird verarbeitet</source>
-        <target>Anfrage wird verarbeitet</target>
+        <target>请求处理中</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.hiking.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wandern</source>
-        <target>Wandern</target>
+        <target>徒步</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.nordicwalking.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nordic Walking</source>
-        <target>Nordic Walking</target>
+        <target>北欧式健走</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.elliptical.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Crosstrainer</source>
-        <target>Crosstrainer</target>
+        <target>椭圆机</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.inlineskating.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Inline-Skaten</source>
-        <target>Inline-Skaten</target>
+        <target>轮滑</target>
       </segment>
     </unit>
     <unit id="exercise.cardio.crosscountryskiing.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Skilanglauf</source>
-        <target>Skilanglauf</target>
+        <target>越野滑雪</target>
       </segment>
     </unit>
     <unit id="exerciseGuide.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Für diese Übung gibt es noch keine Anleitung. </source>
-        <target> Für diese Übung gibt es noch keine Anleitung. </target>
+        <target> 该动作暂无指南。 </target>
       </segment>
     </unit>
     <unit id="exerciseGuide.toWiki">
-      <segment state="initial">
+      <segment state="translated">
         <source>Im Wiki öffnen</source>
-        <target>Im Wiki öffnen</target>
+        <target>在维基中打开</target>
       </segment>
     </unit>
     <unit id="exerciseGuide.close">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verstanden </source>
-        <target> Verstanden </target>
+        <target> 知道了 </target>
       </segment>
     </unit>
     <unit id="session.step.guide">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anleitung</source>
-        <target>Anleitung</target>
+        <target>指南</target>
       </segment>
     </unit>
     <unit id="wiki.exercise.newSession">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als Session anlegen</source>
-        <target>Als Session anlegen</target>
+        <target>创建为训练课</target>
       </segment>
     </unit>
     <unit id="wiki.exercises.search.label">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung suchen</source>
-        <target>Übung suchen</target>
+        <target>搜索动作</target>
       </segment>
     </unit>
     <unit id="wiki.exercises.search.placeholder">
-      <segment state="initial">
+      <segment state="translated">
         <source>z. B. Kniebeuge, Rücken, Plank</source>
-        <target>z. B. Kniebeuge, Rücken, Plank</target>
+        <target>例如：深蹲、背部、平板支撑</target>
       </segment>
     </unit>
     <unit id="wiki.exercises.search.clear">
-      <segment state="initial">
+      <segment state="translated">
         <source>Suche leeren</source>
-        <target>Suche leeren</target>
+        <target>清空搜索</target>
       </segment>
     </unit>
     <unit id="wiki.exercises.search.count">
-      <segment state="initial">
+      <segment state="translated">
         <source>{VAR_PLURAL, plural, =0 {Keine Übung gefunden} =1 {Eine Übung gefunden} other {<ph id="0" equiv="INTERPOLATION"/> Übungen gefunden}}</source>
-        <target>{VAR_PLURAL, plural, =0 {Keine Übung gefunden} =1 {Eine Übung gefunden} other {<ph id="0" equiv="INTERPOLATION"/> Übungen gefunden}}</target>
+        <target>{VAR_PLURAL, plural, =0 {未找到动作} =1 {找到一个动作} other {找到 <ph id="0" equiv="INTERPOLATION"/> 个动作}}</target>
       </segment>
     </unit>
     <unit id="wiki.exercises.search.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Keine Übung passt zu „<ph id="0" equiv="INTERPOLATION" disp="{{ query() }}"/>“. </source>
-        <target> Keine Übung passt zu „<ph id="0" equiv="INTERPOLATION" disp="{{ query() }}"/>“. </target>
+        <target> 没有找到匹配“<ph id="0" equiv="INTERPOLATION" disp="{{ query() }}"/>”的动作。 </target>
       </segment>
     </unit>
     <unit id="wiki.exercises.search.reset">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alle Übungen zeigen </source>
-        <target> Alle Übungen zeigen </target>
+        <target> 显示所有动作 </target>
       </segment>
     </unit>
     <unit id="wiki.exercises.search.pushupHits">
-      <segment state="initial">
+      <segment state="translated">
         <source>Passende Varianten</source>
-        <target>Passende Varianten</target>
+        <target>匹配的变式</target>
       </segment>
     </unit>
     <unit id="workouts.editor.guide">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anleitung ansehen</source>
-        <target>Anleitung ansehen</target>
+        <target>查看指南</target>
       </segment>
     </unit>
     <unit id="announcements.exerciseSearch">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu: Übungssuche und Anleitungen direkt in deinen Sessions</source>
-        <target>Neu: Übungssuche und Anleitungen direkt in deinen Sessions</target>
+        <target>新功能：直接在训练课中搜索动作和查看指南</target>
       </segment>
     </unit>
     <unit id="appUpdate.banner.unrecoverable">
-      <segment state="initial">
+      <segment state="translated">
         <source>App-Daten sind veraltet – bitte neu laden.</source>
-        <target>App-Daten sind veraltet – bitte neu laden.</target>
+        <target>应用数据已过期 – 请重新加载。</target>
       </segment>
     </unit>
     <unit id="appUpdate.banner.ready">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine neue Version ist verfügbar.</source>
-        <target>Eine neue Version ist verfügbar.</target>
+        <target>有新版本可用。</target>
       </segment>
     </unit>
     <unit id="appUpdate.banner.later">
-      <segment state="initial">
+      <segment state="translated">
         <source> Später </source>
-        <target> Später </target>
+        <target> 稍后 </target>
       </segment>
     </unit>
     <unit id="appUpdate.banner.reload">
-      <segment state="initial">
+      <segment state="translated">
         <source> Neu laden </source>
-        <target> Neu laden </target>
+        <target> 重新加载 </target>
       </segment>
     </unit>
     <unit id="announcements.workoutReminders">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu: Erinnerungen für deine Sessions</source>
-        <target>Neu: Erinnerungen für deine Sessions</target>
+        <target>新功能：训练课提醒</target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source> Neu · Session-Erinnerungen </source>
-        <target> Neu · Session-Erinnerungen </target>
+        <target> 新功能 · 训练课提醒 </target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.headline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Deine Session meldet sich — genau dann, wenn du trainieren willst. </source>
-        <target> Deine Session meldet sich — genau dann, wenn du trainieren willst. </target>
+        <target> 训练课会提醒你——正好在你想训练的时候。 </target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source> Gib jeder Session ihren eigenen Rhythmus: alle zwei Tage um 15:00 oder jeden Montag, Mittwoch und Freitag. Zur gewählten Zeit kommt eine Push-Benachrichtigung aufs Handy — ein Tipp, und die Session startet. </source>
-        <target> Gib jeder Session ihren eigenen Rhythmus: alle zwei Tage um 15:00 oder jeden Montag, Mittwoch und Freitag. Zur gewählten Zeit kommt eine Push-Benachrichtigung aufs Handy — ein Tipp, und die Session startet. </target>
+        <target> 为每个训练课设定专属节奏：每两天 15:00，或每周一、三、五。到设定时间，手机会收到推送通知——点一下，训练课就开始。 </target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.chip.rhythm">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle paar Tage oder an festen Wochentagen</source>
-        <target>Alle paar Tage oder an festen Wochentagen</target>
+        <target>每隔几天或固定星期几</target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.chip.time">
-      <segment state="initial">
+      <segment state="translated">
         <source>Deine Uhrzeit, auch bei Zeitumstellung</source>
-        <target>Deine Uhrzeit, auch bei Zeitumstellung</target>
+        <target>你的时间，即使夏令时切换也不受影响</target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.chip.push">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push aufs Handy — ein Tipp startet die Session</source>
-        <target>Push aufs Handy — ein Tipp startet die Session</target>
+        <target>手机推送——点一下即可开始训练课</target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erinnerung einrichten</source>
-        <target>Erinnerung einrichten</target>
+        <target>设置提醒</target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.mock.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>⏰ Ganzkörper kurz</source>
-        <target>⏰ Ganzkörper kurz</target>
+        <target>⏰ 全身速训</target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.mock.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle 2 Tage</source>
-        <target>Alle 2 Tage</target>
+        <target>每 2 天</target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.mock.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zeit für deine Session. Tippe, um direkt loszulegen.</source>
-        <target>Zeit für deine Session. Tippe, um direkt loszulegen.</target>
+        <target>该开始训练课了。点一下立即开始。</target>
       </segment>
     </unit>
     <unit id="landing.workoutReminders.mock.action">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session starten</source>
-        <target>Session starten</target>
+        <target>开始训练课</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erinnerung</source>
-        <target>Erinnerung</target>
+        <target>提醒</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.enabled">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erinnerung aktiv</source>
-        <target>Erinnerung aktiv</target>
+        <target>提醒已开启</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.kind.aria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rhythmus</source>
-        <target>Rhythmus</target>
+        <target>节奏</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.kind.interval">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle paar Tage</source>
-        <target>Alle paar Tage</target>
+        <target>每隔几天</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.kind.weekdays">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wochentage</source>
-        <target>Wochentage</target>
+        <target>星期几</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.everyDays">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle … Tage</source>
-        <target>Alle … Tage</target>
+        <target>每 … 天</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.startDate">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ab</source>
-        <target>Ab</target>
+        <target>从</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.time">
-      <segment state="initial">
+      <segment state="translated">
         <source>Uhrzeit</source>
-        <target>Uhrzeit</target>
+        <target>时间</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.next">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nächste Erinnerung: <ph id="0" equiv="INTERPOLATION" disp="{{ next }}"/></source>
-        <target>Nächste Erinnerung: <ph id="0" equiv="INTERPOLATION" disp="{{ next }}"/></target>
+        <target>下次提醒：<ph id="0" equiv="INTERPOLATION" disp="{{ next }}"/></target>
       </segment>
     </unit>
     <unit id="workouts.reminder.pushOff">
-      <segment state="initial">
+      <segment state="translated">
         <source> Push ist auf diesem Gerät aus. Dann erinnert dich die App nur, solange sie geöffnet ist. </source>
-        <target> Push ist auf diesem Gerät aus. Dann erinnert dich die App nur, solange sie geöffnet ist. </target>
+        <target> 此设备上的推送已关闭。这样应用只会在打开时提醒你。 </target>
       </segment>
     </unit>
     <unit id="workouts.reminder.enablePush">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push aktivieren</source>
-        <target>Push aktivieren</target>
+        <target>启用推送</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.failed">
-      <segment state="initial">
+      <segment state="translated">
         <source> Das hat nicht geklappt. Bitte versuch es noch einmal. </source>
-        <target> Das hat nicht geklappt. Bitte versuch es noch einmal. </target>
+        <target> 操作失败，请再试一次。 </target>
       </segment>
     </unit>
     <unit id="workouts.reminder.remove">
-      <segment state="initial">
+      <segment state="translated">
         <source> Entfernen </source>
-        <target> Entfernen </target>
+        <target> 移除 </target>
       </segment>
     </unit>
     <unit id="workouts.reminder.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> 取消 </target>
       </segment>
     </unit>
     <unit id="workouts.reminder.save">
-      <segment state="initial">
+      <segment state="translated">
         <source> Speichern </source>
-        <target> Speichern </target>
+        <target> 保存 </target>
       </segment>
     </unit>
     <unit id="workouts.reminder.notificationBody">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zeit für deine Session. Tippe, um direkt loszulegen.</source>
-        <target>Zeit für deine Session. Tippe, um direkt loszulegen.</target>
+        <target>该开始训练课了。点一下立即开始。</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.daily">
-      <segment state="initial">
+      <segment state="translated">
         <source>Täglich</source>
-        <target>Täglich</target>
+        <target>每天</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.badge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu</source>
-        <target>Neu</target>
+        <target>新</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session-Erinnerungen</source>
-        <target>Session-Erinnerungen</target>
+        <target>训练课提醒</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.stepCount">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
-        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+        <target> 第 <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> 步，共 <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> 步 </target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.later">
-      <segment state="initial">
+      <segment state="translated">
         <source> Später </source>
-        <target> Später </target>
+        <target> 稍后 </target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.back">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück</source>
-        <target>Zurück</target>
+        <target>返回</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu meinen Sessions</source>
-        <target>Zu meinen Sessions</target>
+        <target>查看我的训练课</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.next">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiter</source>
-        <target>Weiter</target>
+        <target>下一步</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.step1.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erinnerungen für deine Sessions</source>
-        <target>Erinnerungen für deine Sessions</target>
+        <target>为你的训练课设置提醒</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.step1.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Jede Session kann dich jetzt ans Training erinnern — zum Beispiel alle 2 Tage um 15:00 oder jeden Montag, Mittwoch und Freitag.</source>
-        <target>Jede Session kann dich jetzt ans Training erinnern — zum Beispiel alle 2 Tage um 15:00 oder jeden Montag, Mittwoch und Freitag.</target>
+        <target>现在每个训练课都能提醒你训练——比如每 2 天 15:00，或每周一、三、五。</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.step2.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>So richtest du sie ein</source>
-        <target>So richtest du sie ein</target>
+        <target>设置方法</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.step2.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tippe auf der Session-Karte auf das Wecker-Symbol, wähle den Rhythmus und die Uhrzeit — fertig.</source>
-        <target>Tippe auf der Session-Karte auf das Wecker-Symbol, wähle den Rhythmus und die Uhrzeit — fertig.</target>
+        <target>点一下训练课卡片上的闹钟图标，选择节奏和时间——完成。</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.step3.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Push aufs Handy</source>
-        <target>Push aufs Handy</target>
+        <target>手机推送</target>
       </segment>
     </unit>
     <unit id="workouts.reminder.intro.step3.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zur gewählten Zeit kommt eine Push-Benachrichtigung, ein Tipp startet die Session. Ohne Push erinnert dich die App, solange sie geöffnet ist.</source>
-        <target>Zur gewählten Zeit kommt eine Push-Benachrichtigung, ein Tipp startet die Session. Ohne Push erinnert dich die App, solange sie geöffnet ist.</target>
+        <target>到设定时间会收到推送通知，点一下即可开始训练课。没有推送时，应用会在打开期间提醒你。</target>
       </segment>
     </unit>
     <unit id="workouts.card.reminderEdit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erinnerung ändern</source>
-        <target>Erinnerung ändern</target>
+        <target>修改提醒</target>
       </segment>
     </unit>
     <unit id="workouts.card.reminderAdd">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erinnerung einrichten</source>
-        <target>Erinnerung einrichten</target>
+        <target>设置提醒</target>
       </segment>
     </unit>
     <unit id="auth.error.requiresRecentLogin">
-      <segment state="initial">
+      <segment state="translated">
         <source>Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.</source>
-        <target>Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.</target>
+        <target>出于安全考虑，请先退出登录再重新登录，然后再试一次。</target>
       </segment>
     </unit>
     <unit id="admin.bulk.remaining">
-      <segment state="initial">
+      <segment state="translated">
         <source>Noch offen (erneut ausführen):</source>
-        <target>Noch offen (erneut ausführen):</target>
+        <target>仍待处理（请重新执行）：</target>
       </segment>
     </unit>
     <unit id="admin.delete.purgeInfo">
-      <segment state="initial">
+      <segment state="translated">
         <source> Das Konto und alle zugehörigen Daten werden endgültig gelöscht. </source>
-        <target> Das Konto und alle zugehörigen Daten werden endgültig gelöscht. </target>
+        <target> 该账户及所有相关数据将被永久删除。 </target>
       </segment>
     </unit>
     <unit id="admin.migrations.orphanedUserData.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Datenmüll gelöschter Konten entfernen</source>
-        <target>Datenmüll gelöschter Konten entfernen</target>
+        <target>清除已删除账户的残留数据</target>
       </segment>
     </unit>
     <unit id="admin.migrations.orphanedUserData.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sucht Daten von Nutzern ohne Firebase-Auth-Konto (Einträge, Statistiken, Pläne, Workouts, Freundschaften, Push-Abos, Nachrichten, Profilfotos …) und löscht sie wie bei einer Kontolöschung. Bis zu 25 Konten pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Nicht umkehrbar — erst den Probelauf ausführen.</source>
-        <target>Sucht Daten von Nutzern ohne Firebase-Auth-Konto (Einträge, Statistiken, Pläne, Workouts, Freundschaften, Push-Abos, Nachrichten, Profilfotos …) und löscht sie wie bei einer Kontolöschung. Bis zu 25 Konten pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Nicht umkehrbar — erst den Probelauf ausführen.</target>
+        <target>查找没有 Firebase Auth 账户的用户数据（记录、统计、计划、训练、好友关系、推送订阅、消息、头像……）并像删除账户一样将其删除。每次最多处理 25 个账户——重复执行直到「remaining」为 0。此操作不可撤销——请先执行试运行。</target>
       </segment>
     </unit>
     <unit id="settings.deleteAccountFailed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Konto konnte nicht gelöscht werden. Bitte versuche es erneut.</source>
-        <target>Konto konnte nicht gelöscht werden. Bitte versuche es erneut.</target>
+        <target>无法删除账户，请再试一次。</target>
       </segment>
     </unit>
     <unit id="friends.cheer.done">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute angefeuert</source>
-        <target>Heute angefeuert</target>
+        <target>今天已加油</target>
       </segment>
     </unit>
     <unit id="friends.cheer.doneFor">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="name"/> heute schon angefeuert</source>
-        <target><ph id="0" equiv="name" disp="name"/> heute schon angefeuert</target>
+        <target>今天已为 <ph id="0" equiv="name" disp="name"/> 加油</target>
       </segment>
     </unit>
     <unit id="friends.cheer.for">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="name"/> anfeuern</source>
-        <target><ph id="0" equiv="name" disp="name"/> anfeuern</target>
+        <target>为 <ph id="0" equiv="name" disp="name"/> 加油</target>
       </segment>
     </unit>
     <unit id="achievement.dialog.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neues Abzeichen</source>
-        <target>Neues Abzeichen</target>
+        <target>新徽章</target>
       </segment>
     </unit>
     <unit id="achievement.dialog.note">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ab jetzt glänzt es in deiner Sammlung. Weiter so!</source>
-        <target>Ab jetzt glänzt es in deiner Sammlung. Weiter so!</target>
+        <target>从现在起它将在你的收藏中闪耀。继续加油！</target>
       </segment>
     </unit>
     <unit id="achievement.dialog.closeAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schließen</source>
-        <target>Schließen</target>
+        <target>关闭</target>
       </segment>
     </unit>
     <unit id="achievement.dialog.snap">
-      <segment state="initial">
+      <segment state="translated">
         <source>Snap!</source>
         <target>Snap!</target>
       </segment>
     </unit>
     <unit id="achievement.dialog.snapAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Snap! – Abzeichen vaporisieren</source>
-        <target>Snap! – Abzeichen vaporisieren</target>
+        <target>Snap! – 让徽章消散</target>
       </segment>
     </unit>
 </file>
