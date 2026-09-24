@@ -7,6 +7,13 @@
     <language>nl</language>
     <atom:link href="https://pushup-stats.com/nl/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Deze app krijgt een nieuwe naam – en waarom dat nodig was</title>
+      <link>https://pushup-stats.com/nl/blog/app-krijgt-nieuwe-naam-waarom</link>
+      <guid isPermaLink="true">https://pushup-stats.com/nl/blog/app-krijgt-nieuwe-naam-waarom</guid>
+      <pubDate>Sun, 20 Sep 2026 08:00:00 GMT</pubDate>
+      <description>Pushup Tracker heette zo omdat de app met opdrukken begon. Inmiddels telt de camera ook squats en pull-ups, in de helft van de tien trainingsschema&apos;s is de opdruk slechts één oefening onder veel, en in de oefening-wiki staan 40 vermeldingen. Waarom de naam niet meer aansluit, wat verandert – en wat absoluut blijft.</description>
+    </item>
+    <item>
       <title>Full-body training zonder toestellen: de zes basisbewegingen die je elke week nodig hebt</title>
       <link>https://pushup-stats.com/nl/blog/basisbewegingen-full-body-training</link>
       <guid isPermaLink="true">https://pushup-stats.com/nl/blog/basisbewegingen-full-body-training</guid>
@@ -157,14 +164,6 @@
       <pubDate>Mon, 10 Mar 2025 08:00:00 GMT</pubDate>
       <description>Waarom een digitale opdruk-tracker het verschil maakt – en hoe Pushup Tracker je helpt persoonlijke records te behalen en consistent te blijven.</description>
       <enclosure url="https://images.unsplash.com/photo-1717821681365-36b0da044a75?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" type="image/jpeg" length="0"/>
-    </item>
-    <item>
-      <title>Waarom dagelijkse opdrukken je leven veranderen</title>
-      <link>https://pushup-stats.com/nl/blog/dagelijks-opdrukken</link>
-      <guid isPermaLink="true">https://pushup-stats.com/nl/blog/dagelijks-opdrukken</guid>
-      <pubDate>Mon, 03 Feb 2025 08:00:00 GMT</pubDate>
-      <description>Dagelijkse opdrukken verbeteren kracht, houding en welzijn. Ontdek de wetenschappelijk bewezen voordelen en hoe je de gewoonte voor altijd opbouwt.</description>
-      <enclosure url="https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" type="image/jpeg" length="0"/>
     </item>
   </channel>
 </rss>

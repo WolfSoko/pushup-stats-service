@@ -5611,9 +5611,9 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:277,279</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Konto löschen entfernt dein Konto und alle gespeicherten Daten: Trainingseinträge, Statistiken, Pläne, Workouts, Freundschaften, Nachrichten und dein Profilfoto. </source>
-        <target> Η Διαγραφή λογαριασμού θα καταργήσει τον λογαριασμό σας. Τα δεδομένα εκπαίδευσης παραμένουν ανώνυμα για στατιστική ανάλυση. </target>
+        <target>Η διαγραφή λογαριασμού αφαιρεί τον λογαριασμό σου και όλα τα αποθηκευμένα δεδομένα: καταχωρίσεις προπόνησης, στατιστικά, προγράμματα, προπονήσεις, φιλίες, μηνύματα και τη φωτογραφία προφίλ σου.</target>
       </segment>
     </unit>
     <unit id="settings.deleteAccount">
@@ -5656,9 +5656,9 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:307,309</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Dein Konto und alle zugehörigen Daten werden endgültig gelöscht — auch deine Trainingseinträge. Gesendetes Feedback bleibt ohne Bezug zu dir erhalten. </source>
-        <target> Ο λογαριασμός σας θα διαγραφεί. Τα δεδομένα εκπαίδευσης παραμένουν ανώνυμα για στατιστική ανάλυση. </target>
+        <target>Ο λογαριασμός σου και όλα τα σχετικά δεδομένα θα διαγραφούν οριστικά — συμπεριλαμβανομένων των καταχωρίσεων προπόνησής σου. Τυχόν σχόλια που έχεις στείλει παραμένουν, αλλά χωρίς καμία σύνδεση με εσένα.</target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogPhraseLabel">
@@ -10658,9 +10658,9 @@
       </segment>
     </unit>
     <unit id="androidTest.invite.join">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ich bin dabei </source>
-        <target> Μέσα είμαι </target>
+        <target>Μέσα είμαι</target>
       </segment>
     </unit>
         <unit id="androidTest.invite.thanksTitle">
@@ -11858,9 +11858,9 @@
       </segment>
     </unit>
     <unit id="publicProfile.seo.descriptionPlain">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> auf <ph id="1" equiv="brand" disp="BRAND_NAME"/>. Tracke selbst kostenlos auf <ph id="2" equiv="domain" disp="BRAND_DOMAIN"/>.</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> στο Pushup Tracker. Παρακολούθησε δωρεάν και τη δική σου πρόοδο στο pushup-stats.com.</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> στο <ph id="1" equiv="brand" disp="BRAND_NAME"/>. Παρακολούθησε δωρεάν και τη δική σου πρόοδο στο <ph id="2" equiv="domain" disp="BRAND_DOMAIN"/>.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.title">
@@ -14834,39 +14834,39 @@
       </segment>
     </unit>
     <unit id="notifications.filter.unread">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ungelesen</source>
-        <target>Ungelesen</target>
+        <target>Μη αναγνωσμένα</target>
       </segment>
     </unit>
     <unit id="notifications.filter.all">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle</source>
-        <target>Alle</target>
+        <target>Όλα</target>
       </segment>
     </unit>
     <unit id="notifications.empty.unread">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alles gelesen.</source>
-        <target>Alles gelesen.</target>
+        <target>Όλα διαβάστηκαν.</target>
       </segment>
     </unit>
     <unit id="notifications.empty.all">
-      <segment state="initial">
+      <segment state="translated">
         <source>Noch keine Nachrichten.</source>
-        <target>Noch keine Nachrichten.</target>
+        <target>Δεν υπάρχουν ακόμη μηνύματα.</target>
       </segment>
     </unit>
     <unit id="notifications.item.delete">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachricht löschen</source>
-        <target>Nachricht löschen</target>
+        <target>Διαγραφή μηνύματος</target>
       </segment>
     </unit>
     <unit id="notifications.page.allRead">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alles gelesen. Über „Alle“ siehst du auch ältere Nachrichten. </source>
-        <target> Alles gelesen. Über „Alle“ siehst du auch ältere Nachrichten. </target>
+        <target>Όλα διαβάστηκαν. Στο «Όλα» βλέπεις και παλαιότερα μηνύματα.</target>
       </segment>
     </unit>
     <unit id="notifications.panel.allRead">

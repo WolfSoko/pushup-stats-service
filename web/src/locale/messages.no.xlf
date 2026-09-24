@@ -3248,9 +3248,9 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="settings.dangerZoneBody">
-      <segment state="initial">
+      <segment state="translated">
         <source> Konto löschen entfernt dein Konto und alle gespeicherten Daten: Trainingseinträge, Statistiken, Pläne, Workouts, Freundschaften, Nachrichten und dein Profilfoto. </source>
-        <target> Sletting av kontoen din fjerner kontoen din. Treningsdata forblir anonymisert for statistisk analyse. </target>
+        <target>Sletting av kontoen din fjerner kontoen din og alle lagrede data: treningsøkter, statistikk, planer, økter, vennskap, meldinger og profilbildet ditt.</target>
       </segment>
     </unit>
     <unit id="settings.remindersLinkTitle">
@@ -3290,9 +3290,9 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogInfo">
-      <segment state="initial">
+      <segment state="translated">
         <source> Dein Konto und alle zugehörigen Daten werden endgültig gelöscht — auch deine Trainingseinträge. Gesendetes Feedback bleibt ohne Bezug zu dir erhalten. </source>
-        <target> Kontoen din vil bli slettet. Treningsdata forblir anonymisert for statistisk analyse. </target>
+        <target>Kontoen din og alle tilhørende data blir slettet permanent — også treningsøktene dine. Tilbakemeldinger du har sendt, blir bevart, men uten noen kobling til deg.</target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogPhraseHint">
@@ -5798,9 +5798,9 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.imageAlt">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> auf <ph id="1" equiv="brand" disp="BRAND_NAME"/></source>
-        <target><ph id="0" equiv="name" disp="name"/> på Pushup Tracker</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> på <ph id="1" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="publicProfile.notFound.title">
@@ -5924,15 +5924,15 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.title">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> Liegestütze · Streak <ph id="2" equiv="streak" disp="profile.currentStreak"/> · <ph id="3" equiv="brand" disp="BRAND_NAME"/></source>
-        <target><ph id="0" equiv="name" disp="name"/> – <ph id="1" equiv="total" disp="total"/> armhevninger · streak <ph id="2" equiv="streak" disp="streak"/> · Pushup Tracker</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> armhevninger · Serie <ph id="2" equiv="streak" disp="profile.currentStreak"/> · <ph id="3" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.description">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf <ph id="4" equiv="domain" disp="BRAND_DOMAIN"/>.</source>
-        <target><ph id="0" equiv="name" disp="name"/> klarte <ph id="1" equiv="total" disp="total"/> armhevninger over <ph id="2" equiv="days" disp="days"/> aktive dager – nåværende streak: <ph id="3" equiv="streak" disp="streak"/> dager. Start med å spore gratis på pushup-stats.com.</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> klarte <ph id="1" equiv="total" disp="profile.total"/> armhevninger over <ph id="2" equiv="days" disp="profile.totalDays"/> aktive dager – nåværende serie: <ph id="3" equiv="streak" disp="profile.currentStreak"/> dager. Start din egen gratis sporing på <ph id="4" equiv="domain" disp="BRAND_DOMAIN"/>.</target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.toggle">
@@ -9958,9 +9958,9 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.join">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ich bin dabei </source>
-        <target> Jeg blir med </target>
+        <target>Jeg blir med</target>
       </segment>
     </unit>
         <unit id="androidTest.invite.thanksTitle">
@@ -11158,9 +11158,9 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.descriptionPlain">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> auf <ph id="1" equiv="brand" disp="BRAND_NAME"/>. Tracke selbst kostenlos auf <ph id="2" equiv="domain" disp="BRAND_DOMAIN"/>.</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> på Pushup Tracker. Følg din egen fremgang gratis på pushup-stats.com.</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> på <ph id="1" equiv="brand" disp="BRAND_NAME"/>. Følg din egen fremgang gratis på <ph id="2" equiv="domain" disp="BRAND_DOMAIN"/>.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.title">
@@ -14128,39 +14128,39 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="notifications.filter.unread">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ungelesen</source>
-        <target>Ungelesen</target>
+        <target>Uleste</target>
       </segment>
     </unit>
     <unit id="notifications.filter.all">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle</source>
         <target>Alle</target>
       </segment>
     </unit>
     <unit id="notifications.empty.unread">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alles gelesen.</source>
-        <target>Alles gelesen.</target>
+        <target>Alt er lest.</target>
       </segment>
     </unit>
     <unit id="notifications.empty.all">
-      <segment state="initial">
+      <segment state="translated">
         <source>Noch keine Nachrichten.</source>
-        <target>Noch keine Nachrichten.</target>
+        <target>Ingen meldinger ennå.</target>
       </segment>
     </unit>
     <unit id="notifications.item.delete">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachricht löschen</source>
-        <target>Nachricht löschen</target>
+        <target>Slett melding</target>
       </segment>
     </unit>
     <unit id="notifications.page.allRead">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alles gelesen. Über „Alle“ siehst du auch ältere Nachrichten. </source>
-        <target> Alles gelesen. Über „Alle“ siehst du auch ältere Nachrichten. </target>
+        <target>Alt er lest. Under «Alle» ser du også eldre meldinger.</target>
       </segment>
     </unit>
     <unit id="notifications.panel.allRead">

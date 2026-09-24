@@ -7,6 +7,13 @@
     <language>es</language>
     <atom:link href="https://pushup-stats.com/es/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Esta aplicación recibe un nombre nuevo – y por qué era necesario</title>
+      <link>https://pushup-stats.com/es/blog/nueva-identidad-aplicacion-razon-cambio</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/nueva-identidad-aplicacion-razon-cambio</guid>
+      <pubDate>Sun, 20 Sep 2026 08:00:00 GMT</pubDate>
+      <description>Pushup Tracker comenzó contando flexiones. Ahora la cámara también cuenta sentadillas y dominadas, la mitad de los diez planes de entrenamiento tienen la flexión como un ejercicio más, y el wiki de ejercicios tiene 40 entradas. Por qué el nombre ya no encaja, qué cambia – y qué permanece garantizado.</description>
+    </item>
+    <item>
       <title>Entrenamiento de cuerpo completo sin material: los seis movimientos básicos que necesitas cada semana</title>
       <link>https://pushup-stats.com/es/blog/movimientos-basicos-cuerpo-completo</link>
       <guid isPermaLink="true">https://pushup-stats.com/es/blog/movimientos-basicos-cuerpo-completo</guid>
@@ -157,14 +164,6 @@
       <pubDate>Mon, 10 Mar 2025 08:00:00 GMT</pubDate>
       <description>Por qué un rastreador digital de flexiones marca la diferencia — y cómo Pushup Tracker te ayuda a alcanzar récords personales y mantener la constancia.</description>
       <enclosure url="https://images.unsplash.com/photo-1717821681365-36b0da044a75?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" type="image/jpeg" length="0"/>
-    </item>
-    <item>
-      <title>Por qué las flexiones diarias cambiarán tu vida</title>
-      <link>https://pushup-stats.com/es/blog/flexiones-diarias</link>
-      <guid isPermaLink="true">https://pushup-stats.com/es/blog/flexiones-diarias</guid>
-      <pubDate>Mon, 03 Feb 2025 08:00:00 GMT</pubDate>
-      <description>Las flexiones diarias mejoran la fuerza, la postura y el bienestar. Descubre los beneficios científicamente probados y cómo construir el hábito de forma definitiva.</description>
-      <enclosure url="https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" type="image/jpeg" length="0"/>
     </item>
   </channel>
 </rss>

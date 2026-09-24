@@ -7,6 +7,13 @@
     <language>zh</language>
     <atom:link href="https://pushup-stats.com/zh/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>这款应用正在改名 — 为什么这是必要的</title>
+      <link>https://pushup-stats.com/zh/blog/pushup-tracker-rename</link>
+      <guid isPermaLink="true">https://pushup-stats.com/zh/blog/pushup-tracker-rename</guid>
+      <pubDate>Sun, 20 Sep 2026 08:00:00 GMT</pubDate>
+      <description>Pushup Tracker 这个名字的来由是应用最初专注于俯卧撑。如今,摄像头也能计数深蹲和引体向上,十个训练计划中有一半已将俯卧撑降为众多练习之一,而练习百科中已有 40 个条目。为什么这个名字不再符合应用的实际功能、将会发生什么变化 — 以及什么是永远不会改变的。</description>
+    </item>
+    <item>
       <title>无器械全身训练:每周都需要的六大基础动作模式</title>
       <link>https://pushup-stats.com/zh/blog/full-body-movement-patterns</link>
       <guid isPermaLink="true">https://pushup-stats.com/zh/blog/full-body-movement-patterns</guid>
@@ -157,14 +164,6 @@
       <pubDate>Mon, 10 Mar 2025 08:00:00 GMT</pubDate>
       <description>为什么数字俯卧撑追踪器能改变一切，Pushup Tracker 如何帮你突破个人最佳成绩并保持坚持。</description>
       <enclosure url="https://images.unsplash.com/photo-1717821681365-36b0da044a75?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" type="image/jpeg" length="0"/>
-    </item>
-    <item>
-      <title>为什么每日俯卧撑会改变你的生活</title>
-      <link>https://pushup-stats.com/zh/blog/daily-pushups</link>
-      <guid isPermaLink="true">https://pushup-stats.com/zh/blog/daily-pushups</guid>
-      <pubDate>Mon, 03 Feb 2025 08:00:00 GMT</pubDate>
-      <description>每日俯卧撑改善力量、姿态和幸福感。发现科学证明的好处，以及如何养成这个习惯。</description>
-      <enclosure url="https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" type="image/jpeg" length="0"/>
     </item>
   </channel>
 </rss>

@@ -3800,9 +3800,9 @@
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:176</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Profil nicht verfügbar – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
-      <target>资料不可用 — 俯卧撑追踪器</target></segment>
+      <target>个人资料不可用 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target></segment>
     </unit>
     <unit id="publicProfile.seo.notFound.description">
       <notes>
@@ -3816,30 +3816,30 @@
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:192</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> Liegestütze · Streak <ph id="2" equiv="streak" disp="profile.currentStreak"/> · <ph id="3" equiv="brand" disp="BRAND_NAME"/></source>
 
-        <target><ph id="0" equiv="name" disp="profile.displayName" /> – <ph id="1" equiv="total" disp="profile.total" /> 个俯卧撑 · 连续 <ph id="2" equiv="streak" disp="profile.currentStreak" /> 天 · Pushup Tracker</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> 个俯卧撑 · 连续 <ph id="2" equiv="streak" disp="profile.currentStreak"/> 天 · <ph id="3" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.description">
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:193</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf <ph id="4" equiv="domain" disp="BRAND_DOMAIN"/>.</source>
 
-        <target><ph id="0" equiv="name" disp="profile.displayName" /> 在 <ph id="2" equiv="days" disp="profile.totalDays" /> 个活跃天内已完成 <ph id="1" equiv="total" disp="profile.total" /> 个俯卧撑 — 当前连续天数：<ph id="3" equiv="streak" disp="profile.currentStreak" /> 天。在 pushup-stats.com 免费追踪你的数据。</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> 在 <ph id="2" equiv="days" disp="profile.totalDays"/> 个活跃天内完成了 <ph id="1" equiv="total" disp="profile.total"/> 个俯卧撑 — 当前连续天数：<ph id="3" equiv="streak" disp="profile.currentStreak"/> 天。在 <ph id="4" equiv="domain" disp="BRAND_DOMAIN"/> 免费开始记录你的数据。</target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.imageAlt">
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:206</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> auf <ph id="1" equiv="brand" disp="BRAND_NAME"/></source>
 
-        <target><ph id="0" equiv="name" disp="profile.displayName" /> 的 Pushup Tracker 个人资料</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> 在 <ph id="1" equiv="brand" disp="BRAND_NAME"/> 上</target>
       </segment>
     </unit>
     <unit id="reminders.page.title">
@@ -6213,9 +6213,9 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:404,406</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Konto löschen entfernt dein Konto und alle gespeicherten Daten: Trainingseinträge, Statistiken, Pläne, Workouts, Freundschaften, Nachrichten und dein Profilfoto. </source>
-      <target> 删除账户将删除你的账户。训练数据将被匿名保留用于统计分析。 </target></segment>
+      <target>删除账户会移除你的账户及所有已保存的数据：训练记录、统计数据、计划、训练课程、好友关系、消息以及你的头像。</target></segment>
     </unit>
     <unit id="settings.deleteAccount">
       <notes>
@@ -6255,9 +6255,9 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:437,440</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Dein Konto und alle zugehörigen Daten werden endgültig gelöscht — auch deine Trainingseinträge. Gesendetes Feedback bleibt ohne Bezug zu dir erhalten. </source>
-      <target> 你的账户将被删除。训练数据将被匿名保留用于统计分析。 </target></segment>
+      <target>你的账户及所有相关数据将被永久删除——包括你的训练记录。已发送的反馈会保留，但不再与你的身份关联。</target></segment>
     </unit>
     <unit id="settings.deleteDialogPhraseLabel">
       <notes>
@@ -10168,9 +10168,9 @@
       </segment>
     </unit>
     <unit id="androidTest.invite.join">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ich bin dabei </source>
-        <target> 我要参加 </target>
+        <target>我要参加</target>
       </segment>
     </unit>
         <unit id="androidTest.invite.thanksTitle">
@@ -11368,9 +11368,9 @@
       </segment>
     </unit>
     <unit id="publicProfile.seo.descriptionPlain">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> auf <ph id="1" equiv="brand" disp="BRAND_NAME"/>. Tracke selbst kostenlos auf <ph id="2" equiv="domain" disp="BRAND_DOMAIN"/>.</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> 在 Pushup Tracker 上。在 pushup-stats.com 免费追踪你的数据。</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> 在 <ph id="1" equiv="brand" disp="BRAND_NAME"/> 上。在 <ph id="2" equiv="domain" disp="BRAND_DOMAIN"/> 免费追踪你的数据。</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.title">
@@ -14344,39 +14344,39 @@
       </segment>
     </unit>
     <unit id="notifications.filter.unread">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ungelesen</source>
-        <target>Ungelesen</target>
+        <target>未读</target>
       </segment>
     </unit>
     <unit id="notifications.filter.all">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle</source>
-        <target>Alle</target>
+        <target>全部</target>
       </segment>
     </unit>
     <unit id="notifications.empty.unread">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alles gelesen.</source>
-        <target>Alles gelesen.</target>
+        <target>全部已读。</target>
       </segment>
     </unit>
     <unit id="notifications.empty.all">
-      <segment state="initial">
+      <segment state="translated">
         <source>Noch keine Nachrichten.</source>
-        <target>Noch keine Nachrichten.</target>
+        <target>暂时还没有消息。</target>
       </segment>
     </unit>
     <unit id="notifications.item.delete">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachricht löschen</source>
-        <target>Nachricht löschen</target>
+        <target>删除消息</target>
       </segment>
     </unit>
     <unit id="notifications.page.allRead">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alles gelesen. Über „Alle“ siehst du auch ältere Nachrichten. </source>
-        <target> Alles gelesen. Über „Alle“ siehst du auch ältere Nachrichten. </target>
+        <target>全部已读。点击"全部"还可以查看更早的消息。</target>
       </segment>
     </unit>
     <unit id="notifications.panel.allRead">

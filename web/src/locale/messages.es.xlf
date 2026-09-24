@@ -3146,27 +3146,27 @@
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:192</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> Liegestütze · Streak <ph id="2" equiv="streak" disp="profile.currentStreak"/> · <ph id="3" equiv="brand" disp="BRAND_NAME"/></source>
-        <target><ph id="0" equiv="name" disp="profile.displayName" /> – <ph id="1" equiv="total" disp="profile.total" /> Flexiones · Racha <ph id="2" equiv="streak" disp="profile.currentStreak" /> · Pushup Tracker</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> flexiones · Racha <ph id="2" equiv="streak" disp="profile.currentStreak"/> · <ph id="3" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.description">
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:193</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf <ph id="4" equiv="domain" disp="BRAND_DOMAIN"/>.</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName" /> ha completado <ph id="1" equiv="total" disp="profile.total" /> flexiones en <ph id="2" equiv="days" disp="profile.totalDays" /> días activos — racha actual: <ph id="3" equiv="streak" disp="profile.currentStreak" /> días. Haz tu seguimiento gratis en pushup-stats.com.</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> ha completado <ph id="1" equiv="total" disp="profile.total"/> flexiones en <ph id="2" equiv="days" disp="profile.totalDays"/> días activos – racha actual: <ph id="3" equiv="streak" disp="profile.currentStreak"/> días. Empieza a registrar gratis en <ph id="4" equiv="domain" disp="BRAND_DOMAIN"/>.</target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.imageAlt">
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:206</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> auf <ph id="1" equiv="brand" disp="BRAND_NAME"/></source>
-        <target><ph id="0" equiv="name" disp="profile.displayName" /> en el rastreador de flexiones</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> en <ph id="1" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="reminders.page.title">
@@ -5607,9 +5607,9 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:277,279</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Konto löschen entfernt dein Konto und alle gespeicherten Daten: Trainingseinträge, Statistiken, Pläne, Workouts, Freundschaften, Nachrichten und dein Profilfoto. </source>
-        <target> Eliminar cuenta eliminará su cuenta. Los datos de entrenamiento permanecen anónimos para el análisis estadístico. </target>
+        <target>Eliminar la cuenta borra tu cuenta y todos los datos guardados: entradas de entrenamiento, estadísticas, planes, sesiones, amistades, mensajes y tu foto de perfil.</target>
       </segment>
     </unit>
     <unit id="settings.deleteAccount">
@@ -5652,9 +5652,9 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:307,309</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Dein Konto und alle zugehörigen Daten werden endgültig gelöscht — auch deine Trainingseinträge. Gesendetes Feedback bleibt ohne Bezug zu dir erhalten. </source>
-        <target> Tu cuenta será eliminada. Los datos de entrenamiento permanecen anónimos para el análisis estadístico. </target>
+        <target>Tu cuenta y todos los datos asociados se eliminarán definitivamente, incluidas tus entradas de entrenamiento. Los comentarios enviados se conservan, pero sin ninguna referencia a ti.</target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogPhraseLabel">
@@ -5688,9 +5688,9 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:545</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Mein <ph id="0" equiv="brand" disp="BRAND_NAME"/> Profil</source>
-        <target>Mi perfil de seguimiento de flexiones</target>
+        <target>Mi perfil de <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.share.text">
@@ -10654,9 +10654,9 @@
       </segment>
     </unit>
     <unit id="androidTest.invite.join">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ich bin dabei </source>
-        <target> Cuenta conmigo </target>
+        <target>Cuenta conmigo</target>
       </segment>
     </unit>
         <unit id="androidTest.invite.thanksTitle">
@@ -11854,9 +11854,9 @@
       </segment>
     </unit>
     <unit id="publicProfile.seo.descriptionPlain">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> auf <ph id="1" equiv="brand" disp="BRAND_NAME"/>. Tracke selbst kostenlos auf <ph id="2" equiv="domain" disp="BRAND_DOMAIN"/>.</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> en Pushup Tracker. Registra tu propio progreso gratis en pushup-stats.com.</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> en <ph id="1" equiv="brand" disp="BRAND_NAME"/>. Registra tu propio progreso gratis en <ph id="2" equiv="domain" disp="BRAND_DOMAIN"/>.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.title">
@@ -14830,39 +14830,39 @@
       </segment>
     </unit>
     <unit id="notifications.filter.unread">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ungelesen</source>
-        <target>Ungelesen</target>
+        <target>No leídos</target>
       </segment>
     </unit>
     <unit id="notifications.filter.all">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle</source>
-        <target>Alle</target>
+        <target>Todos</target>
       </segment>
     </unit>
     <unit id="notifications.empty.unread">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alles gelesen.</source>
-        <target>Alles gelesen.</target>
+        <target>Todo leído.</target>
       </segment>
     </unit>
     <unit id="notifications.empty.all">
-      <segment state="initial">
+      <segment state="translated">
         <source>Noch keine Nachrichten.</source>
-        <target>Noch keine Nachrichten.</target>
+        <target>Aún no hay mensajes.</target>
       </segment>
     </unit>
     <unit id="notifications.item.delete">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachricht löschen</source>
-        <target>Nachricht löschen</target>
+        <target>Eliminar mensaje</target>
       </segment>
     </unit>
     <unit id="notifications.page.allRead">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alles gelesen. Über „Alle“ siehst du auch ältere Nachrichten. </source>
-        <target> Alles gelesen. Über „Alle“ siehst du auch ältere Nachrichten. </target>
+        <target>Todo leído. En "Todos" también puedes ver los mensajes anteriores.</target>
       </segment>
     </unit>
     <unit id="notifications.panel.allRead">

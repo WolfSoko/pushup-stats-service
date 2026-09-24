@@ -860,6 +860,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       ],
       "article": "<h2>Die vollständigste Ausdauerbelastung</h2>\n<p>\n  Skilanglauf beschäftigt Beine, Rumpf und Oberkörper gleichzeitig und erzeugt damit die höchsten\n  gemessenen Sauerstoffaufnahmewerte aller Ausdauersportarten. Der Grund ist schlicht Muskelmasse:\n  Wo Laufen im Wesentlichen die Beine beansprucht, sind hier Latissimus, Trizeps und Rumpf bei jedem\n  Stockschub beteiligt. Und das bei null Stoßbelastung, weil der Ski den Schnee nie verlässt.\n</p>\n<h2>Zwei Stile, zwei Lernkurven</h2>\n<p>\n  Der klassische Stil bleibt in der gespurten Loipe und ähnelt in der Beinarbeit dem Gehen — er ist in\n  einer Stunde grob erlernbar. Skating läuft auf präparierter Fläche mit seitlichem Abdruck, ist\n  technisch anspruchsvoller und bei gleichem Tempo deutlich intensiver.\n</p>\n<p>\n  Beiden gemeinsam ist die Gewichtsverlagerung: Wer nicht vollständig auf den gleitenden Ski wechselt,\n  schiebt beide Skier gleichzeitig und kommt kaum vorwärts. Das ist der Punkt, an dem die meisten\n  Anfänger hängenbleiben — und der, den eine einzige Unterrichtsstunde meist löst.\n</p>\n<h2>Wofür es besonders taugt</h2>\n<ul>\n  <li><strong>Maximaler Herz-Kreislauf-Reiz.</strong> Mehr beteiligte Muskulatur als jede andere Ausdauerform.</li>\n  <li><strong>Oberkörperausdauer.</strong> Der Stockschub trainiert Zugmuskulatur über Stunden statt über Sätze.</li>\n  <li><strong>Gelenkschonung.</strong> Gleitende Bewegung ohne Aufprall, ganzjährig relevant als Wintervariante zum Laufen.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  60 bis 120 Minuten locker in der Loipe. Weil so viel Muskulatur beteiligt ist, fühlt sich ein\n  moderates Tempo leichter an, als es kreislaufseitig ist — die ersten Einheiten eher kürzer ansetzen\n  als geplant.\n</p>"
     },
+    "el": {
+      "name": "Σκι Ανταγωνισμού",
+      "summary": "Η πιο πλήρης μορφή αντοχής — τα χέρια, τα πόδια και ο κορμός δουλεύουν ταυτόχρονα, χωρίς καμία σοκ φόρτωση.",
+      "instructions": [
+        "Μεταφέρετε το βάρος πλήρως στο σκι ολίσθησης· δύο φορτωμένα σκι ταυτόχρονα σημαίνει στάση.",
+        "Σε κλασικό στυλ σκι στη σχισμή, πίεση προς τα κάτω-πίσω· σε σκέιτερ διαγώνια προς τα έξω.",
+        "Αρχίστε την πίεση του μπαστουνιού από τον κορμό και το latissimus, όχι μόνο από τον τρικέφαλο.",
+        "Κατά την πίεση κοντό και δυνατό, κατά την ολίσθηση πλήρως χαλαρό — ο ρυθμός είναι η τεχνική."
+      ],
+      "tips": [
+        "Ο κλασικός στυλ είναι ευκολότερος για μάθηση, ο σκέιτερ πιο απαιτητικός και εντατικότερος· για την έναρξη, αξίζει μια ώρα μαθημάτων περισσότερο από δέκα ώρες εξάσκησης.",
+        "Το ντύσιμο πολύ ζεστό κατά αίσθηση είναι το πιο συνηθισμένο σφάλμα για αρχάριους — μετά από δέκα λεπτά, η εξίσωση δεν λειτουργεί πλέον."
+      ],
+      "article": "<h2>Η πιο πλήρης φόρτωση αντοχής</h2>\n<p>\n  Το σκι ανταγωνισμού ενεργοποιεί τα πόδια, τον κορμό και τον άνω σώμα ταυτόχρονα και δημιουργεί έτσι τις υψηλότερες μετρούμενες\n  τιμές πρόσληψης οξυγόνου όλων των αθλημάτων αντοχής. Ο λόγος είναι απλός: μυϊκή μάζα — όπου το τρέξιμο ενεργοποιεί ουσιαστικά\n  τα πόδια, εδώ ο latissimus, ο τρικέφαλος και ο κορμός συμμετέχουν σε κάθε πίεση μπαστουνιού. Και αυτό χωρίς καμία σοκ φόρτωση,\n  γιατί το σκι δεν αποχωρίζεται ποτέ το χιόνι.\n</p>\n<h2>Δύο στυλ, δύο καμπύλες μάθησης</h2>\n<p>\n  Ο κλασικός στυλ παραμένει στη σχεδιασμένη διαδρομή και μοιάζει με το περπάτημα στη δουλειά των ποδιών — μπορεί να μαθευτεί\n  χονδροειδώς σε μια ώρα. Το σκέιτερ λειτουργεί σε προετοιμασμένη επιφάνεια με πλευρική πίεση, είναι τεχνικά πιο απαιτητικό\n  και σε ίσο ρυθμό σαφώς πιο εντατικό.\n</p>\n<p>\n  Και οι δύο μοιράζονται τη μεταφορά βάρους: Όποιος δεν μετακινηθεί πλήρως στο ολισθαίνον σκι, σπρώχνει και τα δύο σκι\n  ταυτόχρονα και κινείται δύσκολα προς τα εμπρός. Αυτό είναι το σημείο όπου κολλάνε οι περισσότεροι αρχάριοι — και το σημείο\n  που μια μοναδική ώρα μαθημάτων συνήθως λύνει.\n</p>\n<h2>Για τι είναι ιδιαίτερα κατάλληλο</h2>\n<ul>\n  <li><strong>Μέγιστη καρδιαγγειακή ερέθιση.</strong> Περισσότερη ενεργοποιημένη μυϊκή μάζα από οποιαδήποτε άλλη μορφή αντοχής.</li>\n  <li><strong>Αντοχή άνω σώματος.</strong> Η πίεση μπαστουνιού προπονεί τη μυϊκή μάζα έλξης για ώρες αντί για σετ.</li>\n  <li><strong>Προστασία αρθρώσεων.</strong> Ολισθαίνουσα κίνηση χωρίς κρούση, ολόχρονη σχέση ως χειμερινή παραλλαγή του τρεξίματος.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  60 έως 120 λεπτά χαλαρά στη διαδρομή. Γιατί συμμετέχει τόσο πολύ μυϊκή μάζα, ένα μέτριο ρυθμό αισθάνεται ευκολότερο\n  από ό,τι είναι στη σχέση καρδιάς — τις πρώτες περιόδους ορίστε κάπως πιο κοντές από ό,τι σχεδιάσατε.\n</p>"
+    },
     "en": {
       "name": "Cross-Country Skiing",
       "summary": "The most complete endurance sport — arms, legs and core working at once, with zero impact.",
@@ -874,6 +889,96 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         "Dressing as warmly as feels right is the classic beginner mistake — ten minutes in, the maths no longer works."
       ],
       "article": "<h2>The most complete endurance load there is</h2>\n<p>\n  Cross-country skiing works the legs, core and upper body at the same time and produces the highest\n  oxygen uptake values measured in any endurance sport. The reason is simply muscle mass: where running\n  mainly loads the legs, here the lats, triceps and core contribute on every pole push. And it does so\n  at zero impact, because the ski never leaves the snow.\n</p>\n<h2>Two styles, two learning curves</h2>\n<p>\n  Classic style stays in the prepared track and its leg work resembles walking — roughly learnable in\n  an hour. Skating runs on a groomed surface with a lateral push, is technically harder, and is\n  noticeably more intense at the same speed.\n</p>\n<p>\n  What both share is the weight transfer: without fully committing to the gliding ski you push both\n  skis at once and barely move. That is where most beginners get stuck — and what a single lesson\n  usually fixes.\n</p>\n<h2>What it's especially good for</h2>\n<ul>\n  <li><strong>Maximum cardiovascular stimulus.</strong> More muscle involved than in any other endurance form.</li>\n  <li><strong>Upper-body endurance.</strong> The pole push trains pulling muscles over hours rather than over sets.</li>\n  <li><strong>Joint protection.</strong> Gliding motion without landing, and the natural winter counterpart to running.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  60 to 120 minutes easy in the track. Because so much muscle is involved, a moderate pace feels easier\n  than it is on the cardiovascular side — plan the first few sessions shorter than you think you need.\n</p>"
+    },
+    "es": {
+      "name": "Esquí de fondo",
+      "summary": "La forma de resistencia más completa – brazos, piernas y core trabajan simultáneamente, sin impacto.",
+      "instructions": [
+        "Desplaza el peso completamente al esquí deslizante; dos esquís con carga simultáneamente significan detención.",
+        "En estilo clásico esquís en la pista, impulso hacia abajo-atrás; en patinaje diagonal hacia afuera.",
+        "Inicia el impulso del bastón desde el core y dorsal ancho, no solo desde el tríceps.",
+        "En el impulso breve e intenso, al deslizar relájate completamente – el ritmo es la técnica."
+      ],
+      "tips": [
+        "Clásico es más fácil de aprender, patinaje es más exigente e intenso; para principiantes vale la pena una hora de clase más que diez horas de práctica.",
+        "Abrigarse demasiado es el error más común – después de diez minutos la ecuación cambia."
+      ],
+      "article": "<h2>La carga de resistencia más completa</h2>\n<p>\n  El esquí de fondo trabaja piernas, core y tren superior simultáneamente, generando los mayores\n  valores de consumo de oxígeno medidos de todas las disciplinas de resistencia. La razón es simple: masa muscular.\n  Donde el correr usa principalmente las piernas, aquí dorsal ancho, tríceps y core participan en cada\n  impulso del bastón. Y todo sin impacto, porque el esquí nunca abandona la nieve.\n</p>\n<h2>Dos estilos, dos curvas de aprendizaje</h2>\n<p>\n  El estilo clásico se mantiene en la pista preparada y es similar al caminar en el movimiento de piernas – se puede\n  aprender básicamente en una hora. El patinaje corre en superficie preparada con impulso lateral, es\n  técnicamente más exigente y a igual velocidad significativamente más intenso.\n</p>\n<p>\n  Lo común en ambos es el desplazamiento de peso: si no cambias completamente al esquí deslizante,\n  empujas ambos esquís simultáneamente y apenas avanzas. Este es el punto donde quedan atrapados la mayoría\n  de principiantes – y el que una sola clase de instrucción generalmente resuelve.\n</p>\n<h2>Para qué es especialmente adecuado</h2>\n<ul>\n  <li><strong>Estímulo cardiovascular máximo.</strong> Más musculatura involucrada que cualquier otra forma de resistencia.</li>\n  <li><strong>Resistencia de tren superior.</strong> El impulso del bastón entrena musculatura tractora durante horas en lugar de series.</li>\n  <li><strong>Protección articular.</strong> Movimiento deslizante sin impacto, relevante todo el año como variante invernal para correr.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  60 a 120 minutos relajados en la pista. Porque tanta musculatura está involucrada, un\n  ritmo moderado se siente más fácil de lo que es cardiovascularmente – las primeras sesiones mejor más cortas\n  de lo planeado.\n</p>"
+    },
+    "fr": {
+      "name": "Ski de fond",
+      "summary": "La forme d'endurance la plus complète — bras, jambes et tronc travaillent en même temps, sans aucun impact.",
+      "instructions": [
+        "Transférer complètement le poids sur le ski de glisse ; deux skis chargés en même temps signifient l'arrêt.",
+        "En style classique ski dans la trace, poussée vers le bas-arrière ; en skating diagonal vers l'extérieur.",
+        "Initier la poussée des bâtons depuis le tronc et le grand dorsal, pas uniquement depuis le triceps.",
+        "À la poussée, court et puissant, au glissement, se détendre complètement — le rythme c'est la technique."
+      ],
+      "tips": [
+        "Le classique est plus facile à apprendre, le skating plus exigeant et plus intense ; pour débuter, une heure de cours vaut mieux que dix heures de pratique.",
+        "Trop habillé par sensation est l'erreur la plus courante chez les débutants — après dix minutes, le calcul change."
+      ],
+      "article": "<h2>La charge d'endurance la plus complète</h2>\n<p>\n  Le ski de fond sollicite les jambes, le tronc et le haut du corps simultanément, produisant ainsi les\n  plus hauts niveaux de VO2max mesurés de tous les sports d'endurance. La raison est simple : la masse musculaire.\n  Là où la course sollicite essentiellement les jambes, ici le grand dorsal, le triceps et le tronc sont\n  impliqués à chaque poussée de bâton. Et tout cela sans impact, car le ski ne quitte jamais la neige.\n</p>\n<h2>Deux styles, deux courbes d'apprentissage</h2>\n<p>\n  Le style classique reste dans la trace préparée et ressemble au niveau des jambes à la marche — il s'apprend\n  grossièrement en une heure. Le skating s'exerce sur une surface préparée avec une poussée latérale, est\n  techniquement plus exigeant et à vitesse égale nettement plus intense.\n</p>\n<p>\n  Les deux styles partagent le transfert de poids : celui qui ne bascule pas complètement sur le ski de glisse\n  pousse les deux skis en même temps et avance à peine. C'est le point où la plupart des débutants restent bloqués\n  — et celui qu'une seule leçon résout généralement.\n</p>\n<h2>Pour quoi c'est particulièrement utile</h2>\n<ul>\n  <li><strong>Stimulus cardiovasculaire maximal.</strong> Plus de muscles impliqués que toute autre forme d'endurance.</li>\n  <li><strong>Endurance du haut du corps.</strong> La poussée des bâtons entraîne la musculature de traction sur des heures plutôt que sur des séries.</li>\n  <li><strong>Ménagement des articulations.</strong> Mouvement de glissement sans impact, pertinent toute l'année comme variante d'hiver de la course.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  60 à 120 minutes tranquillement dans la trace. Parce que tant de musculature est impliquée, un tempo modéré\n  se sent plus facile qu'il ne l'est cardiovasculairement — les premières unités plutôt plus courtes que prévu.\n</p>"
+    },
+    "it": {
+      "name": "Sci di fondo",
+      "summary": "La forma di resistenza più completa – braccia, gambe e busto lavorano simultaneamente, senza alcun impatto.",
+      "instructions": [
+        "Sposta il peso completamente sullo sci di scorrimento; due sci caricati contemporaneamente significano stallo.",
+        "Nello stile classico gli sci rimangono in traccia, la spinta è verso il basso e indietro; nello skating diagonale verso l'esterno.",
+        "Avvia la spinta del bastoncino dal core e dal gran dorsale, non solo dal tricipite.",
+        "Durante la spinta sii breve e potente, durante lo scorrimento rilassati completamente — il ritmo è la tecnica."
+      ],
+      "tips": [
+        "Lo stile classico è più facile da imparare, lo skating è più impegnativo e intenso; per iniziare un'ora di lezione vale più di dieci ore di pratica.",
+        "Vestirsi troppo caldo è l'errore più comune dei principianti — dopo dieci minuti il calcolo non è più giusto."
+      ],
+      "article": "<h2>La resistenza più completa</h2>\n<p>\n  Lo sci di fondo sollecita gambe, core e parte superiore del corpo simultaneamente e produce così i massimi valori misurati di VO2 max tra tutti gli sport di resistenza. La ragione è semplice: la massa muscolare. Dove la corsa sollecita principalmente le gambe, qui il gran dorsale, il tricipite e il core sono coinvolti in ogni spinta di bastoncino. E tutto senza alcun impatto, perché lo sci non lascia mai la neve.\n</p>\n<h2>Due stili, due curve di apprendimento</h2>\n<p>\n  Lo stile classico rimane nella traccia preparata e assomiglia nel movimento delle gambe al camminare — è grosso modo apprendibile in un'ora. Lo skating scorre su superficie preparata con spinta laterale, è tecnicamente più impegnativo e a pari velocità notevolmente più intenso.\n</p>\n<p>\n  Comune a entrambi è la distribuzione del peso: chi non trasferisce completamente il peso allo sci che scorre, spinge entrambi gli sci contemporaneamente e non avanza. Questo è il punto dove la maggior parte dei principianti si blocca — e il punto che una singola lezione solitamente risolve.\n</p>\n<h2>Per cosa è particolarmente adatto</h2>\n<ul>\n  <li><strong>Massimo stimolo cardiovascolare.</strong> Più muscolatura coinvolta di qualsiasi altra forma di resistenza.</li>\n  <li><strong>Resistenza della parte superiore del corpo.</strong> La spinta del bastoncino allena la muscolatura di trazione per ore invece che per serie.</li>\n  <li><strong>Protezione delle articolazioni.</strong> Movimento scorrevole senza impatto, rilevante tutto l'anno come variante invernale della corsa.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  60 fino a 120 minuti rilassati sulla traccia. Poiché tanta muscolatura è coinvolta, un ritmo moderato si sente più facile di quanto lo sia dal punto di vista cardiovascolare — le prime unità pianificalo piuttosto più brevi che pianificato.\n</p>"
+    },
+    "nl": {
+      "name": "Skaten",
+      "summary": "De meest volledige vorm van uithoudingsvermogen — armen, benen en romp werken tegelijkertijd, zonder enige schokbelasting.",
+      "instructions": [
+        "Verplaats het gewicht volledig naar de glijdende ski; twee belaste ski's tegelijk betekent stilstand.",
+        "Bij klassieke stijl ski in de spoor, afdruk naar beneden-achter; bij skating diagonaal naar buiten.",
+        "Stokafdruk vanuit romp en brede rugspier, niet alleen van triceps.",
+        "Bij afdruk kort en krachtig, bij glijden volledig ontspannen — ritme is techniek."
+      ],
+      "tips": [
+        "Klassiek is makkelijker te leren, skating vereist meer en is intenser; voor beginners loont één uur les meer dan tien uur oefenen.",
+        "Te warm aangekleed naar gevoel is de meest voorkomende beginnersfout — na tien minuten gaat de berekening niet meer op."
+      ],
+      "article": "<h2>De meest volledige uithoudingsbelasting</h2>\n<p>\n  Skaten belast benen, romp en bovenklinker tegelijk en levert daarmee de hoogste gemeten zuurstofopnamewaarden\n  van alle ausdauersportarten. De reden is simpel spiermassa: terwijl hardlopen vooral de benen belast,\n  zijn hier brede rugspier, triceps en romp bij elke stokafdruk betrokken. En dat bij nul schokbelasting,\n  omdat de ski de sneeuw nooit verlaat.\n</p>\n<h2>Twee stijlen, twee leercurves</h2>\n<p>\n  De klassieke stijl blijft in de gespoor loipe en lijkt op de beenbewegingen van lopen — hij kan ruw\n  in een uur geleerd worden. Skating gaat op voorbereide oppervlakte met zijdelingse afdruk, is technisch\n  veeleisender en bij dezelfde snelheid veel intenser.\n</p>\n<p>\n  Voor beiden geldt gewichtsverschuiving: wie niet volledig naar de glijdende ski overschakelt, duwt\n  beide ski''s tegelijk en komt nauwelijks vooruit. Dit is het punt waar de meeste beginners blijven\n  steken — en het punt dat meestal één trainingsles oplost.\n</p>\n<h2>Waarvoor het bijzonder geschikt is</h2>\n<ul>\n  <li><strong>Maximale hart-vaatstelsel-prikkel.</strong> Meer betrokken spieren dan enige andere uithoudingsvorm.</li>\n  <li><strong>Bovenklinker-uithoudingsvermogen.</strong> De stokafdruk traint trekkrachtige spieren uren in plaats van sets.</li>\n  <li><strong>Gewrichtsbescherming.</strong> Glijdende beweging zonder impact, het hele jaar relevant als wintervariant op hardlopen.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  60 tot 120 minuten ontspannen in de loipe. Omdat zoveel spieren betrokken zijn, voelt een matig tempo\n  lichter aan dan het hart-vaatstelsel-wise is — de eerste sessies eerder korter aanleggen dan gepland.\n</p>"
+    },
+    "no": {
+      "name": "Langrenning",
+      "summary": "Den mest komplette utholdenheetsformen – armer, ben og kjerne jobber samtidig, helt uten støt.",
+      "instructions": [
+        "Flytt vekten helt over på glideskien; to belastede ski samtidig betyr stillstand.",
+        "I klassisk stil holdes skierne i sporet, med avtrykk nedover-bakover; i skating diagonalt utover.",
+        "Start stavekstøtet fra kjerne og latissimus, ikke bare fra triseps.",
+        "Avtrykket kort og kraftig, under glidingen helt avslappet – rytmen er teknikken."
+      ],
+      "tips": [
+        "Klassisk er lettere å lære, skating er mer krevende og intensivt; for å komme i gang er en time undervisning verdt mer enn ti timer øving.",
+        "Å kle seg for varm følelse er den vanligste nybegynnerfeil – etter ti minutter stemmer ikke regnestykket lenger."
+      ],
+      "article": "<h2>Den mest komplette utholdenhetsbelastningen</h2>\n<p>\n  Langrenning engasjerer ben, kjerne og overkropp samtidig og gir dermed de høyeste\n  målte oksygenopptak av alle utholdenhetsidretter. Grunnen er ganske enkelt muskelmasse:\n  Mens løping i hovedsak belaster bena, er latissimus, triseps og kjerne involvert ved hvert\n  staveekstøt. Og det med null støtbelastning, fordi skien aldri forlater snøen.\n</p>\n<h2>To stilarter, to læringskurver</h2>\n<p>\n  Klassisk stil holdes i det sporede løypet og ligner beinarbeiden til gange – det læres grovt på\n  en time. Skating går på preparert flate med sideakstøt, er teknisk mer krevende og ved samme tempo\n  betydelig mer intensivt.\n</p>\n<p>\n  Det som er felles for begge, er vektovergangen: Den som ikke bytter helt over til den gleidende skien,\n  skyver begge skierne samtidig og kommer knapt framover. Det er punktet der de fleste\n  nybegynnere sitter fast – og det som en eneste undervisningstime vanligvis løser.\n</p>\n<h2>Hva det egner seg spesielt for</h2>\n<ul>\n  <li><strong>Maksimal hjerte-karsystem-påvirkning.</strong> Mer involvert muskulatur enn noen annen utholdenheitsform.</li>\n  <li><strong>Overkropps-utholdenhet.</strong> Staveekstøtet trener trekk-muskulatur over timer i stedet for sett.</li>\n  <li><strong>Leddskonende.</strong> Gleidende bevegelse uten påvirkning, året rundt relevant som vintervariasjon til løping.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  60 til 120 minutter lett i løypet. Fordi så mye muskulatur er involvert, føles et\n  moderat tempo lettere enn det sirkulatorisk er – de første økter best begynne kortere\n  enn planlagt.\n</p>"
+    },
+    "zh": {
+      "name": "越野滑雪",
+      "summary": "最完整的耐力运动形式 — 手臂、腿部和躯干同时工作,没有任何冲击负荷。",
+      "instructions": [
+        "将重量完全转移到滑行的滑雪板上;两块滑雪板同时受力意味着停止。",
+        "经典风格中,滑雪板在雪道沟里,推进方向是向下-向后;溜冰风格则是向对角线外侧。",
+        "雪杖推进由躯干和背阔肌发起,而不仅仅是三头肌。",
+        "推进时短而有力,滑行时完全放松 — 节奏就是技术。"
+      ],
+      "tips": [
+        "经典风格更容易学习,溜冰风格则更复杂、强度更大;初学者投入一小时教学比十小时自学效果更好。",
+        "穿得太热是最常见的初学者错误 — 十分钟后情况就会完全不同。"
+      ],
+      "article": "<h2>最完整的耐力负荷</h2>\n<p>\n  越野滑雪同时锻炼腿部、躯干和上身,产生的摄氧量数值是所有耐力运动中最高的。原因很简单:肌肉量。跑步主要工作腿部肌肉,而这里背阔肌、三头肌和躯干在每次雪杖推进时都参与。所有这一切都不存在冲击负荷,因为滑雪板永远不会离开雪面。\n</p>\n<h2>两种风格,两条学习曲线</h2>\n<p>\n  经典风格停留在雪道沟里,腿部动作类似于行走 — 一小时内基本可以学会。溜冰风格在平坦的雪地上进行,侧向推进,技术上更复杂,在相同速度下强度明显更大。\n</p>\n<p>\n  两种风格的共同点是重量转移:不完全转移到滑行滑雪板的人会同时推动两块滑雪板,几乎无法前进。这是大多数初学者卡住的地方 — 也是一堂教学课通常能解决的问题。\n</p>\n<h2>特别适合的用途</h2>\n<ul>\n  <li><strong>最大心血管刺激。</strong> 参与的肌肉比任何其他耐力运动都多。</li>\n  <li><strong>上身耐力。</strong> 雪杖推进在数小时内锻炼拉力肌肉,而不是数组。</li>\n  <li><strong>关节保护。</strong> 滑行动作没有冲击,全年作为跑步的冬季替代方式都相关。</li>\n</ul>\n<h2>运动量</h2>\n<p>\n  在雪道上轻松滑行 60 到 120 分钟。因为有这么多肌肉参与,中等速度感觉比心血管上的实际强度要容易 — 最初的几次课程应该比计划的要短。\n</p>"
     }
   },
   "cardio.cycling": {
@@ -1029,6 +1134,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       ],
       "article": "<h2>Laufen ohne den Aufprall</h2>\n<p>\n  Der Crosstrainer bildet den Bewegungsablauf des Laufens nach, ohne dass der Fuß je den Kontakt\n  verliert. Damit fällt die Stoßbelastung weg, die beim Laufen das limitierende Element ist — für\n  Menschen mit Knie-, Hüft- oder Rückenproblemen oft der Unterschied zwischen Ausdauertraining und\n  keinem Ausdauertraining.\n</p>\n<h2>Warum die Distanz nur ein Anhaltspunkt ist</h2>\n<p>\n  Ein Crosstrainer misst keine Strecke, er rechnet sie aus Schrittzahl und Schrittlänge hoch. Zwei\n  Geräte nebeneinander können bei identischer Arbeit unterschiedliche Kilometer anzeigen. Als\n  Verlaufsgröße auf demselben Gerät ist der Wert brauchbar; als Vergleich zu einer gelaufenen Strecke\n  ist er es nicht.\n</p>\n<p>\n  Der zweite Fallstrick ist die Haltung. Wer sich mit dem Oberkörpergewicht auf den Lenker stützt,\n  nimmt einen erheblichen Teil der Arbeit heraus — das Display zeigt trotzdem fleißig weiter.\n</p>\n<h2>Wofür es besonders taugt</h2>\n<ul>\n  <li><strong>Ersatz für Laufeinheiten.</strong> Vergleichbarer Herz-Kreislauf-Reiz, deutlich geringere Gelenkbelastung.</li>\n  <li><strong>Wetterunabhängige Grundlage.</strong> Zone-2-Arbeit, die nicht von Dunkelheit oder Glätte abhängt.</li>\n  <li><strong>Intervalle mit sauberem Widerstandssprung.</strong> Der Wechsel geht schneller und präziser als an jeder Steigung draußen.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  30 bis 60 Minuten im ruhigen Bereich, oder 20 Minuten als Intervall. Steigere den Widerstand, bevor\n  du die Frequenz erhöhst — hohe Frequenz bei niedrigem Widerstand fühlt sich hart an und trainiert\n  wenig.\n</p>"
     },
+    "el": {
+      "name": "Κροσστρέινερ",
+      "summary": "Κίνηση παρόμοια με τρέξιμο χωρίς σοκ φόρτωση — ο πιο αξιόπιστος αντικαταστάτης εσωτερικού για το τρέξιμο.",
+      "instructions": [
+        "Πόδια επίπεδα στα πεντάλ, βάρος σε ολόκληρη την πλάντα του ποδιού, το χέρι δεν σηκώνεται.",
+        "Ορθό στάση, δεν κρέμεσθε στη λαβή — οι λαβές δίνουν την κατεύθυνση, όχι το φορτίο.",
+        "Ενεργά σπρώξτε και τραβήξτε τα χέρια, μην απλώς τα οδηγείτε.",
+        "Διατηρήστε σταθερή την συχνότητα βημάτων· αλλάξτε την αντίσταση αντί να επιταχύνετε."
+      ],
+      "tips": [
+        "Η ένδειξη απόστασης είναι μια εκτίμηση της συσκευής και δεν μπορεί να συγκριθεί μεταξύ μοντέλων — χρησιμοποιήστε την για την πρόοδο, όχι για συγκρίσεις.",
+        "Η στήριξη της λαβής μειώνει σημαντικά την κατανάλωση, χωρίς να αισθάνεται ευκολότερη."
+      ],
+      "article": "<h2>Τρέξιμο χωρίς κρούση</h2>\n<p>\n  Ο κροσστρέινερ μιμείται την κίνηση του τρεξίματος, χωρίς το πόδι να χάνει ποτέ επαφή. Έτσι\n  εξαφανίζεται η σοκ φόρτωση που περιορίζει το τρέξιμο — για άτομα με προβλήματα γόνατος, ισχίου\n  ή πλάτης, συχνά η διαφορά μεταξύ προπόνησης αντοχής και καμίας προπόνησης αντοχής.\n</p>\n<h2>Γιατί η απόσταση είναι μόνο ένας οδηγός</h2>\n<p>\n  Ένας κροσστρέινερ δεν μετρά απόσταση, την υπολογίζει από τον αριθμό βημάτων και το μήκος βήματος.\n  Δύο συσκευές δίπλα-δίπλα μπορούν να δείξουν διαφορετικά χιλιόμετρα στο ίδιο έργο. Ως τιμή προόδου\n  στην ίδια συσκευή η τιμή είναι χρήσιμη· ως σύγκριση με τρέξιμο δεν είναι.\n</p>\n<p>\n  Η δεύτερη παγίδα είναι η στάση. Αν κάποιος υποστηρίζεται από το βάρος του άνω σώματος στη λαβή,\n  αφαιρεί ένα σημαντικό μέρος της δουλειάς — η οθόνη συνεχίζει να δείχνει περιεχόμενα εργασίας.\n</p>\n<h2>Για τι είναι ιδιαίτερα κατάλληλο</h2>\n<ul>\n  <li><strong>Αντικατάσταση για περιόδους τρεξίματος.</strong> Παρόμοια καρδιαγγειακή ερέθιση, σημαντικά χαμηλότερη φόρτωση άρθρωσης.</li>\n  <li><strong>Ανεξάρτητη από καιρό βάση.</strong> Εργασία Zone-2 που δεν εξαρτάται από σκοτάδι ή ολισθηρότητα.</li>\n  <li><strong>Διαστήματα με καθαρό άλμα αντίστασης.</strong> Η αλλαγή είναι ταχύτερη και ακριβέστερη από οποιαδήποτε ανάβαση έξω.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  30 έως 60 λεπτά στην ήσυχη περιοχή, ή 20 λεπτά ως διάστημα. Αυξήστε την αντίσταση πριν από την αύξηση\n  της συχνότητας — υψηλή συχνότητα με χαμηλή αντίσταση αισθάνεται δύσκολη και εκπαιδεύει λίγο.\n</p>"
+    },
     "en": {
       "name": "Elliptical Trainer",
       "summary": "A running-like motion without the impact — the most reliable indoor substitute for running.",
@@ -1043,6 +1163,96 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         "Leaning on the handlebars cuts the work substantially without feeling any easier."
       ],
       "article": "<h2>Running without the landing</h2>\n<p>\n  The elliptical reproduces the pattern of running while the foot never leaves the pedal. That removes\n  the repeated impact that limits running — for people with knee, hip or back trouble it is often the\n  difference between doing endurance work and doing none.\n</p>\n<h2>Why the distance is only a rough guide</h2>\n<p>\n  An elliptical doesn't measure distance, it extrapolates it from stride count and stride length. Two\n  machines side by side can report different kilometres for identical work. As a trend on the same\n  machine the number is useful; as a comparison against a run outdoors it is not.\n</p>\n<p>\n  The second trap is posture. Resting your upper-body weight on the handles removes a large share of\n  the work — while the display keeps counting happily.\n</p>\n<h2>What it's especially good for</h2>\n<ul>\n  <li><strong>Replacing running sessions.</strong> Comparable cardiovascular stimulus at a fraction of the joint load.</li>\n  <li><strong>Weather-proof base work.</strong> Zone-2 training that doesn't depend on darkness or ice.</li>\n  <li><strong>Intervals with a clean resistance step.</strong> Switching is faster and more precise than any hill outdoors.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  30 to 60 minutes easy, or 20 minutes as intervals. Raise the resistance before you raise the\n  cadence — high cadence against low resistance feels hard and trains little.\n</p>"
+    },
+    "es": {
+      "name": "Elíptica",
+      "summary": "Movimiento similar a correr sin impacto – el sustituto indoor más confiable para correr.",
+      "instructions": [
+        "Pies planos en los pedales, peso en toda la planta, talón sin levantar.",
+        "De pie erguido, no colgándote del manillar – los agarres indican la dirección, no la carga.",
+        "Brazos activos empujando y tirando, no solo acompañando.",
+        "Mantén frecuencia de pedaleo constante; cambia la resistencia en lugar de acelerar."
+      ],
+      "tips": [
+        "La pantalla de distancia es una estimación del aparato y no es comparable entre modelos – úsala para la progresión, no para comparaciones.",
+        "Apoyarse en el manillar reduce significativamente el consumo sin que se sienta más fácil."
+      ],
+      "article": "<h2>Correr sin el impacto</h2>\n<p>\n  La elíptica reproduce el patrón de movimiento de correr, sin que el pie pierda contacto. Esto elimina\n  el impacto, que en correr es el elemento limitante – para personas con problemas de rodilla, cadera o espalda\n  a menudo la diferencia entre entrenamiento de resistencia y ningún entrenamiento de resistencia.\n</p>\n<h2>Por qué la distancia es solo una referencia</h2>\n<p>\n  Una elíptica no mide distancia, la calcula a partir de número de pasos y longitud de paso. Dos\n  máquinas una al lado de la otra pueden mostrar kilómetros diferentes con trabajo idéntico. Como\n  valor de progresión en la misma máquina el valor es útil; como comparación con una distancia corrida\n  no lo es.\n</p>\n<p>\n  La segunda trampa es la postura. Quien se apoya con el peso del tren superior en el manillar,\n  elimina una parte considerable del trabajo – la pantalla sigue mostrando diligentemente.\n</p>\n<h2>Para qué es especialmente adecuada</h2>\n<ul>\n  <li><strong>Sustituto de sesiones de correr.</strong> Estímulo cardiovascular comparable, impacto articular significativamente menor.</li>\n  <li><strong>Base independiente del clima.</strong> Trabajo en zona 2 que no depende de oscuridad o hielo.</li>\n  <li><strong>Intervalos con cambio de resistencia limpio.</strong> El cambio es más rápido y preciso que en cualquier cuesta afuera.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  30 a 60 minutos en zona tranquila, o 20 minutos como intervalo. Aumenta resistencia antes de\n  aumentar frecuencia – alta frecuencia con baja resistencia se siente dura y entrena poco.\n</p>"
+    },
+    "fr": {
+      "name": "Vélo elliptique",
+      "summary": "Mouvement similaire à la course sans impact — le substitut intérieur le plus fiable pour la course.",
+      "instructions": [
+        "Pieds à plat sur les pédales, poids sur toute la plante, talon ne pas se lever.",
+        "Tenir droit, ne pas se tenir aux guidons — les poignées donnent la direction, pas la charge.",
+        "Bras actifs poussant et tirant, ne pas juste suivre.",
+        "Maintenir la cadence constante ; changer la résistance plutôt que d'accélérer."
+      ],
+      "tips": [
+        "L'affichage de la distance est une estimation de l'appareil et n'est pas comparable entre modèles — utilise-le pour la tendance, pas pour les comparaisons.",
+        "S'appuyer sur le guidon réduit considérablement la dépense, sans que cela ne semble plus facile."
+      ],
+      "article": "<h2>Courir sans l'impact</h2>\n<p>\n  Le vélo elliptique reproduit le mouvement de la course sans que le pied ne perde jamais le contact. Cela\n  élimine l'impact, qui est l'élément limitant à la course — pour les personnes ayant des problèmes de genoux,\n  de hanche ou de dos, souvent la différence entre entraînement d'endurance et pas d'entraînement d'endurance.\n</p>\n<h2>Pourquoi la distance n'est qu'une approximation</h2>\n<p>\n  Un vélo elliptique ne mesure pas une distance, il la calcule à partir du nombre de pas et de la longueur\n  de foulée. Deux appareils côte à côte peuvent afficher des kilomètres différents pour un travail identique.\n  Comme valeur de tendance sur le même appareil, la valeur est utile ; comme comparaison à une distance courue,\n  elle ne l'est pas.\n</p>\n<p>\n  Le deuxième piège est la posture. Celui qui s'appuie du poids du haut du corps sur le guidon enlève une part\n  importante du travail — l'écran continue d'afficher fidèlement.\n</p>\n<h2>Pour quoi c'est particulièrement utile</h2>\n<ul>\n  <li><strong>Substitut des unités de course.</strong> Stimulus cardiovasculaire comparable, charge articulaire nettement inférieure.</li>\n  <li><strong>Base indépendante de la météo.</strong> Travail zone 2, qui ne dépend pas de l'obscurité ou du verglas.</li>\n  <li><strong>Intervalles avec changement de résistance précis.</strong> Le changement est plus rapide et plus précis qu'à n'importe quelle pente dehors.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  30 à 60 minutes dans la zone facile, ou 20 minutes en intervalle. Augmente la résistance avant d'augmenter\n  la cadence — une cadence élevée à faible résistance est difficile et entraîne peu.\n</p>"
+    },
+    "it": {
+      "name": "Ellittica",
+      "summary": "Movimento simile alla corsa senza impatto — il sostituto indoor più affidabile per la corsa.",
+      "instructions": [
+        "Piedi piatti sui pedali, peso su tutta la pianta, il tallone non si solleva.",
+        "Stai eretto, non pendere dal manubrio — le maniglie danno la direzione, non portano il carico.",
+        "Spingi e tira attivamente con le braccia, non solo guidale.",
+        "Mantieni la cadenza di pedalata costante; cambia la resistenza invece di accelerare."
+      ],
+      "tips": [
+        "L'indicatore di distanza è una stima del dispositivo e non è comparabile tra modelli — usalo per il trend, non per confronti.",
+        "Appoggiarsi al manubrio riduce significativamente il consumo, senza che sembri più facile."
+      ],
+      "article": "<h2>Correre senza l'impatto</h2>\n<p>\n  L'ellittica riproduce il movimento della corsa, senza che il piede perda mai il contatto. Così scompare l'impatto che nella corsa è l'elemento limitante — per persone con problemi al ginocchio, all'anca o alla schiena spesso la differenza tra fare allenamento di resistenza e non farlo.\n</p>\n<h2>Perché la distanza è solo una stima</h2>\n<p>\n  Un'ellittica non misura una distanza, la calcola dalla cadenza e dalla lunghezza della pedalata. Due dispositivi uno accanto all'altro possono mostrare chilometri diversi a parità di lavoro. Come valore di trend sullo stesso dispositivo il valore è utile; come confronto con una distanza percorsa a piedi non lo è.\n</p>\n<p>\n  La seconda insidia è la postura. Chi si appoggia con il peso della parte superiore del corpo al manubrio, toglie una parte considerevole del lavoro — il display continua comunque a conteggiare.\n</p>\n<h2>Per cosa è particolarmente adatta</h2>\n<ul>\n  <li><strong>Sostituto per le sessioni di corsa.</strong> Stimolo cardiovascolare comparabile, significativamente inferiore sollecitazione articolare.</li>\n  <li><strong>Base indipendente dal meteo.</strong> Lavoro in zona 2 che non dipende da oscurità o ghiaccio.</li>\n  <li><strong>Intervalli con salto di resistenza netto.</strong> Il cambio è più veloce e preciso di qualsiasi salita all'esterno.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  30 fino a 60 minuti nella zona di base leggera, oppure 20 minuti come intervalli. Aumenta la resistenza prima di aumentare la cadenza — cadenza alta con bassa resistenza si sente difficile e allena poco.\n</p>"
+    },
+    "nl": {
+      "name": "Crosstrainer",
+      "summary": "Loopachtige beweging zonder schokbelasting — de meest betrouwbare indoorsvervanging voor hardlopen.",
+      "instructions": [
+        "Voeten plat op de pedalen, gewicht op de hele zool, hak niet omhoog.",
+        "Rechtop staan, niet aan de steunen hangen — de handgrepen geven de richting, niet de last.",
+        "Armen actief meduwen en merekken, niet alleen meevoeren.",
+        "Trapfrequentie constant houden; weerstand veranderen in plaats van versnellen."
+      ],
+      "tips": [
+        "De afstandsweergave is een schatting van het apparaat en tussen modellen niet vergelijkbaar — gebruik het voor het verloop, niet voor vergelijkingen.",
+        "Zich op de steunen steunen verlaagt het verbruik duidelijk, zonder dat het lichter voelt."
+      ],
+      "article": "<h2>Hardlopen zonder de impact</h2>\n<p>\n  De crosstrainer bootst het looppatroon na, zonder dat de voet ooit contact verliest. Daardoor vervalt\n  de schokbelasting, die hardlopen limiterend element is — voor mensen met knie-, heup- of rugproblemen\n  vaak het verschil tussen uithoudingstraining en geen uithoudingstraining.\n</p>\n<h2>Waarom afstand slechts een richtlijn is</h2>\n<p>\n  Een crosstrainer meet geen afstand, hij berekent deze uit aantal stappen en staplengte. Twee apparaten\n  naast elkaar kunnen bij identieke arbeid verschillende kilometers weergeven. Als verloopwaarde op hetzelfde\n  apparaat is het getal bruikbaar; als vergelijking met een gelopen afstand niet.\n</p>\n<p>\n  De tweede valkuil is lichaamshouding. Wie zich met bovenklinkergewicht op de steunen steunt, haalt\n  een aanzienlijk deel van de arbeid eruit — het scherm gaat desondanks gewoon door.\n</p>\n<h2>Waarvoor het bijzonder geschikt is</h2>\n<ul>\n  <li><strong>Vervanging voor hardloopsessies.</strong> Vergelijkbare hart-vaatstelsel-prikkel, aanzienlijk minder gewrichtspanning.</li>\n  <li><strong>Weerafhankelijke basis.</strong> Zone-2-arbeid die niet van duisternis of glibberigheid afhangt.</li>\n  <li><strong>Intervallen met schone weerstandssprong.</strong> De wissel gaat sneller en nauwkeuriger dan op enige helling buiten.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  30 tot 60 minuten in het ontspannen bereik, of 20 minuten als interval. Verhoog de weerstand voordat\n  je de frequentie verhoogt — hoge frequentie met lage weerstand voelt hard aan en traint weinig.\n</p>"
+    },
+    "no": {
+      "name": "Crosstrainer",
+      "summary": "Løpe-lignende bevegelse uten støtbelastning – det mest pålitelige innendørserstattet for løping.",
+      "instructions": [
+        "Føttene flatt på pedalene, vekten på hele sålen, hælen ikke heving.",
+        "Stå rett opp, ikke heng på styringen – grepene gir retningen, ikke belastningen.",
+        "Armene aktivt skyver og trekker, ikke bare med.",
+        "Hold trittfrekvensen konstant; endre motstand i stedet for å akselerere."
+      ],
+      "tips": [
+        "Avstandsindikatoren er et estimat fra maskinen og ikke sammenlignbar mellom modeller – bruk den til trendene, ikke til sammenligninger.",
+        "Å støtte seg på styringen senker forbruket betydelig, uten at det føles lettere."
+      ],
+      "article": "<h2>Løping uten påvirkningen</h2>\n<p>\n  Crosstraineren etterligner løpe-bevegelsen, men uten at foten mister kontakten. Dermed\n  forsvinner støtbelastningen som begrenser løping – for mennesker med kne-, hofte- eller ryggproblemer\n  ofte forskjellen mellom utholdenhestrening og ingen utholdenhestrening.\n</p>\n<h2>Hvorfor distansen bare er en retningslinje</h2>\n<p>\n  En crosstrainer måler ikke distanse, den beregner den fra trittantall og skritthemmelse. To\n  maskiner ved siden av hverandre kan vise ulike kilometer ved identisk arbeid. Som\n  trendverdi på samme maskin er verdien brukbar; som sammenliking til en løpt strekning er den det ikke.\n</p>\n<p>\n  Den andre fallgruven er holdningen. Den som støtter seg med overkroppsvekten på styringen,\n  fjerner en betydelig del av arbeidet – displayet fortsetter likevel å vise flittig.\n</p>\n<h2>Hva det egner seg spesielt for</h2>\n<ul>\n  <li><strong>Erstatning for løpeøkter.</strong> Sammenlignbar hjerte-karsystem-påvirkning, betydelig mindre leddsbelastning.</li>\n  <li><strong>Værsuavhengig grunnlag.</strong> Zone-2-arbeid som ikke avhenger av mørke eller glatthet.</li>\n  <li><strong>Intervaller med rent motstandshopp.</strong> Bytte er raskere og mer presist enn på noen bakke ute.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  30 til 60 minutter i rolig område, eller 20 minutter som intervall. Øk motstanden før\n  du øker frekvensen – høy frekvens ved lavt motstand føles hardt og trener lite.\n</p>"
+    },
+    "zh": {
+      "name": "椭圆机",
+      "summary": "类似跑步的运动,没有冲击负荷 — 最可靠的室内跑步替代品。",
+      "instructions": [
+        "脚平放在踏板上,脚趾压力分散在整个脚掌,脚跟不要抬起。",
+        "直身站立,不要挂在扶手上 — 把手给方向,不承载重量。",
+        "手臂主动推拉,而不仅仅是跟随。",
+        "保持踏频恒定;改变阻力而不是加速。"
+      ],
+      "tips": [
+        "距离显示是设备估计的,不同型号之间不可比较 — 用它来看发展趋势,而不是比较。",
+        "用上身体重依靠扶手会明显降低消耗,但感觉不会更容易。"
+      ],
+      "article": "<h2>没有冲击的跑步</h2>\n<p>\n  椭圆机模拟跑步的动作,而脚从不失去接触。这消除了冲击负荷,这在跑步中是限制因素 — 对于有膝盖、髋部或背部问题的人来说,通常是能否进行耐力训练的区别。\n</p>\n<h2>为什么距离只是参考</h2>\n<p>\n  椭圆机不测量距离,它根据步数和步长计算距离。两台相邻的设备在相同工作量下可能显示不同的公里数。作为同一设备上的发展指标,这个值是可靠的;作为与跑步距离的比较,则不是。\n</p>\n<p>\n  第二个陷阱是姿态。用上身体重依靠扶手的人减少了大量工作 — 但显示屏仍然忙着计数。\n</p>\n<h2>特别适合的用途</h2>\n<ul>\n  <li><strong>跑步替代品。</strong> 类似的心血管刺激,明显较低的关节负荷。</li>\n  <li><strong>与天气无关的基础。</strong> 二区训练,不依赖黑暗或冰冷。</li>\n  <li><strong>阻力跳跃干净的间歇。</strong> 转换比任何室外坡度更快更精确。</li>\n</ul>\n<h2>运动量</h2>\n<p>\n  在轻松区域 30 到 60 分钟,或 20 分钟间歇。在提高频率之前增加阻力 — 低阻力下高频率感觉很难,训练效果却很少。\n</p>"
     }
   },
   "cardio.highknees": {
@@ -1198,6 +1408,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       ],
       "article": "<h2>Ausdauer in einer anderen Zeitskala</h2>\n<p>\n  Wandern unterscheidet sich von Gehen nicht durch die Bewegung, sondern durch die Dauer und das\n  Gelände. Eine Tour von vier Stunden liegt fast durchgehend in Zone 1 bis 2 — genau dem Bereich, den\n  ein Intervalltraining nie lange genug hält. Der Trainingsreiz kommt nicht aus der Intensität,\n  sondern aus der schieren Zeit unter Belastung.\n</p>\n<h2>Höhenmeter statt Tempo</h2>\n<p>\n  Wer eine Wanderung härter machen will, geht nicht schneller — er geht steiler. Eine grobe Faustregel\n  aus der Tourenplanung: 300 Höhenmeter im Aufstieg entsprechen etwa einem zusätzlichen Kilometer in\n  der Ebene. Das macht die Intensität planbar, ohne auf Herzfrequenz schauen zu müssen.\n</p>\n<p>\n  Der Abstieg wird dabei regelmäßig unterschätzt. Er belastet die Oberschenkelvorderseite exzentrisch\n  und ist der Grund, warum der Muskelkater am Tag danach kommt — nicht der Aufstieg. Kurze Schritte und\n  ein leicht gebeugtes Knie nehmen einen großen Teil davon weg.\n</p>\n<h2>Wofür es besonders taugt</h2>\n<ul>\n  <li><strong>Grundlagenausdauer ohne Laufbelastung.</strong> Stundenlange Zone-2-Arbeit, ohne dass die Gelenke die Stoßbelastung des Laufens abbekommen.</li>\n  <li><strong>Beinkraft im Abstieg.</strong> Exzentrische Belastung über Stunden, die kein Satz Kniebeugen so nachbildet.</li>\n  <li><strong>Training, das nicht nach Training aussieht.</strong> Der Hauptgrund, warum Menschen dabeibleiben.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Eine längere Tour pro Woche reicht als Ausdauerblock. Wer aufbaut, steigert zuerst die Dauer, dann\n  die Höhenmeter, dann das Gepäck — und nie zwei davon gleichzeitig.\n</p>"
     },
+    "el": {
+      "name": "Πεζοπορία",
+      "summary": "Αντοχή σε ώρες αντί για λεπτά — με υψομετρικά μέτρα ως ρυθμιστή έντασης.",
+      "instructions": [
+        "Επιλέξτε το ρυθμό έτσι ώστε να διαρκέσει ώρες· ανηφορικά μάλλον πιο κοντά βήματα παρά μεγαλύτερα.",
+        "Κατηφορικά κοντό βήματα, γόνατο ελαφρά λυγισμένο — εδώ προέρχεται ο μυϊκός πόνος, όχι ανηφορικά.",
+        "Σακίδιο κοντά στην πλάτη, ζώνη ισχίου φέρει το βάρος, όχι τα ωμοπλάτια.",
+        "Πίνετε και φάτε ελαφρώς κάθε 60-90 λεπτά, πριν να εμφανιστεί η πείνα."
+      ],
+      "tips": [
+        "Τα υψομετρικά μέτρα είναι ο ρυθμιστής έντασης — 300 υψομετρικά μέτρα κοστίζουν περίπου όσο ένα πρόσθετο επίπεδο χιλιόμετρο.",
+        "Τα παπούτσια που έχουν ραμμένα και δύο ζεύγη κάλτσες αποτρέπουν περισσότερα αποτρέπα από οποιαδήποτε προπόνηση αντοχής."
+      ],
+      "article": "<h2>Αντοχή σε άλλη χρονική κλίμακα</h2>\n<p>\n  Η πεζοπορία διαφέρει από το περπάτημα όχι από την κίνηση, αλλά από τη διάρκεια και το έδαφος.\n  Μια εξόρμηση τεσσάρων ωρών βρίσκεται σχεδόν συνεχώς στη Ζώνη 1 έως 2 — ακριβώς η περιοχή που\n  μια προπόνηση διαστήματος ποτέ δεν κρατά αρκετά. Το σήμα προπόνησης δεν προέρχεται από την ένταση,\n  αλλά από την απλή ώρα υπό φόρτωση.\n</p>\n<h2>Υψομετρικά μέτρα αντί για ρυθμό</h2>\n<p>\n  Αν κάποιος θέλει να κάνει μια πεζοπορία πιο σκληρή, δεν περπατά πιο γρήγορα — περπατά πιο απότομα.\n  Ένας χονδρικός κανόνας από τον σχεδιασμό του ταξιδιού: 300 υψομετρικά μέτρα στην ανάβαση αντιστοιχούν\n  περίπου ένα πρόσθετο χιλιόμετρο στο επίπεδο. Αυτό κάνει την ένταση σχεδιάσιμη χωρίς να κοιτάζετε\n  τη συχνότητα καρδιάς.\n</p>\n<p>\n  Η κατηφόρα ξεχνιέται τακτικά. Φορτώνει τον μηρό εμπροσθίως εκκεντρικά και είναι ο λόγος για τον\n  οποίο ο μυϊκός πόνος έρχεται την επόμενη μέρα — όχι η ανηφόρα. Κοντό βήματα και ένα ελαφρώς\n  λυγισμένο γόνατο αφαιρούν ένα μεγάλο μέρος αυτού.\n</p>\n<h2>Για τι είναι ιδιαίτερα κατάλληλο</h2>\n<ul>\n  <li><strong>Βασική αντοχή χωρίς φόρτωση τρεξίματος.</strong> Ώρες Zone-2 εργασίας, χωρίς τις άρθρωσες να δέχονται τη σοκ φόρτωση του τρεξίματος.</li>\n  <li><strong>Δύναμη ποδιών στην κατηφόρα.</strong> Εκκεντρική φόρτωση ώρες, που κανένα σετ καθισμάτων δεν αναπαράγει έτσι.</li>\n  <li><strong>Προπόνηση που δεν μοιάζει με προπόνηση.</strong> Ο κύριος λόγος για τον οποίο το κρατούν οι άνθρωποι.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Μια μεγαλύτερη εξόρμηση ανά εβδομάδα είναι αρκετή ως μπλοκ αντοχής. Αν κάποιος κατασκευάζει,\n  αυξάνει πρώτα τη διάρκεια, μετά τα υψομετρικά μέτρα, μετά το φορτίο — και ποτέ όχι δύο από αυτά ταυτόχρονα.\n</p>"
+    },
     "en": {
       "name": "Hiking",
       "summary": "Endurance measured in hours rather than minutes — with elevation as the intensity dial.",
@@ -1212,6 +1437,96 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         "Broken-in shoes and two pairs of socks end more hikes early than any lack of fitness does."
       ],
       "article": "<h2>Endurance on a different time scale</h2>\n<p>\n  Hiking differs from walking not in the movement but in the duration and the terrain. A four-hour\n  outing sits almost entirely in zone 1 to 2 — exactly the range interval training never sustains long\n  enough. The stimulus comes from sheer time under load, not from intensity.\n</p>\n<h2>Elevation, not pace</h2>\n<p>\n  To make a hike harder, don't go faster — go steeper. A rough rule from route planning: 300 metres of\n  ascent is worth about one extra kilometre on the flat. That makes intensity plannable without\n  watching a heart rate monitor.\n</p>\n<p>\n  The descent is the part people routinely underestimate. It loads the quadriceps eccentrically and is\n  the reason you are sore the next day — not the climb. Short steps and a softly bent knee remove much\n  of that.\n</p>\n<h2>What it's especially good for</h2>\n<ul>\n  <li><strong>Base endurance without running impact.</strong> Hours of zone-2 work while your joints skip the repeated impact of running.</li>\n  <li><strong>Leg strength on the way down.</strong> Eccentric loading over hours that no set of squats reproduces.</li>\n  <li><strong>Training that doesn't look like training.</strong> The main reason people keep doing it.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  One longer outing per week works as an endurance block. When building up, add duration first, then\n  elevation, then pack weight — and never two at once.\n</p>"
+    },
+    "es": {
+      "name": "Senderismo",
+      "summary": "Resistencia durante horas en lugar de minutos – con desnivel como regulador de intensidad.",
+      "instructions": [
+        "Elige ritmo que aguante durante horas; en subida mejor pasos cortos que largos.",
+        "En bajada pasos cortos, rodilla ligeramente flexionada – aquí viene la agujeta, no en subida.",
+        "Mochila pegada a la espalda, cinturón de cadera carga el peso, no los hombros.",
+        "Cada 60-90 minutos bebe y come brevemente, antes de que llegue el hambre."
+      ],
+      "tips": [
+        "El desnivel es el regulador de intensidad – 300 metros de desnivel cuestan aproximadamente lo mismo que un kilómetro adicional en terreno plano.",
+        "Zapatos ya aclimatados y dos pares de calcetines previenen más abandonos que cualquier entrenamiento de resistencia."
+      ],
+      "article": "<h2>Resistencia en otra escala de tiempo</h2>\n<p>\n  El senderismo se diferencia de caminar no por el movimiento, sino por la duración y el terreno. Una excursión\n  de cuatro horas se mantiene casi completamente en zona 1 a 2 – exactamente el rango que un entrenamiento\n  de intervalos nunca mantiene suficientemente largo. El estímulo de entrenamiento no viene de la intensidad,\n  sino del puro tiempo bajo carga.\n</p>\n<h2>Desnivel en lugar de ritmo</h2>\n<p>\n  Si quieres hacer una caminata más difícil, no vas más rápido – vas más inclinado. Una regla general de\n  la planificación de excursiones: 300 metros de desnivel en ascenso equivalen aproximadamente a un kilómetro\n  adicional en terreno plano. Esto hace que la intensidad sea planificable, sin necesidad de mirar la frecuencia cardíaca.\n</p>\n<p>\n  El descenso se subestima regularmente. Somete el cuádriceps a carga excéntrica\n  y es la razón por la que viene la agujeta al día siguiente – no el ascenso. Pasos cortos y\n  rodilla ligeramente flexionada eliminan buena parte de ello.\n</p>\n<h2>Para qué es especialmente adecuado</h2>\n<ul>\n  <li><strong>Resistencia básica sin impacto de correr.</strong> Trabajo en zona 2 durante horas, sin que las articulaciones reciban el impacto de correr.</li>\n  <li><strong>Fuerza de pierna en el descenso.</strong> Carga excéntrica durante horas, que ningún set de sentadillas reproduce así.</li>\n  <li><strong>Entrenamiento que no se ve como entrenamiento.</strong> La razón principal por la que la gente persevera.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Una excursión más larga por semana es suficiente como bloque de resistencia. Si aumentas,\n  primero aumenta duración, luego desnivel, luego peso – y nunca dos al mismo tiempo.\n</p>"
+    },
+    "fr": {
+      "name": "Randonnée",
+      "summary": "Endurance sur des heures plutôt que des minutes — avec le dénivelé comme régulateur d'intensité.",
+      "instructions": [
+        "Choisir le tempo pour qu'il soit soutenable sur des heures ; en montée plutôt des petits pas que des grands.",
+        "En descente petits pas, genoux légèrement fléchis — c'est ici que vient les courbatures, pas en montée.",
+        "Sac à dos serré contre le dos, la ceinture porte le poids, pas les épaules.",
+        "Tous les 60-90 minutes boire et manger brièvement, avant la faim."
+      ],
+      "tips": [
+        "Les dénivelés sont le régulateur d'intensité — 300 mètres de dénivelé coûtent à peu près autant qu'un kilomètre plat supplémentaire.",
+        "Des chaussures rodées et deux paires de chaussettes préviennent plus d'abandonnes que n'importe quel entraînement d'endurance."
+      ],
+      "article": "<h2>Endurance sur une autre échelle de temps</h2>\n<p>\n  La randonnée se distingue de la marche non par le mouvement, mais par la durée et le terrain. Une sortie de\n  quatre heures reste presque entièrement dans la zone 1 à 2 — exactement la zone que l'entraînement par intervalle\n  ne maintient jamais assez longtemps. Le stimulus d'entraînement ne vient pas de l'intensité, mais de la pure durée\n  sous charge.\n</p>\n<h2>Dénivelé plutôt que tempo</h2>\n<p>\n  Celui qui veut une randonnée plus difficile ne va pas plus vite — il va plus raide. Une règle générale de la\n  planification d'itinéraire : 300 mètres de dénivelé en montée correspondent à peu près à un kilomètre supplémentaire\n  en plat. Cela rend l'intensité prévisible, sans avoir à regarder la fréquence cardiaque.\n</p>\n<p>\n  La descente est régulièrement sous-estimée. Elle charge le devant de la cuisse de façon excentrique et est la\n  raison des courbatures le lendemain — pas la montée. Des petits pas et un genou légèrement fléchi en enlèvent une\n  grande partie.\n</p>\n<h2>Pour quoi c'est particulièrement utile</h2>\n<ul>\n  <li><strong>Endurance fondamentale sans charge de course.</strong> Travail zone 2 pendant des heures, sans que les articulations ne subissent l'impact de la course.</li>\n  <li><strong>Force des jambes en descente.</strong> Charge excentrique pendant des heures, qu'aucune série de squats ne reproduit.</li>\n  <li><strong>Entraînement qui n''a pas l''air d''entraînement.</strong> La raison principale pour laquelle les gens continuent.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Une sortie plus longue par semaine suffit comme bloc d'endurance. Celui qui progresse augmente d'abord la durée,\n  puis le dénivelé, puis le poids — et jamais deux en même temps.\n</p>"
+    },
+    "it": {
+      "name": "Escursionismo",
+      "summary": "Resistenza per ore invece di minuti — con i dislivelli come regolatore di intensità.",
+      "instructions": [
+        "Scegli il ritmo in modo che duri per ore; in salita preferisci passi più corti che più lunghi.",
+        "In discesa passi corti, ginocchia leggermente piegate — è qui che si crea l'indolenzimento muscolare, non in salita.",
+        "Zaino stretto alla schiena, la cintura dell'anca supporta il peso, non le spalle.",
+        "Ogni 60-90 minuti bevi e mangia brevemente, prima che arrivi la fame."
+      ],
+      "tips": [
+        "I dislivelli sono il regolatore di intensità — 300 metri di dislivello costano più o meno quanto un chilometro aggiuntivo in piano.",
+        "Le scarpe già collaudate e due paia di calzini prevengono più abbandoni di qualsiasi allenamento di resistenza."
+      ],
+      "article": "<h2>Resistenza in una scala temporale diversa</h2>\n<p>\n  L'escursionismo si differenzia dalla camminata non per il movimento, ma per la durata e il terreno. Una gita di quattro ore rimane quasi interamente nella zona 1 e 2 — esattamente la zona che un allenamento a intervalli non tiene mai abbastanza a lungo. Lo stimolo di allenamento non viene dall'intensità, ma dal puro tempo sotto carico.\n</p>\n<h2>Dislivelli invece di velocità</h2>\n<p>\n  Chi vuole rendere un'escursione più dura non cammina più veloce — cammina più ripido. Una regola approssimativa dalla pianificazione dei trekking: 300 metri di dislivello in salita corrispondono circa a un chilometro aggiuntivo in piano. Questo rende l'intensità prevedibile, senza dover guardare la frequenza cardiaca.\n</p>\n<p>\n  La discesa viene regolarmente sottovalutata. Sollecita il quadricipite eccentricamente ed è il motivo per cui l'indolenzimento muscolare arriva il giorno dopo — non la salita. Passi corti e un ginocchio leggermente piegato tolgono una gran parte di questo.\n</p>\n<h2>Per cosa è particolarmente adatto</h2>\n<ul>\n  <li><strong>Resistenza di base senza impatto della corsa.</strong> Lavoro in zona 2 per ore, senza che le articolazioni ricevano l'impatto della corsa.</li>\n  <li><strong>Forza gambe in discesa.</strong> Carico eccentrico per ore, che nessuna serie di squat può replicare così.</li>\n  <li><strong>Allenamento che non sembra allenamento.</strong> Il motivo principale per cui le persone continuano.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Un'escursione più lunga a settimana è sufficiente come blocco di resistenza. Chi progredisce, aumenta prima la durata, poi i dislivelli, poi il carico — e mai due contemporaneamente.\n</p>"
+    },
+    "nl": {
+      "name": "Wandelen",
+      "summary": "Uithoudingsvermogen over uren in plaats van minuten — met hoogtemeters als intensiteitssturing.",
+      "instructions": [
+        "Kies tempo zodanig dat het uren vorstaat; bergop eerder kortere stappen dan langere.",
+        "Bergaf korte stappen, knie licht gebogen — hier ontstaat spierpijn, niet bergop.",
+        "Rugzak dicht tegen rug, heupband draagt het gewicht, niet de schouders.",
+        "Elk 60-90 minuten kort drinken en eten, voordat honger komt."
+      ],
+      "tips": [
+        "Hoogtemeters zijn de intensiteitssturing — 300 hoogtemeters kosten ongeveer evenveel als een extra vlakke kilometer.",
+        "Ingelopen schoenen en twee paar sokken voorkomen meer afbraken dan enig uithoudingstraining."
+      ],
+      "article": "<h2>Uithoudingsvermogen op een ander moment</h2>\n<p>\n  Wandelen verschilt van gaan niet door beweging, maar door duur en terrein. Een tocht van vier uur\n  zit bijna doorlopend in zone 1 tot 2 — precies het bereik dat intervaltraining nooit lang genoeg\n  houdt. De trainingseffect komt niet uit intensiteit, maar uit pure tijd onder belasting.\n</p>\n<h2>Hoogtemeters in plaats van tempo</h2>\n<p>\n  Wie een wandeling harder wil maken, gaat niet sneller — hij gaat steiler. Een grove vuistregel uit\n  toerplanning: 300 hoogtemeters in de klim komt ongeveer gelijk met een extra kilometer op vlak.\n  Dit maakt intensiteit planbaar, zonder hartfrequentie hoeven checken.\n</p>\n<p>\n  De afdaling wordt regelmatig onderschat. Het belast de voorkant van het bovenbeen excentrisch en is\n  de reden waarom spierpijn de volgende dag komt — niet de klim. Korte stappen en een licht gebogen knie\n  nemen er veel van weg.\n</p>\n<h2>Waarvoor het bijzonder geschikt is</h2>\n<ul>\n  <li><strong>Basisuithoudingsvermogen zonder loopbelasting.</strong> Uren durende zone-2-arbeid, zonder dat gewrichten de schokbelasting van hardlopen krijgen.</li>\n  <li><strong>Beenkracht in de afdaling.</strong> Excentrische belasting over uren, die geen set squats zo nabootst.</li>\n  <li><strong>Training die niet als training voelt.</strong> De voornaamste reden waarom mensen doorgaan.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Eén langere tocht per week volstaat als uithoudingsblok. Wie opbouwt, verhoogt eerst duur, dan\n  hoogtemeters, dan bagage — en nooit twee tegelijk.\n</p>"
+    },
+    "no": {
+      "name": "Turgåing",
+      "summary": "Utholdenhet over timer i stedet for minutter – med høydemeter som intensitets-regulator.",
+      "instructions": [
+        "Velg tempo slik at det holder over timer; oppover heller færre skritt enn lengre.",
+        "Nedover korte skritt, kne lett bøyd – her oppstår muskelkaten, ikke oppover.",
+        "Ryggsekken tett mot ryggen, hoftebeltet bærer vekten, ikke skuldrene.",
+        "Drikk og spis kort hver 60-90 minutter, før hunger kommer."
+      ],
+      "tips": [
+        "Høydemeter er intensitets-regulatoren – 300 høydemeter koster omtrent det samme som en ekstra flatkileometer.",
+        "Innkjørte sko og to par sokker hindrer mer avbrytelser enn noe utholdenhestrening."
+      ],
+      "article": "<h2>Utholdenhet på en annen tidsskala</h2>\n<p>\n  Turgåing skiller seg fra gange ikke ved bevegelsen, men ved varigheten og terrenget. En tur på fire timer\n  ligger nesten gjennomgående i sone 1 til 2 – akkurat det område som et intervalltrening aldri holder\n  lenge nok. Treningspåvirkningen kommer ikke fra intensiteten,\n  men fra den rene tiden under belastning.\n</p>\n<h2>Høydemeter i stedet for tempo</h2>\n<p>\n  Den som vil gjøre en turgåing hardere, går ikke raskere – han går brattere. En grov tommelfingerregel\n  fra turplanlegging: 300 høydemeter i stigning tilsvarer omtrent en ekstra kilometer på flatmark. Det gjør\n  intensiteten planbar, uten å måtte se på pulsfrekvensen.\n</p>\n<p>\n  Nedstigning blir regelmessig undervurdert. Den belaster lårets forside eksentrisk\n  og er grunnen til at muskelkaten kommer dagen etter – ikke stigningen. Korte skritt og\n  et lett bøyd kne fjerner mye av det.\n</p>\n<h2>Hva det egner seg spesielt for</h2>\n<ul>\n  <li><strong>Grunnlagsutholdenhet uten løpebelastning.</strong> Timeslong sone-2-arbeid, uten at leddene får støtbelastningen fra løping.</li>\n  <li><strong>Beinkraft i nedstigningen.</strong> Eksentrisk belastning over timer som ingen sett knebøy etterligner.</li>\n  <li><strong>Trening som ikke ser ut som trening.</strong> Hovedgrunnen til at folk holder på.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  En lengre tur per uke er tilstrekkelig som utholdenhetsblokk. Den som bygger opp, øker først\n  varigheten, deretter høydemeter, deretter sekken – og aldri to av dem samtidig.\n</p>"
+    },
+    "zh": {
+      "name": "登山",
+      "summary": "数小时的耐力而不是数分钟 — 用高度差作为强度调节器。",
+      "instructions": [
+        "选择能够坚持数小时的速度;上坡时采取较小的步幅而不是较长的步幅。",
+        "下坡时短步幅,膝盖略微弯曲 — 肌肉酸痛产生于下坡,而不是上坡。",
+        "背包紧贴背部,腰带承载重量,而不是肩膀。",
+        "每 60-90 分钟要短暂饮水和进食,在饥饿前进行。"
+      ],
+      "tips": [
+        "高度差是强度调节器 — 300 米高度差大约相当于额外一公里平地。",
+        "合脚的鞋子和两双袜子防止的问题比任何耐力训练都多。"
+      ],
+      "article": "<h2>不同时间尺度的耐力</h2>\n<p>\n  登山与行走的区别不在于运动,而在于持续时间和地形。一次四小时的登山旅程几乎完全在一区到二区 — 正是间歇训练永远无法坚持的范围。训练刺激来自持续时间本身,而不是强度。\n</p>\n<h2>高度差而不是速度</h2>\n<p>\n  想要加大登山难度的人不会走得更快 — 而是走得更陡。登山计划中的一个粗略规则:上坡 300 米高度差大约相当于平地上多走一公里。这使强度可规划,而无需监测心率。\n</p>\n<p>\n  下坡经常被低估。它对大腿前侧施加离心负荷,是第二天为什么出现肌肉酸痛的原因 — 而不是上坡。短步幅和轻微弯曲的膝盖会大大减轻这种情况。\n</p>\n<h2>特别适合的用途</h2>\n<ul>\n  <li><strong>没有跑步冲击的基础耐力。</strong> 数小时的二区训练,而关节没有跑步的冲击负荷。</li>\n  <li><strong>下坡时的腿部力量。</strong> 数小时的离心负荷,没有任何深蹲组能复制。</li>\n  <li><strong>看起来不像训练的训练。</strong> 人们坚持的主要原因。</li>\n</ul>\n<h2>运动量</h2>\n<p>\n  每周一次较长的登山旅程足以作为耐力训练块。在增强体能时,先增加持续时间,然后增加高度差,最后增加负荷 — 永远不要同时增加其中两项。\n</p>"
     }
   },
   "cardio.inlineskating": {
@@ -1230,6 +1545,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       ],
       "article": "<h2>Eine Ebene, die im Laufen fehlt</h2>\n<p>\n  Laufen, Radfahren und Crosstrainer bewegen sich alle nach vorn. Inline-Skaten nicht: Der Vortrieb\n  entsteht aus einem seitlichen Abdruck, und damit aus Gesäßmuskulatur und Abduktoren — genau den\n  Muskeln, die in den anderen Ausdauerformen kaum Arbeit bekommen. Wer viel läuft, merkt nach der\n  ersten Stunde auf Skates Muskeln, von deren Existenz er nichts wusste.\n</p>\n<h2>Gleiten statt treten</h2>\n<p>\n  Anfänger machen viele kurze Schritte; Fortgeschrittene machen wenige lange. Der Unterschied ist die\n  Gleitphase: Nach jedem Abdruck rollt man eine Weile auf einem Bein, bevor das andere übernimmt. Das\n  ist nicht nur effizienter, sondern auch der eigentliche Stabilitätsreiz der Sportart.\n</p>\n<p>\n  Bremsen gehört an den Anfang, nicht ans Ende des Lernens. Eine Strecke, die bergab führt, ist ohne\n  sichere Bremstechnik keine Trainingseinheit, sondern ein Risiko.\n</p>\n<h2>Wofür es besonders taugt</h2>\n<ul>\n  <li><strong>Gesäß und Abduktoren.</strong> Seitliche Kraftentwicklung, die kein Laufkilometer liefert.</li>\n  <li><strong>Gleichgewicht und Rumpfstabilität.</strong> Jede Gleitphase ist ein einbeiniger Stand in Bewegung.</li>\n  <li><strong>Ausdauer ohne Stoßbelastung.</strong> Die Rollen nehmen dem Gelenk den Aufprall komplett ab.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  45 bis 90 Minuten auf einer bekannten, glatten Strecke. Die Belastungsgrenze setzt am Anfang nicht\n  die Ausdauer, sondern die Konzentration — müde Beine fahren unsauber, und unsauber fahren heißt\n  stürzen.\n</p>"
     },
+    "el": {
+      "name": "Σχοινάκι Σκέιτερ",
+      "summary": "Πλευρική πίεση αντί για κύλιση — εκπαιδεύει τον γλουτό και τις αρπακτικές μυς που δεν εμφανίζονται στο τρέξιμο.",
+      "instructions": [
+        "Γόνατο λυγισμένο, ισχίο χαμηλό, άνω σώμα ελαφρώς προς τα εμπρός — ορθή στάση κάνει κάθε στροφή επικίνδυνη.",
+        "Σπρώχνω προς τα πλάγια, όχι προς τα πίσω· η πίεση προέρχεται από το ισχίο, όχι από το αστράγαλο.",
+        "Ολίσθηση μεταξύ πιέσεων σε ένα πόδι, αντί για ταχυχυμένο ακολούθημα.",
+        "Μάθε το φρένο πριν το ταχύ — καμηλοπάρδαλη ή T-stop, πριν έρθει η πρώτη κατηφόρα."
+      ],
+      "tips": [
+        "Τα προστατευτικά καρπού είναι ένα σετ προστατευτικού εξοπλισμού που δεν μπορεί να συζητηθεί· οι περισσότερες πτώσεις πάνε μπροστά στα χέρια.",
+        "Ο υγρός άσφαλτος και τα ρολόγια δεν συμφωνούν — το φρένο και η κίνηση στροφής σπάνε απότομα."
+      ],
+      "article": "<h2>Ένα επίπεδο που λείπει από το τρέξιμο</h2>\n<p>\n  Το τρέξιμο, ποδηλασία και κροσστρέινερ κινούνται όλα προς τα εμπρός. Το σκέιτερ με ρολόγια δεν είναι:\n  Ο προωθητικός δυναμικός προέρχεται από μια πλευρική πίεση, και έτσι από τη μυϊκή μάζα του γλουτού\n  και τα abductors — ακριβώς τις μυς που σε άλλες αθλητικές μορφές αντοχής δεν λαμβάνουν δουλειά.\n  Όποιος τρέχει πολύ, παρατηρεί μετά την πρώτη ώρα στα ρολόγια μυς του οποίου δεν γνώριζε ότι υπάρχουν.\n</p>\n<h2>Ολίσθηση αντί για βήμα</h2>\n<p>\n  Αρχάριοι κάνουν πολλά κοντά βήματα· προχωρημένοι κάνουν λίγα μεγάλα. Η διαφορά είναι η φάση ολίσθησης:\n  Μετά από κάθε πίεση κυλάει κανείς για λίγο σε ένα πόδι, πριν το άλλο αναλάβει. Αυτό δεν είναι μόνο\n  αποδοτικότερο, αλλά και ο πραγματικός ερέθισμα σταθερότητας του αθλήματος.\n</p>\n<p>\n  Το φρένο ανήκει στην αρχή, όχι στο τέλος της μάθησης. Ένα ίχνος που οδηγεί κατηφορικά δεν είναι\n  μια προπόνηση χωρίς ασφαλή τεχνική φρεναρίσματος, αλλά ένας κίνδυνος.\n</p>\n<h2>Για τι είναι ιδιαίτερα κατάλληλο</h2>\n<ul>\n  <li><strong>Γλουτός και abductors.</strong> Πλευρική ανάπτυξη δύναμης που κανένα χιλιόμετρο τρεξίματος δεν παρέχει.</li>\n  <li><strong>Ισορροπία και σταθερότητα κορμού.</strong> Κάθε φάση ολίσθησης είναι ένα μονοποδικό όρθιο σε κίνηση.</li>\n  <li><strong>Αντοχή χωρίς σοκ φόρτωση.</strong> Τα ρολόγια αφαιρούν την κρούση αρθρώσεων πλήρως.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  45 έως 90 λεπτά σε μια γνωστή, ομαλή διαδρομή. Το όριο φόρτωσης ορίζεται στην αρχή όχι από την αντοχή,\n  αλλά από τη συγκέντρωση — κουρασμένα πόδια κινούνται ανίkανα, και ανίkανα κίνηση σημαίνει πτώση.\n</p>"
+    },
     "en": {
       "name": "Inline Skating",
       "summary": "Pushing sideways instead of rolling forward — trains glutes and abductors that running barely touches.",
@@ -1244,6 +1574,96 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         "Wet asphalt and wheels don't mix — braking distance and cornering grip disappear abruptly."
       ],
       "article": "<h2>A plane that running leaves out</h2>\n<p>\n  Running, cycling and the elliptical all move forward. Inline skating does not: propulsion comes from\n  a sideways push, and therefore from the glutes and abductors — precisely the muscles the other\n  endurance forms barely load. Anyone who runs a lot will discover muscles they didn't know about after\n  their first hour on skates.\n</p>\n<h2>Glide, don't step</h2>\n<p>\n  Beginners take many short steps; experienced skaters take few long ones. The difference is the glide\n  phase: after each push you roll on one leg for a while before the other takes over. That is not just\n  more efficient, it is the actual stability stimulus of the sport.\n</p>\n<p>\n  Braking belongs at the start of learning, not the end. A route that runs downhill is not a training\n  session without solid braking technique — it's a risk.\n</p>\n<h2>What it's especially good for</h2>\n<ul>\n  <li><strong>Glutes and abductors.</strong> Lateral force production that no running kilometre delivers.</li>\n  <li><strong>Balance and core stability.</strong> Every glide phase is a single-leg stance in motion.</li>\n  <li><strong>Endurance without impact.</strong> The wheels take the landing off your joints entirely.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  45 to 90 minutes on a known, smooth route. Early on, the limit isn't endurance but concentration —\n  tired legs skate sloppily, and sloppy skating means falling.\n</p>"
+    },
+    "es": {
+      "name": "Patinaje en línea",
+      "summary": "Impulso lateral en lugar de rodamiento – entrena glúteo y abductores, que apenas aparecen en correr.",
+      "instructions": [
+        "Rodillas flexionadas, caderas bajas, tren superior ligeramente inclinado hacia adelante – de pie erguido hace inseguro cualquier giro.",
+        "Impulsa hacia el lado, no hacia atrás; el empuje viene de la cadera, no del tobillo.",
+        "Entre impulsos desliza sobre una pierna, en lugar de hacer pasos frenéticos.",
+        "Aprende a frenar antes de la velocidad – Heel-Brake o T-Stop, antes del primer descenso."
+      ],
+      "tips": [
+        "Los protectores de muñeca son el único equipo de protección que no se discute; la mayoría de caídas van hacia adelante sobre las manos.",
+        "Asfalto mojado y ruedas no se llevan bien – la distancia de frenado y el agarre en curva se pierden abruptamente."
+      ],
+      "article": "<h2>Una dimensión que falta en correr</h2>\n<p>\n  Correr, ciclismo y elíptica se mueven hacia adelante. Patinaje en línea no: el empuje\n  viene de un impulso lateral, y por lo tanto de la musculatura glútea y abductores – exactamente los\n  músculos que en las otras formas de resistencia apenas trabajan. Quien corre mucho, nota después de la\n  primera hora en patines músculos cuya existencia no conocía.\n</p>\n<h2>Deslizar en lugar de impulsar</h2>\n<p>\n  Los principiantes hacen muchos pasos cortos; los avanzados hacen pocos largos. La diferencia es la\n  fase de deslizamiento: después de cada impulso ruedas una rato sobre una pierna, antes de que la otra tome el relevo. Esto\n  no es solo más eficiente, sino el verdadero estímulo de estabilidad del deporte.\n</p>\n<p>\n  Frenar pertenece al comienzo, no al final del aprendizaje. Una pista que baja\n  es sin técnica de frenado segura no una sesión de entrenamiento, sino un riesgo.\n</p>\n<h2>Para qué es especialmente adecuado</h2>\n<ul>\n  <li><strong>Glúteo y abductores.</strong> Desarrollo de fuerza lateral que ningún kilómetro de correr proporciona.</li>\n  <li><strong>Equilibrio y estabilidad de core.</strong> Cada fase de deslizamiento es un soporte sobre una pierna en movimiento.</li>\n  <li><strong>Resistencia sin impacto.</strong> Las ruedas eliminan completamente el impacto de la articulación.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  45 a 90 minutos en una pista conocida y lisa. El límite de carga al principio no lo pone\n  la resistencia, sino la concentración – piernas cansadas conducen desordenado, y conducir desordenado significa\n  caída.\n</p>"
+    },
+    "fr": {
+      "name": "Patin en ligne",
+      "summary": "Poussée latérale plutôt que roulement — entraîne les fessiers et les abducteurs, qui sont à peine présents à la course.",
+      "instructions": [
+        "Genoux fléchis, hanches basses, haut du corps légèrement penché vers l'avant — se tenir droit rend chaque virage instable.",
+        "Pousser sur le côté, pas vers l'arrière ; la poussée vient de la hanche, pas de la cheville.",
+        "Entre les poussées glisser sur une jambe, plutôt que de refaire frénétiquement.",
+        "Apprendre à freiner avant le tempo — freinage par talon ou T-stop, avant la première descente."
+      ],
+      "tips": [
+        "Les protège-poignets sont l'unique équipement de protection non discutable ; la plupart des chutes vont vers l'avant sur les mains.",
+        "L'asphalte mouillé et les roues ne vont pas ensemble — la distance de freinage et la tenue en virage s'évanouissent brutalement."
+      ],
+      "article": "<h2>Une dimension qui manque à la course</h2>\n<p>\n  La course, le vélo et le vélo elliptique se déplacent tous vers l'avant. Le patin en ligne non : la propulsion\n  vient d'une poussée latérale, donc de la musculature des fessiers et des abducteurs — exactement les muscles\n  qui obtiennent à peine du travail dans les autres formes d'endurance. Celui qui court beaucoup remarque après\n  la première heure sur patins des muscles dont il ne savait pas qu'ils existaient.\n</p>\n<h2>Glisser plutôt que dérouler</h2>\n<p>\n  Les débutants font beaucoup de petits pas ; les avancés en font peu et longs. La différence est la phase de glissement :\n  après chaque poussée, on glisse un moment sur une jambe avant que l'autre prenne le relais. Ce n'est pas\n  seulement plus efficace, mais aussi le véritable stimulus de stabilité du sport.\n</p>\n<p>\n  Le freinage doit être au début, pas à la fin de l'apprentissage. Une piste qui descend n'est pas une unité\n  d'entraînement sans technique de freinage sûre, c'est un risque.\n</p>\n<h2>Pour quoi c'est particulièrement utile</h2>\n<ul>\n  <li><strong>Fessiers et abducteurs.</strong> Développement de force latéral, qu'aucun kilomètre de course ne procure.</li>\n  <li><strong>Équilibre et stabilité du tronc.</strong> Chaque phase de glissement est un appui sur une jambe en mouvement.</li>\n  <li><strong>Endurance sans impact.</strong> Les roues absorbent complètement l'impact pour l'articulation.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  45 à 90 minutes sur une piste connue et lisse. La limite de charge est au début non pas l'endurance, mais\n  la concentration — des jambes fatiguées roulent mal, et rouler mal signifie tomber.\n</p>"
+    },
+    "it": {
+      "name": "Pattinaggio in linea",
+      "summary": "Spinta laterale invece di rotolamento — allena i glutei e gli abduttori, che durante la corsa lavorano poco.",
+      "instructions": [
+        "Ginocchia piegate, anca bassa, busto leggermente proteso in avanti — stare eretti rende ogni curva incerta.",
+        "Spingi lateralmente, non indietro; la spinta viene dall'anca, non dalla caviglia.",
+        "Tra le spinte lascia che il tuo corpo scivoli su una gamba, invece di seguire affrettatamente.",
+        "Impara a frenare prima di andare veloce — Heel-Brake o T-Stop, prima che arrivi la prima discesa."
+      ],
+      "tips": [
+        "I protettori per polsi sono l'unica attrezzatura di protezione non negoziabile; la maggior parte delle cadute vanno in avanti sulle mani.",
+        "L'asfalto bagnato e i rulli non vanno d'accordo — la distanza di frenata e la tenuta in curva vengono a mancare improvvisamente."
+      ],
+      "article": "<h2>Un piano che manca nella corsa</h2>\n<p>\n  Corsa, ciclismo e ellittica si muovono tutti in avanti. Il pattinaggio in linea no: la propulsione nasce da una spinta laterale, e quindi da glutei e abduttori — esattamente i muscoli che nelle altre forme di resistenza ricevono poco lavoro. Chi corre molto, dopo la prima ora sui pattini sente muscoli di cui non sapeva dell'esistenza.\n</p>\n<h2>Scivolamento invece di pedalata</h2>\n<p>\n  I principianti fanno molti passi corti; gli avanzati ne fanno pochi lunghi. La differenza è la fase di scivolamento: dopo ogni spinta si scorre per un po' su una gamba, prima che l'altra prenda il sopravvenzo. Non è solo più efficiente, ma è anche il vero stimolo di stabilità dello sport.\n</p>\n<p>\n  Frenare appartiene all'inizio dell'apprendimento, non alla fine. Una pista che scende è senza una tecnica di frenata sicura non un'unità di allenamento, ma un rischio.\n</p>\n<h2>Per cosa è particolarmente adatto</h2>\n<ul>\n  <li><strong>Glutei e abduttori.</strong> Sviluppo di forza laterale che nessun chilometro di corsa fornisce.</li>\n  <li><strong>Equilibrio e stabilità del core.</strong> Ogni fase di scivolamento è uno stacco su una gamba in movimento.</li>\n  <li><strong>Resistenza senza impatto.</strong> I rulli tolgono completamente all'articolazione l'impatto.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  45 fino a 90 minuti su una pista conosciuta e liscia. Il limite di carico all'inizio non è stabilito dalla resistenza, ma dalla concentrazione — gambe stanche patinano in modo disordinato, e patinare in modo disordinato significa cadere.\n</p>"
+    },
+    "nl": {
+      "name": "Inline skaten",
+      "summary": "Zijdelingse afdruk in plaats van afrollen — traint billen en abductoren, die hardlopen nauwelijks gebruikt.",
+      "instructions": [
+        "Knie gebogen, heup laag, bovenklinker licht naar voren geneigd — rechtop staan maakt elke bocht onzeker.",
+        "Naar zijde afdrukken, niet naar achter; stuwkracht komt uit heup, niet uit enkel.",
+        "Tussen afdrukken op één voet laten glijden, in plaats van hectisch toe te zetten.",
+        "Leer remmen vóór snelheid — hielrem of T-stop, voordat de eerste afdaling komt."
+      ],
+      "tips": [
+        "Polsbeschermers zijn de ene beschermingsuitrusting die niet te bespreken valt; de meeste vallen gaan naar voren op handen.",
+        "Nat asfalt en rollen gaan niet samen — remweg en bochtkompas breken abrupt weg."
+      ],
+      "article": "<h2>Een vlak dat hardlopen mist</h2>\n<p>\n  Hardlopen, fietsen en crosstrainer bewegen allemaal naar voren. Inline skaten niet: stuwkracht ontstaat\n  uit zijdelingse afdruk, en dus uit billen en abductoren — precies de spieren die in andere uithoudings-\n  vormen nauwelijks werk krijgen. Wie veel loopt, voelt na het eerste uur op skates spieren waarvan hij\n  het bestaan niet wist.\n</p>\n<h2>Glijden in plaats van stappen</h2>\n<p>\n  Beginners maken veel korte stappen; gevorderden doen weinig lange. Het verschil is de glijfase: na\n  elke afdruk rol je een poosje op één voet voordat de ander het overneemt. Dat is niet alleen efficiënter,\n  maar ook de werkelijke stabiliteitsprikkel van de sport.\n</p>\n<p>\n  Remmen hoort aan het begin, niet aan het einde van leren. Een route die bergaf gaat, is zonder veilige\n  remtechniek geen trainingssessie, maar risico.\n</p>\n<h2>Waarvoor het bijzonder geschikt is</h2>\n<ul>\n  <li><strong>Billen en abductoren.</strong> Zijdelingse krachtopbouw, die geen hardlopen kilometer levert.</li>\n  <li><strong>Evenwicht en rompstabiliteit.</strong> Elke glijfase is een éénbenig stand in beweging.</li>\n  <li><strong>Uithoudingsvermogen zonder schokbelasting.</strong> De rollen nemen gewricht de impact helemaal weg.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  45 tot 90 minuten op bekende, gladde route. Belastingslimiet stelt zich aanvankelijk niet door uithoudingsvermogen,\n  maar door concentratie — moe benen rijden onzuiver, en onzuiver rijden betekent vallen.\n</p>"
+    },
+    "no": {
+      "name": "Rulleskatering",
+      "summary": "Sideakstøt i stedet for aking – trener rumpe og abduktorer som nesten ikke blir aktivert ved løping.",
+      "instructions": [
+        "Kne bøyd, hofte dypt, overkropp lett framover – oppreist stilling gjør hver kurve usikker.",
+        "Aksett til siden, ikke bakover; skyvet kommer fra hoften, ikke fra foten.",
+        "Glidning på ett ben mellom akstøtene i stedet for hektisk gjensetting.",
+        "Lær bremseteknikk før tempoet – heelbrems eller T-stopp før den første nedoverbakken."
+      ],
+      "tips": [
+        "Håndleddsbeskyttere er den ene beskyttelsesutstyr som ikke er til diskusjon; de fleste fall går framover på hendene.",
+        "Vått asfalt og roller tåler ikke – bremsevei og kurveholdt brytes av brått."
+      ],
+      "article": "<h2>Et nivå som mangler ved løping</h2>\n<p>\n  Løping, sykling og crosstrainer beveger seg alle framover. Rulleskatering gjør ikke det: Frambringet\n  kommer fra ett sideakstøt, og dermed fra rumpa og abduktorer – akkurat musklene som i\n  de andre utholdenheitsformene får knapt arbeid. Den som løper mye, merker etter den første timen på skøyter\n  muskler som han ikke visste fantes.\n</p>\n<h2>Glidning i stedet for trinn</h2>\n<p>\n  Nybegynnere gjør mange korte skritt; framskredne gjør få lange. Forskjellen er glidesfasen: Etter hver akstøt\n  ruller man en stund på ett ben før det andre tar over. Det er ikke bare mer effektivt, men også\n  det egentlige stabilitets-påvirkningen av sporten.\n</p>\n<p>\n  Bremsing hører til starten av læringen, ikke slutten. En strekning som går nedover er uten\n  sikker bremseteknikk ikke en treningsøkt, men en risiko.\n</p>\n<h2>Hva det egner seg spesielt for</h2>\n<ul>\n  <li><strong>Rumpe og abduktorer.</strong> Sidekraftutvikling som ingen løpekileometer gir.</li>\n  <li><strong>Balanse og kjernestabilitet.</strong> Hver glidsfase er ett-beins stand i bevegelse.</li>\n  <li><strong>Utholdenhet uten støtbelastning.</strong> Hjulene fjerner påvirkningen fra leddet helt.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  45 til 90 minutter på ett kjent, glatt spor. Belastningsgrensen settes på starten ikke av\n  utholdenhet, men av konsentrasjon – trett ben kjører uslett, og uslett kjøring betyr fall.\n</p>"
+    },
+    "zh": {
+      "name": "轮滑",
+      "summary": "侧向推进而非向前滚动 — 锻炼臀部和腹外斜肌,这些在跑步中几乎不参与。",
+      "instructions": [
+        "膝盖弯曲,臀部低,上身略微前倾 — 直身站立会使每个转弯都不稳定。",
+        "向侧面推进,而不是向后;推力来自臀部,而不是脚踝。",
+        "在推进之间在一只腿上滑行,而不是急促地重新加力。",
+        "在第一次下坡来临前学会制动 — 脚跟制动或T形停止,而不是仓促上阵。"
+      ],
+      "tips": [
+        "腕部护具是唯一不容讨论的保护装备;大多数跌倒是向前摔在手上。",
+        "潮湿的沥青路和轮子不搭配 — 制动距离和转向控制会突然消失。"
+      ],
+      "article": "<h2>跑步中缺失的一个维度</h2>\n<p>\n  跑步、骑自行车和椭圆机都是向前运动。轮滑则不然:推力来自侧向推进,因此来自臀部肌肉和腹外斜肌 — 正是在其他耐力形式中几乎没有工作的肌肉。跑步很多的人在第一小时轮滑后会发现他们不知道存在的肌肉。\n</p>\n<h2>滑行而不是踩踏</h2>\n<p>\n  初学者做很多短步;高级者做很少长步。区别在于滑行阶段:每次推进后,你在一只腿上滑行一段距离,然后另一只腿接管。这不仅效率更高,也是这项运动真正的稳定性刺激。\n</p>\n<p>\n  制动应该在学习的开始,而不是结束。没有可靠制动技术的下坡路段不是一次训练,而是一个风险。\n</p>\n<h2>特别适合的用途</h2>\n<ul>\n  <li><strong>臀部和腹外斜肌。</strong> 侧向力量开发,跑步公里无法提供。</li>\n  <li><strong>平衡和躯干稳定性。</strong> 每个滑行阶段都是一个运动中的单腿站立。</li>\n  <li><strong>没有冲击的耐力。</strong> 轮子完全消除了关节的冲击。</li>\n</ul>\n<h2>运动量</h2>\n<p>\n  在一条熟悉、光滑的路线上 45 到 90 分钟。在开始时,承载限制不是耐力,而是专注力 — 疲惫的腿会滑行得不干净,滑行不干净意味着跌倒。\n</p>"
     }
   },
   "cardio.jumpingjacks": {
@@ -1536,6 +1956,21 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       ],
       "article": "<h2>Gehen, das den Oberkörper mitnimmt</h2>\n<p>\n  Nordic Walking hat den Ruf, eine Rentnerdisziplin zu sein — und ist tatsächlich eine der wenigen\n  Formen, die aus einer Bewegung mit sehr niedriger Gelenkbelastung einen Ganzkörperreiz macht.\n  Richtig ausgeführt beteiligt der Stockabdruck Latissimus, Trizeps und Rumpf an jedem Schritt. Der\n  Energieverbrauch liegt spürbar über dem des Gehens bei gleichem Tempo, ohne dass sich die Belastung\n  für Knie und Hüfte erhöht.\n</p>\n<h2>Der Abdruck entscheidet</h2>\n<p>\n  Der Unterschied zwischen Training und Spazierengehen mit Stöcken liegt in einer Bewegung: Der Stock\n  wird schräg hinter dem Körper abgedrückt, nicht vor dem Körper aufgesetzt. Wer die Stöcke nur\n  mitführt, trägt Gewicht spazieren.\n</p>\n<p>\n  Ein guter Test: Nach zehn Minuten sollte die Rückseite der Schulter zu spüren sein. Ist sie es\n  nicht, fehlt der Schub.\n</p>\n<h2>Wofür es besonders taugt</h2>\n<ul>\n  <li><strong>Gelenkschonendes Ausdauertraining.</strong> Die Stöcke nehmen bei jedem Schritt Last von Knie und Hüfte.</li>\n  <li><strong>Wiedereinstieg nach Verletzungen.</strong> Höhere Stabilität als freies Gehen, mehr Reiz als Spazieren.</li>\n  <li><strong>Schulter- und Nackenmobilität.</strong> Die rhythmische Armarbeit löst, was Schreibtischarbeit festsetzt.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  30 bis 60 Minuten, zwei- bis dreimal pro Woche. Technik vor Tempo: Die ersten Einheiten gehören der\n  Abdruckbewegung, alles andere ergibt sich danach.\n</p>"
     },
+    "el": {
+      "name": "Nordic Walking",
+      "summary": "Περπάτημα με ραβδιά — περιλαμβάνει τον άνω σώμα και αυξάνει την κατανάλωση ενέργειας σημαντικά.",
+      "instructions": [
+        "Μήκος ραβδιού περίπου ύψος σώματος × 0,66· σε αμφιβολία διαλέξτε το μικρότερο.",
+        "Τοποθετήστε το ραβδί διαγώνια στο πόδι, σπρώξτε πίσω από το σώμα — μην τοποθετείτε μπροστά.",
+        "Ανοίξτε το χέρι στο τέλος της πίεσης, το σχοινί κρατά το ραβδί· αυτό προστατεύει τον πήχη και τον ώμο.",
+        "Άνω σώμα ελαφρώς προς τα εμπρός λυγισμένο, ώμοι χαμηλά, κορμός τεντωμένος."
+      ],
+      "tips": [
+        "Το πιο συνηθισμένο σφάλμα είναι να φέρετε απλώς τα ραβδιά — χωρίς πραγματική πίεση είναι απλώς περπάτημα με πρόσθετο βάρος.",
+        "Στον άσφαλτο χρησιμοποιήστε ελαστικό buffer, στο έδαφος το μεταλλικό άκρο."
+      ],
+      "article": "<h2>Περπάτημα που εντάσσει τον άνω σώμα</h2>\n<p>\n  Το Nordic Walking έχει την φήμη να είναι ένα άθλημα συνταξιούχων — και είναι στην πραγματικότητα\n  ένα από τα λίγα πρότυπα που κάνουν ένα σώμα-ευρύ ερέθισμα από μια κίνηση με πολύ χαμηλή φόρτωση\n  άρθρωσης. Σωστά εκτελεσμένη, η πίεση ραβδιού ενεργοποιεί latissimus, τρικέφαλο και κορμό σε κάθε βήμα.\n  Η κατανάλωση ενέργειας είναι σαφώς υψηλότερη από του περπατήματος στο ίδιο ρυθμό, χωρίς αύξηση της\n  φόρτωσης για γόνατο και ισχίο.\n</p>\n<h2>Η πίεση αποφασίζει</h2>\n<p>\n  Η διαφορά μεταξύ προπόνησης και περπατήματος με ραβδιά βρίσκεται σε μια κίνηση: Το ραβδί σπρώχνεται\n  λοξά πίσω από το σώμα, όχι τοποθετημένο μπροστά του σώματος. Αν κάποιος φέρει απλώς τα ραβδιά,\n  φέρει βάρος περπατώντας.\n</p>\n<p>\n  Ένα καλό τεστ: Μετά από δέκα λεπτά πρέπει να αισθάνεστε την πίσω πλευρά του ώμου. Αν δεν το κάνετε,\n  λείπει η πίεση.\n</p>\n<h2>Για τι είναι ιδιαίτερα κατάλληλο</h2>\n<ul>\n  <li><strong>Προπόνηση αντοχής που προστατεύει τις αρθρώσεις.</strong> Τα ραβδιά αφαιρούν φορτίο από γόνατο και ισχίο σε κάθε βήμα.</li>\n  <li><strong>Επανεισαγωγή μετά από τραυματισμούς.</strong> Μεγαλύτερη σταθερότητα από ελεύθερο περπάτημα, περισσότερο ερέθισμα από περπάτημα.</li>\n  <li><strong>Κινητικότητα ώμου και αυχένα.</strong> Η ρυθμική κίνηση του χεριού λύνει αυτό που έχει ακινητοποιήσει η δουλειά γραφείου.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  30 έως 60 λεπτά, δύο έως τρεις φορές ανά εβδομάδα. Τεχνική πριν το ρυθμό: Οι πρώτες περίοδοι ανήκουν\n  στην κίνηση πίεσης, όλα τα άλλα έπεται.\n</p>"
+    },
     "en": {
       "name": "Nordic Walking",
       "summary": "Walking with poles — brings the upper body in and raises energy expenditure noticeably.",
@@ -1550,6 +1985,96 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         "Rubber tips on asphalt, the metal spike off-road."
       ],
       "article": "<h2>Walking that brings the upper body along</h2>\n<p>\n  Nordic walking has a reputation as a retirees' pastime — and is in fact one of the few ways to turn\n  a very low-impact movement into a whole-body stimulus. Done properly, the pole push involves the\n  lats, triceps and core on every stride. Energy expenditure sits noticeably above plain walking at\n  the same pace, without adding any load to knees or hips.\n</p>\n<h2>The push-off is what counts</h2>\n<p>\n  The difference between training and strolling with poles comes down to one movement: the pole is\n  pushed off diagonally behind the body, not planted in front of it. Carry the poles along and you're\n  taking weight for a walk.\n</p>\n<p>\n  A good test: after ten minutes you should feel the back of your shoulder. If you don't, the push is\n  missing.\n</p>\n<h2>What it's especially good for</h2>\n<ul>\n  <li><strong>Low-impact endurance.</strong> The poles take load off knees and hips on every stride.</li>\n  <li><strong>Returning after injury.</strong> More stable than free walking, more stimulus than strolling.</li>\n  <li><strong>Shoulder and neck mobility.</strong> The rhythmic arm work loosens what desk work locks up.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  30 to 60 minutes, two or three times a week. Technique before pace: give the first few sessions to\n  the push-off and the rest follows.\n</p>"
+    },
+    "es": {
+      "name": "Caminata nórdica",
+      "summary": "Caminar con bastones – incluye el tren superior y aumenta notablemente el gasto energético.",
+      "instructions": [
+        "Largo de bastón aproximadamente altura del cuerpo × 0,66; en duda elige la variante más corta.",
+        "Apoya bastón diagonal al pie, empuja detrás del cuerpo – no coloques el bastón frente al cuerpo.",
+        "Abre la mano al final del impulso, la correa sostiene el bastón; esto cuida el antebrazo y el hombro.",
+        "Tren superior ligeramente inclinado hacia adelante, hombros bajos, core tenso."
+      ],
+      "tips": [
+        "El error más frecuente es llevar los bastones simplemente – sin impulso real es simplemente caminar con peso adicional.",
+        "En asfalto usa amortiguadores de goma, en terreno la punta de metal."
+      ],
+      "article": "<h2>Caminar que trae el tren superior</h2>\n<p>\n  La caminata nórdica tiene la reputación de ser una disciplina para jubilados – y es de hecho una de las pocas\n  formas que convierte un movimiento con impacto articular muy bajo en un estímulo de cuerpo completo.\n  Ejecutado correctamente, el impulso del bastón involucra dorsal ancho, tríceps y core en cada paso. El\n  gasto energético está notablemente por encima del de caminar a igual ritmo, sin que la carga\n  para rodilla y cadera aumente.\n</p>\n<h2>El impulso decide</h2>\n<p>\n  La diferencia entre entrenamiento y caminar de paseo con bastones está en un movimiento: el bastón\n  se impulsa diagonalmente detrás del cuerpo, no se coloca frente al cuerpo. Quien solo lleva los bastones,\n  carga peso paseando.\n</p>\n<p>\n  Una buena prueba: después de diez minutos deberías sentir la parte trasera del hombro. Si no la sientes,\n  falta el impulso.\n</p>\n<h2>Para qué es especialmente adecuada</h2>\n<ul>\n  <li><strong>Entrenamiento de resistencia que cuida las articulaciones.</strong> Los bastones alivian carga de rodilla y cadera en cada paso.</li>\n  <li><strong>Reinicio después de lesiones.</strong> Mayor estabilidad que caminar libre, más estímulo que un paseo.</li>\n  <li><strong>Movilidad de hombro y cuello.</strong> El trabajo rítmico de brazos libera lo que el trabajo de escritorio fija.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  30 a 60 minutos, dos a tres veces por semana. Técnica antes que ritmo: las primeras sesiones pertenecen al\n  movimiento de impulso, todo lo demás viene después.\n</p>"
+    },
+    "fr": {
+      "name": "Marche nordique",
+      "summary": "Marcher avec des bâtons — implique le haut du corps et augmente sensiblement la dépense énergétique.",
+      "instructions": [
+        "Longueur des bâtons environ taille × 0,66 ; en cas de doute, choisir la variante plus courte.",
+        "Placer le bâton en diagonale par rapport au pied, pousser vers l'arrière du corps — ne pas placer devant le corps.",
+        "Main ouverte à la fin de la poussée, la sangle tient le bâton ; cela ménage l'avant-bras et l'épaule.",
+        "Haut du corps légèrement penché vers l'avant, épaules basses, tronc engagé."
+      ],
+      "tips": [
+        "L'erreur la plus courante est juste de porter les bâtons — sans véritable poussée c'est juste marcher avec un poids supplémentaire.",
+        "Sur l'asphalte utiliser des tampons en caoutchouc, en terrain les pointes en métal."
+      ],
+      "article": "<h2>Marcher, en impliquant le haut du corps</h2>\n<p>\n  La marche nordique a la réputation d'être une discipline pour retraités — et est en fait l'une des rares\n  formes qui fait d'un mouvement à très faible charge articulaire un stimulus corps entier. Bien exécutée, la\n  poussée des bâtons implique le grand dorsal, le triceps et le tronc à chaque pas. La dépense énergétique\n  se situe sensiblement au-dessus de celle de la marche au même tempo, sans que la charge n'augmente pour les\n  genoux et les hanches.\n</p>\n<h2>La poussée décide</h2>\n<p>\n  La différence entre entraînement et promenade avec bâtons réside dans un mouvement : le bâton est poussé\n  obliquement vers l'arrière du corps, pas placé devant. Celui qui juste porte les bâtons porte du poids\n  en promenade.\n</p>\n<p>\n  Un bon test : après dix minutes, on devrait sentir l'arrière de l'épaule. Si ce n'est pas le cas, la\n  poussée manque.\n</p>\n<h2>Pour quoi c'est particulièrement utile</h2>\n<ul>\n  <li><strong>Entraînement d'endurance ménageant les articulations.</strong> Les bâtons enlèvent à chaque pas de la charge aux genoux et hanches.</li>\n  <li><strong>Reprise après blessure.</strong> Plus de stabilité que la marche libre, plus de stimulus que la promenade.</li>\n  <li><strong>Mobilité des épaules et de la nuque.</strong> Le travail des bras rhythmique détend ce que le travail de bureau fixe.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  30 à 60 minutes, deux à trois fois par semaine. Technique avant tempo : les premières unités servent le\n  mouvement de poussée, tout le reste s'en suit.\n</p>"
+    },
+    "it": {
+      "name": "Nordic Walking",
+      "summary": "Camminare con i bastoncini — coinvolge il busto e aumenta notevolmente il consumo energetico.",
+      "instructions": [
+        "Lunghezza del bastoncino circa altezza corporea × 0,66; in caso di dubbio scegli la variante più corta.",
+        "Posiziona il bastoncino diagonalmente verso il piede, spingi dietro il corpo — non davanti al corpo.",
+        "Apri la mano al termine della spinta, il laccio tiene il bastoncino; questo protegge l'avambraccio e la spalla.",
+        "Busto leggermente proteso in avanti, spalle basse, core teso."
+      ],
+      "tips": [
+        "L'errore più comune è semplicemente portare i bastoncini — senza una vera spinta è solo camminare con peso extra.",
+        "Su asfalto utilizza i tamponi in gomma, in terreno la punta metallica."
+      ],
+      "article": "<h2>Camminare che coinvolge il busto</h2>\n<p>\n  Il Nordic Walking ha la reputazione di essere uno sport da pensionati — e in realtà è una delle poche forme che da un movimento con carico articolare molto basso crea uno stimolo full body. Eseguito correttamente, la spinta del bastoncino coinvolge il gran dorsale, il tricipite e il core ad ogni passo. Il consumo energetico è notevolmente superiore a quello della camminata allo stesso ritmo, senza che il carico per ginocchia e anca aumenti.\n</p>\n<h2>La spinta decide</h2>\n<p>\n  La differenza tra allenamento e una passeggiata con bastoncini è in un movimento: il bastoncino viene spinto diagonalmente dietro il corpo, non posizionato davanti al corpo. Chi portano solo i bastoncini sta trasportando peso.\n</p>\n<p>\n  Una buona prova: dopo dieci minuti dovresti sentire il retro della spalla. Se non lo senti, manca la spinta.\n</p>\n<h2>Per cosa è particolarmente adatto</h2>\n<ul>\n  <li><strong>Allenamento di resistenza che protegge le articolazioni.</strong> I bastoncini tolgono carico da ginocchio e anca ad ogni passo.</li>\n  <li><strong>Ritorno dopo infortuni.</strong> Stabilità più alta della camminata libera, più stimolo di una passeggiata.</li>\n  <li><strong>Mobilità di spalle e collo.</strong> Il lavoro ritmico delle braccia scioglie quello che il lavoro da scrivania blocca.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  30 fino a 60 minuti, due o tre volte a settimana. Tecnica prima di velocità: i primi allenamenti appartengono al movimento di spinta, tutto il resto viene dopo.\n</p>"
+    },
+    "nl": {
+      "name": "Nordic walking",
+      "summary": "Gaan met stokken — betrekt bovenklinker en verhoogt energieverbruik merkbaar.",
+      "instructions": [
+        "Stoklengte ongeveer lichaamslengte × 0,66; bij twijfel de kortere variant kiezen.",
+        "Stok diagonaal naar voet zetten, achter lichaam afdrukken — niet voor lichaam plaatsen.",
+        "Hand aan einde afdruk openen, lus houdt stok; dat spaart onderarm en schouder.",
+        "Bovenklinker licht naar voren geneigd, schouders laag, romp gespannen."
+      ],
+      "tips": [
+        "De meest voorkomende fout is stokken alleen dragen — zonder echte afdruk is het gewoon gaan met extra gewicht.",
+        "Op asfalt rubberdempere gebruiken, in terrein metalen punt."
+      ],
+      "article": "<h2>Gaan dat bovenklinker meeneemt</h2>\n<p>\n  Nordic walking heeft de reputatie een opgenaren-sport te zijn — en is eigenlijk een van de weinige\n  vormen die van een beweging met zeer lage gewrichtsbelasting een lichaamsprikkel maakt. Goed uitgevoerd\n  trekt stokafdruk brede rugspier, triceps en romp in bij elke stap. Energieverbruik ligt merkbaar\n  hoger dan gaan bij hetzelfde tempo, zonder dat gewrichtsbelasting voor knie en heup stijgt.\n</p>\n<h2>De afdruk beslist</h2>\n<p>\n  Het verschil tussen training en wandelen met stokken zit in één beweging: stok wordt schuin achter lichaam\n  afgeduwd, niet voor lichaam geplaatst. Wie stokken alleen medraagt, draagt gewicht wandelen.\n</p>\n<p>\n  Een goede test: na tien minuten zou achterkant schouder voelbaar moeten zijn. Is dit niet het geval,\n  ontbreekt afdruk.\n</p>\n<h2>Waarvoor het bijzonder geschikt is</h2>\n<ul>\n  <li><strong>Gewrichtschonend uithoudingstraining.</strong> Stokken nemen bij elke stap last van knie en heup.</li>\n  <li><strong>Herstart na blessures.</strong> Hogere stabiliteit dan vrij gaan, meer prikkel dan wandelen.</li>\n  <li><strong>Schouder- en nekmobiliteit.</strong> Ritmische armarbeid lost wat bureauwerk vastlegt.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  30 tot 60 minuten, twee- tot driemaal per week. Techniek voor tempo: eerste sessies hoort bij afdrukbeweging,\n  alles andere volgt daarna.\n</p>"
+    },
+    "no": {
+      "name": "Nordisk gange",
+      "summary": "Gange med staver – engasjerer overkroppen og hever energiforbruket merkbart.",
+      "instructions": [
+        "Stavlengde omtrent kroppshøyde × 0,66; i tvil velg den kortere varianten.",
+        "Stav diagonalt til foten, driv bakover kroppen – ikke plasser den foran kroppen.",
+        "Hånd åpnes på slutten av skyvet, sløyfen holder staven; det skåner underarm og skulder.",
+        "Overkropp lett framover, skuldre dypt, kjerne spent."
+      ],
+      "tips": [
+        "Den vanligste feilen er å bare bære stavene – uten ekte skyv er det bare gange med ekstra vekt.",
+        "På asfalt bruk gummibuffer, i terrenget metallspissen."
+      ],
+      "article": "<h2>Gange som tar overkroppen med</h2>\n<p>\n  Nordisk gange har ryktet av å være pensjonistdisiplin – og er faktisk en av få\n  former som gjør et hele-kropp-påvirkning ut av en bevegelse med veldig lav leddsbelastning.\n  Når det gjøres riktig, engasjerer stavskyttet latissimus, triseps og kjerne ved hvert skritt. Energiforbruket\n  ligger merkbart over det ved gange med samme tempo, uten at belastningen for kne og hofte øker.\n</p>\n<h2>Skyvet bestemmer</h2>\n<p>\n  Forskjellen mellom trening og spaserturgange med staver ligger i en bevegelse: Staven\n  skyves skrått bakover kroppen, ikke plassert foran kroppen. Den som bare bærer stavene,\n  bærer vekt på spasertur.\n</p>\n<p>\n  En god test: Etter ti minutter burde baksiden av skulderen være merkbar. Dersom den ikke er det, mangler skyvet.\n</p>\n<h2>Hva det egner seg spesielt for</h2>\n<ul>\n  <li><strong>Leddskonende utholdenhestrening.</strong> Stavene tar belastning fra kne og hofte ved hvert skritt.</li>\n  <li><strong>Gjeninngang etter skader.</strong> Høyere stabilitet enn fri gange, mer påvirkning enn spasering.</li>\n  <li><strong>Skulder- og nakkemobilitet.</strong> Den rytmiske armarbeiden løser det som skrivebordarbeid fester.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  30 til 60 minutter, to til tre ganger per uke. Teknikk før tempo: De første økter tilhører\n  skytebevegelsen, alt annet følger etter.\n</p>"
+    },
+    "zh": {
+      "name": "北欧式健走",
+      "summary": "拿着拐杖行走 — 让上身参与,明显提高能量消耗。",
+      "instructions": [
+        "拐杖长度约为身高的 0.66 倍;如有疑虑,选择较短的。",
+        "拐杖对角线靠近脚部,在身体后方推动 — 不要在身体前方放置。",
+        "推动结束时手打开,带子握住拐杖;这可以保护前臂和肩膀。",
+        "身体略微前倾,肩膀放低,躯干紧张。"
+      ],
+      "tips": [
+        "最常见的错误是只是携带拐杖 — 没有真正推动,这只是拿着额外重量行走。",
+        "在沥青路面上使用橡胶缓冲垫,在地形中使用金属尖端。"
+      ],
+      "article": "<h2>让上身参与的行走</h2>\n<p>\n  北欧式健走有一个名声是老年人的运动 — 实际上是少数能将非常低关节负荷的运动转变为全身刺激的形式之一。正确执行时,拐杖推动在每一步中涉及背阔肌、三头肌和躯干。相比相同速度的行走,能量消耗明显更高,而不会增加膝盖和髋部的负荷。\n</p>\n<h2>推动决定一切</h2>\n<p>\n  训练和用拐杖散步之间的区别在于一个运动:拐杖对角线在身体后方推动,而不是在身体前方放置。只是携带拐杖的人是在背着额外重量散步。\n</p>\n<p>\n  一个好测试:十分钟后应该能感受到肩膀后侧。如果感受不到,说明推动不足。\n</p>\n<h2>特别适合的用途</h2>\n<ul>\n  <li><strong>关节保护的耐力训练。</strong> 拐杖在每一步中从膝盖和髋部卸载。</li>\n  <li><strong>伤后复出。</strong> 比自由行走更稳定,比散步刺激更多。</li>\n  <li><strong>肩膀和颈部活动度。</strong> 有节奏的手臂工作解放了办公室工作固定的部分。</li>\n</ul>\n<h2>运动量</h2>\n<p>\n  每周 30 到 60 分钟,两到三次。技术优先于速度:最初的课程应该致力于推动动作,其他一切随之而来。\n</p>"
     }
   },
   "cardio.rowing": {
