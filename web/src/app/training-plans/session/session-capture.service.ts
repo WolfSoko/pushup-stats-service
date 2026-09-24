@@ -4,6 +4,7 @@ import { UserContextService } from '@pu-auth/auth';
 import { nowLocalIsoTimestamp } from '@pu-stats/date';
 import { ExerciseFirestoreService } from '@pu-stats/data-access';
 import {
+  type ExerciseEntry,
   type ExerciseEntryCreate,
   findExerciseDefinition,
   type SessionStep,
@@ -72,6 +73,14 @@ export class SessionCaptureService {
   private readonly snackBar = inject(MatSnackBar);
   private readonly appData = inject(AppDataFacade);
   private readonly source = inject(SESSION_ENTRY_SOURCE_TOKEN);
+  private saved: ExerciseEntry[] = [];
+
+  /** Entries written since the last call — the session's XP haul. */
+  takeSaved(): ExerciseEntry[] {
+    const saved = this.saved;
+    this.saved = [];
+    return saved;
+  }
 
   /** Run the step's primary tool. */
   capture(step: SessionStep): Promise<SessionCaptureOutcome> {
@@ -226,7 +235,9 @@ export class SessionCaptureService {
     const userId = this.userContext.userIdSafe();
     if (!userId || !this.exerciseApi) return this.fail();
     try {
-      await firstValueFrom(this.exerciseApi.createEntry(userId, entry));
+      this.saved.push(
+        await firstValueFrom(this.exerciseApi.createEntry(userId, entry))
+      );
     } catch (err) {
       return this.fail(err);
     }

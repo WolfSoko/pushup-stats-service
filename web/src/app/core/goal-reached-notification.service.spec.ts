@@ -13,6 +13,7 @@ import {
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
 import { GoalReachedNotificationService } from './goal-reached-notification.service';
 import { UserConfigStore } from './user-config.store';
+import { XpCelebrationService } from './xp/xp-celebration.service';
 
 describe('GoalReachedNotificationService', () => {
   // Frozen Berlin date: Wed Apr 22 2026 (ISO week 17)
@@ -55,6 +56,8 @@ describe('GoalReachedNotificationService', () => {
     dayProgress: (dayIndex: number) =>
       dayIndex === planTodayDay()?.dayIndex ? planProgress() : [],
   };
+
+  let xpIdle: Promise<void> = Promise.resolve();
 
   function setup(config: {
     dailyGoal?: number;
@@ -107,6 +110,10 @@ describe('GoalReachedNotificationService', () => {
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
         { provide: TrainingPlanStore, useValue: trainingPlanStoreMock },
+        {
+          provide: XpCelebrationService,
+          useValue: { whenIdle: () => xpIdle },
+        },
       ],
     });
     return TestBed.inject(GoalReachedNotificationService);
@@ -128,6 +135,7 @@ describe('GoalReachedNotificationService', () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     vi.setSystemTime(frozenDate);
     dialogOpenSpy.mockClear();
+    xpIdle = Promise.resolve();
     liveEntries.set([]);
     planHasActive.set(false);
     planTodayDay.set(null);
@@ -144,6 +152,31 @@ describe('GoalReachedNotificationService', () => {
   });
 
   describe('Given the daily goal becomes reached', () => {
+    it('should wait for an open XP dialog before celebrating the goal', async () => {
+      // given
+      let closeXp: () => void = () => undefined;
+      xpIdle = new Promise<void>((resolve) => (closeXp = resolve));
+      setup({
+        dailyGoal: 10,
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 12,
+          } as PushupRecord,
+        ],
+      });
+
+      // when
+      await flushAll();
+
+      // then
+      expect(dialogOpenSpy).not.toHaveBeenCalled();
+      closeXp();
+      await flushAll();
+      expect(dialogOpenSpy).toHaveBeenCalledTimes(1);
+    });
+
     it('Then it opens the celebration dialog with kind=daily', async () => {
       // Given
       setup({

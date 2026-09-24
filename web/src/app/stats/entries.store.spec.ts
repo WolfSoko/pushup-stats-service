@@ -9,6 +9,7 @@ import { LiveDataStore } from '@pu-stats/data-access-state';
 import { UserContextService } from '@pu-auth/auth';
 import { AppDataFacade } from '../core/app-data.facade';
 import { EntriesStore } from './entries.store';
+import { XpCelebrationService } from '../core/xp/xp-celebration.service';
 
 describe('EntriesStore', () => {
   const rows = [
@@ -50,6 +51,8 @@ describe('EntriesStore', () => {
     userIdSafe: () => 'u1',
   } as unknown as UserContextService;
 
+  const celebrate = vitest.fn();
+
   function setup(): InstanceType<typeof EntriesStore> {
     vitest.clearAllMocks();
     TestBed.resetTestingModule();
@@ -61,6 +64,7 @@ describe('EntriesStore', () => {
         { provide: LiveDataStore, useValue: liveMock },
         { provide: AppDataFacade, useValue: appDataMock },
         { provide: UserContextService, useValue: userContextMock },
+        { provide: XpCelebrationService, useValue: { celebrate } },
       ],
     });
     return TestBed.inject(EntriesStore);
@@ -99,6 +103,21 @@ describe('EntriesStore', () => {
   });
 
   describe('createEntry', () => {
+    it('should celebrate the XP of the saved entry', async () => {
+      // given
+      const store = setup();
+
+      // when
+      await store.createEntry({
+        kind: 'pushup',
+        timestamp: '2026-04-27T08:00:00',
+        reps: 12,
+      });
+
+      // then
+      expect(celebrate).toHaveBeenCalledWith([{ _id: 'x' }]);
+    });
+
     it('Given a pushup-kind create, When createEntry resolves, Then app-level resources are reloaded so the toolbar count refreshes', async () => {
       const store = setup();
 

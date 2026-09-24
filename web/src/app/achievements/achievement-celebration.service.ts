@@ -7,6 +7,7 @@ import { UserAchievementsApiService } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
 import { BRAND_URL, SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
 import { UserConfigStore } from '../core/user-config.store';
+import { XpCelebrationService } from '../core/xp/xp-celebration.service';
 import {
   type AchievementBadge,
   resolveAchievementBadge,
@@ -45,6 +46,7 @@ export class AchievementCelebrationService {
   private readonly user = inject(UserContextService);
   private readonly userConfig = inject(UserConfigStore);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly xpCelebration = inject(XpCelebrationService);
 
   constructor() {
     this.start();
@@ -75,7 +77,7 @@ export class AchievementCelebrationService {
     const badge = pending
       .map(resolveAchievementBadge)
       .find((entry) => entry !== null);
-    if (badge) this.show(badge);
+    if (badge) this.xpCelebration.afterIdle(() => this.show(badge));
   }
 
   /**

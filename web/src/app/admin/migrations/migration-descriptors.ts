@@ -63,4 +63,10 @@ export const DATA_MIGRATIONS: readonly MigrationDescriptor[] = [
     description: $localize`:@@admin.migrations.orphanedUserData.description:Sucht Daten von Nutzern ohne Firebase-Auth-Konto (Einträge, Statistiken, Pläne, Workouts, Freundschaften, Push-Abos, Nachrichten, Profilfotos …) und löscht sie wie bei einer Kontolöschung. Bis zu 25 Konten pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Nicht umkehrbar — erst den Probelauf ausführen.`,
     migrate: { callable: 'cleanupOrphanedUserData' },
   },
+  {
+    id: 'xp-backfill',
+    title: $localize`:@@admin.migrations.xpBackfill.title:XP für bisherige Einträge nachbuchen`,
+    description: $localize`:@@admin.migrations.xpBackfill.description:Bucht XP für alle Einträge, die vor dem Punktesystem gespeichert wurden, zu den aktuellen Wertigkeiten, berechnet Level und Level-Abzeichen neu und baut die XP-Bestenliste auf. Bis zu 200 Nutzer pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Bereits gebuchte Einträge bleiben unverändert. Erst den Probelauf ausführen.`,
+    migrate: { callable: 'backfillXp' },
+  },
 ];

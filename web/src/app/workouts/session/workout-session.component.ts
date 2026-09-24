@@ -40,6 +40,7 @@ import { asSessionSource, WorkoutRunStore } from './workout-run.store';
  * the source differs — the workout instead of today's plan day — and
  * hand ticks live in the run state rather than the plan document.
  */
+import { celebrateSessionXpOnDone } from '../../training-plans/session/session-xp';
 @Component({
   selector: 'app-workout-session',
   imports: [
@@ -90,6 +91,7 @@ export class WorkoutSessionComponent {
     inject(WakeLockService).keepAwakeWhile(
       () => this.session.phase() === 'rest'
     );
+    celebrateSessionXpOnDone(this.session.phase, this.capture);
     effect(() => {
       const id = this.params().get('id');
       if (id) this.run.open(id);

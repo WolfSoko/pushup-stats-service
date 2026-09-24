@@ -16,6 +16,7 @@ import {
 } from '@pu-stats/quick-add';
 import { QuickAddOrchestrationService } from './quick-add-orchestration.service';
 import { AppDataFacade } from './app-data.facade';
+import { XpCelebrationService } from './xp/xp-celebration.service';
 
 /**
  * These specs wait on dialogs whose components are imported lazily, so every
@@ -978,5 +979,77 @@ describe('QuickAddOrchestrationService.openDialog', () => {
     // then
     expect(bridgeMock.requestOpenDialog).not.toHaveBeenCalled();
     expect(service.busyKeys().size).toBe(0);
+  });
+});
+
+describe('QuickAddOrchestrationService XP celebration', () => {
+  function setup(opened: boolean) {
+    const exerciseApiMock = {
+      createEntry: vitest.fn(() =>
+        of({ _id: 'e1', exerciseId: 'pushup', reps: 10 })
+      ),
+    };
+    const snackBarMock = { open: vitest.fn() };
+    const celebrate = vitest.fn(() => opened);
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: [
+        ...baseProviders({
+          statsApiMock: { createPushup: vitest.fn() },
+          exerciseApiMock,
+          snackBarMock,
+          routerMock: { url: '/app', navigate: vitest.fn() },
+          bridgeMock: { requestOpenDialog: vitest.fn() },
+          appDataMock: {
+            remainingToGoal: signal(15).asReadonly(),
+            reloadAfterMutation: vitest.fn(),
+          },
+        }),
+        { provide: XpCelebrationService, useValue: { celebrate } },
+      ],
+    });
+    const service = TestBed.inject(QuickAddOrchestrationService);
+    return { service, celebrate, snackBarMock };
+  }
+
+  it('should celebrate the saved entry instead of the success snackbar', async () => {
+    // given
+    const { service, celebrate, snackBarMock } = setup(true);
+
+    // when
+    await service.add(10);
+
+    // then
+    expect(celebrate).toHaveBeenCalledWith([
+      { _id: 'e1', exerciseId: 'pushup', reps: 10 },
+    ]);
+    expect(snackBarMock.open).not.toHaveBeenCalled();
+  });
+
+  it('should fall back to the snackbar when no dialog opens', async () => {
+    // given
+    const { service, snackBarMock } = setup(false);
+
+    // when
+    await service.add(10);
+
+    // then
+    expect(snackBarMock.open).toHaveBeenCalledWith(
+      expect.stringContaining('gespeichert'),
+      '',
+      expect.anything()
+    );
+  });
+
+  it('should replace the goal snackbar by the XP dialog on fill to goal', async () => {
+    // given
+    const { service, celebrate, snackBarMock } = setup(true);
+
+    // when
+    await service.fillToGoal();
+
+    // then
+    expect(celebrate).toHaveBeenCalledTimes(1);
+    expect(snackBarMock.open).not.toHaveBeenCalled();
   });
 });

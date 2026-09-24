@@ -19,6 +19,15 @@ import { AnalysisGroupViewComponent } from './analysis-group-view.component';
 import { CategoryComparisonChartComponent } from '../components/category-comparison-chart/category-comparison-chart.component';
 import { ExerciseBreakdownControlsComponent } from '../components/exercise-breakdown-controls/exercise-breakdown-controls.component';
 import { CategorySummaryCardComponent } from '../components/category-summary-card/category-summary-card.component';
+import { XpAnalysisCardComponent } from '../components/xp-analysis-card/xp-analysis-card.component';
+
+@Component({
+  selector: 'app-xp-analysis-card',
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<div data-testid="stub-xp-card"></div>',
+})
+class StubXpAnalysisCardComponent {}
 
 // Replace the heavy real children with no-op stubs so the spec stays
 // focused on the overview component's own branching/wiring (empty-state,
@@ -148,6 +157,7 @@ describe('AnalysisOverviewComponent', () => {
             CategorySummaryCardComponent,
             ExerciseBreakdownControlsComponent,
             AnalysisGroupViewComponent,
+            XpAnalysisCardComponent,
           ],
         },
         add: {
@@ -156,6 +166,7 @@ describe('AnalysisOverviewComponent', () => {
             StubSummaryCardComponent,
             StubBreakdownControlsComponent,
             StubAnalysisGroupViewComponent,
+            StubXpAnalysisCardComponent,
           ],
         },
       })
@@ -240,6 +251,27 @@ describe('AnalysisOverviewComponent', () => {
     expect(
       host.querySelector('[data-testid="analysis-overview-empty"]')
     ).toBeNull();
+  });
+
+  it('should render the XP section alongside the category overview', () => {
+    // given
+    store.hasCategorisableRows.set(true);
+
+    // when
+    fixture.detectChanges();
+
+    // then
+    const host: HTMLElement = fixture.nativeElement;
+    expect(host.querySelector('[data-testid="stub-xp-card"]')).toBeTruthy();
+  });
+
+  it('should not render the XP section on the empty state', () => {
+    // when
+    fixture.detectChanges();
+
+    // then
+    const host: HTMLElement = fixture.nativeElement;
+    expect(host.querySelector('[data-testid="stub-xp-card"]')).toBeNull();
   });
 
   it('prefers the category overview over the uncategorised fallback when both signals are populated', () => {

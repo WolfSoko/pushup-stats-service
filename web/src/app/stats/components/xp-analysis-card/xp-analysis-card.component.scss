@@ -1,0 +1,146 @@
+.xp-avatar {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fde68a, #f59e0b);
+  color: #422006;
+}
+
+.xp-skeleton {
+  display: grid;
+  gap: 12px;
+}
+
+.level-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.level-chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  background: rgba(250, 204, 21, 0.18);
+  border: 1px solid rgba(250, 204, 21, 0.4);
+}
+
+.level-meta,
+.bars-caption,
+.kpi small {
+  font-size: 0.78rem;
+  opacity: 0.75;
+}
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  b {
+    font-size: 1.3rem;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 120px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(128, 160, 230, 0.3);
+}
+
+.bar {
+  flex: 1;
+  min-width: 2px;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(180deg, #fbbf24, #f59e0b);
+}
+
+.bars-caption {
+  margin: 4px 0 16px;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+
+  h3 {
+    margin: 0 0 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+}
+
+.share-row {
+  display: grid;
+  grid-template-columns: 7rem 1fr 3rem;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+}
+
+.share-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.share-track {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(128, 160, 230, 0.18);
+  overflow: hidden;
+}
+
+.share-fill {
+  display: block;
+  height: 100%;
+  background: #f59e0b;
+}
+
+.share-value {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.top-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.85rem;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+}
+
+.empty {
+  margin: 0;
+  opacity: 0.7;
+}
+
+@media (max-width: 600px) {
+  .level-row {
+    grid-template-columns: auto 1fr;
+  }
+
+  .level-meta {
+    grid-column: 1 / -1;
+  }
+}

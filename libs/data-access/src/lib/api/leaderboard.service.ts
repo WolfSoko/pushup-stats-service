@@ -1,9 +1,16 @@
 import { inject, Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { doc, docData, Firestore, getDoc } from '@angular/fire/firestore';
-import { findExerciseDefinition, type MeasurementType } from '@pu-stats/models';
+import { findExerciseDefinition } from '@pu-stats/models';
 import { EMPTY, Observable } from 'rxjs';
 import { PendingRequestsService } from '../pending-requests.service';
+import {
+  emptyLeaderboardData,
+  projectSnapshotPeriods,
+  supportsLeaderboard,
+  toDateOrNull,
+  type SnapshotPeriods,
+} from './leaderboard-snapshot';
 
 export type LeaderboardPeriod = 'daily' | 'last7' | 'last30' | 'allTime';
 
@@ -59,24 +66,11 @@ export type LeaderboardData = {
  */
 export const LEADERBOARD_PUSHUP_ID = 'pushup';
 
-const TOP_N = 10;
-
 /**
- * Factory for an empty leaderboard payload. A factory (not a shared
- * frozen constant) keeps each call independent: a caller that ever
- * mutates `.top` (e.g. accidentally splicing in a new entry) only
- * touches its own snapshot instead of the singleton that every other
- * bucket would also point at.
+ * Sentinel id for the cross-exercise XP ranking. Not a catalog id, so it
+ * can never collide with an exercise; served from `leaderboards/xp`.
  */
-function emptyLeaderboardData(): LeaderboardData {
-  return {
-    daily: { top: [], current: null },
-    last7: { top: [], current: null },
-    last30: { top: [], current: null },
-    allTime: { top: [], current: null },
-    updatedAt: null,
-  };
-}
+export const LEADERBOARD_XP_ID = 'xp';
 
 @Injectable({ providedIn: 'root' })
 export class LeaderboardService {
@@ -105,163 +99,64 @@ export class LeaderboardService {
     return docData(doc(this.firestore, 'leaderboards', 'exercises'));
   }
 
+  /** Real-time stream of the precomputed `leaderboards/xp` document. */
+  observeXpSnapshot(): Observable<unknown> {
+    if (!this.firestore) return EMPTY;
+    return docData(doc(this.firestore, 'leaderboards', 'xp'));
+  }
+
   /**
    * Loads ranked buckets (daily / last7 / last30 / allTime) for the
    * requested exercise from the precomputed `leaderboards/exercises`
-   * snapshot.
+   * snapshot, or the XP ranking from `leaderboards/xp` for
+   * {@link LEADERBOARD_XP_ID}.
    */
   async load(
     exerciseId: string = LEADERBOARD_PUSHUP_ID
   ): Promise<LeaderboardData> {
-    return this.loadExercise(exerciseId);
-  }
-
-  private async loadExercise(exerciseId: string): Promise<LeaderboardData> {
+    if (exerciseId === LEADERBOARD_XP_ID) return this.loadXpSnapshot();
     const def = findExerciseDefinition(exerciseId);
     if (!def) return emptyLeaderboardData();
     if (!supportsLeaderboard(def.measurement)) return emptyLeaderboardData();
-    return this.loadExerciseSnapshot(exerciseId);
+    return this.readSnapshot('exercises', exerciseId, (data) => {
+      const byExercise = data['byExercise'] as
+        | Record<string, { periods?: SnapshotPeriods }>
+        | undefined;
+      return byExercise?.[exerciseId]?.periods;
+    });
   }
 
-  /**
-   * Reads the per-exercise snapshot doc at `leaderboards/exercises`
-   * and projects the requested exerciseId's pre-ranked buckets into
-   * the page's `LeaderboardData` shape.
-   */
-  private async loadExerciseSnapshot(
-    exerciseId: string
+  private loadXpSnapshot(): Promise<LeaderboardData> {
+    return this.readSnapshot(
+      'xp',
+      LEADERBOARD_XP_ID,
+      (data) => data['periods'] as SnapshotPeriods | undefined
+    );
+  }
+
+  private async readSnapshot(
+    docId: 'exercises' | 'xp',
+    exerciseId: string,
+    pickPeriods: (data: Record<string, unknown>) => SnapshotPeriods | undefined
   ): Promise<LeaderboardData> {
     if (!this.firestore) return emptyLeaderboardData();
-
     const currentUserId = this.auth?.currentUser?.uid ?? null;
-
     try {
       const snap = await this.pending.track(
-        getDoc(doc(this.firestore, 'leaderboards', 'exercises'))
+        getDoc(doc(this.firestore, 'leaderboards', docId))
       );
       if (!snap.exists()) return emptyLeaderboardData();
-
-      const data = snap.data() as {
-        updatedAt?: unknown;
-        byExercise?: Record<
-          string,
-          {
-            periods?: Partial<
-              Record<
-                LeaderboardPeriod,
-                Array<{ alias: string; reps: number; uid?: string }>
-              >
-            >;
-          }
-        >;
-      };
-
-      const updatedAt = toDateOrNull(data?.updatedAt);
-      const exerciseSnap = data?.byExercise?.[exerciseId];
-      if (!exerciseSnap?.periods) {
-        return { ...emptyLeaderboardData(), updatedAt };
-      }
-
-      return {
-        daily: this.buildSnapshotBucket(
-          exerciseSnap.periods.daily,
-          currentUserId
-        ),
-        last7: this.buildSnapshotBucket(
-          exerciseSnap.periods.last7,
-          currentUserId
-        ),
-        last30: this.buildSnapshotBucket(
-          exerciseSnap.periods.last30,
-          currentUserId
-        ),
-        allTime: this.buildSnapshotBucket(
-          exerciseSnap.periods.allTime,
-          currentUserId
-        ),
-        updatedAt,
-      };
+      const data = (snap.data() ?? {}) as Record<string, unknown>;
+      const updatedAt = toDateOrNull(data['updatedAt']);
+      const periods = pickPeriods(data);
+      if (!periods) return { ...emptyLeaderboardData(), updatedAt };
+      return projectSnapshotPeriods(periods, currentUserId, updatedAt);
     } catch (err) {
       console.warn(
-        `[LeaderboardService] leaderboards/exercises read failed for ${exerciseId}:`,
+        `[LeaderboardService] leaderboards/${docId} read failed for ${exerciseId}:`,
         err
       );
       return emptyLeaderboardData();
     }
   }
-
-  /**
-   * Projects a snapshot period array into a `LeaderboardBucket`,
-   * assigning sequential ranks and flagging the current user's row
-   * by `uid` match.
-   */
-  private buildSnapshotBucket(
-    rows: Array<{ alias: string; reps: number; uid?: string }> | undefined,
-    currentUserId: string | null
-  ): LeaderboardBucket {
-    if (!Array.isArray(rows) || rows.length === 0) {
-      return { top: [], current: null };
-    }
-    const top = rows.slice(0, TOP_N).map((entry, i) => ({
-      alias: entry.alias,
-      reps: entry.reps,
-      rank: i + 1,
-      isCurrent: !!currentUserId && entry.uid === currentUserId,
-      ...(entry.uid ? { uid: entry.uid } : {}),
-    }));
-    return {
-      top,
-      current: top.find((entry) => entry.isCurrent) ?? null,
-    };
-  }
-}
-
-/**
- * Returns `true` for measurement types we can aggregate into a meaningful
- * per-period sum: rep counts, hold durations, and distances. `weight`
- * is excluded because a sum of raw reps across mixed loads isn't a
- * useful leaderboard metric.
- */
-function supportsLeaderboard(measurement: MeasurementType): boolean {
-  return measurement !== 'weight';
-}
-
-/**
- * Coerces whatever the Firestore client decoded into a `Date`.
- */
-function toDateOrNull(value: unknown): Date | null {
-  if (value === null || value === undefined) return null;
-  if (value instanceof Date)
-    return Number.isNaN(value.getTime()) ? null : value;
-  if (typeof value === 'number') {
-    const d = new Date(value);
-    return Number.isNaN(d.getTime()) ? null : d;
-  }
-  if (typeof value === 'string') {
-    const d = new Date(value);
-    return Number.isNaN(d.getTime()) ? null : d;
-  }
-  if (typeof value === 'object') {
-    const candidate = value as {
-      toDate?: () => Date;
-      seconds?: number;
-      nanoseconds?: number;
-    };
-    if (typeof candidate.toDate === 'function') {
-      try {
-        const d = candidate.toDate();
-        return d instanceof Date && !Number.isNaN(d.getTime()) ? d : null;
-      } catch {
-        return null;
-      }
-    }
-    if (typeof candidate.seconds === 'number') {
-      const millis =
-        candidate.seconds * 1000 +
-        Math.floor((candidate.nanoseconds ?? 0) / 1_000_000);
-      const d = new Date(millis);
-      return Number.isNaN(d.getTime()) ? null : d;
-    }
-  }
-  return null;
 }

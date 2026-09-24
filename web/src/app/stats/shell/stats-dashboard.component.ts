@@ -25,6 +25,7 @@ import { LiveDataStore } from '@pu-stats/data-access-state';
 import { UserContextService } from '@pu-auth/auth';
 import {
   BRAND_NAME,
+  type ExerciseEntry,
   findExerciseDefinition,
   formatEntryDisplay,
   isAutoCountQuickAddExerciseId,
@@ -44,6 +45,7 @@ import { DailyGoalChecklistComponent } from '../../core/daily-goal/daily-goal-ch
 import { registerDashboardDeepLinks } from './stats-dashboard.deep-links';
 import { AdSlotComponent } from '@pu-stats/ads';
 import { AllTimeBadgesComponent } from '../dashboard/all-time-badges.component';
+import { LevelCardComponent } from '../components/level-card/level-card.component';
 import {
   AnalysisTeaserSkeletonComponent,
   RecentExercisesSkeletonComponent,
@@ -70,6 +72,7 @@ import {
 } from '@pu-stats/ui';
 import { ChallengeSpotlightComponent } from '../../friends/challenge-spotlight.component';
 import { FriendsTeaserCardComponent } from '../../friends/friends-teaser-card.component';
+import { XpCelebrationService } from '../../core/xp/xp-celebration.service';
 import {
   ExerciseToggle,
   PlanDayExercisesComponent,
@@ -93,6 +96,7 @@ import {
     MatSnackBarModule,
     DatePipe,
     AllTimeBadgesComponent,
+    LevelCardComponent,
     AnalysisTeaserCardComponent,
     AnalysisTeaserSkeletonComponent,
     RecentExercisesSkeletonComponent,
@@ -124,6 +128,7 @@ export class StatsDashboardComponent {
   private readonly appData = inject(AppDataFacade);
   private readonly locale = inject(LOCALE_ID) as string;
   private readonly invites = inject(InviteService);
+  private readonly xpCelebration = inject(XpCelebrationService);
 
   // Mirrors stats-table.formatEntry so the dashboard preview matches
   // the history page when a catalog definition exists (plank → m:ss,
@@ -434,8 +439,9 @@ export class StatsDashboardComponent {
   async createEntry(result: TrainingEntryDialogResult) {
     const userId = this.userContext.userIdSafe();
     if (!userId) return;
+    let saved: ExerciseEntry;
     if (result.kind === 'pushup') {
-      await firstValueFrom(
+      saved = await firstValueFrom(
         this.exerciseService.createEntry(userId, {
           exerciseId: 'pushup',
           timestamp: result.timestamp,
@@ -447,7 +453,7 @@ export class StatsDashboardComponent {
     } else {
       const intervals = result.intervals ?? [];
       const intervalDurationsSec = result.intervalDurationsSec ?? [];
-      await firstValueFrom(
+      saved = await firstValueFrom(
         this.exerciseService.createEntry(userId, {
           exerciseId: result.exerciseId,
           timestamp: result.timestamp,
@@ -478,6 +484,7 @@ export class StatsDashboardComponent {
         })
       );
     }
+    this.xpCelebration.celebrate([saved]);
     this.store.refreshAll();
     this.appData.reloadAfterMutation();
     this.refreshCounter.update((c) => c + 1);
@@ -489,7 +496,7 @@ export class StatsDashboardComponent {
   ) {
     const userId = this.userContext.userIdSafe();
     if (!userId) return;
-    await firstValueFrom(
+    const saved = await firstValueFrom(
       this.exerciseService.createEntry(userId, {
         exerciseId: 'pushup',
         timestamp: nowLocalIsoTimestamp(),
@@ -498,6 +505,7 @@ export class StatsDashboardComponent {
         source,
       })
     );
+    this.xpCelebration.celebrate([saved]);
     this.store.refreshAll();
     this.appData.reloadAfterMutation();
     this.refreshCounter.update((c) => c + 1);
@@ -532,7 +540,7 @@ export class StatsDashboardComponent {
     }
     const userId = this.userContext.userIdSafe();
     if (!userId) return;
-    await firstValueFrom(
+    const saved = await firstValueFrom(
       this.exerciseService.createEntry(userId, {
         exerciseId: vm.exerciseId,
         timestamp: nowLocalIsoTimestamp(),
@@ -540,6 +548,7 @@ export class StatsDashboardComponent {
         source: 'quick-add',
       })
     );
+    this.xpCelebration.celebrate([saved]);
     this.store.refreshAll();
     this.appData.reloadAfterMutation();
     this.refreshCounter.update((c) => c + 1);

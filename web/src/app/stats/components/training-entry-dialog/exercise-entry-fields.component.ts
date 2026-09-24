@@ -26,6 +26,7 @@ import { StopwatchComponent } from '../stopwatch/stopwatch.component';
 import { StopwatchState } from '../stopwatch/stopwatch.state';
 import { ExerciseFormState } from './exercise-entry-fields.state';
 import { IntervalFieldsComponent } from './interval-fields.component';
+import { XpPreviewComponent } from '../../../core/xp/xp-preview.component';
 
 /**
  * Exercise-mode fields for the exercise the parent's picker selected:
@@ -51,6 +52,7 @@ import { IntervalFieldsComponent } from './interval-fields.component';
     MatTooltipModule,
     IntervalFieldsComponent,
     StopwatchComponent,
+    XpPreviewComponent,
   ],
   styleUrl: './training-entry-dialog.component.scss',
   // Transparent host so the fields stay direct items of the dialog's

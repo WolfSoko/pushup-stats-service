@@ -72,6 +72,9 @@ const REP_EXERCISES = EXERCISE_CATALOG.filter(
         <mat-option value="streak" i18n="@@friends.board.metric.streak"
           >Streak</mat-option
         >
+        <mat-option value="xp" i18n="@@friends.board.metric.xp"
+          >XP (alle Übungen)</mat-option
+        >
         <mat-optgroup>
           <span *matOptgroupLabel i18n="@@friends.board.metric.reps"
             >Wiederholungen</span
@@ -152,63 +155,7 @@ const REP_EXERCISES = EXERCISE_CATALOG.filter(
       }
     </ol>
   `,
-  styles: `
-    .comparison {
-      width: 100%;
-      margin-bottom: 8px;
-    }
-    .board {
-      list-style: none;
-      margin: 8px 0 0;
-      padding: 0;
-      display: grid;
-      gap: 4px;
-    }
-    .board li {
-      display: grid;
-      grid-template-columns: 2rem 1fr auto auto 40px;
-      align-items: center;
-      gap: 8px;
-      padding: 4px 4px 4px 12px;
-      border-radius: 8px;
-      background: rgba(0, 0, 0, 0.04);
-      min-height: 48px;
-    }
-    :host-context(.dark-theme) .board li {
-      background: rgba(255, 255, 255, 0.05);
-    }
-    .board li.is-viewer {
-      outline: 2px solid var(--mat-sys-primary, #3f51b5);
-    }
-    .cheer-slot {
-      display: inline-flex;
-      justify-content: center;
-    }
-    .rank {
-      opacity: 0.6;
-      font-variant-numeric: tabular-nums;
-    }
-    .board-name {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      color: inherit;
-      text-decoration: none;
-    }
-    .board-name:hover,
-    .board-name:focus-visible {
-      text-decoration: underline;
-    }
-    .cheers {
-      font-size: 0.85rem;
-      opacity: 0.85;
-      white-space: nowrap;
-    }
-    .cheer-button.is-cheered,
-    .cheer-button.pu-busy {
-      color: var(--mat-sys-tertiary, #ff7043);
-    }
-  `,
+  styleUrl: './friends-board.component.scss',
 })
 export class FriendsBoardComponent {
   readonly entries = input.required<ReadonlyArray<FriendsBoardEntry>>();
@@ -234,7 +181,7 @@ export class FriendsBoardComponent {
     this.comparisonChange.emit(
       key.startsWith('reps:')
         ? { metric: 'reps', exerciseId: key.slice('reps:'.length) }
-        : { metric: key === 'streak' ? 'streak' : 'days' }
+        : { metric: key === 'streak' || key === 'xp' ? key : 'days' }
     );
   }
 

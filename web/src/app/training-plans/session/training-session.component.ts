@@ -40,6 +40,7 @@ import { buildSessionRows } from './training-session.rows';
  * ordinary entry (or a plan tick), so leaving mid-workout and coming
  * back resumes exactly where the logged entries say the user stands.
  */
+import { celebrateSessionXpOnDone } from './session-xp';
 @Component({
   selector: 'app-training-session',
   imports: [
@@ -83,6 +84,7 @@ export class TrainingSessionComponent {
     inject(WakeLockService).keepAwakeWhile(
       () => this.session.phase() === 'rest'
     );
+    celebrateSessionXpOnDone(this.session.phase, this.capture);
   }
 
   private readonly slugSignal = toSignal(this.route.paramMap, {

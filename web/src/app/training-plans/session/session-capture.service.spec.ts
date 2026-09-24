@@ -447,6 +447,20 @@ describe('SessionCaptureService', () => {
     expect(createEntry).not.toHaveBeenCalled();
   });
 
+  it('should hand over the written entries once', async () => {
+    // given
+    openAutoCount.mockResolvedValue({ exerciseId: 'pushup', reps: 17 });
+    await service.capture(step());
+
+    // when
+    const first = service.takeSaved();
+    const second = service.takeSaved();
+
+    // then
+    expect(first).toEqual([{ id: 'e1' }]);
+    expect(second).toEqual([]);
+  });
+
   describe('logPrescribed', () => {
     it('should write exactly what the round prescribes, with no dialog', async () => {
       // given

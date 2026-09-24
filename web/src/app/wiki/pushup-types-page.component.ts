@@ -13,7 +13,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatChipsModule } from '@angular/material/chips';
+import { WikiDifficultyChipsComponent } from './wiki-difficulty-chips.component';
 import { MatIconModule } from '@angular/material/icon';
 import {
   localizePushupType,
@@ -40,7 +40,7 @@ interface LocalizedType {
   imports: [
     MatButtonModule,
     MatCardModule,
-    MatChipsModule,
+    WikiDifficultyChipsComponent,
     MatIconModule,
     RouterLink,
   ],
@@ -96,27 +96,10 @@ interface LocalizedType {
                   <h2>{{ type.name }}</h2>
                 </mat-card-title>
                 <mat-card-subtitle>
-                  <mat-chip-set>
-                    @if (type.difficulty === 'beginner') {
-                      <mat-chip
-                        class="difficulty-chip beginner"
-                        i18n="@@wiki.pushupTypes.level.beginner"
-                        >Einsteiger</mat-chip
-                      >
-                    } @else if (type.difficulty === 'intermediate') {
-                      <mat-chip
-                        class="difficulty-chip intermediate"
-                        i18n="@@wiki.pushupTypes.level.intermediate"
-                        >Mittelstufe</mat-chip
-                      >
-                    } @else {
-                      <mat-chip
-                        class="difficulty-chip advanced"
-                        i18n="@@wiki.pushupTypes.level.advanced"
-                        >Fortgeschritten</mat-chip
-                      >
-                    }
-                  </mat-chip-set>
+                  <app-wiki-difficulty-chips
+                    [difficulty]="type.difficulty"
+                    [exerciseId]="'pushup'"
+                  />
                 </mat-card-subtitle>
               </mat-card-header>
               <mat-card-content>
@@ -244,19 +227,6 @@ interface LocalizedType {
         margin-top: 4px;
         margin-bottom: 0;
         line-height: 1.55;
-      }
-      .difficulty-chip {
-        font-size: 0.78rem;
-        --mdc-chip-container-height: 24px;
-      }
-      .difficulty-chip.beginner {
-        --mdc-chip-elevated-container-color: rgba(76, 175, 80, 0.18);
-      }
-      .difficulty-chip.intermediate {
-        --mdc-chip-elevated-container-color: rgba(255, 167, 38, 0.2);
-      }
-      .difficulty-chip.advanced {
-        --mdc-chip-elevated-container-color: rgba(244, 67, 54, 0.2);
       }
       .instructions,
       .tips {

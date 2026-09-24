@@ -12,7 +12,8 @@ import {
   buildConfirmedEntryPayload,
   catalogIdForHoldTimerProfile,
 } from './quick-add-orchestration.helpers';
-import { notifyEntrySaved, notifyError } from './quick-add-notify';
+import { notifyEntrySavedWithXp, notifyError } from './quick-add-notify';
+import { XpCelebrationService } from './xp/xp-celebration.service';
 import {
   AUTO_COUNT_DIALOG_CONFIG,
   EXERCISE_TIMER_DIALOG_CONFIG,
@@ -51,6 +52,7 @@ export class QuickAddCaptureFlowService {
   });
   private readonly userContext = inject(UserContextService);
   private readonly snackBar = inject(MatSnackBar);
+  private readonly xpCelebration = inject(XpCelebrationService);
   private readonly appData = inject(AppDataFacade);
   private readonly dialog = inject(MatDialog);
 
@@ -203,13 +205,13 @@ export class QuickAddCaptureFlowService {
       return;
     }
     try {
-      await firstValueFrom(
+      const saved = await firstValueFrom(
         this.exerciseApi.createEntry(
           userId,
           buildConfirmedEntryPayload(result, exerciseSource)
         )
       );
-      notifyEntrySaved(this.snackBar);
+      notifyEntrySavedWithXp(this.snackBar, this.xpCelebration, [saved]);
       this.appData.reloadAfterMutation();
     } catch (err) {
       notifyError(this.snackBar, err);

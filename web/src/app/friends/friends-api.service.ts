@@ -23,9 +23,10 @@ export type FriendsBoardPeriod = 'daily' | 'week' | 'month' | 'allTime';
 
 /**
  * What the board compares: training days or the live streak (fair whatever
- * everyone's favourite exercise is), or one exercise's reps.
+ * everyone's favourite exercise is), XP across all exercises, or one
+ * exercise's reps.
  */
-export type FriendsBoardMetric = 'days' | 'streak' | 'reps';
+export type FriendsBoardMetric = 'days' | 'streak' | 'reps' | 'xp';
 
 export interface FriendsBoardComparison {
   readonly metric: FriendsBoardMetric;

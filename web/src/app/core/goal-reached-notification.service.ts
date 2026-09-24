@@ -29,6 +29,7 @@ import {
   writeFlag,
 } from './goal-reached-period.helpers';
 import { UserConfigStore } from './user-config.store';
+import { XpCelebrationService } from './xp/xp-celebration.service';
 
 interface GoalSpec {
   readonly kind: GoalKind;
@@ -63,6 +64,7 @@ export class GoalReachedNotificationService {
   private readonly userConfig = inject(UserConfigStore);
   private readonly live = inject(LiveDataStore);
   private readonly trainingPlan = inject(TrainingPlanStore);
+  private readonly xpCelebration = inject(XpCelebrationService);
 
   // Post-cutover pushups live in `exerciseEntries` (`exerciseId:'pushup'`).
   // Only the legacy daily/weekly/monthly goals tracked here are pushup-reps.
@@ -299,6 +301,9 @@ export class GoalReachedNotificationService {
     snapshot: { total: number; goal: number; maxParticleCount: number }
   ): Promise<void> {
     if (this.activeDialogs.has(kind)) return;
+    // The entry that crossed the goal just opened its XP dialog; the goal
+    // celebration follows it instead of stacking on top.
+    await this.xpCelebration.whenIdle();
     const { GoalReachedDialogComponent } =
       await import('../stats/components/goal-reached-dialog/goal-reached-dialog.component');
     // Re-check after the dynamic import resolves: an auto-fire effect and

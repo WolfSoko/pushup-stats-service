@@ -284,6 +284,13 @@
   }
 
   @defer (hydrate on viewport) {
+    <app-xp-feature-section
+      class="scroll-reveal scroll-reveal--from-left"
+      (ctaClick)="onXpCtaClick()"
+    ></app-xp-feature-section>
+  }
+
+  @defer (hydrate on viewport) {
     <app-workouts-feature-section
       class="scroll-reveal scroll-reveal--from-left"
       (ctaClick)="onWorkoutsCtaClick()"

@@ -23,6 +23,8 @@ import {
   exerciseRefTooltip,
   resolveExerciseRef,
 } from '../../../core/exercise-ref/exercise-ref.model';
+import { XpStore } from '@pu-stats/data-access-state';
+import { xpRateLabelFor } from '../../../core/xp/xp-rate-label';
 import { exerciseDisplayName } from '../../i18n/exercise-display-names';
 import {
   buildExercisePickerGroups,
@@ -61,11 +63,28 @@ import {
   // Transparent host so the field stays a direct item of the dialog's
   // `mat-dialog-content` grid — an inline-flex form field in a block host
   // would size to its content instead of the dialog width.
-  styles: ':host { display: contents; }',
+  styles: `
+    :host {
+      display: contents;
+    }
+    .picker-option {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+      width: 100%;
+    }
+    .picker-option-xp {
+      flex: none;
+      font: var(--mat-sys-label-small);
+      color: var(--mat-sys-on-surface-variant);
+    }
+  `,
   templateUrl: './exercise-picker.component.html',
 })
 export class ExercisePickerComponent {
   private readonly locale = inject(LOCALE_ID) as string;
+  private readonly xpStore = inject(XpStore);
 
   readonly exerciseId = input.required<string>();
   readonly suggestions = input<ExerciseSuggestions>({});
@@ -107,6 +126,11 @@ export class ExercisePickerComponent {
   );
   readonly wikiRoute = computed(() => this.exerciseRef().wikiLink);
   readonly wikiTooltip = computed(() => exerciseRefTooltip(this.exerciseRef()));
+
+  /** "3 XP / Wdh." beside each option — the exercise's worth at a glance. */
+  rateLabel(exerciseId: string): string | null {
+    return xpRateLabelFor(exerciseId, this.xpStore.config(), this.locale);
+  }
 
   readonly displayExercise = (id: string | null | undefined): string =>
     id ? exerciseDisplayName(id) : '';

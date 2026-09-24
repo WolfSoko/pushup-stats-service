@@ -20,6 +20,7 @@ import { TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
 import {
   LEADERBOARD_PUSHUP_ID,
+  LEADERBOARD_XP_ID,
   LeaderboardData,
   LeaderboardService,
 } from '@pu-stats/data-access';
@@ -37,19 +38,24 @@ function makeApiMock(): {
   load: jest.Mock<Promise<LeaderboardData>, [string?]>;
   observeSnapshot: jest.Mock<Subject<unknown>, []>;
   observeExerciseSnapshot: jest.Mock<Subject<unknown>, []>;
+  observeXpSnapshot: jest.Mock<Subject<unknown>, []>;
   snapshot$: Subject<unknown>;
   exerciseSnapshot$: Subject<unknown>;
+  xpSnapshot$: Subject<unknown>;
 } {
   const snapshot$ = new Subject<unknown>();
   const exerciseSnapshot$ = new Subject<unknown>();
+  const xpSnapshot$ = new Subject<unknown>();
   return {
     load: jest.fn().mockResolvedValue(emptyLeaderboard),
     observeSnapshot: jest.fn().mockReturnValue(snapshot$.asObservable()),
     observeExerciseSnapshot: jest
       .fn()
       .mockReturnValue(exerciseSnapshot$.asObservable()),
+    observeXpSnapshot: jest.fn().mockReturnValue(xpSnapshot$.asObservable()),
     snapshot$,
     exerciseSnapshot$,
+    xpSnapshot$,
   };
 }
 
@@ -317,5 +323,76 @@ describe('LeaderboardStore — per-exercise caching', () => {
       exerciseSig.set('legs.squats');
       expect(lastUpdated()).toEqual(squatUpdatedAt);
     });
+  });
+});
+
+describe('LeaderboardStore — XP snapshot reload', () => {
+  function setup() {
+    const api = makeApiMock();
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: LeaderboardService, useValue: api },
+      ],
+    });
+    return { api, store: TestBed.inject(LeaderboardStore) };
+  }
+
+  const flush = async () => {
+    await Promise.resolve();
+    await Promise.resolve();
+  };
+
+  it('should force-reload the cached XP bucket when the XP doc emits', async () => {
+    // given
+    const { api, store } = setup();
+    await store.load(LEADERBOARD_XP_ID);
+    await store.load('legs.squats');
+    api.load.mockClear();
+
+    // when
+    api.xpSnapshot$.next({ rev: 1 });
+    await flush();
+
+    // then
+    expect(api.load.mock.calls).toEqual([[LEADERBOARD_XP_ID]]);
+  });
+
+  it('should not load XP on an XP emission when it was never opened', async () => {
+    // given
+    const { api } = setup();
+
+    // when
+    api.xpSnapshot$.next({ rev: 1 });
+    await flush();
+
+    // then
+    expect(api.load).not.toHaveBeenCalled();
+  });
+
+  it('should leave the XP bucket alone when only the exercise doc emits', async () => {
+    // given
+    const { api, store } = setup();
+    await store.load(LEADERBOARD_XP_ID);
+    api.load.mockClear();
+
+    // when
+    api.exerciseSnapshot$.next({ rev: 2 });
+    await flush();
+
+    // then
+    expect(api.load).not.toHaveBeenCalled();
+  });
+
+  it('should tear down the XP subscription on destroy', () => {
+    // given
+    const { api } = setup();
+    expect(api.xpSnapshot$.observed).toBe(true);
+
+    // when
+    TestBed.resetTestingModule();
+
+    // then
+    expect(api.xpSnapshot$.observed).toBe(false);
   });
 });

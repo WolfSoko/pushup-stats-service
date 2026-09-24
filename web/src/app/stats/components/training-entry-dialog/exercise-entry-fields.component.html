@@ -157,3 +157,12 @@
     }
   </div>
 }
+
+@if (!isEditMode() && exerciseId()) {
+  <app-xp-preview
+    [exerciseId]="exerciseId()"
+    [reps]="state.totalReps()"
+    [durationSec]="state.durationSec()"
+    [distanceM]="state.distanceM()"
+  />
+}

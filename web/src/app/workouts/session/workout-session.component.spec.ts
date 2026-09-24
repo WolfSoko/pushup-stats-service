@@ -84,7 +84,12 @@ async function setup(options: { id?: string; loaded?: boolean } = {}) {
     componentProviders: [
       {
         provide: SessionCaptureService,
-        useValue: { capture, captureByHand: capture, logPrescribed },
+        useValue: {
+          capture,
+          captureByHand: capture,
+          logPrescribed,
+          takeSaved: () => [],
+        },
       },
     ],
   });

@@ -24,6 +24,7 @@ import * as firestoreFns from '@angular/fire/firestore';
 import { Firestore } from '@angular/fire/firestore';
 import {
   LEADERBOARD_PUSHUP_ID,
+  LEADERBOARD_XP_ID,
   LeaderboardService,
 } from './leaderboard.service';
 import { PendingRequestsService } from '../pending-requests.service';
@@ -454,5 +455,85 @@ describe('LeaderboardService — pending-request tracking', () => {
 
     // then
     expect(track).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('LeaderboardService — XP ranking', () => {
+  let service: LeaderboardService;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    TestBed.configureTestingModule({
+      providers: [
+        LeaderboardService,
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'me' } } },
+      ],
+    });
+    service = TestBed.inject(LeaderboardService);
+  });
+
+  it('should read the leaderboards/xp snapshot for the XP sentinel', async () => {
+    // given
+    getDoc.mockResolvedValue(
+      makeSnapshot({
+        daily: [
+          { alias: 'Ada', reps: 900, uid: 'a' },
+          { alias: 'Me', reps: 300, uid: 'me' },
+        ],
+        allTime: [{ alias: 'Ada', reps: 12000, uid: 'a' }],
+      })
+    );
+
+    // when
+    const data = await service.load(LEADERBOARD_XP_ID);
+
+    // then
+    expect(firestoreFns.doc).toHaveBeenCalledWith({}, 'leaderboards', 'xp');
+    expect(data.daily.top.map((e) => [e.alias, e.reps, e.rank])).toEqual([
+      ['Ada', 900, 1],
+      ['Me', 300, 2],
+    ]);
+    expect(data.daily.current).toEqual(
+      expect.objectContaining({ uid: 'me', rank: 2, isCurrent: true })
+    );
+    expect(data.allTime.top).toHaveLength(1);
+    expect(data.last7.top).toEqual([]);
+  });
+
+  it('should return empty buckets before the first XP rebuild', async () => {
+    // given
+    getDoc.mockResolvedValue(makeSnapshot(null));
+
+    // when
+    const data = await service.load(LEADERBOARD_XP_ID);
+
+    // then
+    expect(data.daily.top).toEqual([]);
+    expect(data.updatedAt).toBeNull();
+  });
+
+  it('should fall back to empty buckets when the XP read fails', async () => {
+    // given
+    jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+    getDoc.mockRejectedValue(new Error('offline'));
+
+    // when
+    const data = await service.load(LEADERBOARD_XP_ID);
+
+    // then
+    expect(data.allTime.top).toEqual([]);
+  });
+
+  it('should stream the XP snapshot doc', () => {
+    // given
+    (firestoreFns.docData as jest.Mock).mockReturnValue('stream');
+
+    // when
+    const stream = service.observeXpSnapshot();
+
+    // then
+    expect(firestoreFns.doc).toHaveBeenCalledWith({}, 'leaderboards', 'xp');
+    expect(stream).toBe('stream');
   });
 });

@@ -1,3 +1,4 @@
+import { levelProgress } from '@pu-stats/models';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -12,7 +13,7 @@ import {
   UserStatsApiService,
   UserTrainingPlanApiService,
 } from '@pu-stats/data-access';
-import { LiveDataStore } from '@pu-stats/data-access-state';
+import { LiveDataStore, XpStore } from '@pu-stats/data-access-state';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { AdsStore } from '@pu-stats/ads';
 import { computed, signal } from '@angular/core';
@@ -30,6 +31,7 @@ import { UserConfigStore } from '../../core/user-config.store';
 import { ChallengesApiService } from '../../friends/challenges-api.service';
 import { FriendsApiService } from '../../friends/friends-api.service';
 import { TrainingPlanStore } from '../../training-plans/training-plan.store';
+import { XpCelebrationService } from '../../core/xp/xp-celebration.service';
 
 function goalItem(
   overrides: Partial<DailyGoalItemView> = {}
@@ -195,6 +197,8 @@ describe('StatsDashboardComponent', () => {
     createEntry: exerciseCreateSpy,
   };
 
+  const xpCelebrationMock = { celebrate: vitest.fn() };
+
   const userContextSpy = {
     userIdSafe: vitest.fn().mockReturnValue('u1'),
     isGuest: () => false,
@@ -288,6 +292,20 @@ describe('StatsDashboardComponent', () => {
         { provide: StatsApiService, useValue: serviceMock },
         { provide: UserStatsApiService, useValue: userStatsMock },
         { provide: LiveDataStore, useValue: liveMock },
+        {
+          provide: XpStore,
+          useValue: {
+            loaded: signal(true),
+            userXp: signal(null),
+            ledger: signal(new Map()),
+            config: signal(null),
+            totalXp: signal(0),
+            progress: signal(levelProgress(0)),
+            rateFor: () => 1,
+            previewXp: () => 0,
+            xpOfEntry: () => 0,
+          },
+        },
         { provide: UserContextService, useValue: userContextSpy },
         { provide: FriendsApiService, useValue: friendsApiMock },
         { provide: ChallengesApiService, useValue: challengesApiMock },
@@ -326,6 +344,7 @@ describe('StatsDashboardComponent', () => {
           provide: ExerciseFirestoreService,
           useValue: exerciseFirestoreMock,
         },
+        { provide: XpCelebrationService, useValue: xpCelebrationMock },
         {
           provide: UserTrainingPlanApiService,
           useValue: trainingPlanApiMock,
@@ -765,6 +784,23 @@ describe('StatsDashboardComponent', () => {
             source: 'web',
           })
         );
+      });
+
+      it('should celebrate the XP of the saved entry', async () => {
+        // given
+        const component = fixture.componentInstance;
+        exerciseCreateSpy.mockReturnValueOnce(
+          of({ _id: 'q1', exerciseId: 'pushup', reps: 10 })
+        );
+        xpCelebrationMock.celebrate.mockClear();
+
+        // when
+        await component.addQuickEntry(10);
+
+        // then
+        expect(xpCelebrationMock.celebrate).toHaveBeenCalledWith([
+          { _id: 'q1', exerciseId: 'pushup', reps: 10 },
+        ]);
       });
     });
   });
@@ -1232,6 +1268,20 @@ describe('StatsDashboardComponent', () => {
             },
           },
           { provide: LiveDataStore, useValue: liveMock },
+          {
+            provide: XpStore,
+            useValue: {
+              loaded: signal(true),
+              userXp: signal(null),
+              ledger: signal(new Map()),
+              config: signal(null),
+              totalXp: signal(0),
+              progress: signal(levelProgress(0)),
+              rateFor: () => 1,
+              previewXp: () => 0,
+              xpOfEntry: () => 0,
+            },
+          },
           { provide: UserContextService, useValue: userContextSpy },
           { provide: FriendsApiService, useValue: friendsApiMock },
           { provide: ChallengesApiService, useValue: challengesApiMock },

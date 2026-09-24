@@ -8,6 +8,7 @@ import { of, Subject } from 'rxjs';
 import { vi } from 'vitest';
 
 import { UserConfigStore } from '../core/user-config.store';
+import { XpCelebrationService } from '../core/xp/xp-celebration.service';
 import { STORAGE_KEY } from './achievement-celebration';
 import { AchievementCelebrationService } from './achievement-celebration.service';
 
@@ -24,6 +25,10 @@ function setup(options: {
     providers: [
       { provide: PLATFORM_ID, useValue: options.platform ?? 'browser' },
       { provide: MatDialog, useValue: { open } },
+      {
+        provide: XpCelebrationService,
+        useValue: { afterIdle: (fn: () => void) => fn() },
+      },
       { provide: UserAchievementsApiService, useValue: { watchEarned } },
       {
         provide: UserConfigStore,

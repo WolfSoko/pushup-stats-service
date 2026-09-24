@@ -32,8 +32,10 @@ Componi il tuo allenamento: esercizi, obiettivi e serie nel tuo ordine. L'app ti
 • Barre di progresso, coriandoli all'obiettivo, contatore di streak per non mollare
 • Calendario heatmap su settimane e mesi
 • Analisi con grafici di andamento, schede KPI e confronto per categoria
-• Record: miglior giorno, miglior serie, miglior sessione
 • Distintivi: ottenuti e da prendere
+
+⭐ PUNTI E LIVELLI
+Ogni esercizio fa guadagnare XP — per ripetizione, minuto o chilometro, anche per le registrazioni passate. Sali di livello, colleziona i badge di livello e sfida gli altri nella classifica XP.
 
 🏆 CLASSIFICA E PROFILO
 Misurati con gli altri o resta privato. Classifiche di oggi, degli ultimi 7 e 30 giorni. Il profilo lo condividi con un link: ripetizioni totali, streak, record, heatmap, i tuoi ultimi 10 allenamenti e il piano attivo — ogni riquadro si imposta a parte su nascosto, solo amici o pubblico.
@@ -43,9 +45,6 @@ Invita gli amici: la vostra lavagna mostra chi è avanti questa settimana. Fatev
 
 🔔 PROMEMORIA INTELLIGENTI
 Notifiche con intervallo, ore di silenzio, giorni e fuso orario — anche con l'app chiusa. Un tocco su «Registra 50» nella notifica.
-
-📚 SAPERE INVECE DI INDOVINARE
-Wiki degli esercizi con l'esecuzione corretta e gli errori tipici, più un blog.
 
 🔒 I TUOI DATI
 Provala come ospite, senza account. Conforme al GDPR con consenso cookie regolabile. Account cancellabile quando vuoi, insieme a tutti i dati di allenamento. Database a Francoforte.

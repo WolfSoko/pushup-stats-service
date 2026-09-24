@@ -22,6 +22,7 @@ import {
 } from '@pu-stats/models';
 import { appendLocalOffset, toBerlinIsoDate } from '@pu-stats/date';
 import { TRAINING_PLAN_LOOKUP, TrainingPlanStore } from './training-plan.store';
+import { XpCelebrationService } from '../core/xp/xp-celebration.service';
 
 const PLAN = TRAINING_PLANS.find(
   (p) => p.id === 'challenge-30d-v1'
@@ -269,6 +270,7 @@ interface Mocks {
   };
   stream: BehaviorSubject<UserTrainingPlan | null>;
   current: UserTrainingPlan | null;
+  xpMock: { celebrate: ReturnType<typeof vitest.fn> };
 }
 
 describe('TrainingPlanStore', () => {
@@ -515,6 +517,7 @@ describe('TrainingPlanStore', () => {
           } satisfies PushupRecord)
         ),
       },
+      xpMock: { celebrate: vitest.fn() },
       exerciseApiMock: {
         createEntry: vitest.fn((uid: string, payload: ExerciseEntryCreate) =>
           of({
@@ -560,6 +563,7 @@ describe('TrainingPlanStore', () => {
         { provide: UserTrainingPlanApiService, useValue: mocks.apiMock },
         { provide: StatsApiService, useValue: mocks.statsApiMock },
         { provide: ExerciseFirestoreService, useValue: mocks.exerciseApiMock },
+        { provide: XpCelebrationService, useValue: mocks.xpMock },
         { provide: LiveDataStore, useValue: mocks.liveMock },
         {
           provide: UserContextService,
@@ -1861,6 +1865,45 @@ describe('TrainingPlanStore', () => {
       );
       expect(written).toEqual(['pushup', 'legs.squats', 'plank.standard']);
       expect(mocks.apiMock.addCompletedDay).toHaveBeenCalledWith('u1', 2);
+    });
+
+    it('should celebrate the XP of every entry of the day in one dialog', async () => {
+      // given
+      const { store, mocks } = setup(
+        planStartedYesterday('circuit-plan'),
+        [],
+        [],
+        circuitLookup
+      );
+      await flush();
+
+      // when
+      await store.logPlanDay(2);
+      await flush();
+
+      // then
+      expect(mocks.xpMock.celebrate).toHaveBeenCalledTimes(1);
+      expect(mocks.xpMock.celebrate.mock.calls[0][0]).toHaveLength(3);
+    });
+
+    it('should celebrate a single logged exercise', async () => {
+      // given
+      const { store, mocks } = setup(
+        planStartedYesterday('circuit-plan'),
+        [],
+        [],
+        circuitLookup
+      );
+      await flush();
+
+      // when
+      await store.logPlanExercise(2, 2);
+      await flush();
+
+      // then
+      expect(mocks.xpMock.celebrate).toHaveBeenCalledWith([
+        expect.objectContaining({ exerciseId: 'plank.standard' }),
+      ]);
     });
 
     it('should skip exercises already covered when logging the whole day', async () => {

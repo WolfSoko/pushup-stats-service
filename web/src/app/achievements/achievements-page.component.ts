@@ -132,6 +132,12 @@ export class AchievementsPageComponent {
   protected readonly skeletonTiles = SKELETON_TILES;
 
   protected groupTitle(kind: AchievementKind): string {
+    if (kind === 'level') {
+      return $localize`:@@achievements.group.level:Level`;
+    }
+    if (kind === 'variety') {
+      return $localize`:@@achievements.group.variety:Vielseitigkeit`;
+    }
     if (kind === 'plan-days') {
       return $localize`:@@achievements.group.planDays:Trainingstage`;
     }

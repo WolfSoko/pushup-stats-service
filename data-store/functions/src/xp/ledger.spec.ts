@@ -63,7 +63,8 @@ describe('ledgerLineFor', () => {
 describe('sameLedgerLine', () => {
   it('should treat identical lines as unchanged and ignore the source flag', () => {
     // given
-    const line = ledgerLineFor(entry, null, null)!;
+    const line = ledgerLineFor(entry, null, null);
+    if (!line) throw new Error('expected a ledger line');
 
     // then
     expect(sameLedgerLine(line, { ...line, source: 'backfill' })).toBe(true);

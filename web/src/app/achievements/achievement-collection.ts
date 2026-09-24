@@ -1,8 +1,10 @@
 import {
   INVITE_ACHIEVEMENTS,
+  LEVEL_ACHIEVEMENTS,
   PLAN_DAY_ACHIEVEMENTS,
   planCompletedAchievement,
   TRAINING_PLANS,
+  VARIETY_ACHIEVEMENTS,
   type AchievementDefinition,
   type AchievementKind,
   type EarnedAchievement,
@@ -50,9 +52,15 @@ export interface AchievementCollectionInput {
   readonly earned: ReadonlyArray<EarnedAchievement>;
   readonly planDayTotal: number;
   readonly invitedCount: number;
+  /** Current XP level, from `userXp/{uid}`. */
+  readonly level: number;
+  /** Distinct exercise categories with XP. */
+  readonly xpCategories: number;
 }
 
 const KIND_ORDER: ReadonlyArray<AchievementKind> = [
+  'level',
+  'variety',
   'plan-days',
   'plan-completed',
   'invites',
@@ -63,6 +71,8 @@ function catalog(): ReadonlyArray<AchievementDefinition> {
     ...PLAN_DAY_ACHIEVEMENTS,
     ...TRAINING_PLANS.map((plan) => planCompletedAchievement(plan.id)),
     ...INVITE_ACHIEVEMENTS,
+    ...LEVEL_ACHIEVEMENTS,
+    ...VARIETY_ACHIEVEMENTS,
   ];
 }
 
@@ -73,6 +83,8 @@ function currentFor(
 ): number | null {
   if (kind === 'plan-days') return input.planDayTotal;
   if (kind === 'invites') return input.invitedCount;
+  if (kind === 'level') return input.level;
+  if (kind === 'variety') return input.xpCategories;
   // A finished plan is not a counter — it is done or it is not.
   return null;
 }

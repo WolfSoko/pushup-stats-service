@@ -11,6 +11,7 @@ import {
 } from '@ngrx/signals';
 import {
   LEADERBOARD_PUSHUP_ID,
+  LEADERBOARD_XP_ID,
   LeaderboardData,
   LeaderboardEntry,
   LeaderboardPeriod,
@@ -178,7 +179,9 @@ export const LeaderboardStore = signalStore(
       // exercise.
       const exerciseSub = store._api.observeExerciseSnapshot().subscribe({
         next: () => {
-          const cachedExerciseIds = Object.keys(store.data());
+          const cachedExerciseIds = Object.keys(store.data()).filter(
+            (id) => id !== LEADERBOARD_XP_ID
+          );
           for (const exerciseId of cachedExerciseIds) {
             void store.load(exerciseId, { force: true });
           }
@@ -188,6 +191,18 @@ export const LeaderboardStore = signalStore(
         },
       });
       store._destroyRef.onDestroy(() => exerciseSub.unsubscribe());
+
+      const xpSub = store._api.observeXpSnapshot().subscribe({
+        next: () => {
+          if (store.data()[LEADERBOARD_XP_ID]) {
+            void store.load(LEADERBOARD_XP_ID, { force: true });
+          }
+        },
+        error: () => {
+          /* swallow — same fallback as the exercise snapshot */
+        },
+      });
+      store._destroyRef.onDestroy(() => xpSub.unsubscribe());
     },
   })
 );

@@ -216,7 +216,8 @@ mat-card-header + mat-card-footer {
 // dark/light Material surface shows underneath the fading frame, and clips
 // the snap canvas at the dialog edges. The badge celebration snaps the same way.
 .goal-reached-dialog-panel,
-.achievement-dialog-panel {
+.achievement-dialog-panel,
+.xp-gained-dialog-panel {
   --mdc-dialog-container-color: transparent;
   --mdc-dialog-container-elevation-shadow: none;
 
@@ -229,7 +230,8 @@ mat-card-header + mat-card-footer {
 }
 
 .cdk-overlay-pane.goal-reached-dialog-panel,
-.cdk-overlay-pane.achievement-dialog-panel {
+.cdk-overlay-pane.achievement-dialog-panel,
+.cdk-overlay-pane.xp-gained-dialog-panel {
   overflow: visible;
 }
 

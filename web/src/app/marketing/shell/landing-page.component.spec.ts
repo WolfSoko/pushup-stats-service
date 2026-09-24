@@ -622,4 +622,38 @@ describe('LandingPageComponent', () => {
       expect(trackSpy).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('points system section', () => {
+    async function renderXpSection() {
+      const view = await render(LandingPageComponent, {
+        deferBlockBehavior: DeferBlockBehavior.Manual,
+        providers: [
+          provideRouter([{ path: 'leaderboard', children: [] }]),
+          { provide: AdsStore, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          { provide: AuthStore, useValue: makeAuthStoreMock() },
+        ],
+      });
+      const [, xpBlock] = await view.fixture.getDeferBlocks();
+      await xpBlock.render(DeferBlockState.Complete);
+      return view;
+    }
+
+    it('should report the XP CTA click to the analytics handler', async () => {
+      // given
+      const view = await renderXpSection();
+      const trackSpy = vitest.spyOn(
+        view.fixture.componentInstance,
+        'onXpCtaClick'
+      );
+
+      // when
+      await userEvent.click(
+        screen.getByRole('link', { name: 'Zur XP-Bestenliste' })
+      );
+
+      // then
+      expect(trackSpy).toHaveBeenCalledTimes(1);
+    });
+  });
 });

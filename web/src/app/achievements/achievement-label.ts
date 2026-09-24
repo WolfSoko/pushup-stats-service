@@ -28,6 +28,16 @@ export function achievementLabel(definition: AchievementDefinition): string {
       : $localize`:@@achievements.label.invites:${invites}:invites: Freunde eingeladen`;
   }
 
+  if (definition.kind === 'level') {
+    const level = definition.threshold ?? 0;
+    return $localize`:@@achievements.label.level:Level ${level}:level: erreicht`;
+  }
+
+  if (definition.kind === 'variety') {
+    const categories = definition.threshold ?? 0;
+    return $localize`:@@achievements.label.variety:Vielseitig: ${categories}:categories: Kategorien`;
+  }
+
   const days = definition.threshold ?? 0;
   return days === 1
     ? $localize`:@@achievements.label.firstPlanDay:Erster Plantag`

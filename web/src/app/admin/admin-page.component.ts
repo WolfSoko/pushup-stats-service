@@ -30,6 +30,7 @@ import { CallableFunctionsService } from './callable-functions.service';
 import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';
 import { AdminAutoCountSectionComponent } from './admin-auto-count-section.component';
+import { AdminXpRatesSectionComponent } from './admin-xp-rates-section.component';
 import { AdminFeedbackSectionComponent } from './admin-feedback-section.component';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { ReleaseBadgeComponent } from '../core/observability/release-badge.component';
@@ -62,6 +63,7 @@ import {
     ReleaseBadgeComponent,
     RouterLink,
     AdminAutoCountSectionComponent,
+    AdminXpRatesSectionComponent,
     AdminFeedbackSectionComponent,
   ],
   templateUrl: './admin-page.component.html',

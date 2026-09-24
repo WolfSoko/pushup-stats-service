@@ -20,6 +20,7 @@ import {
   unifiedEntryFilterKey,
 } from '@pu-stats/models';
 import { AppDataFacade } from '../core/app-data.facade';
+import { XpCelebrationService } from '../core/xp/xp-celebration.service';
 import { createVariantPatch, updateVariantPatch } from './entries.variant';
 
 export interface PushupTypeFilterOption {
@@ -74,6 +75,7 @@ export const EntriesStore = signalStore(
     _live: inject(LiveDataStore),
     _appData: inject(AppDataFacade),
     _userContext: inject(UserContextService),
+    _xpCelebration: inject(XpCelebrationService),
     _locale: inject(LOCALE_ID) as string,
   })),
   withComputed((store) => ({
@@ -166,163 +168,176 @@ export const EntriesStore = signalStore(
       });
     }),
   })),
-  withMethods(({ _exerciseService, _appData, _userContext, ...store }) => ({
-    setFrom(value: string): void {
-      patchState(store, { from: value });
-    },
-    setTo(value: string): void {
-      patchState(store, { to: value });
-    },
-    setSource(value: string): void {
-      patchState(store, { source: value });
-    },
-    setType(value: string): void {
-      patchState(store, { type: value });
-    },
-    setKinds(value: ReadonlyArray<UnifiedEntryFilterKey>): void {
-      patchState(store, { kinds: value });
-    },
-    setRepsMin(value: number | null): void {
-      patchState(store, { repsMin: value });
-    },
-    setRepsMax(value: number | null): void {
-      patchState(store, { repsMax: value });
-    },
-    async createEntry(payload: {
-      kind: 'pushup' | 'exercise';
-      timestamp: string;
-      reps?: number;
-      sets?: number[];
-      intervals?: number[];
-      intervalDurationsSec?: number[];
-      durationSec?: number;
-      distanceM?: number;
-      source?: string;
-      type?: string;
-      exerciseId?: string;
-      variantId?: string;
-    }): Promise<void> {
-      patchState(store, { busyAction: 'create', busyId: null, error: null });
-      try {
-        const exerciseId =
-          payload.kind === 'pushup' ? 'pushup' : payload.exerciseId;
-        if (!exerciseId) {
-          throw new Error(
-            'createEntry: exerciseId is required for kind="exercise"'
+  withMethods(
+    ({
+      _exerciseService,
+      _appData,
+      _userContext,
+      _xpCelebration,
+      ...store
+    }) => ({
+      setFrom(value: string): void {
+        patchState(store, { from: value });
+      },
+      setTo(value: string): void {
+        patchState(store, { to: value });
+      },
+      setSource(value: string): void {
+        patchState(store, { source: value });
+      },
+      setType(value: string): void {
+        patchState(store, { type: value });
+      },
+      setKinds(value: ReadonlyArray<UnifiedEntryFilterKey>): void {
+        patchState(store, { kinds: value });
+      },
+      setRepsMin(value: number | null): void {
+        patchState(store, { repsMin: value });
+      },
+      setRepsMax(value: number | null): void {
+        patchState(store, { repsMax: value });
+      },
+      async createEntry(payload: {
+        kind: 'pushup' | 'exercise';
+        timestamp: string;
+        reps?: number;
+        sets?: number[];
+        intervals?: number[];
+        intervalDurationsSec?: number[];
+        durationSec?: number;
+        distanceM?: number;
+        source?: string;
+        type?: string;
+        exerciseId?: string;
+        variantId?: string;
+      }): Promise<void> {
+        patchState(store, { busyAction: 'create', busyId: null, error: null });
+        try {
+          const exerciseId =
+            payload.kind === 'pushup' ? 'pushup' : payload.exerciseId;
+          if (!exerciseId) {
+            throw new Error(
+              'createEntry: exerciseId is required for kind="exercise"'
+            );
+          }
+          const userId = _userContext.userIdSafe();
+          if (!userId) {
+            throw new Error('createEntry: missing user id');
+          }
+          const saved = await firstValueFrom(
+            _exerciseService.createEntry(userId, {
+              exerciseId,
+              timestamp: payload.timestamp,
+              ...(payload.reps !== undefined ? { reps: payload.reps } : {}),
+              ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
+              ...(payload.intervals !== undefined
+                ? { intervals: payload.intervals }
+                : {}),
+              ...(payload.intervalDurationsSec !== undefined
+                ? { intervalDurationsSec: payload.intervalDurationsSec }
+                : {}),
+              ...(payload.durationSec !== undefined
+                ? { durationSec: payload.durationSec }
+                : {}),
+              ...(payload.distanceM !== undefined
+                ? { distanceM: payload.distanceM }
+                : {}),
+              ...(payload.source !== undefined
+                ? { source: payload.source }
+                : {}),
+              ...createVariantPatch(payload),
+            })
           );
+          _xpCelebration.celebrate([saved]);
+          _appData.reloadAfterMutation();
+        } catch (err) {
+          patchState(store, {
+            error: err instanceof Error ? err.message : String(err),
+          });
+        } finally {
+          patchState(store, { busyAction: null, busyId: null });
         }
-        const userId = _userContext.userIdSafe();
-        if (!userId) {
-          throw new Error('createEntry: missing user id');
-        }
-        await firstValueFrom(
-          _exerciseService.createEntry(userId, {
-            exerciseId,
-            timestamp: payload.timestamp,
-            ...(payload.reps !== undefined ? { reps: payload.reps } : {}),
-            ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
-            ...(payload.intervals !== undefined
-              ? { intervals: payload.intervals }
-              : {}),
-            ...(payload.intervalDurationsSec !== undefined
-              ? { intervalDurationsSec: payload.intervalDurationsSec }
-              : {}),
-            ...(payload.durationSec !== undefined
-              ? { durationSec: payload.durationSec }
-              : {}),
-            ...(payload.distanceM !== undefined
-              ? { distanceM: payload.distanceM }
-              : {}),
-            ...(payload.source !== undefined ? { source: payload.source } : {}),
-            ...createVariantPatch(payload),
-          })
-        );
-        _appData.reloadAfterMutation();
-      } catch (err) {
+      },
+      async updateEntry(payload: {
+        kind: 'pushup' | 'exercise';
+        id: string;
+        exerciseId?: string;
+        timestamp: string;
+        reps?: number;
+        sets?: number[];
+        intervals?: number[];
+        intervalDurationsSec?: number[];
+        durationSec?: number;
+        distanceM?: number;
+        source?: string;
+        type?: string;
+        variantId?: string | null;
+      }): Promise<void> {
         patchState(store, {
-          error: err instanceof Error ? err.message : String(err),
+          busyAction: 'update',
+          busyId: payload.id,
+          error: null,
         });
-      } finally {
-        patchState(store, { busyAction: null, busyId: null });
-      }
-    },
-    async updateEntry(payload: {
-      kind: 'pushup' | 'exercise';
-      id: string;
-      exerciseId?: string;
-      timestamp: string;
-      reps?: number;
-      sets?: number[];
-      intervals?: number[];
-      intervalDurationsSec?: number[];
-      durationSec?: number;
-      distanceM?: number;
-      source?: string;
-      type?: string;
-      variantId?: string | null;
-    }): Promise<void> {
-      patchState(store, {
-        busyAction: 'update',
-        busyId: payload.id,
-        error: null,
-      });
-      try {
-        const exerciseId =
-          payload.kind === 'pushup' ? 'pushup' : payload.exerciseId;
-        if (!exerciseId) {
-          throw new Error(
-            'updateEntry: exerciseId is required for kind="exercise"'
+        try {
+          const exerciseId =
+            payload.kind === 'pushup' ? 'pushup' : payload.exerciseId;
+          if (!exerciseId) {
+            throw new Error(
+              'updateEntry: exerciseId is required for kind="exercise"'
+            );
+          }
+          await firstValueFrom(
+            _exerciseService.updateEntry(payload.id, exerciseId, {
+              timestamp: payload.timestamp,
+              ...(payload.reps !== undefined ? { reps: payload.reps } : {}),
+              ...(payload.durationSec !== undefined
+                ? { durationSec: payload.durationSec }
+                : {}),
+              ...(payload.distanceM !== undefined
+                ? { distanceM: payload.distanceM }
+                : {}),
+              ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
+              ...(payload.intervals !== undefined
+                ? { intervals: payload.intervals }
+                : {}),
+              ...(payload.intervalDurationsSec !== undefined
+                ? { intervalDurationsSec: payload.intervalDurationsSec }
+                : {}),
+              ...(payload.source !== undefined
+                ? { source: payload.source }
+                : {}),
+              ...updateVariantPatch(payload),
+            })
           );
+          _appData.reloadAfterMutation();
+        } catch (err) {
+          patchState(store, {
+            error: err instanceof Error ? err.message : String(err),
+          });
+        } finally {
+          patchState(store, { busyAction: null, busyId: null });
         }
-        await firstValueFrom(
-          _exerciseService.updateEntry(payload.id, exerciseId, {
-            timestamp: payload.timestamp,
-            ...(payload.reps !== undefined ? { reps: payload.reps } : {}),
-            ...(payload.durationSec !== undefined
-              ? { durationSec: payload.durationSec }
-              : {}),
-            ...(payload.distanceM !== undefined
-              ? { distanceM: payload.distanceM }
-              : {}),
-            ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
-            ...(payload.intervals !== undefined
-              ? { intervals: payload.intervals }
-              : {}),
-            ...(payload.intervalDurationsSec !== undefined
-              ? { intervalDurationsSec: payload.intervalDurationsSec }
-              : {}),
-            ...(payload.source !== undefined ? { source: payload.source } : {}),
-            ...updateVariantPatch(payload),
-          })
-        );
-        _appData.reloadAfterMutation();
-      } catch (err) {
+      },
+      async deleteEntry(payload: {
+        kind: 'pushup' | 'exercise';
+        id: string;
+      }): Promise<void> {
         patchState(store, {
-          error: err instanceof Error ? err.message : String(err),
+          busyAction: 'delete',
+          busyId: payload.id,
+          error: null,
         });
-      } finally {
-        patchState(store, { busyAction: null, busyId: null });
-      }
-    },
-    async deleteEntry(payload: {
-      kind: 'pushup' | 'exercise';
-      id: string;
-    }): Promise<void> {
-      patchState(store, {
-        busyAction: 'delete',
-        busyId: payload.id,
-        error: null,
-      });
-      try {
-        await firstValueFrom(_exerciseService.deleteEntry(payload.id));
-        _appData.reloadAfterMutation();
-      } catch (err) {
-        patchState(store, {
-          error: err instanceof Error ? err.message : String(err),
-        });
-      } finally {
-        patchState(store, { busyAction: null, busyId: null });
-      }
-    },
-  }))
+        try {
+          await firstValueFrom(_exerciseService.deleteEntry(payload.id));
+          _appData.reloadAfterMutation();
+        } catch (err) {
+          patchState(store, {
+            error: err instanceof Error ? err.message : String(err),
+          });
+        } finally {
+          patchState(store, { busyAction: null, busyId: null });
+        }
+      },
+    })
+  )
 );

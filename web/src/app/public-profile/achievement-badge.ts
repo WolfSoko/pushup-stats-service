@@ -42,6 +42,22 @@ export function resolveAchievementBadge(id: string): AchievementBadge | null {
     };
   }
 
+  if (definition.kind === 'level') {
+    return {
+      id,
+      icon: definition.icon,
+      label: $localize`:@@publicProfile.badge.level:Level ${definition.threshold ?? 0}:level: erreicht`,
+    };
+  }
+
+  if (definition.kind === 'variety') {
+    return {
+      id,
+      icon: definition.icon,
+      label: $localize`:@@publicProfile.badge.variety:Vielseitig: ${definition.threshold ?? 0}:categories: Kategorien`,
+    };
+  }
+
   const days = definition.threshold ?? 0;
   const label =
     days === 1

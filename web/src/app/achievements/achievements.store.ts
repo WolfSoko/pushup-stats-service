@@ -3,7 +3,8 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { signalStore, withComputed, withProps } from '@ngrx/signals';
 import { UserContextService } from '@pu-auth/auth';
 import { UserAchievementsApiService } from '@pu-stats/data-access';
-import { invitedCount } from '@pu-stats/models';
+import { XpStore } from '@pu-stats/data-access-state';
+import { invitedCount, xpCategoryCount } from '@pu-stats/models';
 import { of } from 'rxjs';
 
 import { UserConfigStore } from '../core/user-config.store';
@@ -32,6 +33,7 @@ export const AchievementsStore = signalStore(
     _api: inject(UserAchievementsApiService),
     _user: inject(UserContextService),
     _config: inject(UserConfigStore),
+    _xp: inject(XpStore),
   })),
   withProps((store) => ({
     progressResource: rxResource({
@@ -49,6 +51,8 @@ export const AchievementsStore = signalStore(
         earned: progress.earned,
         planDayTotal: progress.planDayTotal,
         invitedCount: invitedCount(store._config.config()?.referral),
+        level: store._xp.progress().level,
+        xpCategories: xpCategoryCount(store._xp.userXp()?.byExercise ?? {}),
       });
     }),
   }))

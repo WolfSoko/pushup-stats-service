@@ -108,6 +108,12 @@ interface OgCopy {
   firstPlanDay: string;
   /** `%d` is replaced with the milestone, e.g. "10 Plantage". */
   planDays: string;
+  /** `%d` is replaced with the number of friends invited. */
+  invites: string;
+  /** `%d` is replaced with the level reached. */
+  level: string;
+  /** `%d` is replaced with the number of exercise categories. */
+  variety: string;
 }
 
 const OG_COPY: Readonly<Record<OgLocale, OgCopy>> = {
@@ -119,6 +125,9 @@ const OG_COPY: Readonly<Record<OgLocale, OgCopy>> = {
     planCompleted: 'Plan abgeschlossen',
     firstPlanDay: 'Erster Plantag',
     planDays: '%d Plantage',
+    invites: '%d Freunde eingeladen',
+    level: 'Level %d',
+    variety: '%d Kategorien',
   },
   en: {
     numberLocale: 'en-US',
@@ -128,6 +137,9 @@ const OG_COPY: Readonly<Record<OgLocale, OgCopy>> = {
     planCompleted: 'Plan completed',
     firstPlanDay: 'First plan day',
     planDays: '%d plan days',
+    invites: '%d friends invited',
+    level: 'Level %d',
+    variety: '%d categories',
   },
 };
 
@@ -146,6 +158,14 @@ function badgeLabel(id: string, copy: OgCopy): string | null {
   const definition = findAchievementDefinition(id);
   if (!definition) return null;
   if (definition.kind === 'plan-completed') return copy.planCompleted;
+  const threshold = String(definition.threshold ?? 0);
+  if (definition.kind === 'invites') {
+    return copy.invites.replace('%d', threshold);
+  }
+  if (definition.kind === 'level') return copy.level.replace('%d', threshold);
+  if (definition.kind === 'variety') {
+    return copy.variety.replace('%d', threshold);
+  }
   const days = definition.threshold ?? 0;
   return days === 1
     ? copy.firstPlanDay
