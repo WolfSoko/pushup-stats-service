@@ -3253,7 +3253,7 @@
     <unit id="admin.uiFeatures.title">
       <notes>
         <note category="location">web/src/app/admin/admin-page.component.html:39,42</note>
-        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:28,29</note>
+        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:44,45</note>
       </notes>
       <segment>
         <source>UI-Features testen</source>
@@ -4015,7 +4015,7 @@
     </unit>
     <unit id="admin.uiFeatures.subtitle">
       <notes>
-        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:30,32</note>
+        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:46,48</note>
       </notes>
       <segment>
         <source> Animationen und Overlays ohne den auslösenden Fall vorschauen. </source>
@@ -4023,7 +4023,7 @@
     </unit>
     <unit id="admin.uiFeatures.backToAdmin">
       <notes>
-        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:37,41</note>
+        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:53,57</note>
       </notes>
       <segment>
         <source>Zurück zum Admin-Bereich</source>
@@ -4031,7 +4031,7 @@
     </unit>
     <unit id="admin.uiFeatures.cheer.title">
       <notes>
-        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:44,46</note>
+        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:60,62</note>
       </notes>
       <segment>
         <source>Anfeuerungs-Feuerwerk</source>
@@ -4039,7 +4039,7 @@
     </unit>
     <unit id="admin.uiFeatures.cheer.description">
       <notes>
-        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:49,52</note>
+        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:65,68</note>
       </notes>
       <segment>
         <source> Zeigt die Feuerwerk-Animation, die beim Anfeuern durch einen Freund erscheint — unabhängig von der eigenen Animations-Einstellung. </source>
@@ -4047,7 +4047,39 @@
     </unit>
     <unit id="admin.uiFeatures.cheer.preview">
       <notes>
-        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:62,65</note>
+        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:78,81</note>
+      </notes>
+      <segment>
+        <source>Vorschau starten</source>
+      </segment>
+    </unit>
+    <unit id="admin.uiFeatures.badge.title">
+      <notes>
+        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:87,89</note>
+      </notes>
+      <segment>
+        <source>Abzeichen-Dialog</source>
+      </segment>
+    </unit>
+    <unit id="admin.uiFeatures.badge.description">
+      <notes>
+        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:92,95</note>
+      </notes>
+      <segment>
+        <source> Öffnet den Dialog, der beim Verdienen eines Abzeichens erscheint — inklusive Snap. Die Vorschau zählt nicht als gefeiert. </source>
+      </segment>
+    </unit>
+    <unit id="admin.uiFeatures.badge.select">
+      <notes>
+        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:97,99</note>
+      </notes>
+      <segment>
+        <source>Abzeichen</source>
+      </segment>
+    </unit>
+    <unit id="admin.uiFeatures.badge.preview">
+      <notes>
+        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:119,122</note>
       </notes>
       <segment>
         <source>Vorschau starten</source>
@@ -4055,7 +4087,7 @@
     </unit>
     <unit id="admin.uiFeatures.cheer.previewSender">
       <notes>
-        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:82</note>
+        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:144</note>
       </notes>
       <segment>
         <source>Vorschau</source>
