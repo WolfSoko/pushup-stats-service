@@ -3800,9 +3800,9 @@
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:176</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Profil nicht verfügbar – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
-      <target>资料不可用 — 俯卧撑追踪器</target></segment>
+      <target>个人资料不可用 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target></segment>
     </unit>
     <unit id="publicProfile.seo.notFound.description">
       <notes>
@@ -3816,30 +3816,30 @@
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:192</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> Liegestütze · Streak <ph id="2" equiv="streak" disp="profile.currentStreak"/> · <ph id="3" equiv="brand" disp="BRAND_NAME"/></source>
 
-        <target><ph id="0" equiv="name" disp="profile.displayName" /> – <ph id="1" equiv="total" disp="profile.total" /> 个俯卧撑 · 连续 <ph id="2" equiv="streak" disp="profile.currentStreak" /> 天 · Pushup Tracker</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> 个俯卧撑 · 连续 <ph id="2" equiv="streak" disp="profile.currentStreak"/> 天 · <ph id="3" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.description">
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:193</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf <ph id="4" equiv="domain" disp="BRAND_DOMAIN"/>.</source>
 
-        <target><ph id="0" equiv="name" disp="profile.displayName" /> 在 <ph id="2" equiv="days" disp="profile.totalDays" /> 个活跃天内已完成 <ph id="1" equiv="total" disp="profile.total" /> 个俯卧撑 — 当前连续天数：<ph id="3" equiv="streak" disp="profile.currentStreak" /> 天。在 pushup-stats.com 免费追踪你的数据。</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> 在 <ph id="2" equiv="days" disp="profile.totalDays"/> 个活跃天内完成了 <ph id="1" equiv="total" disp="profile.total"/> 个俯卧撑 — 当前连续天数：<ph id="3" equiv="streak" disp="profile.currentStreak"/> 天。在 <ph id="4" equiv="domain" disp="BRAND_DOMAIN"/> 免费开始记录你的数据。</target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.imageAlt">
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:206</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> auf <ph id="1" equiv="brand" disp="BRAND_NAME"/></source>
 
-        <target><ph id="0" equiv="name" disp="profile.displayName" /> 的 Pushup Tracker 个人资料</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> 在 <ph id="1" equiv="brand" disp="BRAND_NAME"/> 上</target>
       </segment>
     </unit>
     <unit id="reminders.page.title">
@@ -6213,9 +6213,9 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:404,406</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Konto löschen entfernt dein Konto und alle gespeicherten Daten: Trainingseinträge, Statistiken, Pläne, Workouts, Freundschaften, Nachrichten und dein Profilfoto. </source>
-      <target> 删除账户将删除你的账户。训练数据将被匿名保留用于统计分析。 </target></segment>
+      <target>删除账户会移除你的账户及所有已保存的数据：训练记录、统计数据、计划、训练课程、好友关系、消息以及你的头像。</target></segment>
     </unit>
     <unit id="settings.deleteAccount">
       <notes>
@@ -6255,9 +6255,9 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:437,440</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Dein Konto und alle zugehörigen Daten werden endgültig gelöscht — auch deine Trainingseinträge. Gesendetes Feedback bleibt ohne Bezug zu dir erhalten. </source>
-      <target> 你的账户将被删除。训练数据将被匿名保留用于统计分析。 </target></segment>
+      <target>你的账户及所有相关数据将被永久删除——包括你的训练记录。已发送的反馈会保留，但不再与你的身份关联。</target></segment>
     </unit>
     <unit id="settings.deleteDialogPhraseLabel">
       <notes>
@@ -7189,7 +7189,7 @@
     <unit id="wiki.exercise.detail.back">
       <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Übungen </source>
-        <target> 训练动作 </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> 训练动作 </target>
       </segment>
     </unit>
     <unit id="wiki.exercise.detail.toList">
@@ -7229,7 +7229,7 @@
     <unit id="wiki.pushupType.detail.back">
       <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Liegestütztypen </source>
-        <target>俯卧撑类型</target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> 俯卧撑类型 </target>
       </segment>
     </unit>
     <unit id="wiki.pushupType.detail.toList">
@@ -10168,9 +10168,9 @@
       </segment>
     </unit>
     <unit id="androidTest.invite.join">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ich bin dabei </source>
-        <target> 我要参加 </target>
+        <target>我要参加</target>
       </segment>
     </unit>
         <unit id="androidTest.invite.thanksTitle">
@@ -11368,9 +11368,9 @@
       </segment>
     </unit>
     <unit id="publicProfile.seo.descriptionPlain">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> auf <ph id="1" equiv="brand" disp="BRAND_NAME"/>. Tracke selbst kostenlos auf <ph id="2" equiv="domain" disp="BRAND_DOMAIN"/>.</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> 在 Pushup Tracker 上。在 pushup-stats.com 免费追踪你的数据。</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> 在 <ph id="1" equiv="brand" disp="BRAND_NAME"/> 上。在 <ph id="2" equiv="domain" disp="BRAND_DOMAIN"/> 免费追踪你的数据。</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.title">
@@ -13900,483 +13900,483 @@
       </segment>
     </unit>
     <unit id="settings.autoCountFeedbackHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Deine Antwort verbessert die Erkennung. Übertragen werden die gezählte und die tatsächliche Anzahl, die Erkennungseinstellungen, dein Konto und die Gerätekennung deines Browsers – kein Video und kein Bild. </source>
-        <target> 你的回答有助于改进检测。仅传输计数次数、实际次数以及检测设置——不传输视频或图像。 </target>
+        <target> 你的回答有助于改进检测。传输的内容包括计数次数、实际次数、检测设置、你的账户以及你浏览器的设备标识——不传输视频或图像。 </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.unpublish">
-      <segment state="initial">
+      <segment state="translated">
         <source> Nur für mich </source>
-        <target> Nur für mich </target>
+        <target> 仅对我自己 </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.toggleAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Parameter-Regler anzeigen oder ausblenden</source>
-        <target>Parameter-Regler anzeigen oder ausblenden</target>
+        <target>显示或隐藏参数滑块</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.tuning.toggleAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Parameter-Regler anzeigen oder ausblenden</source>
-        <target>Parameter-Regler anzeigen oder ausblenden</target>
+        <target>显示或隐藏参数滑块</target>
       </segment>
     </unit>
     <unit id="achievements.label.planCompletedNamed">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="plan" disp="title"/> abgeschlossen</source>
-        <target><ph id="0" equiv="plan" disp="title"/> abgeschlossen</target>
+        <target><ph id="0" equiv="plan" disp="title"/>已完成</target>
       </segment>
     </unit>
     <unit id="achievements.label.planCompleted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingsplan abgeschlossen</source>
-        <target>Trainingsplan abgeschlossen</target>
+        <target>训练计划已完成</target>
       </segment>
     </unit>
     <unit id="achievements.label.firstInvite">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ersten Freund eingeladen</source>
-        <target>Ersten Freund eingeladen</target>
+        <target>邀请了第一位好友</target>
       </segment>
     </unit>
     <unit id="achievements.label.invites">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</source>
-        <target><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</target>
+        <target>已邀请 <ph id="0" equiv="invites" disp="invites"/> 位好友</target>
       </segment>
     </unit>
     <unit id="achievements.label.firstPlanDay">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erster Plantag</source>
-        <target>Erster Plantag</target>
+        <target>第一个计划日</target>
       </segment>
     </unit>
     <unit id="achievements.label.planDays">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="days" disp="days"/> Plantage</source>
-        <target><ph id="0" equiv="days" disp="days"/> Plantage</target>
+        <target><ph id="0" equiv="days" disp="days"/> 个计划日</target>
       </segment>
     </unit>
     <unit id="achievements.tile.progress">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ progress.current }}"/>:current: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.target }}"/>:target:</source>
-        <target><ph id="0" equiv="INTERPOLATION" disp="{{ progress.current }}"/>:current: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.target }}"/>:target:</target>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ progress.current }}"/>:current:／<ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.target }}"/>:target:</target>
       </segment>
     </unit>
     <unit id="achievements.page.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Deine Abzeichen</source>
-        <target>Deine Abzeichen</target>
+        <target>你的徽章</target>
       </segment>
     </unit>
     <unit id="achievements.page.count">
-      <segment state="initial">
+      <segment state="translated">
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ store.collection().earnedCount }}"/>:earned: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ store.collection().totalCount }}"/>:total: freigeschaltet </source>
-        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ store.collection().earnedCount }}"/>:earned: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ store.collection().totalCount }}"/>:total: freigeschaltet </target>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ store.collection().earnedCount }}"/>:earned:／<ph id="1" equiv="INTERPOLATION_1" disp="{{ store.collection().totalCount }}"/>:total: 已解锁</target>
       </segment>
     </unit>
     <unit id="achievements.page.next">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als Nächstes</source>
-        <target>Als Nächstes</target>
+        <target>接下来</target>
       </segment>
     </unit>
     <unit id="achievements.group.planDays">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingstage</source>
-        <target>Trainingstage</target>
+        <target>训练天数</target>
       </segment>
     </unit>
     <unit id="achievements.group.planCompleted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abgeschlossene Pläne</source>
-        <target>Abgeschlossene Pläne</target>
+        <target>已完成的计划</target>
       </segment>
     </unit>
     <unit id="achievements.group.invites">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eingeladene Freunde</source>
-        <target>Eingeladene Freunde</target>
+        <target>已邀请的好友</target>
       </segment>
     </unit>
         <unit id="seo.achievements.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abzeichen – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
-        <target>Abzeichen – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
+        <target>徽章 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.achievements.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Deine verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist.</source>
-        <target>Deine verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist.</target>
+        <target>你已获得的徽章、尚未解锁的徽章,以及距离下一个还有多远。</target>
       </segment>
     </unit>
     <unit id="nav.achievements">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abzeichen</source>
-        <target>Abzeichen</target>
+        <target>徽章</target>
       </segment>
     </unit>
     <unit id="user.menu.notifications">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachrichten</source>
-        <target>Nachrichten</target>
+        <target>消息</target>
       </segment>
     </unit>
         <unit id="seo.notifications.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachrichten – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
-        <target>Nachrichten – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
+        <target>消息 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.notifications.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen an einem Ort.</source>
-        <target>Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen an einem Ort.</target>
+        <target>加油、好友请求、挑战和新徽章,全部集中在一处。</target>
       </segment>
     </unit>
     <unit id="announcements.workouts">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu: eigene Sessions zusammenstellen</source>
-        <target>Neu: eigene Sessions zusammenstellen</target>
+        <target>新功能:自定义训练课程</target>
       </segment>
     </unit>
     <unit id="notifications.panel.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachrichten</source>
-        <target>Nachrichten</target>
+        <target>消息</target>
       </segment>
     </unit>
     <unit id="notifications.panel.markAll">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alle gelesen </source>
-        <target> Alle gelesen </target>
+        <target>全部标为已读</target>
       </segment>
     </unit>
     <unit id="notifications.panel.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch keine Nachrichten. </source>
-        <target> Noch keine Nachrichten. </target>
+        <target>暂无消息。</target>
       </segment>
     </unit>
     <unit id="notifications.panel.showAll">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alle anzeigen </source>
-        <target> Alle anzeigen </target>
+        <target>显示全部</target>
       </segment>
     </unit>
     <unit id="notifications.bell.none">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachrichten</source>
-        <target>Nachrichten</target>
+        <target>消息</target>
       </segment>
     </unit>
     <unit id="notifications.bell.unread">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachrichten, <ph id="0" equiv="count" disp="count"/> ungelesen</source>
-        <target>Nachrichten, <ph id="0" equiv="count" disp="count"/> ungelesen</target>
+        <target>消息,<ph id="0" equiv="count" disp="count"/> 条未读</target>
       </segment>
     </unit>
     <unit id="notifications.actor.anonymous">
-      <segment state="initial">
+      <segment state="translated">
         <source>Jemand</source>
-        <target>Jemand</target>
+        <target>某人</target>
       </segment>
     </unit>
     <unit id="notifications.text.cheer">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="name"/> feuert dich an</source>
-        <target><ph id="0" equiv="name" disp="name"/> feuert dich an</target>
+        <target><ph id="0" equiv="name" disp="name"/> 在为你加油</target>
       </segment>
     </unit>
     <unit id="notifications.text.friendRequest">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="name"/> möchte mit dir befreundet sein</source>
-        <target><ph id="0" equiv="name" disp="name"/> möchte mit dir befreundet sein</target>
+        <target><ph id="0" equiv="name" disp="name"/> 想加你为好友</target>
       </segment>
     </unit>
     <unit id="notifications.text.friendAccepted">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="name"/> hat deine Anfrage angenommen</source>
-        <target><ph id="0" equiv="name" disp="name"/> hat deine Anfrage angenommen</target>
+        <target><ph id="0" equiv="name" disp="name"/> 接受了你的好友请求</target>
       </segment>
     </unit>
     <unit id="notifications.text.challenge">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="name"/> fordert dich heraus</source>
-        <target><ph id="0" equiv="name" disp="name"/> fordert dich heraus</target>
+        <target><ph id="0" equiv="name" disp="name"/> 向你发起了挑战</target>
       </segment>
     </unit>
     <unit id="notifications.text.challengeAccepted">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="name"/> macht bei deiner Challenge mit</source>
-        <target><ph id="0" equiv="name" disp="name"/> macht bei deiner Challenge mit</target>
+        <target><ph id="0" equiv="name" disp="name"/> 加入了你的挑战</target>
       </segment>
     </unit>
     <unit id="notifications.text.workoutShared">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="name"/> hat dir eine Session geschickt</source>
-        <target><ph id="0" equiv="name" disp="name"/> hat dir eine Session geschickt</target>
+        <target><ph id="0" equiv="name" disp="name"/> 给你发送了一个训练课程</target>
       </segment>
     </unit>
     <unit id="notifications.text.achievement">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du hast ein neues Abzeichen verdient</source>
-        <target>Du hast ein neues Abzeichen verdient</target>
+        <target>你获得了一枚新徽章</target>
       </segment>
     </unit>
     <unit id="notifications.page.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachrichten</source>
-        <target>Nachrichten</target>
+        <target>消息</target>
       </segment>
     </unit>
     <unit id="notifications.page.markAll">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle gelesen</source>
-        <target>Alle gelesen</target>
+        <target>全部标为已读</target>
       </segment>
     </unit>
     <unit id="notifications.page.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Hier landen Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen. </source>
-        <target> Hier landen Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen. </target>
+        <target>加油、好友请求、挑战和新徽章都会显示在这里。</target>
       </segment>
     </unit>
     <unit id="announcements.inbox">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu: Nachrichten und deine Abzeichen</source>
-        <target>Neu: Nachrichten und deine Abzeichen</target>
+        <target>新功能:消息和你的徽章</target>
       </segment>
     </unit>
     <unit id="landing.inbox.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source> Neu · Nachrichten &amp; Abzeichen </source>
-        <target> Neu · Nachrichten &amp; Abzeichen </target>
+        <target>新功能 · 消息 &amp; 徽章</target>
       </segment>
     </unit>
     <unit id="landing.inbox.headline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Nichts geht verloren — und du siehst, was du geschafft hast. </source>
-        <target> Nichts geht verloren — und du siehst, was du geschafft hast. </target>
+        <target>什么都不会丢失——你能看到自己取得的成就。</target>
       </segment>
     </unit>
     <unit id="landing.inbox.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source> Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen landen in deinem Postfach. Auch dann, wenn du offline warst oder keine Push-Benachrichtigungen erlaubt hast. Und alle Abzeichen — verdiente wie offene — stehen an einem Ort. </source>
-        <target> Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen landen in deinem Postfach. Auch dann, wenn du offline warst oder keine Push-Benachrichtigungen erlaubt hast. Und alle Abzeichen — verdiente wie offene — stehen an einem Ort. </target>
+        <target>加油、好友请求、挑战和新徽章都会送达你的收件箱。即使你当时离线或未允许推送通知也是如此。所有徽章——已获得的和尚未解锁的——都集中在一处。</target>
       </segment>
     </unit>
     <unit id="landing.inbox.chip.inbox">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alles an einem Ort, auch ohne Push-Benachrichtigungen</source>
-        <target>Alles an einem Ort, auch ohne Push-Benachrichtigungen</target>
+        <target>所有内容集中一处,即使没有推送通知也是如此</target>
       </segment>
     </unit>
     <unit id="landing.inbox.chip.cheer">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuerungen von Freunden, jederzeit nachlesbar</source>
-        <target>Anfeuerungen von Freunden, jederzeit nachlesbar</target>
+        <target>好友的加油鼓励,随时可查看</target>
       </segment>
     </unit>
     <unit id="landing.inbox.chip.badges">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abzeichen sammeln und sehen, wie weit es bis zum nächsten ist</source>
-        <target>Abzeichen sammeln und sehen, wie weit es bis zum nächsten ist</target>
+        <target>收集徽章,查看距离下一个还有多远</target>
       </segment>
     </unit>
     <unit id="landing.inbox.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abzeichen ansehen</source>
-        <target>Abzeichen ansehen</target>
+        <target>查看徽章</target>
       </segment>
     </unit>
     <unit id="landing.inbox.mock.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachrichten</source>
-        <target>Nachrichten</target>
+        <target>消息</target>
       </segment>
     </unit>
     <unit id="landing.inbox.mock.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>3 ungelesen</source>
-        <target>3 ungelesen</target>
+        <target>3 条未读</target>
       </segment>
     </unit>
     <unit id="landing.inbox.mock.line1">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anna feuert dich an</source>
-        <target>Anna feuert dich an</target>
+        <target>Anna 在为你加油</target>
       </segment>
     </unit>
     <unit id="landing.inbox.mock.line2">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du hast ein neues Abzeichen verdient</source>
-        <target>Du hast ein neues Abzeichen verdient</target>
+        <target>你获得了一枚新徽章</target>
       </segment>
     </unit>
     <unit id="landing.inbox.mock.line3">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ben möchte mit dir befreundet sein</source>
-        <target>Ben möchte mit dir befreundet sein</target>
+        <target>Ben 想加你为好友</target>
       </segment>
     </unit>
     <unit id="inboxIntro.badge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu</source>
-        <target>Neu</target>
+        <target>新</target>
       </segment>
     </unit>
     <unit id="inboxIntro.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachrichten und Abzeichen</source>
-        <target>Nachrichten und Abzeichen</target>
+        <target>消息与徽章</target>
       </segment>
     </unit>
     <unit id="inboxIntro.stepCount">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
-        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+        <target>第 <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> 步,共 <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> 步</target>
       </segment>
     </unit>
     <unit id="inboxIntro.later">
-      <segment state="initial">
+      <segment state="translated">
         <source> Später </source>
-        <target> Später </target>
+        <target>稍后</target>
       </segment>
     </unit>
     <unit id="inboxIntro.back">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück</source>
-        <target>Zurück</target>
+        <target>返回</target>
       </segment>
     </unit>
     <unit id="inboxIntro.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abzeichen ansehen</source>
-        <target>Abzeichen ansehen</target>
+        <target>查看徽章</target>
       </segment>
     </unit>
     <unit id="inboxIntro.next">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiter</source>
-        <target>Weiter</target>
+        <target>下一步</target>
       </segment>
     </unit>
     <unit id="inboxIntro.step1.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nichts geht mehr verloren</source>
-        <target>Nichts geht mehr verloren</target>
+        <target>不再有任何遗漏</target>
       </segment>
     </unit>
     <unit id="inboxIntro.step1.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuerungen, Freundschaftsanfragen und Challenges landen in der Glocke oben — auch wenn du offline warst oder keine Push-Benachrichtigungen erlaubt hast.</source>
-        <target>Anfeuerungen, Freundschaftsanfragen und Challenges landen in der Glocke oben — auch wenn du offline warst oder keine Push-Benachrichtigungen erlaubt hast.</target>
+        <target>加油、好友请求和挑战都会显示在上方的铃铛图标中——即使你当时离线或未允许推送通知也是如此。</target>
       </segment>
     </unit>
     <unit id="inboxIntro.step2.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Deine Abzeichen an einem Ort</source>
-        <target>Deine Abzeichen an einem Ort</target>
+        <target>你的徽章集中一处</target>
       </segment>
     </unit>
     <unit id="inboxIntro.step2.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist — unter „Abzeichen&quot; in der Navigation.</source>
-        <target>Alle verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist — unter „Abzeichen&quot; in der Navigation.</target>
+        <target>所有已获得的徽章、尚未解锁的徽章,以及距离下一个还有多远——在导航中的"徽章&quot;下查看。</target>
       </segment>
     </unit>
     <unit id="notificationPrefs.label">
-      <segment state="initial">
+      <segment state="translated">
         <source> Push von Freunden </source>
-        <target> Push von Freunden </target>
+        <target>好友推送</target>
       </segment>
     </unit>
     <unit id="notificationPrefs.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source> Was davon dein Handy klingeln lassen darf. Ausgeschaltet heißt nur: kein Push — in deinen Nachrichten steht es trotzdem. Deine Ruhezeiten oben gelten auch hier. </source>
-        <target> Was davon dein Handy klingeln lassen darf. Ausgeschaltet heißt nur: kein Push — in deinen Nachrichten steht es trotzdem. Deine Ruhezeiten oben gelten auch hier. </target>
+        <target>这些内容中哪些可以让你的手机响铃。关闭只是意味着:没有推送——它仍会出现在你的消息中。上方设置的免打扰时段在这里同样适用。</target>
       </segment>
     </unit>
     <unit id="notificationPrefs.cheer">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuerungen</source>
-        <target>Anfeuerungen</target>
+        <target>加油</target>
       </segment>
     </unit>
     <unit id="notificationPrefs.friendRequest">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freundschaftsanfragen</source>
-        <target>Freundschaftsanfragen</target>
+        <target>好友请求</target>
       </segment>
     </unit>
     <unit id="notificationPrefs.friendAccepted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Angenommene Anfragen</source>
-        <target>Angenommene Anfragen</target>
+        <target>已接受的请求</target>
       </segment>
     </unit>
     <unit id="notificationPrefs.challenge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenge-Einladungen</source>
-        <target>Challenge-Einladungen</target>
+        <target>挑战邀请</target>
       </segment>
     </unit>
     <unit id="notificationPrefs.challengeAccepted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zusagen zu deinen Challenges</source>
-        <target>Zusagen zu deinen Challenges</target>
+        <target>对你挑战的接受回复</target>
       </segment>
     </unit>
     <unit id="notificationPrefs.workoutShared">
-      <segment state="initial">
+      <segment state="translated">
         <source>Geteilte Sessions</source>
-        <target>Geteilte Sessions</target>
+        <target>已分享的训练课程</target>
       </segment>
     </unit>
     <unit id="notifications.text.goalReached">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziel geschafft</source>
-        <target>Tagesziel geschafft</target>
+        <target>已达成每日目标</target>
       </segment>
     </unit>
     <unit id="notifications.filter.unread">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ungelesen</source>
-        <target>Ungelesen</target>
+        <target>未读</target>
       </segment>
     </unit>
     <unit id="notifications.filter.all">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle</source>
-        <target>Alle</target>
+        <target>全部</target>
       </segment>
     </unit>
     <unit id="notifications.empty.unread">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alles gelesen.</source>
-        <target>Alles gelesen.</target>
+        <target>全部已读。</target>
       </segment>
     </unit>
     <unit id="notifications.empty.all">
-      <segment state="initial">
+      <segment state="translated">
         <source>Noch keine Nachrichten.</source>
-        <target>Noch keine Nachrichten.</target>
+        <target>暂时还没有消息。</target>
       </segment>
     </unit>
     <unit id="notifications.item.delete">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachricht löschen</source>
-        <target>Nachricht löschen</target>
+        <target>删除消息</target>
       </segment>
     </unit>
     <unit id="notifications.page.allRead">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alles gelesen. Über „Alle“ siehst du auch ältere Nachrichten. </source>
-        <target> Alles gelesen. Über „Alle“ siehst du auch ältere Nachrichten. </target>
+        <target>全部已读。点击"全部"还可以查看更早的消息。</target>
       </segment>
     </unit>
     <unit id="notifications.panel.allRead">

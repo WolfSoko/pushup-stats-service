@@ -4,6 +4,7 @@ import {
   findExerciseWikiEntry,
   findExerciseWikiEntryBySlug,
   localizeExerciseWiki,
+  type ExerciseWikiEntry,
 } from './exercise-wiki.models';
 import { EXERCISE_WIKI_CONTENT } from './exercise-wiki-content.generated';
 
@@ -80,20 +81,45 @@ describe('exercise wiki catalog', () => {
     });
 
     it('should withhold the body from a locale that has none, while still falling back for the name', () => {
-      // given — cardio.hiking ships de + en copy only
-      const entry = findExerciseWikiEntryBySlug('hiking');
-      expect(entry).not.toBeNull();
-      if (!entry) return;
+      // given — a synthetic entry with de + en copy only, no fr
+      const id = '__test.partialLocale';
+      const entry: ExerciseWikiEntry = {
+        id,
+        categoryId: 'cardio',
+        slug: id,
+        difficulty: 'beginner',
+        icon: 'directions_walk',
+      };
+      (EXERCISE_WIKI_CONTENT as Record<string, unknown>)[id] = {
+        de: {
+          name: 'Wandern',
+          summary: 'x',
+          instructions: ['x'],
+          tips: ['x'],
+          article: '<p>de</p>',
+        },
+        en: {
+          name: 'Hiking',
+          summary: 'x',
+          instructions: ['x'],
+          tips: ['x'],
+          article: '<p>en</p>',
+        },
+      };
 
-      // when
-      const localized = localizeExerciseWiki(entry, 'fr');
+      try {
+        // when
+        const localized = localizeExerciseWiki(entry, 'fr');
 
-      // then — frontmatter falls back, the article does not: inheriting
-      // it would make `exercise-detail.component.ts` advertise an
-      // English duplicate as indexable French, and the sitemap (which
-      // resolves per locale) would not list it.
-      expect(localized?.name).toBe('Hiking');
-      expect(localized?.article).toBeUndefined();
+        // then — frontmatter falls back, the article does not: inheriting
+        // it would make `exercise-detail.component.ts` advertise an
+        // English duplicate as indexable French, and the sitemap (which
+        // resolves per locale) would not list it.
+        expect(localized?.name).toBe('Hiking');
+        expect(localized?.article).toBeUndefined();
+      } finally {
+        delete (EXERCISE_WIKI_CONTENT as Record<string, unknown>)[id];
+      }
     });
 
     it('should keep the body for a locale that has its own copy', () => {

@@ -21,6 +21,14 @@ export const POST: BlogPost = {
     "Trainings-Tracker"
   ],
   "alternateSlugs": {
-    "de": "neuer-name-kommt"
+    "de": "neuer-name-kommt",
+    "el": "nea-onoma-erchetai",
+    "en": "app-getting-new-name",
+    "es": "nueva-identidad-aplicacion-razon-cambio",
+    "fr": "app-change-de-nom",
+    "it": "nuovo-nome-app",
+    "nl": "app-krijgt-nieuwe-naam-waarom",
+    "no": "nytt-navn-kommer",
+    "zh": "pushup-tracker-rename"
   }
 };

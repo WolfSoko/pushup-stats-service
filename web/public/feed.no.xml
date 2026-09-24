@@ -7,6 +7,13 @@
     <language>no</language>
     <atom:link href="https://pushup-stats.com/no/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Denne appen får et nytt navn – og hvorfor det var på tide</title>
+      <link>https://pushup-stats.com/no/blog/nytt-navn-kommer</link>
+      <guid isPermaLink="true">https://pushup-stats.com/no/blog/nytt-navn-kommer</guid>
+      <pubDate>Sun, 20 Sep 2026 08:00:00 GMT</pubDate>
+      <description>Pushup Tracker heter sånn fordi appen startet med armhevinger. Nå teller kameraet også knebøy og pull-ups, i halvparten av de ti treningsplanene er armhevinger bare én øvelse blant mange, og øvelses-wikien har 40 oppføringer. Hvorfor navnet ikke holder mål lenger, hva som endres – og hva som garantert blir stående.</description>
+    </item>
+    <item>
       <title>Helkroppstrening uten utstyr: De seks grunnbevegelsene du trenger hver uke</title>
       <link>https://pushup-stats.com/no/blog/grunnbevegelser-helkroppstrening</link>
       <guid isPermaLink="true">https://pushup-stats.com/no/blog/grunnbevegelser-helkroppstrening</guid>
@@ -157,14 +164,6 @@
       <pubDate>Mon, 10 Mar 2025 08:00:00 GMT</pubDate>
       <description>Hvorfor en digital armhevningstracker gjør forskjellen – og hvordan Pushup Tracker hjelper deg å oppnå personlige rekorder og holde deg konsistent.</description>
       <enclosure url="https://images.unsplash.com/photo-1717821681365-36b0da044a75?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" type="image/jpeg" length="0"/>
-    </item>
-    <item>
-      <title>Hvorfor daglige armhevninger vil endre livet ditt</title>
-      <link>https://pushup-stats.com/no/blog/daglige-armhevninger</link>
-      <guid isPermaLink="true">https://pushup-stats.com/no/blog/daglige-armhevninger</guid>
-      <pubDate>Mon, 03 Feb 2025 08:00:00 GMT</pubDate>
-      <description>Daglige armhevninger forbedrer styrke, stilling og velvære. Oppdag de vitenskapelig beviste fordelene og hvordan du bygger vanen for godt.</description>
-      <enclosure url="https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" type="image/jpeg" length="0"/>
     </item>
   </channel>
 </rss>
