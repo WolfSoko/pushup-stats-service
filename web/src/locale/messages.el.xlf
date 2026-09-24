@@ -15440,27 +15440,27 @@
       </segment>
     </unit>
     <unit id="admin.uiFeatures.badge.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abzeichen-Dialog</source>
-        <target>Abzeichen-Dialog</target>
+        <target>Παράθυρο διαλόγου διακριτικού</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.badge.description">
-      <segment state="initial">
+      <segment state="translated">
         <source> Öffnet den Dialog, der beim Verdienen eines Abzeichens erscheint — inklusive Snap. Die Vorschau zählt nicht als gefeiert. </source>
-        <target> Öffnet den Dialog, der beim Verdienen eines Abzeichens erscheint — inklusive Snap. Die Vorschau zählt nicht als gefeiert. </target>
+        <target> Ανοίγει το παράθυρο διαλόγου που εμφανίζεται όταν αποκτάτε ένα διακριτικό — συμπεριλαμβανομένου του Snap. Η προεπισκόπηση δεν μετράει ως γιορτασμένη. </target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.badge.select">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abzeichen</source>
-        <target>Abzeichen</target>
+        <target>Διακριτικό</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.badge.preview">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vorschau starten</source>
-        <target>Vorschau starten</target>
+        <target>Έναρξη προεπισκόπησης</target>
       </segment>
     </unit>
 </file>

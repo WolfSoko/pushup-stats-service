@@ -14950,27 +14950,27 @@
       </segment>
     </unit>
     <unit id="admin.uiFeatures.badge.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abzeichen-Dialog</source>
-        <target>Abzeichen-Dialog</target>
+        <target>徽章对话框</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.badge.description">
-      <segment state="initial">
+      <segment state="translated">
         <source> Öffnet den Dialog, der beim Verdienen eines Abzeichens erscheint — inklusive Snap. Die Vorschau zählt nicht als gefeiert. </source>
-        <target> Öffnet den Dialog, der beim Verdienen eines Abzeichens erscheint — inklusive Snap. Die Vorschau zählt nicht als gefeiert. </target>
+        <target> 打开获得徽章时出现的对话框——包含 Snap 效果。预览不计为已庆祝。 </target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.badge.select">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abzeichen</source>
-        <target>Abzeichen</target>
+        <target>徽章</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.badge.preview">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vorschau starten</source>
-        <target>Vorschau starten</target>
+        <target>开始预览</target>
       </segment>
     </unit>
 </file>

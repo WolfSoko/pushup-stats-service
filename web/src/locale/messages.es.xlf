@@ -15436,27 +15436,27 @@
       </segment>
     </unit>
     <unit id="admin.uiFeatures.badge.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abzeichen-Dialog</source>
-        <target>Abzeichen-Dialog</target>
+        <target>Diálogo de insignia</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.badge.description">
-      <segment state="initial">
+      <segment state="translated">
         <source> Öffnet den Dialog, der beim Verdienen eines Abzeichens erscheint — inklusive Snap. Die Vorschau zählt nicht als gefeiert. </source>
-        <target> Öffnet den Dialog, der beim Verdienen eines Abzeichens erscheint — inklusive Snap. Die Vorschau zählt nicht als gefeiert. </target>
+        <target> Abre el diálogo que aparece al ganar una insignia, incluido el Snap. La vista previa no cuenta como celebrada. </target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.badge.select">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abzeichen</source>
-        <target>Abzeichen</target>
+        <target>Insignia</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.badge.preview">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vorschau starten</source>
-        <target>Vorschau starten</target>
+        <target>Iniciar vista previa</target>
       </segment>
     </unit>
 </file>
