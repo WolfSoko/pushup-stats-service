@@ -257,9 +257,9 @@
       <notes>
         <note category="location">libs/auth/src/lib/ui/login/login.component.html:5,7</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Willkommen bei <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></source>
-        <target>Bienvenido a Estadísticas de PushUp</target>
+        <target>Bienvenido a <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></target>
       </segment>
     </unit>
     <unit id="auth.login.subtitle">
@@ -2465,18 +2465,18 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:6,7</note>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:8,9</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> Logo</source>
-        <target>Logotipo del rastreador de flexiones</target>
+        <target>Logotipo de <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></target>
       </segment>
     </unit>
     <unit id="landing.eyebrow">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:10,11</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></source>
-        <target>Rastreador de flexiones</target>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></target>
       </segment>
     </unit>
     <unit id="landing.free.badge">
@@ -3119,9 +3119,9 @@
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:131</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="brand" disp="BRAND_NAME"/> Profil</source>
-        <target>Perfil del rastreador de flexiones</target>
+        <target>Perfil de <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.notFound.title">
