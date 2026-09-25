@@ -125,8 +125,13 @@ label:architecture` plus keywords). If an open issue already covers it,
    your tools allow it; otherwise mention in the overview issue that it still
    needs triage.
 
-7. **Ship the diagrams** — before touching the overview issue, so the
+7. **Ship the diagrams** — before rewriting the overview issue, so the
    overview never announces metrics that `main` does not show yet.
+
+   First resolve the overview issue number: find the open issue with label
+   `architecture-review`; if there is none, create it now with the title
+   from **Deliverables** and a one-line placeholder body (step 8 fills it).
+   The diagram PR references this number.
 
    If step 2 produced a diff, commit and push it:
 
@@ -153,9 +158,9 @@ label:architecture` plus keywords). If an open issue already covers it,
    Do **not** touch application code in this routine. Refactors happen in the
    improvement issues, in their own PRs, with tests.
 
-8. **Update the overview issue.** Find the open issue with label
-   `architecture-review` (create it if missing; if you ever find more than
-   one, keep the lowest number and close the others pointing at it). Rewrite
+8. **Update the overview issue** resolved in step 7 (if you ever find more
+   than one open `architecture-review` issue, keep the lowest number and
+   close the others pointing at it). Rewrite
    its body completely:
 
    ```markdown
@@ -198,10 +203,11 @@ label:architecture` plus keywords). If an open issue already covers it,
    The diagram links point at `main`, so the numbers in the body must match
    `main` too:
 
-   - **Diagram PR merged in step 7 (or no diff at all)** → fill the table
-     from the new `metrics.json`; `Stand` names the resulting `main` commit.
-   - **Diagram PR still open** (CI red or pending) → fill the table from the
-     `main` snapshot (`/tmp/metrics.previous.json`) and add a line directly
+   - **Diagram PR merged in step 7, or no diagram PR open and no diff** →
+     fill the table from the new `metrics.json`; `Stand` names the
+     resulting `main` commit.
+   - **Diagram PR still open** (CI red or pending — even when this run
+     produced no new diff) → fill the table from the `main` snapshot (`/tmp/metrics.previous.json`) and add a line directly
      under `Stand`: `⚠️ Neue Diagramme noch nicht gemergt: #<PR> — <Grund>.`
      Mention this week's new numbers only in that PR, never as current.
 
