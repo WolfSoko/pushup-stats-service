@@ -1,7 +1,7 @@
 import { expect, test } from './fixtures/test-fixtures';
 
 /**
- * The snackbar was lifted clear of the arc nav by a `max-width: 767px` rule,
+ * A quick add used to confirm with a snackbar, which was lifted clear of the arc nav by a `max-width: 767px` rule,
  * written as if the strip were a mobile-only bottom nav. It is not — it is
  * fixed to the bottom edge on every viewport, and a landscape phone is wide
  * enough to fall outside that breakpoint while still being short enough for
@@ -54,29 +54,20 @@ test.describe('App shell on a landscape phone @smoke', () => {
     });
     expect(offscreen).toEqual([]);
 
-    // and a quick add reports back
+    // and a quick add reports back with the XP dialog
     await page.locator('.quick-fab').first().click();
 
-    const snackbar = page.locator('.mat-mdc-snack-bar-container');
-    await expect(snackbar).toBeVisible();
+    const dialog = page.locator('.xp-gained-dialog-panel');
+    await expect(dialog).toBeVisible();
 
-    // then the toast sits entirely above the strip. Measured against the
-    // room the strip takes when it is out, not against where it happens to
-    // sit: it parks below the bottom edge when it is left alone, and a toast
-    // clearing a parked strip would prove nothing.
-    const overlap = await page.evaluate(() => {
-      const snackbarEl = document.querySelector('.mat-mdc-snack-bar-container');
-      const navEl = document.querySelector('[data-testid="arc-nav"]');
-      if (!snackbarEl || !navEl) {
-        return null;
-      }
-      const strip = navEl.getBoundingClientRect().height;
-      return Math.round(
-        snackbarEl.getBoundingClientRect().bottom - (window.innerHeight - strip)
-      );
-    });
-
-    expect(overlap).not.toBeNull();
-    expect(overlap).toBeLessThanOrEqual(0);
+    // then the dialog fits the short landscape viewport — its CTA must not
+    // end up below the fold where the arc nav sits
+    const box = await dialog.boundingBox();
+    const viewport = page.viewportSize();
+    expect(box).not.toBeNull();
+    expect(box?.y ?? -1).toBeGreaterThanOrEqual(0);
+    expect((box?.y ?? 0) + (box?.height ?? 0)).toBeLessThanOrEqual(
+      viewport?.height ?? 0
+    );
   });
 });
