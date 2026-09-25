@@ -7643,9 +7643,9 @@
       </segment>
     </unit>
     <unit id="leaderboardHeaderSubtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Heute, letzte 7 Tage und letzte 30 Tage – wer sammelt die meisten XP? </source>
-        <target>Aujourd'hui, sur les 7 et les 30 derniers jours — qui fait le plus de répétitions ?</target>
+        <target> Aujourd'hui, les 7 derniers jours et les 30 derniers jours – qui cumule le plus de XP ? </target>
       </segment>
     </unit>
     <unit id="settingsHeaderTitle">
@@ -15336,93 +15336,93 @@
       </segment>
     </unit>
     <unit id="achievements.label.level">
-      <segment state="initial">
+      <segment state="translated">
         <source>Level <ph id="0" equiv="level" disp="level"/> erreicht</source>
-        <target>Level <ph id="0" equiv="level" disp="level"/> erreicht</target>
+        <target>Niveau <ph id="0" equiv="level" disp="level"/> atteint</target>
       </segment>
     </unit>
     <unit id="achievements.label.variety">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vielseitig: <ph id="0" equiv="categories" disp="categories"/> Kategorien</source>
-        <target>Vielseitig: <ph id="0" equiv="categories" disp="categories"/> Kategorien</target>
+        <target>Polyvalent : <ph id="0" equiv="categories" disp="categories"/> catégories</target>
       </segment>
     </unit>
     <unit id="achievements.group.level">
-      <segment state="initial">
+      <segment state="translated">
         <source>Level</source>
-        <target>Level</target>
+        <target>Niveau</target>
       </segment>
     </unit>
     <unit id="achievements.group.variety">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vielseitigkeit</source>
-        <target>Vielseitigkeit</target>
+        <target>Polyvalence</target>
       </segment>
     </unit>
     <unit id="xp.intro.badge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu</source>
-        <target>Neu</target>
+        <target>Nouveau</target>
       </segment>
     </unit>
     <unit id="xp.intro.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Punkte-System</source>
-        <target>Punkte-System</target>
+        <target>Système de points</target>
       </segment>
     </unit>
     <unit id="xp.intro.stepCount">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
-        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+        <target> Étape <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> sur <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
       </segment>
     </unit>
     <unit id="xp.intro.later">
-      <segment state="initial">
+      <segment state="translated">
         <source> Später </source>
-        <target> Später </target>
+        <target> Plus tard </target>
       </segment>
     </unit>
     <unit id="xp.intro.back">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück</source>
-        <target>Zurück</target>
+        <target>Retour</target>
       </segment>
     </unit>
     <unit id="xp.intro.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zur Bestenliste</source>
-        <target>Zur Bestenliste</target>
+        <target>Voir le classement</target>
       </segment>
     </unit>
     <unit id="xp.intro.next">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiter</source>
-        <target>Weiter</target>
+        <target>Suivant</target>
       </segment>
     </unit>
     <unit id="xp.intro.step1.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Jede Übung bringt Punkte</source>
-        <target>Jede Übung bringt Punkte</target>
+        <target>Chaque exercice rapporte des points</target>
       </segment>
     </unit>
     <unit id="xp.intro.step1.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Für jede Wiederholung, Minute oder jeden Kilometer bekommst du XP — ein Liegestütz 1 XP, ein Klimmzug 3 XP, eine Minute Plank 8 XP, ein Kilometer Laufen 60 XP. Alle bisherigen Einträge zählen mit.</source>
-        <target>Für jede Wiederholung, Minute oder jeden Kilometer bekommst du XP — ein Liegestütz 1 XP, ein Klimmzug 3 XP, eine Minute Plank 8 XP, ein Kilometer Laufen 60 XP. Alle bisherigen Einträge zählen mit.</target>
+        <target>Tu gagnes des XP pour chaque répétition, minute ou kilomètre — une pompe rapporte 1 XP, une traction 3 XP, une minute de gainage 8 XP, un kilomètre de course 60 XP. Toutes tes séances précédentes comptent aussi.</target>
       </segment>
     </unit>
     <unit id="xp.intro.step2.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Level und Abzeichen</source>
-        <target>Level und Abzeichen</target>
+        <target>Niveaux et badges</target>
       </segment>
     </unit>
     <unit id="xp.intro.step2.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mit deinen XP steigst du im Level auf. Level 5, 10, 20 und höher bringen eigene Abzeichen, dazu gibt es welche für Abwechslung über mehrere Übungskategorien.</source>
-        <target>Mit deinen XP steigst du im Level auf. Level 5, 10, 20 und höher bringen eigene Abzeichen, dazu gibt es welche für Abwechslung über mehrere Übungskategorien.</target>
+        <target>Tes XP te font monter de niveau. Les niveaux 5, 10, 20 et plus débloquent leurs propres badges, et il y en a aussi pour la polyvalence sur plusieurs catégories d'exercices.</target>
       </segment>
     </unit>
     <unit id="xp.intro.step3.title">
