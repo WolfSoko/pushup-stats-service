@@ -113,6 +113,14 @@
         "cwd": "{workspaceRoot}"
       }
     },
+    "generate-architecture-diagrams": {
+      "executor": "nx:run-commands",
+      "cache": false,
+      "options": {
+        "command": "node tools/src/generate-architecture-diagrams.mjs",
+        "cwd": "{workspaceRoot}"
+      }
+    },
     "submit-indexnow": {
       "executor": "nx:run-commands",
       "cache": false,

@@ -1,0 +1,1253 @@
+{
+  "projects": [
+    {
+      "name": "auth",
+      "type": "lib",
+      "root": "libs/auth",
+      "tags": ["scope:auth"]
+    },
+    {
+      "name": "auto-count",
+      "type": "lib",
+      "root": "libs/auto-count",
+      "tags": ["scope:auto-count"]
+    },
+    {
+      "name": "cloud-functions",
+      "type": "app",
+      "root": "data-store/functions",
+      "tags": ["npm:private", "scope:cloud-functions"]
+    },
+    {
+      "name": "data-store",
+      "type": "app",
+      "root": "data-store",
+      "tags": ["scope:data-store"]
+    },
+    {
+      "name": "pus-motivation",
+      "type": "lib",
+      "root": "libs/motivation",
+      "tags": ["scope:motivation"]
+    },
+    {
+      "name": "pus-push",
+      "type": "lib",
+      "root": "libs/push",
+      "tags": ["scope:push"]
+    },
+    {
+      "name": "pus-reminders",
+      "type": "lib",
+      "root": "libs/reminders",
+      "tags": ["scope:reminders"]
+    },
+    {
+      "name": "pus-ui",
+      "type": "lib",
+      "root": "libs/ui",
+      "tags": ["scope:ui"]
+    },
+    {
+      "name": "stats-ads",
+      "type": "lib",
+      "root": "libs/ads",
+      "tags": ["scope:ads"]
+    },
+    {
+      "name": "stats-data-access",
+      "type": "lib",
+      "root": "libs/data-access",
+      "tags": ["scope:data-access"]
+    },
+    {
+      "name": "stats-data-access-state",
+      "type": "lib",
+      "root": "libs/data-access-state",
+      "tags": ["scope:data-access-state"]
+    },
+    {
+      "name": "stats-date",
+      "type": "lib",
+      "root": "libs/stats-date",
+      "tags": ["scope:date"]
+    },
+    {
+      "name": "stats-models",
+      "type": "lib",
+      "root": "libs/stats",
+      "tags": ["npm:private", "scope:models"]
+    },
+    {
+      "name": "stats-quick-add",
+      "type": "lib",
+      "root": "libs/quick-add",
+      "tags": ["scope:quick-add"]
+    },
+    {
+      "name": "sw-push",
+      "type": "app",
+      "root": "libs/sw-push",
+      "tags": ["scope:sw-push"]
+    },
+    {
+      "name": "testing",
+      "type": "lib",
+      "root": "libs/testing",
+      "tags": ["scope:testing"]
+    },
+    {
+      "name": "tools",
+      "type": "lib",
+      "root": "tools",
+      "tags": ["scope:tools"]
+    },
+    {
+      "name": "web",
+      "type": "app",
+      "root": "web",
+      "tags": ["npm:private", "scope:app"]
+    },
+    {
+      "name": "web-e2e-emulator",
+      "type": "app",
+      "root": "web/web-e2e-emulator",
+      "tags": ["scope:e2e"]
+    }
+  ],
+  "projectEdges": [
+    {
+      "source": "auth",
+      "target": "pus-ui",
+      "type": "static"
+    },
+    {
+      "source": "auth",
+      "target": "stats-models",
+      "type": "static"
+    },
+    {
+      "source": "auth",
+      "target": "testing",
+      "type": "static"
+    },
+    {
+      "source": "cloud-functions",
+      "target": "stats-models",
+      "type": "static"
+    },
+    {
+      "source": "data-store",
+      "target": "cloud-functions",
+      "type": "implicit"
+    },
+    {
+      "source": "pus-motivation",
+      "target": "stats-models",
+      "type": "static"
+    },
+    {
+      "source": "pus-push",
+      "target": "stats-data-access",
+      "type": "static"
+    },
+    {
+      "source": "pus-push",
+      "target": "sw-push",
+      "type": "implicit"
+    },
+    {
+      "source": "pus-reminders",
+      "target": "pus-motivation",
+      "type": "static"
+    },
+    {
+      "source": "pus-reminders",
+      "target": "pus-push",
+      "type": "static"
+    },
+    {
+      "source": "pus-reminders",
+      "target": "stats-data-access",
+      "type": "static"
+    },
+    {
+      "source": "pus-reminders",
+      "target": "stats-models",
+      "type": "static"
+    },
+    {
+      "source": "stats-data-access",
+      "target": "stats-models",
+      "type": "static"
+    },
+    {
+      "source": "stats-data-access-state",
+      "target": "pus-ui",
+      "type": "static"
+    },
+    {
+      "source": "stats-data-access-state",
+      "target": "stats-data-access",
+      "type": "static"
+    },
+    {
+      "source": "stats-data-access-state",
+      "target": "stats-models",
+      "type": "static"
+    },
+    {
+      "source": "stats-quick-add",
+      "target": "pus-ui",
+      "type": "static"
+    },
+    {
+      "source": "stats-quick-add",
+      "target": "testing",
+      "type": "static"
+    },
+    {
+      "source": "sw-push",
+      "target": "stats-models",
+      "type": "implicit"
+    },
+    {
+      "source": "testing",
+      "target": "stats-data-access",
+      "type": "static"
+    },
+    {
+      "source": "testing",
+      "target": "stats-models",
+      "type": "static"
+    },
+    {
+      "source": "tools",
+      "target": "web",
+      "type": "dynamic"
+    },
+    {
+      "source": "web",
+      "target": "auth",
+      "type": "static"
+    },
+    {
+      "source": "web",
+      "target": "auto-count",
+      "type": "static"
+    },
+    {
+      "source": "web",
+      "target": "data-store",
+      "type": "implicit"
+    },
+    {
+      "source": "web",
+      "target": "pus-motivation",
+      "type": "static"
+    },
+    {
+      "source": "web",
+      "target": "pus-push",
+      "type": "static"
+    },
+    {
+      "source": "web",
+      "target": "pus-reminders",
+      "type": "static"
+    },
+    {
+      "source": "web",
+      "target": "pus-ui",
+      "type": "static"
+    },
+    {
+      "source": "web",
+      "target": "stats-ads",
+      "type": "static"
+    },
+    {
+      "source": "web",
+      "target": "stats-data-access",
+      "type": "static"
+    },
+    {
+      "source": "web",
+      "target": "stats-data-access-state",
+      "type": "static"
+    },
+    {
+      "source": "web",
+      "target": "stats-date",
+      "type": "static"
+    },
+    {
+      "source": "web",
+      "target": "stats-models",
+      "type": "static"
+    },
+    {
+      "source": "web",
+      "target": "stats-quick-add",
+      "type": "static"
+    },
+    {
+      "source": "web",
+      "target": "sw-push",
+      "type": "implicit"
+    },
+    {
+      "source": "web",
+      "target": "testing",
+      "type": "static"
+    },
+    {
+      "source": "web-e2e-emulator",
+      "target": "data-store",
+      "type": "implicit"
+    },
+    {
+      "source": "web-e2e-emulator",
+      "target": "web",
+      "type": "implicit"
+    }
+  ],
+  "projectCycles": [],
+  "projectCoupling": {
+    "auth": {
+      "afferent": 1,
+      "efferent": 3,
+      "instability": 0.75
+    },
+    "auto-count": {
+      "afferent": 1,
+      "efferent": 0,
+      "instability": 0
+    },
+    "cloud-functions": {
+      "afferent": 0,
+      "efferent": 1,
+      "instability": 1
+    },
+    "pus-motivation": {
+      "afferent": 2,
+      "efferent": 1,
+      "instability": 0.33
+    },
+    "pus-push": {
+      "afferent": 2,
+      "efferent": 1,
+      "instability": 0.33
+    },
+    "pus-reminders": {
+      "afferent": 1,
+      "efferent": 4,
+      "instability": 0.8
+    },
+    "pus-ui": {
+      "afferent": 4,
+      "efferent": 0,
+      "instability": 0
+    },
+    "stats-ads": {
+      "afferent": 1,
+      "efferent": 0,
+      "instability": 0
+    },
+    "stats-data-access": {
+      "afferent": 5,
+      "efferent": 1,
+      "instability": 0.17
+    },
+    "stats-data-access-state": {
+      "afferent": 1,
+      "efferent": 3,
+      "instability": 0.75
+    },
+    "stats-date": {
+      "afferent": 1,
+      "efferent": 0,
+      "instability": 0
+    },
+    "stats-models": {
+      "afferent": 8,
+      "efferent": 0,
+      "instability": 0
+    },
+    "stats-quick-add": {
+      "afferent": 1,
+      "efferent": 2,
+      "instability": 0.67
+    },
+    "testing": {
+      "afferent": 3,
+      "efferent": 2,
+      "instability": 0.4
+    },
+    "web": {
+      "afferent": 0,
+      "efferent": 13,
+      "instability": 1
+    }
+  },
+  "projectSizes": {
+    "auth": {
+      "files": 25,
+      "loc": 1956,
+      "oversized": 1
+    },
+    "auto-count": {
+      "files": 20,
+      "loc": 1620,
+      "oversized": 0
+    },
+    "cloud-functions": {
+      "files": 109,
+      "loc": 12391,
+      "oversized": 9
+    },
+    "pus-motivation": {
+      "files": 3,
+      "loc": 296,
+      "oversized": 0
+    },
+    "pus-push": {
+      "files": 5,
+      "loc": 516,
+      "oversized": 1
+    },
+    "pus-reminders": {
+      "files": 6,
+      "loc": 418,
+      "oversized": 0
+    },
+    "pus-ui": {
+      "files": 5,
+      "loc": 377,
+      "oversized": 0
+    },
+    "stats-ads": {
+      "files": 6,
+      "loc": 330,
+      "oversized": 0
+    },
+    "stats-data-access": {
+      "files": 18,
+      "loc": 1809,
+      "oversized": 3
+    },
+    "stats-data-access-state": {
+      "files": 3,
+      "loc": 335,
+      "oversized": 0
+    },
+    "stats-date": {
+      "files": 11,
+      "loc": 183,
+      "oversized": 0
+    },
+    "stats-models": {
+      "files": 38,
+      "loc": 6945,
+      "oversized": 8
+    },
+    "stats-quick-add": {
+      "files": 5,
+      "loc": 302,
+      "oversized": 0
+    },
+    "sw-push": {
+      "files": 3,
+      "loc": 434,
+      "oversized": 0
+    },
+    "web": {
+      "files": 401,
+      "loc": 48623,
+      "oversized": 33
+    }
+  },
+  "featureEdges": [
+    {
+      "source": "achievements",
+      "target": "core",
+      "count": 3
+    },
+    {
+      "source": "achievements",
+      "target": "public-profile",
+      "count": 2
+    },
+    {
+      "source": "admin",
+      "target": "achievements",
+      "count": 1
+    },
+    {
+      "source": "admin",
+      "target": "core",
+      "count": 6
+    },
+    {
+      "source": "admin",
+      "target": "public-profile",
+      "count": 1
+    },
+    {
+      "source": "admin",
+      "target": "stats",
+      "count": 2
+    },
+    {
+      "source": "ai",
+      "target": "core",
+      "count": 2
+    },
+    {
+      "source": "ai",
+      "target": "stats",
+      "count": 1
+    },
+    {
+      "source": "app-shell",
+      "target": "achievements",
+      "count": 2
+    },
+    {
+      "source": "app-shell",
+      "target": "admin",
+      "count": 1
+    },
+    {
+      "source": "app-shell",
+      "target": "ai",
+      "count": 2
+    },
+    {
+      "source": "app-shell",
+      "target": "auto-count",
+      "count": 1
+    },
+    {
+      "source": "app-shell",
+      "target": "blog",
+      "count": 2
+    },
+    {
+      "source": "app-shell",
+      "target": "core",
+      "count": 3
+    },
+    {
+      "source": "app-shell",
+      "target": "friends",
+      "count": 1
+    },
+    {
+      "source": "app-shell",
+      "target": "goals",
+      "count": 1
+    },
+    {
+      "source": "app-shell",
+      "target": "leaderboard",
+      "count": 1
+    },
+    {
+      "source": "app-shell",
+      "target": "marketing",
+      "count": 1
+    },
+    {
+      "source": "app-shell",
+      "target": "notifications",
+      "count": 2
+    },
+    {
+      "source": "app-shell",
+      "target": "public-profile",
+      "count": 1
+    },
+    {
+      "source": "app-shell",
+      "target": "reminders",
+      "count": 1
+    },
+    {
+      "source": "app-shell",
+      "target": "settings",
+      "count": 1
+    },
+    {
+      "source": "app-shell",
+      "target": "stats",
+      "count": 1
+    },
+    {
+      "source": "app-shell",
+      "target": "training-plans",
+      "count": 1
+    },
+    {
+      "source": "app-shell",
+      "target": "wiki",
+      "count": 1
+    },
+    {
+      "source": "app-shell",
+      "target": "workouts",
+      "count": 1
+    },
+    {
+      "source": "auto-count",
+      "target": "core",
+      "count": 3
+    },
+    {
+      "source": "auto-count",
+      "target": "stats",
+      "count": 2
+    },
+    {
+      "source": "blog",
+      "target": "core",
+      "count": 2
+    },
+    {
+      "source": "core",
+      "target": "admin",
+      "count": 3
+    },
+    {
+      "source": "core",
+      "target": "auto-count",
+      "count": 2
+    },
+    {
+      "source": "core",
+      "target": "blog",
+      "count": 1
+    },
+    {
+      "source": "core",
+      "target": "friends",
+      "count": 2
+    },
+    {
+      "source": "core",
+      "target": "notifications",
+      "count": 1
+    },
+    {
+      "source": "core",
+      "target": "stats",
+      "count": 7
+    },
+    {
+      "source": "core",
+      "target": "training-plans",
+      "count": 3
+    },
+    {
+      "source": "core",
+      "target": "workouts",
+      "count": 2
+    },
+    {
+      "source": "friends",
+      "target": "admin",
+      "count": 2
+    },
+    {
+      "source": "friends",
+      "target": "core",
+      "count": 3
+    },
+    {
+      "source": "friends",
+      "target": "stats",
+      "count": 3
+    },
+    {
+      "source": "goals",
+      "target": "core",
+      "count": 1
+    },
+    {
+      "source": "goals",
+      "target": "stats",
+      "count": 1
+    },
+    {
+      "source": "leaderboard",
+      "target": "core",
+      "count": 1
+    },
+    {
+      "source": "leaderboard",
+      "target": "stats",
+      "count": 1
+    },
+    {
+      "source": "marketing",
+      "target": "ai",
+      "count": 1
+    },
+    {
+      "source": "marketing",
+      "target": "core",
+      "count": 1
+    },
+    {
+      "source": "notifications",
+      "target": "core",
+      "count": 3
+    },
+    {
+      "source": "public-profile",
+      "target": "core",
+      "count": 2
+    },
+    {
+      "source": "public-profile",
+      "target": "friends",
+      "count": 1
+    },
+    {
+      "source": "public-profile",
+      "target": "stats",
+      "count": 1
+    },
+    {
+      "source": "public-profile",
+      "target": "workouts",
+      "count": 1
+    },
+    {
+      "source": "reminders",
+      "target": "core",
+      "count": 1
+    },
+    {
+      "source": "reminders",
+      "target": "notifications",
+      "count": 1
+    },
+    {
+      "source": "settings",
+      "target": "auto-count",
+      "count": 1
+    },
+    {
+      "source": "settings",
+      "target": "core",
+      "count": 2
+    },
+    {
+      "source": "settings",
+      "target": "stats",
+      "count": 4
+    },
+    {
+      "source": "stats",
+      "target": "core",
+      "count": 14
+    },
+    {
+      "source": "stats",
+      "target": "friends",
+      "count": 1
+    },
+    {
+      "source": "stats",
+      "target": "notifications",
+      "count": 2
+    },
+    {
+      "source": "stats",
+      "target": "training-plans",
+      "count": 4
+    },
+    {
+      "source": "training-plans",
+      "target": "auto-count",
+      "count": 1
+    },
+    {
+      "source": "training-plans",
+      "target": "core",
+      "count": 12
+    },
+    {
+      "source": "training-plans",
+      "target": "stats",
+      "count": 3
+    },
+    {
+      "source": "wiki",
+      "target": "core",
+      "count": 3
+    },
+    {
+      "source": "wiki",
+      "target": "workouts",
+      "count": 2
+    },
+    {
+      "source": "workouts",
+      "target": "admin",
+      "count": 1
+    },
+    {
+      "source": "workouts",
+      "target": "core",
+      "count": 3
+    },
+    {
+      "source": "workouts",
+      "target": "friends",
+      "count": 1
+    },
+    {
+      "source": "workouts",
+      "target": "stats",
+      "count": 3
+    },
+    {
+      "source": "workouts",
+      "target": "training-plans",
+      "count": 2
+    }
+  ],
+  "featureCycles": [
+    [
+      "achievements",
+      "admin",
+      "auto-count",
+      "blog",
+      "core",
+      "friends",
+      "notifications",
+      "public-profile",
+      "stats",
+      "training-plans",
+      "workouts"
+    ]
+  ],
+  "featureCoupling": {
+    "achievements": {
+      "afferent": 2,
+      "efferent": 2,
+      "instability": 0.5
+    },
+    "admin": {
+      "afferent": 4,
+      "efferent": 4,
+      "instability": 0.5
+    },
+    "ai": {
+      "afferent": 2,
+      "efferent": 2,
+      "instability": 0.5
+    },
+    "app-shell": {
+      "afferent": 0,
+      "efferent": 18,
+      "instability": 1
+    },
+    "auto-count": {
+      "afferent": 4,
+      "efferent": 2,
+      "instability": 0.33
+    },
+    "blog": {
+      "afferent": 2,
+      "efferent": 1,
+      "instability": 0.33
+    },
+    "core": {
+      "afferent": 18,
+      "efferent": 8,
+      "instability": 0.31
+    },
+    "friends": {
+      "afferent": 5,
+      "efferent": 3,
+      "instability": 0.38
+    },
+    "goals": {
+      "afferent": 1,
+      "efferent": 2,
+      "instability": 0.67
+    },
+    "leaderboard": {
+      "afferent": 1,
+      "efferent": 2,
+      "instability": 0.67
+    },
+    "marketing": {
+      "afferent": 1,
+      "efferent": 2,
+      "instability": 0.67
+    },
+    "notifications": {
+      "afferent": 4,
+      "efferent": 1,
+      "instability": 0.2
+    },
+    "public-profile": {
+      "afferent": 3,
+      "efferent": 4,
+      "instability": 0.57
+    },
+    "reminders": {
+      "afferent": 1,
+      "efferent": 2,
+      "instability": 0.67
+    },
+    "settings": {
+      "afferent": 1,
+      "efferent": 3,
+      "instability": 0.75
+    },
+    "stats": {
+      "afferent": 12,
+      "efferent": 4,
+      "instability": 0.25
+    },
+    "training-plans": {
+      "afferent": 4,
+      "efferent": 3,
+      "instability": 0.43
+    },
+    "wiki": {
+      "afferent": 1,
+      "efferent": 2,
+      "instability": 0.67
+    },
+    "workouts": {
+      "afferent": 4,
+      "efferent": 5,
+      "instability": 0.56
+    }
+  },
+  "featureSizes": {
+    "achievements": {
+      "files": 9,
+      "loc": 826,
+      "oversized": 0
+    },
+    "admin": {
+      "files": 25,
+      "loc": 3274,
+      "oversized": 2
+    },
+    "ai": {
+      "files": 9,
+      "loc": 451,
+      "oversized": 0
+    },
+    "app-shell": {
+      "files": 7,
+      "loc": 1297,
+      "oversized": 2
+    },
+    "auto-count": {
+      "files": 22,
+      "loc": 2298,
+      "oversized": 2
+    },
+    "blog": {
+      "files": 6,
+      "loc": 641,
+      "oversized": 0
+    },
+    "core": {
+      "files": 68,
+      "loc": 7363,
+      "oversized": 5
+    },
+    "friends": {
+      "files": 25,
+      "loc": 3107,
+      "oversized": 2
+    },
+    "goals": {
+      "files": 5,
+      "loc": 552,
+      "oversized": 0
+    },
+    "leaderboard": {
+      "files": 1,
+      "loc": 233,
+      "oversized": 0
+    },
+    "marketing": {
+      "files": 9,
+      "loc": 763,
+      "oversized": 0
+    },
+    "notifications": {
+      "files": 11,
+      "loc": 1147,
+      "oversized": 0
+    },
+    "public-profile": {
+      "files": 10,
+      "loc": 1265,
+      "oversized": 0
+    },
+    "reminders": {
+      "files": 11,
+      "loc": 1319,
+      "oversized": 1
+    },
+    "settings": {
+      "files": 4,
+      "loc": 206,
+      "oversized": 0
+    },
+    "stats": {
+      "files": 91,
+      "loc": 13560,
+      "oversized": 12
+    },
+    "training-plans": {
+      "files": 44,
+      "loc": 5443,
+      "oversized": 3
+    },
+    "wiki": {
+      "files": 5,
+      "loc": 1257,
+      "oversized": 2
+    },
+    "workouts": {
+      "files": 22,
+      "loc": 2642,
+      "oversized": 0
+    }
+  },
+  "oversizedFiles": [
+    {
+      "path": "libs/stats/src/lib/models/pushup-type.models.ts",
+      "loc": 910
+    },
+    {
+      "path": "web/src/app/stats/shell/stats-dashboard.component.ts",
+      "loc": 547
+    },
+    {
+      "path": "libs/stats/src/lib/models/exercise.models.ts",
+      "loc": 534
+    },
+    {
+      "path": "data-store/functions/src/user-stats-delta.ts",
+      "loc": 503
+    },
+    {
+      "path": "web/src/app/stats/analysis.store.ts",
+      "loc": 469
+    },
+    {
+      "path": "web/src/app/app.ts",
+      "loc": 466
+    },
+    {
+      "path": "libs/stats/src/lib/models/exercise-wiki.models.ts",
+      "loc": 444
+    },
+    {
+      "path": "web/src/app/app.routes.ts",
+      "loc": 436
+    },
+    {
+      "path": "libs/data-access/src/lib/api/user-training-plan-api.service.ts",
+      "loc": 407
+    },
+    {
+      "path": "web/src/app/stats/components/filter-bar/filter-bar.component.ts",
+      "loc": 402
+    },
+    {
+      "path": "web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts",
+      "loc": 398
+    },
+    {
+      "path": "web/src/app/stats/shell/analysis-page.component.ts",
+      "loc": 395
+    },
+    {
+      "path": "web/src/app/core/goal-reached-notification.service.ts",
+      "loc": 379
+    },
+    {
+      "path": "web/src/app/core/page-header/page-header.component.ts",
+      "loc": 374
+    },
+    {
+      "path": "data-store/functions/src/functions-push.ts",
+      "loc": 369
+    },
+    {
+      "path": "libs/stats/src/lib/models/user-config.models.ts",
+      "loc": 356
+    },
+    {
+      "path": "data-store/functions/src/functions-android-test.ts",
+      "loc": 355
+    },
+    {
+      "path": "web/src/app/wiki/pushup-types-page.component.ts",
+      "loc": 350
+    },
+    {
+      "path": "web/src/app/training-plans/training-plan.store.ts",
+      "loc": 346
+    },
+    {
+      "path": "libs/push/src/lib/push-subscription.store.ts",
+      "loc": 345
+    },
+    {
+      "path": "web/src/app/wiki/pushup-type-detail.component.ts",
+      "loc": 345
+    },
+    {
+      "path": "data-store/functions/src/profile/og-render.ts",
+      "loc": 336
+    },
+    {
+      "path": "web/src/app/stats/dashboard.store.ts",
+      "loc": 333
+    },
+    {
+      "path": "data-store/functions/src/functions-public-profile.ts",
+      "loc": 329
+    },
+    {
+      "path": "web/src/app/stats/entries.store.ts",
+      "loc": 328
+    },
+    {
+      "path": "web/src/app/core/nav/arc-nav.component.ts",
+      "loc": 325
+    },
+    {
+      "path": "web/src/app/training-plans/training-plans-page.component.ts",
+      "loc": 320
+    },
+    {
+      "path": "web/src/server.ts",
+      "loc": 320
+    },
+    {
+      "path": "libs/data-access/src/lib/api/exercise-firestore.service.ts",
+      "loc": 316
+    },
+    {
+      "path": "web/src/app/auto-count/auto-count-dialog.component.ts",
+      "loc": 315
+    },
+    {
+      "path": "web/src/app/auto-count/exercise-timer-dialog.component.ts",
+      "loc": 309
+    },
+    {
+      "path": "web/src/app/admin/network/friendship-graph.component.ts",
+      "loc": 308
+    },
+    {
+      "path": "web/src/app/admin/migrations/migration-card.component.ts",
+      "loc": 304
+    },
+    {
+      "path": "web/src/app/stats/shell/entries-page.component.ts",
+      "loc": 303
+    },
+    {
+      "path": "libs/stats/src/lib/models/training-plan.models.ts",
+      "loc": 301
+    },
+    {
+      "path": "data-store/functions/src/admin/user-entries.ts",
+      "loc": 298
+    },
+    {
+      "path": "libs/stats/src/lib/models/training-plan-exercise.models.ts",
+      "loc": 295
+    },
+    {
+      "path": "data-store/functions/src/exercise-leaderboard/logic.ts",
+      "loc": 293
+    },
+    {
+      "path": "web/src/app/stats/components/stats-chart/stats-chart.component.ts",
+      "loc": 290
+    },
+    {
+      "path": "web/src/app/core/app-data.facade.ts",
+      "loc": 289
+    },
+    {
+      "path": "web/src/app/stats/components/stats-chart/chart-options.ts",
+      "loc": 287
+    },
+    {
+      "path": "libs/stats/src/lib/models/training-plan-scaling.ts",
+      "loc": 281
+    },
+    {
+      "path": "web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.state.ts",
+      "loc": 281
+    },
+    {
+      "path": "web/src/app/friends/friends-board.component.ts",
+      "loc": 279
+    },
+    {
+      "path": "web/src/app/training-plans/training-plan-detail.helpers.ts",
+      "loc": 276
+    },
+    {
+      "path": "libs/stats/src/lib/models/reminder-i18n.models.ts",
+      "loc": 274
+    },
+    {
+      "path": "web/src/app/core/seo.service.ts",
+      "loc": 270
+    },
+    {
+      "path": "libs/data-access/src/lib/api/leaderboard.service.ts",
+      "loc": 267
+    },
+    {
+      "path": "web/src/app/stats/components/stats-table/stats-table.component.ts",
+      "loc": 262
+    },
+    {
+      "path": "data-store/functions/src/leaderboard/logic.ts",
+      "loc": 257
+    },
+    {
+      "path": "data-store/functions/src/functions-challenges.ts",
+      "loc": 254
+    },
+    {
+      "path": "libs/auth/src/lib/ui/register/register.component.ts",
+      "loc": 254
+    },
+    {
+      "path": "web/src/app/reminders/shell/reminders-page.component.ts",
+      "loc": 254
+    },
+    {
+      "path": "web/src/app/friends/friends-page.component.ts",
+      "loc": 251
+    },
+    {
+      "path": "web/src/server-locale-redirect.ts",
+      "loc": 251
+    }
+  ]
+}

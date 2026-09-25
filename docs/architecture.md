@@ -4,6 +4,8 @@ Detailed architecture reference for the Pushup Stats Service. CLAUDE.md keeps th
 
 ## Library Dependency Graph
 
+> Generated, always-current diagrams (Nx projects, feature folders in `web/src/app`, coupling, cycles, files over 250 LOC) live in [`architecture/diagrams.md`](architecture/diagrams.md). The weekly [architecture-review routine](../.claude/routines/architecture-review.md) refreshes them and files modularity issues; regenerate locally with `pnpm nx run tools:generate-architecture-diagrams`. The hand-drawn graph below documents intent; the generated one shows reality.
+
 ```
 @pu-stats/models                (pure types, zero dependencies)
 @pu-stats/date                  (date/time helpers, standalone leaf — zero dependencies)
