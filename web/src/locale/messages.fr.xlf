@@ -15434,7 +15434,7 @@
     <unit id="xp.intro.step3.body">
       <segment state="translated">
         <source>Nach jedem Eintrag siehst du deine gesammelten XP. In der Bestenliste und unter Freunden vergleichst du jetzt auch XP über alle Übungen hinweg.</source>
-        <target>Après chaque séance, tu vois les XP que tu as gagnés. Dans le classement et entre amis, tu compares maintenant aussi les XP toutes catégories confondues.</target>
+        <target>Après chaque entrée, tu vois les XP que tu as gagnés. Dans le classement et entre amis, tu compares maintenant aussi les XP toutes catégories confondues.</target>
       </segment>
     </unit>
     <unit id="admin.xpRates.title">
@@ -15447,7 +15447,7 @@
       <segment state="translated">
         <source> Wie viele XP eine Übung pro Wiederholung, Minute oder Kilometer bringt. Änderungen gelten nur für Einträge, die ab jetzt gespeichert werden — bereits verdiente XP bleiben unverändert.
 </source>
-        <target>Combien d'XP un exercice rapporte par répétition, minute ou kilomètre. Les modifications ne s'appliquent qu'aux séances enregistrées à partir de maintenant — les XP déjà gagnés restent inchangés.</target>
+        <target>Combien d'XP un exercice rapporte par répétition, minute ou kilomètre. Les modifications ne s'appliquent qu'aux entrées enregistrées à partir de maintenant — les XP déjà gagnés restent inchangés.</target>
       </segment>
     </unit>
     <unit id="admin.xpRates.default">
@@ -15489,13 +15489,13 @@
     <unit id="admin.migrations.xpBackfill.title">
       <segment state="translated">
         <source>XP für bisherige Einträge nachbuchen</source>
-        <target>Créditer les XP des séances passées</target>
+        <target>Créditer les XP des entrées passées</target>
       </segment>
     </unit>
     <unit id="admin.migrations.xpBackfill.description">
       <segment state="translated">
         <source>Bucht XP für alle Einträge, die vor dem Punktesystem gespeichert wurden, zu den aktuellen Wertigkeiten, berechnet Level und Level-Abzeichen neu und baut die XP-Bestenliste auf. Bis zu 200 Nutzer pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Bereits gebuchte Einträge bleiben unverändert. Erst den Probelauf ausführen.</source>
-        <target>Crédite les XP pour toutes les séances enregistrées avant le système de points, selon les valeurs actuelles, recalcule le niveau et les badges de niveau, et reconstruit le classement XP. Jusqu'à 200 utilisateurs par exécution — répéter jusqu'à ce que « remaining » soit à 0. Les séances déjà créditées restent inchangées. Exécuter d'abord l'essai.</target>
+        <target>Crédite les XP pour toutes les entrées enregistrées avant le système de points, selon les valeurs actuelles, recalcule le niveau et les badges de niveau, et reconstruit le classement XP. Jusqu'à 200 utilisateurs par exécution — répéter jusqu'à ce que « remaining » soit à 0. Les entrées déjà créditées restent inchangées. Exécuter d'abord l'essai.</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.xp.title">
@@ -15507,7 +15507,7 @@
     <unit id="admin.uiFeatures.xp.description">
       <segment state="translated">
         <source> Öffnet den Dialog, der nach dem Speichern eines Eintrags die verdienten XP zeigt — mit Beispielwerten, wahlweise mit Level-Up. </source>
-        <target>Ouvre la boîte de dialogue qui affiche les XP gagnés après l'enregistrement d'une séance — avec des valeurs d'exemple, éventuellement avec passage de niveau.</target>
+        <target>Ouvre la boîte de dialogue qui affiche les XP gagnés après l'enregistrement d'une entrée — avec des valeurs d'exemple, éventuellement avec passage de niveau.</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.xp.preview">
@@ -15651,7 +15651,7 @@
     <unit id="landing.xp.desc">
       <segment state="translated">
         <source> Jede Übung bringt Punkte: ein Liegestütz 1 XP, ein Klimmzug 3 XP, eine Minute Plank 8 XP, ein Kilometer Laufen 60 XP. Nach jedem Eintrag siehst du, was du gesammelt hast — und alle bisherigen Einträge zählen mit. </source>
-        <target>Chaque exercice rapporte des points : une pompe 1 XP, une traction 3 XP, une minute de gainage 8 XP, un kilomètre de course 60 XP. Après chaque séance, tu vois ce que tu as gagné — et toutes tes séances précédentes comptent aussi.</target>
+        <target>Chaque exercice rapporte des points : une pompe 1 XP, une traction 3 XP, une minute de gainage 8 XP, un kilomètre de course 60 XP. Après chaque entrée, tu vois ce que tu as gagné — et toutes tes entrées précédentes comptent aussi.</target>
       </segment>
     </unit>
     <unit id="landing.xp.chip.levels">
