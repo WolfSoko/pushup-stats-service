@@ -136,21 +136,22 @@ Detailed reference material lives in [`docs/`](docs/). **Read the relevant doc b
 
 ### Architecture & deployment
 
-| Area                                                                    | File                                                                                                                           |
-| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Library deps, ports/adapters, state mgmt, training plans + sessions     | [`docs/architecture.md`](docs/architecture.md)                                                                                 |
-| CI/CD, deploy gate, staging environment, Firestore rules                | [`docs/ci-cd.md`](docs/ci-cd.md)                                                                                               |
-| Cloud Functions overview + Admin Authorization                          | [`docs/cloud-functions.md`](docs/cloud-functions.md)                                                                           |
-| Translatable content workflow (blog & wiki)                             | [`docs/content-workflow.md`](docs/content-workflow.md)                                                                         |
-| Consent banner, ads gating, legal pages, SEO/sitemap                    | [`docs/consent-ads-seo.md`](docs/consent-ads-seo.md)                                                                           |
-| AG-UI / CopilotKit assistant, frontend tools, lazy setup                | [`docs/ai-assistant.md`](docs/ai-assistant.md)                                                                                 |
-| Kamera-Autozähler: Pose-Pipeline, Overlay-Koordinaten, Tuning, Feedback | [`docs/auto-count.md`](docs/auto-count.md)                                                                                     |
-| Firebase environments + deployment                                      | [`docs/Firebase_DEPLOYMENT.md`](docs/Firebase_DEPLOYMENT.md), [`docs/firebase-environments.md`](docs/firebase-environments.md) |
-| Sentry source maps, releases, `SENTRY_AUTH_TOKEN` setup                 | [`docs/observability/sentry.md`](docs/observability/sentry.md)                                                                 |
-| Play-Store-Text: Quelldateien, Publish-Script, Setup                    | [`docs/play-store-publishing.md`](docs/play-store-publishing.md), [`docs/playstore-listing.md`](docs/playstore-listing.md)     |
-| Android Closed-Test: Kandidaten-Scan, Invite-Popup, Tester-Rekrutierung | [`docs/android-test-program.md`](docs/android-test-program.md)                                                                 |
-| TWA-Wrapper: Bubblewrap-Regeneration, AGP/R8-Handarbeit, CI-Build       | [`docs/android-twa-wrapper.md`](docs/android-twa-wrapper.md)                                                                   |
-| graphify: Code-Knowledge-Graph für Agents (query/path/explain, Hooks)   | [`docs/graphify.md`](docs/graphify.md)                                                                                         |
+| Area                                                                    | File                                                                                                                                                   |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Library deps, ports/adapters, state mgmt, training plans + sessions     | [`docs/architecture.md`](docs/architecture.md)                                                                                                         |
+| Generated architecture diagrams + weekly modularity review routine      | [`docs/architecture/diagrams.md`](docs/architecture/diagrams.md), [`.claude/routines/architecture-review.md`](.claude/routines/architecture-review.md) |
+| CI/CD, deploy gate, staging environment, Firestore rules                | [`docs/ci-cd.md`](docs/ci-cd.md)                                                                                                                       |
+| Cloud Functions overview + Admin Authorization                          | [`docs/cloud-functions.md`](docs/cloud-functions.md)                                                                                                   |
+| Translatable content workflow (blog & wiki)                             | [`docs/content-workflow.md`](docs/content-workflow.md)                                                                                                 |
+| Consent banner, ads gating, legal pages, SEO/sitemap                    | [`docs/consent-ads-seo.md`](docs/consent-ads-seo.md)                                                                                                   |
+| AG-UI / CopilotKit assistant, frontend tools, lazy setup                | [`docs/ai-assistant.md`](docs/ai-assistant.md)                                                                                                         |
+| Kamera-Autozähler: Pose-Pipeline, Overlay-Koordinaten, Tuning, Feedback | [`docs/auto-count.md`](docs/auto-count.md)                                                                                                             |
+| Firebase environments + deployment                                      | [`docs/Firebase_DEPLOYMENT.md`](docs/Firebase_DEPLOYMENT.md), [`docs/firebase-environments.md`](docs/firebase-environments.md)                         |
+| Sentry source maps, releases, `SENTRY_AUTH_TOKEN` setup                 | [`docs/observability/sentry.md`](docs/observability/sentry.md)                                                                                         |
+| Play-Store-Text: Quelldateien, Publish-Script, Setup                    | [`docs/play-store-publishing.md`](docs/play-store-publishing.md), [`docs/playstore-listing.md`](docs/playstore-listing.md)                             |
+| Android Closed-Test: Kandidaten-Scan, Invite-Popup, Tester-Rekrutierung | [`docs/android-test-program.md`](docs/android-test-program.md)                                                                                         |
+| TWA-Wrapper: Bubblewrap-Regeneration, AGP/R8-Handarbeit, CI-Build       | [`docs/android-twa-wrapper.md`](docs/android-twa-wrapper.md)                                                                                           |
+| graphify: Code-Knowledge-Graph für Agents (query/path/explain, Hooks)   | [`docs/graphify.md`](docs/graphify.md)                                                                                                                 |
 
 ### Push notifications
 
