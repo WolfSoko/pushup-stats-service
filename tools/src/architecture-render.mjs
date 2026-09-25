@@ -84,7 +84,10 @@ function couplingTable(coupling, sizes) {
 function cycleList(cycles) {
   if (cycles.length === 0) return '_Keine Zyklen._';
   return cycles
-    .map((cycle) => `- ${cycle.map((n) => `\`${n}\``).join(' ↔ ')}`)
+    .map(
+      (cycle) =>
+        `- ${cycle.length} Module: ${cycle.map((n) => `\`${n}\``).join(', ')}`
+    )
     .join('\n');
 }
 
@@ -126,7 +129,9 @@ ${cycleList(metrics.projectCycles)}
 
 Jeder Knoten ist ein Ordner direkt unter \`web/src/app\` (\`${APP_SHELL}\` = Dateien direkt im
 Ordner). Eine Kante zählt die Prod-Dateien des Quell-Features, die per relativem Import
-in das Ziel-Feature greifen. Rot umrandet: Teil eines Import-Zyklus.
+in das Ziel-Feature greifen. Rot umrandet: Teil eines Import-Zyklus. Eine Zyklus-Gruppe
+ist eine stark zusammenhängende Komponente: Jedes Mitglied erreicht jedes andere über
+eine Kette von Kanten, nicht zwingend direkt.
 
 \`\`\`mermaid
 ${featureGraphMermaid(metrics)}

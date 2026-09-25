@@ -4,6 +4,7 @@
  * so every decision is testable.
  */
 import { posix } from 'node:path';
+import ts from 'typescript';
 
 export const MAX_PROD_LOC = 250;
 export const WEB_APP_ROOT = 'web/src/app';
@@ -11,8 +12,6 @@ export const APP_SHELL = 'app-shell';
 
 const NON_PROD_RE =
   /(\.spec\.ts|\.test\.ts|\.generated\.ts|\.catalog\.ts|-content\.ts|test-setup\.ts)$/;
-const IMPORT_RE = /(?:\bfrom\s*|\bimport\s*\(\s*|\bimport\s+)['"]([^'"]+)['"]/g;
-
 export function isProdSource(path) {
   return (
     path.endsWith('.ts') &&
@@ -76,11 +75,14 @@ function featureOfImport(resolved, features) {
 }
 
 export function relativeImports(content) {
-  const specifiers = new Set();
-  for (const match of content.matchAll(IMPORT_RE)) {
-    if (match[1].startsWith('.')) specifiers.add(match[1]);
-  }
-  return [...specifiers];
+  const { importedFiles } = ts.preProcessFile(content, true, true);
+  return [
+    ...new Set(
+      importedFiles
+        .map((file) => file.fileName)
+        .filter((spec) => spec.startsWith('.'))
+    ),
+  ];
 }
 
 /** Counts, per ordered feature pair, how many files of `source` import `target`. */

@@ -43,13 +43,7 @@ function loadGraph() {
 }
 
 function* walk(dir) {
-  let entries;
-  try {
-    entries = readdirSync(dir, { withFileTypes: true });
-  } catch {
-    return;
-  }
-  for (const entry of entries) {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const full = join(dir, entry.name);
     if (entry.isDirectory()) {
       if (!SKIP_DIRS.has(entry.name)) yield* walk(full);

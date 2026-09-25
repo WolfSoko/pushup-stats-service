@@ -104,7 +104,9 @@ _Keine Zyklen._
 
 Jeder Knoten ist ein Ordner direkt unter `web/src/app` (`app-shell` = Dateien direkt im
 Ordner). Eine Kante zählt die Prod-Dateien des Quell-Features, die per relativem Import
-in das Ziel-Feature greifen. Rot umrandet: Teil eines Import-Zyklus.
+in das Ziel-Feature greifen. Rot umrandet: Teil eines Import-Zyklus. Eine Zyklus-Gruppe
+ist eine stark zusammenhängende Komponente: Jedes Mitglied erreicht jedes andere über
+eine Kette von Kanten, nicht zwingend direkt.
 
 ```mermaid
 flowchart LR
@@ -227,7 +229,7 @@ flowchart LR
 
 ### Zyklen zwischen Feature-Bereichen
 
-- `achievements` ↔ `admin` ↔ `auto-count` ↔ `blog` ↔ `core` ↔ `friends` ↔ `notifications` ↔ `public-profile` ↔ `stats` ↔ `training-plans` ↔ `workouts`
+- 11 Module: `achievements`, `admin`, `auto-count`, `blog`, `core`, `friends`, `notifications`, `public-profile`, `stats`, `training-plans`, `workouts`
 
 ## 3. Prod-Dateien über 250 LOC
 

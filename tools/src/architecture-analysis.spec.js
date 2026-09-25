@@ -138,6 +138,25 @@ describe('architecture-analysis', () => {
     ]);
   });
 
+  it('should ignore imports inside comments and strings but keep re-exports and dynamic imports', () => {
+    // given
+    const content = [
+      "// import { X } from '../core/x';",
+      "/* import { Y } from '../friends/y'; */",
+      'const text = "import { Z } from \'../admin/z\'";',
+      "export * from './local';",
+      "const lazy = () => import('../stats/a');",
+    ].join('\n');
+
+    // when
+    const specifiers = run(
+      `analysis.relativeImports(${JSON.stringify(content)})`
+    );
+
+    // then
+    expect(specifiers).toEqual(['./local', '../stats/a']);
+  });
+
   it('should report each multi-member strongly connected component once', () => {
     // given
     const edges = [
@@ -213,7 +232,7 @@ describe('architecture-render', () => {
     expect(first).toContain('  app_shell --> stats');
     expect(first).toContain('  core -->|2| stats');
     expect(first).toContain('  class core,stats cyclic');
-    expect(first).toContain('- `core` ↔ `stats`');
+    expect(first).toContain('- 2 Module: `core`, `stats`');
     expect(first).toContain('| `libs/stats/src/big.ts` | 300 |');
   });
 

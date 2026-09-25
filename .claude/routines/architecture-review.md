@@ -28,6 +28,7 @@ yardstick.
    regenerated on the single long-lived branch `claude/architecture-diagrams`,
    merged into `main` once CI is green (skip when nothing changed).
 2. **Overview issue** — exactly one open issue labelled `architecture-review`
+   (the label is reserved for it; no other issue ever carries it)
    titled `Architektur-Übersicht (wöchentlich aktualisiert)`; its body is
    rewritten in place every run.
 3. **Improvement issues** — at most **3 new** issues per run, labelled
@@ -42,7 +43,7 @@ yardstick.
    git fetch origin
    git checkout -B claude/architecture-diagrams origin/main
    pnpm install --frozen-lockfile
-   cp docs/architecture/metrics.json /tmp/metrics.previous.json
+   git show origin/main:docs/architecture/metrics.json > /tmp/metrics.previous.json
    ```
 
    If `claude/architecture-diagrams` still exists on the remote with an open
@@ -124,7 +125,35 @@ label:architecture` plus keywords). If an open issue already covers it,
    your tools allow it; otherwise mention in the overview issue that it still
    needs triage.
 
-7. **Update the overview issue.** Find the open issue with label
+7. **Ship the diagrams** — before touching the overview issue, so the
+   overview never announces metrics that `main` does not show yet.
+
+   If step 2 produced a diff, commit and push it:
+
+   ```bash
+   pnpm nx run tools:test --tui=false
+   pnpm format:check
+   git add docs/architecture/diagrams.md docs/architecture/metrics.json
+   git commit -m "docs(architecture): refresh diagrams (KW <nn>)"
+   git push -u origin claude/architecture-diagrams
+   ```
+
+   Stage by name — never `git add -A`. Then, **whether or not this run
+   produced a diff**, drive the open diagram PR if one exists (a PR reused
+   from step 1 may already carry exactly this week's output). Open (or
+   update) the PR against
+   `main` titled `docs(architecture): Diagramme aktualisieren (KW <nn>)`,
+   body = the delta table plus `Refs #<overview issue>`. Subscribe to its
+   activity. The change is generated docs only, so once CI is green, squash-
+   merge it and delete the branch. If CI fails, do not merge: root-cause it
+   (most likely a formatter or a generator bug) and report on the PR.
+   Remember whether the diagrams reached `main` in this run — step 8 depends
+   on it.
+
+   Do **not** touch application code in this routine. Refactors happen in the
+   improvement issues, in their own PRs, with tests.
+
+8. **Update the overview issue.** Find the open issue with label
    `architecture-review` (create it if missing; if you ever find more than
    one, keep the lowest number and close the others pointing at it). Rewrite
    its body completely:
@@ -166,31 +195,20 @@ label:architecture` plus keywords). If an open issue already covers it,
    - #… Titel — erledigt durch <PR/Commit>
    ```
 
-   The diagram links point at `main`, so they always show the latest
-   version. Also post a short comment on the overview issue each run (3–5
-   lines: delta headline + links to new/closed issues) so watchers get a
+   The diagram links point at `main`, so the numbers in the body must match
+   `main` too:
+
+   - **Diagram PR merged in step 7 (or no diff at all)** → fill the table
+     from the new `metrics.json`; `Stand` names the resulting `main` commit.
+   - **Diagram PR still open** (CI red or pending) → fill the table from the
+     `main` snapshot (`/tmp/metrics.previous.json`) and add a line directly
+     under `Stand`: `⚠️ Neue Diagramme noch nicht gemergt: #<PR> — <Grund>.`
+     Mention this week's new numbers only in that PR, never as current.
+
+   Also post a short comment on the overview issue each run (3–5 lines:
+   delta headline + links to new/closed issues) so watchers get a
    notification; skip the comment when nothing changed and no issue was
    created or closed.
-
-8. **Ship the diagrams.** If step 2 produced a diff:
-
-   ```bash
-   pnpm nx run tools:test --tui=false
-   pnpm format:check
-   git add docs/architecture/diagrams.md docs/architecture/metrics.json
-   git commit -m "docs(architecture): refresh diagrams (KW <nn>)"
-   git push -u origin claude/architecture-diagrams
-   ```
-
-   Stage by name — never `git add -A`. Open (or update) the PR against
-   `main` titled `docs(architecture): Diagramme aktualisieren (KW <nn>)`,
-   body = the delta table plus `Refs #<overview issue>`. Subscribe to its
-   activity. The change is generated docs only, so once CI is green, squash-
-   merge it and delete the branch. If CI fails, do not merge: root-cause it
-   (most likely a formatter or a generator bug) and report on the PR.
-
-   Do **not** touch application code in this routine. Refactors happen in the
-   improvement issues, in their own PRs, with tests.
 
 ### Failure modes
 
@@ -198,8 +216,10 @@ label:architecture` plus keywords). If an open issue already covers it,
   update issues from stale metrics; comment on the overview issue with the
   error and stop.
 - The generator output looks implausible (e.g. zero projects, all edges gone)
-  → treat it as a generator bug: open one issue labelled `architecture-review`
-  and `bug` with the evidence and stop.
+  → treat it as a generator bug: open one issue labelled `architecture` and
+  `bug` (never `architecture-review` — that label belongs to the overview
+  issue alone) with the evidence, link it in a comment on the overview
+  issue, and stop.
 - Never exceed 3 new improvement issues per run, even if you found more; list
   the rest as "Weitere Kandidaten" in the overview issue.
 
