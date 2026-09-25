@@ -15426,413 +15426,412 @@
       </segment>
     </unit>
     <unit id="xp.intro.step3.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vergleiche dich</source>
-        <target>Vergleiche dich</target>
+        <target>Compare-toi</target>
       </segment>
     </unit>
     <unit id="xp.intro.step3.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nach jedem Eintrag siehst du deine gesammelten XP. In der Bestenliste und unter Freunden vergleichst du jetzt auch XP über alle Übungen hinweg.</source>
-        <target>Nach jedem Eintrag siehst du deine gesammelten XP. In der Bestenliste und unter Freunden vergleichst du jetzt auch XP über alle Übungen hinweg.</target>
+        <target>Après chaque séance, tu vois les XP que tu as gagnés. Dans le classement et entre amis, tu compares maintenant aussi les XP toutes catégories confondues.</target>
       </segment>
     </unit>
     <unit id="admin.xpRates.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>XP-Wertigkeiten</source>
-        <target>XP-Wertigkeiten</target>
+        <target>Valeurs XP</target>
       </segment>
     </unit>
     <unit id="admin.xpRates.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wie viele XP eine Übung pro Wiederholung, Minute oder Kilometer bringt. Änderungen gelten nur für Einträge, die ab jetzt gespeichert werden — bereits verdiente XP bleiben unverändert.
 </source>
-        <target> Wie viele XP eine Übung pro Wiederholung, Minute oder Kilometer bringt. Änderungen gelten nur für Einträge, die ab jetzt gespeichert werden — bereits verdiente XP bleiben unverändert.
-</target>
+        <target>Combien d'XP un exercice rapporte par répétition, minute ou kilomètre. Les modifications ne s'appliquent qu'aux séances enregistrées à partir de maintenant — les XP déjà gagnés restent inchangés.</target>
       </segment>
     </unit>
     <unit id="admin.xpRates.default">
-      <segment state="initial">
+      <segment state="translated">
         <source>Standard: <ph id="0" equiv="INTERPOLATION" disp="{{ formatRate(row.defaultRate) }}"/></source>
-        <target>Standard: <ph id="0" equiv="INTERPOLATION" disp="{{ formatRate(row.defaultRate) }}"/></target>
+        <target>Standard : <ph id="0" equiv="INTERPOLATION" disp="{{ formatRate(row.defaultRate) }}"/></target>
       </segment>
     </unit>
     <unit id="admin.xpRates.invalid">
-      <segment state="initial">
+      <segment state="translated">
         <source> Bitte nur Werte zwischen 0 und <ph id="0" equiv="INTERPOLATION" disp="{{ rateMax }}"/> eingeben. </source>
-        <target> Bitte nur Werte zwischen 0 und <ph id="0" equiv="INTERPOLATION" disp="{{ rateMax }}"/> eingeben. </target>
+        <target>Merci de saisir uniquement des valeurs entre 0 et <ph id="0" equiv="INTERPOLATION" disp="{{ rateMax }}"/>.</target>
       </segment>
     </unit>
     <unit id="admin.xpRates.saved">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gespeichert.</source>
-        <target>Gespeichert.</target>
+        <target>Enregistré.</target>
       </segment>
     </unit>
     <unit id="admin.xpRates.discard">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verwerfen </source>
-        <target> Verwerfen </target>
+        <target>Annuler</target>
       </segment>
     </unit>
     <unit id="admin.xpRates.save">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wertigkeiten speichern </source>
-        <target> Wertigkeiten speichern </target>
+        <target>Enregistrer les valeurs</target>
       </segment>
     </unit>
     <unit id="admin.xpRates.reset">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf Standard zurücksetzen</source>
-        <target>Auf Standard zurücksetzen</target>
+        <target>Réinitialiser aux valeurs par défaut</target>
       </segment>
     </unit>
     <unit id="admin.migrations.xpBackfill.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>XP für bisherige Einträge nachbuchen</source>
-        <target>XP für bisherige Einträge nachbuchen</target>
+        <target>Créditer les XP des séances passées</target>
       </segment>
     </unit>
     <unit id="admin.migrations.xpBackfill.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bucht XP für alle Einträge, die vor dem Punktesystem gespeichert wurden, zu den aktuellen Wertigkeiten, berechnet Level und Level-Abzeichen neu und baut die XP-Bestenliste auf. Bis zu 200 Nutzer pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Bereits gebuchte Einträge bleiben unverändert. Erst den Probelauf ausführen.</source>
-        <target>Bucht XP für alle Einträge, die vor dem Punktesystem gespeichert wurden, zu den aktuellen Wertigkeiten, berechnet Level und Level-Abzeichen neu und baut die XP-Bestenliste auf. Bis zu 200 Nutzer pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Bereits gebuchte Einträge bleiben unverändert. Erst den Probelauf ausführen.</target>
+        <target>Crédite les XP pour toutes les séances enregistrées avant le système de points, selon les valeurs actuelles, recalcule le niveau et les badges de niveau, et reconstruit le classement XP. Jusqu'à 200 utilisateurs par exécution — répéter jusqu'à ce que « remaining » soit à 0. Les séances déjà créditées restent inchangées. Exécuter d'abord l'essai.</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.xp.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>XP-Erfolgsdialog</source>
-        <target>XP-Erfolgsdialog</target>
+        <target>Boîte de dialogue de succès XP</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.xp.description">
-      <segment state="initial">
+      <segment state="translated">
         <source> Öffnet den Dialog, der nach dem Speichern eines Eintrags die verdienten XP zeigt — mit Beispielwerten, wahlweise mit Level-Up. </source>
-        <target> Öffnet den Dialog, der nach dem Speichern eines Eintrags die verdienten XP zeigt — mit Beispielwerten, wahlweise mit Level-Up. </target>
+        <target>Ouvre la boîte de dialogue qui affiche les XP gagnés après l'enregistrement d'une séance — avec des valeurs d'exemple, éventuellement avec passage de niveau.</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.xp.preview">
-      <segment state="initial">
+      <segment state="translated">
         <source>XP-Dialog</source>
-        <target>XP-Dialog</target>
+        <target>Boîte de dialogue XP</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.xp.previewLevelUp">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mit Level-Up</source>
-        <target>Mit Level-Up</target>
+        <target>Avec passage de niveau</target>
       </segment>
     </unit>
     <unit id="announcements.xp">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu: Punkte, Level und XP-Bestenliste</source>
-        <target>Neu: Punkte, Level und XP-Bestenliste</target>
+        <target>Nouveau : points, niveaux et classement XP</target>
       </segment>
     </unit>
     <unit id="xp.gained.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erfahrung gesammelt</source>
-        <target>Erfahrung gesammelt</target>
+        <target>Expérience gagnée</target>
       </segment>
     </unit>
     <unit id="xp.gained.levelUp">
-      <segment state="initial">
+      <segment state="translated">
         <source>Level-Up!</source>
-        <target>Level-Up!</target>
+        <target>Passage de niveau !</target>
       </segment>
     </unit>
     <unit id="xp.gained.levelReached">
-      <segment state="initial">
+      <segment state="translated">
         <source>Level <ph id="0" equiv="INTERPOLATION" disp="{{ data.after.level }}"/> erreicht!</source>
-        <target>Level <ph id="0" equiv="INTERPOLATION" disp="{{ data.after.level }}"/> erreicht!</target>
+        <target>Niveau <ph id="0" equiv="INTERPOLATION" disp="{{ data.after.level }}"/> atteint !</target>
       </segment>
     </unit>
     <unit id="xp.gained.level">
-      <segment state="initial">
+      <segment state="translated">
         <source>Level <ph id="0" equiv="INTERPOLATION" disp="{{ bar().level }}"/></source>
-        <target>Level <ph id="0" equiv="INTERPOLATION" disp="{{ bar().level }}"/></target>
+        <target>Niveau <ph id="0" equiv="INTERPOLATION" disp="{{ bar().level }}"/></target>
       </segment>
     </unit>
     <unit id="xp.gained.toNext">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ data.after.intoLevel | number }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ data.after.levelSpan | number }}"/> XP</source>
         <target><ph id="0" equiv="INTERPOLATION" disp="{{ data.after.intoLevel | number }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ data.after.levelSpan | number }}"/> XP</target>
       </segment>
     </unit>
     <unit id="xp.gained.continue">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiter</source>
-        <target>Weiter</target>
+        <target>Continuer</target>
       </segment>
     </unit>
     <unit id="xp.preview.entryWorth">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Einheit bringt <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ previewLabel() }}"/></pc></source>
-        <target>Diese Einheit bringt <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ previewLabel() }}"/></pc></target>
+        <target>Cette séance rapporte <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ previewLabel() }}"/></pc></target>
       </segment>
     </unit>
     <unit id="xp.rate.badgeTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Punkte, die diese Übung pro Einheit bringt</source>
-        <target>Punkte, die diese Übung pro Einheit bringt</target>
+        <target>Points que cet exercice rapporte par unité</target>
       </segment>
     </unit>
     <unit id="xp.rate.unit.rep">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wdh.</source>
-        <target>Wdh.</target>
+        <target>Réps.</target>
       </segment>
     </unit>
     <unit id="xp.rate.unit.minute">
-      <segment state="initial">
+      <segment state="translated">
         <source>Min.</source>
         <target>Min.</target>
       </segment>
     </unit>
     <unit id="xp.rate.unit.km">
-      <segment state="initial">
+      <segment state="translated">
         <source>km</source>
         <target>km</target>
       </segment>
     </unit>
     <unit id="xp.rate.label">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="value" disp="value"/> XP / <ph id="1" equiv="unit" disp="unitLabel"/></source>
         <target><ph id="0" equiv="value" disp="value"/> XP / <ph id="1" equiv="unit" disp="unitLabel"/></target>
       </segment>
     </unit>
         <unit id="xp.preview.label">
-      <segment state="initial">
+      <segment state="translated">
         <source>≈ <ph id="0" equiv="value" disp="value"/></source>
         <target>≈ <ph id="0" equiv="value" disp="value"/></target>
       </segment>
     </unit>
     <unit id="friends.board.xpValue">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="value"/> XP</source>
         <target><ph id="0" equiv="count" disp="value"/> XP</target>
       </segment>
     </unit>
     <unit id="friends.board.metric.xp">
-      <segment state="initial">
+      <segment state="translated">
         <source>XP (alle Übungen)</source>
-        <target>XP (alle Übungen)</target>
+        <target>XP (tous exercices)</target>
       </segment>
     </unit>
     <unit id="leaderboard.xp.ownLevel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Level <ph id="0" equiv="INTERPOLATION" disp="{{ level }}"/></source>
-        <target>Level <ph id="0" equiv="INTERPOLATION" disp="{{ level }}"/></target>
+        <target>Niveau <ph id="0" equiv="INTERPOLATION" disp="{{ level }}"/></target>
       </segment>
     </unit>
     <unit id="leaderboard.xp.chip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gesamt-XP</source>
-        <target>Gesamt-XP</target>
+        <target>XP total</target>
       </segment>
     </unit>
     <unit id="leaderboard.xp.value">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="xp" disp="xp"/> XP</source>
         <target><ph id="0" equiv="xp" disp="xp"/> XP</target>
       </segment>
     </unit>
     <unit id="landing.xp.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu · Punkte-System</source>
-        <target>Neu · Punkte-System</target>
+        <target>Nouveau · Système de points</target>
       </segment>
     </unit>
     <unit id="landing.xp.headline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Jede Wiederholung zählt — sammle XP und steig im Level auf. </source>
-        <target> Jede Wiederholung zählt — sammle XP und steig im Level auf. </target>
+        <target>Chaque répétition compte — gagne des XP et monte de niveau.</target>
       </segment>
     </unit>
     <unit id="landing.xp.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source> Jede Übung bringt Punkte: ein Liegestütz 1 XP, ein Klimmzug 3 XP, eine Minute Plank 8 XP, ein Kilometer Laufen 60 XP. Nach jedem Eintrag siehst du, was du gesammelt hast — und alle bisherigen Einträge zählen mit. </source>
-        <target> Jede Übung bringt Punkte: ein Liegestütz 1 XP, ein Klimmzug 3 XP, eine Minute Plank 8 XP, ein Kilometer Laufen 60 XP. Nach jedem Eintrag siehst du, was du gesammelt hast — und alle bisherigen Einträge zählen mit. </target>
+        <target>Chaque exercice rapporte des points : une pompe 1 XP, une traction 3 XP, une minute de gainage 8 XP, un kilomètre de course 60 XP. Après chaque séance, tu vois ce que tu as gagné — et toutes tes séances précédentes comptent aussi.</target>
       </segment>
     </unit>
     <unit id="landing.xp.chip.levels">
-      <segment state="initial">
+      <segment state="translated">
         <source>Level und Abzeichen für Level 5, 10, 20 und mehr</source>
-        <target>Level und Abzeichen für Level 5, 10, 20 und mehr</target>
+        <target>Niveaux et badges pour les niveaux 5, 10, 20 et plus</target>
       </segment>
     </unit>
     <unit id="landing.xp.chip.variety">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abwechslung lohnt sich: Abzeichen für mehrere Kategorien</source>
-        <target>Abwechslung lohnt sich: Abzeichen für mehrere Kategorien</target>
+        <target>La diversité paie : des badges pour plusieurs catégories</target>
       </segment>
     </unit>
     <unit id="landing.xp.chip.leaderboard">
-      <segment state="initial">
+      <segment state="translated">
         <source>XP-Bestenliste weltweit und unter Freunden</source>
-        <target>XP-Bestenliste weltweit und unter Freunden</target>
+        <target>Classement XP mondial et entre amis</target>
       </segment>
     </unit>
     <unit id="landing.xp.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zur XP-Bestenliste</source>
-        <target>Zur XP-Bestenliste</target>
+        <target>Voir le classement XP</target>
       </segment>
     </unit>
     <unit id="landing.xp.mock.gain">
-      <segment state="initial">
+      <segment state="translated">
         <source>+30 XP</source>
         <target>+30 XP</target>
       </segment>
     </unit>
     <unit id="landing.xp.mock.caption">
-      <segment state="initial">
+      <segment state="translated">
         <source> 10 Klimmzüge gespeichert </source>
-        <target> 10 Klimmzüge gespeichert </target>
+        <target>10 tractions enregistrées</target>
       </segment>
     </unit>
     <unit id="landing.xp.mock.level">
-      <segment state="initial">
+      <segment state="translated">
         <source>Level 12</source>
-        <target>Level 12</target>
+        <target>Niveau 12</target>
       </segment>
     </unit>
     <unit id="landing.xp.mock.next">
-      <segment state="initial">
+      <segment state="translated">
         <source>noch 340 XP bis Level 13</source>
-        <target>noch 340 XP bis Level 13</target>
+        <target>encore 340 XP avant le niveau 13</target>
       </segment>
     </unit>
     <unit id="publicProfile.badge.level">
-      <segment state="initial">
+      <segment state="translated">
         <source>Level <ph id="0" equiv="level" disp="definition.threshold ?? 0"/> erreicht</source>
-        <target>Level <ph id="0" equiv="level" disp="definition.threshold ?? 0"/> erreicht</target>
+        <target>Niveau <ph id="0" equiv="level" disp="definition.threshold ?? 0"/> atteint</target>
       </segment>
     </unit>
     <unit id="publicProfile.badge.variety">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vielseitig: <ph id="0" equiv="categories" disp="definition.threshold ?? 0"/> Kategorien</source>
-        <target>Vielseitig: <ph id="0" equiv="categories" disp="definition.threshold ?? 0"/> Kategorien</target>
+        <target>Polyvalent : <ph id="0" equiv="categories" disp="definition.threshold ?? 0"/> catégories</target>
       </segment>
     </unit>
     <unit id="levelCard.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Level <ph id="0" equiv="INTERPOLATION" disp="{{ progress().level }}"/></source>
-        <target>Level <ph id="0" equiv="INTERPOLATION" disp="{{ progress().level }}"/></target>
+        <target>Niveau <ph id="0" equiv="INTERPOLATION" disp="{{ progress().level }}"/></target>
       </segment>
     </unit>
     <unit id="levelCard.total">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ progress().totalXp | number }}"/> XP</source>
         <target><ph id="0" equiv="INTERPOLATION" disp="{{ progress().totalXp | number }}"/> XP</target>
       </segment>
     </unit>
     <unit id="levelCard.remaining">
-      <segment state="initial">
+      <segment state="translated">
         <source>Noch <ph id="0" equiv="INTERPOLATION" disp="{{ remaining() | number }}"/> XP bis Level <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress().level + 1 }}"/></source>
-        <target>Noch <ph id="0" equiv="INTERPOLATION" disp="{{ remaining() | number }}"/> XP bis Level <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress().level + 1 }}"/></target>
+        <target>Encore <ph id="0" equiv="INTERPOLATION" disp="{{ remaining() | number }}"/> XP avant le niveau <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress().level + 1 }}"/></target>
       </segment>
     </unit>
     <unit id="levelCard.barLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fortschritt zu Level <ph id="0" equiv="next" disp="this.progress().level + 1"/></source>
-        <target>Fortschritt zu Level <ph id="0" equiv="next" disp="this.progress().level + 1"/></target>
+        <target>Progression vers le niveau <ph id="0" equiv="next" disp="this.progress().level + 1"/></target>
       </segment>
     </unit>
     <unit id="analysis.xp.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erfahrungspunkte</source>
-        <target>Erfahrungspunkte</target>
+        <target>Points d'expérience</target>
       </segment>
     </unit>
     <unit id="analysis.xp.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>XP im gewählten Zeitraum</source>
-        <target>XP im gewählten Zeitraum</target>
+        <target>XP sur la période sélectionnée</target>
       </segment>
     </unit>
     <unit id="analysis.xp.level">
-      <segment state="initial">
+      <segment state="translated">
         <source>Level <ph id="0" equiv="INTERPOLATION" disp="{{ progress.level }}"/></source>
-        <target>Level <ph id="0" equiv="INTERPOLATION" disp="{{ progress.level }}"/></target>
+        <target>Niveau <ph id="0" equiv="INTERPOLATION" disp="{{ progress.level }}"/></target>
       </segment>
     </unit>
     <unit id="analysis.xp.levelMeta">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ progress.intoLevel | number }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.levelSpan | number }}"/> XP</source>
         <target><ph id="0" equiv="INTERPOLATION" disp="{{ progress.intoLevel | number }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.levelSpan | number }}"/> XP</target>
       </segment>
     </unit>
     <unit id="analysis.xp.kpi.total">
-      <segment state="initial">
+      <segment state="translated">
         <source>XP im Zeitraum</source>
-        <target>XP im Zeitraum</target>
+        <target>XP sur la période</target>
       </segment>
     </unit>
     <unit id="analysis.xp.kpi.days">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tage mit XP</source>
-        <target>Tage mit XP</target>
+        <target>Jours avec XP</target>
       </segment>
     </unit>
     <unit id="analysis.xp.kpi.bestDay">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bester Tag</source>
-        <target>Bester Tag</target>
+        <target>Meilleur jour</target>
       </segment>
     </unit>
     <unit id="analysis.xp.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> In diesem Zeitraum hast du noch keine XP gesammelt. </source>
-        <target> In diesem Zeitraum hast du noch keine XP gesammelt. </target>
+        <target>Tu n'as pas encore gagné d'XP sur cette période.</target>
       </segment>
     </unit>
     <unit id="analysis.xp.perWeek">
-      <segment state="initial">
+      <segment state="translated">
         <source>XP pro Woche</source>
-        <target>XP pro Woche</target>
+        <target>XP par semaine</target>
       </segment>
     </unit>
     <unit id="analysis.xp.perDay">
-      <segment state="initial">
+      <segment state="translated">
         <source>XP pro Tag</source>
-        <target>XP pro Tag</target>
+        <target>XP par jour</target>
       </segment>
     </unit>
     <unit id="analysis.xp.byCategory">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nach Kategorie</source>
-        <target>Nach Kategorie</target>
+        <target>Par catégorie</target>
       </segment>
     </unit>
     <unit id="analysis.xp.topExercises">
-      <segment state="initial">
+      <segment state="translated">
         <source>Top-Übungen</source>
-        <target>Top-Übungen</target>
+        <target>Meilleurs exercices</target>
       </segment>
     </unit>
     <unit id="wiki.difficulty.aria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schwierigkeitsgrad</source>
-        <target>Schwierigkeitsgrad</target>
+        <target>Niveau de difficulté</target>
       </segment>
     </unit>
     <unit id="xp.value">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="xp" disp="xp"/> XP</source>
         <target><ph id="0" equiv="xp" disp="xp"/> XP</target>
       </segment>
     </unit>
     <unit id="analysis.xp.perMonth">
-      <segment state="initial">
+      <segment state="translated">
         <source>XP pro Monat</source>
-        <target>XP pro Monat</target>
+        <target>XP par mois</target>
       </segment>
     </unit>
     <unit id="analysis.xp.bucketTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="date" disp="date"/>: <ph id="1" equiv="xp" disp="xp"/></source>
-        <target><ph id="0" equiv="date" disp="date"/>: <ph id="1" equiv="xp" disp="xp"/></target>
+        <target><ph id="0" equiv="date" disp="date"/> : <ph id="1" equiv="xp" disp="xp"/></target>
       </segment>
     </unit>
 </file>
