@@ -11,7 +11,7 @@ import {
   dailyGoalFillPayload,
 } from './daily-goal.helpers';
 import { PlanGoalsService } from './plan-goals.service';
-import { notifyEntrySaved, notifyError } from './quick-add-notify';
+import { notifyError } from './quick-add-notify';
 
 /** Outcome of a single check-off, for callers that report it. */
 export type CompleteGoalResult =
@@ -84,7 +84,6 @@ export class DailyGoalActionsService {
           source: 'goal-fill',
         })
       );
-      notifyEntrySaved(this.snackBar);
       this.appData.reloadAfterMutation();
       return 'logged';
     } catch (err) {
@@ -106,7 +105,6 @@ export class DailyGoalActionsService {
     try {
       const result = await this.planGoals.complete(goalId);
       if (result === 'noop') return 'noop';
-      if (result === 'logged') notifyEntrySaved(this.snackBar);
       this.appData.reloadAfterMutation();
       return result === 'logged' ? 'logged' : 'already-reached';
     } catch (err) {

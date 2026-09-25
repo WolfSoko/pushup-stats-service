@@ -5,10 +5,11 @@ import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import {
   LEADERBOARD_PUSHUP_ID,
+  LEADERBOARD_XP_ID,
   type LeaderboardEntry,
   type LeaderboardPeriod,
 } from '@pu-stats/data-access';
-import { LeaderboardStore } from '@pu-stats/data-access-state';
+import { LeaderboardStore, XpStore } from '@pu-stats/data-access-state';
 import { LeaderboardPageComponent } from './leaderboard-page.component';
 
 /**
@@ -32,6 +33,18 @@ describe('LeaderboardPageComponent', () => {
   const loadMock = vitest.fn();
   const busyExerciseIds = signal<ReadonlySet<string>>(new Set());
   const loading = signal(false);
+  const ownEntry = signal<LeaderboardEntry | null>(null);
+  const xpLoaded = signal(true);
+  const xpStoreMock = {
+    loaded: xpLoaded,
+    progress: signal({
+      level: 7,
+      totalXp: 2500,
+      intoLevel: 400,
+      levelSpan: 700,
+      fraction: 0.57,
+    }),
+  };
 
   function setEntries(exerciseId: string, entries: LeaderboardEntry[]): void {
     entriesByExerciseAndPeriod[exerciseId] = {
@@ -57,7 +70,7 @@ describe('LeaderboardPageComponent', () => {
         () => entriesByExerciseAndPeriod[exerciseId()]?.[period()] ?? []
       ),
     currentUserForPeriod: (): (() => LeaderboardEntry | null) =>
-      signal<LeaderboardEntry | null>(null).asReadonly(),
+      ownEntry.asReadonly(),
     lastUpdatedFor: (exerciseId: () => string): (() => Date | null) =>
       computed(() => lastUpdatedByExercise[exerciseId()] ?? null),
     load: loadMock,
@@ -69,7 +82,7 @@ describe('LeaderboardPageComponent', () => {
     entries: LeaderboardEntry[],
     options?: { exerciseId?: string; updatedAt?: Date | null; userId?: string }
   ): Promise<void> {
-    const exerciseId = options?.exerciseId ?? LEADERBOARD_PUSHUP_ID;
+    const exerciseId = options?.exerciseId ?? LEADERBOARD_XP_ID;
     setEntries(exerciseId, entries);
     lastUpdatedByExercise[exerciseId] = options?.updatedAt ?? null;
 
@@ -79,6 +92,7 @@ describe('LeaderboardPageComponent', () => {
       providers: [
         provideRouter([]),
         { provide: LeaderboardStore, useValue: storeMock },
+        { provide: XpStore, useValue: xpStoreMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
         {
           provide: UserContextService,
@@ -98,6 +112,8 @@ describe('LeaderboardPageComponent', () => {
 
   beforeEach(() => {
     loadMock.mockClear();
+    ownEntry.set(null);
+    xpLoaded.set(true);
     busyExerciseIds.set(new Set());
     loading.set(false);
     for (const key of Object.keys(entriesByExerciseAndPeriod)) {
@@ -169,9 +185,28 @@ describe('LeaderboardPageComponent', () => {
   });
 
   describe('Given the initial render', () => {
-    it('Loads the pushup leaderboard by default', async () => {
+    it('should load the XP leaderboard by default', async () => {
+      // when
       await setup([]);
-      expect(loadMock).toHaveBeenCalledWith(LEADERBOARD_PUSHUP_ID);
+
+      // then
+      expect(loadMock).toHaveBeenCalledWith(LEADERBOARD_XP_ID);
+      expect(loadMock).not.toHaveBeenCalledWith(LEADERBOARD_PUSHUP_ID);
+    });
+
+    it('should render the XP chip first and active', async () => {
+      // when
+      await setup([]);
+
+      // then
+      const chips = (fixture.nativeElement as HTMLElement).querySelectorAll(
+        '.exercise-switch .exercise-chip'
+      );
+      expect(chips[0].getAttribute('data-testid')).toBe(
+        `leaderboard-exercise-chip-${LEADERBOARD_XP_ID}`
+      );
+      expect(chips[0].classList.contains('active')).toBe(true);
+      expect(chips[0].textContent).toContain('Gesamt-XP');
     });
 
     it('Renders one popular-exercise chip per curated entry plus the pushup default', async () => {
@@ -437,10 +472,14 @@ describe('LeaderboardPageComponent', () => {
     });
   });
 
-  describe('Given pushups (the default)', () => {
+  describe('Given pushups', () => {
     it('Keeps the "Reps" label next to the value', async () => {
       // Given
-      await setup([{ rank: 1, alias: 'Pia', reps: 25, uid: 'pia1' }]);
+      await setup([{ rank: 1, alias: 'Pia', reps: 25, uid: 'pia1' }], {
+        exerciseId: LEADERBOARD_PUSHUP_ID,
+      });
+      fixture.componentInstance.selectExercise(LEADERBOARD_PUSHUP_ID);
+      fixture.detectChanges();
 
       // Then — bare number + "Reps" suffix matches the legacy template.
       const root = fixture.nativeElement as HTMLElement;
@@ -455,7 +494,7 @@ describe('LeaderboardPageComponent', () => {
     it('Switches the bound entries to the allTime bucket when clicked', async () => {
       // Given — daily bucket has Alice, allTime bucket has Bob who
       // hasn't trained in the last 30 days but tops the cumulative list.
-      const exerciseId = LEADERBOARD_PUSHUP_ID;
+      const exerciseId = LEADERBOARD_XP_ID;
       await setup([{ rank: 1, alias: 'Alice', reps: 30, uid: 'aaa' }], {
         exerciseId,
       });
@@ -527,6 +566,71 @@ describe('LeaderboardPageComponent', () => {
       const root = fixture.nativeElement as HTMLElement;
       expect(
         root.querySelector('[data-testid="leaderboard-last-updated"]')
+      ).toBeNull();
+    });
+  });
+
+  describe('Given the XP ranking', () => {
+    const rowValue = () =>
+      (fixture.nativeElement as HTMLElement)
+        .querySelector(
+          'ol[data-testid="leaderboard-list"] li:first-child strong'
+        )
+        ?.textContent?.replace(/\s+/g, ' ')
+        .trim();
+
+    it('should format the value as XP with grouping', async () => {
+      // when
+      await setup([{ rank: 1, alias: 'Ada', reps: 12345, uid: 'ada1' }]);
+
+      // then
+      expect(rowValue()).toMatch(/^12.345 XP$/);
+    });
+
+    it('should show the viewer level next to their own XP position', async () => {
+      // given
+      ownEntry.set({ rank: 3, alias: 'Me', reps: 2500, uid: 'me1' });
+
+      // when
+      await setup([], { userId: 'me1' });
+
+      // then
+      const level = (fixture.nativeElement as HTMLElement).querySelector(
+        '[data-testid="leaderboard-own-level"]'
+      );
+      expect(level?.textContent?.trim()).toBe('Level 7');
+    });
+
+    it('should hide the level on an exercise leaderboard', async () => {
+      // given
+      ownEntry.set({ rank: 3, alias: 'Me', reps: 25, uid: 'me1' });
+      await setup([], { userId: 'me1' });
+
+      // when
+      fixture.componentInstance.selectExercise('legs.squats');
+      fixture.detectChanges();
+
+      // then
+      expect(
+        (fixture.nativeElement as HTMLElement).querySelector(
+          '[data-testid="leaderboard-own-level"]'
+        )
+      ).toBeNull();
+    });
+
+    it('should hide the level until the XP aggregate has loaded', async () => {
+      // given
+      xpLoaded.set(false);
+      ownEntry.set({ rank: 3, alias: 'Me', reps: 2500, uid: 'me1' });
+
+      // when
+      await setup([], { userId: 'me1' });
+
+      // then
+      expect(
+        (fixture.nativeElement as HTMLElement).querySelector(
+          '[data-testid="leaderboard-own-level"]'
+        )
       ).toBeNull();
     });
   });

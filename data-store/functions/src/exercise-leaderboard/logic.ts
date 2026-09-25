@@ -175,7 +175,8 @@ export function rankExerciseEntries(
   valueField: ExerciseValueField,
   periodKey: WindowedExerciseLeaderboardPeriodKind,
   targetKey: string,
-  userProfiles: Map<string, UserProfile>
+  userProfiles: Map<string, UserProfile>,
+  dailyCap: number = DAILY_CAP_BY_FIELD[valueField]
 ): ExerciseLeaderboardEntry[] {
   // Aggregate per (userId, Berlin day) first so the per-day cap can be
   // applied before the windowed sum collapses the day boundary.
@@ -215,12 +216,11 @@ export function rankExerciseEntries(
     userDays.set(p.isoDate, (userDays.get(p.isoDate) || 0) + rawValue);
   }
 
-  const cap = DAILY_CAP_BY_FIELD[valueField];
   const totals = new Map<string, number>();
   for (const [userId, days] of perDay) {
     let total = 0;
     for (const [, dayValue] of days) {
-      total += Math.min(dayValue, cap);
+      total += Math.min(dayValue, dailyCap);
     }
     totals.set(userId, total);
   }

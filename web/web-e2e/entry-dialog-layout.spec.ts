@@ -47,7 +47,7 @@ test.describe('Training entry dialog on a phone @smoke', () => {
     const exercise = page.getByTestId('training-entry-exercise');
     await exercise.fill('Laufen');
     await page
-      .getByRole('option', { name: /^Laufen$/ })
+      .getByRole('option', { name: /^Laufen\b/ })
       .first()
       .click();
     await title.click();

@@ -10,6 +10,7 @@ import {
   periodValue,
   rankFriends,
   streakValue,
+  xpStatsOf,
   type FriendStatsRow,
 } from './leaderboard';
 
@@ -300,5 +301,40 @@ describe('friends/leaderboard', () => {
     expect(
       rankFriends([bob, ada], 'week', KEYS, undefined, 'reps').map((e) => e.uid)
     ).toEqual(['b', 'a']);
+  });
+});
+
+describe('XP metric', () => {
+  it('should accept xp as a board metric', () => {
+    // then
+    expect(isFriendsBoardMetric('xp')).toBe(true);
+  });
+
+  it('should rank the period bucket of the XP aggregate', () => {
+    // given
+    const stats = xpStatsOf({
+      total: 900,
+      dailyXp: 50,
+      dailyKey: KEYS.dailyKey,
+      weeklyXp: 250,
+      weeklyKey: KEYS.weeklyKey,
+      monthlyXp: 600,
+      monthlyKey: '2026-08',
+    });
+
+    // when
+    const value = (period: 'daily' | 'week' | 'month' | 'allTime') =>
+      metricValue(row({ stats }), 'xp', period, KEYS);
+
+    // then
+    expect(value('daily')).toBe(50);
+    expect(value('week')).toBe(250);
+    expect(value('month')).toBe(0);
+    expect(value('allTime')).toBe(900);
+  });
+
+  it('should map a missing XP aggregate to no stats', () => {
+    // then
+    expect(xpStatsOf(undefined)).toBeNull();
   });
 });

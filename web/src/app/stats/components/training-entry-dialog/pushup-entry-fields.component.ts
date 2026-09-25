@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
+import { XpPreviewComponent } from '../../../core/xp/xp-preview.component';
 import {
   findPushupTypeByLocalizedName,
   findPushupTypeByStoredValue,
@@ -64,6 +65,7 @@ import {
     MatAutocompleteModule,
     MatTooltipModule,
     RouterLink,
+    XpPreviewComponent,
   ],
   styleUrl: './training-entry-dialog.component.scss',
   // Transparent host so the fields stay direct items of the dialog's

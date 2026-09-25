@@ -61,11 +61,11 @@ describe('challengeWithoutUser', () => {
 describe('UID_KEYED_COLLECTIONS', () => {
   it('should delete the trigger-written aggregates last', () => {
     // given the purge order
-    // when the last two collections are read
-    const last = UID_KEYED_COLLECTIONS.slice(-2);
+    // when the last three collections are read
+    const last = UID_KEYED_COLLECTIONS.slice(-3);
 
     // then they are the ones the entry triggers write
-    expect(last).toEqual(['userStats', 'adminUserActivity']);
+    expect(last).toEqual(['userStats', 'userXp', 'adminUserActivity']);
   });
 });
 

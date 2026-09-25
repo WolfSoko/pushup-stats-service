@@ -32,8 +32,10 @@ Sett sammen din egen økt: øvelser, mål og sett i din rekkefølge. Appen leder
 • Fremdriftslinjer, konfetti når målet er nådd, streak-teller for å holde ut
 • Heatmap-kalender over uker og måneder
 • Analyse med utviklingsgrafer, KPI-kort og sammenligning per kategori
-• Rekorder: beste dag, beste sett, beste økt
 • Merker for milepæler — oppnådde og de som står igjen
+
+⭐ POENG OG NIVÅER
+Hver øvelse gir XP — per repetisjon, minutt eller kilometer, også for tidligere registreringer. Gå opp i nivå, samle nivåmerker og mål deg mot andre på XP-topplisten.
 
 🏆 RESULTATLISTE OG PROFIL
 Mål deg mot andre eller hold deg privat. Lister for i dag, de siste 7 og 30 dagene. Profilen deler du med en lenke: totale reps, streak, rekorder, heatmap, de siste 10 øktene og den aktive planen — hver rute stiller du inn hver for seg på av, bare venner eller offentlig.
@@ -43,9 +45,6 @@ Inviter venner: tavla deres viser hvem som leder denne uka. Send hverandre heiar
 
 🔔 SMARTE PÅMINNELSER
 Varsler med intervall, stilletid, ukedager og tidssone — også når appen er lukket. Raskest: ett trykk på «Logg 50» i varselet.
-
-📚 KUNNSKAP FRAMFOR GJETTING
-Øvelses-wiki med ren utførelse og de typiske feilene, i tillegg til en blogg.
 
 🔒 DINE DATA
 Prøv som gjest, helt uten konto. GDPR-klar med justerbart samtykke til cookies. Kontoen kan slettes når som helst, sammen med alle treningsdata. Database i Frankfurt.

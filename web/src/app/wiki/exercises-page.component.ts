@@ -16,7 +16,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatChipsModule } from '@angular/material/chips';
+import { WikiDifficultyChipsComponent } from './wiki-difficulty-chips.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -47,7 +47,7 @@ export const SEARCH_PARAM = 'suche';
   imports: [
     MatButtonModule,
     MatCardModule,
-    MatChipsModule,
+    WikiDifficultyChipsComponent,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,

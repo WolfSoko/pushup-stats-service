@@ -24,8 +24,11 @@ import * as firestoreFns from '@angular/fire/firestore';
 import { Firestore } from '@angular/fire/firestore';
 import {
   LEADERBOARD_PUSHUP_ID,
+  LEADERBOARD_XP_ID,
   LeaderboardService,
+  boardSource,
 } from './leaderboard.service';
+import { firstValueFrom, of } from 'rxjs';
 import { PendingRequestsService } from '../pending-requests.service';
 
 const getDoc = firestoreFns.getDoc as unknown as jest.Mock;
@@ -454,5 +457,132 @@ describe('LeaderboardService — pending-request tracking', () => {
 
     // then
     expect(track).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('LeaderboardService — XP ranking', () => {
+  let service: LeaderboardService;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    TestBed.configureTestingModule({
+      providers: [
+        LeaderboardService,
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'me' } } },
+      ],
+    });
+    service = TestBed.inject(LeaderboardService);
+  });
+
+  it('should read the leaderboards/xp snapshot for the XP sentinel', async () => {
+    // given
+    getDoc.mockResolvedValue(
+      makeSnapshot({
+        daily: [
+          { alias: 'Ada', reps: 900, uid: 'a' },
+          { alias: 'Me', reps: 300, uid: 'me' },
+        ],
+        allTime: [{ alias: 'Ada', reps: 12000, uid: 'a' }],
+      })
+    );
+
+    // when
+    const data = await service.load(LEADERBOARD_XP_ID);
+
+    // then
+    expect(firestoreFns.doc).toHaveBeenCalledWith({}, 'leaderboards', 'xp');
+    expect(data.daily.top.map((e) => [e.alias, e.reps, e.rank])).toEqual([
+      ['Ada', 900, 1],
+      ['Me', 300, 2],
+    ]);
+    expect(data.daily.current).toEqual(
+      expect.objectContaining({ uid: 'me', rank: 2, isCurrent: true })
+    );
+    expect(data.allTime.top).toHaveLength(1);
+    expect(data.last7.top).toEqual([]);
+  });
+
+  it('should return empty buckets before the first XP rebuild', async () => {
+    // given
+    getDoc.mockResolvedValue(makeSnapshot(null));
+
+    // when
+    const data = await service.load(LEADERBOARD_XP_ID);
+
+    // then
+    expect(data.daily.top).toEqual([]);
+    expect(data.updatedAt).toBeNull();
+  });
+
+  it('should fall back to empty buckets when the XP read fails', async () => {
+    // given
+    jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+    getDoc.mockRejectedValue(new Error('offline'));
+
+    // when
+    const data = await service.load(LEADERBOARD_XP_ID);
+
+    // then
+    expect(data.allTime.top).toEqual([]);
+  });
+
+  it('should project each emission of the XP doc without a second read', async () => {
+    // given
+    (firestoreFns.docData as jest.Mock).mockReturnValue(
+      of({ periods: { daily: [{ alias: 'Me', reps: 40, uid: 'me' }] } })
+    );
+
+    // when
+    const data = await firstValueFrom(service.observe(LEADERBOARD_XP_ID));
+
+    // then
+    expect(firestoreFns.doc).toHaveBeenCalledWith({}, 'leaderboards', 'xp');
+    expect(data.daily.current).toEqual(
+      expect.objectContaining({ alias: 'Me', isCurrent: true })
+    );
+    expect(getDoc).not.toHaveBeenCalled();
+  });
+
+  it('should stream an exercise board from its slot of the exercises doc', async () => {
+    // given
+    (firestoreFns.docData as jest.Mock).mockReturnValue(
+      of({
+        byExercise: {
+          'legs.squats': { periods: { last7: [{ alias: 'Bo', reps: 90 }] } },
+        },
+      })
+    );
+
+    // when
+    const data = await firstValueFrom(service.observe('legs.squats'));
+
+    // then
+    expect(firestoreFns.doc).toHaveBeenCalledWith(
+      {},
+      'leaderboards',
+      'exercises'
+    );
+    expect(data.last7.top.map((e) => e.alias)).toEqual(['Bo']);
+  });
+
+  it('should not stream a board that has no source', () => {
+    // given
+    (firestoreFns.docData as jest.Mock).mockClear();
+
+    // when
+    service.observe('not-in-catalog');
+
+    // then
+    expect(firestoreFns.docData).not.toHaveBeenCalled();
+  });
+});
+
+describe('boardSource', () => {
+  it('should resolve the XP board to its own doc and exercises to theirs', () => {
+    // then
+    expect(boardSource(LEADERBOARD_XP_ID)?.docId).toBe('xp');
+    expect(boardSource('legs.squats')?.docId).toBe('exercises');
+    expect(boardSource('unknown')).toBeNull();
   });
 });

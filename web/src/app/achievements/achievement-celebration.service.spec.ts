@@ -10,6 +10,8 @@ import { vi } from 'vitest';
 import { UserConfigStore } from '../core/user-config.store';
 import { STORAGE_KEY } from './achievement-celebration';
 import { AchievementCelebrationService } from './achievement-celebration.service';
+import { CelebrationQueueService } from '../core/celebration-queue.service';
+import { immediateCelebrationQueue } from '../core/celebration-queue.testing';
 
 function setup(options: {
   earned?: Array<{ id: string; awardedAt: string }>;
@@ -24,6 +26,10 @@ function setup(options: {
     providers: [
       { provide: PLATFORM_ID, useValue: options.platform ?? 'browser' },
       { provide: MatDialog, useValue: { open } },
+      {
+        provide: CelebrationQueueService,
+        useValue: immediateCelebrationQueue(),
+      },
       { provide: UserAchievementsApiService, useValue: { watchEarned } },
       {
         provide: UserConfigStore,

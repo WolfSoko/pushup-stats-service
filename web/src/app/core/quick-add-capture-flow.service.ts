@@ -12,7 +12,7 @@ import {
   buildConfirmedEntryPayload,
   catalogIdForHoldTimerProfile,
 } from './quick-add-orchestration.helpers';
-import { notifyEntrySaved, notifyError } from './quick-add-notify';
+import { notifyError } from './quick-add-notify';
 import {
   AUTO_COUNT_DIALOG_CONFIG,
   EXERCISE_TIMER_DIALOG_CONFIG,
@@ -209,7 +209,6 @@ export class QuickAddCaptureFlowService {
           buildConfirmedEntryPayload(result, exerciseSource)
         )
       );
-      notifyEntrySaved(this.snackBar);
       this.appData.reloadAfterMutation();
     } catch (err) {
       notifyError(this.snackBar, err);

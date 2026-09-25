@@ -130,6 +130,14 @@ li {
   font-weight: 600;
 }
 
+.own-level {
+  margin-left: 6px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 0.8em;
+  background: color-mix(in srgb, currentColor 18%, transparent);
+}
+
 .own-rank--link {
   display: inline-flex;
   align-items: center;

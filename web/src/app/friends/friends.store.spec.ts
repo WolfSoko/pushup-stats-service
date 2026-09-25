@@ -187,6 +187,18 @@ describe('FriendsStore', () => {
     });
   });
 
+  it('should re-read the board by XP when the user picks it', async () => {
+    // given
+    const { store, api } = setup();
+    await store.loadBoard('daily');
+
+    // when
+    await store.compareBy({ metric: 'xp' });
+
+    // then
+    expect(api.board).toHaveBeenLastCalledWith('daily', { metric: 'xp' });
+  });
+
   it('should reuse the last period when none is given', async () => {
     // given
     const { store, api } = setup();

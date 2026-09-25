@@ -15,6 +15,7 @@ import {
   isFriendsLeaderboardPeriod,
   periodStartIso,
   rankFriends,
+  xpStatsOf,
   type FriendStatsRow,
 } from './friends';
 import { readCheersToday } from './friends/cheers-read';
@@ -24,7 +25,7 @@ import { periodKeys } from './user-stats-delta';
 /**
  * The friends board for one metric and period: training days (the
  * default — fair whatever everyone's favourite exercise is), the live
- * streak, or one exercise's reps.
+ * streak, one exercise's reps, or XP across all exercises.
  *
  * Not served from the public leaderboard snapshot: that one is a top-N
  * list, and friends are an arbitrary set of at most `MAX_FRIENDS` users
@@ -67,6 +68,7 @@ export const getFriendsLeaderboard = onCall(
     const uids = [uid, ...friendUids];
     const today = berlinDateParts();
     const statsDoc = (id: string) => {
+      if (metric === 'xp') return db.collection('userXp').doc(id);
       const root = db.collection('userStats').doc(id);
       return metric === 'reps'
         ? root.collection('perExercise').doc(exerciseId)
@@ -91,7 +93,10 @@ export const getFriendsLeaderboard = onCall(
       return {
         uid: id,
         displayName: String(config?.['displayName'] ?? '').trim() || null,
-        stats: stats[index]?.data() ?? null,
+        stats:
+          metric === 'xp'
+            ? xpStatsOf(stats[index]?.data())
+            : (stats[index]?.data() ?? null),
         days: days.get(id),
         ui: config?.['ui'] as ProfileVisibilityUi | undefined,
         isViewer: id === uid,

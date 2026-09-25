@@ -1,0 +1,63 @@
+<section class="xp-section">
+  <div class="xp-content">
+    <p class="eyebrow" i18n="@@landing.xp.eyebrow">Neu · Punkte-System</p>
+    <h2 i18n="@@landing.xp.headline">
+      Jede Wiederholung zählt — sammle XP und steig im Level auf.
+    </h2>
+    <p class="xp-desc" i18n="@@landing.xp.desc">
+      Jede Übung bringt Punkte: ein Liegestütz 1 XP, ein Klimmzug 3 XP, eine
+      Minute Plank 8 XP, ein Kilometer Laufen 60 XP. Nach jedem Eintrag siehst
+      du, was du gesammelt hast — und alle bisherigen Einträge zählen mit.
+    </p>
+
+    <ul class="xp-chips">
+      <li>
+        <mat-icon aria-hidden="true">bolt</mat-icon>
+        <span i18n="@@landing.xp.chip.levels"
+          >Level und Abzeichen für Level 5, 10, 20 und mehr</span
+        >
+      </li>
+      <li>
+        <mat-icon aria-hidden="true">category</mat-icon>
+        <span i18n="@@landing.xp.chip.variety"
+          >Abwechslung lohnt sich: Abzeichen für mehrere Kategorien</span
+        >
+      </li>
+      <li>
+        <mat-icon aria-hidden="true">leaderboard</mat-icon>
+        <span i18n="@@landing.xp.chip.leaderboard"
+          >XP-Bestenliste weltweit und unter Freunden</span
+        >
+      </li>
+    </ul>
+
+    <a
+      mat-flat-button
+      color="primary"
+      routerLink="/leaderboard"
+      (click)="ctaClick.emit()"
+      i18n="@@landing.xp.cta"
+      >Zur XP-Bestenliste</a
+    >
+  </div>
+
+  <div class="xp-mock-wrap" aria-hidden="true">
+    <mat-card class="xp-mock">
+      <mat-card-content>
+        <p class="mock-gain" i18n="@@landing.xp.mock.gain">+30 XP</p>
+        <p class="mock-caption" i18n="@@landing.xp.mock.caption">
+          10 Klimmzüge gespeichert
+        </p>
+        <div class="mock-level">
+          <span class="mock-level-badge" i18n="@@landing.xp.mock.level"
+            >Level 12</span
+          >
+          <span class="mock-level-next" i18n="@@landing.xp.mock.next"
+            >noch 340 XP bis Level 13</span
+          >
+        </div>
+        <div class="mock-bar"><span class="mock-bar-fill"></span></div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>

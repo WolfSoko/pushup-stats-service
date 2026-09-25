@@ -10,7 +10,7 @@ import {
   type AchievementProgress,
 } from './achievements/logic';
 import { db } from './firebase-app';
-import { writeNotification } from './notifications';
+import { notifyAchievementsAwarded } from './achievements/notify';
 
 const COLLECTION = 'userAchievements';
 
@@ -102,27 +102,7 @@ export const awardAchievementsOnPlanWrite = onDocumentWritten(
 
     if (awarded.length === 0) return;
 
-    // Outside the transaction: a retry would otherwise re-file every entry.
-    // The deterministic id makes that harmless, but a wasted write per
-    // retry is still a wasted write.
-    const createdAt = new Date().toISOString();
-    await Promise.all(
-      awarded.map((achievementId) =>
-        writeNotification(
-          userId,
-          { type: 'achievement', achievementId },
-          {
-            type: 'achievement',
-            createdAt,
-            readAt: null,
-            actorUid: null,
-            actorName: null,
-            url: '/abzeichen',
-            payload: { achievementId },
-          }
-        )
-      )
-    );
+    await notifyAchievementsAwarded(userId, awarded);
 
     logger.info('awardAchievementsOnPlanWrite: awarded', {
       userId,

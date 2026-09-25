@@ -44,6 +44,7 @@ import { DailyGoalChecklistComponent } from '../../core/daily-goal/daily-goal-ch
 import { registerDashboardDeepLinks } from './stats-dashboard.deep-links';
 import { AdSlotComponent } from '@pu-stats/ads';
 import { AllTimeBadgesComponent } from '../dashboard/all-time-badges.component';
+import { LevelCardComponent } from '../components/level-card/level-card.component';
 import {
   AnalysisTeaserSkeletonComponent,
   RecentExercisesSkeletonComponent,
@@ -93,6 +94,7 @@ import {
     MatSnackBarModule,
     DatePipe,
     AllTimeBadgesComponent,
+    LevelCardComponent,
     AnalysisTeaserCardComponent,
     AnalysisTeaserSkeletonComponent,
     RecentExercisesSkeletonComponent,

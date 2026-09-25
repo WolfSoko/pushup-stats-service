@@ -32,8 +32,10 @@ Stel je eigen workout samen: oefeningen, doelen en sets in jouw volgorde. De app
 • Voortgangsbalken, confetti bij je doel, streakteller om het vol te houden
 • Heatmapkalender over weken en maanden
 • Analyse met verloopgrafieken, KPI-kaarten en vergelijking per categorie
-• Records: beste dag, beste set, beste losse sessie
 • Badges voor mijlpalen — behaalde en nog open in één oogopslag
+
+⭐ PUNTEN & LEVELS
+Elke oefening levert XP op — per herhaling, minuut of kilometer, ook met terugwerkende kracht voor al je eerdere invoer. Stijg in level, verzamel levelbadges en meet je met anderen in het XP-klassement.
 
 🏆 RANGLIJST & PROFIEL
 Meet je met anderen of blijf privé. Ranglijsten voor vandaag, de laatste 7 en 30 dagen. Je profiel deel je met een link: totaal aantal reps, streak, records, heatmap, je laatste 10 workouts en het actieve plan — elke tegel zet je los op uit, alleen vrienden of openbaar.
@@ -46,9 +48,6 @@ Meldingen met interval, stille uren, weekdagen en tijdzone — ook met de app di
 
 🔒 JOUW GEGEVENS
 Probeer het als gast, zonder account. AVG-proof met aanpasbare cookietoestemming. Account altijd te verwijderen, samen met al je trainingsgegevens. Database in Frankfurt.
-
-📚 WETEN IN PLAATS VAN GOKKEN
-Oefeningenwiki met nette uitvoering en klassieke fouten, plus een blog.
 
 📱 ANDROID + WEB
 Dezelfde gegevens op je telefoon en in de browser, live gesynchroniseerd op al je toestellen. Inloggen met Google of e-mail. Offline werkt ook — invoer synchroniseert zodra je weer online bent. Licht en donker thema.

@@ -6,6 +6,7 @@ import {
   inject,
   OnInit,
   PLATFORM_ID,
+  LOCALE_ID,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -196,6 +197,7 @@ export class FriendsTeaserCardComponent implements OnInit {
   private readonly user = inject(UserContextService);
   private readonly invites = inject(InviteService);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly locale = inject(LOCALE_ID);
   protected readonly inviting = createBusyState();
 
   protected readonly visible = computed(
@@ -233,7 +235,11 @@ export class FriendsTeaserCardComponent implements OnInit {
   }
 
   protected valueLabel(entry: { value: number }): string {
-    return boardValueLabel(this.friends.boardComparison().metric, entry.value);
+    return boardValueLabel(
+      this.friends.boardComparison().metric,
+      entry.value,
+      this.locale
+    );
   }
 
   protected label(entry: { isViewer: boolean; displayName: string | null }) {

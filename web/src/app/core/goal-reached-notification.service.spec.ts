@@ -13,6 +13,8 @@ import {
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
 import { GoalReachedNotificationService } from './goal-reached-notification.service';
 import { UserConfigStore } from './user-config.store';
+import { CelebrationQueueService } from './celebration-queue.service';
+import { immediateCelebrationQueue } from './celebration-queue.testing';
 
 describe('GoalReachedNotificationService', () => {
   // Frozen Berlin date: Wed Apr 22 2026 (ISO week 17)
@@ -103,6 +105,10 @@ describe('GoalReachedNotificationService', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: MatDialog, useValue: dialogMock },
+        {
+          provide: CelebrationQueueService,
+          useValue: immediateCelebrationQueue(),
+        },
         { provide: LiveDataStore, useValue: liveStoreMock },
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
@@ -989,6 +995,7 @@ describe('GoalReachedNotificationService', () => {
       // (proves the cleanup subscription releases the per-kind slot).
       afterClosed.next(null);
       afterClosed.complete();
+      await flushAll();
       service.reopen('daily');
       await flushAll();
       expect(dialogOpenSpy).toHaveBeenCalledTimes(1);

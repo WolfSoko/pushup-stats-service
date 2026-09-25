@@ -20,6 +20,7 @@ import { TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
 import {
   LEADERBOARD_PUSHUP_ID,
+  LEADERBOARD_XP_ID,
   LeaderboardData,
   LeaderboardService,
 } from '@pu-stats/data-access';
@@ -35,118 +36,114 @@ const emptyLeaderboard: LeaderboardData = {
 
 function makeApiMock(): {
   load: jest.Mock<Promise<LeaderboardData>, [string?]>;
-  observeSnapshot: jest.Mock<Subject<unknown>, []>;
-  observeExerciseSnapshot: jest.Mock<Subject<unknown>, []>;
-  snapshot$: Subject<unknown>;
-  exerciseSnapshot$: Subject<unknown>;
+  observe: jest.Mock<Subject<LeaderboardData>, [string]>;
+  board$: (boardId: string) => Subject<LeaderboardData>;
 } {
-  const snapshot$ = new Subject<unknown>();
-  const exerciseSnapshot$ = new Subject<unknown>();
+  const boards = new Map<string, Subject<LeaderboardData>>();
+  const board$ = (boardId: string) => {
+    let subject = boards.get(boardId);
+    if (!subject) {
+      subject = new Subject<LeaderboardData>();
+      boards.set(boardId, subject);
+    }
+    return subject;
+  };
   return {
     load: jest.fn().mockResolvedValue(emptyLeaderboard),
-    observeSnapshot: jest.fn().mockReturnValue(snapshot$.asObservable()),
-    observeExerciseSnapshot: jest
-      .fn()
-      .mockReturnValue(exerciseSnapshot$.asObservable()),
-    snapshot$,
-    exerciseSnapshot$,
+    observe: jest.fn((boardId: string) => board$(boardId)),
+    board$,
   };
 }
 
-describe('LeaderboardStore — live snapshot reload', () => {
-  describe('Given the app is running in the browser', () => {
-    it('Then it subscribes to observeExerciseSnapshot on init and does NOT subscribe to the legacy pushup snapshot', () => {
-      // Given
-      const api = makeApiMock();
-      TestBed.configureTestingModule({
-        providers: [
-          { provide: PLATFORM_ID, useValue: 'browser' },
-          { provide: LeaderboardService, useValue: api },
-        ],
-      });
+function withTop(alias: string): LeaderboardData {
+  return {
+    ...emptyLeaderboard,
+    daily: { top: [{ alias, reps: 10, rank: 1 }], current: null },
+  };
+}
 
-      // When
-      TestBed.inject(LeaderboardStore);
-
-      // Then — only the exercise snapshot listener is registered; pushups
-      // are ranked in the exercises doc post-cutover, so no separate
-      // pushup-snapshot subscription is needed.
-      expect(api.observeExerciseSnapshot).toHaveBeenCalledTimes(1);
-      expect(api.observeSnapshot).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('Given the app is running on the server', () => {
-    it('Then no live subscription is opened (SSR has no Firestore listener)', () => {
-      // Given
-      const api = makeApiMock();
-      TestBed.configureTestingModule({
-        providers: [
-          { provide: PLATFORM_ID, useValue: 'server' },
-          { provide: LeaderboardService, useValue: api },
-        ],
-      });
-
-      // When
-      TestBed.inject(LeaderboardStore);
-
-      // Then
-      expect(api.observeSnapshot).not.toHaveBeenCalled();
-      expect(api.observeExerciseSnapshot).not.toHaveBeenCalled();
-    });
-  });
-});
-
-describe('LeaderboardStore — exercise snapshot reload', () => {
-  it('Force-reloads every cached exerciseId (incl pushup) when the exercise snapshot doc emits', async () => {
-    // Given — the store has the pushup bucket and two exercise buckets
-    // already cached from earlier user navigation.
+describe('LeaderboardStore — live board updates', () => {
+  function setup(platform: 'browser' | 'server' = 'browser') {
     const api = makeApiMock();
     TestBed.configureTestingModule({
       providers: [
-        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: PLATFORM_ID, useValue: platform },
         { provide: LeaderboardService, useValue: api },
       ],
     });
-    const store = TestBed.inject(LeaderboardStore);
-    await store.load(LEADERBOARD_PUSHUP_ID);
-    await store.load('legs.squats');
-    await store.load('plank.standard');
-    expect(api.load).toHaveBeenCalledTimes(3);
+    return { api, store: TestBed.inject(LeaderboardStore) };
+  }
 
-    // When — the Cloud Function rewrites `leaderboards/exercises`.
-    api.exerciseSnapshot$.next({ rev: 1 });
-    await Promise.resolve();
-    await Promise.resolve();
+  it('should open no listener before a board is loaded', () => {
+    // given / when
+    const { api } = setup();
 
-    // Then — every cached bucket gets refetched so the user sees the
-    // newly rebuilt rankings without manually re-selecting. Post Phase-7
-    // cutover pushups are ranked in `leaderboards/exercises` too, so the
-    // pushup bucket is refreshed by this sub like any other exercise.
-    expect(api.load).toHaveBeenCalledWith('legs.squats');
-    expect(api.load).toHaveBeenCalledWith('plank.standard');
-    const pushupForceReloads = api.load.mock.calls.filter(
-      ([id]) => id === LEADERBOARD_PUSHUP_ID
-    ).length;
-    expect(pushupForceReloads).toBe(2); // initial load + exercise-snapshot refresh
+    // then
+    expect(api.observe).not.toHaveBeenCalled();
   });
 
-  it('Tears down the exercise snapshot subscription on injector destroy', () => {
+  it('should listen to a board once it has been loaded, one listener per board', async () => {
     // given
-    const api = makeApiMock();
-    TestBed.configureTestingModule({
-      providers: [
-        { provide: PLATFORM_ID, useValue: 'browser' },
-        { provide: LeaderboardService, useValue: api },
-      ],
-    });
-    TestBed.inject(LeaderboardStore);
+    const { api, store } = setup();
+
     // when
-    expect(api.exerciseSnapshot$.observed).toBe(true);
+    await store.load(LEADERBOARD_XP_ID);
+    await store.load(LEADERBOARD_XP_ID, { force: true });
+    await store.load('legs.squats');
+
+    // then
+    expect(api.observe.mock.calls).toEqual([
+      [LEADERBOARD_XP_ID],
+      ['legs.squats'],
+    ]);
+  });
+
+  it('should put an emitted board straight into the cache without re-reading', async () => {
+    // given
+    const { api, store } = setup();
+    await store.load(LEADERBOARD_XP_ID);
+    await store.load('legs.squats');
+    api.load.mockClear();
+    const xpTop = store.entriesForPeriod(
+      () => LEADERBOARD_XP_ID,
+      () => 'daily'
+    );
+    const squatTop = store.entriesForPeriod(
+      () => 'legs.squats',
+      () => 'daily'
+    );
+
+    // when
+    api.board$(LEADERBOARD_XP_ID).next(withTop('Ada'));
+
+    // then
+    expect(xpTop().map((e) => e.alias)).toEqual(['Ada']);
+    expect(squatTop()).toEqual([]);
+    expect(api.load).not.toHaveBeenCalled();
+  });
+
+  it('should not listen on the server', async () => {
+    // given
+    const { api, store } = setup('server');
+
+    // when
+    await store.load(LEADERBOARD_PUSHUP_ID);
+
+    // then
+    expect(api.observe).not.toHaveBeenCalled();
+  });
+
+  it('should tear down every board listener on destroy', async () => {
+    // given
+    const { api, store } = setup();
+    await store.load(LEADERBOARD_XP_ID);
+    expect(api.board$(LEADERBOARD_XP_ID).observed).toBe(true);
+
+    // when
     TestBed.resetTestingModule();
-    // then — exercise subscription torn down; pushup snapshot was never opened
-    expect(api.exerciseSnapshot$.observed).toBe(false);
-    expect(api.snapshot$.observed).toBe(false);
+
+    // then
+    expect(api.board$(LEADERBOARD_XP_ID).observed).toBe(false);
   });
 });
 

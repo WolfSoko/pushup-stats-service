@@ -44,6 +44,20 @@ describe('resolveAchievementBadge', () => {
     );
   });
 
+  it('should label a level badge with its level', () => {
+    // when / then
+    expect(resolveAchievementBadge('level-20')?.label).toBe(
+      'Level 20 erreicht'
+    );
+  });
+
+  it('should label a variety badge with its category count', () => {
+    // when / then
+    expect(resolveAchievementBadge('variety-5')?.label).toBe(
+      'Vielseitig: 5 Kategorien'
+    );
+  });
+
   it('should skip ids no catalog knows rather than break the page', () => {
     // when / then
     expect(resolveAchievementBadge('invites-7')).toBeNull();

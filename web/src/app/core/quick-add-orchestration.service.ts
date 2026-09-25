@@ -15,11 +15,7 @@ import { firstValueFrom } from 'rxjs';
 
 import { AppDataFacade } from './app-data.facade';
 import { QuickAddCaptureFlowService } from './quick-add-capture-flow.service';
-import {
-  notifyEntrySaved,
-  notifyError,
-  notifyGoalReached,
-} from './quick-add-notify';
+import { notifyError, notifyGoalReached } from './quick-add-notify';
 
 @Injectable({ providedIn: 'root' })
 export class QuickAddOrchestrationService {
@@ -72,7 +68,6 @@ export class QuickAddOrchestrationService {
           source: 'quick-add',
         })
       );
-      notifyEntrySaved(this.snackBar);
       this.appData.reloadAfterMutation();
     } catch (err) {
       notifyError(this.snackBar, err);
@@ -84,7 +79,6 @@ export class QuickAddOrchestrationService {
     if (!entry$) return;
     try {
       await firstValueFrom(entry$);
-      notifyEntrySaved(this.snackBar);
       this.appData.reloadAfterMutation();
     } catch (err) {
       notifyError(this.snackBar, err);

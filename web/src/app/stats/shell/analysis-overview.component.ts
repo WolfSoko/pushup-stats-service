@@ -13,6 +13,7 @@ import { AnalysisStore } from '../analysis.store';
 import { CategoryComparisonChartComponent } from '../components/category-comparison-chart/category-comparison-chart.component';
 import { CategorySummaryCardComponent } from '../components/category-summary-card/category-summary-card.component';
 import { ExerciseBreakdownControlsComponent } from '../components/exercise-breakdown-controls/exercise-breakdown-controls.component';
+import { XpAnalysisCardComponent } from '../components/xp-analysis-card/xp-analysis-card.component';
 import { AnalysisGroupViewComponent } from './analysis-group-view.component';
 
 /**
@@ -41,6 +42,7 @@ import { AnalysisGroupViewComponent } from './analysis-group-view.component';
     CategorySummaryCardComponent,
     ExerciseBreakdownControlsComponent,
     AnalysisGroupViewComponent,
+    XpAnalysisCardComponent,
   ],
   template: `
     @if (showCategoryOverview()) {
@@ -59,6 +61,8 @@ import { AnalysisGroupViewComponent } from './analysis-group-view.component';
           />
         </mat-card-content>
       </mat-card>
+
+      <app-xp-analysis-card />
 
       <section class="cards" data-testid="analysis-overview-cards">
         @for (summary of store.categorySummaries(); track summary.categoryId) {

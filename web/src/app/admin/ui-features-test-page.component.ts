@@ -17,6 +17,7 @@ import {
 } from '@pu-stats/models';
 import { AchievementCelebrationService } from '../achievements/achievement-celebration.service';
 import { CheerAnimationStore } from '../core/cheer-animation.store';
+import { XpCelebrationService } from '../core/xp/xp-celebration.service';
 import { resolveAchievementBadges } from '../public-profile/achievement-badge';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 
@@ -121,6 +122,42 @@ import { PageHeaderComponent } from '../core/page-header/page-header.component';
           </button>
         </mat-card-actions>
       </mat-card>
+
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title i18n="@@admin.uiFeatures.xp.title"
+            >XP-Erfolgsdialog</mat-card-title
+          >
+        </mat-card-header>
+        <mat-card-content>
+          <p i18n="@@admin.uiFeatures.xp.description">
+            Öffnet den Dialog, der nach dem Speichern eines Eintrags die
+            verdienten XP zeigt — mit Beispielwerten, wahlweise mit Level-Up.
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button
+            mat-flat-button
+            type="button"
+            data-testid="preview-xp-dialog"
+            (click)="previewXpDialog(false)"
+          >
+            <mat-icon>bolt</mat-icon>
+            <span i18n="@@admin.uiFeatures.xp.preview">XP-Dialog</span>
+          </button>
+          <button
+            mat-stroked-button
+            type="button"
+            data-testid="preview-xp-level-up"
+            (click)="previewXpDialog(true)"
+          >
+            <mat-icon>military_tech</mat-icon>
+            <span i18n="@@admin.uiFeatures.xp.previewLevelUp"
+              >Mit Level-Up</span
+            >
+          </button>
+        </mat-card-actions>
+      </mat-card>
     </div>
   `,
   styles: `
@@ -140,6 +177,7 @@ import { PageHeaderComponent } from '../core/page-header/page-header.component';
 export class UiFeaturesTestPageComponent {
   private readonly cheerAnimation = inject(CheerAnimationStore);
   private readonly achievements = inject(AchievementCelebrationService);
+  private readonly xpCelebration = inject(XpCelebrationService);
 
   private readonly previewSender = $localize`:@@admin.uiFeatures.cheer.previewSender:Vorschau`;
 
@@ -153,6 +191,10 @@ export class UiFeaturesTestPageComponent {
 
   previewCheerAnimation(): void {
     this.cheerAnimation.play(this.previewSender);
+  }
+
+  previewXpDialog(levelUp: boolean): void {
+    this.xpCelebration.showPreview(levelUp);
   }
 
   previewBadgeDialog(): void {

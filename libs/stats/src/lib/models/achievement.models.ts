@@ -12,10 +12,20 @@
  * both are unit-testable without Firebase.
  */
 
+import {
+  LEVEL_ACHIEVEMENTS,
+  VARIETY_ACHIEVEMENTS,
+} from './xp-achievement.models';
+
 /** Stable id of an earned achievement. Never rename — it is the doc id. */
 export type AchievementId = string;
 
-export type AchievementKind = 'plan-days' | 'plan-completed' | 'invites';
+export type AchievementKind =
+  | 'plan-days'
+  | 'plan-completed'
+  | 'invites'
+  | 'level'
+  | 'variety';
 
 export interface AchievementDefinition {
   readonly id: AchievementId;
@@ -25,6 +35,8 @@ export interface AchievementDefinition {
   /**
    * For `plan-days`: how many completed plan days unlock it.
    * For `invites`: how many friends joined through the user's link.
+   * For `level`: the level that unlocks it.
+   * For `variety`: how many exercise categories need XP.
    * For `plan-completed`: unset — the badge is tied to `planId`.
    */
   readonly threshold?: number;
@@ -148,6 +160,10 @@ export function findAchievementDefinition(
   if (milestone) return milestone;
   const invite = INVITE_ACHIEVEMENTS.find((a) => a.id === id);
   if (invite) return invite;
+  const xpBadge = [...LEVEL_ACHIEVEMENTS, ...VARIETY_ACHIEVEMENTS].find(
+    (a) => a.id === id
+  );
+  if (xpBadge) return xpBadge;
   const planMatch = /^plan-completed-(.+)$/.exec(id);
   return planMatch ? planCompletedAchievement(planMatch[1]) : null;
 }

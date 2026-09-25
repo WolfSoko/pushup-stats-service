@@ -191,27 +191,10 @@
                 <h3>{{ entry.name }}</h3>
               </mat-card-title>
               <mat-card-subtitle>
-                <mat-chip-set>
-                  @if (entry.difficulty === 'beginner') {
-                    <mat-chip
-                      class="difficulty-chip beginner"
-                      i18n="@@wiki.pushupTypes.level.beginner"
-                      >Einsteiger</mat-chip
-                    >
-                  } @else if (entry.difficulty === 'intermediate') {
-                    <mat-chip
-                      class="difficulty-chip intermediate"
-                      i18n="@@wiki.pushupTypes.level.intermediate"
-                      >Mittelstufe</mat-chip
-                    >
-                  } @else {
-                    <mat-chip
-                      class="difficulty-chip advanced"
-                      i18n="@@wiki.pushupTypes.level.advanced"
-                      >Fortgeschritten</mat-chip
-                    >
-                  }
-                </mat-chip-set>
+                <app-wiki-difficulty-chips
+                  [difficulty]="entry.difficulty"
+                  [exerciseId]="entry.id"
+                />
               </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>

@@ -6,6 +6,7 @@ import {
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { UserContextService } from '@pu-auth/auth';
 import { of } from 'rxjs';
 import { AdminPageComponent } from './admin-page.component';
 import { AdminUser } from './admin-page.models';
@@ -71,6 +72,8 @@ describe('AdminPageComponent', () => {
             isKnown: signal(true),
           },
         },
+        // The XP rate editor stamps saves with the admin uid.
+        { provide: UserContextService, useValue: { userIdSafe: signal('') } },
         provideRouter([]),
       ],
     }).compileComponents();

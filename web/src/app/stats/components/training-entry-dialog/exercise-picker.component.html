@@ -41,7 +41,16 @@
     @for (group of filteredGroups(); track group.key) {
       <mat-optgroup [label]="group.label">
         @for (option of group.options; track option.id) {
-          <mat-option [value]="option.id">{{ option.label }}</mat-option>
+          <mat-option [value]="option.id">
+            <span class="picker-option">
+              <span>{{ option.label }}</span>
+              @if (rateLabel(option.id); as rate) {
+                <span class="picker-option-xp" data-testid="picker-option-xp">{{
+                  rate
+                }}</span>
+              }
+            </span>
+          </mat-option>
         }
       </mat-optgroup>
     }

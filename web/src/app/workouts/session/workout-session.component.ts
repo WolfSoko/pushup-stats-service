@@ -17,6 +17,7 @@ import { createKeyedBusyState } from '@pu-stats/ui';
 
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';
 import { WakeLockService } from '../../core/wake-lock.service';
+import { holdXpUntilDone } from '../../core/xp/xp-session-hold';
 import { WORKOUT_SESSION_ENTRY_SOURCE } from '../../training-plans/session/session-capture.helpers';
 import {
   SESSION_ENTRY_SOURCE_TOKEN,
@@ -89,6 +90,10 @@ export class WorkoutSessionComponent {
   constructor() {
     inject(WakeLockService).keepAwakeWhile(
       () => this.session.phase() === 'rest'
+    );
+    holdXpUntilDone(
+      () => this.session.phase() === 'done',
+      [WORKOUT_SESSION_ENTRY_SOURCE]
     );
     effect(() => {
       const id = this.params().get('id');

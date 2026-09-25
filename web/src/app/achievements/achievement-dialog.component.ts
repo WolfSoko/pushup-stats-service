@@ -15,6 +15,7 @@ import { BRAND_NAME } from '@pu-stats/models';
 import { ShareService } from '../core/share.service';
 import { snapElement } from '../core/snap-element';
 import type { AchievementBadge } from '../public-profile/achievement-badge';
+import { prefersReducedMotion } from '../core/reduced-motion';
 
 export const ACHIEVEMENT_SNAP_DURATION_MS = 4000;
 
@@ -37,12 +38,6 @@ export interface AchievementDialogData {
 }
 
 const RAY_COUNT = 12;
-
-function prefersReducedMotion(): boolean {
-  return (
-    globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
-  );
-}
 
 @Component({
   selector: 'app-achievement-dialog',

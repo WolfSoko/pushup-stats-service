@@ -604,6 +604,29 @@ describe('FriendsPageComponent', () => {
       expect(screen.queryByRole('option', { name: 'Gesamt' })).toBeNull();
     });
 
+    it('should switch the board to XP across all exercises when picked', async () => {
+      // given
+      const { api, fixture } = await renderPage(
+        { friends: [row()] },
+        {},
+        entries
+      );
+      api.board.mockClear();
+
+      // when
+      (screen.getByTestId('board-comparison') as HTMLElement).click();
+      await fixture.whenStable();
+      (
+        screen.getByRole('option', { name: 'XP (alle Übungen)' }) as HTMLElement
+      ).click();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then — XP has a today bucket, so the "Heute" chip appears
+      expect(api.board).toHaveBeenLastCalledWith('week', { metric: 'xp' });
+      expect(screen.getByRole('option', { name: 'Heute' })).toBeTruthy();
+    });
+
     it('should link every name on the board to that profile', async () => {
       // given
       await renderPage({ friends: [row()] }, {}, entries);

@@ -1,0 +1,90 @@
+<section
+  class="xp-card"
+  [class.is-level-up]="phase() === 'levelup'"
+  (animationend)="$event.target === countdown ? close() : null"
+>
+  <div class="glow" aria-hidden="true"></div>
+
+  <p class="eyebrow" i18n="@@xp.gained.eyebrow">Erfahrung gesammelt</p>
+
+  <div class="burst" aria-hidden="true">
+    <span class="ring"></span>
+    <span class="ring ring--late"></span>
+    @for (spark of sparks; track $index) {
+      <span
+        class="spark"
+        [style.--a]="spark.angle + 'deg'"
+        [style.--d]="spark.distance + 'px'"
+        [style.--delay]="spark.delay + 'ms'"
+      ></span>
+    }
+  </div>
+
+  <h2 class="gain" [id]="data.titleId">
+    <span class="gain-plus">+</span>
+    <span class="gain-value">{{ displayXp() | number }}</span>
+    <span class="gain-unit">XP</span>
+  </h2>
+
+  @if (phase() === 'levelup') {
+    <div class="level-up" role="status">
+      <span class="level-up-kicker" i18n="@@xp.gained.levelUp">Level-Up!</span>
+      <span class="level-up-text" i18n="@@xp.gained.levelReached"
+        >Level {{ data.after.level }} erreicht!</span
+      >
+    </div>
+  }
+
+  <div class="progress">
+    <div class="progress-head">
+      <span class="level-chip">
+        <mat-icon aria-hidden="true">bolt</mat-icon>
+        <span i18n="@@xp.gained.level">Level {{ bar().level }}</span>
+      </span>
+      @if (phase() === 'levelup' || !levelUp) {
+        <span class="progress-numbers" i18n="@@xp.gained.toNext"
+          >{{ data.after.intoLevel | number }} /
+          {{ data.after.levelSpan | number }} XP</span
+        >
+      }
+    </div>
+    <div class="track">
+      @if (phase() === 'levelup') {
+        <span
+          class="fill fill--new"
+          [style.--from]="bar().from"
+          [style.--to]="bar().to"
+        ></span>
+      } @else {
+        <span
+          class="fill"
+          [style.--from]="bar().from"
+          [style.--to]="bar().to"
+        ></span>
+      }
+    </div>
+  </div>
+
+  @if (data.lines.length > 0) {
+    <ul class="lines">
+      @for (line of data.lines; track line.label) {
+        <li class="line">
+          <span class="line-label">{{ line.label }}</span>
+          <span class="line-value">{{ line.value }}</span>
+          <span class="line-xp">+{{ line.xp | number }}</span>
+        </li>
+      }
+    </ul>
+  }
+
+  <button mat-flat-button class="continue" (click)="close()">
+    <span i18n="@@xp.gained.continue">Weiter</span>
+  </button>
+
+  <span
+    #countdown
+    class="countdown"
+    [class.countdown--long]="levelUp"
+    aria-hidden="true"
+  ></span>
+</section>

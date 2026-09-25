@@ -4,7 +4,6 @@ import {
   patchState,
   signalStore,
   withComputed,
-  withHooks,
   withMethods,
   withProps,
   withState,
@@ -17,6 +16,7 @@ import {
   LeaderboardService,
 } from '@pu-stats/data-access';
 import { createKeyedBusyState } from '@pu-stats/ui';
+import type { Subscription } from 'rxjs';
 
 type LeaderboardState = {
   /**
@@ -60,7 +60,7 @@ export const LeaderboardStore = signalStore(
   withComputed((store) => ({
     loaded: computed(() => Object.keys(store.data()).length > 0),
   })),
-  withMethods(({ _api, busy, ...store }) => {
+  withMethods(({ _api, busy, _isBrowser, _destroyRef, ...store }) => {
     // Tracks loads currently awaiting `_api.load(exerciseId)`, keyed by
     // exerciseId. The `loading` signal reflects "any load in flight" —
     // simpler than a per-exerciseId loading map and matches the
@@ -70,6 +70,25 @@ export const LeaderboardStore = signalStore(
     // finishes — e.g. a snapshot live-reload fired while a slow load
     // was already running. Dropping these would silently lose updates.
     const reloadPending = new Set<string>();
+    // One live listener per board, opened after its first load: a board
+    // nobody opened costs no listener, and each snapshot rebuild lands
+    // in the cache straight from the emitted doc.
+    const live = new Map<string, Subscription>();
+    _destroyRef.onDestroy(() => live.forEach((sub) => sub.unsubscribe()));
+
+    function watch(boardId: string): void {
+      if (!_api || !_isBrowser || live.has(boardId)) return;
+      live.set(
+        boardId,
+        _api.observe(boardId).subscribe({
+          next: (data) =>
+            patchState(store, { data: { ...store.data(), [boardId]: data } }),
+          error: () => {
+            /* swallow — leaderboard is non-critical, keep the one-shot load */
+          },
+        })
+      );
+    }
 
     async function performLoad(exerciseId: string): Promise<void> {
       inFlight.add(exerciseId);
@@ -87,6 +106,7 @@ export const LeaderboardStore = signalStore(
           data: { ...store.data(), [exerciseId]: data },
           loading: inFlight.size > 1,
         });
+        watch(exerciseId);
       } catch (err) {
         patchState(store, {
           error: err instanceof Error ? err.message : String(err),
@@ -158,36 +178,5 @@ export const LeaderboardStore = signalStore(
         return computed(() => store.data()[exerciseId()]?.updatedAt ?? null);
       },
     };
-  }),
-  withHooks({
-    onInit(store) {
-      // Live-refresh whenever the precomputed exercise leaderboard doc
-      // changes. We subscribe directly (not via `effect`) so the
-      // listener attaches synchronously at construction — tests can
-      // assert behaviour without flushing effects, and cleanup is
-      // hooked into `DestroyRef` for symmetric tear-down.
-      if (!store._isBrowser || !store._api) return;
-
-      // `leaderboards/exercises` mutates after the per-exercise ranker
-      // rewrites it. Without this subscription a user who opens the
-      // page before the first post-deploy snapshot exists would cache
-      // an empty bucket and never see it refill, because
-      // `load(exerciseId)` short-circuits on cache hits. Force-reload
-      // every already-cached exerciseId on each emission so the visible
-      // leaderboard stays fresh. Pushups are ranked here like any other
-      // exercise.
-      const exerciseSub = store._api.observeExerciseSnapshot().subscribe({
-        next: () => {
-          const cachedExerciseIds = Object.keys(store.data());
-          for (const exerciseId of cachedExerciseIds) {
-            void store.load(exerciseId, { force: true });
-          }
-        },
-        error: () => {
-          /* swallow — leaderboard is non-critical, fall back to one-shot load */
-        },
-      });
-      store._destroyRef.onDestroy(() => exerciseSub.unsubscribe());
-    },
   })
 );

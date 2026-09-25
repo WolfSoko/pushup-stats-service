@@ -6,6 +6,9 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { patchState } from '@ngrx/signals';
+import { unprotected } from '@ngrx/signals/testing';
+import { XpStore } from '@pu-stats/data-access-state';
 
 import { ExercisePickerComponent } from './exercise-picker.component';
 import { ExerciseSuggestions } from './training-entry-dialog.models';
@@ -240,5 +243,28 @@ describe('ExercisePickerComponent', () => {
     ).map((el) => (el.textContent ?? '').trim());
     expect(component.showWikiLink()).toBe(false);
     expect(suffixIcons).toEqual(['search']);
+  });
+
+  it('should label each option with its XP rate at the default without admin overrides', () => {
+    // given / when
+    const { component } = render();
+
+    // then
+    expect(component.rateLabel('pull.pullups')).toBe('3 XP / Wdh.');
+    expect(component.rateLabel('plank.standard')).toBe('8 XP / Min.');
+  });
+
+  it('should label an option with the admin rate once the config is loaded', () => {
+    // given
+    const { component } = render();
+    const store = TestBed.inject(XpStore);
+
+    // when
+    patchState(unprotected(store), {
+      config: { rates: { 'pull.pullups': 5 } },
+    });
+
+    // then
+    expect(component.rateLabel('pull.pullups')).toBe('5 XP / Wdh.');
   });
 });

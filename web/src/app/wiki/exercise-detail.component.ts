@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatChipsModule } from '@angular/material/chips';
+import { WikiDifficultyChipsComponent } from './wiki-difficulty-chips.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
@@ -50,7 +50,7 @@ export const EXERCISE_WIKI_LOCALIZER = new InjectionToken<
     RouterLink,
     MatButtonModule,
     MatCardModule,
-    MatChipsModule,
+    WikiDifficultyChipsComponent,
     MatIconModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -68,27 +68,10 @@ export const EXERCISE_WIKI_LOCALIZER = new InjectionToken<
             Übungen
           </a>
           <h1>{{ name }}</h1>
-          <mat-chip-set aria-label="Schwierigkeitsgrad">
-            @if (entry.difficulty === 'beginner') {
-              <mat-chip
-                class="difficulty-chip beginner"
-                i18n="@@wiki.pushupTypes.level.beginner"
-                >Einsteiger</mat-chip
-              >
-            } @else if (entry.difficulty === 'intermediate') {
-              <mat-chip
-                class="difficulty-chip intermediate"
-                i18n="@@wiki.pushupTypes.level.intermediate"
-                >Mittelstufe</mat-chip
-              >
-            } @else {
-              <mat-chip
-                class="difficulty-chip advanced"
-                i18n="@@wiki.pushupTypes.level.advanced"
-                >Fortgeschritten</mat-chip
-              >
-            }
-          </mat-chip-set>
+          <app-wiki-difficulty-chips
+            [difficulty]="entry.difficulty"
+            [exerciseId]="entry.id"
+          />
           <p class="summary">{{ summary }}</p>
         </header>
 

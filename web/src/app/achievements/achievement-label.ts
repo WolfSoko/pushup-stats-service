@@ -1,4 +1,5 @@
 import { TRAINING_PLANS, type AchievementDefinition } from '@pu-stats/models';
+import { xpBadgeLabel } from './xp-badge-label';
 
 /**
  * Badge labels for the owner's own collection.
@@ -27,6 +28,9 @@ export function achievementLabel(definition: AchievementDefinition): string {
       ? $localize`:@@achievements.label.firstInvite:Ersten Freund eingeladen`
       : $localize`:@@achievements.label.invites:${invites}:invites: Freunde eingeladen`;
   }
+
+  const xpLabel = xpBadgeLabel(definition);
+  if (xpLabel) return xpLabel;
 
   const days = definition.threshold ?? 0;
   return days === 1

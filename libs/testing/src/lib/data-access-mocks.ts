@@ -89,7 +89,7 @@ export function makeLeaderboardMock(
 ): Partial<LeaderboardService> {
   return {
     load: () => Promise.resolve(makeEmptyLeaderboard()),
-    observeSnapshot: () => EMPTY,
+    observe: () => EMPTY,
     ...overrides,
   };
 }

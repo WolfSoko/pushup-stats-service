@@ -51,19 +51,6 @@ h1 {
   line-height: 1.6;
   color: var(--mat-sys-on-surface-variant);
 }
-.difficulty-chip {
-  font-size: 0.78rem;
-  --mdc-chip-container-height: 24px;
-}
-.difficulty-chip.beginner {
-  --mdc-chip-elevated-container-color: rgba(76, 175, 80, 0.18);
-}
-.difficulty-chip.intermediate {
-  --mdc-chip-elevated-container-color: rgba(255, 167, 38, 0.2);
-}
-.difficulty-chip.advanced {
-  --mdc-chip-elevated-container-color: rgba(244, 67, 54, 0.2);
-}
 .detail-card {
   padding: 8px 4px;
 }

@@ -168,6 +168,23 @@ describe('buildOgTree achievements', () => {
     );
   });
 
+  it('should label invite, level and variety badges by their own kind', () => {
+    // when
+    const tree = buildOgTree(
+      { ...base, achievements: ['invites-3', 'level-10', 'variety-5'] },
+      'de'
+    );
+
+    // then
+    expect(labels(tree)).toEqual(
+      expect.arrayContaining([
+        '3 Freunde eingeladen',
+        'Level 10',
+        '5 Kategorien',
+      ])
+    );
+  });
+
   it('should localise the badge labels', () => {
     // when
     const tree = buildOgTree({ ...base, achievements: ['plan-days-1'] }, 'en');

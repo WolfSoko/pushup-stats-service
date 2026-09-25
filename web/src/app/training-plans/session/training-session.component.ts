@@ -20,6 +20,8 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
 import { TrainingPlanStore } from '../training-plan.store';
 import { isPlanActive } from '../training-plan-store.selectors';
 import { WakeLockService } from '../../core/wake-lock.service';
+import { holdXpUntilDone } from '../../core/xp/xp-session-hold';
+import { SESSION_ENTRY_SOURCE } from './session-capture.helpers';
 import { SessionCaptureService } from './session-capture.service';
 import { SessionIntroComponent } from './session-intro.component';
 import { SessionRestComponent } from './session-rest.component';
@@ -82,6 +84,10 @@ export class TrainingSessionComponent {
   constructor() {
     inject(WakeLockService).keepAwakeWhile(
       () => this.session.phase() === 'rest'
+    );
+    holdXpUntilDone(
+      () => this.session.phase() === 'done',
+      [SESSION_ENTRY_SOURCE, 'plan']
     );
   }
 

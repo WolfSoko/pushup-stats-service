@@ -1,4 +1,5 @@
 import { findAchievementDefinition } from '@pu-stats/models';
+import { xpBadgeLabel } from '../achievements/xp-badge-label';
 
 export interface AchievementBadge {
   readonly id: string;
@@ -41,6 +42,9 @@ export function resolveAchievementBadge(id: string): AchievementBadge | null {
           : $localize`:@@publicProfile.badge.invites:${invites}:invites: Freunde eingeladen`,
     };
   }
+
+  const xpLabel = xpBadgeLabel(definition);
+  if (xpLabel) return { id, icon: definition.icon, label: xpLabel };
 
   const days = definition.threshold ?? 0;
   const label =

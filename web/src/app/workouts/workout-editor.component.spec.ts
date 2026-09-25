@@ -102,7 +102,9 @@ describe('WorkoutEditorComponent', () => {
 
     // when
     await user.type(exerciseInput(), 'kniebeu');
-    await user.click(await screen.findByRole('option', { name: 'Kniebeugen' }));
+    await user.click(
+      await screen.findByRole('option', { name: /^Kniebeugen\b/ })
+    );
     await user.type(screen.getByTestId('workout-title'), 'Beine');
     await user.click(screen.getByTestId('workout-save'));
 
@@ -123,7 +125,9 @@ describe('WorkoutEditorComponent', () => {
 
     // when
     await user.click(exerciseInput());
-    await user.click(await screen.findByRole('option', { name: 'Kniebeugen' }));
+    await user.click(
+      await screen.findByRole('option', { name: /^Kniebeugen\b/ })
+    );
     await user.type(screen.getByTestId('workout-title'), 'Beine');
     await user.click(screen.getByTestId('workout-save'));
 

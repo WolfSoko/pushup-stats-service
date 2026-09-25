@@ -858,4 +858,35 @@ describe('ExerciseEntryFieldsComponent', () => {
       ).toBe(true);
     });
   });
+
+  it('should preview the XP of the entered reps in create mode', () => {
+    // given
+    const { component, fixture } = render('pull.pullups', null);
+
+    // when
+    component.state.updateSet(0, '10');
+    fixture.detectChanges();
+
+    // then
+    const preview = fixture.nativeElement.querySelector(
+      '[data-testid="xp-preview"]'
+    ) as HTMLElement | null;
+    expect(preview?.textContent).toContain('30 XP');
+  });
+
+  it('should not preview XP when editing an entry, whose rate is frozen', () => {
+    // given
+    const { fixture } = render('pull.pullups', {
+      kind: 'exercise',
+      exerciseId: 'pull.pullups',
+      timestamp: '2026-09-24T10:00',
+      reps: 10,
+      sets: [10],
+    });
+
+    // then
+    expect(
+      fixture.nativeElement.querySelector('[data-testid="xp-preview"]')
+    ).toBeNull();
+  });
 });

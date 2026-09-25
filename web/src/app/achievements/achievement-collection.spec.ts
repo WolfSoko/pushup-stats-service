@@ -1,8 +1,21 @@
-import { INVITE_MILESTONES, PLAN_DAY_MILESTONES } from '@pu-stats/models';
+import {
+  INVITE_MILESTONES,
+  LEVEL_MILESTONES,
+  PLAN_DAY_MILESTONES,
+  VARIETY_MILESTONES,
+} from '@pu-stats/models';
 
 import { buildAchievementCollection } from './achievement-collection';
 
-const EMPTY = { earned: [], planDayTotal: 0, invitedCount: 0 };
+// Level and variety maxed out so the plan/invite tests below compare only
+// their own counters when choosing the next badge.
+const EMPTY = {
+  earned: [],
+  planDayTotal: 0,
+  invitedCount: 0,
+  level: Math.max(...LEVEL_MILESTONES),
+  xpCategories: Math.max(...VARIETY_MILESTONES),
+};
 
 describe('buildAchievementCollection', () => {
   it('should list every catalog badge, locked ones included', () => {
@@ -23,6 +36,8 @@ describe('buildAchievementCollection', () => {
 
     // then
     expect(view.groups.map((g) => g.kind)).toEqual([
+      'level',
+      'variety',
       'plan-days',
       'plan-completed',
       'invites',
@@ -111,5 +126,34 @@ describe('buildAchievementCollection', () => {
 
     // then — plan completions remain locked but carry no distance to show
     expect(view.next).toBeNull();
+  });
+
+  it('should point at the next level badge with the current level as progress', () => {
+    // given level 8: the level-10 badge is two levels away
+    // when
+    const view = buildAchievementCollection({
+      ...EMPTY,
+      planDayTotal: Math.max(...PLAN_DAY_MILESTONES),
+      invitedCount: Math.max(...INVITE_MILESTONES),
+      level: 8,
+    });
+
+    // then
+    expect(view.next?.id).toBe('level-10');
+    expect(view.next?.progress).toEqual({ current: 8, target: 10 });
+  });
+
+  it('should count variety progress in exercise categories', () => {
+    // when
+    const view = buildAchievementCollection({
+      ...EMPTY,
+      planDayTotal: Math.max(...PLAN_DAY_MILESTONES),
+      invitedCount: Math.max(...INVITE_MILESTONES),
+      xpCategories: 4,
+    });
+
+    // then
+    expect(view.next?.id).toBe('variety-5');
+    expect(view.next?.label).toBe('Vielseitig: 5 Kategorien');
   });
 });

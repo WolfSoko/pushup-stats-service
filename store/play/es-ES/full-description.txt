@@ -32,8 +32,10 @@ Monta tu propio entrenamiento: ejercicios, objetivos y series en tu orden. La ap
 • Barras de progreso, confeti al llegar al objetivo, contador de racha para no fallar
 • Calendario heatmap por semanas y meses
 • Análisis con gráficas de evolución, tarjetas KPI y comparación por categoría
-• Récords: mejor día, mejor serie, mejor sesión
 • Insignias: conseguidas y pendientes
+
+⭐ PUNTOS Y NIVELES
+Cada ejercicio da XP: por repetición, minuto o kilómetro, también para tus registros anteriores. Sube de nivel, consigue insignias de nivel y compite en la clasificación de XP.
 
 🏆 CLASIFICACIÓN Y PERFIL
 Mídete con los demás o quédate en privado. Rankings de hoy, de los últimos 7 y 30 días. Tu perfil se comparte por enlace: repeticiones totales, racha, récords, heatmap, tus últimos 10 entrenamientos y el plan activo — cada tarjeta se pone por separado en oculta, solo amigos o pública.
@@ -43,9 +45,6 @@ Invita a tus amigos: vuestro tablero muestra quién va por delante esta semana. 
 
 🔔 RECORDATORIOS INTELIGENTES
 Notificaciones con intervalo, horas de silencio, días y zona horaria — también con la app cerrada. Un toque en «Registrar 50» en la notificación.
-
-📚 SABER EN VEZ DE ADIVINAR
-Wiki de ejercicios con la ejecución correcta y los errores típicos, además de un blog.
 
 🔒 TUS DATOS
 Pruébala como invitado, sin cuenta. Cumple el RGPD con consentimiento de cookies ajustable. Cuenta borrable en cualquier momento, junto con todos tus datos de entrenamiento. Base de datos en Fráncfort.

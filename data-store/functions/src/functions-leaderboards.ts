@@ -4,6 +4,7 @@ import { onSchedule } from 'firebase-functions/v2/scheduler';
 import { isPurgedEntryDeletion } from './account-deletion/tombstone';
 import { rebuildExerciseLeaderboardsCore } from './exercise-leaderboard/rebuild';
 import { db, TZ } from './firebase-app';
+import { rebuildXpLeaderboardCore } from './xp/leaderboard';
 
 // Scheduled rebuild every 15 min + a write-driven refresh so the snapshot
 // stays fresh between scheduled runs.
@@ -15,7 +16,10 @@ export const rebuildExerciseLeaderboards = onSchedule(
     retryCount: 1,
   },
   async () => {
-    await rebuildExerciseLeaderboardsCore({ includeAllTime: true });
+    await Promise.all([
+      rebuildExerciseLeaderboardsCore({ includeAllTime: true }),
+      rebuildXpLeaderboardCore(db, { includeAllTime: true }),
+    ]);
   }
 );
 

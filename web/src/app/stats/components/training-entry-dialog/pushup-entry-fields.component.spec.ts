@@ -172,4 +172,19 @@ describe('PushupEntryFieldsComponent', () => {
       expect(component.sourceControl.value).toBe('whatsapp');
     });
   });
+
+  it('should preview the XP of the entered pushups', () => {
+    // given
+    const { component, fixture } = render(null);
+
+    // when
+    component.updateSet(0, '25');
+    fixture.detectChanges();
+
+    // then
+    const preview = fixture.nativeElement.querySelector(
+      '[data-testid="xp-preview"]'
+    ) as HTMLElement | null;
+    expect(preview?.textContent).toContain('25 XP');
+  });
 });

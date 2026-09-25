@@ -1,0 +1,92 @@
+<h2 i18n="@@admin.xpRates.title">XP-Wertigkeiten</h2>
+<p class="muted" i18n="@@admin.xpRates.hint">
+  Wie viele XP eine Übung pro Wiederholung, Minute oder Kilometer bringt.
+  Änderungen gelten nur für Einträge, die ab jetzt gespeichert werden — bereits
+  verdiente XP bleiben unverändert.
+</p>
+
+@if (!state.loaded()) {
+  <mat-card>
+    <pu-skeleton-table [rows]="8" [columns]="3" />
+  </mat-card>
+} @else {
+  @for (group of groups; track group.categoryId) {
+    <mat-card
+      class="rate-group"
+      [attr.data-testid]="'xp-rates-' + group.categoryId"
+    >
+      <mat-card-header>
+        <mat-card-title>{{ group.label }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        @for (row of group.rows; track row.id) {
+          <div class="rate-row" [attr.data-testid]="'xp-rate-row-' + row.id">
+            <span class="rate-name">{{ row.name }}</span>
+            <span class="rate-default muted" i18n="@@admin.xpRates.default"
+              >Standard: {{ formatRate(row.defaultRate) }}</span
+            >
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <input
+                matInput
+                type="number"
+                inputmode="decimal"
+                min="0"
+                [max]="rateMax"
+                step="0.1"
+                [value]="state.rateOf(row.id)"
+                (input)="state.setRate(row.id, asValue($event))"
+                [attr.aria-label]="row.name"
+              />
+              <span matTextSuffix>XP / {{ unitLabel(row.unit) }}</span>
+            </mat-form-field>
+            <button
+              mat-icon-button
+              type="button"
+              [disabled]="state.isDefault(row.id)"
+              [matTooltip]="resetTooltip"
+              [attr.aria-label]="resetTooltip"
+              (click)="state.resetToDefault(row.id)"
+            >
+              <mat-icon>restart_alt</mat-icon>
+            </button>
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>
+  }
+
+  @if (state.invalid().size > 0) {
+    <p class="error-text" i18n="@@admin.xpRates.invalid">
+      Bitte nur Werte zwischen 0 und {{ rateMax }} eingeben.
+    </p>
+  }
+  @if (state.error(); as error) {
+    <p class="error-text">{{ error }}</p>
+  }
+
+  <div class="actions">
+    @if (state.saved() && !state.dirty()) {
+      <span class="muted" i18n="@@admin.xpRates.saved">Gespeichert.</span>
+    }
+    <button
+      mat-button
+      type="button"
+      [disabled]="!state.dirty() || state.saving.busy()"
+      (click)="state.discard()"
+      i18n="@@admin.xpRates.discard"
+    >
+      Verwerfen
+    </button>
+    <button
+      mat-flat-button
+      type="button"
+      data-testid="xp-rates-save"
+      [disabled]="!state.dirty() || state.invalid().size > 0"
+      [puBusy]="state.saving.busy()"
+      (click)="state.save()"
+      i18n="@@admin.xpRates.save"
+    >
+      Wertigkeiten speichern
+    </button>
+  </div>
+}

@@ -7650,8 +7650,8 @@
       </segment>
     </unit>
     <unit id="leaderboardHeaderSubtitle">
-      <segment state="translated">
-        <source>Heute, letzte 7 Tage und letzte 30 Tage – wer schiebt die meisten Reps?</source>
+      <segment state="initial">
+        <source> Heute, letzte 7 Tage und letzte 30 Tage – wer sammelt die meisten XP? </source>
         <target>Hoy, últimos 7 días y últimos 30 días: ¿quién hace más reps?</target>
       </segment>
     </unit>
@@ -15457,6 +15457,506 @@
       <segment state="translated">
         <source>Vorschau starten</source>
         <target>Iniciar vista previa</target>
+      </segment>
+    </unit>
+    <unit id="achievements.label.level">
+      <segment state="initial">
+        <source>Level <ph id="0" equiv="level" disp="level"/> erreicht</source>
+        <target>Level <ph id="0" equiv="level" disp="level"/> erreicht</target>
+      </segment>
+    </unit>
+    <unit id="achievements.label.variety">
+      <segment state="initial">
+        <source>Vielseitig: <ph id="0" equiv="categories" disp="categories"/> Kategorien</source>
+        <target>Vielseitig: <ph id="0" equiv="categories" disp="categories"/> Kategorien</target>
+      </segment>
+    </unit>
+    <unit id="achievements.group.level">
+      <segment state="initial">
+        <source>Level</source>
+        <target>Level</target>
+      </segment>
+    </unit>
+    <unit id="achievements.group.variety">
+      <segment state="initial">
+        <source>Vielseitigkeit</source>
+        <target>Vielseitigkeit</target>
+      </segment>
+    </unit>
+    <unit id="xp.intro.badge">
+      <segment state="initial">
+        <source>Neu</source>
+        <target>Neu</target>
+      </segment>
+    </unit>
+    <unit id="xp.intro.title">
+      <segment state="initial">
+        <source>Punkte-System</source>
+        <target>Punkte-System</target>
+      </segment>
+    </unit>
+    <unit id="xp.intro.stepCount">
+      <segment state="initial">
+        <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
+        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+      </segment>
+    </unit>
+    <unit id="xp.intro.later">
+      <segment state="initial">
+        <source> Später </source>
+        <target> Später </target>
+      </segment>
+    </unit>
+    <unit id="xp.intro.back">
+      <segment state="initial">
+        <source>Zurück</source>
+        <target>Zurück</target>
+      </segment>
+    </unit>
+    <unit id="xp.intro.start">
+      <segment state="initial">
+        <source>Zur Bestenliste</source>
+        <target>Zur Bestenliste</target>
+      </segment>
+    </unit>
+    <unit id="xp.intro.next">
+      <segment state="initial">
+        <source>Weiter</source>
+        <target>Weiter</target>
+      </segment>
+    </unit>
+    <unit id="xp.intro.step1.title">
+      <segment state="initial">
+        <source>Jede Übung bringt Punkte</source>
+        <target>Jede Übung bringt Punkte</target>
+      </segment>
+    </unit>
+    <unit id="xp.intro.step1.body">
+      <segment state="initial">
+        <source>Für jede Wiederholung, Minute oder jeden Kilometer bekommst du XP — ein Liegestütz 1 XP, ein Klimmzug 3 XP, eine Minute Plank 8 XP, ein Kilometer Laufen 60 XP. Alle bisherigen Einträge zählen mit.</source>
+        <target>Für jede Wiederholung, Minute oder jeden Kilometer bekommst du XP — ein Liegestütz 1 XP, ein Klimmzug 3 XP, eine Minute Plank 8 XP, ein Kilometer Laufen 60 XP. Alle bisherigen Einträge zählen mit.</target>
+      </segment>
+    </unit>
+    <unit id="xp.intro.step2.title">
+      <segment state="initial">
+        <source>Level und Abzeichen</source>
+        <target>Level und Abzeichen</target>
+      </segment>
+    </unit>
+    <unit id="xp.intro.step2.body">
+      <segment state="initial">
+        <source>Mit deinen XP steigst du im Level auf. Level 5, 10, 20 und höher bringen eigene Abzeichen, dazu gibt es welche für Abwechslung über mehrere Übungskategorien.</source>
+        <target>Mit deinen XP steigst du im Level auf. Level 5, 10, 20 und höher bringen eigene Abzeichen, dazu gibt es welche für Abwechslung über mehrere Übungskategorien.</target>
+      </segment>
+    </unit>
+    <unit id="xp.intro.step3.title">
+      <segment state="initial">
+        <source>Vergleiche dich</source>
+        <target>Vergleiche dich</target>
+      </segment>
+    </unit>
+    <unit id="xp.intro.step3.body">
+      <segment state="initial">
+        <source>Nach jedem Eintrag siehst du deine gesammelten XP. In der Bestenliste und unter Freunden vergleichst du jetzt auch XP über alle Übungen hinweg.</source>
+        <target>Nach jedem Eintrag siehst du deine gesammelten XP. In der Bestenliste und unter Freunden vergleichst du jetzt auch XP über alle Übungen hinweg.</target>
+      </segment>
+    </unit>
+    <unit id="admin.xpRates.title">
+      <segment state="initial">
+        <source>XP-Wertigkeiten</source>
+        <target>XP-Wertigkeiten</target>
+      </segment>
+    </unit>
+    <unit id="admin.xpRates.hint">
+      <segment state="initial">
+        <source> Wie viele XP eine Übung pro Wiederholung, Minute oder Kilometer bringt. Änderungen gelten nur für Einträge, die ab jetzt gespeichert werden — bereits verdiente XP bleiben unverändert.
+</source>
+        <target> Wie viele XP eine Übung pro Wiederholung, Minute oder Kilometer bringt. Änderungen gelten nur für Einträge, die ab jetzt gespeichert werden — bereits verdiente XP bleiben unverändert.
+</target>
+      </segment>
+    </unit>
+    <unit id="admin.xpRates.default">
+      <segment state="initial">
+        <source>Standard: <ph id="0" equiv="INTERPOLATION" disp="{{ formatRate(row.defaultRate) }}"/></source>
+        <target>Standard: <ph id="0" equiv="INTERPOLATION" disp="{{ formatRate(row.defaultRate) }}"/></target>
+      </segment>
+    </unit>
+    <unit id="admin.xpRates.invalid">
+      <segment state="initial">
+        <source> Bitte nur Werte zwischen 0 und <ph id="0" equiv="INTERPOLATION" disp="{{ rateMax }}"/> eingeben. </source>
+        <target> Bitte nur Werte zwischen 0 und <ph id="0" equiv="INTERPOLATION" disp="{{ rateMax }}"/> eingeben. </target>
+      </segment>
+    </unit>
+    <unit id="admin.xpRates.saved">
+      <segment state="initial">
+        <source>Gespeichert.</source>
+        <target>Gespeichert.</target>
+      </segment>
+    </unit>
+    <unit id="admin.xpRates.discard">
+      <segment state="initial">
+        <source> Verwerfen </source>
+        <target> Verwerfen </target>
+      </segment>
+    </unit>
+    <unit id="admin.xpRates.save">
+      <segment state="initial">
+        <source> Wertigkeiten speichern </source>
+        <target> Wertigkeiten speichern </target>
+      </segment>
+    </unit>
+    <unit id="admin.xpRates.reset">
+      <segment state="initial">
+        <source>Auf Standard zurücksetzen</source>
+        <target>Auf Standard zurücksetzen</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.xpBackfill.title">
+      <segment state="initial">
+        <source>XP für bisherige Einträge nachbuchen</source>
+        <target>XP für bisherige Einträge nachbuchen</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.xpBackfill.description">
+      <segment state="initial">
+        <source>Bucht XP für alle Einträge, die vor dem Punktesystem gespeichert wurden, zu den aktuellen Wertigkeiten, berechnet Level und Level-Abzeichen neu und baut die XP-Bestenliste auf. Bis zu 200 Nutzer pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Bereits gebuchte Einträge bleiben unverändert. Erst den Probelauf ausführen.</source>
+        <target>Bucht XP für alle Einträge, die vor dem Punktesystem gespeichert wurden, zu den aktuellen Wertigkeiten, berechnet Level und Level-Abzeichen neu und baut die XP-Bestenliste auf. Bis zu 200 Nutzer pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Bereits gebuchte Einträge bleiben unverändert. Erst den Probelauf ausführen.</target>
+      </segment>
+    </unit>
+    <unit id="admin.uiFeatures.xp.title">
+      <segment state="initial">
+        <source>XP-Erfolgsdialog</source>
+        <target>XP-Erfolgsdialog</target>
+      </segment>
+    </unit>
+    <unit id="admin.uiFeatures.xp.description">
+      <segment state="initial">
+        <source> Öffnet den Dialog, der nach dem Speichern eines Eintrags die verdienten XP zeigt — mit Beispielwerten, wahlweise mit Level-Up. </source>
+        <target> Öffnet den Dialog, der nach dem Speichern eines Eintrags die verdienten XP zeigt — mit Beispielwerten, wahlweise mit Level-Up. </target>
+      </segment>
+    </unit>
+    <unit id="admin.uiFeatures.xp.preview">
+      <segment state="initial">
+        <source>XP-Dialog</source>
+        <target>XP-Dialog</target>
+      </segment>
+    </unit>
+    <unit id="admin.uiFeatures.xp.previewLevelUp">
+      <segment state="initial">
+        <source>Mit Level-Up</source>
+        <target>Mit Level-Up</target>
+      </segment>
+    </unit>
+    <unit id="announcements.xp">
+      <segment state="initial">
+        <source>Neu: Punkte, Level und XP-Bestenliste</source>
+        <target>Neu: Punkte, Level und XP-Bestenliste</target>
+      </segment>
+    </unit>
+    <unit id="xp.gained.eyebrow">
+      <segment state="initial">
+        <source>Erfahrung gesammelt</source>
+        <target>Erfahrung gesammelt</target>
+      </segment>
+    </unit>
+    <unit id="xp.gained.levelUp">
+      <segment state="initial">
+        <source>Level-Up!</source>
+        <target>Level-Up!</target>
+      </segment>
+    </unit>
+    <unit id="xp.gained.levelReached">
+      <segment state="initial">
+        <source>Level <ph id="0" equiv="INTERPOLATION" disp="{{ data.after.level }}"/> erreicht!</source>
+        <target>Level <ph id="0" equiv="INTERPOLATION" disp="{{ data.after.level }}"/> erreicht!</target>
+      </segment>
+    </unit>
+    <unit id="xp.gained.level">
+      <segment state="initial">
+        <source>Level <ph id="0" equiv="INTERPOLATION" disp="{{ bar().level }}"/></source>
+        <target>Level <ph id="0" equiv="INTERPOLATION" disp="{{ bar().level }}"/></target>
+      </segment>
+    </unit>
+    <unit id="xp.gained.toNext">
+      <segment state="initial">
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ data.after.intoLevel | number }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ data.after.levelSpan | number }}"/> XP</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ data.after.intoLevel | number }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ data.after.levelSpan | number }}"/> XP</target>
+      </segment>
+    </unit>
+    <unit id="xp.gained.continue">
+      <segment state="initial">
+        <source>Weiter</source>
+        <target>Weiter</target>
+      </segment>
+    </unit>
+    <unit id="xp.preview.entryWorth">
+      <segment state="initial">
+        <source>Diese Einheit bringt <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ previewLabel() }}"/></pc></source>
+        <target>Diese Einheit bringt <pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ previewLabel() }}"/></pc></target>
+      </segment>
+    </unit>
+    <unit id="xp.rate.badgeTooltip">
+      <segment state="initial">
+        <source>Punkte, die diese Übung pro Einheit bringt</source>
+        <target>Punkte, die diese Übung pro Einheit bringt</target>
+      </segment>
+    </unit>
+    <unit id="xp.rate.unit.rep">
+      <segment state="initial">
+        <source>Wdh.</source>
+        <target>Wdh.</target>
+      </segment>
+    </unit>
+    <unit id="xp.rate.unit.minute">
+      <segment state="initial">
+        <source>Min.</source>
+        <target>Min.</target>
+      </segment>
+    </unit>
+    <unit id="xp.rate.unit.km">
+      <segment state="initial">
+        <source>km</source>
+        <target>km</target>
+      </segment>
+    </unit>
+    <unit id="xp.rate.label">
+      <segment state="initial">
+        <source><ph id="0" equiv="value" disp="value"/> XP / <ph id="1" equiv="unit" disp="unitLabel"/></source>
+        <target><ph id="0" equiv="value" disp="value"/> XP / <ph id="1" equiv="unit" disp="unitLabel"/></target>
+      </segment>
+    </unit>
+        <unit id="xp.preview.label">
+      <segment state="initial">
+        <source>≈ <ph id="0" equiv="value" disp="value"/></source>
+        <target>≈ <ph id="0" equiv="value" disp="value"/></target>
+      </segment>
+    </unit>
+    <unit id="friends.board.xpValue">
+      <segment state="initial">
+        <source><ph id="0" equiv="count" disp="value"/> XP</source>
+        <target><ph id="0" equiv="count" disp="value"/> XP</target>
+      </segment>
+    </unit>
+    <unit id="friends.board.metric.xp">
+      <segment state="initial">
+        <source>XP (alle Übungen)</source>
+        <target>XP (alle Übungen)</target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.xp.ownLevel">
+      <segment state="initial">
+        <source>Level <ph id="0" equiv="INTERPOLATION" disp="{{ level }}"/></source>
+        <target>Level <ph id="0" equiv="INTERPOLATION" disp="{{ level }}"/></target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.xp.chip">
+      <segment state="initial">
+        <source>Gesamt-XP</source>
+        <target>Gesamt-XP</target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.xp.value">
+      <segment state="initial">
+        <source><ph id="0" equiv="xp" disp="xp"/> XP</source>
+        <target><ph id="0" equiv="xp" disp="xp"/> XP</target>
+      </segment>
+    </unit>
+    <unit id="landing.xp.eyebrow">
+      <segment state="initial">
+        <source>Neu · Punkte-System</source>
+        <target>Neu · Punkte-System</target>
+      </segment>
+    </unit>
+    <unit id="landing.xp.headline">
+      <segment state="initial">
+        <source> Jede Wiederholung zählt — sammle XP und steig im Level auf. </source>
+        <target> Jede Wiederholung zählt — sammle XP und steig im Level auf. </target>
+      </segment>
+    </unit>
+    <unit id="landing.xp.desc">
+      <segment state="initial">
+        <source> Jede Übung bringt Punkte: ein Liegestütz 1 XP, ein Klimmzug 3 XP, eine Minute Plank 8 XP, ein Kilometer Laufen 60 XP. Nach jedem Eintrag siehst du, was du gesammelt hast — und alle bisherigen Einträge zählen mit. </source>
+        <target> Jede Übung bringt Punkte: ein Liegestütz 1 XP, ein Klimmzug 3 XP, eine Minute Plank 8 XP, ein Kilometer Laufen 60 XP. Nach jedem Eintrag siehst du, was du gesammelt hast — und alle bisherigen Einträge zählen mit. </target>
+      </segment>
+    </unit>
+    <unit id="landing.xp.chip.levels">
+      <segment state="initial">
+        <source>Level und Abzeichen für Level 5, 10, 20 und mehr</source>
+        <target>Level und Abzeichen für Level 5, 10, 20 und mehr</target>
+      </segment>
+    </unit>
+    <unit id="landing.xp.chip.variety">
+      <segment state="initial">
+        <source>Abwechslung lohnt sich: Abzeichen für mehrere Kategorien</source>
+        <target>Abwechslung lohnt sich: Abzeichen für mehrere Kategorien</target>
+      </segment>
+    </unit>
+    <unit id="landing.xp.chip.leaderboard">
+      <segment state="initial">
+        <source>XP-Bestenliste weltweit und unter Freunden</source>
+        <target>XP-Bestenliste weltweit und unter Freunden</target>
+      </segment>
+    </unit>
+    <unit id="landing.xp.cta">
+      <segment state="initial">
+        <source>Zur XP-Bestenliste</source>
+        <target>Zur XP-Bestenliste</target>
+      </segment>
+    </unit>
+    <unit id="landing.xp.mock.gain">
+      <segment state="initial">
+        <source>+30 XP</source>
+        <target>+30 XP</target>
+      </segment>
+    </unit>
+    <unit id="landing.xp.mock.caption">
+      <segment state="initial">
+        <source> 10 Klimmzüge gespeichert </source>
+        <target> 10 Klimmzüge gespeichert </target>
+      </segment>
+    </unit>
+    <unit id="landing.xp.mock.level">
+      <segment state="initial">
+        <source>Level 12</source>
+        <target>Level 12</target>
+      </segment>
+    </unit>
+    <unit id="landing.xp.mock.next">
+      <segment state="initial">
+        <source>noch 340 XP bis Level 13</source>
+        <target>noch 340 XP bis Level 13</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.badge.level">
+      <segment state="initial">
+        <source>Level <ph id="0" equiv="level" disp="definition.threshold ?? 0"/> erreicht</source>
+        <target>Level <ph id="0" equiv="level" disp="definition.threshold ?? 0"/> erreicht</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.badge.variety">
+      <segment state="initial">
+        <source>Vielseitig: <ph id="0" equiv="categories" disp="definition.threshold ?? 0"/> Kategorien</source>
+        <target>Vielseitig: <ph id="0" equiv="categories" disp="definition.threshold ?? 0"/> Kategorien</target>
+      </segment>
+    </unit>
+    <unit id="levelCard.title">
+      <segment state="initial">
+        <source>Level <ph id="0" equiv="INTERPOLATION" disp="{{ progress().level }}"/></source>
+        <target>Level <ph id="0" equiv="INTERPOLATION" disp="{{ progress().level }}"/></target>
+      </segment>
+    </unit>
+    <unit id="levelCard.total">
+      <segment state="initial">
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ progress().totalXp | number }}"/> XP</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ progress().totalXp | number }}"/> XP</target>
+      </segment>
+    </unit>
+    <unit id="levelCard.remaining">
+      <segment state="initial">
+        <source>Noch <ph id="0" equiv="INTERPOLATION" disp="{{ remaining() | number }}"/> XP bis Level <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress().level + 1 }}"/></source>
+        <target>Noch <ph id="0" equiv="INTERPOLATION" disp="{{ remaining() | number }}"/> XP bis Level <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress().level + 1 }}"/></target>
+      </segment>
+    </unit>
+    <unit id="levelCard.barLabel">
+      <segment state="initial">
+        <source>Fortschritt zu Level <ph id="0" equiv="next" disp="this.progress().level + 1"/></source>
+        <target>Fortschritt zu Level <ph id="0" equiv="next" disp="this.progress().level + 1"/></target>
+      </segment>
+    </unit>
+    <unit id="analysis.xp.title">
+      <segment state="initial">
+        <source>Erfahrungspunkte</source>
+        <target>Erfahrungspunkte</target>
+      </segment>
+    </unit>
+    <unit id="analysis.xp.subtitle">
+      <segment state="initial">
+        <source>XP im gewählten Zeitraum</source>
+        <target>XP im gewählten Zeitraum</target>
+      </segment>
+    </unit>
+    <unit id="analysis.xp.level">
+      <segment state="initial">
+        <source>Level <ph id="0" equiv="INTERPOLATION" disp="{{ progress.level }}"/></source>
+        <target>Level <ph id="0" equiv="INTERPOLATION" disp="{{ progress.level }}"/></target>
+      </segment>
+    </unit>
+    <unit id="analysis.xp.levelMeta">
+      <segment state="initial">
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ progress.intoLevel | number }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.levelSpan | number }}"/> XP</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ progress.intoLevel | number }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.levelSpan | number }}"/> XP</target>
+      </segment>
+    </unit>
+    <unit id="analysis.xp.kpi.total">
+      <segment state="initial">
+        <source>XP im Zeitraum</source>
+        <target>XP im Zeitraum</target>
+      </segment>
+    </unit>
+    <unit id="analysis.xp.kpi.days">
+      <segment state="initial">
+        <source>Tage mit XP</source>
+        <target>Tage mit XP</target>
+      </segment>
+    </unit>
+    <unit id="analysis.xp.kpi.bestDay">
+      <segment state="initial">
+        <source>Bester Tag</source>
+        <target>Bester Tag</target>
+      </segment>
+    </unit>
+    <unit id="analysis.xp.empty">
+      <segment state="initial">
+        <source> In diesem Zeitraum hast du noch keine XP gesammelt. </source>
+        <target> In diesem Zeitraum hast du noch keine XP gesammelt. </target>
+      </segment>
+    </unit>
+    <unit id="analysis.xp.perWeek">
+      <segment state="initial">
+        <source>XP pro Woche</source>
+        <target>XP pro Woche</target>
+      </segment>
+    </unit>
+    <unit id="analysis.xp.perDay">
+      <segment state="initial">
+        <source>XP pro Tag</source>
+        <target>XP pro Tag</target>
+      </segment>
+    </unit>
+    <unit id="analysis.xp.byCategory">
+      <segment state="initial">
+        <source>Nach Kategorie</source>
+        <target>Nach Kategorie</target>
+      </segment>
+    </unit>
+    <unit id="analysis.xp.topExercises">
+      <segment state="initial">
+        <source>Top-Übungen</source>
+        <target>Top-Übungen</target>
+      </segment>
+    </unit>
+    <unit id="wiki.difficulty.aria">
+      <segment state="initial">
+        <source>Schwierigkeitsgrad</source>
+        <target>Schwierigkeitsgrad</target>
+      </segment>
+    </unit>
+    <unit id="xp.value">
+      <segment state="initial">
+        <source><ph id="0" equiv="xp" disp="xp"/> XP</source>
+        <target><ph id="0" equiv="xp" disp="xp"/> XP</target>
+      </segment>
+    </unit>
+    <unit id="analysis.xp.perMonth">
+      <segment state="initial">
+        <source>XP pro Monat</source>
+        <target>XP pro Monat</target>
+      </segment>
+    </unit>
+    <unit id="analysis.xp.bucketTitle">
+      <segment state="initial">
+        <source><ph id="0" equiv="date" disp="date"/>: <ph id="1" equiv="xp" disp="xp"/></source>
+        <target><ph id="0" equiv="date" disp="date"/>: <ph id="1" equiv="xp" disp="xp"/></target>
       </segment>
     </unit>
 </file>

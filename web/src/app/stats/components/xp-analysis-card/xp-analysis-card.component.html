@@ -1,0 +1,117 @@
+<mat-card class="xp-card" data-testid="analysis-xp-card">
+  <mat-card-header>
+    <mat-icon mat-card-avatar class="xp-avatar" aria-hidden="true"
+      >bolt</mat-icon
+    >
+    <mat-card-title i18n="@@analysis.xp.title">Erfahrungspunkte</mat-card-title>
+    <mat-card-subtitle i18n="@@analysis.xp.subtitle"
+      >XP im gewählten Zeitraum</mat-card-subtitle
+    >
+  </mat-card-header>
+
+  <mat-card-content>
+    @if (store.loading()) {
+      <div class="xp-skeleton">
+        <pu-skeleton shape="title" width="140px" />
+        <pu-skeleton width="100%" height="120px" />
+        <pu-skeleton width="70%" />
+      </div>
+    } @else {
+      @let progress = store.progress();
+      @let view = store.analysis();
+
+      <div class="level-row">
+        <span class="level-chip" i18n="@@analysis.xp.level"
+          >Level {{ progress.level }}</span
+        >
+        <mat-progress-bar
+          mode="determinate"
+          [value]="levelPercent()"
+          [attr.aria-label]="xpLabel(progress.totalXp)"
+        />
+        <small class="level-meta" i18n="@@analysis.xp.levelMeta"
+          >{{ progress.intoLevel | number }} /
+          {{ progress.levelSpan | number }} XP</small
+        >
+      </div>
+
+      <div class="kpis">
+        <div class="kpi">
+          <b data-testid="analysis-xp-total">{{ view.total | number }}</b>
+          <small i18n="@@analysis.xp.kpi.total">XP im Zeitraum</small>
+        </div>
+        <div class="kpi">
+          <b>{{ view.activeDays }}</b>
+          <small i18n="@@analysis.xp.kpi.days">Tage mit XP</small>
+        </div>
+        <div class="kpi">
+          <b>{{ view.bestDay ? (view.bestDay.xp | number) : '–' }}</b>
+          <small i18n="@@analysis.xp.kpi.bestDay">Bester Tag</small>
+        </div>
+      </div>
+
+      @if (view.total === 0) {
+        <p class="empty" i18n="@@analysis.xp.empty">
+          In diesem Zeitraum hast du noch keine XP gesammelt.
+        </p>
+      } @else {
+        <div
+          class="bars"
+          role="img"
+          [attr.aria-label]="xpLabel(view.total)"
+          data-testid="analysis-xp-bars"
+        >
+          @for (bucket of view.buckets; track bucket.key) {
+            <span
+              class="bar"
+              [style.height.%]="barHeight(bucket.xp)"
+              [attr.title]="bucketTitle(bucket)"
+            ></span>
+          }
+        </div>
+        <p class="bars-caption">
+          @switch (view.granularity) {
+            @case ('monthly') {
+              <span i18n="@@analysis.xp.perMonth">XP pro Monat</span>
+            }
+            @case ('weekly') {
+              <span i18n="@@analysis.xp.perWeek">XP pro Woche</span>
+            }
+            @default {
+              <span i18n="@@analysis.xp.perDay">XP pro Tag</span>
+            }
+          }
+        </p>
+
+        <div class="split">
+          <section>
+            <h3 i18n="@@analysis.xp.byCategory">Nach Kategorie</h3>
+            @for (item of view.byCategory; track item.id) {
+              <div class="share-row">
+                <span class="share-label">{{ categoryName(item.id) }}</span>
+                <span class="share-track"
+                  ><span
+                    class="share-fill"
+                    [style.width.%]="item.share * 100"
+                  ></span
+                ></span>
+                <span class="share-value">{{ item.share | percent }}</span>
+              </div>
+            }
+          </section>
+          <section>
+            <h3 i18n="@@analysis.xp.topExercises">Top-Übungen</h3>
+            <ol class="top-list">
+              @for (item of view.topExercises; track item.id) {
+                <li>
+                  <span>{{ exerciseName(item.id) }}</span>
+                  <b>{{ xpLabel(item.xp) }}</b>
+                </li>
+              }
+            </ol>
+          </section>
+        </div>
+      }
+    }
+  </mat-card-content>
+</mat-card>

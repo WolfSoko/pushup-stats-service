@@ -5,6 +5,7 @@ import {
   inject,
   linkedSignal,
   ChangeDetectionStrategy,
+  LOCALE_ID,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -12,52 +13,26 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
-import {
-  LEADERBOARD_PUSHUP_ID,
-  LeaderboardPeriod,
-} from '@pu-stats/data-access';
-import { LeaderboardStore } from '@pu-stats/data-access-state';
+import { LEADERBOARD_XP_ID, LeaderboardPeriod } from '@pu-stats/data-access';
+import { LeaderboardStore, XpStore } from '@pu-stats/data-access-state';
 import { BusyDirective, SkeletonComponent } from '@pu-stats/ui';
 import {
   EXERCISE_CATEGORIES,
   type ExerciseCategoryInfo,
   type ExerciseDefinition,
-  findExerciseDefinition,
   exercisesByCategory,
-  formatExerciseValue,
 } from '@pu-stats/models';
 import {
   categoryDisplayName,
   exerciseDisplayName,
 } from '../../stats/i18n/exercise-display-names';
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';
-
-/**
- * Exercises surfaced as one-tap chips above the leaderboard list.
- * Order is curated, not alphabetical, so the most-used variants stay
- * left of the picker overflow. Pushups lead because the app is named
- * after them and they have the only server-precomputed snapshot today.
- */
-type PopularExercise = {
-  id: string;
-  /** Resolved label — pushup id needs the category label, others the catalog name. */
-  label: string;
-  icon: string;
-};
-
-const PUSHUP_CHIP: PopularExercise = {
-  id: LEADERBOARD_PUSHUP_ID,
-  label: $localize`:@@exercise.category.pushup:Liegestütze`,
-  icon: 'fitness_center',
-};
-
-const POPULAR_EXERCISE_IDS: ReadonlyArray<string> = [
-  'legs.squats',
-  'pull.pullups',
-  'plank.standard',
-  'abs.crunches',
-  'cardio.running',
-];
+import {
+  buildPopularExercises,
+  formatLeaderboardValue,
+  leaderboardLabel,
+  type PopularExercise,
+} from './leaderboard-page.helpers';
 
 @Component({
   selector: 'app-leaderboard-page',
@@ -80,6 +55,8 @@ export class LeaderboardPageComponent {
   private readonly store = inject(LeaderboardStore);
   private readonly user = inject(UserContextService);
   private readonly auth = inject(AuthStore);
+  private readonly xp = inject(XpStore);
+  private readonly locale = inject(LOCALE_ID);
 
   readonly currentUserId = this.user.userIdSafe;
   /**
@@ -93,33 +70,22 @@ export class LeaderboardPageComponent {
   );
 
   readonly period = linkedSignal<LeaderboardPeriod>(() => 'daily');
-  readonly selectedExerciseId = linkedSignal<string>(
-    () => LEADERBOARD_PUSHUP_ID
+  readonly selectedExerciseId = linkedSignal<string>(() => LEADERBOARD_XP_ID);
+
+  readonly isXpSelected = computed(
+    () => this.selectedExerciseId() === LEADERBOARD_XP_ID
+  );
+  readonly ownLevel = computed(() =>
+    this.xp.loaded() ? this.xp.progress().level : null
   );
 
-  readonly selectedDefinition = computed(() => {
-    const id = this.selectedExerciseId();
-    if (id === LEADERBOARD_PUSHUP_ID) return null;
-    return findExerciseDefinition(id);
-  });
-
   /**
-   * Static chip row. The "Mehr ▾" entry below opens a menu with the
-   * full catalog by category so users can still reach any exercise
-   * without polluting the chip row with 40+ entries.
+   * Static chip row. The "Mehr ▾" entry opens a menu with the full
+   * catalog by category, so every exercise stays reachable without 40+
+   * chips.
    */
-  readonly popularExercises = computed<ReadonlyArray<PopularExercise>>(() => {
-    const rest = POPULAR_EXERCISE_IDS.map<PopularExercise | null>((id) => {
-      const def = findExerciseDefinition(id);
-      if (!def) return null;
-      return {
-        id: def.id,
-        label: exerciseDisplayName(def.id),
-        icon: def.icon ?? 'fitness_center',
-      };
-    }).filter((c): c is PopularExercise => c !== null);
-    return [PUSHUP_CHIP, ...rest];
-  });
+  readonly popularExercises: ReadonlyArray<PopularExercise> =
+    buildPopularExercises();
 
   /**
    * Catalog grouped by category for the overflow menu. Empty categories
@@ -144,11 +110,9 @@ export class LeaderboardPageComponent {
     });
   });
 
-  readonly selectedLabel = computed(() => {
-    const id = this.selectedExerciseId();
-    if (id === LEADERBOARD_PUSHUP_ID) return PUSHUP_CHIP.label;
-    return exerciseDisplayName(id);
-  });
+  readonly selectedLabel = computed(() =>
+    leaderboardLabel(this.selectedExerciseId())
+  );
 
   readonly leaderboardEntries = this.store.entriesForPeriod(
     this.selectedExerciseId,
@@ -179,23 +143,8 @@ export class LeaderboardPageComponent {
     });
   });
 
-  /**
-   * Returns the row's display value with the unit baked in
-   * (`"30 Reps"` / `"1:30"` / `"5.00 km"`). Keeping value+unit in one
-   * string lets the template use a single i18n message with
-   * placeholders — splitting them would block translators from
-   * re-ordering the pieces. Empty-slot placeholders (`reps === 0`)
-   * stay unitless so the column alignment doesn't jitter.
-   */
-  readonly formatValue = (value: number): string => {
-    const def = this.selectedDefinition();
-    if (value === 0) return '0';
-    if (!def || def.unit === 'reps') {
-      const repsLabel = $localize`:@@landing.leaderboard.reps:Reps`;
-      return `${value} ${repsLabel}`;
-    }
-    return formatExerciseValue(value, def.unit);
-  };
+  readonly formatValue = (value: number): string =>
+    formatLeaderboardValue(value, this.selectedExerciseId(), this.locale);
 
   skeletonAliasWidth(rank: number): string {
     return `${45 + ((rank * 7) % 30)}%`;
@@ -222,7 +171,7 @@ export class LeaderboardPageComponent {
    */
   readonly isOverflowSelection = computed(() => {
     const id = this.selectedExerciseId();
-    return !this.popularExercises().some((chip) => chip.id === id);
+    return !this.popularExercises.some((chip) => chip.id === id);
   });
 
   constructor() {

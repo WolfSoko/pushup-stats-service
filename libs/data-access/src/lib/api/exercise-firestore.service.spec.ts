@@ -182,6 +182,47 @@ describe('ExerciseFirestoreService', () => {
   });
 
   describe('createEntry', () => {
+    it('should announce a saved entry on entryCreated$', async () => {
+      // given
+      const seen: string[] = [];
+      service.entryCreated$.subscribe((e) => seen.push(e._id));
+
+      // when
+      await firstValueFrom(
+        service.createEntry('u1', {
+          exerciseId: 'abs.situps',
+          timestamp: '2026-04-01T10:00:00Z',
+          reps: 20,
+        })
+      );
+
+      // then
+      expect(seen).toEqual(['new-id']);
+    });
+
+    it('should not announce an entry whose write failed', async () => {
+      // given
+      const seen: string[] = [];
+      service.entryCreated$.subscribe((e) => seen.push(e._id));
+      jest
+        .spyOn(firestoreFns, 'setDoc')
+        .mockRejectedValueOnce(new Error('denied'));
+
+      // when
+      await expect(
+        firstValueFrom(
+          service.createEntry('u1', {
+            exerciseId: 'abs.situps',
+            timestamp: '2026-04-01T10:00:00Z',
+            reps: 20,
+          })
+        )
+      ).rejects.toThrow('denied');
+
+      // then
+      expect(seen).toEqual([]);
+    });
+
     it('writes a new sit-ups entry to exerciseEntries', async () => {
       const setDocSpy = jest.spyOn(firestoreFns, 'setDoc');
 
