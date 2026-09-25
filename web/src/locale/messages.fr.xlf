@@ -15410,7 +15410,7 @@
     <unit id="xp.intro.step1.body">
       <segment state="translated">
         <source>Für jede Wiederholung, Minute oder jeden Kilometer bekommst du XP — ein Liegestütz 1 XP, ein Klimmzug 3 XP, eine Minute Plank 8 XP, ein Kilometer Laufen 60 XP. Alle bisherigen Einträge zählen mit.</source>
-        <target>Tu gagnes des XP pour chaque répétition, minute ou kilomètre — une pompe rapporte 1 XP, une traction 3 XP, une minute de gainage 8 XP, un kilomètre de course 60 XP. Toutes tes séances précédentes comptent aussi.</target>
+        <target>Tu gagnes des XP pour chaque répétition, minute ou kilomètre — une pompe rapporte 1 XP, une traction 3 XP, une minute de gainage 8 XP, un kilomètre de course 60 XP. Toutes tes entrées précédentes comptent aussi.</target>
       </segment>
     </unit>
     <unit id="xp.intro.step2.title">
