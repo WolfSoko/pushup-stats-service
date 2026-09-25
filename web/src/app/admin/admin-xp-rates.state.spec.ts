@@ -2,32 +2,46 @@ import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { UserContextService } from '@pu-auth/auth';
 import { XpApiService } from '@pu-stats/data-access';
+import { XpStore } from '@pu-stats/data-access-state';
 import { DEFAULT_XP_RATES, type XpConfig } from '@pu-stats/models';
-import { BehaviorSubject } from 'rxjs';
 import { AdminXpRatesState } from './admin-xp-rates.state';
 
-function setup(initial: XpConfig | null = null) {
-  const config$ = new BehaviorSubject<XpConfig | null>(initial);
+function setup(initial: XpConfig | null = null, loaded = true) {
+  const config = signal<XpConfig | null>(initial);
+  const configLoaded = signal(loaded);
   const api = {
-    watchConfig: vi.fn(() => config$),
     saveConfig: vi.fn(async (rates: Record<string, number>) => {
-      config$.next({ rates });
+      config.set({ rates });
     }),
   };
   TestBed.configureTestingModule({
     providers: [
       AdminXpRatesState,
       { provide: XpApiService, useValue: api },
+      { provide: XpStore, useValue: { config, configLoaded } },
       {
         provide: UserContextService,
         useValue: { userIdSafe: signal('admin-1') },
       },
     ],
   });
-  return { state: TestBed.inject(AdminXpRatesState), api, config$ };
+  return {
+    state: TestBed.inject(AdminXpRatesState),
+    api,
+    config,
+    configLoaded,
+  };
 }
 
 describe('AdminXpRatesState', () => {
+  it('should report not loaded until the rates listener delivered', () => {
+    // given / when
+    const { state } = setup(null, false);
+
+    // then
+    expect(state.loaded()).toBe(false);
+  });
+
   it('should start from the stored overrides on top of the defaults', () => {
     // given / when
     const { state } = setup({ rates: { pushup: 2 } });

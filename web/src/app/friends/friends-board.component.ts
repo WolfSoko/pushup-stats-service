@@ -5,6 +5,7 @@ import {
   inject,
   input,
   output,
+  LOCALE_ID,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
@@ -168,6 +169,7 @@ export class FriendsBoardComponent {
   readonly busyKeys = input<ReadonlySet<string>>(new Set());
 
   private readonly cheers = inject(CheerStore);
+  private readonly locale = inject(LOCALE_ID);
 
   protected readonly repExercises = REP_EXERCISES;
 
@@ -190,7 +192,7 @@ export class FriendsBoardComponent {
   }
 
   protected valueLabel(entry: FriendsBoardEntry): string {
-    return boardValueLabel(this.comparison().metric, entry.value);
+    return boardValueLabel(this.comparison().metric, entry.value, this.locale);
   }
 
   protected readonly cheerAria = $localize`:@@friends.board.cheer:Anfeuern`;

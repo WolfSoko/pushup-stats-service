@@ -2782,7 +2782,7 @@
     </unit>
     <unit id="achievement.dialog.eyebrow">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:72</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:67</note>
       </notes>
       <segment>
         <source>Neues Abzeichen</source>
@@ -2790,7 +2790,7 @@
     </unit>
     <unit id="achievement.dialog.headline">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:73</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:68</note>
       </notes>
       <segment>
         <source>Geschafft!</source>
@@ -2798,7 +2798,7 @@
     </unit>
     <unit id="achievement.dialog.note">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:74</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:69</note>
       </notes>
       <segment>
         <source>Ab jetzt glänzt es in deiner Sammlung. Weiter so!</source>
@@ -2806,7 +2806,7 @@
     </unit>
     <unit id="achievement.dialog.closeAria">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:75</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:70</note>
       </notes>
       <segment>
         <source>Schließen</source>
@@ -2814,7 +2814,7 @@
     </unit>
     <unit id="achievement.dialog.share">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:76</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:71</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -2822,7 +2822,7 @@
     </unit>
     <unit id="achievement.dialog.snap">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:77</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:72</note>
       </notes>
       <segment>
         <source>Snap!</source>
@@ -2830,7 +2830,7 @@
     </unit>
     <unit id="achievement.dialog.snapAria">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:78</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:73</note>
       </notes>
       <segment>
         <source>Snap! – Abzeichen vaporisieren</source>
@@ -2838,7 +2838,7 @@
     </unit>
     <unit id="achievement.share.title">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:88</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:83</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -2846,7 +2846,7 @@
     </unit>
     <unit id="achievement.share.text">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:89</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:84</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="badge" disp="this.data.badge.label"/> — geschafft! 💪</source>
@@ -2854,7 +2854,7 @@
     </unit>
     <unit id="achievements.label.planCompletedNamed">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-label.ts:20</note>
+        <note category="location">web/src/app/achievements/achievement-label.ts:21</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="plan" disp="title"/> abgeschlossen</source>
@@ -2862,7 +2862,7 @@
     </unit>
     <unit id="achievements.label.planCompleted">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-label.ts:21</note>
+        <note category="location">web/src/app/achievements/achievement-label.ts:22</note>
       </notes>
       <segment>
         <source>Trainingsplan abgeschlossen</source>
@@ -2870,7 +2870,7 @@
     </unit>
     <unit id="achievements.label.firstInvite">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-label.ts:27</note>
+        <note category="location">web/src/app/achievements/achievement-label.ts:28</note>
       </notes>
       <segment>
         <source>Ersten Freund eingeladen</source>
@@ -2878,31 +2878,15 @@
     </unit>
     <unit id="achievements.label.invites">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-label.ts:28</note>
+        <note category="location">web/src/app/achievements/achievement-label.ts:29</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</source>
       </segment>
     </unit>
-    <unit id="achievements.label.level">
-      <notes>
-        <note category="location">web/src/app/achievements/achievement-label.ts:33</note>
-      </notes>
-      <segment>
-        <source>Level <ph id="0" equiv="level" disp="level"/> erreicht</source>
-      </segment>
-    </unit>
-    <unit id="achievements.label.variety">
-      <notes>
-        <note category="location">web/src/app/achievements/achievement-label.ts:38</note>
-      </notes>
-      <segment>
-        <source>Vielseitig: <ph id="0" equiv="categories" disp="categories"/> Kategorien</source>
-      </segment>
-    </unit>
     <unit id="achievements.label.firstPlanDay">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-label.ts:43</note>
+        <note category="location">web/src/app/achievements/achievement-label.ts:37</note>
       </notes>
       <segment>
         <source>Erster Plantag</source>
@@ -2910,7 +2894,7 @@
     </unit>
     <unit id="achievements.label.planDays">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-label.ts:44</note>
+        <note category="location">web/src/app/achievements/achievement-label.ts:38</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="days" disp="days"/> Plantage</source>
@@ -2994,6 +2978,22 @@
       </notes>
       <segment>
         <source>Eingeladene Freunde</source>
+      </segment>
+    </unit>
+    <unit id="achievements.label.level">
+      <notes>
+        <note category="location">web/src/app/achievements/xp-badge-label.ts:12</note>
+      </notes>
+      <segment>
+        <source>Level <ph id="0" equiv="level" disp="level"/> erreicht</source>
+      </segment>
+    </unit>
+    <unit id="achievements.label.variety">
+      <notes>
+        <note category="location">web/src/app/achievements/xp-badge-label.ts:16</note>
+      </notes>
+      <segment>
+        <source>Vielseitig: <ph id="0" equiv="categories" disp="categories"/> Kategorien</source>
       </segment>
     </unit>
     <unit id="xp.intro.badge">
@@ -5169,7 +5169,7 @@
     </unit>
     <unit id="toolbarDailyGoal.detailsAria">
       <notes>
-        <note category="location">web/src/app/app.ts:259</note>
+        <note category="location">web/src/app/app.ts:263</note>
       </notes>
       <segment>
         <source>Tagesziel-Einzelpositionen anzeigen</source>
@@ -5177,7 +5177,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:328</note>
+        <note category="location">web/src/app/app.ts:332</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
@@ -5185,7 +5185,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:331</note>
+        <note category="location">web/src/app/app.ts:335</note>
       </notes>
       <segment>
         <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
@@ -5193,7 +5193,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:395</note>
+        <note category="location">web/src/app/app.ts:399</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -5201,7 +5201,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:424</note>
+        <note category="location">web/src/app/app.ts:428</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -5209,7 +5209,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:431</note>
+        <note category="location">web/src/app/app.ts:435</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -6205,7 +6205,7 @@
     </unit>
     <unit id="dailyGoal.check.manual">
       <notes>
-        <note category="location">web/src/app/core/daily-goal-actions.service.ts:70</note>
+        <note category="location">web/src/app/core/daily-goal-actions.service.ts:64</note>
         <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:59</note>
       </notes>
       <segment>
@@ -6631,7 +6631,7 @@
     </unit>
     <unit id="quickAdd.success.create">
       <notes>
-        <note category="location">web/src/app/core/quick-add-notify.ts:14</note>
+        <note category="location">web/src/app/core/quick-add-notify.ts:11</note>
       </notes>
       <segment>
         <source>Eintrag gespeichert.</source>
@@ -6639,7 +6639,7 @@
     </unit>
     <unit id="quickAdd.success.goalReached">
       <notes>
-        <note category="location">web/src/app/core/quick-add-notify.ts:37</note>
+        <note category="location">web/src/app/core/quick-add-notify.ts:22</note>
       </notes>
       <segment>
         <source>Tagesziel erreicht 🎉</source>
@@ -6694,6 +6694,14 @@
       </notes>
       <segment>
         <source>Dunkles Design aktiv. Klicken zum Wechseln</source>
+      </segment>
+    </unit>
+    <unit id="xp.value">
+      <notes>
+        <note category="location">web/src/app/core/xp/xp-format.ts:7</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="xp" disp="xp"/> XP</source>
       </segment>
     </unit>
     <unit id="xp.gained.eyebrow">
@@ -6762,7 +6770,7 @@
     </unit>
     <unit id="xp.rate.unit.rep">
       <notes>
-        <note category="location">web/src/app/core/xp/xp-rate-label.ts:14</note>
+        <note category="location">web/src/app/core/xp/xp-rate-label.ts:15</note>
       </notes>
       <segment>
         <source>Wdh.</source>
@@ -6770,7 +6778,7 @@
     </unit>
     <unit id="xp.rate.unit.minute">
       <notes>
-        <note category="location">web/src/app/core/xp/xp-rate-label.ts:16</note>
+        <note category="location">web/src/app/core/xp/xp-rate-label.ts:17</note>
       </notes>
       <segment>
         <source>Min.</source>
@@ -6778,7 +6786,7 @@
     </unit>
     <unit id="xp.rate.unit.km">
       <notes>
-        <note category="location">web/src/app/core/xp/xp-rate-label.ts:18</note>
+        <note category="location">web/src/app/core/xp/xp-rate-label.ts:19</note>
       </notes>
       <segment>
         <source>km</source>
@@ -6786,7 +6794,7 @@
     </unit>
     <unit id="xp.rate.label">
       <notes>
-        <note category="location">web/src/app/core/xp/xp-rate-label.ts:40</note>
+        <note category="location">web/src/app/core/xp/xp-rate-label.ts:41</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="value" disp="value"/> XP / <ph id="1" equiv="unit" disp="unitLabel"/></source>
@@ -6794,23 +6802,15 @@
     </unit>
     <unit id="xp.preview.label">
       <notes>
-        <note category="location">web/src/app/core/xp/xp-rate-label.ts:58</note>
+        <note category="location">web/src/app/core/xp/xp-rate-label.ts:59</note>
       </notes>
       <segment>
-        <source>≈ <ph id="0" equiv="value" disp="value"/> XP</source>
-      </segment>
-    </unit>
-    <unit id="friends.board.xpValue">
-      <notes>
-        <note category="location">web/src/app/friends/board-value-label.ts:10</note>
-      </notes>
-      <segment>
-        <source><ph id="0" equiv="count" disp="value"/> XP</source>
+        <source>≈ <ph id="0" equiv="value" disp="value"/></source>
       </segment>
     </unit>
     <unit id="friends.board.dayOne">
       <notes>
-        <note category="location">web/src/app/friends/board-value-label.ts:12</note>
+        <note category="location">web/src/app/friends/board-value-label.ts:13</note>
       </notes>
       <segment>
         <source>1 Tag</source>
@@ -6818,7 +6818,7 @@
     </unit>
     <unit id="friends.board.days">
       <notes>
-        <note category="location">web/src/app/friends/board-value-label.ts:13</note>
+        <note category="location">web/src/app/friends/board-value-label.ts:14</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="count" disp="value"/> Tage</source>
@@ -6901,10 +6901,10 @@
         <note category="location">web/src/app/friends/challenge-card.component.ts:217</note>
         <note category="location">web/src/app/friends/challenge-create-dialog.component.ts:152</note>
         <note category="location">web/src/app/friends/friend-requests.component.ts:81</note>
-        <note category="location">web/src/app/friends/friends-board.component.ts:218</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:220</note>
         <note category="location">web/src/app/friends/friends-list.component.ts:124</note>
         <note category="location">web/src/app/friends/friends-page.component.ts:230</note>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:241</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:247</note>
         <note category="location">web/src/app/workouts/workout-card.component.ts:204</note>
         <note category="location">web/src/app/workouts/workout-share-dialog.component.ts:122</note>
       </notes>
@@ -6915,8 +6915,8 @@
     <unit id="friends.board.you">
       <notes>
         <note category="location">web/src/app/friends/challenge-card.component.ts:224</note>
-        <note category="location">web/src/app/friends/friends-board.component.ts:217</note>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:240</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:219</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:246</note>
       </notes>
       <segment>
         <source>Du</source>
@@ -7062,7 +7062,7 @@
       <notes>
         <note category="location">web/src/app/friends/cheer-button.component.ts:92</note>
         <note category="location">web/src/app/friends/cheer-button.component.ts:107</note>
-        <note category="location">web/src/app/friends/friends-board.component.ts:196</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:198</note>
       </notes>
       <segment>
         <source>Anfeuern</source>
@@ -7071,7 +7071,7 @@
     <unit id="friends.board.cheering">
       <notes>
         <note category="location">web/src/app/friends/cheer-button.component.ts:97</note>
-        <note category="location">web/src/app/friends/friends-board.component.ts:198</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:200</note>
       </notes>
       <segment>
         <source>Anfeuerung wird gesendet</source>
@@ -7088,7 +7088,7 @@
     <unit id="friends.board.cheered">
       <notes>
         <note category="location">web/src/app/friends/cheer-button.component.ts:103</note>
-        <note category="location">web/src/app/friends/friends-board.component.ts:197</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:199</note>
       </notes>
       <segment>
         <source>Heute schon angefeuert</source>
@@ -7216,7 +7216,7 @@
     </unit>
     <unit id="friends.board.compare">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:63,65</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:64,66</note>
       </notes>
       <segment>
         <source>Vergleich</source>
@@ -7224,7 +7224,7 @@
     </unit>
     <unit id="friends.board.metric.days">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:70,72</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:71,73</note>
       </notes>
       <segment>
         <source>Trainingstage</source>
@@ -7232,7 +7232,7 @@
     </unit>
     <unit id="friends.board.metric.streak">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:73,75</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:74,76</note>
       </notes>
       <segment>
         <source>Streak</source>
@@ -7240,7 +7240,7 @@
     </unit>
     <unit id="friends.board.metric.xp">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:76,78</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:77,79</note>
       </notes>
       <segment>
         <source>XP (alle Übungen)</source>
@@ -7248,7 +7248,7 @@
     </unit>
     <unit id="friends.board.metric.reps">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:80,82</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:81,83</note>
       </notes>
       <segment>
         <source>Wiederholungen</source>
@@ -7256,7 +7256,7 @@
     </unit>
     <unit id="friends.board.periodAria">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:94,95</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:95,96</note>
       </notes>
       <segment>
         <source>Zeitraum</source>
@@ -7264,7 +7264,7 @@
     </unit>
     <unit id="friends.board.daily">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:99,101</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:100,102</note>
       </notes>
       <segment>
         <source>Heute</source>
@@ -7272,7 +7272,7 @@
     </unit>
     <unit id="friends.board.week">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:103,105</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:104,106</note>
       </notes>
       <segment>
         <source>7 Tage</source>
@@ -7280,7 +7280,7 @@
     </unit>
     <unit id="friends.board.month">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:106,108</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:107,109</note>
       </notes>
       <segment>
         <source>30 Tage</source>
@@ -7288,7 +7288,7 @@
     </unit>
     <unit id="friends.board.allTime">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:109,111</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:110,112</note>
       </notes>
       <segment>
         <source>Gesamt</source>
@@ -7296,7 +7296,7 @@
     </unit>
     <unit id="friends.board.cheersTodayOne">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:223</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:225</note>
       </notes>
       <segment>
         <source>Eine Anfeuerung heute</source>
@@ -7304,7 +7304,7 @@
     </unit>
     <unit id="friends.board.cheersToday">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:224</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:226</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="count" disp="count"/> Anfeuerungen heute</source>
@@ -7329,7 +7329,7 @@
     <unit id="invite.action">
       <notes>
         <note category="location">web/src/app/friends/friends-list.component.ts:61,63</note>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:129,130</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:130,131</note>
         <note category="location">web/src/app/public-profile/public-profile-page.component.html:194,195</note>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:51,52</note>
       </notes>
@@ -7559,7 +7559,7 @@
     </unit>
     <unit id="dashboard.friends.title">
       <notes>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:57,59</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:58,60</note>
       </notes>
       <segment>
         <source>Freunde</source>
@@ -7567,7 +7567,7 @@
     </unit>
     <unit id="dashboard.friends.empty">
       <notes>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:114,116</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:115,117</note>
       </notes>
       <segment>
         <source> Trainier mit Freunden: vergleicht euch, feuert euch an und startet gemeinsame Challenges. </source>
@@ -7575,7 +7575,7 @@
     </unit>
     <unit id="dashboard.friends.open">
       <notes>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:137,138</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:138,139</note>
       </notes>
       <segment>
         <source>Zu den Freunden</source>
@@ -8090,17 +8090,9 @@
         <source>Gesamt-XP</source>
       </segment>
     </unit>
-    <unit id="leaderboard.xp.value">
-      <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.helpers.ts:63</note>
-      </notes>
-      <segment>
-        <source><ph id="0" equiv="xp" disp="xp"/> XP</source>
-      </segment>
-    </unit>
     <unit id="landing.leaderboard.reps">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.helpers.ts:81</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.helpers.ts:76</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -9944,7 +9936,7 @@
     </unit>
     <unit id="publicProfile.badge.planCompleted">
       <notes>
-        <note category="location">web/src/app/public-profile/achievement-badge.ts:29</note>
+        <note category="location">web/src/app/public-profile/achievement-badge.ts:30</note>
       </notes>
       <segment>
         <source>Trainingsplan abgeschlossen</source>
@@ -9952,7 +9944,7 @@
     </unit>
     <unit id="publicProfile.badge.firstInvite">
       <notes>
-        <note category="location">web/src/app/public-profile/achievement-badge.ts:40</note>
+        <note category="location">web/src/app/public-profile/achievement-badge.ts:41</note>
       </notes>
       <segment>
         <source>Ersten Freund eingeladen</source>
@@ -9960,31 +9952,15 @@
     </unit>
     <unit id="publicProfile.badge.invites">
       <notes>
-        <note category="location">web/src/app/public-profile/achievement-badge.ts:41</note>
+        <note category="location">web/src/app/public-profile/achievement-badge.ts:42</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</source>
       </segment>
     </unit>
-    <unit id="publicProfile.badge.level">
-      <notes>
-        <note category="location">web/src/app/public-profile/achievement-badge.ts:49</note>
-      </notes>
-      <segment>
-        <source>Level <ph id="0" equiv="level" disp="definition.threshold ?? 0"/> erreicht</source>
-      </segment>
-    </unit>
-    <unit id="publicProfile.badge.variety">
-      <notes>
-        <note category="location">web/src/app/public-profile/achievement-badge.ts:57</note>
-      </notes>
-      <segment>
-        <source>Vielseitig: <ph id="0" equiv="categories" disp="definition.threshold ?? 0"/> Kategorien</source>
-      </segment>
-    </unit>
     <unit id="publicProfile.badge.firstPlanDay">
       <notes>
-        <note category="location">web/src/app/public-profile/achievement-badge.ts:64</note>
+        <note category="location">web/src/app/public-profile/achievement-badge.ts:52</note>
       </notes>
       <segment>
         <source>Erster Plantag</source>
@@ -9992,7 +9968,7 @@
     </unit>
     <unit id="publicProfile.badge.planDays">
       <notes>
-        <note category="location">web/src/app/public-profile/achievement-badge.ts:65</note>
+        <note category="location">web/src/app/public-profile/achievement-badge.ts:53</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="days" disp="days"/> Plantage</source>
@@ -12382,7 +12358,7 @@
     </unit>
     <unit id="levelCard.title">
       <notes>
-        <note category="location">web/src/app/stats/components/level-card/level-card.component.ts:43,44</note>
+        <note category="location">web/src/app/stats/components/level-card/level-card.component.ts:44,45</note>
       </notes>
       <segment>
         <source>Level <ph id="0" equiv="INTERPOLATION" disp="{{ progress().level }}"/></source>
@@ -12390,7 +12366,7 @@
     </unit>
     <unit id="levelCard.total">
       <notes>
-        <note category="location">web/src/app/stats/components/level-card/level-card.component.ts:46,47</note>
+        <note category="location">web/src/app/stats/components/level-card/level-card.component.ts:47,48</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ progress().totalXp | number }}"/> XP</source>
@@ -12398,7 +12374,7 @@
     </unit>
     <unit id="levelCard.remaining">
       <notes>
-        <note category="location">web/src/app/stats/components/level-card/level-card.component.ts:55,57</note>
+        <note category="location">web/src/app/stats/components/level-card/level-card.component.ts:56,58</note>
       </notes>
       <segment>
         <source>Noch <ph id="0" equiv="INTERPOLATION" disp="{{ remaining() | number }}"/> XP bis Level <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress().level + 1 }}"/></source>
@@ -12406,7 +12382,7 @@
     </unit>
     <unit id="levelCard.barLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/level-card/level-card.component.ts:157</note>
+        <note category="location">web/src/app/stats/components/level-card/level-card.component.ts:156</note>
       </notes>
       <segment>
         <source>Fortschritt zu Level <ph id="0" equiv="next" disp="this.progress().level + 1"/></source>
@@ -13286,7 +13262,7 @@
     </unit>
     <unit id="analysis.xp.levelMeta">
       <notes>
-        <note category="location">web/src/app/stats/components/xp-analysis-card/xp-analysis-card.component.html:33,35</note>
+        <note category="location">web/src/app/stats/components/xp-analysis-card/xp-analysis-card.component.html:33,36</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ progress.intoLevel | number }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.levelSpan | number }}"/> XP</source>
@@ -13324,9 +13300,17 @@
         <source> In diesem Zeitraum hast du noch keine XP gesammelt. </source>
       </segment>
     </unit>
+    <unit id="analysis.xp.perMonth">
+      <notes>
+        <note category="location">web/src/app/stats/components/xp-analysis-card/xp-analysis-card.component.html:75,77</note>
+      </notes>
+      <segment>
+        <source>XP pro Monat</source>
+      </segment>
+    </unit>
     <unit id="analysis.xp.perWeek">
       <notes>
-        <note category="location">web/src/app/stats/components/xp-analysis-card/xp-analysis-card.component.html:79,81</note>
+        <note category="location">web/src/app/stats/components/xp-analysis-card/xp-analysis-card.component.html:78,80</note>
       </notes>
       <segment>
         <source>XP pro Woche</source>
@@ -13334,7 +13318,7 @@
     </unit>
     <unit id="analysis.xp.perDay">
       <notes>
-        <note category="location">web/src/app/stats/components/xp-analysis-card/xp-analysis-card.component.html:81,84</note>
+        <note category="location">web/src/app/stats/components/xp-analysis-card/xp-analysis-card.component.html:81,83</note>
       </notes>
       <segment>
         <source>XP pro Tag</source>
@@ -13342,7 +13326,7 @@
     </unit>
     <unit id="analysis.xp.byCategory">
       <notes>
-        <note category="location">web/src/app/stats/components/xp-analysis-card/xp-analysis-card.component.html:87,88</note>
+        <note category="location">web/src/app/stats/components/xp-analysis-card/xp-analysis-card.component.html:88,89</note>
       </notes>
       <segment>
         <source>Nach Kategorie</source>
@@ -13350,10 +13334,18 @@
     </unit>
     <unit id="analysis.xp.topExercises">
       <notes>
-        <note category="location">web/src/app/stats/components/xp-analysis-card/xp-analysis-card.component.html:102,103</note>
+        <note category="location">web/src/app/stats/components/xp-analysis-card/xp-analysis-card.component.html:103,104</note>
       </notes>
       <segment>
         <source>Top-Übungen</source>
+      </segment>
+    </unit>
+    <unit id="analysis.xp.bucketTitle">
+      <notes>
+        <note category="location">web/src/app/stats/components/xp-analysis-card/xp-analysis-card.component.ts:64</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="date" disp="date"/>: <ph id="1" equiv="xp" disp="xp"/></source>
       </segment>
     </unit>
     <unit id="dashboard.allTime.heading">
@@ -15202,7 +15194,7 @@
     </unit>
     <unit id="dashboard.tile.openInHistoryAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:158</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:155</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
@@ -15210,7 +15202,7 @@
     </unit>
     <unit id="dashboard.share.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:161</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:158</note>
       </notes>
       <segment>
         <source>Tagesleistung teilen</source>
@@ -15218,7 +15210,7 @@
     </unit>
     <unit id="dashboard.share">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:162</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:159</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -15989,7 +15981,7 @@
     </unit>
     <unit id="session.close">
       <notes>
-        <note category="location">web/src/app/training-plans/session/training-session.component.ts:81</note>
+        <note category="location">web/src/app/training-plans/session/training-session.component.ts:82</note>
         <note category="location">web/src/app/workouts/session/workout-session.component.ts:84</note>
       </notes>
       <segment>
@@ -15998,7 +15990,7 @@
     </unit>
     <unit id="session.notLogged">
       <notes>
-        <note category="location">web/src/app/training-plans/session/training-session.component.ts:232</note>
+        <note category="location">web/src/app/training-plans/session/training-session.component.ts:236</note>
       </notes>
       <segment>
         <source>Konnte nicht eingetragen werden. Versuch es gleich nochmal.</source>
@@ -16690,7 +16682,7 @@
     </unit>
     <unit id="wiki.difficulty.aria">
       <notes>
-        <note category="location">web/src/app/wiki/wiki-difficulty-chips.component.ts:17,18</note>
+        <note category="location">web/src/app/wiki/wiki-difficulty-chips.component.ts:16,17</note>
       </notes>
       <segment>
         <source>Schwierigkeitsgrad</source>
@@ -16698,7 +16690,7 @@
     </unit>
     <unit id="wiki.pushupTypes.level.beginner">
       <notes>
-        <note category="location">web/src/app/wiki/wiki-difficulty-chips.component.ts:24,26</note>
+        <note category="location">web/src/app/wiki/wiki-difficulty-chips.component.ts:23,25</note>
       </notes>
       <segment>
         <source>Einsteiger</source>
@@ -16706,7 +16698,7 @@
     </unit>
     <unit id="wiki.pushupTypes.level.intermediate">
       <notes>
-        <note category="location">web/src/app/wiki/wiki-difficulty-chips.component.ts:30,33</note>
+        <note category="location">web/src/app/wiki/wiki-difficulty-chips.component.ts:29,32</note>
       </notes>
       <segment>
         <source>Mittelstufe</source>
@@ -16714,7 +16706,7 @@
     </unit>
     <unit id="wiki.pushupTypes.level.advanced">
       <notes>
-        <note category="location">web/src/app/wiki/wiki-difficulty-chips.component.ts:36,39</note>
+        <note category="location">web/src/app/wiki/wiki-difficulty-chips.component.ts:35,38</note>
       </notes>
       <segment>
         <source>Fortgeschritten</source>

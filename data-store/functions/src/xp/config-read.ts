@@ -1,22 +1,26 @@
 import {
-  isValidXpRate,
+  parseXpConfig,
   XP_CONFIG_DOC_PATH,
   type XpConfig,
 } from '@pu-stats/models';
 import type { Firestore } from 'firebase-admin/firestore';
 
-/** Keeps only well-formed rates, so a bad admin write cannot poison XP. */
-export function parseXpConfig(data: unknown): XpConfig | null {
-  const rates = (data as { rates?: unknown } | undefined)?.rates;
-  if (!rates || typeof rates !== 'object') return null;
-  const clean: Record<string, number> = {};
-  for (const [id, rate] of Object.entries(rates as Record<string, unknown>)) {
-    if (isValidXpRate(rate)) clean[id] = rate;
-  }
-  return { rates: clean };
+/** Rates change only when an admin edits them; warm instances reuse them briefly. */
+export const XP_CONFIG_TTL_MS = 60_000;
+
+let cached: { config: XpConfig | null; readAt: number } | null = null;
+
+export async function readXpConfig(
+  db: Firestore,
+  nowMs: number = Date.now()
+): Promise<XpConfig | null> {
+  if (cached && nowMs - cached.readAt < XP_CONFIG_TTL_MS) return cached.config;
+  const snap = await db.doc(XP_CONFIG_DOC_PATH).get();
+  const config = snap.exists ? parseXpConfig(snap.data()) : null;
+  cached = { config, readAt: nowMs };
+  return config;
 }
 
-export async function readXpConfig(db: Firestore): Promise<XpConfig | null> {
-  const snap = await db.doc(XP_CONFIG_DOC_PATH).get();
-  return snap.exists ? parseXpConfig(snap.data()) : null;
+export function resetXpConfigCache(): void {
+  cached = null;
 }

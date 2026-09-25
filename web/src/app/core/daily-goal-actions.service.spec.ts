@@ -9,7 +9,6 @@ import { AppDataFacade } from './app-data.facade';
 import { DailyGoalActionsService } from './daily-goal-actions.service';
 import type { DailyGoalItemView } from './daily-goal.helpers';
 import { PlanGoalsService } from './plan-goals.service';
-import { XpCelebrationService } from './xp/xp-celebration.service';
 
 function item(overrides: Partial<DailyGoalItemView> = {}): DailyGoalItemView {
   return {
@@ -38,8 +37,6 @@ describe('DailyGoalActionsService', () => {
   const userId = signal<string>('u1');
   const isPlanGoal = vitest.fn();
   const completePlanGoal = vitest.fn();
-  const celebrate = vitest.fn();
-  const isShowing = vitest.fn();
 
   function setup(): DailyGoalActionsService {
     TestBed.resetTestingModule();
@@ -62,10 +59,6 @@ describe('DailyGoalActionsService', () => {
           provide: PlanGoalsService,
           useValue: { isPlanGoal, complete: completePlanGoal },
         },
-        {
-          provide: XpCelebrationService,
-          useValue: { celebrate, isShowing },
-        },
       ],
     });
     return TestBed.inject(DailyGoalActionsService);
@@ -78,34 +71,6 @@ describe('DailyGoalActionsService', () => {
     isPlanGoal.mockReset().mockReturnValue(false);
     completePlanGoal.mockReset().mockResolvedValue('logged');
     userId.set('u1');
-    celebrate.mockReset().mockReturnValue(false);
-    isShowing.mockReset().mockReturnValue(false);
-  });
-
-  it('should celebrate the fill entry instead of the success snackbar', async () => {
-    // given
-    celebrate.mockReturnValue(true);
-    const service = setup();
-
-    // when
-    await service.complete(item());
-
-    // then
-    expect(celebrate).toHaveBeenCalledWith([{ _id: 'e1' }]);
-    expect(snackBarOpen).not.toHaveBeenCalled();
-  });
-
-  it('should skip the success snackbar while the plan XP dialog shows', async () => {
-    // given
-    isPlanGoal.mockReturnValue(true);
-    isShowing.mockReturnValue(true);
-    const service = setup();
-
-    // when
-    await service.complete(item());
-
-    // then
-    expect(snackBarOpen).not.toHaveBeenCalled();
   });
 
   it('should close a plan goal through the plan action instead of a fill entry', async () => {

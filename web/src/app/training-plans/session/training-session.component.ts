@@ -20,6 +20,8 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
 import { TrainingPlanStore } from '../training-plan.store';
 import { isPlanActive } from '../training-plan-store.selectors';
 import { WakeLockService } from '../../core/wake-lock.service';
+import { holdXpUntilDone } from '../../core/xp/xp-session-hold';
+import { SESSION_ENTRY_SOURCE } from './session-capture.helpers';
 import { SessionCaptureService } from './session-capture.service';
 import { SessionIntroComponent } from './session-intro.component';
 import { SessionRestComponent } from './session-rest.component';
@@ -40,7 +42,6 @@ import { buildSessionRows } from './training-session.rows';
  * ordinary entry (or a plan tick), so leaving mid-workout and coming
  * back resumes exactly where the logged entries say the user stands.
  */
-import { celebrateSessionXpOnDone } from './session-xp';
 @Component({
   selector: 'app-training-session',
   imports: [
@@ -84,7 +85,10 @@ export class TrainingSessionComponent {
     inject(WakeLockService).keepAwakeWhile(
       () => this.session.phase() === 'rest'
     );
-    celebrateSessionXpOnDone(this.session.phase, this.capture);
+    holdXpUntilDone(
+      () => this.session.phase() === 'done',
+      [SESSION_ENTRY_SOURCE, 'plan']
+    );
   }
 
   private readonly slugSignal = toSignal(this.route.paramMap, {

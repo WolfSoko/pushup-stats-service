@@ -20,7 +20,7 @@ Decomposed from the monolithic `index.ts`:
 - **push/reminder-action:** Single-use action tokens for the notification buttons (`reminderAction` callable — see [`gotchas/push-and-service-workers.md`](gotchas/push-and-service-workers.md))
 - **admin/:** User privilege checks (Custom Claims validation), deletion validation, batch helpers
 - **entry-trash/:** Archive record for deleted entries (retention window, owner extraction)
-- **xp/:** XP ledger lines with frozen rates (`ledger.ts`), the `userXp` aggregate (`aggregate.ts`), level/variety badges (`badges.ts`), backfill planning (`backfill-plan.ts`); I/O in `award.ts`, `config-read.ts`, `leaderboard.ts`
+- **xp/:** XP ledger lines with frozen rates (`ledger.ts`), the `userXp` aggregate (`aggregate.ts`), level/variety badges (`badges.ts`), backfill planning (`backfill-plan.ts`); I/O in `award.ts`, `config-read.ts` (60 s cache), `leaderboard.ts`, `rebuild.ts`
 
 All modules include comprehensive Jest tests (no Firebase dependencies for pure logic).
 
@@ -43,7 +43,7 @@ Two consequences worth remembering:
 
 ## XP / Punkte-System
 
-`functions-xp.ts` holds the three triggers — `bookXpOnEntryWrite` (entry → ledger line in `userXp/{uid}/xpLedger/{entryId}`, rate frozen on first booking), `aggregateXpOnLedgerWrite` (ledger → `userXp/{uid}` aggregate + level/variety badges + inbox notification) and `refreshXpLeaderboardOnLedgerWrite` (ledger → windowed periods of `leaderboards/xp`, `retry: false` like the exercise refresh). The scheduled `rebuildExerciseLeaderboards` also rebuilds the XP board's all-time ranking. `functions-xp-backfill.ts` exports the admin migration `backfillXp` (`{ dryRun }`, 200 users per run, reports `remaining`). Ledger lines written by the backfill carry `source: 'backfill'`, and both ledger triggers skip their creation. All ledger/aggregate triggers honour the account-deletion tombstone. Design and client side: [`architecture.md`](architecture.md#xp--punkte-system).
+`functions-xp.ts` holds the three triggers — `bookXpOnEntryWrite` (entry → ledger line in `userXp/{uid}/xpLedger/{entryId}`, rate frozen on first booking, built transactionally from the current entry doc so unordered deliveries cannot regress it), `aggregateXpOnLedgerWrite` (ledger → `userXp/{uid}` aggregate, deduped by event id via `recentEventIds`, + level/variety badges + inbox notification) and `refreshXpLeaderboardOnLedgerWrite` (ledger → windowed periods of `leaderboards/xp`, `retry: false` like the exercise refresh). The scheduled `rebuildExerciseLeaderboards` also rebuilds the XP board's all-time ranking. `functions-xp-backfill.ts` exports the admin migration `backfillXp` (`{ dryRun }`, 200 users per run, reports `remaining`). Ledger lines written by the backfill carry `source: 'backfill'`, and both ledger triggers skip their creation (`isBackfillCreation`); the backfill rebuilds each aggregate from a fresh ledger read inside a transaction (`xp/rebuild.ts`). All ledger/aggregate triggers honour the account-deletion tombstone. Design and client side: [`architecture.md`](architecture.md#xp--punkte-system).
 
 ## Account deletion (data purge)
 

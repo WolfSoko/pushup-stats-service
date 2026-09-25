@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatChipsModule } from '@angular/material/chips';
+import type { ExerciseDifficulty } from '@pu-stats/models';
 import { XpRateBadgeComponent } from '../core/xp/xp-rate-badge.component';
-
-export type WikiDifficulty = 'beginner' | 'intermediate' | 'advanced';
 
 /**
  * Difficulty chip of a wiki exercise or pushup type, followed by the XP
@@ -64,6 +63,6 @@ export type WikiDifficulty = 'beginner' | 'intermediate' | 'advanced';
   `,
 })
 export class WikiDifficultyChipsComponent {
-  readonly difficulty = input.required<WikiDifficulty>();
+  readonly difficulty = input.required<ExerciseDifficulty>();
   readonly exerciseId = input<string | null>(null);
 }

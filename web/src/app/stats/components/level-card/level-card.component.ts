@@ -10,6 +10,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { RouterLink } from '@angular/router';
 import { XpStore } from '@pu-stats/data-access-state';
 import { SkeletonComponent } from '@pu-stats/ui';
+import { levelPercent } from '../../../core/xp/xp-format';
 
 /**
  * Compact level strip on the dashboard: current level, the bar to the
@@ -146,9 +147,7 @@ export class LevelCardComponent {
 
   protected readonly loaded = this.xp.loaded;
   protected readonly progress = this.xp.progress;
-  protected readonly percent = computed(() =>
-    Math.round(this.progress().fraction * 100)
-  );
+  protected readonly percent = computed(() => levelPercent(this.progress()));
   protected readonly remaining = computed(
     () => this.progress().levelSpan - this.progress().intoLevel
   );

@@ -5,27 +5,19 @@ import {
   doc,
   docData,
   Firestore,
+  query,
   serverTimestamp,
   setDoc,
+  where,
 } from '@angular/fire/firestore';
 import {
-  isValidXpRate,
+  parseXpConfig,
   XP_CONFIG_DOC_PATH,
   type UserXp,
   type XpConfig,
 } from '@pu-stats/models';
 import { map, Observable, of } from 'rxjs';
 import { PendingRequestsService } from '../pending-requests.service';
-
-function toConfig(raw: unknown): XpConfig | null {
-  const rates = (raw as { rates?: unknown } | undefined)?.rates;
-  if (!rates || typeof rates !== 'object') return null;
-  const clean: Record<string, number> = {};
-  for (const [id, rate] of Object.entries(rates as Record<string, unknown>)) {
-    if (isValidXpRate(rate)) clean[id] = rate;
-  }
-  return { rates: clean };
-}
 
 /**
  * Reads the server-derived XP state (`userXp/{uid}` and its ledger) and
@@ -44,11 +36,18 @@ export class XpApiService {
     );
   }
 
-  /** XP booked per entry id — the frozen value, not a recomputation. */
-  watchLedger(uid: string): Observable<ReadonlyMap<string, number>> {
+  /**
+   * XP booked per entry id — the frozen value, not a recomputation.
+   * `fromIso` limits the listener to entries on or after that date.
+   */
+  watchLedger(
+    uid: string,
+    fromIso?: string
+  ): Observable<ReadonlyMap<string, number>> {
     if (!this.firestore || !uid) return of(new Map());
+    const ledger = collection(this.firestore, `userXp/${uid}/xpLedger`);
     return collectionData(
-      collection(this.firestore, `userXp/${uid}/xpLedger`),
+      fromIso ? query(ledger, where('timestamp', '>=', fromIso)) : ledger,
       { idField: 'id' }
     ).pipe(
       map(
@@ -65,7 +64,9 @@ export class XpApiService {
 
   watchConfig(): Observable<XpConfig | null> {
     if (!this.firestore) return of(null);
-    return docData(doc(this.firestore, XP_CONFIG_DOC_PATH)).pipe(map(toConfig));
+    return docData(doc(this.firestore, XP_CONFIG_DOC_PATH)).pipe(
+      map(parseXpConfig)
+    );
   }
 
   /** Replaces the whole rate map — never merged (nested-map clobber). */

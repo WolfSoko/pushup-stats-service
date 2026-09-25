@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 
-import { ledgerLineFor, sameLedgerLine } from './ledger';
+import { isBackfillCreation, ledgerLineFor, sameLedgerLine } from './ledger';
 
 const entry = {
   userId: 'u1',
@@ -71,5 +71,17 @@ describe('sameLedgerLine', () => {
     expect(sameLedgerLine(line, { ...line, xp: 1 })).toBe(false);
     expect(sameLedgerLine(null, null)).toBe(true);
     expect(sameLedgerLine(line, null)).toBe(false);
+  });
+});
+
+describe('isBackfillCreation', () => {
+  it('should only flag lines the backfill created', () => {
+    // then
+    expect(isBackfillCreation(undefined, { source: 'backfill' })).toBe(true);
+    expect(isBackfillCreation(undefined, { xp: 1 })).toBe(false);
+    expect(
+      isBackfillCreation({ source: 'backfill' }, { source: 'backfill' })
+    ).toBe(false);
+    expect(isBackfillCreation({ source: 'backfill' }, undefined)).toBe(false);
   });
 });

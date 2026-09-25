@@ -1,8 +1,8 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { UserContextService } from '@pu-auth/auth';
 import { XpApiService } from '@pu-stats/data-access';
-import { DEFAULT_XP_RATES, type XpConfig } from '@pu-stats/models';
+import { XpStore } from '@pu-stats/data-access-state';
+import { DEFAULT_XP_RATES } from '@pu-stats/models';
 import { createBusyState } from '@pu-stats/ui';
 import { errorMessage } from './admin-page.helpers';
 import {
@@ -20,15 +20,10 @@ import {
 export class AdminXpRatesState {
   private readonly api = inject(XpApiService);
   private readonly user = inject(UserContextService);
+  private readonly xp = inject(XpStore);
 
-  /** `undefined` until the first snapshot — drives the skeleton. */
-  private readonly config = toSignal<XpConfig | null | undefined>(
-    this.api.watchConfig(),
-    { initialValue: undefined }
-  );
-
-  readonly loaded = computed(() => this.config() !== undefined);
-  readonly stored = computed(() => effectiveRates(this.config() ?? null));
+  readonly loaded = this.xp.configLoaded;
+  readonly stored = computed(() => effectiveRates(this.xp.config()));
 
   private readonly edits = signal<Readonly<Record<string, number>>>({});
   readonly invalid = signal<ReadonlySet<string>>(new Set());

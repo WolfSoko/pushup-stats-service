@@ -17,7 +17,7 @@
         aria-label="Bestenlisten-Übung auswählen"
         i18n-aria-label="@@leaderboard.exercise.ariaLabel"
       >
-        @for (chip of popularExercises(); track chip.id) {
+        @for (chip of popularExercises; track chip.id) {
           <button
             mat-stroked-button
             type="button"

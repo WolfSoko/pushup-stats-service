@@ -1,9 +1,9 @@
-import { formatNumber } from '@angular/common';
 import {
   LEADERBOARD_PUSHUP_ID,
   LEADERBOARD_XP_ID,
 } from '@pu-stats/data-access';
 import { findExerciseDefinition, formatExerciseValue } from '@pu-stats/models';
+import { formatXp } from '../../core/xp/xp-format';
 import { exerciseDisplayName } from '../../stats/i18n/exercise-display-names';
 
 export type PopularExercise = {
@@ -56,11 +56,6 @@ export function leaderboardLabel(id: string): string {
   if (id === LEADERBOARD_XP_ID) return XP_CHIP.label;
   if (id === LEADERBOARD_PUSHUP_ID) return PUSHUP_CHIP.label;
   return exerciseDisplayName(id);
-}
-
-export function formatXp(value: number, locale: string): string {
-  const xp = formatNumber(value, locale, '1.0-0');
-  return $localize`:@@leaderboard.xp.value:${xp}:xp: XP`;
 }
 
 /**

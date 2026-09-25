@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { doc, docData, Firestore, getDoc } from '@angular/fire/firestore';
 import { findExerciseDefinition } from '@pu-stats/models';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, map, Observable } from 'rxjs';
 import { PendingRequestsService } from '../pending-requests.service';
 import {
   emptyLeaderboardData,
@@ -72,6 +72,36 @@ export const LEADERBOARD_PUSHUP_ID = 'pushup';
  */
 export const LEADERBOARD_XP_ID = 'xp';
 
+/**
+ * Where a board's pre-ranked periods live: the Firestore snapshot doc and
+ * how to pick this board out of it. The XP board has its own doc; every
+ * exercise board is one slot of `leaderboards/exercises`.
+ */
+export interface BoardSource {
+  readonly docId: 'exercises' | 'xp';
+  pickPeriods(data: Record<string, unknown>): SnapshotPeriods | undefined;
+}
+
+export function boardSource(boardId: string): BoardSource | null {
+  if (boardId === LEADERBOARD_XP_ID) {
+    return {
+      docId: 'xp',
+      pickPeriods: (data) => data['periods'] as SnapshotPeriods | undefined,
+    };
+  }
+  const def = findExerciseDefinition(boardId);
+  if (!def || !supportsLeaderboard(def.measurement)) return null;
+  return {
+    docId: 'exercises',
+    pickPeriods: (data) =>
+      (
+        data['byExercise'] as
+          | Record<string, { periods?: SnapshotPeriods }>
+          | undefined
+      )?.[boardId]?.periods,
+  };
+}
+
 @Injectable({ providedIn: 'root' })
 export class LeaderboardService {
   private readonly firestore = inject(Firestore, { optional: true });
@@ -79,84 +109,50 @@ export class LeaderboardService {
   private readonly pending = inject(PendingRequestsService);
 
   /**
-   * Real-time stream of the precomputed `leaderboards/current` document.
-   * Kept so the store's `pushupSub` subscription can still wire up (the
-   * subscription itself is removed in the same step, but `observeSnapshot`
-   * is also used by `observeExerciseSnapshot` tests).
-   */
-  observeSnapshot(): Observable<unknown> {
-    if (!this.firestore) return EMPTY;
-    return docData(doc(this.firestore, 'leaderboards', 'current'));
-  }
-
-  /**
-   * Real-time stream of the precomputed `leaderboards/exercises`
-   * document (per-exercise leaderboards). Emits on every Cloud Function
-   * rebuild so the store can invalidate cached non-pushup buckets.
-   */
-  observeExerciseSnapshot(): Observable<unknown> {
-    if (!this.firestore) return EMPTY;
-    return docData(doc(this.firestore, 'leaderboards', 'exercises'));
-  }
-
-  /** Real-time stream of the precomputed `leaderboards/xp` document. */
-  observeXpSnapshot(): Observable<unknown> {
-    if (!this.firestore) return EMPTY;
-    return docData(doc(this.firestore, 'leaderboards', 'xp'));
-  }
-
-  /**
-   * Loads ranked buckets (daily / last7 / last30 / allTime) for the
-   * requested exercise from the precomputed `leaderboards/exercises`
-   * snapshot, or the XP ranking from `leaderboards/xp` for
-   * {@link LEADERBOARD_XP_ID}.
+   * Ranked buckets for a board (a catalog exercise id or
+   * {@link LEADERBOARD_XP_ID}) from its precomputed snapshot doc.
    */
   async load(
-    exerciseId: string = LEADERBOARD_PUSHUP_ID
+    boardId: string = LEADERBOARD_PUSHUP_ID
   ): Promise<LeaderboardData> {
-    if (exerciseId === LEADERBOARD_XP_ID) return this.loadXpSnapshot();
-    const def = findExerciseDefinition(exerciseId);
-    if (!def) return emptyLeaderboardData();
-    if (!supportsLeaderboard(def.measurement)) return emptyLeaderboardData();
-    return this.readSnapshot('exercises', exerciseId, (data) => {
-      const byExercise = data['byExercise'] as
-        | Record<string, { periods?: SnapshotPeriods }>
-        | undefined;
-      return byExercise?.[exerciseId]?.periods;
-    });
-  }
-
-  private loadXpSnapshot(): Promise<LeaderboardData> {
-    return this.readSnapshot(
-      'xp',
-      LEADERBOARD_XP_ID,
-      (data) => data['periods'] as SnapshotPeriods | undefined
-    );
-  }
-
-  private async readSnapshot(
-    docId: 'exercises' | 'xp',
-    exerciseId: string,
-    pickPeriods: (data: Record<string, unknown>) => SnapshotPeriods | undefined
-  ): Promise<LeaderboardData> {
-    if (!this.firestore) return emptyLeaderboardData();
-    const currentUserId = this.auth?.currentUser?.uid ?? null;
+    const source = boardSource(boardId);
+    if (!source || !this.firestore) return emptyLeaderboardData();
     try {
       const snap = await this.pending.track(
-        getDoc(doc(this.firestore, 'leaderboards', docId))
+        getDoc(doc(this.firestore, 'leaderboards', source.docId))
       );
       if (!snap.exists()) return emptyLeaderboardData();
-      const data = (snap.data() ?? {}) as Record<string, unknown>;
-      const updatedAt = toDateOrNull(data['updatedAt']);
-      const periods = pickPeriods(data);
-      if (!periods) return { ...emptyLeaderboardData(), updatedAt };
-      return projectSnapshotPeriods(periods, currentUserId, updatedAt);
+      return this.project(source, snap.data());
     } catch (err) {
       console.warn(
-        `[LeaderboardService] leaderboards/${docId} read failed for ${exerciseId}:`,
+        `[LeaderboardService] leaderboards/${source.docId} read failed for ${boardId}:`,
         err
       );
       return emptyLeaderboardData();
     }
+  }
+
+  /**
+   * Live stream of a board, projected from each emission of its snapshot
+   * doc — no second read per update.
+   */
+  observe(boardId: string): Observable<LeaderboardData> {
+    const source = boardSource(boardId);
+    if (!source || !this.firestore) return EMPTY;
+    return docData(doc(this.firestore, 'leaderboards', source.docId)).pipe(
+      map((data) => this.project(source, data))
+    );
+  }
+
+  private project(source: BoardSource, raw: unknown): LeaderboardData {
+    const data = (raw ?? {}) as Record<string, unknown>;
+    const updatedAt = toDateOrNull(data['updatedAt']);
+    const periods = source.pickPeriods(data);
+    if (!periods) return { ...emptyLeaderboardData(), updatedAt };
+    return projectSnapshotPeriods(
+      periods,
+      this.auth?.currentUser?.uid ?? null,
+      updatedAt
+    );
   }
 }

@@ -7,6 +7,7 @@ import {
   type ExerciseCategoryId,
   type XpConfig,
   type XpRateUnitKey,
+  xpRateFor,
 } from '@pu-stats/models';
 import {
   categoryDisplayName,
@@ -60,11 +61,9 @@ export function buildXpRateGroups(): XpRateGroup[] {
 export function effectiveRates(
   config: XpConfig | null
 ): Record<string, number> {
-  const rates: Record<string, number> = { ...DEFAULT_XP_RATES };
-  for (const [id, rate] of Object.entries(config?.rates ?? {})) {
-    if (id in rates && isValidXpRate(rate)) rates[id] = rate;
-  }
-  return rates;
+  return Object.fromEntries(
+    Object.keys(DEFAULT_XP_RATES).map((id) => [id, xpRateFor(id, config)])
+  );
 }
 
 /**

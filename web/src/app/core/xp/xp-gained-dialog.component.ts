@@ -12,17 +12,12 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 
 import type { XpGainedDialogData } from './xp-gained.models';
+import { prefersReducedMotion } from '../reduced-motion';
 
 export const XP_COUNT_UP_MS = 900;
 export const XP_LEVEL_UP_DELAY_MS = 1100;
 
 const SPARK_COUNT = 16;
-
-function prefersReducedMotion(): boolean {
-  return (
-    globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
-  );
-}
 
 @Component({
   selector: 'app-xp-gained-dialog',

@@ -1,4 +1,5 @@
 import { findAchievementDefinition } from '@pu-stats/models';
+import { xpBadgeLabel } from '../achievements/xp-badge-label';
 
 export interface AchievementBadge {
   readonly id: string;
@@ -42,21 +43,8 @@ export function resolveAchievementBadge(id: string): AchievementBadge | null {
     };
   }
 
-  if (definition.kind === 'level') {
-    return {
-      id,
-      icon: definition.icon,
-      label: $localize`:@@publicProfile.badge.level:Level ${definition.threshold ?? 0}:level: erreicht`,
-    };
-  }
-
-  if (definition.kind === 'variety') {
-    return {
-      id,
-      icon: definition.icon,
-      label: $localize`:@@publicProfile.badge.variety:Vielseitig: ${definition.threshold ?? 0}:categories: Kategorien`,
-    };
-  }
+  const xpLabel = xpBadgeLabel(definition);
+  if (xpLabel) return { id, icon: definition.icon, label: xpLabel };
 
   const days = definition.threshold ?? 0;
   const label =

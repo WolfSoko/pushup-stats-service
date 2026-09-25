@@ -1,201 +1,193 @@
 import { PLATFORM_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
-import { Auth } from '@angular/fire/auth';
-import { DEMO_USER_ID } from '@pu-stats/data-access';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DEMO_USER_ID, ExerciseFirestoreService } from '@pu-stats/data-access';
 import { XpStore } from '@pu-stats/data-access-state';
-import type { XpEntryInput } from '@pu-stats/models';
+import type { ExerciseEntry, XpEntryInput } from '@pu-stats/models';
 import { Subject } from 'rxjs';
 import { vi } from 'vitest';
 
-import { XpCelebrationService } from './xp-celebration.service';
+import { CelebrationQueueService } from '../celebration-queue.service';
+import { XP_COALESCE_MS, XpCelebrationService } from './xp-celebration.service';
 
-function setup(
-  options: {
-    uid?: string;
-    guest?: boolean;
-    platform?: string;
-    openDialogs?: unknown[];
-  } = {}
-) {
-  const closed = new Subject<void>();
-  const allClosed = new Subject<void>();
-  const close = vi.fn(() => closed.next());
-  const open = vi.fn((_component: unknown, _config: unknown) => ({
-    afterClosed: () => closed,
-    close,
-  }));
-  const dialog = {
-    open,
-    openDialogs: options.openDialogs ?? [],
-    afterAllClosed: allClosed,
+function entry(over: Partial<ExerciseEntry> = {}): ExerciseEntry {
+  return {
+    _id: 'e1',
+    userId: 'u1',
+    exerciseId: 'pushup',
+    timestamp: '2026-09-24T10:00:00',
+    reps: 20,
+    source: 'web',
+    ...over,
   };
+}
+
+function setup(options: { loaded?: boolean; total?: number } = {}) {
+  const created = new Subject<ExerciseEntry>();
+  const open = vi.fn();
+  const enqueue = vi.fn(async (fn: () => unknown) => {
+    open(await fn());
+  });
+  const dialogOpen = vi.fn((_c: unknown, config: { data: unknown }) => ({
+    data: config.data,
+  }));
+  const snackOpen = vi.fn();
+  const total = { value: options.total ?? 90 };
   TestBed.configureTestingModule({
     providers: [
-      { provide: PLATFORM_ID, useValue: options.platform ?? 'browser' },
-      { provide: MatDialog, useValue: dialog },
+      { provide: PLATFORM_ID, useValue: 'browser' },
+      { provide: MatDialog, useValue: { open: dialogOpen } },
+      { provide: MatSnackBar, useValue: { open: snackOpen } },
+      { provide: CelebrationQueueService, useValue: { enqueue } },
       { provide: DEMO_USER_ID, useValue: 'demo' },
+      {
+        provide: ExerciseFirestoreService,
+        useValue: { entryCreated$: created },
+      },
       {
         provide: XpStore,
         useValue: {
+          loaded: () => options.loaded ?? true,
           previewXp: (e: XpEntryInput) => e.reps ?? 0,
-          totalXp: () => 90,
-        },
-      },
-      {
-        provide: Auth,
-        useValue: {
-          currentUser: {
-            uid: options.uid ?? 'u1',
-            isAnonymous: options.guest ?? false,
-          },
+          totalXp: () => total.value,
         },
       },
     ],
   });
   const service = TestBed.inject(XpCelebrationService);
-  return { service, open, closed, allClosed, dialog };
+  return { service, created, dialogOpen, snackOpen, total, enqueue };
 }
 
-const PUSHUPS = [{ exerciseId: 'pushup', reps: 20 }];
+function shownData(dialogOpen: ReturnType<typeof vi.fn>) {
+  return (dialogOpen.mock.calls.at(-1)?.[1] as { data: Record<string, any> })
+    ?.data;
+}
 
 describe('XpCelebrationService', () => {
-  beforeEach(() => TestBed.resetTestingModule());
+  beforeEach(() => {
+    TestBed.resetTestingModule();
+    vi.useFakeTimers();
+  });
+  afterEach(() => vi.useRealTimers());
 
-  it('should open the dialog with the gained XP and the level-up', () => {
+  it('should celebrate a saved entry from any save path', async () => {
     // given
-    const { service, open } = setup();
+    const { created, dialogOpen } = setup();
 
     // when
-    const opened = service.celebrate(PUSHUPS);
+    created.next(entry());
+    await vi.advanceTimersByTimeAsync(XP_COALESCE_MS);
 
     // then
-    expect(opened).toBe(true);
-    expect(open).toHaveBeenCalledWith(
-      expect.anything(),
+    expect(shownData(dialogOpen)).toEqual(
       expect.objectContaining({
-        panelClass: 'xp-gained-dialog-panel',
-        data: expect.objectContaining({
-          xp: 20,
-          before: expect.objectContaining({ level: 1 }),
-          after: expect.objectContaining({ level: 2 }),
-        }),
+        xp: 20,
+        before: expect.objectContaining({ level: 1, totalXp: 90 }),
+        after: expect.objectContaining({ level: 2, totalXp: 110 }),
       })
     );
   });
 
-  it.each([
-    ['a guest', { guest: true }],
-    ['the demo user', { uid: 'demo' }],
-    ['the server', { platform: 'server' }],
-  ])('should not open for %s', (_case, options) => {
+  it('should coalesce saves close together into one dialog', async () => {
     // given
-    const { service, open } = setup(options);
+    const { created, dialogOpen, enqueue } = setup();
 
     // when
-    const opened = service.celebrate(PUSHUPS);
+    created.next(entry({ _id: 'a', reps: 10 }));
+    await vi.advanceTimersByTimeAsync(XP_COALESCE_MS / 2);
+    created.next(entry({ _id: 'b', reps: 5 }));
+    await vi.advanceTimersByTimeAsync(XP_COALESCE_MS);
 
     // then
-    expect(opened).toBe(false);
-    expect(open).not.toHaveBeenCalled();
+    expect(enqueue).toHaveBeenCalledOnce();
+    expect(dialogOpen).toHaveBeenCalledOnce();
+    expect(shownData(dialogOpen)?.['xp']).toBe(15);
   });
 
-  it('should not open when the entries are worth nothing', () => {
+  it('should start the level bar from the total seen when the save arrived', async () => {
     // given
-    const { service, open } = setup();
+    const { created, dialogOpen, total } = setup({ total: 90 });
+
+    // when — the server books the entry before the dialog shows
+    created.next(entry());
+    total.value = 110;
+    await vi.advanceTimersByTimeAsync(XP_COALESCE_MS);
 
     // then
-    expect(service.celebrate([{ exerciseId: 'pushup', reps: 0 }])).toBe(false);
-    expect(open).not.toHaveBeenCalled();
+    expect(shownData(dialogOpen)?.['before'].totalXp).toBe(90);
   });
 
-  it('should collect held entries into one dialog', () => {
+  it('should fall back to the saved snackbar when the entry is worth nothing', async () => {
     // given
-    const { service, open } = setup();
-    const hold = service.hold();
+    const { created, dialogOpen, snackOpen } = setup();
 
     // when
-    service.celebrate(PUSHUPS);
-    service.celebrate(PUSHUPS);
-    const held = hold.take();
-    hold.release();
+    created.next(entry({ reps: 0 }));
+    await vi.advanceTimersByTimeAsync(XP_COALESCE_MS);
 
     // then
-    expect(open).not.toHaveBeenCalled();
-    expect(held).toHaveLength(2);
-  });
-
-  it('should open a single dialog after a batch', async () => {
-    // given
-    const { service, open } = setup();
-
-    // when
-    await service.batch(async () => {
-      service.celebrate(PUSHUPS);
-      service.celebrate(PUSHUPS);
-    });
-
-    // then
-    expect(open).toHaveBeenCalledTimes(1);
-    expect(open.mock.calls[0][1]).toEqual(
-      expect.objectContaining({ data: expect.objectContaining({ xp: 40 }) })
+    expect(dialogOpen).not.toHaveBeenCalled();
+    expect(snackOpen).toHaveBeenCalledWith(
+      'Eintrag gespeichert.',
+      '',
+      expect.anything()
     );
   });
 
-  it('should queue behind a dialog that is already open', async () => {
+  it('should only confirm with a snackbar for the demo account', async () => {
     // given
-    const { service, open, allClosed } = setup({ openDialogs: [{}] });
+    const { created, dialogOpen, snackOpen } = setup();
 
     // when
-    service.celebrate(PUSHUPS);
-    await Promise.resolve();
+    created.next(entry({ userId: 'demo' }));
+    await vi.advanceTimersByTimeAsync(XP_COALESCE_MS);
 
     // then
-    expect(open).not.toHaveBeenCalled();
-    allClosed.next();
-    await Promise.resolve();
-    await Promise.resolve();
-    expect(open).toHaveBeenCalledTimes(1);
+    expect(dialogOpen).not.toHaveBeenCalled();
+    expect(snackOpen).toHaveBeenCalledOnce();
   });
 
-  it('should run afterIdle work only once the dialog closed', async () => {
+  it('should hold a session source until released and leave others alone', async () => {
     // given
-    const { service, closed } = setup();
-    const work = vi.fn();
-    service.celebrate(PUSHUPS);
+    const { service, created, dialogOpen } = setup();
+    const hold = service.hold(['plan-session']);
 
     // when
-    service.afterIdle(work);
-    await Promise.resolve();
+    created.next(entry({ _id: 's1', source: 'plan-session', reps: 10 }));
+    created.next(entry({ _id: 's2', source: 'plan-session', reps: 12 }));
+    created.next(entry({ _id: 'q1', source: 'quick-add', reps: 3 }));
+    await vi.advanceTimersByTimeAsync(XP_COALESCE_MS);
 
     // then
-    expect(work).not.toHaveBeenCalled();
-    closed.next();
-    await service.whenIdle();
-    await Promise.resolve();
-    expect(work).toHaveBeenCalledTimes(1);
+    expect(dialogOpen).toHaveBeenCalledOnce();
+    expect(shownData(dialogOpen)?.['xp']).toBe(3);
+
+    // when
+    hold.release();
+    hold.release();
+    await vi.advanceTimersByTimeAsync(0);
+
+    // then
+    expect(dialogOpen).toHaveBeenCalledTimes(2);
+    expect(shownData(dialogOpen)?.['xp']).toBe(22);
   });
 
-  it('should run afterIdle work immediately when idle', () => {
-    // given
-    const { service } = setup();
-    const work = vi.fn();
+  it('should not count a session twice when the total was unknown at its start', async () => {
+    // given — XP had not loaded when the session started
+    const { service, created, dialogOpen, total } = setup({
+      loaded: false,
+      total: 100,
+    });
+    const hold = service.hold(['plan-session']);
+    created.next(entry({ source: 'plan-session', reps: 30 }));
 
-    // when
-    service.afterIdle(work);
-
-    // then
-    expect(work).toHaveBeenCalledTimes(1);
-  });
-
-  it('should open a preview regardless of the user', () => {
-    // given
-    const { service, open } = setup({ guest: true });
-
-    // when
-    service.showPreview(true);
+    // when — by the done screen the server has booked it
+    total.value = 130;
+    hold.release();
+    await vi.advanceTimersByTimeAsync(0);
 
     // then
-    expect(open).toHaveBeenCalledTimes(1);
+    expect(shownData(dialogOpen)?.['before'].totalXp).toBe(100);
   });
 });

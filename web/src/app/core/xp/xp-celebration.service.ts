@@ -1,153 +1,175 @@
 import { isPlatformBrowser } from '@angular/common';
-import { inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { MatDialog, type MatDialogRef } from '@angular/material/dialog';
-import { Auth } from '@angular/fire/auth';
-import { DEMO_USER_ID } from '@pu-stats/data-access';
+import { inject, Injectable, Injector, PLATFORM_ID } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DEMO_USER_ID, ExerciseFirestoreService } from '@pu-stats/data-access';
 import { XpStore } from '@pu-stats/data-access-state';
-import { xpForLevel, type XpEntryInput } from '@pu-stats/models';
-import { firstValueFrom } from 'rxjs';
+import {
+  xpForLevel,
+  type ExerciseEntry,
+  type XpEntryInput,
+} from '@pu-stats/models';
 
+import { CelebrationQueueService } from '../celebration-queue.service';
+import { notifyEntrySaved } from '../quick-add-notify';
 import { XpGainedDialogComponent } from './xp-gained-dialog.component';
 import { buildXpGainedData, type XpGainedDialogData } from './xp-gained.models';
 
+/** Saves this close together (a plan day, a goal check-off) share one dialog. */
+export const XP_COALESCE_MS = 800;
+
 let nextTitleId = 0;
 
+interface XpBatch {
+  readonly entries: XpEntryInput[];
+  /** Total XP before these entries, or null when it was not loaded yet. */
+  readonly baseline: number | null;
+}
+
 export interface XpHold {
-  /** Hands over (and clears) what was collected so far. */
-  take(): Array<XpEntryInput | null | undefined>;
   release(): void;
 }
 
 /**
- * Opens the "+XP" celebration right after an entry is saved.
+ * Celebrates every saved entry with the "+XP" dialog — hooked once onto
+ * `ExerciseFirestoreService.entryCreated$`, so no save path has to know
+ * about it. It also owns the saved confirmation: when no dialog is due
+ * (demo account, an entry worth nothing) it falls back to the plain
+ * "Eintrag gespeichert" snackbar.
  *
- * The number is a client-side preview at today's rates: the server books
- * the entry a moment later and may freeze a different rate only if an
- * admin changed it in between. Other celebrations (goal reached) wait for
- * {@link whenIdle} so two modals never stack.
+ * The level bar starts from the total captured when the first entry of a
+ * batch arrived: by the time a batch is shown the server may already have
+ * booked it, and reading the live total then would count it twice.
  */
 @Injectable({ providedIn: 'root' })
 export class XpCelebrationService {
+  private readonly injector = inject(Injector);
   private readonly dialog = inject(MatDialog);
-  private readonly xp = inject(XpStore);
-  // Read at call time rather than through `UserContextService`: this
-  // service sits under many save paths, and that chain drags the whole
-  // auth adapter into every harness that reaches one of them.
-  private readonly auth = inject(Auth, { optional: true });
+  private readonly queue = inject(CelebrationQueueService);
+  private readonly snackBar = inject(MatSnackBar);
   private readonly demoUserId = inject(DEMO_USER_ID);
-  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private readonly holds: Array<{ sources: Set<string>; batch: XpBatch }> = [];
+  private pending: XpBatch | null = null;
+  private flushPending: (() => void) | null = null;
+  private timer: ReturnType<typeof setTimeout> | undefined;
 
-  private ref: MatDialogRef<XpGainedDialogComponent> | null = null;
-  private idle: Promise<void> = Promise.resolve();
-  private pending = 0;
-  private holds = 0;
-  private held: Array<XpEntryInput | null | undefined> = [];
-
-  /** Resolves once no XP dialog is open. */
-  whenIdle(): Promise<void> {
-    return this.idle;
-  }
-
-  isShowing(): boolean {
-    return this.ref !== null;
-  }
-
-  /** Runs `fn` right away when no XP dialog is open or queued, else after it. */
-  afterIdle(fn: () => void): void {
-    if (this.pending === 0) fn();
-    else void this.idle.then(fn);
+  constructor() {
+    if (!isPlatformBrowser(inject(PLATFORM_ID))) return;
+    inject(ExerciseFirestoreService, { optional: true })
+      ?.entryCreated$?.pipe(takeUntilDestroyed())
+      .subscribe((entry) => this.onCreated(entry));
   }
 
   /**
-   * Collects every `celebrate` call until released, instead of opening a
-   * dialog per call — a session gathers its entries for the done screen.
+   * Collects entries of the given sources until released, then shows one
+   * dialog — a session celebrates on its done screen, not after each set.
+   * Saves from other sources keep celebrating as usual.
    */
-  hold(): XpHold {
-    this.holds++;
-    let released = false;
+  hold(sources: ReadonlyArray<string>): XpHold {
+    const hold = { sources: new Set(sources), batch: this.newBatch() };
+    this.holds.push(hold);
     return {
-      take: () => {
-        const entries = this.held;
-        this.held = [];
-        return entries;
-      },
       release: () => {
-        if (released) return;
-        released = true;
-        this.holds--;
+        const index = this.holds.indexOf(hold);
+        if (index < 0) return;
+        this.holds.splice(index, 1);
+        const data = this.dialogData(hold.batch, true);
+        if (data) this.show(data);
       },
     };
   }
 
-  /** One dialog for everything `work` saves. */
-  async batch<T>(work: () => Promise<T>): Promise<T> {
-    const hold = this.hold();
-    try {
-      return await work();
-    } finally {
-      const entries = hold.take();
-      hold.release();
-      if (entries.length > 0) this.celebrate(entries);
-    }
-  }
-
-  /** Returns whether a dialog opened; callers fall back to a snackbar otherwise. */
-  celebrate(entries: ReadonlyArray<XpEntryInput | null | undefined>): boolean {
-    if (this.holds > 0) {
-      this.held.push(...entries);
-      return true;
-    }
-    const user = this.auth?.currentUser;
-    if (!this.isBrowser || !user || user.isAnonymous) return false;
-    if (user.uid === this.demoUserId) return false;
-
-    const data = buildXpGainedData(
-      entries,
-      (entry) => this.xp.previewXp(entry),
-      this.xp.totalXp(),
-      `xp-gained-title-${nextTitleId++}`
-    );
-    if (!data) return false;
-
-    this.ref?.close();
-    this.idle = this.open(data);
-    return true;
-  }
-
-  /** Admin preview with sample entries, bypassing the guest/demo gates. */
+  /** Admin preview with sample entries. */
   showPreview(levelUp: boolean): void {
     const sample: XpEntryInput[] = [
       { exerciseId: 'pushup', reps: 40 },
       { exerciseId: 'pull.pullups', reps: 10 },
     ];
-    const gain = sample.reduce((sum, e) => sum + this.xp.previewXp(e), 0);
+    const store = this.store();
+    const gain = sample.reduce((sum, e) => sum + store.previewXp(e), 0);
     const data = buildXpGainedData(
       sample,
-      (entry) => this.xp.previewXp(entry),
+      (entry) => store.previewXp(entry),
       levelUp ? xpForLevel(5) - Math.ceil(gain / 2) : xpForLevel(5) + 10,
       `xp-gained-title-${nextTitleId++}`
     );
-    if (data) this.idle = this.open(data);
+    if (data) this.show(data);
+  }
+
+  private onCreated(entry: ExerciseEntry): void {
+    if (entry.userId === this.demoUserId) {
+      notifyEntrySaved(this.snackBar);
+      return;
+    }
+    const hold = this.holds.find((h) => h.sources.has(entry.source));
+    if (hold) {
+      hold.batch.entries.push(entry);
+      return;
+    }
+    if (!this.pending) this.startPending();
+    this.pending?.entries.push(entry);
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => this.flush(), XP_COALESCE_MS);
   }
 
   /**
-   * A goal dialog may already be up: the live listener sees the local
-   * write before the save resolves. The XP dialog then queues behind it.
+   * Takes the queue slot right away, so the queue reads as busy while the
+   * batch is still collecting — nothing else jumps in between.
    */
-  private async open(data: XpGainedDialogData): Promise<void> {
-    this.pending++;
-    try {
-      await this.show(data);
-    } finally {
-      this.pending--;
-    }
+  private startPending(): void {
+    let ready!: () => void;
+    const collected = new Promise<void>((resolve) => (ready = resolve));
+    const batch = this.newBatch();
+    this.pending = batch;
+    this.flushPending = ready;
+    void this.queue.enqueue(async () => {
+      await collected;
+      const data = this.dialogData(batch, false);
+      if (!data) {
+        if (batch.entries.length > 0) notifyEntrySaved(this.snackBar);
+        return null;
+      }
+      return this.open(data);
+    });
   }
 
-  private async show(data: XpGainedDialogData): Promise<void> {
-    if (this.dialog.openDialogs.length > 0) {
-      await firstValueFrom(this.dialog.afterAllClosed);
-    }
-    const ref = this.dialog.open(XpGainedDialogComponent, {
+  private flush(): void {
+    this.pending = null;
+    this.flushPending?.();
+    this.flushPending = null;
+  }
+
+  /**
+   * `settled`: the batch was collected long enough (a session) that the
+   * server has booked it — without a captured baseline the live total
+   * already contains it. A quick save is shown before the booking lands.
+   */
+  private dialogData(
+    batch: XpBatch,
+    settled: boolean
+  ): XpGainedDialogData | null {
+    if (batch.entries.length === 0) return null;
+    const store = this.store();
+    const preview = (entry: XpEntryInput) => store.previewXp(entry);
+    const gained = batch.entries.reduce((sum, e) => sum + preview(e), 0);
+    const baseline =
+      batch.baseline ??
+      (settled ? Math.max(0, store.totalXp() - gained) : store.totalXp());
+    return buildXpGainedData(
+      batch.entries,
+      preview,
+      baseline,
+      `xp-gained-title-${nextTitleId++}`
+    );
+  }
+
+  private show(data: XpGainedDialogData): void {
+    void this.queue.enqueue(() => this.open(data));
+  }
+
+  private open(data: XpGainedDialogData) {
+    return this.dialog.open(XpGainedDialogComponent, {
       data,
       panelClass: 'xp-gained-dialog-panel',
       autoFocus: 'dialog',
@@ -156,8 +178,15 @@ export class XpCelebrationService {
       width: 'min(92vw, 400px)',
       maxWidth: '92vw',
     });
-    this.ref = ref;
-    await firstValueFrom(ref.afterClosed());
-    if (this.ref === ref) this.ref = null;
+  }
+
+  private newBatch(): XpBatch {
+    const store = this.store();
+    return { entries: [], baseline: store.loaded() ? store.totalXp() : null };
+  }
+
+  /** Resolved on first use, so app start does not open the XP listeners. */
+  private store() {
+    return this.injector.get(XpStore);
   }
 }

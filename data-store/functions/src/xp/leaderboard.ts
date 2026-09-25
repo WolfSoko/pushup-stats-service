@@ -12,6 +12,7 @@ import {
 } from '../exercise-leaderboard/logic';
 import { DEMO_USER_ID, TZ } from '../firebase-app';
 import type { UserProfile } from '../profile';
+import { readUserConfigs } from '../user-config-read';
 
 /**
  * Per-user, per-Berlin-day XP ceiling for the windowed boards — the XP
@@ -38,10 +39,11 @@ export async function rebuildXpLeaderboardCore(
   const ledgerSnap = await db
     .collectionGroup('xpLedger')
     .where('timestamp', '>=', queryStart)
+    .select('userId', 'timestamp', 'xp')
     .get();
   const rows: ExerciseEntryRow[] = ledgerSnap.docs
     .map((d) => d.data())
-    .filter((d) => d['userId'] !== DEMO_USER_ID)
+    .filter((d) => d['userId'] && d['userId'] !== DEMO_USER_ID)
     .map((d) => ({
       userId: d['userId'] as string,
       timestamp: d['timestamp'] as string,
@@ -61,21 +63,13 @@ export async function rebuildXpLeaderboardCore(
     carryForward = Array.isArray(allTime) ? allTime : [];
   }
 
-  const userIds = [
-    ...new Set([
-      ...rows.map((r) => r.userId as string),
-      ...allTimeRows.map((r) => r.userId),
-    ]),
-  ].filter(Boolean);
-  const profiles = new Map<string, UserProfile>();
-  if (userIds.length > 0) {
-    const snaps = await db.getAll(
-      ...userIds.map((uid) => db.collection('userConfigs').doc(uid))
-    );
-    for (const snap of snaps) {
-      profiles.set(snap.id, (snap.data() as UserProfile | undefined) ?? {});
-    }
-  }
+  const configs = await readUserConfigs([
+    ...rows.map((r) => r.userId as string),
+    ...allTimeRows.map((r) => r.userId),
+  ]);
+  const profiles = new Map<string, UserProfile>(
+    [...configs].map(([uid, config]) => [uid, (config as UserProfile) ?? {}])
+  );
 
   const todayKey = today.isoDate;
   const rank = (period: 'daily' | 'last7' | 'last30') =>

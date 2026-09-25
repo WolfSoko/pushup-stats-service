@@ -15239,10 +15239,10 @@
         <target><ph id="0" equiv="value" disp="value"/> XP / <ph id="1" equiv="unit" disp="unitLabel"/></target>
       </segment>
     </unit>
-    <unit id="xp.preview.label">
+        <unit id="xp.preview.label">
       <segment state="initial">
-        <source>≈ <ph id="0" equiv="value" disp="value"/> XP</source>
-        <target>≈ <ph id="0" equiv="value" disp="value"/> XP</target>
+        <source>≈ <ph id="0" equiv="value" disp="value"/></source>
+        <target>≈ <ph id="0" equiv="value" disp="value"/></target>
       </segment>
     </unit>
     <unit id="friends.board.xpValue">
@@ -15453,6 +15453,24 @@
       <segment state="initial">
         <source>Schwierigkeitsgrad</source>
         <target>Schwierigkeitsgrad</target>
+      </segment>
+    </unit>
+    <unit id="xp.value">
+      <segment state="initial">
+        <source><ph id="0" equiv="xp" disp="xp"/> XP</source>
+        <target><ph id="0" equiv="xp" disp="xp"/> XP</target>
+      </segment>
+    </unit>
+    <unit id="analysis.xp.perMonth">
+      <segment state="initial">
+        <source>XP pro Monat</source>
+        <target>XP pro Monat</target>
+      </segment>
+    </unit>
+    <unit id="analysis.xp.bucketTitle">
+      <segment state="initial">
+        <source><ph id="0" equiv="date" disp="date"/>: <ph id="1" equiv="xp" disp="xp"/></source>
+        <target><ph id="0" equiv="date" disp="date"/>: <ph id="1" equiv="xp" disp="xp"/></target>
       </segment>
     </unit>
 </file>

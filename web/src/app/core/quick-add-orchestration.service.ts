@@ -15,12 +15,7 @@ import { firstValueFrom } from 'rxjs';
 
 import { AppDataFacade } from './app-data.facade';
 import { QuickAddCaptureFlowService } from './quick-add-capture-flow.service';
-import {
-  notifyEntrySavedWithXp,
-  notifyError,
-  notifyGoalReached,
-} from './quick-add-notify';
-import { XpCelebrationService } from './xp/xp-celebration.service';
+import { notifyError, notifyGoalReached } from './quick-add-notify';
 
 @Injectable({ providedIn: 'root' })
 export class QuickAddOrchestrationService {
@@ -33,7 +28,6 @@ export class QuickAddOrchestrationService {
   private readonly quickAddBridge = inject(QuickAddBridgeService);
   private readonly appData = inject(AppDataFacade);
   private readonly captureFlow = inject(QuickAddCaptureFlowService);
-  private readonly xpCelebration = inject(XpCelebrationService);
 
   /**
    * One key per speed-dial action (`fillToGoal`, `autoCount`,
@@ -66,7 +60,7 @@ export class QuickAddOrchestrationService {
       return;
     }
     try {
-      const saved = await firstValueFrom(
+      await firstValueFrom(
         this.exerciseApi.createEntry(userId, {
           exerciseId: suggestion.exerciseId,
           timestamp: nowLocalIsoTimestamp(),
@@ -74,7 +68,6 @@ export class QuickAddOrchestrationService {
           source: 'quick-add',
         })
       );
-      notifyEntrySavedWithXp(this.snackBar, this.xpCelebration, [saved]);
       this.appData.reloadAfterMutation();
     } catch (err) {
       notifyError(this.snackBar, err);
@@ -85,8 +78,7 @@ export class QuickAddOrchestrationService {
     const entry$ = this.createPushupEntry(reps, 'quick-add');
     if (!entry$) return;
     try {
-      const saved = await firstValueFrom(entry$);
-      notifyEntrySavedWithXp(this.snackBar, this.xpCelebration, [saved]);
+      await firstValueFrom(entry$);
       this.appData.reloadAfterMutation();
     } catch (err) {
       notifyError(this.snackBar, err);
@@ -102,10 +94,8 @@ export class QuickAddOrchestrationService {
 
     await this.busy.run('fillToGoal', async () => {
       try {
-        const saved = await firstValueFrom(entry$);
-        if (!this.xpCelebration.celebrate([saved])) {
-          notifyGoalReached(this.snackBar);
-        }
+        await firstValueFrom(entry$);
+        notifyGoalReached(this.snackBar);
         this.appData.reloadAfterMutation();
       } catch (err) {
         notifyError(this.snackBar, err);

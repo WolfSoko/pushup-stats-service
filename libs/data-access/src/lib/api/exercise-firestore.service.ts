@@ -24,7 +24,7 @@ import {
   measurementValueField,
   validateExerciseEntry,
 } from '@pu-stats/models';
-import { from, map, Observable, throwError } from 'rxjs';
+import { from, map, Observable, Subject, tap, throwError } from 'rxjs';
 import { PendingRequestsService } from '../pending-requests.service';
 
 const EXERCISE_ENTRIES_COLLECTION = 'exerciseEntries';
@@ -76,6 +76,14 @@ function violationObservable<T>(
 export class ExerciseFirestoreService {
   private readonly firestore = inject(Firestore);
   private readonly pending = inject(PendingRequestsService);
+  private readonly created = new Subject<ExerciseEntry>();
+
+  /**
+   * Every entry a `createEntry` call saved, whichever screen wrote it —
+   * one place to react to "an entry was logged" instead of each caller.
+   */
+  readonly entryCreated$: Observable<ExerciseEntry> =
+    this.created.asObservable();
 
   /**
    * Lists entries for a user, optionally restricted to a single exercise
@@ -213,7 +221,8 @@ export class ExerciseFirestoreService {
     }
 
     return from(this.pending.track(setDoc(newRef, firestoreData))).pipe(
-      map(() => record)
+      map(() => record),
+      tap((entry) => this.created.next(entry))
     );
   }
 

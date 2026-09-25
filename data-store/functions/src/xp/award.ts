@@ -1,7 +1,7 @@
 import type { EarnedAchievement, UserXp } from '@pu-stats/models';
 import type { Firestore } from 'firebase-admin/firestore';
 
-import { writeNotification } from '../notifications';
+import { notifyAchievementsAwarded } from '../achievements/notify';
 import { newXpBadges } from './badges';
 
 /**
@@ -13,7 +13,7 @@ import { newXpBadges } from './badges';
 export async function awardXpBadges(
   db: Firestore,
   userId: string,
-  xp: Pick<UserXp, 'level' | 'byExercise'>,
+  xp: Pick<UserXp, 'total' | 'byExercise'>,
   opts: { notify: boolean }
 ): Promise<string[]> {
   const ref = db.collection('userAchievements').doc(userId);
@@ -34,24 +34,7 @@ export async function awardXpBadges(
   });
 
   if (opts.notify && awarded.length > 0) {
-    const createdAt = new Date().toISOString();
-    await Promise.all(
-      awarded.map((achievementId) =>
-        writeNotification(
-          userId,
-          { type: 'achievement', achievementId },
-          {
-            type: 'achievement',
-            createdAt,
-            readAt: null,
-            actorUid: null,
-            actorName: null,
-            url: '/abzeichen',
-            payload: { achievementId },
-          }
-        )
-      )
-    );
+    await notifyAchievementsAwarded(userId, awarded);
   }
   return awarded;
 }

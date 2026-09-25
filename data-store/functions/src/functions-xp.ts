@@ -8,25 +8,22 @@ import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 
 import { isPurgedEntryDeletion } from './account-deletion/tombstone';
 import { db } from './firebase-app';
-import { applyXpChange, rebuildUserXp } from './xp/aggregate';
+import { applyXpChange, rebuildUserXp, rememberEvent } from './xp/aggregate';
 import { awardXpBadges } from './xp/award';
+import { xpBadgesMayChange } from './xp/badges';
 import { readXpConfig } from './xp/config-read';
-import { ledgerLineFor, sameLedgerLine } from './xp/ledger';
+import { isBackfillCreation, ledgerLineFor, sameLedgerLine } from './xp/ledger';
 import { rebuildXpLeaderboardCore } from './xp/leaderboard';
-
-function ledgerRef(userId: string, entryId: string) {
-  return db
-    .collection('userXp')
-    .doc(userId)
-    .collection('xpLedger')
-    .doc(entryId);
-}
 
 /**
  * Books an entry's XP into `userXp/{uid}/xpLedger/{entryId}`. The ledger
  * — not the entry — is the record of earned XP, so admin re-weighting
  * never rewrites history and no entry write re-fires the other entry
  * triggers.
+ *
+ * The line is built from the entry as it is *now*, read inside the
+ * transaction, not from the event: Firestore does not order trigger
+ * deliveries, and a late create event must not overwrite a newer edit.
  */
 export const bookXpOnEntryWrite = onDocumentWritten(
   { document: 'exerciseEntries/{entryId}', region: 'europe-west3' },
@@ -40,20 +37,29 @@ export const bookXpOnEntryWrite = onDocumentWritten(
     if (!userId || !entryId) return;
     if (await isPurgedEntryDeletion(db, before, after)) return;
 
-    const ref = ledgerRef(userId, entryId);
-    const existingSnap = await ref.get();
-    const existing = existingSnap.exists
-      ? (existingSnap.data() as XpLedgerEntry)
-      : null;
-    const config = after && !existing ? await readXpConfig(db) : null;
-    const next = ledgerLineFor(after, existing, config);
+    const entryRef = db.collection('exerciseEntries').doc(entryId);
+    const ref = db
+      .collection('userXp')
+      .doc(userId)
+      .collection('xpLedger')
+      .doc(entryId);
+    const config = await readXpConfig(db);
 
-    if (!next) {
-      if (existing) await ref.delete();
-      return;
-    }
-    if (sameLedgerLine(existing, next)) return;
-    await ref.set(next);
+    await db.runTransaction(async (tx) => {
+      const [entrySnap, lineSnap] = await Promise.all([
+        tx.get(entryRef),
+        tx.get(ref),
+      ]);
+      const existing = lineSnap.exists
+        ? (lineSnap.data() as XpLedgerEntry)
+        : null;
+      const next = ledgerLineFor(entrySnap.data(), existing, config);
+      if (!next) {
+        if (existing) tx.delete(ref);
+        return;
+      }
+      if (!sameLedgerLine(existing, next)) tx.set(ref, next);
+    });
   }
 );
 
@@ -66,27 +72,21 @@ export const bookXpOnEntryWrite = onDocumentWritten(
 export const aggregateXpOnLedgerWrite = onDocumentWritten(
   { document: 'userXp/{userId}/xpLedger/{entryId}', region: 'europe-west3' },
   async (event) => {
-    const before = event.data?.before?.data() as XpLedgerEntry | undefined;
-    const after = event.data?.after?.data() as XpLedgerEntry | undefined;
+    const before = event.data?.before?.data();
+    const after = event.data?.after?.data();
     const userId = event.params['userId'];
     if (!userId) return;
-    if (!before && after?.source === 'backfill') return;
-    if (
-      await isPurgedEntryDeletion(
-        db,
-        before as Record<string, unknown> | undefined,
-        after as Record<string, unknown> | undefined
-      )
-    ) {
-      return;
-    }
+    if (isBackfillCreation(before, after)) return;
+    if (await isPurgedEntryDeletion(db, before, after)) return;
 
     const aggregateRef = db.collection('userXp').doc(userId);
     const nowIso = new Date().toISOString();
-    const xp = await db.runTransaction(async (tx) => {
+    const result = await db.runTransaction(async (tx) => {
       const snap = await tx.get(aggregateRef);
       const current = snap.exists ? (snap.data() as UserXp) : null;
+      if (current?.recentEventIds?.includes(event.id)) return null;
       let next: UserXp;
+      let previous: UserXp | null = current;
       if (!current || (current.version ?? 0) < USER_XP_VERSION) {
         const ledger = await tx.get(aggregateRef.collection('xpLedger'));
         next = rebuildUserXp(
@@ -94,14 +94,27 @@ export const aggregateXpOnLedgerWrite = onDocumentWritten(
           ledger.docs.map((d) => d.data() as XpLedgerEntry),
           nowIso
         );
+        previous = null;
       } else {
-        next = applyXpChange(current, before ?? null, after ?? null, nowIso);
+        next = applyXpChange(
+          current,
+          (before as XpLedgerEntry | undefined) ?? null,
+          (after as XpLedgerEntry | undefined) ?? null,
+          nowIso
+        );
       }
-      tx.set(aggregateRef, { ...next, updatedAt: nowIso });
-      return next;
+      tx.set(aggregateRef, {
+        ...next,
+        recentEventIds: rememberEvent(current?.recentEventIds, event.id),
+        updatedAt: nowIso,
+      });
+      return { previous, next };
     });
 
-    const awarded = await awardXpBadges(db, userId, xp, { notify: true });
+    if (!result || !xpBadgesMayChange(result.previous, result.next)) return;
+    const awarded = await awardXpBadges(db, userId, result.next, {
+      notify: true,
+    });
     if (awarded.length > 0) {
       logger.info('aggregateXpOnLedgerWrite: awarded', { userId, awarded });
     }
@@ -117,7 +130,7 @@ export const refreshXpLeaderboardOnLedgerWrite = onDocumentWritten(
   async (event) => {
     const before = event.data?.before?.data();
     const after = event.data?.after?.data();
-    if (!before && after?.['source'] === 'backfill') return;
+    if (isBackfillCreation(before, after)) return;
     if (await isPurgedEntryDeletion(db, before, after)) return;
     await rebuildXpLeaderboardCore(db, { includeAllTime: false });
   }

@@ -42,7 +42,7 @@ describe('buildXpGainedData', () => {
     ]);
   });
 
-  it('should merge repeated exercises into one row with a count', () => {
+  it('should merge repeated exercises into one row with the summed value', () => {
     // when
     const data = buildXpGainedData(
       [
@@ -56,7 +56,7 @@ describe('buildXpGainedData', () => {
 
     // then
     expect(data?.lines).toEqual([
-      expect.objectContaining({ value: '2×', xp: 25 }),
+      expect.objectContaining({ value: expect.stringContaining('25'), xp: 25 }),
     ]);
   });
 

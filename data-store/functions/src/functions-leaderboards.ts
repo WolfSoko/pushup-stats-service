@@ -16,8 +16,10 @@ export const rebuildExerciseLeaderboards = onSchedule(
     retryCount: 1,
   },
   async () => {
-    await rebuildExerciseLeaderboardsCore({ includeAllTime: true });
-    await rebuildXpLeaderboardCore(db, { includeAllTime: true });
+    await Promise.all([
+      rebuildExerciseLeaderboardsCore({ includeAllTime: true }),
+      rebuildXpLeaderboardCore(db, { includeAllTime: true }),
+    ]);
   }
 );
 

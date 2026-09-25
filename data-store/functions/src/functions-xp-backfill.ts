@@ -4,17 +4,25 @@ import { onCall } from 'firebase-functions/v2/https';
 
 import { db, DEMO_USER_ID } from './firebase-app';
 import { assertAdmin } from './functions-admin';
-import { rebuildUserXp } from './xp/aggregate';
 import { awardXpBadges } from './xp/award';
 import { type BackfillEntry, planXpBackfill } from './xp/backfill-plan';
 import { readXpConfig } from './xp/config-read';
 import { rebuildXpLeaderboardCore } from './xp/leaderboard';
+import { inChunks, rebuildUserAggregate } from './xp/rebuild';
 
 /** Users booked per live run; the rest waits for the next run. */
 export const XP_BACKFILL_USER_LIMIT = 200;
 
+const BACKFILL_CONCURRENCY = 20;
+
+/** gRPC status of a `create` on an existing document. */
+const ALREADY_EXISTS = 6;
+
 async function readLedger(): Promise<Map<string, Map<string, XpLedgerEntry>>> {
-  const snap = await db.collectionGroup('xpLedger').get();
+  const snap = await db
+    .collectionGroup('xpLedger')
+    .select('userId', 'exerciseId', 'timestamp', 'rate', 'xp')
+    .get();
   const ledger = new Map<string, Map<string, XpLedgerEntry>>();
   for (const doc of snap.docs) {
     const userId = doc.ref.parent.parent?.id;
@@ -74,38 +82,46 @@ export const backfillXp = onCall(
     }
 
     const batch = plans.slice(0, XP_BACKFILL_USER_LIMIT);
+    const bookedLines = batch.reduce((n, p) => n + p.missing.length, 0);
     const writer = db.bulkWriter();
-    const nowIso = new Date().toISOString();
+    // A live trigger may book a line while the backfill runs; its line wins.
+    writer.onWriteError(
+      (err) => err.code !== ALREADY_EXISTS && err.failedAttempts < 3
+    );
     for (const plan of batch) {
-      const userRef = db.collection('userXp').doc(plan.userId);
+      const ledgerRef = db
+        .collection('userXp')
+        .doc(plan.userId)
+        .collection('xpLedger');
       for (const { id, line } of plan.missing) {
-        void writer.set(userRef.collection('xpLedger').doc(id), line);
+        writer.create(ledgerRef.doc(id), line).catch(() => undefined);
       }
-      void writer.set(userRef, {
-        ...rebuildUserXp(plan.userId, plan.lines, nowIso),
-        updatedAt: nowIso,
-      });
     }
     await writer.close();
 
-    let badges = 0;
-    for (const plan of batch) {
-      const xp = rebuildUserXp(plan.userId, plan.lines, nowIso);
-      badges += (await awardXpBadges(db, plan.userId, xp, { notify: false }))
-        .length;
-    }
+    const nowIso = new Date().toISOString();
+    const awarded = await inChunks(
+      batch,
+      BACKFILL_CONCURRENCY,
+      async (plan) => {
+        const xp = await rebuildUserAggregate(db, plan.userId, nowIso);
+        return (await awardXpBadges(db, plan.userId, xp, { notify: false }))
+          .length;
+      }
+    );
+    const badges = awarded.reduce((n, count) => n + count, 0);
     await rebuildXpLeaderboardCore(db, { includeAllTime: true });
 
     logger.info('backfillXp', {
       users: batch.length,
-      lines: batch.reduce((n, p) => n + p.missing.length, 0),
+      lines: bookedLines,
       badges,
       by: request.auth?.uid,
     });
     return {
       dryRun: false,
       bookedUsers: batch.length,
-      bookedLines: batch.reduce((n, p) => n + p.missing.length, 0),
+      bookedLines,
       badges,
       remaining: plans.length - batch.length,
     };

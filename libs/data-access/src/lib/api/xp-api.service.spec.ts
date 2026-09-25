@@ -4,6 +4,15 @@ jest.mock('@angular/fire/firestore', () => ({
   collection: jest.fn(() => ({})),
   docData: jest.fn(),
   collectionData: jest.fn(),
+  query: jest.fn((ref: unknown, ...constraints: unknown[]) => ({
+    ref,
+    constraints,
+  })),
+  where: jest.fn((field: string, op: string, value: unknown) => ({
+    field,
+    op,
+    value,
+  })),
   setDoc: jest.fn(),
   serverTimestamp: jest.fn(() => 'server-ts'),
 }));
@@ -13,6 +22,7 @@ import {
   Firestore,
   collectionData,
   doc,
+  query,
   docData,
   setDoc,
 } from '@angular/fire/firestore';
@@ -65,6 +75,20 @@ describe('XpApiService', () => {
       ['e1', 12],
       ['e2', 0],
     ]);
+  });
+
+  it('should limit the ledger listener to the requested range', async () => {
+    // given
+    jest.mocked(collectionData).mockReturnValue(of([]) as never);
+
+    // when
+    await firstValueFrom(service.watchLedger('u1', '2026-09-01'));
+
+    // then
+    expect(query).toHaveBeenCalledWith(
+      {},
+      { field: 'timestamp', op: '>=', value: '2026-09-01' }
+    );
   });
 
   it('should write the full rate map with the admin stamp', async () => {

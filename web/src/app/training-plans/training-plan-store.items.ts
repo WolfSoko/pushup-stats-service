@@ -8,8 +8,6 @@ import {
 } from '@pu-stats/models';
 import { appendLocalOffset } from '@pu-stats/date';
 import { ExerciseFirestoreService } from '@pu-stats/data-access';
-import type { ExerciseEntry } from '@pu-stats/models';
-import { XpCelebrationService } from '../core/xp/xp-celebration.service';
 import {
   acquireWriteLock,
   dayIsWritable,
@@ -30,8 +28,6 @@ interface EntryWriter {
   /** Noon on the plan day's calendar date, so a backfill for an earlier
    *  day still lands in the correct daily bucket. */
   readonly timestamp: string;
-  /** Entries written by this action, for the XP celebration. */
-  readonly saved: ExerciseEntry[];
 }
 
 /**
@@ -52,14 +48,7 @@ function resolveEntryWriter(
     api,
     userId,
     timestamp: appendLocalOffset(`${planDayDateFor(store, dayIndex)}T12:00`),
-    saved: [],
   };
-}
-
-/** Resolved lazily for the same NG0200 reason as the exercise API. */
-function celebrateXp(store: Store, writer: EntryWriter): void {
-  if (writer.saved.length === 0) return;
-  store._injector.get(XpCelebrationService, null)?.celebrate(writer.saved);
 }
 
 /**
@@ -76,7 +65,7 @@ async function writeExerciseEntry(
 ): Promise<LogPlanDayResult> {
   const payload = planExerciseEntryPayload(exercise, alreadyLogged);
   if (!payload) return 'already-logged';
-  const saved = await firstValueFrom(
+  await firstValueFrom(
     writer.api.createEntry(writer.userId, {
       exerciseId: payload.exerciseId,
       ...(payload.variantId ? { variantId: payload.variantId } : {}),
@@ -86,7 +75,6 @@ async function writeExerciseEntry(
       source: 'plan',
     })
   );
-  writer.saved.push(saved);
   return 'logged';
 }
 
@@ -134,7 +122,6 @@ export async function logPlanExercise(
     if (!writer) return 'noop';
     const result = await writeExerciseEntry(writer, item.exercise, item.logged);
     await checkOffItems(store, dayIndex, [itemIndex]);
-    celebrateXp(store, writer);
     return result;
   } finally {
     releaseWriteLock(store, dayIndex);
@@ -249,7 +236,6 @@ export async function logPlanDayExercises(
       dayIndex,
       progress.map((p) => p.itemIndex)
     );
-    celebrateXp(store, writer);
     return wroteAny ? 'logged' : 'already-logged';
   } finally {
     releaseWriteLock(store, dayIndex);

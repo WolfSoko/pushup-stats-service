@@ -84,9 +84,8 @@ export class LeaderboardPageComponent {
    * catalog by category, so every exercise stays reachable without 40+
    * chips.
    */
-  readonly popularExercises = computed<ReadonlyArray<PopularExercise>>(
-    buildPopularExercises
-  );
+  readonly popularExercises: ReadonlyArray<PopularExercise> =
+    buildPopularExercises();
 
   /**
    * Catalog grouped by category for the overflow menu. Empty categories
@@ -172,7 +171,7 @@ export class LeaderboardPageComponent {
    */
   readonly isOverflowSelection = computed(() => {
     const id = this.selectedExerciseId();
-    return !this.popularExercises().some((chip) => chip.id === id);
+    return !this.popularExercises.some((chip) => chip.id === id);
   });
 
   constructor() {

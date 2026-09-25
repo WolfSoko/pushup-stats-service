@@ -29,21 +29,24 @@ import {
 
 type XpState = {
   config: XpConfig | null;
+  /** True once the rates listener delivered its first snapshot. */
+  configLoaded: boolean;
   userXp: UserXp | null;
-  /** XP booked per entry id, mirrored from the ledger. */
-  ledger: ReadonlyMap<string, number>;
   /** True once the aggregate listener delivered its first snapshot. */
   loaded: boolean;
 };
 
-const EMPTY_LEDGER: ReadonlyMap<string, number> = new Map();
-
+/**
+ * App-wide XP state: the admin rates and the signed-in user's aggregate —
+ * two single-doc listeners. The per-entry ledger is only needed by the
+ * analysis page, which listens to its own date range.
+ */
 export const XpStore = signalStore(
   { providedIn: 'root' },
   withState<XpState>({
     config: null,
+    configLoaded: false,
     userXp: null,
-    ledger: EMPTY_LEDGER,
     loaded: false,
   }),
   withProps(() => {
@@ -55,57 +58,36 @@ export const XpStore = signalStore(
       _destroyRef: inject(DestroyRef),
     };
   }),
-  withComputed((store) => ({
-    totalXp: computed(() => store.userXp()?.total ?? 0),
-    progress: computed(() => levelProgress(store.userXp()?.total ?? 0)),
-  })),
+  withComputed((store) => {
+    const progress = computed(() => levelProgress(store.userXp()?.total ?? 0));
+    return { progress, totalXp: computed(() => progress().totalXp) };
+  }),
   withMethods((store) => ({
-    rateFor(exerciseId: string): number {
-      return xpRateFor(exerciseId, store.config());
-    },
-    /** What an entry is worth at today's rates — the success dialog's number. */
+    /** What an entry is worth at today's rates. */
     previewXp(entry: XpEntryInput): number {
       return xpForEntry(entry, xpRateFor(entry.exerciseId, store.config()));
-    },
-    /**
-     * Booked XP of an entry, falling back to today's rate while the
-     * trigger has not booked it yet.
-     */
-    xpOfEntry(entryId: string, entry: XpEntryInput): number {
-      const booked = store.ledger().get(entryId);
-      return (
-        booked ?? xpForEntry(entry, xpRateFor(entry.exerciseId, store.config()))
-      );
     },
   })),
   withHooks({
     onInit(store) {
       if (!store._isBrowser) return;
-      const configSub = store._api
-        .watchConfig()
-        .subscribe({ next: (config) => patchState(store, { config }) });
+      const configSub = store._api.watchConfig().subscribe({
+        next: (config) => patchState(store, { config, configLoaded: true }),
+        error: () => patchState(store, { configLoaded: true }),
+      });
       store._destroyRef.onDestroy(() => configSub.unsubscribe());
 
       if (!store._auth) return;
       const user = toSignal(authState(store._auth));
       effect((onCleanup) => {
         const uid = user()?.uid ?? null;
-        patchState(store, {
-          userXp: null,
-          ledger: EMPTY_LEDGER,
-          loaded: false,
-        });
+        patchState(store, { userXp: null, loaded: false });
         if (!uid) return;
-        const subs = [
-          store._api.watchUserXp(uid).subscribe({
-            next: (userXp) => patchState(store, { userXp, loaded: true }),
-            error: () => patchState(store, { loaded: true }),
-          }),
-          store._api
-            .watchLedger(uid)
-            .subscribe({ next: (ledger) => patchState(store, { ledger }) }),
-        ];
-        onCleanup(() => subs.forEach((s) => s.unsubscribe()));
+        const sub = store._api.watchUserXp(uid).subscribe({
+          next: (userXp) => patchState(store, { userXp, loaded: true }),
+          error: () => patchState(store, { loaded: true }),
+        });
+        onCleanup(() => sub.unsubscribe());
       });
     },
   })

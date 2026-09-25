@@ -4,7 +4,6 @@ import type { PlanExerciseProgress, TrainingPlanDay } from '@pu-stats/models';
 
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
 import { PlanGoalsService } from './plan-goals.service';
-import { XpCelebrationService } from './xp/xp-celebration.service';
 
 describe('PlanGoalsService', () => {
   const todayDay = signal<TrainingPlanDay | null>(null);
@@ -54,10 +53,6 @@ describe('PlanGoalsService', () => {
             dayProgress: () => itemProgress(),
             logPlanExercise,
           },
-        },
-        {
-          provide: XpCelebrationService,
-          useValue: { batch: (work: () => Promise<unknown>) => work() },
         },
       ],
     });

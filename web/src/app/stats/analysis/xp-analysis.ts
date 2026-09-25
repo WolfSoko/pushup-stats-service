@@ -1,16 +1,28 @@
+import { toLocalIsoDate } from '@pu-stats/date';
 import {
+  addDays,
   findExerciseDefinition,
   type ExerciseCategoryId,
-  type ExerciseEntry,
+  type StatsGranularity,
+  type XpEntryInput,
 } from '@pu-stats/models';
+
+import { startOfIsoWeek } from './trend-math';
 
 /**
  * XP roll-up for the analysis page's selected range.
  *
- * XP per entry comes from the caller (`XpStore.xpOfEntry`): the booked
- * ledger value where there is one, so the numbers here match what the
- * server counted even after an admin re-weighted an exercise.
+ * XP per entry comes from the caller: the booked ledger value where there
+ * is one, so the numbers here match what the server counted even after an
+ * admin re-weighted an exercise.
  */
+
+export type XpAnalysisEntry = XpEntryInput & {
+  readonly _id: string;
+  readonly timestamp: string;
+};
+
+export type XpBucketGranularity = 'daily' | 'weekly' | 'monthly';
 
 export interface XpBucket {
   /** ISO date of the day, or of the Monday for weekly buckets. */
@@ -28,33 +40,28 @@ export interface XpShare<TId extends string> {
 export interface XpAnalysis {
   readonly total: number;
   readonly activeDays: number;
-  readonly granularity: 'day' | 'week';
+  readonly granularity: XpBucketGranularity;
   readonly buckets: ReadonlyArray<XpBucket>;
   readonly byCategory: ReadonlyArray<XpShare<ExerciseCategoryId>>;
   readonly topExercises: ReadonlyArray<XpShare<string>>;
   readonly bestDay: XpBucket | null;
 }
 
-/** Ranges longer than this switch the chart to weekly bars. */
-export const XP_DAILY_BUCKET_LIMIT = 45;
 const TOP_EXERCISES = 5;
 
-function addDays(isoDate: string, days: number): string {
-  const d = new Date(`${isoDate}T12:00:00Z`);
-  d.setUTCDate(d.getUTCDate() + days);
-  return d.toISOString().slice(0, 10);
+/** The page's chart granularity, with hourly (a single day) shown per day. */
+export function xpBucketGranularity(
+  granularity: StatsGranularity
+): XpBucketGranularity {
+  return granularity === 'hourly' ? 'daily' : granularity;
 }
 
-function mondayOf(isoDate: string): string {
-  const d = new Date(`${isoDate}T12:00:00Z`);
-  return addDays(isoDate, -((d.getUTCDay() + 6) % 7));
-}
-
-function daysBetween(from: string, to: string): number {
-  return Math.round(
-    (Date.parse(`${to}T12:00:00Z`) - Date.parse(`${from}T12:00:00Z`)) /
-      86_400_000
-  );
+function bucketKey(isoDate: string, granularity: XpBucketGranularity): string {
+  if (granularity === 'monthly') return `${isoDate.slice(0, 7)}-01`;
+  if (granularity === 'weekly') {
+    return toLocalIsoDate(startOfIsoWeek(new Date(`${isoDate}T00:00:00`)));
+  }
+  return isoDate;
 }
 
 function shares<TId extends string>(
@@ -73,9 +80,13 @@ function shares<TId extends string>(
  * range the buckets span first to last entry.
  */
 export function buildXpAnalysis(
-  entries: ReadonlyArray<ExerciseEntry>,
-  xpOf: (entry: ExerciseEntry) => number,
-  range: { readonly from: string; readonly to: string }
+  entries: ReadonlyArray<XpAnalysisEntry>,
+  xpOf: (entry: XpAnalysisEntry) => number,
+  range: {
+    readonly from: string;
+    readonly to: string;
+    readonly granularity: XpBucketGranularity;
+  }
 ): XpAnalysis {
   const perDay = new Map<string, number>();
   const perCategory = new Map<ExerciseCategoryId, number>();
@@ -101,19 +112,16 @@ export function buildXpAnalysis(
   const days = [...perDay.keys()].sort();
   const from = range.from || days[0] || '';
   const to = range.to || days[days.length - 1] || '';
-  const span = from && to ? daysBetween(from, to) : -1;
-  const granularity = span >= XP_DAILY_BUCKET_LIMIT ? 'week' : 'day';
+  const granularity = range.granularity;
 
-  const buckets: XpBucket[] = [];
-  if (span >= 0) {
-    const step = granularity === 'week' ? 7 : 1;
-    const start = granularity === 'week' ? mondayOf(from) : from;
-    for (let key = start; key <= to; key = addDays(key, step)) {
-      let xp = 0;
-      for (let i = 0; i < step; i++) xp += perDay.get(addDays(key, i)) ?? 0;
-      buckets.push({ key, xp });
+  const perBucket = new Map<string, number>();
+  if (from && to) {
+    for (let day = from; day <= to; day = addDays(day, 1)) {
+      const key = bucketKey(day, granularity);
+      perBucket.set(key, (perBucket.get(key) ?? 0) + (perDay.get(day) ?? 0));
     }
   }
+  const buckets: XpBucket[] = [...perBucket].map(([key, xp]) => ({ key, xp }));
 
   let bestDay: XpBucket | null = null;
   for (const [key, xp] of perDay) {

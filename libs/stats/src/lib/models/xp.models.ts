@@ -7,7 +7,7 @@ import { DEFAULT_XP_RATES } from './xp-rates.catalog';
  *
  * Every exercise is worth a number of XP per rate unit (per rep, per
  * minute, per kilometre). An entry's XP is fixed when the server first
- * books it into the ledger (`userXp/{uid}/entries/{entryId}`): an admin
+ * books it into the ledger (`userXp/{uid}/xpLedger/{entryId}`): an admin
  * changing a rate later only affects entries saved afterwards, so nobody
  * loses a level because of a re-weighting.
  *
@@ -54,6 +54,17 @@ export function isValidXpRate(rate: unknown): rate is number {
     rate >= 0 &&
     rate <= XP_RATE_MAX
   );
+}
+
+/** Keeps only well-formed rates, so a bad admin write cannot poison XP. */
+export function parseXpConfig(data: unknown): XpConfig | null {
+  const rates = (data as { rates?: unknown } | null | undefined)?.rates;
+  if (!rates || typeof rates !== 'object') return null;
+  const clean: Record<string, number> = {};
+  for (const [id, rate] of Object.entries(rates as Record<string, unknown>)) {
+    if (isValidXpRate(rate)) clean[id] = rate;
+  }
+  return { rates: clean };
 }
 
 /**
@@ -153,7 +164,7 @@ export function levelProgress(totalXp: number): LevelProgress {
 
 // ── Stored shapes ───────────────────────────────────────────────────────
 
-/** Ledger line per booked entry: `userXp/{uid}/entries/{entryId}`. */
+/** Ledger line per booked entry: `userXp/{uid}/xpLedger/{entryId}`. */
 export interface XpLedgerEntry {
   readonly userId: string;
   readonly exerciseId: string;
@@ -175,8 +186,8 @@ export const USER_XP_VERSION = 1;
 /** Per-user XP aggregate at `userXp/{uid}`. Written by Cloud Functions only. */
 export interface UserXp {
   readonly userId: string;
+  /** The level is never stored — derive it with {@link levelForXp}. */
   readonly total: number;
-  readonly level: number;
   readonly dailyXp: number;
   readonly dailyKey: string;
   readonly weeklyXp: number;
@@ -185,4 +196,9 @@ export interface UserXp {
   readonly monthlyKey: string;
   readonly byExercise: Readonly<Record<string, number>>;
   readonly version: number;
+  /**
+   * Ids of the last ledger events folded in. Triggers are delivered at
+   * least once, and the delta must not be applied twice.
+   */
+  readonly recentEventIds?: ReadonlyArray<string>;
 }

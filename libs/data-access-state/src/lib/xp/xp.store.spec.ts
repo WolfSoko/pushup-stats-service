@@ -17,7 +17,6 @@ jest.mock('@pu-stats/data-access', () => ({
 const USER_XP: UserXp = {
   userId: 'u1',
   total: 450,
-  level: 3,
   dailyXp: 0,
   dailyKey: '2026-09-24',
   weeklyXp: 0,
@@ -32,7 +31,6 @@ function setup(platform: 'browser' | 'server' = 'browser') {
   const api = {
     watchConfig: jest.fn(() => of({ rates: { pushup: 2 } })),
     watchUserXp: jest.fn(() => of(USER_XP)),
-    watchLedger: jest.fn(() => of(new Map([['e1', 7]]))),
   };
   const user$ = new BehaviorSubject<{ uid: string } | null>({ uid: 'u1' });
   jest.mocked(authState).mockReturnValue(user$ as never);
@@ -56,6 +54,7 @@ describe('XpStore', () => {
 
     // then
     expect(store.loaded()).toBe(true);
+    expect(store.configLoaded()).toBe(true);
     expect(store.totalXp()).toBe(450);
     expect(store.progress().level).toBe(3);
   });
@@ -71,15 +70,6 @@ describe('XpStore', () => {
     expect(xp).toBe(20);
   });
 
-  it('should prefer the booked ledger value over a recomputation', () => {
-    // given
-    const { store } = setup();
-
-    // then
-    expect(store.xpOfEntry('e1', { exerciseId: 'pushup', reps: 10 })).toBe(7);
-    expect(store.xpOfEntry('e2', { exerciseId: 'pushup', reps: 10 })).toBe(20);
-  });
-
   it('should clear the user state on sign-out', () => {
     // given
     const { store, user$ } = setup();
@@ -90,7 +80,16 @@ describe('XpStore', () => {
 
     // then
     expect(store.userXp()).toBeNull();
-    expect(store.ledger().size).toBe(0);
+    expect(store.loaded()).toBe(false);
+  });
+
+  it('should mirror the admin rates from the config doc', () => {
+    // given
+    const { store, api } = setup();
+
+    // then
+    expect(api.watchConfig).toHaveBeenCalledTimes(1);
+    expect(store.config()).toEqual({ rates: { pushup: 2 } });
   });
 
   it('should not subscribe on the server', () => {

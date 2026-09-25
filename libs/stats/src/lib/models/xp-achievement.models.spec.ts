@@ -5,11 +5,12 @@ import {
   varietyAchievementId,
   xpCategoryCount,
 } from './xp-achievement.models';
+import { xpForLevel } from './xp.models';
 
 describe('deriveXpAchievements', () => {
   it('should award every level milestone at or below the level', () => {
     // when
-    const ids = deriveXpAchievements({ level: 12, byExercise: {} });
+    const ids = deriveXpAchievements({ total: xpForLevel(12), byExercise: {} });
 
     // then
     expect(ids).toEqual(['level-5', 'level-10']);
@@ -25,7 +26,7 @@ describe('deriveXpAchievements', () => {
     };
 
     // when
-    const ids = deriveXpAchievements({ level: 1, byExercise });
+    const ids = deriveXpAchievements({ total: 0, byExercise });
 
     // then
     expect(ids).toEqual(['variety-3']);

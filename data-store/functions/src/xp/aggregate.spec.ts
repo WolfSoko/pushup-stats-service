@@ -1,6 +1,12 @@
 import { describe, expect, it } from '@jest/globals';
 
-import { applyXpChange, emptyUserXp, rebuildUserXp } from './aggregate';
+import {
+  applyXpChange,
+  emptyUserXp,
+  rebuildUserXp,
+  rememberEvent,
+  RECENT_EVENT_IDS_MAX,
+} from './aggregate';
 
 const NOW = '2026-09-24T12:00:00+02:00';
 const TODAY = '2026-09-24T08:00:00+02:00';
@@ -23,7 +29,6 @@ describe('applyXpChange', () => {
     expect(next).toEqual(
       expect.objectContaining({
         total: 150,
-        level: 2,
         dailyXp: 150,
         weeklyXp: 150,
         monthlyXp: 150,
@@ -115,10 +120,29 @@ describe('rebuildUserXp', () => {
     expect(xp).toEqual(
       expect.objectContaining({
         total: 300,
-        level: 3,
         dailyXp: 100,
         byExercise: { pushup: 100, 'pull.pullups': 200 },
       })
     );
+  });
+});
+
+describe('rememberEvent', () => {
+  it('should append the id and keep only the newest ones', () => {
+    // given
+    const ids = Array.from({ length: RECENT_EVENT_IDS_MAX }, (_, i) => `e${i}`);
+
+    // when
+    const next = rememberEvent(ids, 'new');
+
+    // then
+    expect(next).toHaveLength(RECENT_EVENT_IDS_MAX);
+    expect(next[0]).toBe('e1');
+    expect(next.at(-1)).toBe('new');
+  });
+
+  it('should start a list when none is stored', () => {
+    // then
+    expect(rememberEvent(undefined, 'a')).toEqual(['a']);
   });
 });

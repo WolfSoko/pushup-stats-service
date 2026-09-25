@@ -1,5 +1,4 @@
 import {
-  levelForXp,
   USER_XP_VERSION,
   type UserXp,
   type XpLedgerEntry,
@@ -9,11 +8,13 @@ import { berlinParts, periodKeys } from '../user-stats-delta';
 
 type LedgerLine = Pick<XpLedgerEntry, 'exerciseId' | 'timestamp' | 'xp'>;
 
-interface PeriodKeys {
-  readonly dailyKey: string;
-  readonly weeklyKey: string;
-  readonly monthlyKey: string;
-}
+const PERIODS = ['daily', 'weekly', 'monthly'] as const;
+type Period = (typeof PERIODS)[number];
+type PeriodKeys = Record<`${Period}Key`, string>;
+type MutableUserXp = { -readonly [K in keyof UserXp]: UserXp[K] };
+
+/** How many ledger event ids the aggregate remembers for dedupe. */
+export const RECENT_EVENT_IDS_MAX = 50;
 
 function keysOf(isoTimestamp: string): PeriodKeys {
   return periodKeys(berlinParts(isoTimestamp));
@@ -24,7 +25,6 @@ export function emptyUserXp(userId: string, nowIso: string): UserXp {
   return {
     userId,
     total: 0,
-    level: 1,
     dailyXp: 0,
     dailyKey: today.dailyKey,
     weeklyXp: 0,
@@ -38,15 +38,12 @@ export function emptyUserXp(userId: string, nowIso: string): UserXp {
 
 /** Resets period buckets whose key has rolled over since the last write. */
 function rollPeriods(current: UserXp, today: PeriodKeys): UserXp {
-  return {
-    ...current,
-    dailyXp: current.dailyKey === today.dailyKey ? current.dailyXp : 0,
-    dailyKey: today.dailyKey,
-    weeklyXp: current.weeklyKey === today.weeklyKey ? current.weeklyXp : 0,
-    weeklyKey: today.weeklyKey,
-    monthlyXp: current.monthlyKey === today.monthlyKey ? current.monthlyXp : 0,
-    monthlyKey: today.monthlyKey,
-  };
+  const next: MutableUserXp = { ...current };
+  for (const p of PERIODS) {
+    if (current[`${p}Key`] !== today[`${p}Key`]) next[`${p}Xp`] = 0;
+    next[`${p}Key`] = today[`${p}Key`];
+  }
+  return next;
 }
 
 function addLine(
@@ -65,25 +62,17 @@ function addLine(
   const byExercise = { ...current.byExercise };
   if (exerciseXp > 0) byExercise[line.exerciseId] = exerciseXp;
   else delete byExercise[line.exerciseId];
-  const total = Math.max(0, current.total + xp);
-  return {
+  const next: MutableUserXp = {
     ...current,
-    total,
-    level: levelForXp(total),
-    dailyXp:
-      keys.dailyKey === today.dailyKey
-        ? Math.max(0, current.dailyXp + xp)
-        : current.dailyXp,
-    weeklyXp:
-      keys.weeklyKey === today.weeklyKey
-        ? Math.max(0, current.weeklyXp + xp)
-        : current.weeklyXp,
-    monthlyXp:
-      keys.monthlyKey === today.monthlyKey
-        ? Math.max(0, current.monthlyXp + xp)
-        : current.monthlyXp,
+    total: Math.max(0, current.total + xp),
     byExercise,
   };
+  for (const p of PERIODS) {
+    if (keys[`${p}Key`] === today[`${p}Key`]) {
+      next[`${p}Xp`] = Math.max(0, current[`${p}Xp`] + xp);
+    }
+  }
+  return next;
 }
 
 /**
@@ -114,4 +103,12 @@ export function rebuildUserXp(
     (acc, line) => addLine(acc, line, 1, today),
     emptyUserXp(userId, nowIso)
   );
+}
+
+/** Appends `eventId`, keeping only the newest {@link RECENT_EVENT_IDS_MAX}. */
+export function rememberEvent(
+  ids: ReadonlyArray<string> | undefined,
+  eventId: string
+): string[] {
+  return [...(ids ?? []), eventId].slice(-RECENT_EVENT_IDS_MAX);
 }

@@ -23,6 +23,14 @@ export interface XpGainedDialogData {
   readonly titleId: string;
 }
 
+interface ExerciseSum {
+  exerciseId: string;
+  reps: number;
+  durationSec: number;
+  distanceM: number;
+  xp: number;
+}
+
 /** Summary rows shown under the big number; a session is capped to stay short. */
 export const MAX_XP_LINES = 4;
 
@@ -37,28 +45,25 @@ export function buildXpGainedData(
   totalBefore: number,
   titleId: string
 ): XpGainedDialogData | null {
-  const lines: XpGainedLine[] = [];
+  const byExercise = new Map<string, ExerciseSum>();
   let xp = 0;
   for (const entry of entries) {
     if (!entry?.exerciseId) continue;
     const gained = previewXp(entry);
     if (!(gained > 0)) continue;
     xp += gained;
-    const definition = findExerciseDefinition(entry.exerciseId);
-    lines.push({
-      label: exerciseDisplayName(entry.exerciseId),
-      value: definition
-        ? formatEntryDisplay(
-            {
-              reps: entry.reps ?? undefined,
-              durationSec: entry.durationSec ?? undefined,
-              distanceM: entry.distanceM ?? undefined,
-            },
-            definition
-          )
-        : '',
-      xp: gained,
-    });
+    const sum = byExercise.get(entry.exerciseId) ?? {
+      exerciseId: entry.exerciseId,
+      reps: 0,
+      durationSec: 0,
+      distanceM: 0,
+      xp: 0,
+    };
+    sum.reps += entry.reps ?? 0;
+    sum.durationSec += entry.durationSec ?? 0;
+    sum.distanceM += entry.distanceM ?? 0;
+    sum.xp += gained;
+    byExercise.set(entry.exerciseId, sum);
   }
   if (xp <= 0) return null;
   const before = Math.max(0, totalBefore);
@@ -66,26 +71,29 @@ export function buildXpGainedData(
     xp,
     before: levelProgress(before),
     after: levelProgress(before + xp),
-    lines: mergeLines(lines).slice(0, MAX_XP_LINES),
+    lines: [...byExercise.values()]
+      .map(toLine)
+      .sort((a, b) => b.xp - a.xp)
+      .slice(0, MAX_XP_LINES),
     titleId,
   };
 }
 
-/** A session logs one exercise in several steps; show it as one row. */
-function mergeLines(lines: ReadonlyArray<XpGainedLine>): XpGainedLine[] {
-  const byLabel = new Map<string, XpGainedLine & { count: number }>();
-  for (const line of lines) {
-    const existing = byLabel.get(line.label);
-    byLabel.set(
-      line.label,
-      existing
-        ? { ...existing, xp: existing.xp + line.xp, count: existing.count + 1 }
-        : { ...line, count: 1 }
-    );
-  }
-  return [...byLabel.values()]
-    .map(({ count, ...line }) =>
-      count > 1 ? { ...line, value: `${count}×` } : line
-    )
-    .sort((a, b) => b.xp - a.xp);
+/** A session logs one exercise in several steps; its row shows the sum. */
+function toLine(sum: ExerciseSum): XpGainedLine {
+  const definition = findExerciseDefinition(sum.exerciseId);
+  return {
+    label: exerciseDisplayName(sum.exerciseId),
+    value: definition
+      ? formatEntryDisplay(
+          {
+            reps: sum.reps || undefined,
+            durationSec: sum.durationSec || undefined,
+            distanceM: sum.distanceM || undefined,
+          },
+          definition
+        )
+      : '',
+    xp: sum.xp,
+  };
 }

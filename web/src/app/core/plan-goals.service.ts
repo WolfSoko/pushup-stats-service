@@ -3,7 +3,6 @@ import type { ComplexGoalEntry } from '@pu-stats/models';
 
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
 import { type PlanDayGoal, planDayGoals } from './plan-goal-entries';
-import { XpCelebrationService } from './xp/xp-celebration.service';
 
 /** What a check-off of a plan goal did, mapped from the plan actions. */
 export type PlanGoalCompleteResult = 'logged' | 'already-logged' | 'noop';
@@ -21,7 +20,6 @@ export type PlanGoalCompleteResult = 'logged' | 'already-logged' | 'noop';
 @Injectable({ providedIn: 'root' })
 export class PlanGoalsService {
   private readonly trainingPlan = inject(TrainingPlanStore);
-  private readonly xpCelebration = inject(XpCelebrationService);
 
   /** Today's plan day when a plan is active and today is no rest day. */
   readonly todayDay = computed(() => {
@@ -70,11 +68,7 @@ export class PlanGoalsService {
    * (the only thing that closes a `checkoff` day), and the day itself is
    * marked done once its last exercise lands.
    */
-  complete(goalId: string): Promise<PlanGoalCompleteResult> {
-    return this.xpCelebration.batch(() => this.completeItems(goalId));
-  }
-
-  private async completeItems(goalId: string): Promise<PlanGoalCompleteResult> {
+  async complete(goalId: string): Promise<PlanGoalCompleteResult> {
     const goal = this.goals().find((g) => g.entry.id === goalId);
     const dayIndex = this.trainingPlan.currentDayIndex();
     if (!goal || dayIndex === null) return 'noop';

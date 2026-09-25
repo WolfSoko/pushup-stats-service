@@ -216,12 +216,11 @@ export function rankExerciseEntries(
     userDays.set(p.isoDate, (userDays.get(p.isoDate) || 0) + rawValue);
   }
 
-  const cap = dailyCap;
   const totals = new Map<string, number>();
   for (const [userId, days] of perDay) {
     let total = 0;
     for (const [, dayValue] of days) {
-      total += Math.min(dayValue, cap);
+      total += Math.min(dayValue, dailyCap);
     }
     totals.set(userId, total);
   }

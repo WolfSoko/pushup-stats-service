@@ -26,7 +26,9 @@ import {
   LEADERBOARD_PUSHUP_ID,
   LEADERBOARD_XP_ID,
   LeaderboardService,
+  boardSource,
 } from './leaderboard.service';
+import { firstValueFrom, of } from 'rxjs';
 import { PendingRequestsService } from '../pending-requests.service';
 
 const getDoc = firestoreFns.getDoc as unknown as jest.Mock;
@@ -525,15 +527,62 @@ describe('LeaderboardService — XP ranking', () => {
     expect(data.allTime.top).toEqual([]);
   });
 
-  it('should stream the XP snapshot doc', () => {
+  it('should project each emission of the XP doc without a second read', async () => {
     // given
-    (firestoreFns.docData as jest.Mock).mockReturnValue('stream');
+    (firestoreFns.docData as jest.Mock).mockReturnValue(
+      of({ periods: { daily: [{ alias: 'Me', reps: 40, uid: 'me' }] } })
+    );
 
     // when
-    const stream = service.observeXpSnapshot();
+    const data = await firstValueFrom(service.observe(LEADERBOARD_XP_ID));
 
     // then
     expect(firestoreFns.doc).toHaveBeenCalledWith({}, 'leaderboards', 'xp');
-    expect(stream).toBe('stream');
+    expect(data.daily.current).toEqual(
+      expect.objectContaining({ alias: 'Me', isCurrent: true })
+    );
+    expect(getDoc).not.toHaveBeenCalled();
+  });
+
+  it('should stream an exercise board from its slot of the exercises doc', async () => {
+    // given
+    (firestoreFns.docData as jest.Mock).mockReturnValue(
+      of({
+        byExercise: {
+          'legs.squats': { periods: { last7: [{ alias: 'Bo', reps: 90 }] } },
+        },
+      })
+    );
+
+    // when
+    const data = await firstValueFrom(service.observe('legs.squats'));
+
+    // then
+    expect(firestoreFns.doc).toHaveBeenCalledWith(
+      {},
+      'leaderboards',
+      'exercises'
+    );
+    expect(data.last7.top.map((e) => e.alias)).toEqual(['Bo']);
+  });
+
+  it('should not stream a board that has no source', () => {
+    // given
+    (firestoreFns.docData as jest.Mock).mockClear();
+
+    // when
+    service.observe('not-in-catalog');
+
+    // then
+    expect(firestoreFns.docData).not.toHaveBeenCalled();
+  });
+});
+
+describe('boardSource', () => {
+  it('should resolve the XP board to its own doc and exercises to theirs', () => {
+    // then
+    expect(boardSource(LEADERBOARD_XP_ID)?.docId).toBe('xp');
+    expect(boardSource('legs.squats')?.docId).toBe('exercises');
+    expect(boardSource('unknown')).toBeNull();
   });
 });

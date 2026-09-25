@@ -8,9 +8,10 @@ import { of, Subject } from 'rxjs';
 import { vi } from 'vitest';
 
 import { UserConfigStore } from '../core/user-config.store';
-import { XpCelebrationService } from '../core/xp/xp-celebration.service';
 import { STORAGE_KEY } from './achievement-celebration';
 import { AchievementCelebrationService } from './achievement-celebration.service';
+import { CelebrationQueueService } from '../core/celebration-queue.service';
+import { immediateCelebrationQueue } from '../core/celebration-queue.testing';
 
 function setup(options: {
   earned?: Array<{ id: string; awardedAt: string }>;
@@ -26,8 +27,8 @@ function setup(options: {
       { provide: PLATFORM_ID, useValue: options.platform ?? 'browser' },
       { provide: MatDialog, useValue: { open } },
       {
-        provide: XpCelebrationService,
-        useValue: { afterIdle: (fn: () => void) => fn() },
+        provide: CelebrationQueueService,
+        useValue: immediateCelebrationQueue(),
       },
       { provide: UserAchievementsApiService, useValue: { watchEarned } },
       {

@@ -1,21 +1,53 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it, jest, beforeEach } from '@jest/globals';
+import type { Firestore } from 'firebase-admin/firestore';
 
-import { parseXpConfig } from './config-read';
+import {
+  readXpConfig,
+  resetXpConfigCache,
+  XP_CONFIG_TTL_MS,
+} from './config-read';
 
-describe('parseXpConfig', () => {
-  it('should keep valid rates and drop invalid ones', () => {
+function fakeDb(data: unknown) {
+  const get = jest.fn(async () => ({ exists: true, data: () => data }));
+  const db = { doc: jest.fn(() => ({ get })) } as unknown as Firestore;
+  return { db, get };
+}
+
+describe('readXpConfig', () => {
+  beforeEach(() => resetXpConfigCache());
+
+  it('should parse the rates and drop invalid ones', async () => {
+    // given
+    const { db } = fakeDb({ rates: { pushup: 2, bad: -1 } });
+
     // when
-    const config = parseXpConfig({
-      rates: { pushup: 2, bad: -1, nan: Number.NaN, text: '3' },
-    });
+    const config = await readXpConfig(db, 0);
 
     // then
     expect(config).toEqual({ rates: { pushup: 2 } });
   });
 
-  it('should return null without a rates map', () => {
+  it('should reuse the cached config within the TTL', async () => {
+    // given
+    const { db, get } = fakeDb({ rates: { pushup: 2 } });
+    await readXpConfig(db, 0);
+
+    // when
+    await readXpConfig(db, XP_CONFIG_TTL_MS - 1);
+
     // then
-    expect(parseXpConfig(undefined)).toBeNull();
-    expect(parseXpConfig({ rates: 'x' })).toBeNull();
+    expect(get).toHaveBeenCalledTimes(1);
+  });
+
+  it('should read again once the TTL expired', async () => {
+    // given
+    const { db, get } = fakeDb({ rates: { pushup: 2 } });
+    await readXpConfig(db, 0);
+
+    // when
+    await readXpConfig(db, XP_CONFIG_TTL_MS);
+
+    // then
+    expect(get).toHaveBeenCalledTimes(2);
   });
 });

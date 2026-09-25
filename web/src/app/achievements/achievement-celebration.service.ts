@@ -6,8 +6,8 @@ import { UserAchievementsApiService } from '@pu-stats/data-access';
 
 import { UserContextService } from '@pu-auth/auth';
 import { BRAND_URL, SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
+import { CelebrationQueueService } from '../core/celebration-queue.service';
 import { UserConfigStore } from '../core/user-config.store';
-import { XpCelebrationService } from '../core/xp/xp-celebration.service';
 import {
   type AchievementBadge,
   resolveAchievementBadge,
@@ -42,11 +42,11 @@ let nextDialogTitleId = 0;
 export class AchievementCelebrationService {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly dialog = inject(MatDialog);
+  private readonly queue = inject(CelebrationQueueService);
   private readonly api = inject(UserAchievementsApiService);
   private readonly user = inject(UserContextService);
   private readonly userConfig = inject(UserConfigStore);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly xpCelebration = inject(XpCelebrationService);
 
   constructor() {
     this.start();
@@ -77,7 +77,7 @@ export class AchievementCelebrationService {
     const badge = pending
       .map(resolveAchievementBadge)
       .find((entry) => entry !== null);
-    if (badge) this.xpCelebration.afterIdle(() => this.show(badge));
+    if (badge) this.show(badge);
   }
 
   /**
@@ -86,8 +86,12 @@ export class AchievementCelebrationService {
    * never suppresses the real celebration later.
    */
   show(badge: AchievementBadge): void {
+    void this.queue.enqueue(() => this.open(badge));
+  }
+
+  private open(badge: AchievementBadge) {
     const titleId = `achievement-dialog-title-${nextDialogTitleId++}`;
-    this.dialog.open(AchievementDialogComponent, {
+    return this.dialog.open(AchievementDialogComponent, {
       data: {
         titleId,
         badge,

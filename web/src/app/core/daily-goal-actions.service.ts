@@ -11,12 +11,7 @@ import {
   dailyGoalFillPayload,
 } from './daily-goal.helpers';
 import { PlanGoalsService } from './plan-goals.service';
-import {
-  notifyEntrySaved,
-  notifyEntrySavedWithXp,
-  notifyError,
-} from './quick-add-notify';
-import { XpCelebrationService } from './xp/xp-celebration.service';
+import { notifyError } from './quick-add-notify';
 
 /** Outcome of a single check-off, for callers that report it. */
 export type CompleteGoalResult =
@@ -40,7 +35,6 @@ export class DailyGoalActionsService {
   private readonly snackBar = inject(MatSnackBar);
   private readonly appData = inject(AppDataFacade);
   private readonly planGoals = inject(PlanGoalsService);
-  private readonly xpCelebration = inject(XpCelebrationService);
 
   private readonly _pending = signal<ReadonlySet<string>>(new Set());
 
@@ -80,7 +74,7 @@ export class DailyGoalActionsService {
     }
     this.markPending(item.id, true);
     try {
-      const saved = await firstValueFrom(
+      await firstValueFrom(
         this.exerciseApi.createEntry(userId, {
           exerciseId: payload.exerciseId,
           ...(payload.variantId ? { variantId: payload.variantId } : {}),
@@ -90,7 +84,6 @@ export class DailyGoalActionsService {
           source: 'goal-fill',
         })
       );
-      notifyEntrySavedWithXp(this.snackBar, this.xpCelebration, [saved]);
       this.appData.reloadAfterMutation();
       return 'logged';
     } catch (err) {
@@ -112,9 +105,6 @@ export class DailyGoalActionsService {
     try {
       const result = await this.planGoals.complete(goalId);
       if (result === 'noop') return 'noop';
-      if (result === 'logged' && !this.xpCelebration.isShowing()) {
-        notifyEntrySaved(this.snackBar);
-      }
       this.appData.reloadAfterMutation();
       return result === 'logged' ? 'logged' : 'already-reached';
     } catch (err) {

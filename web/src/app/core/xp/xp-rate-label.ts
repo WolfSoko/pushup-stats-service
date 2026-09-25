@@ -6,6 +6,7 @@ import {
   type XpConfig,
   type XpRateUnitKey,
 } from '@pu-stats/models';
+import { formatXp } from './xp-format';
 
 /** Localized rate unit suffix, e.g. "Wdh." / "Min." / "km". */
 export function xpRateUnitLabel(key: XpRateUnitKey): string {
@@ -54,6 +55,6 @@ export function xpRateLabelFor(
 
 /** "≈ 30 XP" preview for a value that has not been saved yet. */
 export function xpPreviewLabel(xp: number, locale: string): string {
-  const value = formatNumber(xp, locale, '1.0-0');
-  return $localize`:@@xp.preview.label:≈ ${value}:value: XP`;
+  const value = formatXp(xp, locale);
+  return $localize`:@@xp.preview.label:≈ ${value}:value:`;
 }

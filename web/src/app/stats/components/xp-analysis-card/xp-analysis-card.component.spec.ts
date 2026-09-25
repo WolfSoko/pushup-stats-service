@@ -1,27 +1,35 @@
 import { signal } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { UserContextService } from '@pu-auth/auth';
+import { XpApiService } from '@pu-stats/data-access';
 import { LiveDataStore, XpStore } from '@pu-stats/data-access-state';
-import { levelProgress, type ExerciseEntry } from '@pu-stats/models';
+import {
+  levelProgress,
+  type StatsGranularity,
+  type XpEntryInput,
+} from '@pu-stats/models';
 import { render, screen } from '@testing-library/angular';
+import { of } from 'rxjs';
 
 import { AnalysisStore } from '../../analysis.store';
+import type { XpAnalysisEntry } from '../../analysis/xp-analysis';
 import { XpAnalysisCardComponent } from './xp-analysis-card.component';
 
-function entry(
+function row(
   id: string,
   exerciseId: string,
   timestamp: string,
   reps: number
-): ExerciseEntry {
-  return { _id: id, userId: 'u1', exerciseId, timestamp, reps, source: 'web' };
+): XpAnalysisEntry {
+  return { _id: id, exerciseId, timestamp, reps };
 }
 
 async function setup(opts: {
-  entries: ExerciseEntry[];
+  rows: XpAnalysisEntry[];
+  booked?: ReadonlyMap<string, number>;
   loaded?: boolean;
-  hidden?: string[];
+  granularity?: StatsGranularity;
 }) {
-  const entries = signal(opts.entries);
+  const watchLedger = vi.fn(() => of(opts.booked ?? new Map()));
   await render(XpAnalysisCardComponent, {
     providers: [
       {
@@ -29,41 +37,40 @@ async function setup(opts: {
         useValue: {
           from: signal('2026-09-01'),
           to: signal('2026-09-07'),
-          hiddenExerciseIds: signal(opts.hidden ?? []),
+          visibleRows: signal(opts.rows),
+          viewGranularity: signal(opts.granularity ?? 'daily'),
         },
       },
       {
         provide: LiveDataStore,
-        useValue: {
-          exerciseEntries: entries,
-          exerciseEntriesLoaded: signal(true),
-        },
+        useValue: { exerciseEntriesLoaded: signal(true) },
       },
       {
         provide: XpStore,
         useValue: {
           loaded: signal(opts.loaded ?? true),
           progress: signal(levelProgress(450)),
-          xpOfEntry: (_id: string, e: ExerciseEntry) => (e.reps ?? 0) * 2,
+          previewXp: (e: XpEntryInput) => (e.reps ?? 0) * 2,
         },
       },
+      { provide: XpApiService, useValue: { watchLedger } },
+      { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
     ],
   });
-  return { entries };
+  return { watchLedger };
 }
 
 describe('XpAnalysisCardComponent', () => {
-  it('should total the XP of the range entries with their booked value', async () => {
+  it('should total the visible rows at today’s rate when nothing is booked yet', async () => {
     // given
     await setup({
-      entries: [
-        entry('a', 'pushup', '2026-09-02T08:00:00', 10),
-        entry('b', 'pull.pullups', '2026-09-03T08:00:00', 5),
-        entry('c', 'pushup', '2026-08-01T08:00:00', 100),
+      rows: [
+        row('a', 'pushup', '2026-09-02T08:00:00', 10),
+        row('b', 'pull.pullups', '2026-09-03T08:00:00', 5),
       ],
     });
 
-    // then — the August entry lies outside the range
+    // then
     expect(screen.getByTestId('analysis-xp-total').textContent?.trim()).toBe(
       '30'
     );
@@ -71,25 +78,41 @@ describe('XpAnalysisCardComponent', () => {
     expect(screen.getByTestId('analysis-xp-bars').children).toHaveLength(7);
   });
 
-  it('should leave hidden exercises out, like the rest of the page', async () => {
+  it('should prefer the booked ledger XP over a recomputation', async () => {
     // given
     await setup({
-      entries: [
-        entry('a', 'pushup', '2026-09-02T08:00:00', 10),
-        entry('b', 'pull.pullups', '2026-09-03T08:00:00', 5),
-      ],
-      hidden: ['pushup'],
+      rows: [row('a', 'pushup', '2026-09-02T08:00:00', 10)],
+      booked: new Map([['a', 7]]),
     });
 
     // then
     expect(screen.getByTestId('analysis-xp-total').textContent?.trim()).toBe(
-      '10'
+      '7'
     );
+  });
+
+  it('should listen to the ledger only from the start of the range', async () => {
+    // given / when
+    const { watchLedger } = await setup({ rows: [] });
+
+    // then
+    expect(watchLedger).toHaveBeenCalledWith('u1', '2026-09-01');
+  });
+
+  it('should follow the page granularity for the bars', async () => {
+    // given
+    await setup({
+      rows: [row('a', 'pushup', '2026-09-02T08:00:00', 10)],
+      granularity: 'weekly',
+    });
+
+    // then
+    expect(screen.getByText('XP pro Woche')).toBeTruthy();
   });
 
   it('should explain an empty range instead of drawing empty bars', async () => {
     // given
-    await setup({ entries: [] });
+    await setup({ rows: [] });
 
     // then
     expect(screen.getByText(/noch keine XP gesammelt/)).toBeTruthy();
@@ -98,10 +121,9 @@ describe('XpAnalysisCardComponent', () => {
 
   it('should show a skeleton while XP is loading', async () => {
     // given
-    await setup({ entries: [], loaded: false });
+    await setup({ rows: [], loaded: false });
 
     // then
     expect(screen.queryByTestId('analysis-xp-total')).toBeNull();
-    expect(TestBed.inject(XpStore)).toBeTruthy();
   });
 });

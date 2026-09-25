@@ -2,19 +2,26 @@ import { signal } from '@angular/core';
 import { render, screen } from '@testing-library/angular';
 import { UserContextService } from '@pu-auth/auth';
 import { XpApiService } from '@pu-stats/data-access';
+import { XpStore } from '@pu-stats/data-access-state';
 import type { XpConfig } from '@pu-stats/models';
-import { Subject } from 'rxjs';
 import { AdminXpRatesSectionComponent } from './admin-xp-rates-section.component';
 
 async function setup() {
-  const config$ = new Subject<XpConfig | null>();
+  const config = signal<XpConfig | null>(null);
+  const configLoaded = signal(false);
+  const config$ = {
+    next(value: XpConfig | null) {
+      config.set(value);
+      configLoaded.set(true);
+    },
+  };
   const api = {
-    watchConfig: vi.fn(() => config$),
     saveConfig: vi.fn(async () => undefined),
   };
   const view = await render(AdminXpRatesSectionComponent, {
     providers: [
       { provide: XpApiService, useValue: api },
+      { provide: XpStore, useValue: { config, configLoaded } },
       {
         provide: UserContextService,
         useValue: { userIdSafe: signal('admin-1') },

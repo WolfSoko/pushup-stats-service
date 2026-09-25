@@ -64,3 +64,14 @@ export function sameLedgerLine(
     a.xp === b.xp
   );
 }
+
+/**
+ * A line the backfill created. Triggers leave these to the backfill,
+ * which rebuilds each user's aggregate once instead of once per line.
+ */
+export function isBackfillCreation(
+  before: Record<string, unknown> | undefined,
+  after: Record<string, unknown> | undefined
+): boolean {
+  return !before && after?.['source'] === 'backfill';
+}

@@ -3,6 +3,7 @@ import type {
   AchievementId,
 } from './achievement.models';
 import { findExerciseDefinition } from './exercise.catalog';
+import { levelForXp } from './xp.models';
 
 /**
  * Level badges: sparse on purpose, like the plan-day milestones — one
@@ -65,12 +66,13 @@ export function xpCategoryCount(
  * badge away.
  */
 export function deriveXpAchievements(input: {
-  readonly level: number;
+  readonly total: number;
   readonly byExercise: Readonly<Record<string, number>>;
 }): ReadonlyArray<AchievementId> {
+  const level = levelForXp(input.total);
   const categories = xpCategoryCount(input.byExercise);
   return [
-    ...LEVEL_MILESTONES.filter((m) => input.level >= m).map(levelAchievementId),
+    ...LEVEL_MILESTONES.filter((m) => level >= m).map(levelAchievementId),
     ...VARIETY_MILESTONES.filter((m) => categories >= m).map(
       varietyAchievementId
     ),

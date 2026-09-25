@@ -29,7 +29,7 @@ import {
   writeFlag,
 } from './goal-reached-period.helpers';
 import { UserConfigStore } from './user-config.store';
-import { XpCelebrationService } from './xp/xp-celebration.service';
+import { CelebrationQueueService } from './celebration-queue.service';
 
 interface GoalSpec {
   readonly kind: GoalKind;
@@ -61,10 +61,10 @@ let nextDialogTitleId = 0;
 export class GoalReachedNotificationService {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly dialog = inject(MatDialog);
+  private readonly queue = inject(CelebrationQueueService);
   private readonly userConfig = inject(UserConfigStore);
   private readonly live = inject(LiveDataStore);
   private readonly trainingPlan = inject(TrainingPlanStore);
-  private readonly xpCelebration = inject(XpCelebrationService);
 
   // Post-cutover pushups live in `exerciseEntries` (`exerciseId:'pushup'`).
   // Only the legacy daily/weekly/monthly goals tracked here are pushup-reps.
@@ -222,10 +222,10 @@ export class GoalReachedNotificationService {
    * Per-kind dedupe for live dialog instances. Without it, rapid clicks /
    * held Enter on the toolbar pill (or two near-simultaneous goal crossings
    * on the same kind) would stack overlays and trap focus inside the
-   * top-most one. We cap at one open dialog per kind; the second trigger
-   * silently no-ops while the first is still on screen.
+   * top-most one. We cap at one queued or open dialog per kind; the second
+   * trigger silently no-ops until the first has closed.
    */
-  private readonly activeDialogs = new Map<GoalKind, MatDialogRef<unknown>>();
+  private readonly activeDialogs = new Set<GoalKind>();
   /**
    * Last-seen goal value per kind. Used to detect upward changes so that an
    * earlier "shown" flag for the current period is cleared — otherwise the
@@ -301,15 +301,20 @@ export class GoalReachedNotificationService {
     snapshot: { total: number; goal: number; maxParticleCount: number }
   ): Promise<void> {
     if (this.activeDialogs.has(kind)) return;
-    // The entry that crossed the goal just opened its XP dialog; the goal
-    // celebration follows it instead of stacking on top.
-    await this.xpCelebration.whenIdle();
+    this.activeDialogs.add(kind);
+    try {
+      await this.queue.enqueue(() => this.showDialog(kind, snapshot));
+    } finally {
+      this.activeDialogs.delete(kind);
+    }
+  }
+
+  private async showDialog(
+    kind: GoalKind,
+    snapshot: { total: number; goal: number; maxParticleCount: number }
+  ): Promise<MatDialogRef<unknown>> {
     const { GoalReachedDialogComponent } =
       await import('../stats/components/goal-reached-dialog/goal-reached-dialog.component');
-    // Re-check after the dynamic import resolves: an auto-fire effect and
-    // a manual reopen() can race across the await, and we still only want
-    // one dialog per kind.
-    if (this.activeDialogs.has(kind)) return;
     const titleId = `goal-reached-dialog-title-${nextDialogTitleId++}`;
     // Weekly/monthly celebrations are about the period total; only the
     // two "today" dialogs show what today's plan asked for.
@@ -317,7 +322,7 @@ export class GoalReachedNotificationService {
       kind === 'daily' || kind === 'plan'
         ? untracked(() => this.planItems())
         : [];
-    const ref = this.dialog.open(GoalReachedDialogComponent, {
+    return this.dialog.open(GoalReachedDialogComponent, {
       panelClass: 'goal-reached-dialog-panel',
       backdropClass: 'goal-reached-dialog-backdrop',
       autoFocus: 'dialog',
@@ -333,10 +338,6 @@ export class GoalReachedNotificationService {
         maxParticleCount: snapshot.maxParticleCount,
         planItems,
       },
-    });
-    this.activeDialogs.set(kind, ref);
-    ref.afterClosed().subscribe(() => {
-      this.activeDialogs.delete(kind);
     });
   }
 

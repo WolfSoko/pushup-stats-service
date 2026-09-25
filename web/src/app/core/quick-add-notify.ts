@@ -1,8 +1,5 @@
 import type { MatSnackBar } from '@angular/material/snack-bar';
 import { pushupValidationMessage } from '@pu-stats/data-access';
-import type { XpEntryInput } from '@pu-stats/models';
-
-import type { XpCelebrationService } from './xp/xp-celebration.service';
 
 const SNACKBAR_POSITION = {
   horizontalPosition: 'center',
@@ -18,18 +15,6 @@ export function notifyEntrySaved(snackBar: MatSnackBar): void {
       ...SNACKBAR_POSITION,
     }
   );
-}
-
-/**
- * Confirms a save with the XP celebration, or with the plain snackbar when
- * no dialog opens (guest, demo, zero-XP exercise).
- */
-export function notifyEntrySavedWithXp(
-  snackBar: MatSnackBar,
-  celebration: Pick<XpCelebrationService, 'celebrate'>,
-  entries: ReadonlyArray<XpEntryInput | null | undefined>
-): void {
-  if (!celebration.celebrate(entries)) notifyEntrySaved(snackBar);
 }
 
 export function notifyGoalReached(snackBar: MatSnackBar): void {

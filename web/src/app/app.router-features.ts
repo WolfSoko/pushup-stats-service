@@ -3,6 +3,7 @@ import {
   withViewTransitions,
   type RouterFeatures,
 } from '@angular/router';
+import { prefersReducedMotion } from './core/reduced-motion';
 
 export function createAppRouterFeatures(): RouterFeatures[] {
   return [
@@ -17,12 +18,7 @@ export function createAppRouterFeatures(): RouterFeatures[] {
       onViewTransitionCreated: ({ transition }) => {
         // Honour the OS-level reduced-motion preference: finish the DOM swap
         // instantly instead of cross-fading.
-        if (
-          typeof globalThis.matchMedia === 'function' &&
-          globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches
-        ) {
-          transition.skipTransition();
-        }
+        if (prefersReducedMotion()) transition.skipTransition();
       },
     }),
   ];

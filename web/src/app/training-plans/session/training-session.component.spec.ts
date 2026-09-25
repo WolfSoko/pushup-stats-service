@@ -3,7 +3,6 @@ import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthStore } from '@pu-auth/auth';
 import {
-  type ExerciseEntry,
   PlanExerciseProgress,
   type SessionMode,
   TrainingPlanDay,
@@ -16,7 +15,6 @@ import { of } from 'rxjs';
 
 import { UserConfigStore } from '../../core/user-config.store';
 import { TrainingPlanStore } from '../training-plan.store';
-import { XpCelebrationService } from '../../core/xp/xp-celebration.service';
 import { SessionCaptureService } from './session-capture.service';
 import { TrainingSessionComponent } from './training-session.component';
 
@@ -72,7 +70,6 @@ interface Options {
   planLoaded?: boolean;
   slug?: string;
   capture?: Partial<SessionCaptureService>;
-  saved?: ExerciseEntry[];
 }
 
 async function setup(options: Options = {}) {
@@ -93,8 +90,6 @@ async function setup(options: Options = {}) {
     status: 'captured',
     value: 999,
   });
-  const takeSaved = vitest.fn(() => options.saved ?? []);
-  const celebrate = vitest.fn(() => true);
 
   const activePlan =
     options.activePlan === undefined ? ACTIVE_PLAN : options.activePlan;
@@ -120,13 +115,6 @@ async function setup(options: Options = {}) {
         },
       },
       { provide: MatSnackBar, useValue: { open: vitest.fn() } },
-      {
-        provide: XpCelebrationService,
-        useValue: {
-          celebrate,
-          hold: () => ({ take: () => [], release: vitest.fn() }),
-        },
-      },
       {
         provide: AuthStore,
         useValue: {
@@ -165,19 +153,12 @@ async function setup(options: Options = {}) {
     componentProviders: [
       {
         provide: SessionCaptureService,
-        useValue: {
-          capture,
-          captureByHand,
-          logPrescribed,
-          takeSaved,
-          ...options.capture,
-        },
+        useValue: { capture, captureByHand, logPrescribed, ...options.capture },
       },
     ],
   });
 
   return {
-    celebrate,
     capture,
     captureByHand,
     logPrescribed,
@@ -477,24 +458,6 @@ describe('TrainingSessionComponent', () => {
 
     // then
     expect(screen.getByText(/Session geschafft/)).toBeTruthy();
-  });
-
-  it('should celebrate the XP of the whole session once it is done', async () => {
-    // given
-    const saved = [
-      { _id: 'e1', exerciseId: 'pushup', reps: 20 },
-    ] as ExerciseEntry[];
-    const { celebrate } = await setup({
-      saved,
-      progress: [item(0, PLANK, true)],
-    });
-
-    // when
-    await userEvent.click(byTestId('session-start'));
-
-    // then
-    expect(celebrate).toHaveBeenCalledTimes(1);
-    expect(celebrate).toHaveBeenCalledWith(saved);
   });
 
   it('should return to the plan when the session is closed', async () => {
