@@ -344,7 +344,7 @@ Vergeben auf `.app` und damit aus dem Rennen: `rally`, `nudge`, `uplift`, `spark
 
 Das ist der erste belastbare Konstruktionshinweis dieser ganzen Suche — vorher waren alle Muster Artefakte meines Generators (`-span`, `-mark`, `-wise`).
 
-**Die Grenze des Hinweises**, sofort mitgeliefert: `Any-` löst die Domain- und die Neutralitätsfrage, **nicht die Kollisionsfrage**. Das Zweitglied muss trotzdem durch den Store-Check — genau daran ist Anynudge gefallen, obwohl das Präfix seine Arbeit getan hatte. Der Baustein verkürzt die Suche, er ersetzt sie nicht.
+**Die Grenze des Hinweises**, sofort mitgeliefert: `Any-` **signalisiert** Domänenneutralität, es **erfüllt Kriterium 1 aber nicht allein** — geprüft wird das ganze Kompositum. _AnyWorkout_ trägt das Präfix und ist trotzdem domänengebunden, weil das Zweitglied die Domäne benennt. Und die Kollisionsfrage löst das Präfix ohnehin nicht: Daran ist Anynudge gefallen. Der Baustein verkürzt die Suche, er ersetzt die Prüfung des ganzen Namens nicht.
 
 #### Aktuelles Feld
 
