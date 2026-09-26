@@ -5786,9 +5786,9 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="seo.publicProfile.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Öffentliches Trainingsprofil mit Level, XP, Trainingstagen und Bestleistungen.</source>
-        <target>Offentlig armhevningsprofil med reps, streak og personlige rekorder.</target>
+        <target>Offentlig treningsprofil med nivå, XP, treningsdager og beste prestasjoner.</target>
       </segment>
     </unit>
     <unit id="publicProfile.subtitle">
@@ -5900,9 +5900,9 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="publicProfile.share.text">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Wiederholungen auf <ph id="2" equiv="brand" disp="BRAND_NAME"/> geschafft 💪 Schau&apos;s dir an:</source>
-        <target><ph id="0" equiv="name" disp="name"/> klarte <ph id="1" equiv="total" disp="total"/> armhevninger på <ph id="2" equiv="brand" disp="BRAND_NAME"/> 💪 Sjekk det ut:</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> har klart <ph id="1" equiv="total" disp="profile.total"/> repetisjoner på <ph id="2" equiv="brand" disp="BRAND_NAME"/> 💪 Sjekk det ut:</target>
       </segment>
     </unit>
     <unit id="publicProfile.share.title">
@@ -5924,15 +5924,15 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.title">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> Wiederholungen · Streak <ph id="2" equiv="streak" disp="profile.currentStreak"/> · <ph id="3" equiv="brand" disp="BRAND_NAME"/></source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> armhevninger · Serie <ph id="2" equiv="streak" disp="profile.currentStreak"/> · <ph id="3" equiv="brand" disp="BRAND_NAME"/></target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> repetisjoner · Rekke <ph id="2" equiv="streak" disp="profile.currentStreak"/> · <ph id="3" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.description">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Wiederholungen an <ph id="2" equiv="days" disp="profile.totalDays"/> Trainingstagen geschafft – aktuell <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage in Folge. Tracke selbst kostenlos auf <ph id="4" equiv="domain" disp="BRAND_DOMAIN"/>.</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> klarte <ph id="1" equiv="total" disp="profile.total"/> armhevninger over <ph id="2" equiv="days" disp="profile.totalDays"/> aktive dager – nåværende serie: <ph id="3" equiv="streak" disp="profile.currentStreak"/> dager. Start din egen gratis sporing på <ph id="4" equiv="domain" disp="BRAND_DOMAIN"/>.</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> har klart <ph id="1" equiv="total" disp="profile.total"/> repetisjoner på <ph id="2" equiv="days" disp="profile.totalDays"/> treningsdager – for øyeblikket <ph id="3" equiv="streak" disp="profile.currentStreak"/> dager på rad. Registrer dine egne gratis på <ph id="4" equiv="domain" disp="BRAND_DOMAIN"/>.</target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.toggle">
@@ -15258,321 +15258,321 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="publicProfile.stat.xp">
-      <segment state="initial">
+      <segment state="translated">
         <source>Level &amp; XP</source>
-        <target>Level &amp; XP</target>
+        <target>Nivå &amp; XP</target>
       </segment>
     </unit>
     <unit id="publicProfile.stat.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wiederholungen gesamt</source>
-        <target>Wiederholungen gesamt</target>
+        <target>Repetisjoner totalt</target>
       </segment>
     </unit>
     <unit id="publicProfile.stat.duration">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingszeit gesamt</source>
-        <target>Trainingszeit gesamt</target>
+        <target>Treningstid totalt</target>
       </segment>
     </unit>
     <unit id="publicProfile.stat.distance">
-      <segment state="initial">
+      <segment state="translated">
         <source>Strecke gesamt</source>
-        <target>Strecke gesamt</target>
+        <target>Distanse totalt</target>
       </segment>
     </unit>
     <unit id="publicProfile.stat.days">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingstage</source>
-        <target>Trainingstage</target>
+        <target>Treningsdager</target>
       </segment>
     </unit>
     <unit id="publicProfile.stat.streak">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tage in Folge</source>
-        <target>Tage in Folge</target>
+        <target>Dager på rad</target>
       </segment>
     </unit>
     <unit id="publicProfile.stat.entries">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge gesamt</source>
-        <target>Einträge gesamt</target>
+        <target>Oppføringer totalt</target>
       </segment>
     </unit>
     <unit id="publicProfile.stat.bestEntry">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stärkster Eintrag</source>
-        <target>Stärkster Eintrag</target>
+        <target>Sterkeste oppføring</target>
       </segment>
     </unit>
     <unit id="publicProfile.stat.bestDay">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stärkster Tag</source>
-        <target>Stärkster Tag</target>
+        <target>Sterkeste dag</target>
       </segment>
     </unit>
     <unit id="publicProfile.xp.level">
-      <segment state="initial">
+      <segment state="translated">
         <source>Level <ph id="0" equiv="INTERPOLATION" disp="{{ progress().level }}"/></source>
-        <target>Level <ph id="0" equiv="INTERPOLATION" disp="{{ progress().level }}"/></target>
+        <target>Nivå <ph id="0" equiv="INTERPOLATION" disp="{{ progress().level }}"/></target>
       </segment>
     </unit>
     <unit id="publicProfile.xp.remaining">
-      <segment state="initial">
+      <segment state="translated">
         <source>Noch <ph id="0" equiv="INTERPOLATION" disp="{{ remaining() }}"/> bis Level <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress().level + 1 }}"/></source>
-        <target>Noch <ph id="0" equiv="INTERPOLATION" disp="{{ remaining() }}"/> bis Level <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress().level + 1 }}"/></target>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ remaining() }}"/> igjen til nivå <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress().level + 1 }}"/></target>
       </segment>
     </unit>
     <unit id="publicProfile.xp.week">
-      <segment state="initial">
+      <segment state="translated">
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ weekly() }}"/> diese Woche</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ weekly() }}"/> diese Woche</target>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ weekly() }}"/> denne uken</target>
       </segment>
     </unit>
     <unit id="publicProfile.xp.month">
-      <segment state="initial">
+      <segment state="translated">
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ monthly() }}"/> diesen Monat</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ monthly() }}"/> diesen Monat</target>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ monthly() }}"/> denne måneden</target>
       </segment>
     </unit>
     <unit id="publicProfile.xp.barLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fortschritt zu Level <ph id="0" equiv="next" disp="this.progress().level + 1"/></source>
-        <target>Fortschritt zu Level <ph id="0" equiv="next" disp="this.progress().level + 1"/></target>
+        <target>Fremgang mot nivå <ph id="0" equiv="next" disp="this.progress().level + 1"/></target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.headingAll">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Übungen seit Beginn</source>
-        <target>Alle Übungen seit Beginn</target>
+        <target>Alle øvelser siden start</target>
       </segment>
     </unit>
     <unit id="allTime.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wiederholungen</source>
-        <target>Wiederholungen</target>
+        <target>Repetisjoner</target>
       </segment>
     </unit>
     <unit id="allTime.duration">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zeit</source>
-        <target>Zeit</target>
+        <target>Tid</target>
       </segment>
     </unit>
     <unit id="allTime.distance">
-      <segment state="initial">
+      <segment state="translated">
         <source>Strecke</source>
-        <target>Strecke</target>
+        <target>Distanse</target>
       </segment>
     </unit>
     <unit id="allTime.days">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingstage</source>
-        <target>Trainingstage</target>
+        <target>Treningsdager</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.hint.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Wiederholungen deiner Stückübungen zusammen – Liegestütze, Sit-ups, Kniebeugen und alle anderen.</source>
-        <target>Alle Wiederholungen deiner Stückübungen zusammen – Liegestütze, Sit-ups, Kniebeugen und alle anderen.</target>
+        <target>Alle repetisjoner fra dine repetisjonsøvelser samlet – push-ups, sit-ups, knebøy og alle andre.</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.hint.duration">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gesamte Zeit deiner Zeitübungen wie Planks und Halteübungen.</source>
-        <target>Gesamte Zeit deiner Zeitübungen wie Planks und Halteübungen.</target>
+        <target>Total tid for dine tidsbaserte øvelser som planke og holdeøvelser.</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.hint.distance">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gesamte Strecke deiner Lauf- und Streckenübungen.</source>
-        <target>Gesamte Strecke deiner Lauf- und Streckenübungen.</target>
+        <target>Total distanse for dine løpe- og distanseøvelser.</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.hint.trainingDays">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tage, an denen du mindestens eine Übung eingetragen hast.</source>
-        <target>Tage, an denen du mindestens eine Übung eingetragen hast.</target>
+        <target>Dager du har registrert minst én øvelse.</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.hint.allEntries">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anzahl aller Einträge über alle Übungen – jede erfasste Serie zählt als einer.</source>
-        <target>Anzahl aller Einträge über alle Übungen – jede erfasste Serie zählt als einer.</target>
+        <target>Antall oppføringer på tvers av alle øvelser – hver registrerte serie teller som én.</target>
       </segment>
     </unit>
     <unit id="admin.migrations.trainingStatsBackfill.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainings-Statistik über alle Übungen aufbauen</source>
-        <target>Trainings-Statistik über alle Übungen aufbauen</target>
+        <target>Bygg treningsstatistikk på tvers av alle øvelser</target>
       </segment>
     </unit>
     <unit id="admin.migrations.trainingStatsBackfill.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Baut für alle Nutzer mit Einträgen die übungsübergreifende Trainings-Statistik auf (Profil, Heatmap, Freunde-Board). Ohne sie rechnen diese Seiten bei jedem Aufruf alle Einträge durch. Bis zu 200 Nutzer pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Bestehende Statistiken bleiben unverändert. Erst den Probelauf ausführen.</source>
-        <target>Baut für alle Nutzer mit Einträgen die übungsübergreifende Trainings-Statistik auf (Profil, Heatmap, Freunde-Board). Ohne sie rechnen diese Seiten bei jedem Aufruf alle Einträge durch. Bis zu 200 Nutzer pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Bestehende Statistiken bleiben unverändert. Erst den Probelauf ausführen.</target>
+        <target>Bygger den øvelsesovergripende treningsstatistikken (profil, heatmap, venneoversikt) for alle brukere med oppføringer. Uten den beregner disse sidene alle oppføringer på nytt ved hver forespørsel. Opptil 200 brukere per kjøring — gjenta til «remaining» er 0. Eksisterende statistikk endres ikke. Kjør prøvekjøringen først.</target>
       </segment>
     </unit>
     <unit id="announcements.profileXp">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu: Level &amp; XP auf deinem Profil, Statistik über alle Übungen</source>
-        <target>Neu: Level &amp; XP auf deinem Profil, Statistik über alle Übungen</target>
+        <target>Nytt: nivå &amp; XP på profilen din, statistikk på tvers av alle øvelser</target>
       </segment>
     </unit>
     <unit id="landing.profile.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source> Neu · Trainingsprofil </source>
-        <target> Neu · Trainingsprofil </target>
+        <target> Nytt · Treningsprofil </target>
       </segment>
     </unit>
     <unit id="landing.profile.headline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Dein Profil zeigt alles, was du trainierst — nicht nur Liegestütze. </source>
-        <target> Dein Profil zeigt alles, was du trainierst — nicht nur Liegestütze. </target>
+        <target> Profilen din viser alt du trener — ikke bare push-ups. </target>
       </segment>
     </unit>
     <unit id="landing.profile.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ganz oben dein Level und deine XP, darunter Wiederholungen, Trainingszeit, Strecke, Trainingstage und deine Serie — über alle Übungen gezählt. Du entscheidest bei jedem Wert, ob ihn alle, nur Freunde oder niemand sieht. </source>
-        <target> Ganz oben dein Level und deine XP, darunter Wiederholungen, Trainingszeit, Strecke, Trainingstage und deine Serie — über alle Übungen gezählt. Du entscheidest bei jedem Wert, ob ihn alle, nur Freunde oder niemand sieht. </target>
+        <target> Øverst nivået og XP-en din, under repetisjoner, treningstid, distanse, treningsdager og rekken din — telt på tvers av alle øvelser. Du bestemmer for hver verdi om alle, bare venner eller ingen ser den. </target>
       </segment>
     </unit>
     <unit id="landing.profile.chip.xp">
-      <segment state="initial">
+      <segment state="translated">
         <source>Level und XP, dazu was diese Woche und diesen Monat dazukam</source>
-        <target>Level und XP, dazu was diese Woche und diesen Monat dazukam</target>
+        <target>Nivå og XP, pluss det du fikk denne uken og denne måneden</target>
       </segment>
     </unit>
     <unit id="landing.profile.chip.allExercises">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wiederholungen, Zeit und Kilometer über alle Übungen</source>
-        <target>Wiederholungen, Zeit und Kilometer über alle Übungen</target>
+        <target>Repetisjoner, tid og kilometer på tvers av alle øvelser</target>
       </segment>
     </unit>
     <unit id="landing.profile.chip.visibility">
-      <segment state="initial">
+      <segment state="translated">
         <source>Für alle, nur für Freunde oder privat — pro Wert</source>
-        <target>Für alle, nur für Freunde oder privat — pro Wert</target>
+        <target>Synlig for alle, bare venner eller privat — per verdi</target>
       </segment>
     </unit>
     <unit id="landing.profile.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eigenes Profil anlegen</source>
-        <target>Eigenes Profil anlegen</target>
+        <target>Opprett din egen profil</target>
       </segment>
     </unit>
     <unit id="landing.profile.mock.level">
-      <segment state="initial">
+      <segment state="translated">
         <source>Level 12</source>
-        <target>Level 12</target>
+        <target>Nivå 12</target>
       </segment>
     </unit>
     <unit id="landing.profile.mock.total">
-      <segment state="initial">
+      <segment state="translated">
         <source>6.930 XP</source>
-        <target>6.930 XP</target>
+        <target>6 930 XP</target>
       </segment>
     </unit>
     <unit id="landing.profile.mock.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wiederholungen</source>
-        <target>Wiederholungen</target>
+        <target>Repetisjoner</target>
       </segment>
     </unit>
     <unit id="landing.profile.mock.duration">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingszeit</source>
-        <target>Trainingszeit</target>
+        <target>Treningstid</target>
       </segment>
     </unit>
     <unit id="landing.profile.mock.distance">
-      <segment state="initial">
+      <segment state="translated">
         <source>Strecke</source>
-        <target>Strecke</target>
+        <target>Distanse</target>
       </segment>
     </unit>
     <unit id="landing.profile.mock.streak">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tage in Folge</source>
-        <target>Tage in Folge</target>
+        <target>Dager på rad</target>
       </segment>
     </unit>
     <unit id="profileXp.intro.badge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu</source>
-        <target>Neu</target>
+        <target>Nytt</target>
       </segment>
     </unit>
     <unit id="profileXp.intro.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Level &amp; XP auf deinem Profil</source>
-        <target>Level &amp; XP auf deinem Profil</target>
+        <target>Nivå &amp; XP på profilen din</target>
       </segment>
     </unit>
     <unit id="profileXp.intro.stepCount">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
-        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+        <target> Steg <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> av <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
       </segment>
     </unit>
     <unit id="profileXp.intro.later">
-      <segment state="initial">
+      <segment state="translated">
         <source> Später </source>
-        <target> Später </target>
+        <target> Senere </target>
       </segment>
     </unit>
     <unit id="profileXp.intro.back">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück</source>
-        <target>Zurück</target>
+        <target>Tilbake</target>
       </segment>
     </unit>
     <unit id="profileXp.intro.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu meinem Profil</source>
-        <target>Zu meinem Profil</target>
+        <target>Gå til profilen min</target>
       </segment>
     </unit>
     <unit id="profileXp.intro.next">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiter</source>
-        <target>Weiter</target>
+        <target>Neste</target>
       </segment>
     </unit>
     <unit id="profileXp.intro.step1.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dein Level ganz oben</source>
-        <target>Dein Level ganz oben</target>
+        <target>Nivået ditt helt øverst</target>
       </segment>
     </unit>
     <unit id="profileXp.intro.step1.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dein Profil zeigt jetzt oben dein Level und deine XP — im Gold deiner Abzeichen, dazu was diese Woche und diesen Monat dazukam.</source>
-        <target>Dein Profil zeigt jetzt oben dein Level und deine XP — im Gold deiner Abzeichen, dazu was diese Woche und diesen Monat dazukam.</target>
+        <target>Profilen din viser nå nivået og XP-en din øverst — i gullet til merkene dine, pluss det du fikk denne uken og denne måneden.</target>
       </segment>
     </unit>
     <unit id="profileXp.intro.step2.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Jede Übung zählt</source>
-        <target>Jede Übung zählt</target>
+        <target>Hver øvelse teller</target>
       </segment>
     </unit>
     <unit id="profileXp.intro.step2.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wiederholungen, Trainingszeit, Strecke, Trainingstage und Serie zählen jetzt alle Übungen, nicht nur Liegestütze — auf dem Profil und auf deinem Dashboard.</source>
-        <target>Wiederholungen, Trainingszeit, Strecke, Trainingstage und Serie zählen jetzt alle Übungen, nicht nur Liegestütze — auf dem Profil und auf deinem Dashboard.</target>
+        <target>Repetisjoner, treningstid, distanse, treningsdager og rekke teller nå alle øvelser, ikke bare push-ups — på profilen og på dashbordet ditt.</target>
       </segment>
     </unit>
     <unit id="profileXp.intro.step3.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du entscheidest, wer es sieht</source>
-        <target>Du entscheidest, wer es sieht</target>
+        <target>Du bestemmer hvem som ser den</target>
       </segment>
     </unit>
     <unit id="profileXp.intro.step3.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die XP-Karte siehst erst einmal nur du. Tippe auf ihr Symbol, um sie deinen Freunden oder allen zu zeigen.</source>
-        <target>Die XP-Karte siehst erst einmal nur du. Tippe auf ihr Symbol, um sie deinen Freunden oder allen zu zeigen.</target>
+        <target>Foreløpig er det bare du som ser XP-kortet. Trykk på ikonet for å vise det til vennene dine eller alle.</target>
       </segment>
     </unit>
 </file>
