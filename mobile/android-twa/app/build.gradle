@@ -102,7 +102,7 @@ android {
 
         
             // This is used by Meta Quest.
-            resValue "string", "fullScopeUrl", 'https://pushup-stats.com/de/'
+            resValue "string", "fullScopeUrl", 'https://pushup-stats.com/'
         
 
         

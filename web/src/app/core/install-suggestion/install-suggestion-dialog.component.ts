@@ -35,6 +35,9 @@ export interface InstallSuggestionDialogData {
       display: grid;
       gap: 4px;
     }
+    .browser-install {
+      justify-self: start;
+    }
     .ios-steps mat-icon {
       vertical-align: middle;
     }
@@ -61,6 +64,19 @@ export interface InstallSuggestionDialogData {
               Erinnerungen kommen als App-Benachrichtigung
             </li>
           </ul>
+          @if (canInstallPwa()) {
+            <button
+              type="button"
+              mat-button
+              class="browser-install"
+              data-testid="install-suggestion-browser-install"
+              [puBusy]="installing.busy()"
+              (click)="installPwa()"
+              i18n="@@installSuggestion.android.browserInstall"
+            >
+              Kein Play Store? Im Browser installieren
+            </button>
+          }
         </mat-dialog-content>
         <mat-dialog-actions align="end">
           <button
@@ -137,7 +153,7 @@ export interface InstallSuggestionDialogData {
           </p>
           <ol class="ios-steps">
             <li i18n="@@installSuggestion.ios.step1">
-              Tippe unten auf das Teilen-Symbol
+              Tippe in Safari auf das Teilen-Symbol
               <mat-icon aria-hidden="true">ios_share</mat-icon>
             </li>
             <li i18n="@@installSuggestion.ios.step2">
@@ -169,6 +185,7 @@ export class InstallSuggestionDialogComponent {
     MatDialogRef<InstallSuggestionDialogComponent, InstallSuggestionResult>
   );
   private readonly installPrompt = inject(InstallPromptService);
+  protected readonly canInstallPwa = this.installPrompt.canInstall;
 
   readonly installing = createBusyState();
 

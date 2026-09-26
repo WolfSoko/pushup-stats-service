@@ -5,6 +5,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
 import { InstallPromptService } from '../install-prompt.service';
+import { UserConfigStore } from '../user-config.store';
 import { INSTALL_SUGGESTION_SNOOZE_KEY } from './install-suggestion';
 import { InstallSuggestionDialogComponent } from './install-suggestion-dialog.component';
 import {
@@ -24,6 +25,7 @@ describe('InstallSuggestionOrchestrationService', () => {
     isIos: boolean;
     hasInstalledAndroidApp: ReturnType<typeof vi.fn>;
   };
+  let configLoaded: ReturnType<typeof signal<boolean>>;
 
   function setup(
     options: {
@@ -34,6 +36,7 @@ describe('InstallSuggestionOrchestrationService', () => {
       canInstall?: boolean;
       standalone?: boolean;
       androidAppInstalled?: boolean;
+      configLoaded?: boolean;
     } = {}
   ): void {
     events = new Subject();
@@ -49,6 +52,7 @@ describe('InstallSuggestionOrchestrationService', () => {
         .fn()
         .mockResolvedValue(options.androidAppInstalled ?? false),
     };
+    configLoaded = signal(options.configLoaded ?? true);
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       providers: [
@@ -56,6 +60,10 @@ describe('InstallSuggestionOrchestrationService', () => {
         { provide: MatDialog, useValue: { open, openDialogs } },
         { provide: Router, useValue: { events, url: options.url ?? '/app' } },
         { provide: InstallPromptService, useValue: installPrompt },
+        {
+          provide: UserConfigStore,
+          useValue: { loaded: configLoaded.asReadonly() },
+        },
       ],
     });
     TestBed.inject(InstallSuggestionOrchestrationService);
@@ -64,6 +72,7 @@ describe('InstallSuggestionOrchestrationService', () => {
 
   async function elapse(ms = INSTALL_SUGGESTION_DELAY_MS): Promise<void> {
     await vi.advanceTimersByTimeAsync(ms);
+    await vi.dynamicImportSettled();
   }
 
   beforeEach(() => {
@@ -230,5 +239,42 @@ describe('InstallSuggestionOrchestrationService', () => {
     await elapse();
     // then
     expect(open).not.toHaveBeenCalled();
+  });
+
+  it('should start the countdown only once the user config has loaded', async () => {
+    // given
+    setup({ isAndroid: true, configLoaded: false });
+    await elapse();
+    expect(open).not.toHaveBeenCalled();
+    // when
+    configLoaded.set(true);
+    TestBed.tick();
+    await elapse();
+    // then
+    expect(open).toHaveBeenCalledTimes(1);
+  });
+
+  it('should respect a snooze written while the countdown ran', async () => {
+    // given
+    setup({ isAndroid: true });
+    // when
+    localStorage.setItem(
+      INSTALL_SUGGESTION_SNOOZE_KEY,
+      '2026-10-01T00:00:00.000Z'
+    );
+    await elapse();
+    // then
+    expect(open).not.toHaveBeenCalled();
+  });
+
+  it('should snooze once it finds the Android app already installed', async () => {
+    // given
+    setup({ isAndroid: true, androidAppInstalled: true });
+    // when
+    await elapse();
+    // then
+    expect(localStorage.getItem(INSTALL_SUGGESTION_SNOOZE_KEY)).toBe(
+      '2026-12-25T10:00:20.000Z'
+    );
   });
 });

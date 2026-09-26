@@ -746,6 +746,16 @@
               >Android-App im Play Store</span
             >
           </a>
+          @if (canInstall()) {
+            <button
+              mat-button
+              type="button"
+              (click)="onInstallClick()"
+              i18n="@@landing.feature.pwa.browserInstall"
+            >
+              Ohne Play Store im Browser installieren
+            </button>
+          }
         </mat-card-actions>
       } @else if (canInstall()) {
         <mat-card-actions class="install-actions">

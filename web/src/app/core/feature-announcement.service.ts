@@ -4,6 +4,7 @@ import {
   inject,
   Injectable,
   PLATFORM_ID,
+  type Signal,
   type Type,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -125,13 +126,7 @@ export class FeatureAnnouncementService {
   private readonly router = inject(Router);
   private readonly user = inject(UserContextService);
 
-  private readonly url = toSignal(
-    this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd),
-      map((event) => event.urlAfterRedirects)
-    ),
-    { initialValue: this.router.url }
-  );
+  private readonly url = routerUrl(this.router);
 
   private shown = false;
 
@@ -162,6 +157,17 @@ export class FeatureAnnouncementService {
       void this.userConfig.markAnnouncementSeen(id).catch(() => undefined);
     });
   }
+}
+
+/** The current URL after redirects; call from an injection context. */
+export function routerUrl(router: Router): Signal<string> {
+  return toSignal(
+    router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      map((event) => event.urlAfterRedirects)
+    ),
+    { initialValue: router.url }
+  );
 }
 
 /** `/app`, with or without a locale prefix or query string. */

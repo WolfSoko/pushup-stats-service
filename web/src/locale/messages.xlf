@@ -6342,7 +6342,7 @@
     </unit>
     <unit id="announcements.workouts">
       <notes>
-        <note category="location">web/src/app/core/feature-announcement.service.ts:52</note>
+        <note category="location">web/src/app/core/feature-announcement.service.ts:53</note>
       </notes>
       <segment>
         <source>Neu: eigene Sessions zusammenstellen</source>
@@ -6350,7 +6350,7 @@
     </unit>
     <unit id="announcements.inbox">
       <notes>
-        <note category="location">web/src/app/core/feature-announcement.service.ts:61</note>
+        <note category="location">web/src/app/core/feature-announcement.service.ts:62</note>
       </notes>
       <segment>
         <source>Neu: Nachrichten und deine Abzeichen</source>
@@ -6358,7 +6358,7 @@
     </unit>
     <unit id="announcements.rebrand">
       <notes>
-        <note category="location">web/src/app/core/feature-announcement.service.ts:70</note>
+        <note category="location">web/src/app/core/feature-announcement.service.ts:71</note>
       </notes>
       <segment>
         <source>Diese App bekommt einen neuen Namen</source>
@@ -6366,7 +6366,7 @@
     </unit>
     <unit id="announcements.exerciseSearch">
       <notes>
-        <note category="location">web/src/app/core/feature-announcement.service.ts:75</note>
+        <note category="location">web/src/app/core/feature-announcement.service.ts:76</note>
       </notes>
       <segment>
         <source>Neu: Übungssuche und Anleitungen direkt in deinen Sessions</source>
@@ -6374,7 +6374,7 @@
     </unit>
     <unit id="announcements.workoutReminders">
       <notes>
-        <note category="location">web/src/app/core/feature-announcement.service.ts:84</note>
+        <note category="location">web/src/app/core/feature-announcement.service.ts:85</note>
       </notes>
       <segment>
         <source>Neu: Erinnerungen für deine Sessions</source>
@@ -6382,7 +6382,7 @@
     </unit>
     <unit id="announcements.xp">
       <notes>
-        <note category="location">web/src/app/core/feature-announcement.service.ts:93</note>
+        <note category="location">web/src/app/core/feature-announcement.service.ts:94</note>
       </notes>
       <segment>
         <source>Neu: Punkte, Level und XP-Bestenliste</source>
@@ -6390,7 +6390,7 @@
     </unit>
     <unit id="announcements.profileXp">
       <notes>
-        <note category="location">web/src/app/core/feature-announcement.service.ts:102</note>
+        <note category="location">web/src/app/core/feature-announcement.service.ts:103</note>
       </notes>
       <segment>
         <source>Neu: Level &amp; XP auf deinem Profil, Statistik über alle Übungen</source>
@@ -6446,7 +6446,7 @@
     </unit>
     <unit id="installSuggestion.android.title">
       <notes>
-        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:46,48</note>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:49,51</note>
       </notes>
       <segment>
         <source> Hol dir die Android-App </source>
@@ -6454,7 +6454,7 @@
     </unit>
     <unit id="installSuggestion.android.body">
       <notes>
-        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:50,52</note>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:53,55</note>
       </notes>
       <segment>
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> gibt es kostenlos im Play Store – schneller zur Hand als im Browser. </source>
@@ -6462,7 +6462,7 @@
     </unit>
     <unit id="installSuggestion.benefit.homescreen">
       <notes>
-        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:55,57</note>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:58,60</note>
       </notes>
       <segment>
         <source> Startet direkt vom Startbildschirm, ohne Browserleiste </source>
@@ -6470,7 +6470,7 @@
     </unit>
     <unit id="installSuggestion.benefit.links">
       <notes>
-        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:58,59</note>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:61,62</note>
       </notes>
       <segment>
         <source> Links zu <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> öffnen sich direkt in der App </source>
@@ -6478,16 +6478,24 @@
     </unit>
     <unit id="installSuggestion.benefit.reminders">
       <notes>
-        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:61,64</note>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:64,67</note>
       </notes>
       <segment>
         <source> Erinnerungen kommen als App-Benachrichtigung </source>
       </segment>
     </unit>
+    <unit id="installSuggestion.android.browserInstall">
+      <notes>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:77,80</note>
+      </notes>
+      <segment>
+        <source> Kein Play Store? Im Browser installieren </source>
+      </segment>
+    </unit>
     <unit id="installSuggestion.notNow">
       <notes>
-        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:73,75</note>
-        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:114,116</note>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:89,91</note>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:132,134</note>
       </notes>
       <segment>
         <source> Nicht jetzt </source>
@@ -6495,7 +6503,7 @@
     </unit>
     <unit id="installSuggestion.android.cta">
       <notes>
-        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:84,86</note>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:101,104</note>
       </notes>
       <segment>
         <source>Im Play Store öffnen</source>
@@ -6503,7 +6511,7 @@
     </unit>
     <unit id="installSuggestion.pwa.title">
       <notes>
-        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:90,92</note>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:108,110</note>
       </notes>
       <segment>
         <source> Als App installieren </source>
@@ -6511,7 +6519,7 @@
     </unit>
     <unit id="installSuggestion.pwa.body">
       <notes>
-        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:94,96</note>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:112,114</note>
       </notes>
       <segment>
         <source> Installiere <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> mit einem Klick – kein App-Store nötig, Updates kommen automatisch. </source>
@@ -6519,7 +6527,7 @@
     </unit>
     <unit id="installSuggestion.benefit.window">
       <notes>
-        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:99,101</note>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:117,119</note>
       </notes>
       <segment>
         <source> Eigenes Fenster und eigenes Symbol, ohne Browserleiste </source>
@@ -6527,7 +6535,7 @@
     </unit>
     <unit id="installSuggestion.benefit.offline">
       <notes>
-        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:102,105</note>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:120,123</note>
       </notes>
       <segment>
         <source> Einträge speichern auch ohne Verbindung </source>
@@ -6535,7 +6543,7 @@
     </unit>
     <unit id="installSuggestion.pwa.cta">
       <notes>
-        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:124,126</note>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:142,144</note>
       </notes>
       <segment>
         <source> Installieren </source>
@@ -6543,7 +6551,7 @@
     </unit>
     <unit id="installSuggestion.ios.title">
       <notes>
-        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:130,132</note>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:148,150</note>
       </notes>
       <segment>
         <source> Auf den Home-Bildschirm legen </source>
@@ -6551,7 +6559,7 @@
     </unit>
     <unit id="installSuggestion.ios.body">
       <notes>
-        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:134,136</note>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:152,154</note>
       </notes>
       <segment>
         <source> So startest du <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> wie eine App, ohne Safari-Leiste: </source>
@@ -6559,15 +6567,15 @@
     </unit>
     <unit id="installSuggestion.ios.step1">
       <notes>
-        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:138,141</note>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:156,159</note>
       </notes>
       <segment>
-        <source> Tippe unten auf das Teilen-Symbol <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">ios_share</pc></source>
+        <source> Tippe in Safari auf das Teilen-Symbol <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">ios_share</pc></source>
       </segment>
     </unit>
     <unit id="installSuggestion.ios.step2">
       <notes>
-        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:142,144</note>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:160,162</note>
       </notes>
       <segment>
         <source> Wähle „Zum Home-Bildschirm“ </source>
@@ -6575,7 +6583,7 @@
     </unit>
     <unit id="installSuggestion.ios.ok">
       <notes>
-        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:154,156</note>
+        <note category="location">web/src/app/core/install-suggestion/install-suggestion-dialog.component.ts:172,174</note>
       </notes>
       <segment>
         <source> Verstanden </source>
@@ -9703,9 +9711,17 @@
         <source>Android-App im Play Store</source>
       </segment>
     </unit>
+    <unit id="landing.feature.pwa.browserInstall">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:756,759</note>
+      </notes>
+      <segment>
+        <source> Ohne Play Store im Browser installieren </source>
+      </segment>
+    </unit>
     <unit id="landing.feature.pwa.install">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:759,761</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:769,771</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </source>
@@ -9713,7 +9729,7 @@
     </unit>
     <unit id="landing.feature.pwa.iosHint">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:766,769</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:776,779</note>
       </notes>
       <segment>
         <source> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </source>
@@ -9721,7 +9737,7 @@
     </unit>
     <unit id="landing.feature.privacy.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:777,779</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:787,789</note>
       </notes>
       <segment>
         <source>Privacy first &amp; 100 % kostenlos</source>
@@ -9729,7 +9745,7 @@
     </unit>
     <unit id="landing.feature.privacy.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:781,785</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:791,795</note>
       </notes>
       <segment>
         <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
@@ -9737,7 +9753,7 @@
     </unit>
     <unit id="ads.landing.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:788</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:798</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -9745,7 +9761,7 @@
     </unit>
     <unit id="landing.ai.eyebrow">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:796,797</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:806,807</note>
       </notes>
       <segment>
         <source>AI ready</source>
@@ -9753,7 +9769,7 @@
     </unit>
     <unit id="landing.ai.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:798,800</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:808,810</note>
       </notes>
       <segment>
         <source> Bereit für deinen KI-Coach </source>
@@ -9761,7 +9777,7 @@
     </unit>
     <unit id="landing.ai.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:801,805</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:811,815</note>
       </notes>
       <segment>
         <source> Die App spricht das offene AG-UI-Protokoll: Ein KI-Agent kann deinen Tagesfortschritt abfragen, Sätze für dich eintragen und dich durch die App navigieren. Die Oberfläche baut auf CopilotKit für Angular auf – du verbindest einfach deinen eigenen Agenten. </source>
@@ -9769,7 +9785,7 @@
     </unit>
     <unit id="landing.ai.chip.protocol">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:809,812</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:819,822</note>
       </notes>
       <segment>
         <source>AG-UI-Protokoll</source>
@@ -9777,7 +9793,7 @@
     </unit>
     <unit id="landing.ai.chip.copilotkit">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:813,816</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:823,826</note>
       </notes>
       <segment>
         <source>CopilotKit für Angular</source>
@@ -9785,7 +9801,7 @@
     </unit>
     <unit id="landing.ai.chip.tools">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:818,821</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:828,831</note>
       </notes>
       <segment>
         <source>Eintragen &amp; Abfragen per Tool</source>
@@ -9793,7 +9809,7 @@
     </unit>
     <unit id="landing.ai.chip.onDevice">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:823,826</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:833,836</note>
       </notes>
       <segment>
         <source>Kamera-KI ohne Cloud</source>
@@ -9801,7 +9817,7 @@
     </unit>
     <unit id="landing.ai.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:834,837</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:844,847</note>
       </notes>
       <segment>
         <source>KI-Coach öffnen</source>
@@ -9809,7 +9825,7 @@
     </unit>
     <unit id="landing.preview.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:842,844</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:852,854</note>
       </notes>
       <segment>
         <source> Deine Statistik auf einen Blick </source>
@@ -9817,7 +9833,7 @@
     </unit>
     <unit id="landing.preview.alt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:849,850</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:859,860</note>
       </notes>
       <segment>
         <source>Vorschau der Statistikansicht</source>
@@ -9825,7 +9841,7 @@
     </unit>
     <unit id="landing.discover.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:990,991</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:1000,1001</note>
       </notes>
       <segment>
         <source>Mehr entdecken</source>
@@ -9833,7 +9849,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:996,998</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:1006,1008</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -9841,7 +9857,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:1000,1003</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:1010,1013</note>
       </notes>
       <segment>
         <source> Vergleiche dich mit der Community: Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
@@ -9849,7 +9865,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:1010,1013</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:1020,1023</note>
       </notes>
       <segment>
         <source>Zur Bestenliste</source>
@@ -9857,7 +9873,7 @@
     </unit>
     <unit id="landing.discover.blog.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:1019,1021</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:1029,1031</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -9865,7 +9881,7 @@
     </unit>
     <unit id="landing.discover.blog.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:1023,1026</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:1033,1036</note>
       </notes>
       <segment>
         <source> Tipps, Hintergrundwissen und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. Viele Artikel verlinken direkt auf den passenden Trainingsplan. </source>
@@ -9873,7 +9889,7 @@
     </unit>
     <unit id="landing.discover.blog.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:1033,1035</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:1043,1045</note>
       </notes>
       <segment>
         <source>Zum Blog</source>

@@ -40,7 +40,7 @@ Links auf andere Sprachen landeten im Browser.
 
 Voraussetzungen, die zusammenpassen müssen:
 
-- `twa-manifest.json` → `fullScopeUrl` ist die Domain-Wurzel. Bubblewrap leitet den
+- `twa-manifest.json` und `app/build.gradle` → `fullScopeUrl` ist die Domain-Wurzel. Bubblewrap leitet den
   `pathPrefix` daraus ab — steht dort wieder ein Sprachpfad, schrumpft ein
   `bubblewrap update` den Filter zurück.
 - `web/public/.well-known/assetlinks.json` (per Rewrite unter
@@ -58,14 +58,23 @@ dem Gerät mit `adb shell pm get-app-links com.pushupstats.app` (Status `verifie
 ## Install-Vorschlag im Web
 
 `InstallSuggestionOrchestrationService` (`web/src/app/core/install-suggestion/`) öffnet
-einmal pro Sitzung, 20 s nach dem Dashboard-Aufruf, einen Dialog: auf Android den
-Play-Store-Link, auf iOS die „Zum Home-Bildschirm"-Schritte, sonst den
-PWA-Installationsdialog des Browsers (`beforeinstallprompt`). Stumm bleibt er in der
-installierten App (`display-mode: standalone` oder TWA-Referrer), wenn Chrome die
-Android-App über `getInstalledRelatedApps()` schon findet (dafür steht sie in
-`related_applications` des Web-Manifests), wenn schon ein anderer Dialog offen ist, und
-nach einer Antwort 14 Tage („Nicht jetzt") bzw. 90 Tage (Installation gestartet). Der
-Snooze liegt bewusst im `localStorage`: installiert wird pro Gerät, nicht pro Account.
+einmal pro Sitzung einen Dialog auf dem Dashboard: auf Android den Play-Store-Link (plus
+„Im Browser installieren", falls Chrome das anbietet — Geräte ohne Play Store), auf iOS
+die „Zum Home-Bildschirm"-Schritte, sonst den PWA-Installationsdialog des Browsers
+(`beforeinstallprompt`).
+
+- **Zeitpunkt:** 20 s, nachdem die User-Config geladen ist. Walkthrough und
+  Android-Test-Einladung öffnen auf dasselbe Signal ohne Blick auf offene Dialoge — sie
+  gehen also vor, und der Vorschlag lässt die Sitzung aus, wenn dann schon ein Dialog
+  offen ist.
+- **Stumm** in der installierten App (`display-mode: standalone` oder TWA-Referrer) und
+  wenn Chrome die Android-App über `getInstalledRelatedApps()` findet (dafür steht sie in
+  `related_applications` des Web-Manifests).
+- **Snooze** 14 Tage nach „Nicht jetzt", 90 Tage nach gestarteter Installation oder
+  gefundener App — im `localStorage`, weil pro Gerät installiert wird, nicht pro Account.
+
+Kein `launch_handler` im Web-Manifest: `navigate-existing` würde ein offenes PWA-Fenster
+samt laufender Trainings-Session wegnavigieren, sobald ein Link von außen kommt.
 
 ## Bauen
 

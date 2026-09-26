@@ -1,3 +1,4 @@
+import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InstallPromptService } from '../install-prompt.service';
@@ -6,14 +7,21 @@ import { InstallSuggestionDialogComponent } from './install-suggestion-dialog.co
 
 describe('InstallSuggestionDialogComponent', () => {
   let dialogRef: { close: ReturnType<typeof vi.fn> };
-  let installPrompt: { prompt: ReturnType<typeof vi.fn> };
+  let installPrompt: {
+    prompt: ReturnType<typeof vi.fn>;
+    canInstall: ReturnType<typeof signal<boolean>>;
+  };
 
   function setup(
     variant: InstallSuggestionVariant,
-    promptOutcome = 'accepted'
+    promptOutcome = 'accepted',
+    canInstall = false
   ): HTMLElement {
     dialogRef = { close: vi.fn() };
-    installPrompt = { prompt: vi.fn().mockResolvedValue(promptOutcome) };
+    installPrompt = {
+      prompt: vi.fn().mockResolvedValue(promptOutcome),
+      canInstall: signal(canInstall),
+    };
     TestBed.configureTestingModule({
       imports: [InstallSuggestionDialogComponent],
       providers: [
@@ -96,5 +104,27 @@ describe('InstallSuggestionDialogComponent', () => {
     expect(
       root.querySelector('[data-testid="install-suggestion-install"]')
     ).toBeNull();
+  });
+
+  it('should offer the browser install on Android when Chrome allows it', async () => {
+    // given
+    const root = setup('play-store', 'accepted', true);
+    // when
+    byTestId(root, 'install-suggestion-browser-install').click();
+    await vi.waitFor(() => expect(dialogRef.close).toHaveBeenCalled());
+    // then
+    expect(installPrompt.prompt).toHaveBeenCalledTimes(1);
+    expect(dialogRef.close).toHaveBeenCalledWith('installing');
+  });
+
+  it('should hide the browser install on Android when Chrome does not offer it', () => {
+    // given
+    const root = setup('play-store', 'accepted', false);
+    // when
+    const button = root.querySelector(
+      '[data-testid="install-suggestion-browser-install"]'
+    );
+    // then
+    expect(button).toBeNull();
   });
 });

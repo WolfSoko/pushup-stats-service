@@ -16365,10 +16365,10 @@
         <target> So startest du <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> wie eine App, ohne Safari-Leiste: </target>
       </segment>
     </unit>
-    <unit id="installSuggestion.ios.step1">
+        <unit id="installSuggestion.ios.step1">
       <segment state="initial">
-        <source> Tippe unten auf das Teilen-Symbol <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">ios_share</pc></source>
-        <target> Tippe unten auf das Teilen-Symbol <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">ios_share</pc></target>
+        <source> Tippe in Safari auf das Teilen-Symbol <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">ios_share</pc></source>
+        <target> Tippe in Safari auf das Teilen-Symbol <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">ios_share</pc></target>
       </segment>
     </unit>
     <unit id="installSuggestion.ios.step2">
@@ -16387,6 +16387,18 @@
       <segment state="initial">
         <source>Android-App im Play Store</source>
         <target>Android-App im Play Store</target>
+      </segment>
+    </unit>
+    <unit id="installSuggestion.android.browserInstall">
+      <segment state="initial">
+        <source> Kein Play Store? Im Browser installieren </source>
+        <target> Kein Play Store? Im Browser installieren </target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.pwa.browserInstall">
+      <segment state="initial">
+        <source> Ohne Play Store im Browser installieren </source>
+        <target> Ohne Play Store im Browser installieren </target>
       </segment>
     </unit>
 </file>

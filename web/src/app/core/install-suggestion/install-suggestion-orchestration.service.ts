@@ -6,13 +6,12 @@ import {
   Injectable,
   PLATFORM_ID,
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter, map } from 'rxjs';
+import { Router } from '@angular/router';
 
-import { isDashboard } from '../feature-announcement.service';
+import { isDashboard, routerUrl } from '../feature-announcement.service';
 import { InstallPromptService } from '../install-prompt.service';
+import { UserConfigStore } from '../user-config.store';
 import {
   installSuggestionVariant,
   type InstallSuggestionResult,
@@ -20,13 +19,7 @@ import {
   isSnoozed,
   snooze,
 } from './install-suggestion';
-import { InstallSuggestionDialogComponent } from './install-suggestion-dialog.component';
 
-/**
- * Long enough for the "what's new" walkthrough, which opens right away on
- * the dashboard, to claim the screen first — the suggestion then skips the
- * session instead of stacking a second dialog on top.
- */
 export const INSTALL_SUGGESTION_DELAY_MS = 20_000;
 
 /**
@@ -35,22 +28,20 @@ export const INSTALL_SUGGESTION_DELAY_MS = 20_000;
  * home-screen steps on iOS. Stays silent inside the installed app, while
  * another dialog is open, and for the snooze window after an answer.
  *
+ * The countdown starts only once the user config has loaded — the "what's
+ * new" walkthrough and the Android test invite open on that same signal,
+ * and none of them check for open dialogs, so they get to go first and
+ * the suggestion skips the session instead of stacking on top.
+ *
  * Inject once in the app root, like `FeatureAnnouncementService`.
  */
 @Injectable({ providedIn: 'root' })
 export class InstallSuggestionOrchestrationService {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly dialog = inject(MatDialog);
-  private readonly router = inject(Router);
   private readonly installPrompt = inject(InstallPromptService);
-
-  private readonly url = toSignal(
-    this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd),
-      map((event) => event.urlAfterRedirects)
-    ),
-    { initialValue: this.router.url }
-  );
+  private readonly userConfig = inject(UserConfigStore);
+  private readonly url = routerUrl(inject(Router));
 
   private shown = false;
   private timer: ReturnType<typeof setTimeout> | null = null;
@@ -61,10 +52,11 @@ export class InstallSuggestionOrchestrationService {
     // never wake up for the next dashboard visit.
     const onDashboard = isDashboard(this.url());
     const variant = this.variant();
+    const configLoaded = this.userConfig.loaded();
     if (!isPlatformBrowser(this.platformId) || this.shown || this.timer) {
       return;
     }
-    if (!onDashboard || !variant) return;
+    if (!onDashboard || !variant || !configLoaded) return;
     if (isSnoozed(this.storage(), new Date())) return;
 
     this.timer = setTimeout(() => {
@@ -91,29 +83,33 @@ export class InstallSuggestionOrchestrationService {
   private async suggest(): Promise<void> {
     const variant = this.variant();
     if (!variant || !isDashboard(this.url())) return;
-    if (this.dialog.openDialogs.length > 0) {
-      this.shown = true;
-      return;
-    }
     if (
-      variant === 'play-store' &&
-      (await this.installPrompt.hasInstalledAndroidApp())
+      this.dialog.openDialogs.length > 0 ||
+      isSnoozed(this.storage(), new Date())
     ) {
       this.shown = true;
       return;
     }
-
     this.shown = true;
-    const ref = this.dialog.open<
+    if (
+      variant === 'play-store' &&
+      (await this.installPrompt.hasInstalledAndroidApp())
+    ) {
+      snooze(this.storage(), 'installing', new Date());
+      return;
+    }
+
+    const { InstallSuggestionDialogComponent } =
+      await import('./install-suggestion-dialog.component');
+    const ref = this.dialog.open<unknown, unknown, InstallSuggestionResult>(
       InstallSuggestionDialogComponent,
-      unknown,
-      InstallSuggestionResult
-    >(InstallSuggestionDialogComponent, {
-      data: { variant },
-      width: 'min(92vw, 440px)',
-      maxWidth: '92vw',
-      autoFocus: 'dialog',
-    });
+      {
+        data: { variant },
+        width: 'min(92vw, 440px)',
+        maxWidth: '92vw',
+        autoFocus: 'dialog',
+      }
+    );
     ref.afterClosed().subscribe((result) => {
       snooze(this.storage(), result ?? 'dismissed', new Date());
     });

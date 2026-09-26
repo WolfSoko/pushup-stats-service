@@ -508,6 +508,23 @@ describe('LandingPageComponent', () => {
       ).toBeNull();
     });
 
+    it('should keep the browser install next to the Play Store link for Android devices without Play', async () => {
+      // given
+      const installMock = makeInstallPromptMock({
+        isAndroid: true,
+        canInstall: true,
+      });
+      await renderWith(installMock);
+      // when
+      await userEvent.click(
+        screen.getByRole('button', {
+          name: /Ohne Play Store im Browser installieren/,
+        })
+      );
+      // then
+      expect(installMock.prompt).toHaveBeenCalledTimes(1);
+    });
+
     it('shows the "already installed" badge when running standalone', async () => {
       await renderWith(makeInstallPromptMock({ isStandalone: true }));
 
