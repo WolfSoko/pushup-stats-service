@@ -64,6 +64,17 @@ in `web/src/app/core/nav/arc-nav-reveal.ts`:
   Ergebnis geschenkt; gegen ihre `height` zu messen (`landscape-layout.spec.ts`)
   bleibt unabhängig davon. Wer sie anklicken will, holt sie vorher zurück.
 
+## `overflow-y: visible` neben `overflow-x: auto` scrollt trotzdem
+
+Ist eine Achse `auto`, rechnet der Browser `visible` auf der anderen ebenfalls zu
+`auto` um. Der Track der Arc-Nav ist so ein Fall: Die skalierten, abgesenkten Items
+ragen unten über ihn hinaus, und das Hochziehen vom unteren Rand, das die geparkte
+Leiste zurückholt, scrollte ihn um gut 20px nach oben — der gebogene Rand schnitt die
+Icons ab. `touch-action: pan-x` hält das nicht auf. Wer nur eine Achse scrollen will,
+setzt die andere auf `hidden`. Synthetische `TouchEvent`s scrollen nie; den
+Regressionstest in `arc-nav-autohide.spec.ts` treibt deshalb echte Touch-Eingabe über
+CDP (`Input.dispatchTouchEvent`).
+
 ## Edge-to-Edge und Safe-Area-Insets
 
 Die Play-Store-App ist eine TWA — Chrome rendert die Website, und ab targetSdk 35

@@ -97,6 +97,43 @@ test.describe('Arc nav auto-hide on a phone @smoke', () => {
     await expect.poll(pullUp, { timeout: 15_000 }).toBeGreaterThan(60);
   });
 
+  test('should not scroll the strip vertically when it is pulled back up', async ({
+    page,
+    context,
+  }) => {
+    // given the parked strip on a touch viewport
+    await page.goto('/');
+    await expect(page.getByTestId('arc-nav')).toBeVisible();
+    await expect
+      .poll(() => shownHeight(page), { timeout: 15_000 })
+      .toBeLessThan(24);
+
+    // when a real finger pulls it up from the bottom edge. Dispatched
+    // TouchEvents never scroll anything, so the drag goes through CDP.
+    const height = page.viewportSize()?.height ?? 844;
+    const cdp = await context.newCDPSession(page);
+    const touch = (type: string, y: number | null) =>
+      cdp.send('Input.dispatchTouchEvent', {
+        type,
+        touchPoints: y === null ? [] : [{ x: 200, y }],
+      });
+    await touch('touchStart', height - 4);
+    for (let step = 1; step <= 10; step++) {
+      await touch('touchMove', height - 4 - step * 8);
+    }
+    await touch('touchEnd', null);
+    await expect.poll(() => shownHeight(page)).toBeGreaterThan(60);
+
+    // then the track has not moved vertically — Regression: the items
+    // overflow its bottom, `overflow-y: visible` computed to `auto`, and the
+    // pull scrolled the track up and cut the items off at the curved edge
+    const scrollTop = await page
+      .getByTestId('arc-nav')
+      .locator('.track')
+      .evaluate((track) => track.scrollTop);
+    expect(scrollTop).toBe(0);
+  });
+
   test('should leave a grip standing above the parked strip, and come back on a tap', async ({
     page,
   }) => {
