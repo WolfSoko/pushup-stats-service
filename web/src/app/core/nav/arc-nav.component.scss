@@ -146,7 +146,11 @@ $parked-sliver: 10px;
   display: flex;
   height: 100%;
   overflow-x: auto;
-  overflow-y: visible;
+  // Not `visible`: next to `overflow-x: auto` that computes to `auto`, and
+  // the scaled, lowered items overflow the bottom — so the upward pull that
+  // reveals the strip scrolled the track itself up and cut the items off at
+  // the curved top edge. `hidden` clips the same, but no gesture scrolls it.
+  overflow-y: hidden;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   touch-action: pan-x;
