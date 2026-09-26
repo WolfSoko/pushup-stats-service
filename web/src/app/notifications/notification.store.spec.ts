@@ -4,6 +4,7 @@ import { UserContextService } from '@pu-auth/auth';
 import { NotificationsApiService } from '@pu-stats/data-access';
 import { of, Subject } from 'rxjs';
 
+import { ANNOUNCEMENTS } from '../core/feature-announcement.service';
 import { UserConfigStore } from '../core/user-config.store';
 import type { InboxRow } from './inbox-rows';
 import { NotificationStore } from './notification.store';
@@ -40,6 +41,7 @@ describe('NotificationStore', () => {
     config: signal<{ ui?: { seenAnnouncements?: string[] } } | null>({
       ui: { seenAnnouncements: [] },
     }),
+    loaded: signal(true),
     markAnnouncementSeen: vitest.fn(),
   };
 
@@ -57,6 +59,41 @@ describe('NotificationStore', () => {
 
   beforeEach(() => {
     vitest.clearAllMocks();
+    config.loaded.set(true);
+    config.config.set({ ui: { seenAnnouncements: [] } });
+  });
+
+  it('should report no unread rows while the user config is still loading', () => {
+    // given
+    config.loaded.set(false);
+    config.config.set(null);
+    const store = setup();
+
+    // then
+    expect(store.unreadCount()).toBe(0);
+    expect(store.hasUnread()).toBe(false);
+    expect(store.rows()).toEqual([]);
+    expect(store.loaded()).toBe(false);
+  });
+
+  it('should count only unseen announcements once the user config arrived', () => {
+    // given
+    config.loaded.set(false);
+    config.config.set(null);
+    const store = setup();
+    expect(store.unreadCount()).toBe(0);
+
+    // when
+    config.config.set({
+      ui: { seenAnnouncements: ANNOUNCEMENTS.map((a) => a.id) },
+    });
+    config.loaded.set(true);
+    TestBed.tick();
+
+    // then
+    expect(store.loaded()).toBe(true);
+    expect(store.rows()).toHaveLength(ANNOUNCEMENTS.length);
+    expect(store.unreadCount()).toBe(0);
   });
 
   it('should report loaded only once the inbox listener delivered its first snapshot', async () => {
@@ -143,6 +180,7 @@ describe('NotificationStore', () => {
     const seen = deferred();
     config.markAnnouncementSeen.mockReturnValue(seen.promise);
     const store = setup();
+    TestBed.tick();
 
     // when
     const pending = store.markAllRead();

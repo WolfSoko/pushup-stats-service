@@ -55,12 +55,19 @@ export const NotificationStore = signalStore(
     }),
   })),
   withComputed((store) => {
+    // Without the config, every announcement reads as unread — the bell
+    // would flash a badge until `seenAnnouncements` arrives.
+    const loaded = computed(
+      () => store._config.loaded() && !store.inboxResource.isLoading()
+    );
     const rows = computed<ReadonlyArray<InboxRow>>(() =>
-      buildInboxRows(
-        store.inboxResource.value() ?? [],
-        ANNOUNCEMENTS,
-        store._config.config()?.ui?.seenAnnouncements ?? []
-      )
+      loaded()
+        ? buildInboxRows(
+            store.inboxResource.value() ?? [],
+            ANNOUNCEMENTS,
+            store._config.config()?.ui?.seenAnnouncements ?? []
+          )
+        : []
     );
     return {
       rows,
@@ -75,8 +82,8 @@ export const NotificationStore = signalStore(
       unreadCount: computed(() => unreadCount(rows())),
       hasUnread: computed(() => unreadCount(rows()) > 0),
       hasAny: computed(() => rows().length > 0),
-      /** False until the listener's first snapshot, so the page shows a skeleton, not "empty". */
-      loaded: computed(() => !store.inboxResource.isLoading()),
+      /** False until the listener's first snapshot and the user config are in, so the page shows a skeleton, not "empty". */
+      loaded,
     };
   }),
   withMethods((store) => ({
