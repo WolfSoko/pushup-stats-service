@@ -16152,5 +16152,113 @@
         <target>Pour l'instant, seul toi vois la carte XP. Touche son icône pour la montrer à tes amis ou à tout le monde.</target>
       </segment>
     </unit>
+    <unit id="installSuggestion.android.title">
+      <segment state="initial">
+        <source> Hol dir die Android-App </source>
+        <target> Hol dir die Android-App </target>
+      </segment>
+    </unit>
+    <unit id="installSuggestion.android.body">
+      <segment state="initial">
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> gibt es kostenlos im Play Store – schneller zur Hand als im Browser. </source>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> gibt es kostenlos im Play Store – schneller zur Hand als im Browser. </target>
+      </segment>
+    </unit>
+    <unit id="installSuggestion.benefit.homescreen">
+      <segment state="initial">
+        <source> Startet direkt vom Startbildschirm, ohne Browserleiste </source>
+        <target> Startet direkt vom Startbildschirm, ohne Browserleiste </target>
+      </segment>
+    </unit>
+    <unit id="installSuggestion.benefit.links">
+      <segment state="initial">
+        <source> Links zu <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> öffnen sich direkt in der App </source>
+        <target> Links zu <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> öffnen sich direkt in der App </target>
+      </segment>
+    </unit>
+    <unit id="installSuggestion.benefit.reminders">
+      <segment state="initial">
+        <source> Erinnerungen kommen als App-Benachrichtigung </source>
+        <target> Erinnerungen kommen als App-Benachrichtigung </target>
+      </segment>
+    </unit>
+    <unit id="installSuggestion.notNow">
+      <segment state="initial">
+        <source> Nicht jetzt </source>
+        <target> Nicht jetzt </target>
+      </segment>
+    </unit>
+    <unit id="installSuggestion.android.cta">
+      <segment state="initial">
+        <source>Im Play Store öffnen</source>
+        <target>Im Play Store öffnen</target>
+      </segment>
+    </unit>
+    <unit id="installSuggestion.pwa.title">
+      <segment state="initial">
+        <source> Als App installieren </source>
+        <target> Als App installieren </target>
+      </segment>
+    </unit>
+    <unit id="installSuggestion.pwa.body">
+      <segment state="initial">
+        <source> Installiere <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> mit einem Klick – kein App-Store nötig, Updates kommen automatisch. </source>
+        <target> Installiere <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> mit einem Klick – kein App-Store nötig, Updates kommen automatisch. </target>
+      </segment>
+    </unit>
+    <unit id="installSuggestion.benefit.window">
+      <segment state="initial">
+        <source> Eigenes Fenster und eigenes Symbol, ohne Browserleiste </source>
+        <target> Eigenes Fenster und eigenes Symbol, ohne Browserleiste </target>
+      </segment>
+    </unit>
+    <unit id="installSuggestion.benefit.offline">
+      <segment state="initial">
+        <source> Einträge speichern auch ohne Verbindung </source>
+        <target> Einträge speichern auch ohne Verbindung </target>
+      </segment>
+    </unit>
+    <unit id="installSuggestion.pwa.cta">
+      <segment state="initial">
+        <source> Installieren </source>
+        <target> Installieren </target>
+      </segment>
+    </unit>
+    <unit id="installSuggestion.ios.title">
+      <segment state="initial">
+        <source> Auf den Home-Bildschirm legen </source>
+        <target> Auf den Home-Bildschirm legen </target>
+      </segment>
+    </unit>
+    <unit id="installSuggestion.ios.body">
+      <segment state="initial">
+        <source> So startest du <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> wie eine App, ohne Safari-Leiste: </source>
+        <target> So startest du <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> wie eine App, ohne Safari-Leiste: </target>
+      </segment>
+    </unit>
+    <unit id="installSuggestion.ios.step1">
+      <segment state="initial">
+        <source> Tippe unten auf das Teilen-Symbol <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">ios_share</pc></source>
+        <target> Tippe unten auf das Teilen-Symbol <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">ios_share</pc></target>
+      </segment>
+    </unit>
+    <unit id="installSuggestion.ios.step2">
+      <segment state="initial">
+        <source> Wähle „Zum Home-Bildschirm“ </source>
+        <target> Wähle „Zum Home-Bildschirm“ </target>
+      </segment>
+    </unit>
+    <unit id="installSuggestion.ios.ok">
+      <segment state="initial">
+        <source> Verstanden </source>
+        <target> Verstanden </target>
+      </segment>
+    </unit>
+    <unit id="landing.feature.pwa.playStore">
+      <segment state="initial">
+        <source>Android-App im Play Store</source>
+        <target>Android-App im Play Store</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

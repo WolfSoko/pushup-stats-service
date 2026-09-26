@@ -19,3 +19,14 @@ export function isAndroidDevice(userAgent: string): boolean {
 export function isRunningInTwa(referrer: string): boolean {
   return referrer.startsWith('android-app://');
 }
+
+export const ANDROID_APP_PACKAGE = 'com.pushupstats.app';
+
+/**
+ * Public Play Store listing. `referrer` is Play's install-referrer
+ * parameter, so installs can be attributed to the web entry point.
+ */
+export function playStoreUrl(source: string): string {
+  const referrer = encodeURIComponent(`utm_source=web&utm_medium=${source}`);
+  return `https://play.google.com/store/apps/details?id=${ANDROID_APP_PACKAGE}&referrer=${referrer}`;
+}

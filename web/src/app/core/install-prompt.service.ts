@@ -7,6 +7,7 @@ import {
   PLATFORM_ID,
   signal,
 } from '@angular/core';
+import { isAndroidDevice, isRunningInTwa } from './android-platform';
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: readonly string[];
@@ -18,6 +19,10 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 type IosNavigator = Navigator & { standalone?: boolean };
+
+type RelatedAppsNavigator = Navigator & {
+  getInstalledRelatedApps?: () => Promise<ReadonlyArray<{ platform: string }>>;
+};
 
 export type InstallPromptOutcome =
   | 'accepted'
@@ -38,6 +43,9 @@ export class InstallPromptService {
   readonly canInstall = computed(() => this.deferredPrompt() !== null);
   readonly isStandalone = this.installed.asReadonly();
   readonly isIos = this.detectIos();
+  readonly isAndroid =
+    isPlatformBrowser(this.platformId) &&
+    isAndroidDevice(globalThis.navigator?.userAgent ?? '');
 
   constructor() {
     if (!isPlatformBrowser(this.platformId)) return;
@@ -81,8 +89,27 @@ export class InstallPromptService {
     }
   }
 
+  /**
+   * Whether the Play Store app is installed on this device. Chrome answers
+   * this only for apps listed in the web manifest's `related_applications`
+   * that vouch for this origin via their asset statements; every other
+   * browser has no API and resolves `false`.
+   */
+  async hasInstalledAndroidApp(): Promise<boolean> {
+    if (!isPlatformBrowser(this.platformId)) return false;
+    const nav = globalThis.navigator as RelatedAppsNavigator | undefined;
+    if (typeof nav?.getInstalledRelatedApps !== 'function') return false;
+    try {
+      const apps = await nav.getInstalledRelatedApps();
+      return apps.some((app) => app.platform === 'play');
+    } catch {
+      return false;
+    }
+  }
+
   private detectStandalone(): boolean {
     if (!isPlatformBrowser(this.platformId)) return false;
+    if (isRunningInTwa(globalThis.document?.referrer ?? '')) return true;
     if (typeof globalThis.matchMedia === 'function') {
       try {
         // Call via globalThis so the WebIDL `this` binding is preserved

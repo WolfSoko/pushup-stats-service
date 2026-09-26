@@ -11,6 +11,18 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/?source=pwa",
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  },
+  "handle_links": "preferred",
+  "prefer_related_applications": false,
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.pushupstats.app",
+      "id": "com.pushupstats.app"
+    }
+  ],
   "icons": [
     {
       "src": "icons/icon-72x72.png",

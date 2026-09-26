@@ -37,7 +37,7 @@
   "enableSiteSettingsShortcut": true,
   "isChromeOSOnly": false,
   "isMetaQuest": false,
-  "fullScopeUrl": "https://pushup-stats.com/de/",
+  "fullScopeUrl": "https://pushup-stats.com/",
   "minSdkVersion": 23,
   "orientation": "any",
   "fingerprints": [

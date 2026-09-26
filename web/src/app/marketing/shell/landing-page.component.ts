@@ -13,6 +13,7 @@ import {
   AI_ASSISTANT_ROUTE,
   isAiAssistantEnabled,
 } from '../../ai/ai-assistant.config';
+import { playStoreUrl } from '../../core/android-platform';
 import { InstallPromptService } from '../../core/install-prompt.service';
 import { ReminderFeatureSectionComponent } from '../components/reminder-feature-section/reminder-feature-section.component';
 import { SessionFeatureSectionComponent } from '../components/session-feature-section/session-feature-section.component';
@@ -84,6 +85,8 @@ export class LandingPageComponent {
   readonly canInstall = this.installPrompt.canInstall;
   readonly isStandalone = this.installPrompt.isStandalone;
   readonly showIosInstallHint = this.installPrompt.isIos;
+  readonly isAndroid = this.installPrompt.isAndroid;
+  readonly playStoreUrl = playStoreUrl('landing');
 
   readonly adClient = this.adsStore.adClient;
   readonly landingAdSlot = this.adsStore.landingInlineSlot;
@@ -164,6 +167,10 @@ export class LandingPageComponent {
   async onInstallClick(): Promise<void> {
     const outcome = await this.installPrompt.prompt();
     this.track('landing_install_prompt', { outcome });
+  }
+
+  onPlayStoreClick(): void {
+    this.track('landing_play_store_click', { target: 'play_store' });
   }
 
   private track(

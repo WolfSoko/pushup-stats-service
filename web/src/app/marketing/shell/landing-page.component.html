@@ -730,6 +730,23 @@
             Du nutzt bereits die installierte App
           </span>
         </mat-card-actions>
+      } @else if (isAndroid) {
+        <mat-card-actions class="install-actions">
+          <a
+            mat-flat-button
+            color="primary"
+            data-testid="landing-play-store"
+            [href]="playStoreUrl"
+            target="_blank"
+            rel="noopener"
+            (click)="onPlayStoreClick()"
+          >
+            <mat-icon aria-hidden="true">shop</mat-icon>
+            <span i18n="@@landing.feature.pwa.playStore"
+              >Android-App im Play Store</span
+            >
+          </a>
+        </mat-card-actions>
       } @else if (canInstall()) {
         <mat-card-actions class="install-actions">
           <button

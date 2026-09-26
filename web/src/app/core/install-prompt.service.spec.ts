@@ -14,6 +14,7 @@ interface MutableNavigator {
   userAgent?: string;
   maxTouchPoints?: number;
   standalone?: boolean;
+  getInstalledRelatedApps?: () => Promise<Array<{ platform: string }>>;
 }
 
 type Listener = (event: Event) => void;
@@ -237,6 +238,85 @@ describe('InstallPromptService', () => {
       const service = setup('browser');
 
       expect(service.isIos).toBe(false);
+    });
+  });
+
+  describe('Given an Android user agent', () => {
+    const androidUa =
+      'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/120.0 Mobile Safari/537.36';
+
+    it('should flag the device as Android', () => {
+      // given
+      setNavigator({ userAgent: androidUa });
+      // when
+      const service = setup('browser');
+      // then
+      expect(service.isAndroid).toBe(true);
+      expect(service.isIos).toBe(false);
+    });
+
+    it('should report the Play Store app as installed when Chrome lists it', async () => {
+      // given
+      setNavigator({
+        userAgent: androidUa,
+        getInstalledRelatedApps: async () => [{ platform: 'play' }],
+      });
+      const service = setup('browser');
+      // when
+      const installed = await service.hasInstalledAndroidApp();
+      // then
+      expect(installed).toBe(true);
+    });
+
+    it('should report no installed app when Chrome lists none', async () => {
+      // given
+      setNavigator({
+        userAgent: androidUa,
+        getInstalledRelatedApps: async () => [],
+      });
+      const service = setup('browser');
+      // when
+      const installed = await service.hasInstalledAndroidApp();
+      // then
+      expect(installed).toBe(false);
+    });
+
+    it('should report no installed app when the lookup throws', async () => {
+      // given
+      setNavigator({
+        userAgent: androidUa,
+        getInstalledRelatedApps: () => Promise.reject(new Error('blocked')),
+      });
+      const service = setup('browser');
+      // when
+      const installed = await service.hasInstalledAndroidApp();
+      // then
+      expect(installed).toBe(false);
+    });
+  });
+
+  describe('Given a browser without getInstalledRelatedApps', () => {
+    it('should report no installed app', async () => {
+      // given
+      const service = setup('browser');
+      // when
+      const installed = await service.hasInstalledAndroidApp();
+      // then
+      expect(installed).toBe(false);
+    });
+  });
+
+  describe('Given the page was launched from the installed TWA', () => {
+    it('should count as the installed app', () => {
+      // given
+      const referrer = vitest
+        .spyOn(document, 'referrer', 'get')
+        .mockReturnValue('android-app://com.pushupstats.app/');
+      // when
+      const service = setup('browser');
+      // then
+      expect(service.isStandalone()).toBe(true);
+      referrer.mockRestore();
     });
   });
 });

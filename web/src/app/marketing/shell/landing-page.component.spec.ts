@@ -14,6 +14,7 @@ interface InstallPromptStub {
   canInstall: ReturnType<typeof signal<boolean>>;
   isStandalone: ReturnType<typeof signal<boolean>>;
   isIos: boolean;
+  isAndroid: boolean;
   prompt: ReturnType<typeof vitest.fn>;
 }
 
@@ -22,12 +23,14 @@ function makeInstallPromptMock(
     canInstall: boolean;
     isStandalone: boolean;
     isIos: boolean;
+    isAndroid: boolean;
   }> = {}
 ): InstallPromptStub {
   return {
     canInstall: signal(init.canInstall ?? false),
     isStandalone: signal(init.isStandalone ?? false),
     isIos: init.isIos ?? false,
+    isAndroid: init.isAndroid ?? false,
     prompt: vitest.fn().mockResolvedValue('accepted'),
   };
 }
@@ -480,6 +483,26 @@ describe('LandingPageComponent', () => {
       await renderWith(makeInstallPromptMock({ isIos: true }));
 
       expect(screen.getByText(/Teilen-Symbol antippen/)).toBeTruthy();
+      expect(
+        screen.queryByRole('button', { name: /Jetzt als App installieren/ })
+      ).toBeNull();
+    });
+
+    it('should link Android visitors to the Play Store instead of the browser install', async () => {
+      // given
+      const installMock = makeInstallPromptMock({
+        isAndroid: true,
+        canInstall: true,
+      });
+      // when
+      await renderWith(installMock);
+      // then
+      const link = screen.getByRole('link', {
+        name: /Android-App im Play Store/,
+      });
+      expect(link.getAttribute('href')).toContain(
+        'play.google.com/store/apps/details?id=com.pushupstats.app'
+      );
       expect(
         screen.queryByRole('button', { name: /Jetzt als App installieren/ })
       ).toBeNull();

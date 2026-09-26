@@ -149,7 +149,7 @@
                 <data android:scheme="https"
                     android:host="@string/hostName"
                 
-                    android:pathPrefix="/de/"
+                    android:pathPrefix="/"
                 
                 />
             </intent-filter>

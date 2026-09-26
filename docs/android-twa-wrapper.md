@@ -30,6 +30,43 @@ ein Update leitet daraus also schon das Richtige ab — aber eben nur daraus.
 
 `minSdkVersion 23` ist keine freie Wahl: `androidbrowserhelper` verlangt es ab 2.7.x.
 
+## App-Links: Webseiten-Links öffnen in der App
+
+Der `VIEW`-Intent-Filter der `LauncherActivity` trägt `android:autoVerify="true"` und
+`pathPrefix="/"` — damit öffnet Android **jeden** `https://pushup-stats.com/…`-Link
+(WhatsApp, Mail, geteilte Profile, alle Sprachpfade `/de/`, `/en/`, …) direkt in der
+App statt im Browser, sofern sie installiert ist. Bis Version 4 stand dort `/de/`;
+Links auf andere Sprachen landeten im Browser.
+
+Voraussetzungen, die zusammenpassen müssen:
+
+- `twa-manifest.json` → `fullScopeUrl` ist die Domain-Wurzel. Bubblewrap leitet den
+  `pathPrefix` daraus ab — steht dort wieder ein Sprachpfad, schrumpft ein
+  `bubblewrap update` den Filter zurück.
+- `web/public/.well-known/assetlinks.json` (per Rewrite unter
+  `/.well-known/assetlinks.json` ausgeliefert) listet **beide** Fingerprints: Upload-Key
+  und Play App Signing. Ohne den Play-Signing-Key scheitert die Verifizierung für jede
+  Installation aus dem Store.
+- `authDomain` ist `pushup-stats.firebaseapp.com`, nicht die eigene Domain — der
+  OAuth-Redirect läuft also nicht über einen Pfad, den die App abfangen würde.
+
+Links, die im Browser auf derselben Seite angeklickt werden, bleiben im Browser —
+Chrome übergibt nur Navigationen von außen an die App. Die Änderung greift erst mit
+dem nächsten AAB aus `play-release.yml` in der Produktion; prüfen lässt sie sich auf
+dem Gerät mit `adb shell pm get-app-links com.pushupstats.app` (Status `verified`).
+
+## Install-Vorschlag im Web
+
+`InstallSuggestionOrchestrationService` (`web/src/app/core/install-suggestion/`) öffnet
+einmal pro Sitzung, 20 s nach dem Dashboard-Aufruf, einen Dialog: auf Android den
+Play-Store-Link, auf iOS die „Zum Home-Bildschirm"-Schritte, sonst den
+PWA-Installationsdialog des Browsers (`beforeinstallprompt`). Stumm bleibt er in der
+installierten App (`display-mode: standalone` oder TWA-Referrer), wenn Chrome die
+Android-App über `getInstalledRelatedApps()` schon findet (dafür steht sie in
+`related_applications` des Web-Manifests), wenn schon ein anderer Dialog offen ist, und
+nach einer Antwort 14 Tage („Nicht jetzt") bzw. 90 Tage (Installation gestartet). Der
+Snooze liegt bewusst im `localStorage`: installiert wird pro Gerät, nicht pro Account.
+
 ## Bauen
 
 Lokal braucht es ein Android SDK, das auf diesem Rechner nicht installiert ist. Der

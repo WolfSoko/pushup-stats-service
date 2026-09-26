@@ -1,4 +1,8 @@
-import { isAndroidDevice, isRunningInTwa } from './android-platform';
+import {
+  isAndroidDevice,
+  isRunningInTwa,
+  playStoreUrl,
+} from './android-platform';
 
 describe('isAndroidDevice', () => {
   it('should detect a Chrome-on-Android user agent', () => {
@@ -67,5 +71,20 @@ describe('isRunningInTwa', () => {
     const result = isRunningInTwa(referrer);
     // then
     expect(result).toBe(false);
+  });
+});
+
+describe('playStoreUrl', () => {
+  it('should point at the public listing with an install referrer', () => {
+    // given
+    const source = 'install_dialog';
+    // when
+    const url = new URL(playStoreUrl(source));
+    // then
+    expect(url.origin).toBe('https://play.google.com');
+    expect(url.searchParams.get('id')).toBe('com.pushupstats.app');
+    expect(url.searchParams.get('referrer')).toBe(
+      'utm_source=web&utm_medium=install_dialog'
+    );
   });
 });

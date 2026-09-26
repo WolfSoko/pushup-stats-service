@@ -61,6 +61,7 @@ import { createGoalPillOverlay } from './core/daily-goal/goal-pill-overlay';
 import { ThemeToggleComponent } from './core/theme';
 import { ReminderOrchestrationService } from './core/reminder-orchestration.service';
 import { AndroidTestInviteOrchestrationService } from './core/android-test-invite-orchestration.service';
+import { InstallSuggestionOrchestrationService } from './core/install-suggestion/install-suggestion-orchestration.service';
 import { FeatureAnnouncementService } from './core/feature-announcement.service';
 import { AppUpdateBannerComponent } from './core/app-update/app-update-banner.component';
 import { AppUpdateService } from './core/app-update/app-update.service';
@@ -222,6 +223,10 @@ export class App {
   // Eager-inject so the "what's new" walkthrough fires once the dashboard
   // is up, whichever page the user signed in from.
   private readonly _announcements = inject(FeatureAnnouncementService);
+  // Eager-inject so the install suggestion can watch for the dashboard.
+  private readonly _installSuggestion = inject(
+    InstallSuggestionOrchestrationService
+  );
   // Eager-inject so update detection and the navigation fallback run from
   // the first page on, not only once the banner has something to show.
   private readonly _appUpdate = inject(AppUpdateService);
