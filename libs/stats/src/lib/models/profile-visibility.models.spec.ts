@@ -46,6 +46,32 @@ describe('profile-visibility.models', () => {
       expect(sectionVisibility(ui, 'total')).toBe('public');
     });
 
+    it('should start xp switched off even on a public legacy profile', () => {
+      // given — an old opt-in was about the data the profile had then
+      const ui = { publicProfile: true };
+
+      // when / then
+      expect(sectionVisibility(ui, 'xp')).toBe('off');
+    });
+
+    it('should carry the wider level of the retired week/month switches over to xp', () => {
+      // given — their numbers now live in the XP card
+      const ui = {
+        profileVisibility: { week: 'friends', month: 'public', total: 'off' },
+      };
+
+      // when / then
+      expect(sectionVisibility(ui, 'xp')).toBe('public');
+    });
+
+    it('should prefer an explicit xp level over the retired switches', () => {
+      // given
+      const ui = { profileVisibility: { week: 'public', xp: 'off' } };
+
+      // when / then
+      expect(sectionVisibility(ui, 'xp')).toBe('off');
+    });
+
     it('should treat a missing config as a private profile', () => {
       // when / then
       expect(sectionVisibility(undefined, 'total')).toBe('friends');
@@ -100,6 +126,20 @@ describe('profile-visibility.models', () => {
   });
 
   describe('isProfilePublic', () => {
+    it('should keep a profile public that was published only through week or month', () => {
+      // given — every other section switched off
+      const ui = {
+        profileVisibility: Object.fromEntries([
+          ...PROFILE_SECTIONS.map((section) => [section, 'off']),
+          ['week', 'public'],
+        ]),
+      };
+      delete (ui.profileVisibility as Record<string, string>)['xp'];
+
+      // when / then
+      expect(isProfilePublic(ui)).toBe(true);
+    });
+
     it('should call a profile public as soon as one section is', () => {
       // given — the settings switch is gone; the levels are the opt-in
       const ui = { profileVisibility: { total: 'public', streak: 'off' } };

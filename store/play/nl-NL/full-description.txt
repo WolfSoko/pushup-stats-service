@@ -38,7 +38,7 @@ Stel je eigen workout samen: oefeningen, doelen en sets in jouw volgorde. De app
 Elke oefening levert XP op — per herhaling, minuut of kilometer, ook met terugwerkende kracht voor al je eerdere invoer. Stijg in level, verzamel levelbadges en meet je met anderen in het XP-klassement.
 
 🏆 RANGLIJST & PROFIEL
-Meet je met anderen of blijf privé. Ranglijsten voor vandaag, de laatste 7 en 30 dagen. Je profiel deel je met een link: totaal aantal reps, streak, records, heatmap, je laatste 10 workouts en het actieve plan — elke tegel zet je los op uit, alleen vrienden of openbaar.
+Meet je met anderen of blijf privé. Ranglijsten voor vandaag, de laatste 7 en 30 dagen. Je profiel deel je met een link: level en XP, reps, tijd en km van alle oefeningen, streak, heatmap, workouts en actief plan — elke tegel zet je los op uit, alleen vrienden of openbaar.
 
 👥 VRIENDEN & CHALLENGES
 Nodig vrienden uit: jullie bord laat zien wie deze week voorligt. Moedig elkaar aan en start gezamenlijke challenges — 500 push-ups in 7 dagen, ieder met eigen voortgang. Elk duwtje belandt in je postvak, ook offline.

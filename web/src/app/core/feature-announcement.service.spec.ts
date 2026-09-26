@@ -13,6 +13,7 @@ import {
   FeatureAnnouncementService,
   INBOX_ANNOUNCEMENT,
   isDashboard,
+  PROFILE_XP_ANNOUNCEMENT,
   REBRAND_ANNOUNCEMENT,
   WORKOUT_REMINDERS_ANNOUNCEMENT,
   XP_ANNOUNCEMENT,
@@ -43,6 +44,7 @@ describe('ANNOUNCEMENTS', () => {
     expect(ids).toContain(REBRAND_ANNOUNCEMENT);
     expect(ids).toContain(WORKOUT_REMINDERS_ANNOUNCEMENT);
     expect(ids).toContain(XP_ANNOUNCEMENT);
+    expect(ids).toContain(PROFILE_XP_ANNOUNCEMENT);
   });
 
   it.each(

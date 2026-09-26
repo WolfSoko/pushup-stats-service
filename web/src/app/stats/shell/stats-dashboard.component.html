@@ -58,10 +58,12 @@
     </div>
   </header>
 
-  <app-all-time-badges
-    [summary]="allTimeSummary()"
-    [loading]="allTimeLoading()"
-  />
+  @if (!allTimeUnavailable()) {
+    <app-all-time-badges
+      [summary]="allTimeSummary()"
+      [loading]="allTimeLoading()"
+    />
+  }
 
   <app-level-card />
 

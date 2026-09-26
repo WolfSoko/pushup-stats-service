@@ -163,6 +163,7 @@ export class StatsDashboardComponent {
   // Delegate store signals for template access
   readonly allTimeSummary = this.store.allTimeSummary;
   readonly allTimeLoading = this.store.allTimeLoading;
+  readonly allTimeUnavailable = this.store.allTimeUnavailable;
   readonly todayTotal = this.store.todayTotal;
   readonly dailyGoal = this.store.dailyGoal;
   readonly goalProgressPercent = this.store.goalProgressPercent;

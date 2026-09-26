@@ -104,7 +104,17 @@ export const DashboardStore = signalStore(
         toBerlinIsoDate(new Date())
       )
     );
-    const allTimeLoading = computed(() => !store._live.exerciseEntriesLoaded());
+    const allTimeLoading = computed(
+      () =>
+        !store._live.exerciseEntriesLoaded() &&
+        !store._live.exerciseEntriesFailed()
+    );
+    /** The feed failed before delivering anything — no numbers to show. */
+    const allTimeUnavailable = computed(
+      () =>
+        !store._live.exerciseEntriesLoaded() &&
+        store._live.exerciseEntriesFailed()
+    );
 
     const todayTotal = computed(() => {
       const berlinToday = toBerlinIsoDate(new Date());
@@ -266,6 +276,7 @@ export const DashboardStore = signalStore(
     return {
       allTimeSummary,
       allTimeLoading,
+      allTimeUnavailable,
       entryRows,
       currentStreak,
       weekReps,

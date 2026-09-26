@@ -102,6 +102,57 @@ describe('LiveDataStore', () => {
       expect(store.connected()).toBe(true);
     });
 
+    function setupWithErrorCapture() {
+      jest.mocked(authState).mockReturnValue(of({ uid: 'u1' }) as never);
+      const next: SnapshotCallback[] = [];
+      const fail: Array<() => void> = [];
+      jest
+        .mocked(onSnapshot)
+        .mockImplementation(
+          (_query, onNext: SnapshotCallback, onError: () => void) => {
+            next.push(onNext);
+            fail.push(onError);
+            return jest.fn();
+          }
+        );
+      TestBed.configureTestingModule({
+        providers: [
+          LiveDataStore,
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          { provide: Auth, useValue: {} },
+          { provide: Firestore, useValue: {} },
+        ],
+      });
+      const store = TestBed.inject(LiveDataStore);
+      TestBed.tick();
+      return { store, next: () => next[0], fail: () => fail[0] };
+    }
+
+    it('should mark the feed failed when it errors before the first snapshot', () => {
+      // given
+      const { store, fail } = setupWithErrorCapture();
+
+      // when
+      fail()();
+
+      // then — waiting views must stop waiting
+      expect(store.exerciseEntriesFailed()).toBe(true);
+      expect(store.exerciseEntriesLoaded()).toBe(false);
+    });
+
+    it('should not mark the feed failed when it errors after data arrived', () => {
+      // given
+      const { store, next, fail } = setupWithErrorCapture();
+      next()({ docs: [] });
+
+      // when
+      fail()();
+
+      // then — the entries already on screen stay valid
+      expect(store.exerciseEntriesFailed()).toBe(false);
+      expect(store.connected()).toBe(false);
+    });
+
     it('should surface pushups (exerciseId:"pushup") on the live feed post-cutover', () => {
       // given a browser-platform store wired to a signed-in user
       jest.mocked(authState).mockReturnValue(of({ uid: 'u1' }) as never);

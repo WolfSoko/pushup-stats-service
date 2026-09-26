@@ -56,6 +56,30 @@ const OFF_UNLESS_CHOSEN: ReadonlyArray<ProfileSection> = [
   'workouts',
 ];
 
+const WIDTH: Readonly<Record<ProfileSectionVisibility, number>> = {
+  off: 0,
+  friends: 1,
+  public: 2,
+};
+
+/**
+ * The retired `week` and `month` sections showed this week's and month's
+ * volume, which now lives in the XP card. A level the owner set on them
+ * carries over to `xp` (the wider of the two) until they set `xp` itself
+ * — otherwise a profile published only through them would go dark.
+ */
+function retiredPeriodLevel(
+  ui: ProfileVisibilityUi | undefined | null
+): ProfileSectionVisibility | null {
+  const levels = [
+    ui?.profileVisibility?.['week'],
+    ui?.profileVisibility?.['month'],
+  ]
+    .filter(isProfileSectionVisibility)
+    .sort((a, b) => WIDTH[b] - WIDTH[a]);
+  return levels[0] ?? null;
+}
+
 /** The level in force for one section, legacy configs included. */
 export function sectionVisibility(
   ui: ProfileVisibilityUi | undefined | null,
@@ -63,6 +87,10 @@ export function sectionVisibility(
 ): ProfileSectionVisibility {
   const explicit = ui?.profileVisibility?.[section];
   if (isProfileSectionVisibility(explicit)) return explicit;
+  if (section === 'xp') {
+    const inherited = retiredPeriodLevel(ui);
+    if (inherited) return inherited;
+  }
   if (normalizeHiddenSections(ui?.profileHidden).includes(section)) {
     return 'off';
   }

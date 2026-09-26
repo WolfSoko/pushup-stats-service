@@ -38,7 +38,7 @@ Componi il tuo allenamento: esercizi, obiettivi e serie nel tuo ordine. L'app ti
 Ogni esercizio fa guadagnare XP — per ripetizione, minuto o chilometro, anche per le registrazioni passate. Sali di livello, colleziona i badge di livello e sfida gli altri nella classifica XP.
 
 🏆 CLASSIFICA E PROFILO
-Misurati con gli altri o resta privato. Classifiche di oggi, degli ultimi 7 e 30 giorni. Il profilo lo condividi con un link: ripetizioni totali, streak, record, heatmap, i tuoi ultimi 10 allenamenti e il piano attivo — ogni riquadro si imposta a parte su nascosto, solo amici o pubblico.
+Misurati con gli altri o resta privato. Classifiche di oggi, degli ultimi 7 e 30 giorni. Il profilo lo condividi con un link: livello e XP, ripetizioni, tempo e km di tutti gli esercizi, streak, heatmap, allenamenti e piano — ogni riquadro si imposta a parte su nascosto, solo amici o pubblico.
 
 👥 AMICI E SFIDE
 Invita gli amici: la vostra lavagna mostra chi è avanti questa settimana. Fatevi il tifo e lanciate sfide comuni — 500 flessioni in 7 giorni, ognuno con il suo progresso. Ogni incitamento resta in casella, anche offline.

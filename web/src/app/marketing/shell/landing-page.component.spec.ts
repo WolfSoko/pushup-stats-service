@@ -656,4 +656,40 @@ describe('LandingPageComponent', () => {
       expect(trackSpy).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('training profile section', () => {
+    async function renderProfileSection() {
+      const view = await render(LandingPageComponent, {
+        deferBlockBehavior: DeferBlockBehavior.Manual,
+        providers: [
+          provideRouter([{ path: 'register', children: [] }]),
+          { provide: AdsStore, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          { provide: AuthStore, useValue: makeAuthStoreMock() },
+        ],
+      });
+      // Seventh `@defer` block: after the session, XP, workouts, workout
+      // reminders, inbox and reminder sections.
+      const blocks = await view.fixture.getDeferBlocks();
+      await blocks[6].render(DeferBlockState.Complete);
+      return view;
+    }
+
+    it('should report the profile CTA click to the analytics handler', async () => {
+      // given
+      const view = await renderProfileSection();
+      const trackSpy = vitest.spyOn(
+        view.fixture.componentInstance,
+        'onProfileCtaClick'
+      );
+
+      // when
+      await userEvent.click(
+        screen.getByRole('link', { name: 'Eigenes Profil anlegen' })
+      );
+
+      // then
+      expect(trackSpy).toHaveBeenCalledTimes(1);
+    });
+  });
 });

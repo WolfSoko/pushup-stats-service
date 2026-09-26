@@ -17,6 +17,7 @@ export * from './lib/models/achievement.models';
 export * from './lib/models/xp.models';
 export * from './lib/models/xp-rates.catalog';
 export * from './lib/models/xp-achievement.models';
+export * from './lib/models/berlin-time';
 export * from './lib/models/training-stats.models';
 export * from './lib/models/training-summary';
 export * from './lib/models/referral.models';

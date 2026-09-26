@@ -44,6 +44,12 @@ type LiveDataState = {
    */
   exerciseEntriesLoaded: boolean;
   /**
+   * True when the subscription failed before its first snapshot. Views
+   * that wait for the entries show nothing then, rather than a skeleton
+   * that never resolves.
+   */
+  exerciseEntriesFailed: boolean;
+  /**
    * Liveness of the `exerciseEntries` subscription — the canonical "live
    * data is ready" signal for every entry-derived view (pushups included).
    */
@@ -57,6 +63,7 @@ export const LiveDataStore = signalStore(
     exerciseEntries: [],
     exerciseDefinitions: [],
     exerciseEntriesLoaded: false,
+    exerciseEntriesFailed: false,
     connected: false,
     updateTick: 0,
   }),
@@ -91,6 +98,7 @@ export const LiveDataStore = signalStore(
             exerciseEntries: [],
             exerciseDefinitions: [],
             exerciseEntriesLoaded: false,
+            exerciseEntriesFailed: false,
             updateTick: 0,
           });
           subscribedUid = null;
@@ -105,6 +113,7 @@ export const LiveDataStore = signalStore(
             exerciseEntries: [],
             exerciseDefinitions: [],
             exerciseEntriesLoaded: false,
+            exerciseEntriesFailed: false,
             updateTick: 0,
           });
           subscribedUid = u.uid;
@@ -126,10 +135,15 @@ export const LiveDataStore = signalStore(
                 (d) => ({ _id: d.id, ...d.data() }) as ExerciseEntry
               ),
               exerciseEntriesLoaded: true,
+              exerciseEntriesFailed: false,
               updateTick: store.updateTick() + 1,
             });
           },
-          () => patchState(store, { connected: false })
+          () =>
+            patchState(store, {
+              connected: false,
+              exerciseEntriesFailed: !store.exerciseEntriesLoaded(),
+            })
         );
         onCleanup(() => {
           unsubExercises();

@@ -1,5 +1,11 @@
-import { findExerciseDefinition } from './exercise.catalog';
-import { xpBaseValue, type XpEntryInput } from './xp.models';
+import { berlinParts, heatmapSlot } from './berlin-time';
+import { EXERCISE_CATALOG, findExerciseDefinition } from './exercise.catalog';
+import {
+  type XpConfig,
+  type XpEntryInput,
+  xpBaseValue,
+  xpRateFor,
+} from './xp.models';
 
 /**
  * Cross-exercise aggregate at `userStats/{uid}/aggregates/training`,
@@ -26,6 +32,17 @@ export interface TrainingStats {
   readonly heatmap: Readonly<Record<string, number>>;
   /** Highest XP of a single entry. Only grows by delta; see `needsRebuild`. */
   readonly bestEntryXp: number;
+  /**
+   * {@link xpRatesKey} of the rates every XP figure here was priced at.
+   * A delta priced at other rates would not cancel what was added, so a
+   * mismatch means rebuild instead.
+   */
+  readonly ratesKey: string;
+  /**
+   * Read time of the entries the last rebuild folded in. Events of writes
+   * at or before it are already contained and must not be applied again.
+   */
+  readonly rebuiltAt: string;
   readonly version: number;
   /** Ids of the last trigger events folded in, for at-least-once delivery. */
   readonly recentEventIds?: ReadonlyArray<string>;
@@ -38,7 +55,7 @@ export interface TrainingDay {
 }
 
 /** A doc below this version is rebuilt from the entries on the next write. */
-export const TRAINING_STATS_VERSION = 1;
+export const TRAINING_STATS_VERSION = 2;
 
 export const TRAINING_STATS_DOC = 'aggregates/training';
 
@@ -58,60 +75,76 @@ export function emptyTrainingStats(userId: string): TrainingStats {
     days: {},
     heatmap: {},
     bestEntryXp: 0,
+    ratesKey: '',
+    rebuiltAt: '',
     version: TRAINING_STATS_VERSION,
     updatedAt: '',
   };
 }
 
-const BERLIN = new Intl.DateTimeFormat('en-US', {
-  timeZone: 'Europe/Berlin',
-  year: 'numeric',
-  month: '2-digit',
-  day: '2-digit',
-  weekday: 'short',
-  hour: '2-digit',
-  hourCycle: 'h23',
-});
-
-/** The German abbreviations the heatmap slots have always been keyed by. */
-const WEEKDAY_KEYS: Readonly<Record<string, string>> = {
-  Mon: 'Mo',
-  Tue: 'Di',
-  Wed: 'Mi',
-  Thu: 'Do',
-  Fri: 'Fr',
-  Sat: 'Sa',
-  Sun: 'So',
-};
+/**
+ * Short fingerprint of the effective rate of every catalog exercise —
+ * admin overrides and shipped defaults alike, so a changed default in a
+ * release counts as a change too.
+ */
+export function xpRatesKey(config: XpConfig | null | undefined): string {
+  const text = EXERCISE_CATALOG.map(
+    (e) => `${e.id}=${xpRateFor(e.id, config)}`
+  ).join(';');
+  // FNV-1a: a fingerprint, not a secret — collisions only cost a missed rebuild.
+  let hash = 0x811c9dc5;
+  for (let i = 0; i < text.length; i++) {
+    hash ^= text.charCodeAt(i);
+    hash = Math.imul(hash, 0x01000193);
+  }
+  return (hash >>> 0).toString(36);
+}
 
 /** Berlin day and heatmap slot of a timestamp; `null` when unparsable. */
 export function berlinDayAndSlot(
   timestamp: string
 ): { day: string; slot: string } | null {
-  const date = new Date(timestamp);
-  if (Number.isNaN(date.getTime())) return null;
-  const parts: Record<string, string> = {};
-  for (const part of BERLIN.formatToParts(date)) parts[part.type] = part.value;
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}/.test(timestamp)) return null;
+  if (Number.isNaN(Date.parse(timestamp))) return null;
+  const parts = berlinParts(timestamp);
+  return { day: parts.isoDate, slot: heatmapSlot(parts.weekday, parts.hour) };
+}
+
+interface Contribution {
+  readonly day: string;
+  readonly slot: string;
+  readonly measurement: string;
+  readonly value: number;
+  readonly xp: number;
+}
+
+function contributionOf(line: TrainingLine): Contribution | null {
+  const definition = findExerciseDefinition(line.exerciseId);
+  const where = berlinDayAndSlot(line.timestamp);
+  if (!definition || !where) return null;
   return {
-    day: `${parts['year']}-${parts['month']}-${parts['day']}`,
-    slot: `${WEEKDAY_KEYS[parts['weekday']]}-${parts['hour']}`,
+    ...where,
+    measurement: definition.measurement,
+    value: xpBaseValue(definition, line),
+    xp: Number.isFinite(line.xp) && line.xp > 0 ? line.xp : 0,
   };
+}
+
+type Totals = { reps: number; durationSec: number; distanceM: number };
+
+function addVolume(totals: Totals, measurement: string, value: number): Totals {
+  if (measurement === 'reps') return { ...totals, reps: totals.reps + value };
+  if (measurement === 'time') {
+    return { ...totals, durationSec: totals.durationSec + value };
+  }
+  if (measurement === 'distance' || measurement === 'distance-time') {
+    return { ...totals, distanceM: totals.distanceM + value };
+  }
+  return totals;
 }
 
 function nonNegative(value: number): number {
   return value > 0 ? value : 0;
-}
-
-function bump(
-  map: Readonly<Record<string, number>>,
-  key: string,
-  delta: number
-): Record<string, number> {
-  const next = { ...map };
-  const value = (next[key] ?? 0) + delta;
-  if (value > 0) next[key] = value;
-  else delete next[key];
-  return next;
 }
 
 /**
@@ -127,59 +160,116 @@ export function applyTrainingLine(
   line: TrainingLine,
   sign: 1 | -1
 ): { stats: TrainingStats; needsRebuild: boolean } {
-  const definition = findExerciseDefinition(line.exerciseId);
-  const where = berlinDayAndSlot(line.timestamp);
-  if (!definition || !where) return { stats, needsRebuild: false };
+  const c = contributionOf(line);
+  if (!c) return { stats, needsRebuild: false };
 
-  const value = sign * xpBaseValue(definition, line);
-  const xp = Number.isFinite(line.xp) && line.xp > 0 ? line.xp : 0;
-  const measurement = definition.measurement;
-  const day = stats.days[where.day] ?? { entries: 0, xp: 0 };
-  const nextDay = {
-    entries: day.entries + sign,
-    xp: nonNegative(day.xp + sign * xp),
-  };
+  const totals = addVolume(
+    {
+      reps: stats.reps,
+      durationSec: stats.durationSec,
+      distanceM: stats.distanceM,
+    },
+    c.measurement,
+    sign * c.value
+  );
+  const day = stats.days[c.day] ?? { entries: 0, xp: 0 };
   const days = { ...stats.days };
-  if (nextDay.entries > 0) days[where.day] = nextDay;
-  else delete days[where.day];
+  const entries = day.entries + sign;
+  if (entries > 0) {
+    days[c.day] = { entries, xp: nonNegative(day.xp + sign * c.xp) };
+  } else {
+    delete days[c.day];
+  }
+  const heatmap = { ...stats.heatmap };
+  const slotXp = (heatmap[c.slot] ?? 0) + sign * c.xp;
+  if (slotXp > 0) heatmap[c.slot] = slotXp;
+  else delete heatmap[c.slot];
 
   return {
     stats: {
       ...stats,
-      reps: nonNegative(stats.reps + (measurement === 'reps' ? value : 0)),
-      durationSec: nonNegative(
-        stats.durationSec + (measurement === 'time' ? value : 0)
-      ),
-      distanceM: nonNegative(
-        stats.distanceM +
-          (measurement === 'distance' || measurement === 'distance-time'
-            ? value
-            : 0)
-      ),
+      reps: nonNegative(totals.reps),
+      durationSec: nonNegative(totals.durationSec),
+      distanceM: nonNegative(totals.distanceM),
       entries: nonNegative(stats.entries + sign),
       days,
-      heatmap: bump(stats.heatmap, where.slot, sign * xp),
+      heatmap,
       bestEntryXp:
-        sign > 0 ? Math.max(stats.bestEntryXp, xp) : stats.bestEntryXp,
+        sign > 0 ? Math.max(stats.bestEntryXp, c.xp) : stats.bestEntryXp,
     },
-    needsRebuild: sign < 0 && xp > 0 && xp >= stats.bestEntryXp,
+    needsRebuild: sign < 0 && c.xp > 0 && c.xp >= stats.bestEntryXp,
   };
 }
 
+/**
+ * Folds every line in one pass. Deliberately not a reduce over
+ * {@link applyTrainingLine}: copying the day map per line would make a
+ * long history quadratic, and the dashboard reruns this on every
+ * snapshot.
+ */
 export function rebuildTrainingStats(
   userId: string,
-  lines: ReadonlyArray<TrainingLine>
+  lines: ReadonlyArray<TrainingLine>,
+  meta: { ratesKey?: string; rebuiltAt?: string } = {}
 ): TrainingStats {
-  return lines.reduce(
-    (acc, line) => applyTrainingLine(acc, line, 1).stats,
-    emptyTrainingStats(userId)
+  let totals: Totals = { reps: 0, durationSec: 0, distanceM: 0 };
+  let entries = 0;
+  let bestEntryXp = 0;
+  const days: Record<string, TrainingDay> = {};
+  const heatmap: Record<string, number> = {};
+  for (const line of lines) {
+    const c = contributionOf(line);
+    if (!c) continue;
+    totals = addVolume(totals, c.measurement, c.value);
+    entries += 1;
+    bestEntryXp = Math.max(bestEntryXp, c.xp);
+    const day = days[c.day] ?? { entries: 0, xp: 0 };
+    days[c.day] = { entries: day.entries + 1, xp: day.xp + c.xp };
+    if (c.xp > 0) heatmap[c.slot] = (heatmap[c.slot] ?? 0) + c.xp;
+  }
+  return {
+    ...emptyTrainingStats(userId),
+    ...totals,
+    entries,
+    days,
+    heatmap,
+    bestEntryXp,
+    ratesKey: meta.ratesKey ?? '',
+    rebuiltAt: meta.rebuiltAt ?? '',
+  };
+}
+
+function sameLine(a: TrainingLine, b: TrainingLine): boolean {
+  return (
+    a.exerciseId === b.exerciseId &&
+    a.timestamp === b.timestamp &&
+    a.xp === b.xp &&
+    (a.reps ?? null) === (b.reps ?? null) &&
+    (a.durationSec ?? null) === (b.durationSec ?? null) &&
+    (a.distanceM ?? null) === (b.distanceM ?? null)
   );
 }
 
-/** Appends `eventId`, keeping only the newest 50. */
-export function rememberTrainingEvent(
-  ids: ReadonlyArray<string> | undefined,
-  eventId: string
-): string[] {
-  return [...(ids ?? []), eventId].slice(-50);
+/**
+ * Moves the aggregate from an entry's old state to its new one, or
+ * returns `null` when it has to be rebuilt from all entries: there is no
+ * current aggregate, it was priced at other rates, or the removal may
+ * have taken the best entry. An edit that leaves every counted field
+ * alone (a note, a variant) changes nothing.
+ */
+export function nextTrainingStats(
+  current: TrainingStats | null,
+  removed: TrainingLine | null,
+  added: TrainingLine | null,
+  ratesKey: string
+): TrainingStats | null {
+  if (!current || current.ratesKey !== ratesKey) return null;
+  if (removed && added && sameLine(removed, added)) return current;
+  let next = current;
+  if (removed) {
+    const result = applyTrainingLine(next, removed, -1);
+    if (result.needsRebuild) return null;
+    next = result.stats;
+  }
+  return added ? applyTrainingLine(next, added, 1).stats : next;
 }

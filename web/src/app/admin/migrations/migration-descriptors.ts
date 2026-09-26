@@ -69,4 +69,10 @@ export const DATA_MIGRATIONS: readonly MigrationDescriptor[] = [
     description: $localize`:@@admin.migrations.xpBackfill.description:Bucht XP für alle Einträge, die vor dem Punktesystem gespeichert wurden, zu den aktuellen Wertigkeiten, berechnet Level und Level-Abzeichen neu und baut die XP-Bestenliste auf. Bis zu 200 Nutzer pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Bereits gebuchte Einträge bleiben unverändert. Erst den Probelauf ausführen.`,
     migrate: { callable: 'backfillXp' },
   },
+  {
+    id: 'training-stats-backfill',
+    title: $localize`:@@admin.migrations.trainingStatsBackfill.title:Trainings-Statistik über alle Übungen aufbauen`,
+    description: $localize`:@@admin.migrations.trainingStatsBackfill.description:Baut für alle Nutzer mit Einträgen die übungsübergreifende Trainings-Statistik auf (Profil, Heatmap, Freunde-Board). Ohne sie rechnen diese Seiten bei jedem Aufruf alle Einträge durch. Bis zu 200 Nutzer pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Bestehende Statistiken bleiben unverändert. Erst den Probelauf ausführen.`,
+    migrate: { callable: 'backfillTrainingStats' },
+  },
 ];

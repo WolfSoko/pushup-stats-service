@@ -161,10 +161,12 @@ describe('StatsDashboardComponent', () => {
       variantId?: string;
     }>
   >([]);
+  const liveFailed = signal(false);
   const liveMock = {
     updateTick: liveTick.asReadonly(),
     connected: liveConnected.asReadonly(),
     exerciseEntriesLoaded: liveConnected.asReadonly(),
+    exerciseEntriesFailed: liveFailed.asReadonly(),
     // Post-cutover the live feed carries pushups (`exerciseId:'pushup'`)
     // alongside other exercises; tests still seed `liveEntries` for pushups.
     exerciseEntries: computed(() => [
@@ -241,6 +243,7 @@ describe('StatsDashboardComponent', () => {
       .mockReset()
       .mockReturnValue(of(defaultUserStats));
     liveTick.set(0);
+    liveFailed.set(false);
     liveConnected.set(true);
     liveEntries.set([
       {
@@ -648,6 +651,23 @@ describe('StatsDashboardComponent', () => {
         expect(summary.distanceM).toBe(5000);
         expect(summary.entries).toBe(4);
         expect(summary.days).toBe(3);
+      });
+
+      it('should drop the row instead of spinning forever when the feed failed', async () => {
+        // given — the listener errored before its first snapshot
+        liveConnected.set(false);
+        liveFailed.set(true);
+
+        // when
+        const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+        await freshFixture.whenStable();
+
+        // then
+        expect(
+          (freshFixture.nativeElement as HTMLElement).querySelector(
+            'app-all-time-badges'
+          )
+        ).toBeNull();
       });
 
       it('should show time and distance badges only once something was logged', async () => {

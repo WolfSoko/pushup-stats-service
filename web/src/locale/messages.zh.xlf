@@ -2547,8 +2547,8 @@
       <notes>
         <note category="location">web/src/app/app.routes.ts:150</note>
       </notes>
-      <segment state="translated">
-        <source>Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.</source>
+      <segment state="initial">
+        <source>Öffentliches Trainingsprofil mit Level, XP, Trainingstagen und Bestleistungen.</source>
       <target>公开俯卧撑个人资料，显示次数、连续纪录和个人记录。</target></segment>
     </unit>
     <unit id="seo.blog.title">
@@ -15615,6 +15615,180 @@
       <segment state="initial">
         <source>Anzahl aller Einträge über alle Übungen – jede erfasste Serie zählt als einer.</source>
         <target>Anzahl aller Einträge über alle Übungen – jede erfasste Serie zählt als einer.</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.trainingStatsBackfill.title">
+      <segment state="initial">
+        <source>Trainings-Statistik über alle Übungen aufbauen</source>
+        <target>Trainings-Statistik über alle Übungen aufbauen</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.trainingStatsBackfill.description">
+      <segment state="initial">
+        <source>Baut für alle Nutzer mit Einträgen die übungsübergreifende Trainings-Statistik auf (Profil, Heatmap, Freunde-Board). Ohne sie rechnen diese Seiten bei jedem Aufruf alle Einträge durch. Bis zu 200 Nutzer pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Bestehende Statistiken bleiben unverändert. Erst den Probelauf ausführen.</source>
+        <target>Baut für alle Nutzer mit Einträgen die übungsübergreifende Trainings-Statistik auf (Profil, Heatmap, Freunde-Board). Ohne sie rechnen diese Seiten bei jedem Aufruf alle Einträge durch. Bis zu 200 Nutzer pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Bestehende Statistiken bleiben unverändert. Erst den Probelauf ausführen.</target>
+      </segment>
+    </unit>
+    <unit id="announcements.profileXp">
+      <segment state="initial">
+        <source>Neu: Level &amp; XP auf deinem Profil, Statistik über alle Übungen</source>
+        <target>Neu: Level &amp; XP auf deinem Profil, Statistik über alle Übungen</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.eyebrow">
+      <segment state="initial">
+        <source> Neu · Trainingsprofil </source>
+        <target> Neu · Trainingsprofil </target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.headline">
+      <segment state="initial">
+        <source> Dein Profil zeigt alles, was du trainierst — nicht nur Liegestütze. </source>
+        <target> Dein Profil zeigt alles, was du trainierst — nicht nur Liegestütze. </target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.desc">
+      <segment state="initial">
+        <source> Ganz oben dein Level und deine XP, darunter Wiederholungen, Trainingszeit, Strecke, Trainingstage und deine Serie — über alle Übungen gezählt. Du entscheidest bei jedem Wert, ob ihn alle, nur Freunde oder niemand sieht. </source>
+        <target> Ganz oben dein Level und deine XP, darunter Wiederholungen, Trainingszeit, Strecke, Trainingstage und deine Serie — über alle Übungen gezählt. Du entscheidest bei jedem Wert, ob ihn alle, nur Freunde oder niemand sieht. </target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.chip.xp">
+      <segment state="initial">
+        <source>Level und XP, dazu was diese Woche und diesen Monat dazukam</source>
+        <target>Level und XP, dazu was diese Woche und diesen Monat dazukam</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.chip.allExercises">
+      <segment state="initial">
+        <source>Wiederholungen, Zeit und Kilometer über alle Übungen</source>
+        <target>Wiederholungen, Zeit und Kilometer über alle Übungen</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.chip.visibility">
+      <segment state="initial">
+        <source>Für alle, nur für Freunde oder privat — pro Wert</source>
+        <target>Für alle, nur für Freunde oder privat — pro Wert</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.cta">
+      <segment state="initial">
+        <source>Eigenes Profil anlegen</source>
+        <target>Eigenes Profil anlegen</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.mock.level">
+      <segment state="initial">
+        <source>Level 12</source>
+        <target>Level 12</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.mock.total">
+      <segment state="initial">
+        <source>6.930 XP</source>
+        <target>6.930 XP</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.mock.reps">
+      <segment state="initial">
+        <source>Wiederholungen</source>
+        <target>Wiederholungen</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.mock.duration">
+      <segment state="initial">
+        <source>Trainingszeit</source>
+        <target>Trainingszeit</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.mock.distance">
+      <segment state="initial">
+        <source>Strecke</source>
+        <target>Strecke</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.mock.streak">
+      <segment state="initial">
+        <source>Tage in Folge</source>
+        <target>Tage in Folge</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.badge">
+      <segment state="initial">
+        <source>Neu</source>
+        <target>Neu</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.title">
+      <segment state="initial">
+        <source>Level &amp; XP auf deinem Profil</source>
+        <target>Level &amp; XP auf deinem Profil</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.stepCount">
+      <segment state="initial">
+        <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
+        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.later">
+      <segment state="initial">
+        <source> Später </source>
+        <target> Später </target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.back">
+      <segment state="initial">
+        <source>Zurück</source>
+        <target>Zurück</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.start">
+      <segment state="initial">
+        <source>Zu meinem Profil</source>
+        <target>Zu meinem Profil</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.next">
+      <segment state="initial">
+        <source>Weiter</source>
+        <target>Weiter</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.step1.title">
+      <segment state="initial">
+        <source>Dein Level ganz oben</source>
+        <target>Dein Level ganz oben</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.step1.body">
+      <segment state="initial">
+        <source>Dein Profil zeigt jetzt oben dein Level und deine XP — im Gold deiner Abzeichen, dazu was diese Woche und diesen Monat dazukam.</source>
+        <target>Dein Profil zeigt jetzt oben dein Level und deine XP — im Gold deiner Abzeichen, dazu was diese Woche und diesen Monat dazukam.</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.step2.title">
+      <segment state="initial">
+        <source>Jede Übung zählt</source>
+        <target>Jede Übung zählt</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.step2.body">
+      <segment state="initial">
+        <source>Wiederholungen, Trainingszeit, Strecke, Trainingstage und Serie zählen jetzt alle Übungen, nicht nur Liegestütze — auf dem Profil und auf deinem Dashboard.</source>
+        <target>Wiederholungen, Trainingszeit, Strecke, Trainingstage und Serie zählen jetzt alle Übungen, nicht nur Liegestütze — auf dem Profil und auf deinem Dashboard.</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.step3.title">
+      <segment state="initial">
+        <source>Du entscheidest, wer es sieht</source>
+        <target>Du entscheidest, wer es sieht</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.step3.body">
+      <segment state="initial">
+        <source>Die XP-Karte siehst erst einmal nur du. Tippe auf ihr Symbol, um sie deinen Freunden oder allen zu zeigen.</source>
+        <target>Die XP-Karte siehst erst einmal nur du. Tippe auf ihr Symbol, um sie deinen Freunden oder allen zu zeigen.</target>
       </segment>
     </unit>
 </file>

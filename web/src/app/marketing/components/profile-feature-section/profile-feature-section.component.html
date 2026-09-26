@@ -1,0 +1,76 @@
+<section class="profile-section">
+  <div class="profile-content">
+    <p class="eyebrow" i18n="@@landing.profile.eyebrow">
+      Neu · Trainingsprofil
+    </p>
+    <h2 i18n="@@landing.profile.headline">
+      Dein Profil zeigt alles, was du trainierst — nicht nur Liegestütze.
+    </h2>
+    <p class="profile-desc" i18n="@@landing.profile.desc">
+      Ganz oben dein Level und deine XP, darunter Wiederholungen, Trainingszeit,
+      Strecke, Trainingstage und deine Serie — über alle Übungen gezählt. Du
+      entscheidest bei jedem Wert, ob ihn alle, nur Freunde oder niemand sieht.
+    </p>
+
+    <ul class="profile-chips">
+      <li>
+        <mat-icon aria-hidden="true">bolt</mat-icon>
+        <span i18n="@@landing.profile.chip.xp"
+          >Level und XP, dazu was diese Woche und diesen Monat dazukam</span
+        >
+      </li>
+      <li>
+        <mat-icon aria-hidden="true">functions</mat-icon>
+        <span i18n="@@landing.profile.chip.allExercises"
+          >Wiederholungen, Zeit und Kilometer über alle Übungen</span
+        >
+      </li>
+      <li>
+        <mat-icon aria-hidden="true">visibility</mat-icon>
+        <span i18n="@@landing.profile.chip.visibility"
+          >Für alle, nur für Freunde oder privat — pro Wert</span
+        >
+      </li>
+    </ul>
+
+    <a
+      mat-flat-button
+      color="primary"
+      routerLink="/register"
+      (click)="ctaClick.emit()"
+      i18n="@@landing.profile.cta"
+      >Eigenes Profil anlegen</a
+    >
+  </div>
+
+  <div class="profile-mock-wrap" aria-hidden="true">
+    <div class="profile-mock">
+      <div class="mock-xp">
+        <span class="mock-medal">12</span>
+        <span class="mock-xp-text">
+          <small i18n="@@landing.profile.mock.level">Level 12</small>
+          <b i18n="@@landing.profile.mock.total">6.930 XP</b>
+        </span>
+      </div>
+      <div class="mock-bar"><span class="mock-bar-fill"></span></div>
+      <div class="mock-grid">
+        <span>
+          <small i18n="@@landing.profile.mock.reps">Wiederholungen</small>
+          <b>4.659</b>
+        </span>
+        <span>
+          <small i18n="@@landing.profile.mock.duration">Trainingszeit</small>
+          <b>3 h 20 min</b>
+        </span>
+        <span>
+          <small i18n="@@landing.profile.mock.distance">Strecke</small>
+          <b>42,5 km</b>
+        </span>
+        <span>
+          <small i18n="@@landing.profile.mock.streak">Tage in Folge</small>
+          <b>9</b>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

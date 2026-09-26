@@ -19,7 +19,7 @@ import {
   type FriendStatsRow,
 } from './friends';
 import { readCheersToday } from './friends/cheers-read';
-import { readTrainingStats } from './training/stats-read';
+import { readTrainingStatsMany } from './training/stats-read';
 import { periodKeys } from './user-stats-delta';
 
 /**
@@ -74,14 +74,8 @@ export const getFriendsLeaderboard = onCall(
       ReadonlyArray<Pick<FriendStatsRow, 'stats' | 'days'>>
     > =
       metric === 'days' || metric === 'streak'
-        ? Promise.all(
-            uids.map(async (id) =>
-              trainingRowOf(
-                await readTrainingStats(db, id),
-                period,
-                today.isoDate
-              )
-            )
+        ? readTrainingStatsMany(db, uids).then((all) =>
+            all.map((stats) => trainingRowOf(stats, period, today.isoDate))
           )
         : db
             .getAll(

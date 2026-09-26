@@ -101,6 +101,7 @@ export {
 export { claimReferral } from './functions-referral';
 export { updateExerciseStatsOnEntryWrite } from './functions-user-stats';
 export { updateTrainingStatsOnEntryWrite } from './functions-training-stats';
+export { backfillTrainingStats } from './functions-training-backfill';
 
 export { awardAchievementsOnPlanWrite } from './functions-achievements';
 export { notifyGoalReachedOnStatsWrite } from './functions-goal-reached';

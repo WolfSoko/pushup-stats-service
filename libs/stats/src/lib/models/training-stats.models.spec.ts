@@ -2,8 +2,9 @@ import {
   applyTrainingLine,
   berlinDayAndSlot,
   emptyTrainingStats,
+  nextTrainingStats,
   rebuildTrainingStats,
-  rememberTrainingEvent,
+  xpRatesKey,
   type TrainingLine,
 } from './training-stats.models';
 import { summaryFromTrainingStats } from './training-summary';
@@ -39,9 +40,19 @@ describe('berlinDayAndSlot', () => {
     expect(result).toEqual({ day: '2026-09-25', slot: 'Fr-00' });
   });
 
+  it('should read an offset-less timestamp as Berlin local time', () => {
+    // given — older entries were stored without an offset; reading them
+    // as UTC would move a late workout to the next day
+    const result = berlinDayAndSlot('2026-04-05T22:50');
+
+    // then
+    expect(result).toEqual({ day: '2026-04-05', slot: 'So-22' });
+  });
+
   it('should return null for an unparsable timestamp', () => {
     // then
     expect(berlinDayAndSlot('kaputt')).toBeNull();
+    expect(berlinDayAndSlot('2026-13-45T99:00')).toBeNull();
   });
 });
 
@@ -130,17 +141,89 @@ describe('summaryFromTrainingStats', () => {
   });
 });
 
-describe('rememberTrainingEvent', () => {
-  it('should keep only the newest 50 ids', () => {
+describe('rebuildTrainingStats', () => {
+  it('should fold to the same result as applying every line one by one', () => {
     // given
-    const ids = Array.from({ length: 50 }, (_, i) => `e${i}`);
+    const lines = [PUSHUPS, PLANK, RUN, { ...PUSHUPS, reps: 5, xp: 5 }];
 
     // when
-    const next = rememberTrainingEvent(ids, 'new');
+    const folded = rebuildTrainingStats('u1', lines);
+    const stepwise = lines.reduce(
+      (acc, l) => applyTrainingLine(acc, l, 1).stats,
+      emptyTrainingStats('u1')
+    );
 
     // then
-    expect(next).toHaveLength(50);
-    expect(next[0]).toBe('e1');
-    expect(next.at(-1)).toBe('new');
+    expect(folded).toEqual(stepwise);
+  });
+
+  it('should stamp the rates and the read time it was built from', () => {
+    // when
+    const stats = rebuildTrainingStats('u1', [PUSHUPS], {
+      ratesKey: 'k1',
+      rebuiltAt: '2026-09-26T10:00:00.000Z',
+    });
+
+    // then
+    expect(stats.ratesKey).toBe('k1');
+    expect(stats.rebuiltAt).toBe('2026-09-26T10:00:00.000Z');
+  });
+});
+
+describe('nextTrainingStats', () => {
+  const KEY = 'k1';
+  const current = () =>
+    rebuildTrainingStats('u1', [RUN, PUSHUPS], {
+      ratesKey: KEY,
+    });
+
+  it('should ask for a rebuild while there is no aggregate yet', () => {
+    // then
+    expect(nextTrainingStats(null, null, PUSHUPS, KEY)).toBeNull();
+  });
+
+  it('should ask for a rebuild once the rates changed', () => {
+    // then — a removal priced at new rates would not cancel the old add
+    expect(nextTrainingStats(current(), PUSHUPS, null, 'k2')).toBeNull();
+  });
+
+  it('should swap the old state of an edited entry for the new one', () => {
+    // when
+    const next = nextTrainingStats(
+      current(),
+      PUSHUPS,
+      { ...PUSHUPS, reps: 40, xp: 40 },
+      KEY
+    );
+
+    // then
+    expect(next).toMatchObject({ reps: 40, entries: 2, bestEntryXp: 50 });
+  });
+
+  it('should ask for a rebuild when the best entry is removed', () => {
+    // then
+    expect(nextTrainingStats(current(), RUN, null, KEY)).toBeNull();
+  });
+
+  it('should leave the aggregate alone when no counted field changed', () => {
+    // given — e.g. a note edited on the best entry
+    const stats = current();
+
+    // then
+    expect(nextTrainingStats(stats, RUN, { ...RUN }, KEY)).toBe(stats);
+  });
+});
+
+describe('xpRatesKey', () => {
+  it('should stay the same for the same rates', () => {
+    // then
+    expect(xpRatesKey({ rates: { pushup: 2 } })).toBe(
+      xpRatesKey({ rates: { pushup: 2 } })
+    );
+  });
+
+  it('should change when any effective rate changes', () => {
+    // then
+    expect(xpRatesKey({ rates: { pushup: 2 } })).not.toBe(xpRatesKey(null));
   });
 });
