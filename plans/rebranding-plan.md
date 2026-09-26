@@ -107,6 +107,9 @@ Kein Ticket aus **Phase 2 und später** startet, bevor dieses Gate geschlossen i
 Ein Kandidat muss **alle** erfüllen:
 
 1. **Übungsneutral, mindestens** — trägt Liegestütze bis Cardio und Mobility, ohne eine Übung zu bevorzugen. **Verschärfung vom 2026-09-22, siehe 3.7:** Wenn das Produkt sich zu „zähl irgendetwas und behalte die Statistik“ öffnet, muss der Name **domänenneutral** sein — er muss Liegestütze _und_ Kaffeetassen _und_ gelesene Seiten tragen. Ob diese Öffnung Absicht oder bloße Möglichkeit ist, ist **nicht entschieden** (offener Punkt 7). Solange das offen ist, gilt die schärfere Lesart als Filter, weil ein Name, der beides trägt, in beiden Welten funktioniert — umgekehrt nicht.
+
+   **Präzisierung vom 2026-09-26:** Domänenneutral heißt **nicht** funktionsneutral. Verboten sind Wörter, die die **Domäne** benennen — _exercise_, _workout_, _training_, _rep_, _trainer_ —, denn die schließen Kaffeetassen und gelesene Seiten aus. Erlaubt sind Wörter, die die **Funktion** benennen: zählen, festhalten, **motivieren, anschieben, planen, coachen**. Die App motiviert und bietet Trainingspläne an, und beides trägt in jeder Domäne — einen Plan und einen Anstoß kann man auch fürs Lesen oder Wassertrinken brauchen. Diese Unterscheidung hat eine Namensrunde korrigiert, die _Coach_ und _Plan_ zunächst pauschal mit _Trainer_ verworfen hatte.
+
 2. **DE und EN tragfähig** — Quelle ist Deutsch, ausgeliefert wird in 9 Sprachen. Kein Wortspiel, das nur in einer Sprache funktioniert.
 3. **Play-Titel-Budget** — max. 30 Zeichen inkl. Untertitel. Zum Vergleich der heutige Titel: „Pushup Tracker: Liegestütze“ = 27 Zeichen, also praktisch am Limit. Ein Name über ~14 Zeichen lässt keinen Untertitel mehr zu.
 4. **Domain frei** — `.com` bevorzugt, `.de` als Ergänzung (der Bestand hat beide).
@@ -282,6 +285,15 @@ Nach dem Merge von #762 sind drei Dinge dazugekommen, die das Feld aus 3.6 volls
 
 **2. Zwei Geschmacksentscheidungen.** Deutsche Namen scheiden aus (Stetwerk, Kerbstrich, Tagpensum, Zählwerk-Familie); der Stamm _tally_ scheidet aus. Damit fallen zusätzlich Tallyspan, Tallyslate, Sticktally, Wolftally und Tallyo — Tallyspan ausdrücklich mitgenannt, obwohl es oben in der Tabelle steht, damit die Ausschlussliste vollständig ist. Beides sind Setzungen des Auftraggebers, keine Kriterienbefunde — hier dokumentiert, damit spätere Runden die Namen nicht erneut vorschlagen.
 
+**2a. Nachtrag 2026-09-26 — zwei weitere vorgeschlagene und geprüfte Namen.**
+
+| Name                                                   | Befund                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **ExerciseStats** (vorgeschlagen als „ExercicesStats“) | Alle drei TLDs ohne Auflösung — und **genau das ist das Warnsignal**: In fünf Runden war jeder bedeutungsvolle Name vergeben; dieser ist frei, weil niemand aus zwei Allerweltswörtern eine Marke baut. Damit genau die Falle aus 3.3 (generisches Wort ⇒ keine Unterscheidungskraft, Kriterium 5). Dazu baut „Exercise“ die Enge des heutigen Namens eine Ebene höher wieder auf, und der Name behält mit „Stats“ die Hälfte des alten — voller SEO-Preis für einen halben Wechsel. Schreibweise nebenbei: _Exercices_ ist französisch.                                                                                                                                                                                              |
+| **Freetrainer**                                        | **Store-Kollision, belegt.** `freetrainers.com` läuft seit 2000 (eigene Angabe: über 2 Mio. Nutzer, kostenlose Trainingspläne) mit App im App Store, Entwickler **Red House Consulting GmbH** — ein deutsches Unternehmen, also in unserem Markt. Unterschied: ein Buchstabe. Unabhängig davon: „Free“ ist eine **Preisaussage im Markennamen** und fesselt das Geschäftsmodell (die App zeigt heute Werbung); dazu Näheverhältnis zu **Freeletics**. Der gemeinte Sinn („freiform, ortsunabhängig“) trägt nicht, weil englische Leser _free_ zuerst als „kostenlos“ lesen — und dieser Raum ist ohnehin leer: `freeform`, `freeflow`, `freemove`, `movefree`, `freebody`, `freetrain`, `openform` sind auf allen drei TLDs vergeben. |
+
+**Beide Male hat der Store-Check in einem Aufruf entschieden**, was DNS allein durchgelassen hätte — bei ExerciseStats lag die Domain sogar auf allen drei TLDs frei. Das bestätigt die Regel am Ende dieses Abschnitts.
+
 **3. Ein belegter Store-Treffer.** _RepVision_ wurde vorgeschlagen und ist **vergeben**: „RepVision – PushUps Tracker“ (`com.hpt.repvision`) bei Google Play zählt laut Eintrag Liegestütze und Kniebeugen per Kamera-KI. Derselbe Name für dasselbe Produkt, inklusive Kamera-Autozähler — der eindeutigste Kriterium-6-Verstoß dieser ganzen Suche. Unabhängig davon wäre „Rep“ ohnehin gefallen: derselbe Grund, aus dem _Repora_ in 3.4 abgewertet und _RepStack_ ausgeschlossen wurde.
 
 **Regel 1 aus 3.5 hat dabei einen zweiten, härteren Beleg bekommen.** `repcount.com` löst **nicht** auf — die App **RepCount** existiert trotzdem, unter `repcountapp.com`, in beiden Stores. Domain- und Store-Prüfung sind unabhängig, und keine ersetzt die andere. Talvio und Vantio waren der erste Beleg, RepCount ist der deutlichere.
@@ -300,12 +312,47 @@ Per Websuche, für alle fünf. (3.4 beansprucht dieselbe Abdeckung für seine Ru
 
 **Etymologie zu Wolfsten**, weil sie die Markengeschichte trägt und belegbar ist: _tungsten_ kommt aus dem Schwedischen, _tung sten_ = schwerer Stein. Der deutsche Name desselben Elements ist **Wolfram**, von mittelalterlichen Bergleuten so genannt, weil das Erz das Zinn fraß „wie ein Wolf die Schafe“. Element 74 hat den höchsten Schmelzpunkt aller Metalle. Der Name ist damit zugleich der Vorname des Autors, ein Tier und ein Werkstoff — und als **willkürliche Marke** (kein beschreibender Bezug zur Ware) die durchsetzungsstärkste Kategorie für Kriterium 5. Genau das ist auch sein Preis: Er erklärt nichts, der Untertitel muss die Arbeit machen.
 
+#### Runde im Motivations- und Planungsraum (2026-09-26)
+
+Die Präzisierung von Kriterium 1 öffnet ein Feld, das vorher fälschlich mit _Trainer_ zusammen verworfen war. 42 Namen geprüft, neun ohne Auflösung auf allen drei TLDs:
+
+| Name                               |  Z. | Bild                                                         | Bewertung                                                                           |
+| ---------------------------------- | --: | ------------------------------------------------------------ | ----------------------------------------------------------------------------------- |
+| **Anyrally**                       |   8 | sich aufraffen, sammeln — wärmer und sportlicher als _nudge_ | Gute Alternative, etwas unschärfer                                                  |
+| **Planotch**                       |   8 | Plan + Kerbe: Vorhaben und Zählstrich in einem Wort          | Inhaltlich stark, liest sich aber als Verschmelzung — „pla-notch“ oder „plan-otch“? |
+| Rallynotch, Nudgenotch, Sparknotch |  10 | dieselbe Idee, länger                                        |                                                                                     |
+| Climbmark                          |   9 | der Aufstieg                                                 | _climb_ ist körperlich gefärbt, also wieder leicht domänengebunden                  |
+| Plankeep                           |   8 | —                                                            | „Keep“-Stamm, Google Keep in Klasse 9                                               |
+| Upliftnotch                        |  11 | —                                                            | zu lang                                                                             |
+
+Vergeben auf `.app` und damit aus dem Rennen: `rally`, `nudge`, `uplift`, `spark`, `momentum`, `stride`, `tempo`, `keepon`, `planmark`, `planwise`, `coachly`, `dailycoach`. **Sechste Runde, sechstes Mal dasselbe:** Jedes bedeutungsvolle Einzelwort ist belegt.
+
+#### Store-Check der beiden Any-Kandidaten — beide gedämpft
+
+**Anynudge fällt.** Kein exakter Treffer, aber **„Nudge“ ist im Habit-Tracker-Bereich mehrfach besetzt**: _Nudge – Build Better Habits_, _Nudge – Accountability_, _Nudge – ADHD Planner & Focus_, _Nudge: Focus & App Blocker_, _Nudge Habit_, _Nudge Me_. Das ist genau unsere Kategorie unter der „zähl irgendetwas“-Richtung. „Anynudge“ ist Präfix plus das unterscheidungskräftige Element — dieselbe Stammnähe, wegen der _Cairnmark_ an Cairn und _Holdspan_ an Holdfast gescheitert sind. Gleich angewandt heißt das: Anynudge fällt.
+
+**Anynotch bleibt, mit einem neuen Vorbehalt.** Kein Treffer in unserer Kategorie, Kriterium 6 also erfüllt. Aber die Suche zeigt etwas anderes: **Im Software-Sprachgebrauch bedeutet „notch“ heute die Display-Aussparung**, nicht den Kerbstrich. Der Namensraum ist voll von macOS-Notch-Werkzeugen — NotchNook, The Boring Notch, Droppy, NotchFlow, TopNotch, QuakeNotch, ComfyNotch, `notchy.dev`. Keine Markenkollision, aber ein Auffindbarkeitsproblem: Wer „notch app“ sucht, landet bei MacBook-Utilities.
+
+**Das trifft auch Notchcard**, den bisherigen Spitzenkandidaten. Das Kerbholz-Bild funktioniert für einen Leser, der es erklärt bekommt; die spontane Assoziation eines Tech-Publikums ist die Bildschirmkerbe. Kein Ausschluss, aber ein Abzug, den beide Notch-Namen tragen.
+
+#### Der produktivste Namensbaustein: `Any-`
+
+Über drei unabhängige Runden hinweg war der beste Überlebende jedes Mal ein `Any-`-Kompositum: **Anynotch**, **Anycount**, **Anynudge**, **Anyrally**. Das hat zwei Gründe, und beide sind systematisch:
+
+1. **`Any-` kodiert genau die Anforderung, die am schwersten zu treffen ist.** Domänenneutralität muss der Name nicht andeuten — er sagt sie.
+2. **Das Präfix ist selten genug, dass Domains überleben.** Anders als `Fit-`, `My-` oder `Daily-` ist der `Any-`-Raum nicht abgegrast.
+
+Das ist der erste belastbare Konstruktionshinweis dieser ganzen Suche — vorher waren alle Muster Artefakte meines Generators (`-span`, `-mark`, `-wise`).
+
+**Die Grenze des Hinweises**, sofort mitgeliefert: `Any-` löst die Domain- und die Neutralitätsfrage, **nicht die Kollisionsfrage**. Das Zweitglied muss trotzdem durch den Store-Check — genau daran ist Anynudge gefallen, obwohl das Präfix seine Arbeit getan hatte. Der Baustein verkürzt die Suche, er ersetzt sie nicht.
+
 #### Aktuelles Feld
 
-| Name          |  Z. | `.com` | `.de` | `.app` | Play-Titel mit `: Count & Track` |
-| ------------- | --: | ------ | ----- | ------ | -------------------------------: |
-| **Notchcard** |   9 | frei?  | frei? | frei?  |                               24 |
-| **Wolfsten**  |   8 | frei?  | frei? | frei?  |                               23 |
+| Name          |  Z. | `.com` | `.de` | `.app` | Play-Titel mit `: Count & Track` | Store-Check                                                |
+| ------------- | --: | ------ | ----- | ------ | -------------------------------: | ---------------------------------------------------------- |
+| **Notchcard** |   9 | frei?  | frei? | frei?  |                               24 | sauber; derselbe „notch“-Vorbehalt                         |
+| **Wolfsten**  |   8 | frei?  | frei? | frei?  |                               23 | sauber, Wolfenstein offen                                  |
+| **Anynotch**  |   8 | frei?  | frei? | frei?  |                               23 | sauber; „notch“ = Display-Kerbe im Software-Sprachgebrauch |
 
 „frei?“ heißt unverändert: keine DNS-Auflösung, kein Freigabebeweis.
 
