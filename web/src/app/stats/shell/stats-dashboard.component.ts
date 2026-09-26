@@ -161,10 +161,8 @@ export class StatsDashboardComponent {
   readonly store = inject(DashboardStore);
 
   // Delegate store signals for template access
-  readonly allTimeTotal = this.store.allTimeTotal;
-  readonly allTimeDays = this.store.allTimeDays;
-  readonly allTimeEntries = this.store.allTimeEntries;
-  readonly allTimeAvg = this.store.allTimeAvg;
+  readonly allTimeSummary = this.store.allTimeSummary;
+  readonly allTimeLoading = this.store.allTimeLoading;
   readonly todayTotal = this.store.todayTotal;
   readonly dailyGoal = this.store.dailyGoal;
   readonly goalProgressPercent = this.store.goalProgressPercent;

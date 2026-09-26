@@ -1,4 +1,8 @@
-import { PROFILE_SECTIONS } from '@pu-stats/models';
+import {
+  EMPTY_TRAINING_SUMMARY,
+  PROFILE_SECTIONS,
+  type TrainingSummary,
+} from '@pu-stats/models';
 
 import {
   buildPublicProfile,
@@ -100,6 +104,17 @@ describe('isPublicProfileAllowed', () => {
   });
 });
 
+const SUMMARY: TrainingSummary = {
+  reps: 5000,
+  durationSec: 3600,
+  distanceM: 42000,
+  entries: 200,
+  days: 90,
+  currentStreak: 14,
+  bestEntryXp: 50,
+  bestDayXp: 250,
+};
+
 describe('buildPublicProfile', () => {
   const uid = 'abcdef1234567890';
 
@@ -117,26 +132,30 @@ describe('buildPublicProfile', () => {
     ).toBeNull();
   });
 
-  it('Given opt-in but no stats yet, Then returns zeros for numeric fields', () => {
+  it('should return zeros when nothing was summed yet', () => {
+    // when
     const result = buildPublicProfile(
       uid,
       { displayName: 'Wolfi', ui: { publicProfile: true } },
       null
     );
+
+    // then
     expect(result).toEqual({
       uid,
       displayName: 'Wolfi',
       total: 0,
+      totalDurationSec: 0,
+      totalDistanceM: 0,
       totalEntries: 0,
       totalDays: 0,
       currentStreak: 0,
-      bestSingleEntry: null,
-      bestDayTotal: null,
+      bestEntryXp: 0,
+      bestDayXp: 0,
+      xp: null,
       achievements: [],
       photoURL: null,
       memberSince: null,
-      weeklyReps: 0,
-      monthlyReps: 0,
       heatmap: {},
       exercises: [],
       recent: [],
@@ -152,122 +171,52 @@ describe('buildPublicProfile', () => {
     });
   });
 
-  it('Given opt-in and full stats, Then projects whitelisted fields only', () => {
+  it('should project the cross-exercise summary', () => {
+    // when
     const result = buildPublicProfile(
       uid,
       { displayName: 'Wolfi', ui: { publicProfile: true } },
-      {
-        total: 5000,
-        totalEntries: 200,
-        totalDays: 90,
-        currentStreak: 14,
-        bestSingleEntry: { reps: 50, timestamp: '2026-04-01T12:00:00Z' },
-        bestDay: { date: '2026-04-15', total: 250 },
-        updatedAt: '2026-04-29T08:30:00.000Z',
-      }
+      { updatedAt: '2026-04-29T08:30:00.000Z' },
+      { summary: SUMMARY }
     );
-    expect(result).toEqual({
-      uid,
-      displayName: 'Wolfi',
+
+    // then
+    expect(result).toMatchObject({
       total: 5000,
+      totalDurationSec: 3600,
+      totalDistanceM: 42000,
       totalEntries: 200,
       totalDays: 90,
       currentStreak: 14,
-      bestSingleEntry: 50,
-      bestDayTotal: 250,
-      achievements: [],
-      photoURL: null,
-      memberSince: null,
-      weeklyReps: 0,
-      monthlyReps: 0,
-      heatmap: {},
-      exercises: [],
-      recent: [],
-      plan: null,
-      workouts: [],
-      isPrivate: false,
-      viewerIsOwner: false,
-      viewerIsFriend: false,
-      viewerCheeredToday: false,
-      hidden: [],
-      visibility: {},
+      bestEntryXp: 50,
+      bestDayXp: 250,
       updatedAt: '2026-04-29T08:30:00.000Z',
     });
   });
 
-  it('Falls back to anonymous label when displayName is missing', () => {
+  it('should fall back to the anonymous label when displayName is missing', () => {
+    // when
     const result = buildPublicProfile(
       uid,
       { ui: { publicProfile: true } },
       null
     );
+
+    // then
     expect(result?.displayName).toBe('anonym');
   });
 
-  it('Coerces non-numeric stats fields to 0', () => {
+  it('should fall back to an empty updatedAt when the value is not a string', () => {
+    // when
     const result = buildPublicProfile(
       uid,
       { displayName: 'Wolfi', ui: { publicProfile: true } },
-      {
-        total: NaN,
-        totalEntries: undefined,
-        totalDays: 'oops' as unknown as number,
-        currentStreak: Infinity,
-      }
+      // @ts-expect-error – intentionally testing bad runtime data
+      { updatedAt: 1714383600000 }
     );
-    expect(result).toMatchObject({
-      total: 0,
-      totalEntries: 0,
-      totalDays: 0,
-      currentStreak: 0,
-    });
-  });
 
-  it('Returns null for bestSingleEntry when reps is Infinity', () => {
-    const result = buildPublicProfile(
-      uid,
-      { displayName: 'Wolfi', ui: { publicProfile: true } },
-      {
-        bestSingleEntry: { reps: Infinity, timestamp: '2026-04-01T12:00:00Z' },
-        updatedAt: '2026-04-29T00:00:00Z',
-      }
-    );
-    expect(result?.bestSingleEntry).toBeNull();
-  });
-
-  it('Returns null for bestDayTotal when total is NaN', () => {
-    const result = buildPublicProfile(
-      uid,
-      { displayName: 'Wolfi', ui: { publicProfile: true } },
-      {
-        bestDay: { date: '2026-04-15', total: NaN },
-        updatedAt: '2026-04-29T00:00:00Z',
-      }
-    );
-    expect(result?.bestDayTotal).toBeNull();
-  });
-
-  it('Falls back to empty string for updatedAt when value is not a string', () => {
-    const result = buildPublicProfile(
-      uid,
-      { displayName: 'Wolfi', ui: { publicProfile: true } },
-      {
-        total: 100,
-        // @ts-expect-error – intentionally testing bad runtime data
-        updatedAt: 1714383600000,
-      }
-    );
+    // then
     expect(result?.updatedAt).toBe('');
-  });
-
-  it('Returns bestSingleEntry and bestDayTotal as null when both are absent', () => {
-    const result = buildPublicProfile(
-      uid,
-      { displayName: 'Wolfi', ui: { publicProfile: true } },
-      { total: 100 }
-    );
-    expect(result?.bestSingleEntry).toBeNull();
-    expect(result?.bestDayTotal).toBeNull();
   });
 
   // Privacy regression — explicit list of fields a future careless edit
@@ -283,27 +232,28 @@ describe('buildPublicProfile', () => {
         ...({ email: 'leak@example.com' } as Record<string, unknown>),
       },
       {
-        total: 1,
-        totalEntries: 1,
-        totalDays: 1,
-        currentStreak: 1,
-        // Sensitive timestamps and full heatmap must not pass through.
-        ...({ heatmap: { 'Mo-08': 100 } } as Record<string, unknown>),
+        // Sensitive timestamps must not pass through.
+        ...({ lastEntryDate: '2026-04-28' } as Record<string, unknown>),
+        heatmap: { 'Mo-08': 100 },
         updatedAt: '2026-04-29T00:00:00Z',
-      } as never
+      },
+      { summary: SUMMARY, xp: { total: 10, weeklyKey: 'leak' } }
     );
     const allowed = new Set([
       'uid',
       'displayName',
       'total',
+      'totalDurationSec',
+      'totalDistanceM',
       'totalEntries',
       'totalDays',
       'currentStreak',
+      'bestEntryXp',
+      'bestDayXp',
+      'xp',
       'achievements',
       'photoURL',
       'memberSince',
-      'weeklyReps',
-      'monthlyReps',
       'heatmap',
       'exercises',
       'recent',
@@ -315,8 +265,6 @@ describe('buildPublicProfile', () => {
       'viewerCheeredToday',
       'hidden',
       'visibility',
-      'bestSingleEntry',
-      'bestDayTotal',
       'updatedAt',
     ]);
     // Naming the offenders beats a bare `true !== false`: this guard
@@ -454,46 +402,76 @@ describe('buildPublicProfile owner access', () => {
   });
 });
 
-describe('buildPublicProfile period buckets', () => {
+describe('buildPublicProfile xp', () => {
   const uid = 'abc123';
-  const config = { displayName: 'Wolfi', ui: { publicProfile: true } };
-  const stats = {
-    weeklyReps: 300,
+  const config = {
+    displayName: 'Wolfi',
+    ui: { publicProfile: true, profileVisibility: { xp: 'public' } },
+  };
+  const xp = {
+    total: 4321,
+    weeklyXp: 300,
     weeklyKey: '2026-W36',
-    monthlyReps: 1200,
+    monthlyXp: 1200,
     monthlyKey: '2026-09',
   };
 
-  it('should report the bucket when it belongs to the current period', () => {
+  it('should report the period buckets that belong to the current period', () => {
     // when
-    const result = buildPublicProfile(uid, config, stats, {
+    const result = buildPublicProfile(uid, config, null, {
+      xp,
       currentWeeklyKey: '2026-W36',
       currentMonthlyKey: '2026-09',
     });
 
     // then
-    expect(result?.weeklyReps).toBe(300);
-    expect(result?.monthlyReps).toBe(1200);
+    expect(result?.xp).toEqual({ total: 4321, weekly: 300, monthly: 1200 });
   });
 
   it('should zero a stale bucket instead of presenting it as current', () => {
     // given — a user who last trained in August would otherwise show
-    // August's volume as "this month"
-    const result = buildPublicProfile(uid, config, stats, {
+    // August's XP as "this month"
+    const result = buildPublicProfile(uid, config, null, {
+      xp,
       currentWeeklyKey: '2026-W37',
       currentMonthlyKey: '2026-10',
     });
 
     // then
-    expect(result?.weeklyReps).toBe(0);
-    expect(result?.monthlyReps).toBe(0);
+    expect(result?.xp).toEqual({ total: 4321, weekly: 0, monthly: 0 });
   });
 
-  it('should zero when the current period is unknown', () => {
+  it('should zero the buckets when the current period is unknown', () => {
+    // when
+    const result = buildPublicProfile(uid, config, null, { xp });
+
     // then — guessing would be worse than showing nothing
-    const result = buildPublicProfile(uid, config, stats, {});
-    expect(result?.weeklyReps).toBe(0);
-    expect(result?.monthlyReps).toBe(0);
+    expect(result?.xp).toEqual({ total: 4321, weekly: 0, monthly: 0 });
+  });
+
+  it('should be null before the first XP was booked', () => {
+    // when
+    const result = buildPublicProfile(uid, config, null, { xp: null });
+
+    // then
+    expect(result?.xp).toBeNull();
+  });
+
+  it('should keep XP from visitors until the owner publishes it', () => {
+    // given — XP is newer than the profile levels, so an earlier opt-in
+    // does not cover it
+    const legacy = { displayName: 'Wolfi', ui: { publicProfile: true } };
+
+    // when
+    const visitor = buildPublicProfile(uid, legacy, null, { xp });
+    const owner = buildPublicProfile(uid, legacy, null, {
+      xp,
+      viewerIsOwner: true,
+    });
+
+    // then
+    expect(visitor?.xp).toBeNull();
+    expect(owner?.xp?.total).toBe(4321);
   });
 });
 
@@ -529,20 +507,9 @@ describe('buildPublicProfile heatmap', () => {
 
 describe('buildPublicProfile element visibility', () => {
   const uid = 'abc123';
-  const stats = {
-    total: 5000,
-    totalEntries: 120,
-    totalDays: 90,
-    currentStreak: 7,
-    bestSingleEntry: { reps: 60, timestamp: '2026-09-01T10:00:00.000Z' },
-    bestDay: { date: '2026-09-01', total: 200 },
-    weeklyReps: 300,
-    weeklyKey: '2026-W36',
-    monthlyReps: 1200,
-    monthlyKey: '2026-09',
-    heatmap: { 'Mo-07': 40 },
-  };
+  const stats = { heatmap: { 'Mo-07': 40 } };
   const extras = {
+    summary: { ...SUMMARY, currentStreak: 7 },
     currentWeeklyKey: '2026-W36',
     currentMonthlyKey: '2026-09',
     achievements: { earned: { 'plan-days-10': '2026-09-01T00:00:00.000Z' } },
@@ -558,13 +525,13 @@ describe('buildPublicProfile element visibility', () => {
   describe('Given a visitor', () => {
     it.each([
       ['total', 'total'],
+      ['total', 'totalDurationSec'],
+      ['total', 'totalDistanceM'],
       ['streak', 'currentStreak'],
       ['days', 'totalDays'],
       ['entries', 'totalEntries'],
-      ['week', 'weeklyReps'],
-      ['month', 'monthlyReps'],
-      ['bestSet', 'bestSingleEntry'],
-      ['bestDay', 'bestDayTotal'],
+      ['bestSet', 'bestEntryXp'],
+      ['bestDay', 'bestDayXp'],
     ])('should omit %s entirely from the payload', (section, field) => {
       // then — the projection goes over the wire, so hiding it only in
       // the template would still ship the number to anyone who looks
@@ -638,6 +605,7 @@ describe('buildPublicProfile element visibility', () => {
       // Sections that are off by default until the owner publishes them
       // belong in the list too — it is what the owner's page dims.
       expect(result?.hidden).toEqual([
+        'xp',
         'streak',
         'heatmap',
         'recent',
@@ -661,7 +629,8 @@ describe('buildPublicProfile element visibility', () => {
 
 describe('buildPublicProfile for friends', () => {
   const uid = 'abc123';
-  const stats = { total: 5000, currentStreak: 7, updatedAt: 'x' } as never;
+  const stats = { updatedAt: 'x' };
+  const summary = { ...EMPTY_TRAINING_SUMMARY, reps: 5000, currentStreak: 7 };
 
   it('should show a private profile to a confirmed friend', () => {
     // given a profile that was never made public
@@ -669,6 +638,7 @@ describe('buildPublicProfile for friends', () => {
 
     // when
     const result = buildPublicProfile(uid, config, stats, {
+      summary,
       viewerIsFriend: true,
     });
 
@@ -685,7 +655,7 @@ describe('buildPublicProfile for friends', () => {
     const config = { displayName: 'Wolf', ui: { publicProfile: false } };
 
     // when / then
-    expect(buildPublicProfile(uid, config, stats, {})).toBeNull();
+    expect(buildPublicProfile(uid, config, stats, { summary })).toBeNull();
   });
 
   it('should keep a section switched off hidden from friends too', () => {
@@ -697,6 +667,7 @@ describe('buildPublicProfile for friends', () => {
 
     // when
     const result = buildPublicProfile(uid, config, stats, {
+      summary,
       viewerIsFriend: true,
     });
 
@@ -713,7 +684,7 @@ describe('buildPublicProfile for friends', () => {
     };
 
     // when
-    const result = buildPublicProfile(uid, config, stats, {});
+    const result = buildPublicProfile(uid, config, stats, { summary });
 
     // then
     expect(result?.total).toBeNull();
@@ -729,9 +700,10 @@ describe('buildPublicProfile for friends', () => {
 
     // when
     const owner = buildPublicProfile(uid, config, stats, {
+      summary,
       viewerIsOwner: true,
     });
-    const visitor = buildPublicProfile(uid, config, stats, {});
+    const visitor = buildPublicProfile(uid, config, stats, { summary });
 
     // then
     expect(owner?.visibility.total).toBe('friends');

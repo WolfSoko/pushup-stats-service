@@ -28,16 +28,17 @@ const sampleProfile: PublicProfile = {
   uid: 'abcdef1234567890',
   displayName: 'Wolfi',
   total: 5000,
+  totalDurationSec: 0,
+  totalDistanceM: 0,
   totalEntries: 200,
   totalDays: 90,
   currentStreak: 14,
-  bestSingleEntry: 50,
-  bestDayTotal: 250,
+  bestEntryXp: 50,
+  bestDayXp: 250,
+  xp: null,
   achievements: [],
   photoURL: null,
   memberSince: null,
-  weeklyReps: 0,
-  monthlyReps: 0,
   heatmap: {},
   exercises: [],
   recent: [],
@@ -142,12 +143,69 @@ describe('PublicProfilePageComponent', () => {
       // separator so changing LOCALE_ID for tests doesn't break the assertion.
       expect(
         root
-          .querySelector('[data-testid="public-profile-total"]')
+          .querySelector('[data-testid="public-profile-stat-reps"]')
           ?.textContent?.replace(/[,.\s]/g, '')
       ).toContain('5000');
       expect(
-        root.querySelector('[data-testid="public-profile-streak"]')?.textContent
+        root.querySelector('[data-testid="public-profile-stat-streak"]')
+          ?.textContent
       ).toContain('14');
+    });
+
+    it('should lead with the XP card above the stats', async () => {
+      // given
+      await setup({
+        resolve: {
+          ...sampleProfile,
+          xp: { total: 4659, weekly: 103, monthly: 227 },
+        },
+      });
+
+      // then
+      const root = fixture.nativeElement as HTMLElement;
+      const card = root.querySelector('[data-testid="public-profile-xp"]');
+      const grid = root.querySelector('.stats-grid');
+      expect(card?.textContent).toContain('4,659 XP');
+      expect(
+        card && grid
+          ? card.compareDocumentPosition(grid) &
+              Node.DOCUMENT_POSITION_FOLLOWING
+          : 0
+      ).toBeTruthy();
+    });
+
+    it('should show no XP card when the viewer gets no XP', async () => {
+      // when
+      await setup({ resolve: { ...sampleProfile, xp: null } });
+
+      // then
+      expect(
+        (fixture.nativeElement as HTMLElement).querySelector(
+          '[data-testid="public-profile-xp"]'
+        )
+      ).toBeNull();
+    });
+
+    it('should show time and distance totals once they were logged', async () => {
+      // when
+      await setup({
+        resolve: {
+          ...sampleProfile,
+          totalDurationSec: 5400,
+          totalDistanceM: 42000,
+        },
+      });
+
+      // then
+      const root = fixture.nativeElement as HTMLElement;
+      expect(
+        root.querySelector('[data-testid="public-profile-stat-duration"]')
+          ?.textContent
+      ).toContain('1 h 30 min');
+      expect(
+        root.querySelector('[data-testid="public-profile-stat-distance"]')
+          ?.textContent
+      ).toContain('42.0 km');
     });
 
     it('Then it sets SEO meta tags including the displayName', async () => {
@@ -924,7 +982,7 @@ describe('PublicProfilePageComponent', () => {
       });
 
       // then
-      expect(q('[data-testid="public-profile-streak"]')).toBeTruthy();
+      expect(q('[data-testid="public-profile-stat-streak"]')).toBeTruthy();
       expect(q('[data-testid="profile-toggle-streak"]')).toBeTruthy();
     });
 
@@ -937,7 +995,7 @@ describe('PublicProfilePageComponent', () => {
       // then — dimming is the only cue that it is off; without it the
       // page would look the same either way
       expect(
-        q('[data-testid="public-profile-streak"]').closest('.is-hidden')
+        q('[data-testid="public-profile-stat-streak"]').closest('.is-hidden')
       ).toBeTruthy();
     });
 
@@ -996,7 +1054,7 @@ describe('PublicProfilePageComponent', () => {
         pick('friend');
 
         // then
-        expect(q('[data-testid="public-profile-streak"]')).toBeTruthy();
+        expect(q('[data-testid="public-profile-stat-streak"]')).toBeTruthy();
       });
 
       it('should drop a friends-only element from the visitor view', async () => {
@@ -1007,7 +1065,7 @@ describe('PublicProfilePageComponent', () => {
         pick('public');
 
         // then
-        expect(q('[data-testid="public-profile-streak"]')).toBeNull();
+        expect(q('[data-testid="public-profile-stat-streak"]')).toBeNull();
       });
 
       it('should drop switched-off elements from both previews', async () => {
@@ -1019,13 +1077,13 @@ describe('PublicProfilePageComponent', () => {
 
         // then — a preview that still showed it would be a lie about what
         // the other side gets
-        expect(q('[data-testid="public-profile-streak"]')).toBeNull();
+        expect(q('[data-testid="public-profile-stat-streak"]')).toBeNull();
 
         // when
         pick('public');
 
         // then
-        expect(q('[data-testid="public-profile-streak"]')).toBeNull();
+        expect(q('[data-testid="public-profile-stat-streak"]')).toBeNull();
       });
 
       it('should hide the switches themselves', async () => {
@@ -1175,7 +1233,7 @@ describe('PublicProfilePageComponent', () => {
         // then — the projection still says visible; the local mirror is
         // what makes the switch feel like a switch
         expect(
-          q('[data-testid="public-profile-streak"]').closest('.is-hidden')
+          q('[data-testid="public-profile-stat-streak"]').closest('.is-hidden')
         ).toBeTruthy();
       });
     });

@@ -17,6 +17,7 @@ export * from './lib/models/achievement.models';
 export * from './lib/models/xp.models';
 export * from './lib/models/xp-rates.catalog';
 export * from './lib/models/xp-achievement.models';
+export * from './lib/models/training-summary';
 export * from './lib/models/referral.models';
 export * from './lib/models/public-profile.models';
 export * from './lib/models/exercise.models';

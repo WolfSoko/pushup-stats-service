@@ -12,6 +12,7 @@ import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
   exerciseEntryToUnified,
   isProfilePublic,
+  summarizeTraining,
   type UnifiedEntry,
   type UserStats,
 } from '@pu-stats/models';
@@ -98,12 +99,13 @@ export const DashboardStore = signalStore(
       () => store.userStatsResource.value() ?? null
     );
 
-    const allTimeTotal = computed(() => userStats()?.total ?? 0);
-    const allTimeDays = computed(() => userStats()?.totalDays ?? 0);
-    const allTimeEntries = computed(() => userStats()?.totalEntries ?? 0);
-    const allTimeAvg = computed(() =>
-      allTimeDays() ? (allTimeTotal() / allTimeDays()).toFixed(1) : '0'
+    const allTimeSummary = computed(() =>
+      summarizeTraining(
+        store._live.exerciseEntries(),
+        toBerlinIsoDate(new Date())
+      )
     );
+    const allTimeLoading = computed(() => !store._live.exerciseEntriesLoaded());
 
     const todayTotal = computed(() => {
       const berlinToday = toBerlinIsoDate(new Date());
@@ -272,10 +274,8 @@ export const DashboardStore = signalStore(
     const todayQuote = store._motivation.todayQuote;
 
     return {
-      allTimeTotal,
-      allTimeDays,
-      allTimeEntries,
-      allTimeAvg,
+      allTimeSummary,
+      allTimeLoading,
       entryRows,
       currentStreak,
       weekReps,

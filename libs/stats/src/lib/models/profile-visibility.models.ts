@@ -50,6 +50,7 @@ export function isProfileSectionVisibility(
  * the profile had then, not about a new kind of it.
  */
 const OFF_UNLESS_CHOSEN: ReadonlyArray<ProfileSection> = [
+  'xp',
   'recent',
   'plan',
   'workouts',

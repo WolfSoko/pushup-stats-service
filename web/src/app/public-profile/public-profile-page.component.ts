@@ -35,6 +35,8 @@ import { UserConfigStore } from '../core/user-config.store';
 import { ProfilePhotoService } from '../core/profile-photo.service';
 import { InviteBannerComponent } from '../core/invite-banner.component';
 import { ProfileWorkoutsComponent } from './profile-workouts.component';
+import { ProfileXpCardComponent } from './profile-xp-card.component';
+import { buildProfileStatCards } from './profile-stat-cards';
 import { PublicProfileSkeletonComponent } from './public-profile-skeleton.component';
 import { InviteService } from '../core/invite.service';
 import { FriendsStore } from '../friends/friends.store';
@@ -60,6 +62,7 @@ type LoadState =
     MatTooltipModule,
     InviteBannerComponent,
     ProfileWorkoutsComponent,
+    ProfileXpCardComponent,
     PublicProfileSkeletonComponent,
     BusyDirective,
     CheerButtonComponent,
@@ -91,6 +94,11 @@ export class PublicProfilePageComponent {
 
   /** Everything the page renders as a list. */
   protected readonly rows = createProfileRows(this.profile, this.localeId);
+
+  protected readonly statCards = computed(() => {
+    const profile = this.profile();
+    return profile ? buildProfileStatCards(profile, this.localeId) : [];
+  });
 
   /** Who sees what, and whose view the owner is previewing. */
   protected readonly audience = new ProfileAudienceView(

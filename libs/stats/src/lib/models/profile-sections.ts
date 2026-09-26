@@ -8,12 +8,11 @@
  * lists would drift the moment an element is added.
  */
 export const PROFILE_SECTIONS = [
+  'xp',
   'total',
   'streak',
   'days',
   'entries',
-  'week',
-  'month',
   'bestSet',
   'bestDay',
   'achievements',

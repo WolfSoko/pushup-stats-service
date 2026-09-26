@@ -55,7 +55,7 @@ export class PublicProfileSeo {
     const text =
       profile.total === null
         ? $localize`:@@publicProfile.share.textPlain:${profile.displayName}:name: trackt auf ${BRAND_NAME}:brand: 💪 Schau's dir an:`
-        : $localize`:@@publicProfile.share.text:${profile.displayName}:name: hat ${profile.total}:total: Liegestütze auf ${BRAND_NAME}:brand: geschafft 💪 Schau's dir an:`;
+        : $localize`:@@publicProfile.share.text:${profile.displayName}:name: hat ${profile.total}:total: Wiederholungen auf ${BRAND_NAME}:brand: geschafft 💪 Schau's dir an:`;
     void this.shareService.share({
       title: $localize`:@@publicProfile.share.title:${BRAND_NAME}:brand: Profil`,
       text,
@@ -105,10 +105,10 @@ export class PublicProfileSeo {
       profile.totalDays !== null;
     this.seo.update(
       hasStats
-        ? $localize`:@@publicProfile.seo.title:${profile.displayName}:name: – ${profile.total}:total: Liegestütze · Streak ${profile.currentStreak}:streak: · ${BRAND_NAME}:brand:`
+        ? $localize`:@@publicProfile.seo.title:${profile.displayName}:name: – ${profile.total}:total: Wiederholungen · Streak ${profile.currentStreak}:streak: · ${BRAND_NAME}:brand:`
         : $localize`:@@publicProfile.seo.titlePlain:${profile.displayName}:name: · ${BRAND_NAME}:brand:`,
       hasStats
-        ? $localize`:@@publicProfile.seo.description:${profile.displayName}:name: hat ${profile.total}:total: Liegestütze in ${profile.totalDays}:days: aktiven Tagen geschafft – aktuelle Streak: ${profile.currentStreak}:streak: Tage. Tracke selbst kostenlos auf ${BRAND_DOMAIN}:domain:.`
+        ? $localize`:@@publicProfile.seo.description:${profile.displayName}:name: hat ${profile.total}:total: Wiederholungen an ${profile.totalDays}:days: Trainingstagen geschafft – aktuell ${profile.currentStreak}:streak: Tage in Folge. Tracke selbst kostenlos auf ${BRAND_DOMAIN}:domain:.`
         : $localize`:@@publicProfile.seo.descriptionPlain:${profile.displayName}:name: auf ${BRAND_NAME}:brand:. Tracke selbst kostenlos auf ${BRAND_DOMAIN}:domain:.`,
       `/u/${encodedUid}`,
       {

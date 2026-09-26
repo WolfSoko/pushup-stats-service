@@ -59,11 +59,8 @@
   </header>
 
   <app-all-time-badges
-    [total]="allTimeTotal()"
-    [days]="allTimeDays()"
-    [entries]="allTimeEntries()"
-    [avg]="allTimeAvg()"
-    [loading]="loading()"
+    [summary]="allTimeSummary()"
+    [loading]="allTimeLoading()"
   />
 
   <app-level-card />

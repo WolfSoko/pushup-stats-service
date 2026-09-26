@@ -26,6 +26,7 @@ import { db } from './firebase-app';
 import { periodKeys } from './user-stats-delta';
 import { resolvePhotoUrl } from './functions-profile-photo';
 import { profileWorkouts } from './workouts/logic';
+import { readTrainingSummary, readUserXp } from './profile/summary-read';
 import {
   buildPublicProfile,
   isValidUid,
@@ -76,6 +77,16 @@ async function readExerciseTotals(uid: string): Promise<ExerciseTotal[]> {
 const MAX_PROFILE_EXERCISES = 8;
 
 const MAX_RECENT_ENTRIES = 10;
+
+/** Sections fed by `readTrainingSummary`, the one read that scans every entry. */
+const SUMMARY_SECTIONS: ReadonlyArray<ProfileSection> = [
+  'total',
+  'entries',
+  'days',
+  'streak',
+  'bestSet',
+  'bestDay',
+];
 
 /**
  * The workouts behind the numbers, newest first — the same "what did you
@@ -162,10 +173,8 @@ async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
   if (!isValidUid(uid)) return null;
   const [cfgSnap, statsSnap, achievementsSnap] = await Promise.all([
     db.collection('userConfigs').doc(uid).get(),
-    // Public pushup stats now live in the per-exercise aggregate
-    // (`updateExerciseStatsOnEntryWrite` keeps it fresh); the top-level
-    // `userStats/{uid}` doc is frozen for pushups. Same UserStats shape,
-    // so `buildPublicProfile` is unchanged.
+    // Only the heatmap still comes from the pushup aggregate; the
+    // numbers are summed across exercises in `readTrainingSummary`.
     db
       .collection('userStats')
       .doc(uid)
@@ -207,20 +216,33 @@ async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
   // Skip the extra read entirely when the viewer may not see the section.
   const shows = (section: ProfileSection): boolean =>
     isSectionVisibleTo(sectionVisibility(config?.ui, section), viewer);
-  const [photoURL, exercises, recent, plan, workouts, viewerCheeredToday] =
-    await Promise.all([
-      resolvePhotoUrl(uid, config ?? {}, viewerIsOwner),
-      readExerciseTotals(uid),
-      shows('recent') ? readRecentEntries(uid) : Promise.resolve([]),
-      shows('plan')
-        ? readActivePlan(uid, parts.isoDate)
-        : Promise.resolve(null),
-      shows('workouts') ? readProfileWorkouts(uid) : Promise.resolve([]),
-      viewerIsFriend
-        ? hasCheered(viewerUid, uid, parts.isoDate)
-        : Promise.resolve(false),
-    ]);
+  const needsSummary = SUMMARY_SECTIONS.some(shows);
+  const [
+    photoURL,
+    exercises,
+    recent,
+    plan,
+    workouts,
+    viewerCheeredToday,
+    summary,
+    xp,
+  ] = await Promise.all([
+    resolvePhotoUrl(uid, config ?? {}, viewerIsOwner),
+    readExerciseTotals(uid),
+    shows('recent') ? readRecentEntries(uid) : Promise.resolve([]),
+    shows('plan') ? readActivePlan(uid, parts.isoDate) : Promise.resolve(null),
+    shows('workouts') ? readProfileWorkouts(uid) : Promise.resolve([]),
+    viewerIsFriend
+      ? hasCheered(viewerUid, uid, parts.isoDate)
+      : Promise.resolve(false),
+    needsSummary
+      ? readTrainingSummary(db, uid, parts.isoDate)
+      : Promise.resolve(null),
+    shows('xp') ? readUserXp(db, uid) : Promise.resolve(null),
+  ]);
   return buildPublicProfile(uid, config, stats, {
+    summary,
+    xp,
     achievements,
     photoURL,
     exercises,

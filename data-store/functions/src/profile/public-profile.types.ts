@@ -3,6 +3,8 @@ import {
   type ProfileSection,
   type ProfileSectionVisibility,
   type PublicProfileWorkout,
+  type PublicProfileXp,
+  type TrainingSummary,
 } from '@pu-stats/models';
 
 import { type UserProfile } from './logic';
@@ -23,26 +25,24 @@ export interface UserConfigForPublicProfile extends UserProfile {
   photoUpdatedAt?: string;
 }
 
-/** Subset of `UserStats` this projection actually reads. */
+/**
+ * Subset of `userStats/{uid}/perExercise/pushup` this projection still
+ * reads. The numbers come from {@link TrainingSummary} now; only the
+ * heatmap is left, until it gets a cross-exercise source of its own.
+ */
 export interface UserStatsForPublicProfile {
-  total?: number;
-  totalEntries?: number;
-  totalDays?: number;
-  currentStreak?: number;
-  bestSingleEntry?: { reps: number; timestamp: string } | null;
-  bestDay?: { date: string; total: number } | null;
-  /**
-   * Period buckets carry the key they were written for. Reading the
-   * value without checking the key would present last week's number as
-   * "this week" for anyone who has not trained since.
-   */
-  weeklyReps?: number;
-  weeklyKey?: string;
-  monthlyReps?: number;
-  monthlyKey?: string;
   /** Cumulative reps per `<weekday>-<HH>` slot, zero slots pruned. */
   heatmap?: Record<string, number>;
   updatedAt?: string;
+}
+
+/** Subset of `userXp/{uid}` this projection reads. */
+export interface UserXpForPublicProfile {
+  total?: unknown;
+  weeklyXp?: unknown;
+  weeklyKey?: unknown;
+  monthlyXp?: unknown;
+  monthlyKey?: unknown;
 }
 
 /** Where the owner stands in their training plan. */
@@ -90,11 +90,14 @@ export interface PublicProfileProjection {
    * value that is only hidden in the template is still public.
    */
   total: number | null;
+  totalDurationSec: number | null;
+  totalDistanceM: number | null;
   totalEntries: number | null;
   totalDays: number | null;
   currentStreak: number | null;
-  bestSingleEntry: number | null;
-  bestDayTotal: number | null;
+  bestEntryXp: number | null;
+  bestDayXp: number | null;
+  xp: PublicProfileXp | null;
   /**
    * Ids of achievements the user has earned, newest first. Ids only —
    * the label and icon come from the client-side catalog, so renaming a
@@ -105,9 +108,6 @@ export interface PublicProfileProjection {
   photoURL: string | null;
   /** ISO date the account was created, null when unknown. */
   memberSince: string | null;
-  /** Reps in the *current* Berlin week/month; 0 when the bucket is stale. */
-  weeklyReps: number | null;
-  monthlyReps: number | null;
   /** Cumulative reps per `<weekday>-<HH>` slot. */
   heatmap: Record<string, number>;
   /** Top exercises by volume, grouped and formatted by the client. */
@@ -153,6 +153,9 @@ export interface PublicProfileProjection {
  * callers so existence of a private user can't be probed.
  */
 export interface PublicProfileExtras {
+  /** Lifetime numbers across all exercises, from the owner's entries. */
+  readonly summary?: TrainingSummary | null;
+  readonly xp?: UserXpForPublicProfile | null;
   readonly achievements?: UserAchievementsForPublicProfile | null;
   readonly photoURL?: string | null;
   readonly exercises?: ReadonlyArray<ExerciseTotal>;
