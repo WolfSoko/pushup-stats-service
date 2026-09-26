@@ -2,7 +2,7 @@
 
 Single source of truth for all AI agents working on this repo (Claude Code, Copilot, Gemini, etc.). The Copilot entry point (`.github/copilot-instructions.md`) is a symlink to this file; Gemini reads it via `contextFileName` in `.gemini/settings.json`.
 
-Angular 21 / Nx monorepo for tracking pushup statistics with Firebase backend.
+Angular 22 / Nx monorepo for tracking pushup statistics with Firebase backend.
 
 > **Default rule:** if there is even a small chance a docs file under [`docs/`](docs/) is relevant to the change you are making, read it before making the change. Linking to a doc from this file is an explicit signal that the doc contains constraints not obvious from the code.
 
@@ -81,8 +81,8 @@ More test pitfalls: [`docs/gotchas/testing.md`](docs/gotchas/testing.md).
 
 ## Tech Stack
 
-- **Frontend:** Angular 21 (standalone, zoneless, SSR)
-- **Build:** Nx 22, pnpm
+- **Frontend:** Angular 22 (standalone, zoneless, SSR)
+- **Build:** Nx 23.2.1, pnpm
 - **Backend:** Firebase (Firestore, Cloud Functions, Auth)
 - **State:** @ngrx/signals (signal stores)
 - **UI:** Angular Material 21, Chart.js
