@@ -13,13 +13,13 @@ import {
   acceptedFriendUids,
   isFriendsBoardMetric,
   isFriendsLeaderboardPeriod,
-  periodStartIso,
   rankFriends,
+  trainingRowOf,
   xpStatsOf,
   type FriendStatsRow,
 } from './friends';
 import { readCheersToday } from './friends/cheers-read';
-import { readTrainingDays } from './friends/training-days-read';
+import { readTrainingStats } from './training/stats-read';
 import { periodKeys } from './user-stats-delta';
 
 /**
@@ -29,9 +29,9 @@ import { periodKeys } from './user-stats-delta';
  *
  * Not served from the public leaderboard snapshot: that one is a top-N
  * list, and friends are an arbitrary set of at most `MAX_FRIENDS` users
- * who will mostly not be in it. Their values come from the aggregates,
- * one `getAll` per collection; only training days within a week or
- * month are counted from the entries.
+ * who will mostly not be in it. Their values come from the aggregates:
+ * days and streak from the cross-exercise training aggregate, reps and
+ * XP with one `getAll` each.
  */
 export const getFriendsLeaderboard = onCall(
   { region: 'europe-west3', timeoutSeconds: 30 },
@@ -67,37 +67,50 @@ export const getFriendsLeaderboard = onCall(
 
     const uids = [uid, ...friendUids];
     const today = berlinDateParts();
-    const statsDoc = (id: string) => {
-      if (metric === 'xp') return db.collection('userXp').doc(id);
-      const root = db.collection('userStats').doc(id);
-      return metric === 'reps'
-        ? root.collection('perExercise').doc(exerciseId)
-        : root;
-    };
-    const countDays =
-      metric === 'days' && (period === 'week' || period === 'month');
-    const [configs, stats, days] = await Promise.all([
-      db.getAll(...uids.map((id) => db.collection('userConfigs').doc(id))),
-      db.getAll(...uids.map(statsDoc)),
-      countDays
-        ? readTrainingDays(
-            uids,
-            periodStartIso(period, today.isoDate),
-            today.isoDate
+    const configsRead = db.getAll(
+      ...uids.map((id) => db.collection('userConfigs').doc(id))
+    );
+    const statsRead: Promise<
+      ReadonlyArray<Pick<FriendStatsRow, 'stats' | 'days'>>
+    > =
+      metric === 'days' || metric === 'streak'
+        ? Promise.all(
+            uids.map(async (id) =>
+              trainingRowOf(
+                await readTrainingStats(db, id),
+                period,
+                today.isoDate
+              )
+            )
           )
-        : new Map<string, number>(),
-    ]);
+        : db
+            .getAll(
+              ...uids.map((id) =>
+                metric === 'xp'
+                  ? db.collection('userXp').doc(id)
+                  : db
+                      .collection('userStats')
+                      .doc(id)
+                      .collection('perExercise')
+                      .doc(exerciseId)
+              )
+            )
+            .then((snaps) =>
+              snaps.map((snap) => ({
+                stats:
+                  metric === 'xp'
+                    ? xpStatsOf(snap.data())
+                    : (snap.data() ?? null),
+              }))
+            );
+    const [configs, stats] = await Promise.all([configsRead, statsRead]);
 
     const rows: FriendStatsRow[] = uids.map((id, index) => {
       const config = configs[index]?.data();
       return {
         uid: id,
         displayName: String(config?.['displayName'] ?? '').trim() || null,
-        stats:
-          metric === 'xp'
-            ? xpStatsOf(stats[index]?.data())
-            : (stats[index]?.data() ?? null),
-        days: days.get(id),
+        ...stats[index],
         ui: config?.['ui'] as ProfileVisibilityUi | undefined,
         isViewer: id === uid,
       };

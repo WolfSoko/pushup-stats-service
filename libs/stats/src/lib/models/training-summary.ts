@@ -1,6 +1,9 @@
 import { addDays } from './challenge.models';
-import { findExerciseDefinition } from './exercise.catalog';
-import { xpBaseValue, type XpEntryInput } from './xp.models';
+import {
+  rebuildTrainingStats,
+  type TrainingStats,
+} from './training-stats.models';
+import type { XpEntryInput } from './xp.models';
 
 export interface TrainingSummaryEntry extends XpEntryInput {
   readonly timestamp: string;
@@ -11,8 +14,8 @@ export interface TrainingSummaryEntry extends XpEntryInput {
  *
  * Volume is kept per unit — reps, seconds and metres cannot be added up
  * — while entries, days and the streak count any catalog exercise. The
- * dashboard feeds it the live entries, the public profile the same
- * entries read server-side, so both show the same numbers.
+ * dashboard derives it from its live entries, the public profile from
+ * the `TrainingStats` aggregate; both go through the same fold.
  */
 export interface TrainingSummary {
   /** Reps of all rep-counted exercises. */
@@ -43,19 +46,6 @@ export const EMPTY_TRAINING_SUMMARY: TrainingSummary = {
   bestDayXp: 0,
 };
 
-/** `en-CA` formats as `YYYY-MM-DD`; models may not import `@pu-stats/date`. */
-const BERLIN_DAY = new Intl.DateTimeFormat('en-CA', {
-  timeZone: 'Europe/Berlin',
-  year: 'numeric',
-  month: '2-digit',
-  day: '2-digit',
-});
-
-function berlinDay(timestamp: string): string | null {
-  const date = new Date(timestamp);
-  return Number.isNaN(date.getTime()) ? null : BERLIN_DAY.format(date);
-}
-
 function streakOf(sortedDays: ReadonlyArray<string>, today: string): number {
   const last = sortedDays[sortedDays.length - 1];
   if (!last || (last !== today && addDays(last, 1) !== today)) return 0;
@@ -68,49 +58,41 @@ function streakOf(sortedDays: ReadonlyArray<string>, today: string): number {
 }
 
 /**
+ * The lifetime numbers of an aggregate.
+ *
  * @param today Berlin ISO date the streak is measured against.
- * @param xpOf XP an entry is worth; only needed for the two XP bests.
+ */
+export function summaryFromTrainingStats(
+  stats: TrainingStats,
+  today: string
+): TrainingSummary {
+  const days = Object.keys(stats.days).sort();
+  return {
+    reps: stats.reps,
+    durationSec: stats.durationSec,
+    distanceM: stats.distanceM,
+    entries: stats.entries,
+    days: days.length,
+    currentStreak: streakOf(days, today),
+    bestEntryXp: stats.bestEntryXp,
+    bestDayXp: Math.max(0, ...Object.values(stats.days).map((d) => d.xp)),
+  };
+}
+
+/**
+ * The same numbers straight from the entries — what the dashboard shows
+ * from its live feed, through the very fold the trigger applies.
+ *
+ * @param xpOf XP an entry is worth; only needed for the XP bests.
  */
 export function summarizeTraining(
   entries: ReadonlyArray<TrainingSummaryEntry>,
   today: string,
   xpOf?: (entry: TrainingSummaryEntry) => number
 ): TrainingSummary {
-  let reps = 0;
-  let durationSec = 0;
-  let distanceM = 0;
-  let count = 0;
-  let bestEntryXp = 0;
-  const xpByDay = new Map<string, number>();
-
-  for (const entry of entries) {
-    const definition = findExerciseDefinition(entry.exerciseId);
-    const day = berlinDay(entry.timestamp);
-    if (!definition || !day) continue;
-    count += 1;
-    const value = xpBaseValue(definition, entry);
-    if (definition.measurement === 'reps') reps += value;
-    else if (definition.measurement === 'time') durationSec += value;
-    else if (
-      definition.measurement === 'distance' ||
-      definition.measurement === 'distance-time'
-    ) {
-      distanceM += value;
-    }
-    const xp = xpOf ? xpOf(entry) : 0;
-    bestEntryXp = Math.max(bestEntryXp, xp);
-    xpByDay.set(day, (xpByDay.get(day) ?? 0) + xp);
-  }
-
-  const days = [...xpByDay.keys()].sort();
-  return {
-    reps,
-    durationSec,
-    distanceM,
-    entries: count,
-    days: days.length,
-    currentStreak: streakOf(days, today),
-    bestEntryXp,
-    bestDayXp: Math.max(0, ...xpByDay.values()),
-  };
+  const lines = entries.map((entry) => ({
+    ...entry,
+    xp: xpOf ? xpOf(entry) : 0,
+  }));
+  return summaryFromTrainingStats(rebuildTrainingStats('', lines), today);
 }

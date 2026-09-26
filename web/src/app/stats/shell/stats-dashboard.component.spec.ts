@@ -1838,14 +1838,22 @@ describe('StatsDashboardComponent', () => {
     });
 
     it('Then a multi-day streak adds the streak count to the share text', async () => {
-      // Given — server stats report a 3-day streak ending today
-      userStatsMock.getPerExerciseStats.mockReturnValueOnce(
-        of({
-          ...defaultUserStats,
-          currentStreak: 3,
-          lastEntryDate: '2025-01-15',
-        })
-      );
+      // Given — pushups today, a plank yesterday, a run the day before:
+      // a streak counts every exercise
+      liveExerciseEntries.set([
+        {
+          _id: 'p1',
+          exerciseId: 'plank.standard',
+          timestamp: '2025-01-14T08:00:00',
+          durationSec: 60,
+        },
+        {
+          _id: 'r1',
+          exerciseId: 'cardio.running',
+          timestamp: '2025-01-13T08:00:00',
+          distanceM: 3000,
+        },
+      ]);
       const freshFixture = TestBed.createComponent(StatsDashboardComponent);
       await freshFixture.whenStable();
       shareSpy.mockClear();
@@ -1922,8 +1930,7 @@ describe('StatsDashboardComponent', () => {
   describe('Given entries with consecutive dates', () => {
     describe('When currentStreak is computed with no recent entries', () => {
       it('Then it should return 0 when last entry is more than 1 day ago', async () => {
-        // Given - null server stats forces client-side fallback; only old entry
-        userStatsMock.getPerExerciseStats.mockReturnValueOnce(of(null));
+        // Given - only an old entry
         liveEntries.set([
           {
             _id: '1',

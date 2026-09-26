@@ -45,9 +45,9 @@ export interface FriendStatsRow {
   readonly uid: string;
   readonly displayName: string | null;
   /**
-   * `userStats/{uid}/perExercise/{exerciseId}` for `reps`, the root
-   * `userStats/{uid}` for `days` and `streak`, `userXp/{uid}` mapped by
-   * {@link xpStatsOf} for `xp`; null when absent.
+   * `userStats/{uid}/perExercise/{exerciseId}` for `reps`, the training
+   * aggregate mapped by `trainingRowOf` for `days` and `streak`,
+   * `userXp/{uid}` mapped by {@link xpStatsOf} for `xp`; null when absent.
    */
   readonly stats: {
     total?: unknown;
@@ -61,7 +61,7 @@ export interface FriendStatsRow {
     monthlyReps?: unknown;
     monthlyKey?: unknown;
   } | null;
-  /** Training days in the period, counted from the entries (`days`, week/month). */
+  /** Training days in the period (`days`, week/month). */
   readonly days?: number;
   /** The participant's own profile settings, for the visibility gate. */
   readonly ui: ProfileVisibilityUi | undefined;

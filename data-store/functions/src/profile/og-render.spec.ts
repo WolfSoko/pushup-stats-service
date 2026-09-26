@@ -18,10 +18,13 @@ describe('buildOgTree', () => {
     totalEntries: 200,
     totalDays: 90,
     currentStreak: 14,
-    bestSingleEntry: 50,
-    bestDayTotal: 250,
+    totalDurationSec: 0,
+    totalDistanceM: 0,
+    bestEntryXp: 50,
+    bestDayXp: 250,
+    xp: null,
     updatedAt: '2026-04-29T08:30:00.000Z',
-  };
+  } as PublicProfileProjection;
 
   function flatten(node: unknown): string {
     if (typeof node === 'string') return node;
@@ -49,6 +52,32 @@ describe('buildOgTree', () => {
     expect(text).toContain('5.000');
     expect(text).toContain('Streak 14');
     expect(text).toContain('90 Tage');
+  });
+
+  it('should lead the stats with level and XP once they are public', () => {
+    // when
+    const text = flatten(
+      buildOgTree({ ...profile, xp: { total: 4659, weekly: 0, monthly: 0 } })
+    );
+
+    // then — 4659 XP is level 10 (4500 XP threshold)
+    expect(text).toMatch(/Level 10\s*·\s*4\.659 XP\s*·\s*5\.000 Reps/);
+  });
+
+  it('should leave level and XP out while they are not public', () => {
+    // when
+    const text = flatten(buildOgTree({ ...profile, xp: null }));
+
+    // then
+    expect(text).not.toContain('XP');
+  });
+
+  it('should present the profile as a training profile, not a push-up one', () => {
+    // when
+    const text = flatten(buildOgTree(profile));
+
+    // then
+    expect(text).toContain('Trainingsprofil');
   });
 
   it('Always renders the brand mark and canonical URL', () => {

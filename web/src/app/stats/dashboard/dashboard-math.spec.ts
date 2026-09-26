@@ -1,5 +1,4 @@
 import {
-  computeStreakFromEntries,
   currentIsoWeekKey,
   currentMonthKey,
   goalPercent,
@@ -11,40 +10,6 @@ import {
 function row(timestamp: string, reps: number): RepEntry {
   return { timestamp, reps };
 }
-
-describe('computeStreakFromEntries', () => {
-  it('should return 0 for no rows', () => {
-    expect(computeStreakFromEntries([], '2026-06-15')).toBe(0);
-  });
-
-  it('should count consecutive days ending today', () => {
-    // given three consecutive days ending on "today"
-    const rows = [
-      row('2026-06-13T10:00:00', 10),
-      row('2026-06-14T10:00:00', 10),
-      row('2026-06-15T10:00:00', 10),
-    ];
-    // when / then
-    expect(computeStreakFromEntries(rows, '2026-06-15')).toBe(3);
-  });
-
-  it('should still count when the last entry was yesterday', () => {
-    // given last entry one day before today
-    const rows = [
-      row('2026-06-13T10:00:00', 10),
-      row('2026-06-14T10:00:00', 10),
-    ];
-    // when / then
-    expect(computeStreakFromEntries(rows, '2026-06-15')).toBe(2);
-  });
-
-  it('should return 0 when the last entry is older than yesterday', () => {
-    // given a stale last entry (>1 day gap to today)
-    const rows = [row('2026-06-10T10:00:00', 10)];
-    // when / then
-    expect(computeStreakFromEntries(rows, '2026-06-15')).toBe(0);
-  });
-});
 
 describe('sumRepsInWeek', () => {
   it('should sum only entries within the ISO week (Mon–Sun) of today', () => {

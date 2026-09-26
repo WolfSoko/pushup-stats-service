@@ -48,7 +48,7 @@ export interface PublicProfile {
   readonly photoURL: string | null;
   /** ISO date the account was created, null when unknown. */
   readonly memberSince: string | null;
-  /** Cumulative reps per `<weekday>-<HH>` slot. */
+  /** XP of every exercise per `<weekday>-<HH>` slot. */
   readonly heatmap: Readonly<Record<string, number>>;
   /** Top exercises by volume. */
   readonly exercises: ReadonlyArray<PublicProfileExercise>;

@@ -25,13 +25,9 @@ export interface UserConfigForPublicProfile extends UserProfile {
   photoUpdatedAt?: string;
 }
 
-/**
- * Subset of `userStats/{uid}/perExercise/pushup` this projection still
- * reads. The numbers come from {@link TrainingSummary} now; only the
- * heatmap is left, until it gets a cross-exercise source of its own.
- */
+/** What the projection takes from the training aggregate besides the numbers. */
 export interface UserStatsForPublicProfile {
-  /** Cumulative reps per `<weekday>-<HH>` slot, zero slots pruned. */
+  /** XP of every exercise per `<weekday>-<HH>` slot, zero slots pruned. */
   heatmap?: Record<string, number>;
   updatedAt?: string;
 }
@@ -108,7 +104,7 @@ export interface PublicProfileProjection {
   photoURL: string | null;
   /** ISO date the account was created, null when unknown. */
   memberSince: string | null;
-  /** Cumulative reps per `<weekday>-<HH>` slot. */
+  /** XP of every exercise per `<weekday>-<HH>` slot. */
   heatmap: Record<string, number>;
   /** Top exercises by volume, grouped and formatted by the client. */
   exercises: ExerciseTotal[];
