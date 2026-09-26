@@ -1,116 +1,114 @@
 import { By } from '@angular/platform-browser';
+import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { MatTooltip } from '@angular/material/tooltip';
 import { provideRouter } from '@angular/router';
+import { EMPTY_TRAINING_SUMMARY, type TrainingSummary } from '@pu-stats/models';
 
 import { AllTimeBadgesComponent } from './all-time-badges.component';
 
+const SUMMARY: TrainingSummary = {
+  ...EMPTY_TRAINING_SUMMARY,
+  reps: 1200,
+  durationSec: 5400,
+  distanceM: 42000,
+  days: 30,
+  entries: 90,
+};
+
 describe('AllTimeBadgesComponent', () => {
-  async function render() {
+  async function render(summary = SUMMARY, loading = false) {
     TestBed.resetTestingModule();
     await TestBed.configureTestingModule({
       imports: [AllTimeBadgesComponent],
-      providers: [provideRouter([])],
+      providers: [provideRouter([]), { provide: LOCALE_ID, useValue: 'en-US' }],
     }).compileComponents();
     const fixture = TestBed.createComponent(AllTimeBadgesComponent);
-    fixture.componentRef.setInput('total', 1200);
-    fixture.componentRef.setInput('days', 30);
-    fixture.componentRef.setInput('entries', 90);
-    fixture.componentRef.setInput('avg', '40.0');
+    fixture.componentRef.setInput('summary', summary);
+    fixture.componentRef.setInput('loading', loading);
     fixture.detectChanges();
     return fixture;
   }
 
-  function tooltips(
-    fixture: Awaited<ReturnType<typeof render>>
-  ): ReadonlyArray<string> {
-    return fixture.debugElement
-      .queryAll(By.directive(MatTooltip))
-      .map((el) => el.injector.get(MatTooltip).message);
+  function text(
+    fixture: Awaited<ReturnType<typeof render>>,
+    testId: string
+  ): string | undefined {
+    return fixture.nativeElement
+      .querySelector(`[data-testid="${testId}"]`)
+      ?.textContent?.replace(/\s+/g, ' ')
+      .trim();
   }
 
-  it('should name the exercise the numbers belong to', async () => {
-    // given — the badges aggregate push-ups only, while the page below
-    // them lists sit-ups, planks and runs
+  it('should say that the numbers cover every exercise', async () => {
+    // when
     const fixture = await render();
 
     // then
-    expect(fixture.nativeElement.textContent).toContain('Liegestütze');
-  });
-
-  it('should explain what every badge counts', async () => {
-    // given — four bare numbers in a row say nothing about their own
-    // arithmetic
-    const fixture = await render();
-
-    // then
-    const messages = tooltips(fixture);
-    expect(messages.length).toBe(4);
-    for (const message of messages) {
-      expect(message).toContain('Liegestütz');
-    }
-  });
-
-  it('should give the same explanation to a screen reader', async () => {
-    // given — the tooltip only exists on hover or long-press, and the
-    // row itself is a link, so a tap navigates instead of explaining
-    const fixture = await render();
-
-    // then
-    const labels = [...fixture.nativeElement.querySelectorAll('.badge')].map(
-      (badge: Element) => badge.getAttribute('aria-label')
+    expect(fixture.nativeElement.textContent).toContain(
+      'Alle Übungen seit Beginn'
     );
-    expect(labels.length).toBe(4);
-    for (const label of labels) {
-      expect(label).toContain('Liegestütz');
-    }
   });
 
-  it('should say how the average is calculated', async () => {
-    // given — the one badge whose number cannot be checked by eye
-    const fixture = await render();
-
-    // then
-    expect(tooltips(fixture).at(-1)).toContain('geteilt durch');
-  });
-
-  it('should render the four values it was given', async () => {
-    // given
-    const fixture = await render();
-
-    // then
-    const text = fixture.nativeElement.textContent;
-    expect(text).toContain('1200');
-    expect(text).toContain('30');
-    expect(text).toContain('90');
-    expect(text).toContain('40.0');
-  });
-
-  it('should show a skeleton per value while the totals are still loading', async () => {
-    // given
-    const fixture = await render();
+  it('should render each volume in its own unit', async () => {
     // when
-    fixture.componentRef.setInput('loading', true);
-    fixture.detectChanges();
-    const host = fixture.nativeElement as HTMLElement;
+    const fixture = await render();
+
     // then
-    expect(host.querySelectorAll('.badge pu-skeleton')).toHaveLength(4);
-    expect(host.textContent).not.toContain('1200');
+    expect(text(fixture, 'all-time-reps')).toContain('1,200');
+    expect(text(fixture, 'all-time-duration')).toContain('1 h 30 min');
+    expect(text(fixture, 'all-time-distance')).toContain('42.0 km');
+    expect(text(fixture, 'all-time-days')).toContain('30');
+    expect(text(fixture, 'all-time-entries')).toContain('90');
+  });
+
+  it('should leave out time and distance nobody logged', async () => {
+    // given — a pure push-up user would otherwise read "0 min"
+    const summary = { ...SUMMARY, durationSec: 0, distanceM: 0 };
+
+    // when
+    const fixture = await render(summary);
+
+    // then
+    expect(text(fixture, 'all-time-duration')).toBeUndefined();
+    expect(text(fixture, 'all-time-distance')).toBeUndefined();
+    expect(text(fixture, 'all-time-reps')).toBeDefined();
+  });
+
+  it('should explain every badge in its tooltip and to a screen reader', async () => {
+    // when
+    const fixture = await render();
+
+    // then
+    const tooltips = fixture.debugElement
+      .queryAll(By.directive(MatTooltip))
+      .map((el) => el.injector.get(MatTooltip).message);
+    const labels = [...fixture.nativeElement.querySelectorAll('.badge')].map(
+      (el: Element) => el.getAttribute('aria-label')
+    );
+    expect(tooltips).toHaveLength(5);
+    expect(labels).toEqual(tooltips);
+    for (const message of tooltips) expect(message).not.toBe('');
+  });
+
+  it('should show a skeleton per value while the entries are still loading', async () => {
+    // when
+    const fixture = await render(SUMMARY, true);
+
+    // then
+    expect(fixture.nativeElement.querySelectorAll('pu-skeleton')).toHaveLength(
+      3
+    );
+    expect(text(fixture, 'all-time-duration')).toBeUndefined();
     expect(
-      host
+      fixture.nativeElement
         .querySelector('[data-testid="dashboard-all-time-badges-link"]')
-        ?.getAttribute('aria-busy')
+        .getAttribute('aria-busy')
     ).toBe('true');
-    // when
-    fixture.componentRef.setInput('loading', false);
-    fixture.detectChanges();
-    // then
-    expect(host.querySelector('pu-skeleton')).toBeNull();
-    expect(host.textContent).toContain('1200');
   });
 
   it('should still link to the analysis page', async () => {
-    // given
+    // when
     const fixture = await render();
 
     // then
@@ -118,6 +116,6 @@ describe('AllTimeBadgesComponent', () => {
       fixture.nativeElement
         .querySelector('[data-testid="dashboard-all-time-badges-link"]')
         .getAttribute('href')
-    ).toContain('/analysis');
+    ).toBe('/analysis');
   });
 });

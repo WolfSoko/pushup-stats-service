@@ -317,7 +317,7 @@ export const appRoutes: Routes = [
     path: 'u/:uid',
     data: {
       seoTitle: $localize`:@@seo.publicProfile.title:Profil – ${BRAND_NAME}:brand:`,
-      seoDescription: $localize`:@@seo.publicProfile.description:Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.`,
+      seoDescription: $localize`:@@seo.publicProfile.description:Öffentliches Trainingsprofil mit Level, XP, Trainingstagen und Bestleistungen.`,
     },
     loadComponent: () =>
       import('./public-profile/public-profile-page.component').then(

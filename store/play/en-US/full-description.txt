@@ -41,7 +41,7 @@ Send a request, accept, train. Your board ranks you by today, week, month and al
 Every exercise earns XP — per rep, minute or kilometre, retroactively for all your past entries too. Level up, collect level badges and compete on the XP leaderboard, worldwide and among friends.
 
 🏆 LEADERBOARD & PROFILE
-Measure yourself against everyone or stay private. Rankings for today, the last 7 and 30 days. Your profile shows total reps, streak, personal bests, heatmap, your last 10 workouts and your active plan.
+Measure yourself against everyone or stay private. Rankings for today, the last 7 and 30 days. Your profile shows level and XP, reps, time and km across all exercises, streak, bests, heatmap, recent workouts and your plan.
 
 🔔 SMART REMINDERS
 Push notifications with your own interval, quiet hours, weekdays and time zone — even when the app is closed. Fastest way to log: one tap on "Log 50" in the notification.

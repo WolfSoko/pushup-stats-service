@@ -17,4 +17,15 @@ describe('DATA_MIGRATIONS', () => {
     expect(backfill?.migrate.callable).toBe('backfillXp');
     expect(backfill?.rollback).toBeUndefined();
   });
+
+  it('should wire the training stats backfill to its callable', () => {
+    // when
+    const backfill = DATA_MIGRATIONS.find(
+      (m) => m.id === 'training-stats-backfill'
+    );
+
+    // then
+    expect(backfill?.migrate.callable).toBe('backfillTrainingStats');
+    expect(backfill?.rollback).toBeUndefined();
+  });
 });

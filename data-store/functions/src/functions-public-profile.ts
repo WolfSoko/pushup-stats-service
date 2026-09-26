@@ -5,19 +5,11 @@ import { HttpsError, onCall, onRequest } from 'firebase-functions/v2/https';
 // Imported for its init side effects (Sentry + admin.initializeApp) so this
 // module is safe to load before any other firebase-app consumer.
 import {
-  currentPlanDayIndex,
-  findExerciseDefinition,
-  findPlanById,
-  friendshipId,
-  isPausedPlan,
   isSectionVisibleTo,
-  isValidFriendUid,
-  pausedPlanDayIndex,
   sectionVisibility,
-  type Friendship,
+  summaryFromTrainingStats,
   type ProfileSection,
   type ProfileViewer,
-  type UserTrainingPlan,
 } from '@pu-stats/models';
 
 import { berlinDateParts } from './datetime';
@@ -25,15 +17,20 @@ import { hasCheered } from './friends/cheers-read';
 import { db } from './firebase-app';
 import { periodKeys } from './user-stats-delta';
 import { resolvePhotoUrl } from './functions-profile-photo';
-import { profileWorkouts } from './workouts/logic';
+import {
+  areFriends,
+  readActivePlan,
+  readExerciseTotals,
+  readProfileWorkouts,
+  readRecentEntries,
+  readUserXp,
+} from './profile/profile-read';
+import { readTrainingStats } from './training/stats-read';
 import {
   buildPublicProfile,
   isValidUid,
   type UserConfigForPublicProfile,
-  type ExerciseTotal,
   type UserAchievementsForPublicProfile,
-  type PlanProgress,
-  type RecentEntry,
   type UserStatsForPublicProfile,
 } from './profile';
 // `renderProfileOg` lives behind a dynamic `import()` call inside the
@@ -48,137 +45,27 @@ import {
 // functions in `index.ts` are thin wrappers" rule.
 
 /**
- * Per-exercise totals, biggest first. Capped because a profile is a
- * summary, not a database dump.
+ * Sections fed by the training aggregate. Skipped when none is visible:
+ * for a user without an aggregate yet, the read falls back to every entry.
  */
-async function readExerciseTotals(uid: string): Promise<ExerciseTotal[]> {
-  const snap = await db
-    .collection('userStats')
-    .doc(uid)
-    .collection('perExercise')
-    .get();
-  const rows: ExerciseTotal[] = [];
-  for (const doc of snap.docs) {
-    const definition = findExerciseDefinition(doc.id);
-    if (!definition) continue;
-    const total = Number(doc.data()['total'] ?? 0);
-    if (!Number.isFinite(total) || total <= 0) continue;
-    rows.push({
-      exerciseId: doc.id,
-      total,
-      totalDays: Number(doc.data()['totalDays'] ?? 0),
-      measurement: definition.measurement,
-    });
-  }
-  return rows.sort((a, b) => b.total - a.total).slice(0, MAX_PROFILE_EXERCISES);
-}
-
-const MAX_PROFILE_EXERCISES = 8;
-
-const MAX_RECENT_ENTRIES = 10;
-
-/**
- * The workouts behind the numbers, newest first — the same "what did you
- * just train" the owner sees on their dashboard.
- *
- * Only fetched when the viewer may actually see them: it is the one extra
- * query per profile view, and a section set to `friends` would otherwise
- * be paid for by every anonymous visitor.
- */
-async function readRecentEntries(uid: string): Promise<RecentEntry[]> {
-  const snap = await db
-    .collection('exerciseEntries')
-    .where('userId', '==', uid)
-    .orderBy('timestamp', 'desc')
-    .limit(MAX_RECENT_ENTRIES)
-    .get();
-  const rows: RecentEntry[] = [];
-  for (const doc of snap.docs) {
-    const data = doc.data();
-    const definition = findExerciseDefinition(String(data['exerciseId'] ?? ''));
-    const timestamp = data['timestamp'];
-    if (!definition || typeof timestamp !== 'string' || !timestamp) continue;
-    // Same fallback order as the stats trigger: a run carries both
-    // `distanceM` and `durationSec`, and distance is its primary value.
-    const value = Number(
-      data['reps'] ?? data['distanceM'] ?? data['durationSec'] ?? 0
-    );
-    if (!Number.isFinite(value) || value <= 0) continue;
-    rows.push({
-      exerciseId: definition.id,
-      value,
-      measurement: definition.measurement,
-      timestamp,
-    });
-  }
-  return rows;
-}
-
-/**
- * The plan the user is running, as far as a visitor may see it: which
- * plan, how far in, and whether it is on hold. Named by id — the client
- * resolves title and length from its own catalog, in its own language.
- */
-async function readActivePlan(
-  uid: string,
-  today: string
-): Promise<PlanProgress | null> {
-  const snap = await db.collection('userTrainingPlans').doc(uid).get();
-  const data = snap.data() as UserTrainingPlan | undefined;
-  if (!data || (data.status !== 'active' && data.status !== 'paused')) {
-    return null;
-  }
-  const plan = findPlanById(data.planId);
-  if (!plan) return null;
-  // A paused plan shows the day it was left on, not one the break ran past.
-  const dayIndex =
-    pausedPlanDayIndex(data, plan.totalDays) ??
-    currentPlanDayIndex(plan, data.startDate, today);
-  if (dayIndex === null) return null;
-  return {
-    planId: plan.id,
-    dayIndex,
-    totalDays: plan.totalDays,
-    paused: isPausedPlan(data),
-  };
-}
-
-/**
- * The workouts the owner put on their profile. Two equality filters, so
- * no composite index; the sort and cap happen in `profileWorkouts`.
- */
-async function readProfileWorkouts(uid: string) {
-  const snap = await db
-    .collection('workouts')
-    .where('ownerId', '==', uid)
-    .where('onProfile', '==', true)
-    .get();
-  return profileWorkouts(
-    snap.docs.map((doc) => ({ id: doc.id, data: doc.data() }))
-  );
-}
+const TRAINING_SECTIONS: ReadonlyArray<ProfileSection> = [
+  'heatmap',
+  'total',
+  'entries',
+  'days',
+  'streak',
+  'bestSet',
+  'bestDay',
+];
 
 async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
   if (!isValidUid(uid)) return null;
-  const [cfgSnap, statsSnap, achievementsSnap] = await Promise.all([
+  const [cfgSnap, achievementsSnap] = await Promise.all([
     db.collection('userConfigs').doc(uid).get(),
-    // Public pushup stats now live in the per-exercise aggregate
-    // (`updateExerciseStatsOnEntryWrite` keeps it fresh); the top-level
-    // `userStats/{uid}` doc is frozen for pushups. Same UserStats shape,
-    // so `buildPublicProfile` is unchanged.
-    db
-      .collection('userStats')
-      .doc(uid)
-      .collection('perExercise')
-      .doc('pushup')
-      .get(),
     db.collection('userAchievements').doc(uid).get(),
   ]);
   const config = cfgSnap.exists
     ? (cfgSnap.data() as UserConfigForPublicProfile)
-    : null;
-  const stats = statsSnap.exists
-    ? (statsSnap.data() as UserStatsForPublicProfile)
     : null;
   const achievements = achievementsSnap.exists
     ? (achievementsSnap.data() as UserAchievementsForPublicProfile)
@@ -192,7 +79,7 @@ async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
     !viewerIsOwner && viewerUid !== '' && (await areFriends(viewerUid, uid));
   // Only pay for the extra reads once the profile will actually be shown.
   if (
-    !buildPublicProfile(uid, config, stats, { viewerIsOwner, viewerIsFriend })
+    !buildPublicProfile(uid, config, null, { viewerIsOwner, viewerIsFriend })
   ) {
     return null;
   }
@@ -207,20 +94,36 @@ async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
   // Skip the extra read entirely when the viewer may not see the section.
   const shows = (section: ProfileSection): boolean =>
     isSectionVisibleTo(sectionVisibility(config?.ui, section), viewer);
-  const [photoURL, exercises, recent, plan, workouts, viewerCheeredToday] =
-    await Promise.all([
-      resolvePhotoUrl(uid, config ?? {}, viewerIsOwner),
-      readExerciseTotals(uid),
-      shows('recent') ? readRecentEntries(uid) : Promise.resolve([]),
-      shows('plan')
-        ? readActivePlan(uid, parts.isoDate)
-        : Promise.resolve(null),
-      shows('workouts') ? readProfileWorkouts(uid) : Promise.resolve([]),
-      viewerIsFriend
-        ? hasCheered(viewerUid, uid, parts.isoDate)
-        : Promise.resolve(false),
-    ]);
+  const needsTraining = TRAINING_SECTIONS.some(shows);
+  const [
+    photoURL,
+    exercises,
+    recent,
+    plan,
+    workouts,
+    viewerCheeredToday,
+    training,
+    xp,
+  ] = await Promise.all([
+    resolvePhotoUrl(uid, config ?? {}, viewerIsOwner),
+    readExerciseTotals(uid),
+    shows('recent') ? readRecentEntries(uid) : Promise.resolve([]),
+    shows('plan') ? readActivePlan(uid, parts.isoDate) : Promise.resolve(null),
+    shows('workouts') ? readProfileWorkouts(uid) : Promise.resolve([]),
+    viewerIsFriend
+      ? hasCheered(viewerUid, uid, parts.isoDate)
+      : Promise.resolve(false),
+    needsTraining ? readTrainingStats(db, uid) : Promise.resolve(null),
+    shows('xp') ? readUserXp(uid) : Promise.resolve(null),
+  ]);
+  const stats: UserStatsForPublicProfile | null = training
+    ? { heatmap: { ...training.heatmap }, updatedAt: training.updatedAt }
+    : null;
   return buildPublicProfile(uid, config, stats, {
+    summary: training
+      ? summaryFromTrainingStats(training, parts.isoDate)
+      : null,
+    xp,
     achievements,
     photoURL,
     exercises,
@@ -233,16 +136,6 @@ async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
     viewerIsFriend,
     viewerCheeredToday,
   });
-}
-
-/** Whether the two users have an accepted friendship. */
-async function areFriends(viewerUid: string, uid: string): Promise<boolean> {
-  if (!isValidFriendUid(viewerUid) || !isValidFriendUid(uid)) return false;
-  const snap = await db
-    .collection('friendships')
-    .doc(friendshipId(viewerUid, uid))
-    .get();
-  return (snap.data() as Friendship | undefined)?.status === 'accepted';
 }
 
 // Returns a sanitized projection of `userConfigs/{uid}` + `userStats/{uid}`

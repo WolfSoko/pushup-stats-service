@@ -10,12 +10,14 @@
 
 import {
   canViewProfile,
+  EMPTY_TRAINING_SUMMARY,
   isProfilePublic,
   isSectionVisibleTo,
   profileVisibilityMap,
   PROFILE_SECTIONS,
   type ProfileSection,
   type ProfileViewer,
+  type PublicProfileXp,
 } from '@pu-stats/models';
 
 import { toPublicDisplayName } from './logic';
@@ -80,30 +82,20 @@ export function buildPublicProfile(
   // else gets a projection the values they may not see never entered.
   const show = <T>(section: ProfileSection, value: T, blank: T): T =>
     isSectionVisibleTo(visibility[section], viewer) ? value : blank;
+  const summary = extras.summary ?? EMPTY_TRAINING_SUMMARY;
 
   return {
     uid,
     displayName: toPublicDisplayName(config),
-    total: show('total', numberOrZero(stats?.total), null),
-    totalEntries: show('entries', numberOrZero(stats?.totalEntries), null),
-    totalDays: show('days', numberOrZero(stats?.totalDays), null),
-    currentStreak: show('streak', numberOrZero(stats?.currentStreak), null),
-    bestSingleEntry: show(
-      'bestSet',
-      typeof stats?.bestSingleEntry?.reps === 'number' &&
-        Number.isFinite(stats.bestSingleEntry.reps)
-        ? stats.bestSingleEntry.reps
-        : null,
-      null
-    ),
-    bestDayTotal: show(
-      'bestDay',
-      typeof stats?.bestDay?.total === 'number' &&
-        Number.isFinite(stats.bestDay.total)
-        ? stats.bestDay.total
-        : null,
-      null
-    ),
+    total: show('total', summary.reps, null),
+    totalDurationSec: show('total', summary.durationSec, null),
+    totalDistanceM: show('total', summary.distanceM, null),
+    totalEntries: show('entries', summary.entries, null),
+    totalDays: show('days', summary.days, null),
+    currentStreak: show('streak', summary.currentStreak, null),
+    bestEntryXp: show('bestSet', summary.bestEntryXp, null),
+    bestDayXp: show('bestDay', summary.bestDayXp, null),
+    xp: show('xp', publicXp(extras), null),
     achievements: show(
       'achievements',
       publicAchievementIds(extras.achievements ?? null),
@@ -117,20 +109,6 @@ export function buildPublicProfile(
       typeof config.createdAt === 'string' && config.createdAt !== ''
         ? config.createdAt
         : null,
-    weeklyReps: show(
-      'week',
-      periodValue(stats?.weeklyReps, stats?.weeklyKey, extras.currentWeeklyKey),
-      null
-    ),
-    monthlyReps: show(
-      'month',
-      periodValue(
-        stats?.monthlyReps,
-        stats?.monthlyKey,
-        extras.currentMonthlyKey
-      ),
-      null
-    ),
     heatmap: show('heatmap', publicHeatmap(stats?.heatmap), {}),
     exercises: show('exercises', [...(extras.exercises ?? [])], []),
     recent: show('recent', [...(extras.recent ?? [])], []),
@@ -167,6 +145,20 @@ function publicAchievementIds(
     )
     .sort((a, b) => b.awardedAt.localeCompare(a.awardedAt))
     .map((entry) => entry.id);
+}
+
+/**
+ * The owner's XP. `null` before the first booking, so a profile without
+ * XP shows no empty level card.
+ */
+function publicXp(extras: PublicProfileExtras): PublicProfileXp | null {
+  const xp = extras.xp;
+  if (!xp) return null;
+  return {
+    total: numberOrZero(xp.total),
+    weekly: periodValue(xp.weeklyXp, xp.weeklyKey, extras.currentWeeklyKey),
+    monthly: periodValue(xp.monthlyXp, xp.monthlyKey, extras.currentMonthlyKey),
+  };
 }
 
 /**

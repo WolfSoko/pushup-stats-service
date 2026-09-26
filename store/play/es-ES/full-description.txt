@@ -38,7 +38,7 @@ Monta tu propio entrenamiento: ejercicios, objetivos y series en tu orden. La ap
 Cada ejercicio da XP: por repetición, minuto o kilómetro, también para tus registros anteriores. Sube de nivel, consigue insignias de nivel y compite en la clasificación de XP.
 
 🏆 CLASIFICACIÓN Y PERFIL
-Mídete con los demás o quédate en privado. Rankings de hoy, de los últimos 7 y 30 días. Tu perfil se comparte por enlace: repeticiones totales, racha, récords, heatmap, tus últimos 10 entrenamientos y el plan activo — cada tarjeta se pone por separado en oculta, solo amigos o pública.
+Mídete con los demás o quédate en privado. Rankings de hoy, de los últimos 7 y 30 días. Tu perfil se comparte por enlace: nivel y XP, repeticiones, tiempo y km de todos los ejercicios, racha, heatmap, entrenos y plan — cada tarjeta se pone por separado en oculta, solo amigos o pública.
 
 👥 AMIGOS Y RETOS
 Invita a tus amigos: vuestro tablero muestra quién va por delante esta semana. Animaos y lanzad retos en común — 500 flexiones en 7 días, cada uno con su progreso. Cada ánimo llega a tu bandeja, aun sin conexión.

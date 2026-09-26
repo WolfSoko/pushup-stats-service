@@ -35,6 +35,7 @@ export const REBRAND_ANNOUNCEMENT = 'rebrand-2026-09';
 export const EXERCISE_SEARCH_ANNOUNCEMENT = 'exercise-search-2026-09';
 export const WORKOUT_REMINDERS_ANNOUNCEMENT = 'workout-reminders-2026-09';
 export const XP_ANNOUNCEMENT = 'xp-points-2026-09';
+export const PROFILE_XP_ANNOUNCEMENT = 'profile-xp-2026-09';
 
 /**
  * Every announcement, oldest first. A new feature adds an entry with a
@@ -91,6 +92,15 @@ export const ANNOUNCEMENTS: ReadonlyArray<FeatureAnnouncement> = [
       ),
     label: $localize`:@@announcements.xp:Neu: Punkte, Level und XP-Bestenliste`,
     url: '/leaderboard',
+  },
+  {
+    id: PROFILE_XP_ANNOUNCEMENT,
+    load: () =>
+      import('../public-profile/profile-xp-intro-dialog.component').then(
+        (m) => m.ProfileXpIntroDialogComponent
+      ),
+    label: $localize`:@@announcements.profileXp:Neu: Level & XP auf deinem Profil, Statistik über alle Übungen`,
+    url: '/settings/profil',
   },
 ];
 

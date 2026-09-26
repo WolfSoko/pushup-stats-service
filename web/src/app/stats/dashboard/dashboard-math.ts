@@ -1,9 +1,4 @@
-import {
-  daysBetween,
-  sortedUniqueDates,
-  toBerlinIsoDate,
-  toLocalIsoDate,
-} from '@pu-stats/date';
+import { toBerlinIsoDate, toLocalIsoDate } from '@pu-stats/date';
 
 export interface RepEntry {
   timestamp: string;
@@ -35,28 +30,6 @@ export function currentIsoWeekKey(): string {
 /** `YYYY-MM` month key for today, in the Berlin timezone. */
 export function currentMonthKey(): string {
   return toBerlinIsoDate(new Date()).slice(0, 7);
-}
-
-/**
- * Client-side fallback streak: consecutive logged days ending at the most
- * recent entry, but only when that entry is today or yesterday (`diff`
- * 0/1). Used when the precomputed server stats aren't available yet.
- */
-export function computeStreakFromEntries(
-  rows: ReadonlyArray<RepEntry>,
-  today: string
-): number {
-  const dates = sortedUniqueDates(rows);
-  if (!dates.length) return 0;
-  const lastDate = dates[dates.length - 1];
-  const diff = daysBetween(lastDate, today);
-  if (diff > 1 || diff < 0) return 0;
-  let streak = 1;
-  for (let i = dates.length - 1; i > 0; i--) {
-    if (daysBetween(dates[i - 1], dates[i]) === 1) streak += 1;
-    else break;
-  }
-  return streak;
 }
 
 /** Sum of reps logged in the ISO week (Mon–Sun) containing `today`. */

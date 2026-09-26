@@ -38,7 +38,7 @@ Compose ton entraînement : exercices, objectifs et séries dans ton ordre. L'ap
 Chaque exercice rapporte des XP — par répétition, minute ou kilomètre, même pour tes entrées passées. Monte de niveau, collectionne les badges de niveau et affronte les autres au classement XP.
 
 🏆 CLASSEMENT & PROFIL
-Mesure-toi aux autres ou reste discret. Classements du jour, des 7 et des 30 derniers jours. Tu partages ton profil par lien : total de répétitions, série, records, heatmap, tes 10 dernières séances et le plan actif — chaque tuile réglable séparément sur masqué, amis seulement ou public.
+Mesure-toi aux autres ou reste discret. Classements du jour, des 7 et des 30 derniers jours. Tu partages ton profil par lien : niveau et XP, reps, temps et km de tous les exercices, série, heatmap, séances et plan — chaque tuile réglable séparément sur masqué, amis seulement ou public.
 
 👥 AMIS & DÉFIS
 Invite tes amis : votre tableau montre qui mène cette semaine. Encouragez-vous et lancez des défis communs — 500 pompes en 7 jours, chacun avec sa progression. Les encouragements arrivent dans ta boîte, hors ligne.

@@ -20,6 +20,7 @@ Decomposed from the monolithic `index.ts`:
 - **push/reminder-action:** Single-use action tokens for the notification buttons (`reminderAction` callable — see [`gotchas/push-and-service-workers.md`](gotchas/push-and-service-workers.md))
 - **admin/:** User privilege checks (Custom Claims validation), deletion validation, batch helpers
 - **entry-trash/:** Archive record for deleted entries (retention window, owner extraction)
+- **training/:** the cross-exercise training aggregate — entry → line mapping (`lines.ts`), reads with the in-memory fallback (`stats-read.ts`), backfill planning (`backfill-plan.ts`); the trigger is `functions-training-stats.ts`, the admin migration `backfillTrainingStats` lives in `functions-training-backfill.ts`, design in [`architecture.md`](architecture.md#cross-exercise-training-aggregate)
 - **xp/:** XP ledger lines with frozen rates (`ledger.ts`), the `userXp` aggregate (`aggregate.ts`), level/variety badges (`badges.ts`), backfill planning (`backfill-plan.ts`); I/O in `award.ts`, `config-read.ts` (60 s cache), `leaderboard.ts`, `rebuild.ts`
 
 All modules include comprehensive Jest tests (no Firebase dependencies for pure logic).

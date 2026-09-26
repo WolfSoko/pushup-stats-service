@@ -229,146 +229,43 @@
 
         <app-invite-banner />
 
+        @if (p.xp; as xp) {
+          @if (audience.renders('xp', true)) {
+            <app-profile-xp-card
+              [xp]="xp"
+              [class.is-hidden]="!audience.isVisible('xp')"
+            >
+              <ng-container
+                *ngTemplateOutlet="
+                  sectionToggle;
+                  context: { $implicit: 'xp', label: labels.xp }
+                "
+              ></ng-container>
+            </app-profile-xp-card>
+          }
+        }
+
         <section class="stats-grid" [attr.aria-label]="labels.stats">
-          @if (audience.renders('total', p.total !== null)) {
-            <mat-card
-              class="stat-card"
-              [class.is-hidden]="!audience.isVisible('total')"
-            >
-              <mat-card-content>
-                <small>{{ labels.total }}</small>
-                <b data-testid="public-profile-total">{{
-                  p.total | number: '1.0-0'
-                }}</b>
-                <ng-container
-                  *ngTemplateOutlet="
-                    sectionToggle;
-                    context: { $implicit: 'total', label: labels.total }
-                  "
-                ></ng-container>
-              </mat-card-content>
-            </mat-card>
-          }
-          @if (audience.renders('streak', p.currentStreak !== null)) {
-            <mat-card
-              class="stat-card"
-              [class.is-hidden]="!audience.isVisible('streak')"
-            >
-              <mat-card-content>
-                <small>{{ labels.streak }}</small>
-                <b data-testid="public-profile-streak">{{
-                  p.currentStreak | number: '1.0-0'
-                }}</b>
-                <ng-container
-                  *ngTemplateOutlet="
-                    sectionToggle;
-                    context: { $implicit: 'streak', label: labels.streak }
-                  "
-                ></ng-container>
-              </mat-card-content>
-            </mat-card>
-          }
-          @if (audience.renders('days', p.totalDays !== null)) {
-            <mat-card
-              class="stat-card"
-              [class.is-hidden]="!audience.isVisible('days')"
-            >
-              <mat-card-content>
-                <small>{{ labels.days }}</small>
-                <b>{{ p.totalDays | number: '1.0-0' }}</b>
-                <ng-container
-                  *ngTemplateOutlet="
-                    sectionToggle;
-                    context: { $implicit: 'days', label: labels.days }
-                  "
-                ></ng-container>
-              </mat-card-content>
-            </mat-card>
-          }
-          @if (audience.renders('entries', p.totalEntries !== null)) {
-            <mat-card
-              class="stat-card"
-              [class.is-hidden]="!audience.isVisible('entries')"
-            >
-              <mat-card-content>
-                <small>{{ labels.entries }}</small>
-                <b>{{ p.totalEntries | number: '1.0-0' }}</b>
-                <ng-container
-                  *ngTemplateOutlet="
-                    sectionToggle;
-                    context: { $implicit: 'entries', label: labels.entries }
-                  "
-                ></ng-container>
-              </mat-card-content>
-            </mat-card>
-          }
-          @if (audience.renders('week', !!p.weeklyReps)) {
-            <mat-card
-              class="stat-card"
-              [class.is-hidden]="!audience.isVisible('week')"
-            >
-              <mat-card-content>
-                <small>{{ labels.week }}</small>
-                <b>{{ p.weeklyReps | number: '1.0-0' }}</b>
-                <ng-container
-                  *ngTemplateOutlet="
-                    sectionToggle;
-                    context: { $implicit: 'week', label: labels.week }
-                  "
-                ></ng-container>
-              </mat-card-content>
-            </mat-card>
-          }
-          @if (audience.renders('month', !!p.monthlyReps)) {
-            <mat-card
-              class="stat-card"
-              [class.is-hidden]="!audience.isVisible('month')"
-            >
-              <mat-card-content>
-                <small>{{ labels.month }}</small>
-                <b>{{ p.monthlyReps | number: '1.0-0' }}</b>
-                <ng-container
-                  *ngTemplateOutlet="
-                    sectionToggle;
-                    context: { $implicit: 'month', label: labels.month }
-                  "
-                ></ng-container>
-              </mat-card-content>
-            </mat-card>
-          }
-          @if (audience.renders('bestSet', p.bestSingleEntry !== null)) {
-            <mat-card
-              class="stat-card"
-              [class.is-hidden]="!audience.isVisible('bestSet')"
-            >
-              <mat-card-content>
-                <small>{{ labels.bestSet }}</small>
-                <b>{{ p.bestSingleEntry | number: '1.0-0' }}</b>
-                <ng-container
-                  *ngTemplateOutlet="
-                    sectionToggle;
-                    context: { $implicit: 'bestSet', label: labels.bestSet }
-                  "
-                ></ng-container>
-              </mat-card-content>
-            </mat-card>
-          }
-          @if (audience.renders('bestDay', p.bestDayTotal !== null)) {
-            <mat-card
-              class="stat-card"
-              [class.is-hidden]="!audience.isVisible('bestDay')"
-            >
-              <mat-card-content>
-                <small>{{ labels.bestDay }}</small>
-                <b>{{ p.bestDayTotal | number: '1.0-0' }}</b>
-                <ng-container
-                  *ngTemplateOutlet="
-                    sectionToggle;
-                    context: { $implicit: 'bestDay', label: labels.bestDay }
-                  "
-                ></ng-container>
-              </mat-card-content>
-            </mat-card>
+          @for (card of statCards(); track card.key) {
+            @if (audience.renders(card.section, card.hasContent)) {
+              <mat-card
+                class="stat-card"
+                [class.is-hidden]="!audience.isVisible(card.section)"
+              >
+                <mat-card-content>
+                  <small>{{ card.label }}</small>
+                  <b [attr.data-testid]="'public-profile-stat-' + card.key">{{
+                    card.value
+                  }}</b>
+                  <ng-container
+                    *ngTemplateOutlet="
+                      sectionToggle;
+                      context: { $implicit: card.section, label: card.label }
+                    "
+                  ></ng-container>
+                </mat-card-content>
+              </mat-card>
+            }
           }
         </section>
 

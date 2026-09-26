@@ -161,10 +161,12 @@ describe('StatsDashboardComponent', () => {
       variantId?: string;
     }>
   >([]);
+  const liveFailed = signal(false);
   const liveMock = {
     updateTick: liveTick.asReadonly(),
     connected: liveConnected.asReadonly(),
     exerciseEntriesLoaded: liveConnected.asReadonly(),
+    exerciseEntriesFailed: liveFailed.asReadonly(),
     // Post-cutover the live feed carries pushups (`exerciseId:'pushup'`)
     // alongside other exercises; tests still seed `liveEntries` for pushups.
     exerciseEntries: computed(() => [
@@ -241,6 +243,7 @@ describe('StatsDashboardComponent', () => {
       .mockReset()
       .mockReturnValue(of(defaultUserStats));
     liveTick.set(0);
+    liveFailed.set(false);
     liveConnected.set(true);
     liveEntries.set([
       {
@@ -620,15 +623,80 @@ describe('StatsDashboardComponent', () => {
     });
 
     describe('When all-time stats are loaded', () => {
-      it('Then it should compute the correct badge values', () => {
-        // Given
+      it('should sum every exercise from the live entries', async () => {
+        // given
+        liveExerciseEntries.set([
+          {
+            _id: 'p1',
+            exerciseId: 'plank.standard',
+            timestamp: todayTs,
+            durationSec: 90,
+          },
+          {
+            _id: 'r1',
+            exerciseId: 'cardio.running',
+            timestamp: '2025-01-10T07:00:00',
+            distanceM: 5000,
+            durationSec: 1800,
+          },
+        ]);
         const component = fixture.componentInstance;
 
-        // Then
-        expect(component.allTimeTotal()).toBe(1200);
-        expect(component.allTimeDays()).toBe(25);
-        expect(component.allTimeEntries()).toBe(100);
-        expect(component.allTimeAvg()).toBe('48.0');
+        // when
+        const summary = component.allTimeSummary();
+
+        // then — the two seeded pushup entries plus plank and run
+        expect(summary.reps).toBe(20);
+        expect(summary.durationSec).toBe(90);
+        expect(summary.distanceM).toBe(5000);
+        expect(summary.entries).toBe(4);
+        expect(summary.days).toBe(3);
+      });
+
+      it('should drop the row instead of spinning forever when the feed failed', async () => {
+        // given — the listener errored before its first snapshot
+        liveConnected.set(false);
+        liveFailed.set(true);
+
+        // when
+        const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+        await freshFixture.whenStable();
+
+        // then
+        expect(
+          (freshFixture.nativeElement as HTMLElement).querySelector(
+            'app-all-time-badges'
+          )
+        ).toBeNull();
+      });
+
+      it('should show time and distance badges only once something was logged', async () => {
+        // given
+        await fixture.whenStable();
+        const host: HTMLElement = fixture.nativeElement;
+        expect(host.querySelector('[data-testid="all-time-duration"]')).toBe(
+          null
+        );
+
+        // when
+        liveExerciseEntries.set([
+          {
+            _id: 'p1',
+            exerciseId: 'plank.standard',
+            timestamp: todayTs,
+            durationSec: 120,
+          },
+        ]);
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        // then
+        expect(
+          host.querySelector('[data-testid="all-time-duration"]')?.textContent
+        ).toContain('2 min');
+        expect(host.querySelector('[data-testid="all-time-distance"]')).toBe(
+          null
+        );
       });
     });
 
@@ -1381,7 +1449,7 @@ describe('StatsDashboardComponent', () => {
       expect(root.querySelector('app-recent-exercises-skeleton')).toBeTruthy();
       expect(
         root.querySelectorAll('app-all-time-badges pu-skeleton')
-      ).toHaveLength(4);
+      ).toHaveLength(3);
       expect(
         root.querySelector('.today-focus')?.getAttribute('aria-busy')
       ).toBe('true');
@@ -1790,14 +1858,22 @@ describe('StatsDashboardComponent', () => {
     });
 
     it('Then a multi-day streak adds the streak count to the share text', async () => {
-      // Given — server stats report a 3-day streak ending today
-      userStatsMock.getPerExerciseStats.mockReturnValueOnce(
-        of({
-          ...defaultUserStats,
-          currentStreak: 3,
-          lastEntryDate: '2025-01-15',
-        })
-      );
+      // Given — pushups today, a plank yesterday, a run the day before:
+      // a streak counts every exercise
+      liveExerciseEntries.set([
+        {
+          _id: 'p1',
+          exerciseId: 'plank.standard',
+          timestamp: '2025-01-14T08:00:00',
+          durationSec: 60,
+        },
+        {
+          _id: 'r1',
+          exerciseId: 'cardio.running',
+          timestamp: '2025-01-13T08:00:00',
+          distanceM: 3000,
+        },
+      ]);
       const freshFixture = TestBed.createComponent(StatsDashboardComponent);
       await freshFixture.whenStable();
       shareSpy.mockClear();
@@ -1874,8 +1950,7 @@ describe('StatsDashboardComponent', () => {
   describe('Given entries with consecutive dates', () => {
     describe('When currentStreak is computed with no recent entries', () => {
       it('Then it should return 0 when last entry is more than 1 day ago', async () => {
-        // Given - null server stats forces client-side fallback; only old entry
-        userStatsMock.getPerExerciseStats.mockReturnValueOnce(of(null));
+        // Given - only an old entry
         liveEntries.set([
           {
             _id: '1',

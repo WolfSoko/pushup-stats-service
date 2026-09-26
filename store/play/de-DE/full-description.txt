@@ -38,7 +38,7 @@ Stell dir dein Workout selbst zusammen: Übungen, Ziele und Sätze in deiner Rei
 Jede Übung bringt XP — pro Wiederholung, Minute oder Kilometer, auch rückwirkend für alte Einträge. Steig im Level auf, sammle Level-Abzeichen und miss dich in der XP-Bestenliste.
 
 🏆 BESTENLISTE & PROFIL
-Miss dich mit anderen oder bleib privat. Ranglisten für heute, die letzten 7 und 30 Tage. Dein Profil teilst du per Link: Gesamt-Reps, Streak, Bestleistungen, Heatmap, die letzten 10 Workouts und der aktive Plan — jede Kachel einzeln auf aus, nur für Freunde oder öffentlich.
+Miss dich mit anderen oder bleib privat. Ranglisten für heute, die letzten 7 und 30 Tage. Dein Profil teilst du per Link: Level und XP, Reps, Zeit und km aller Übungen, Streak, Heatmap, letzte Workouts und aktiver Plan — jede Kachel einzeln auf aus, nur für Freunde oder öffentlich.
 
 👥 FREUNDE & CHALLENGES
 Lade Freunde ein: euer Board zeigt, wer diese Woche vorne liegt. Feuert euch an und startet gemeinsame Challenges — 500 Liegestütze in 7 Tagen, jeder mit eigenem Fortschritt. Jede Anfeuerung landet in deinem Postfach, auch offline.

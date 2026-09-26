@@ -16,21 +16,27 @@ export interface PublicProfile {
   /** Public display name (anonymous fallback when none was set). */
   readonly displayName: string;
   /**
-   * Total reps across all time. `null` when the owner switched this
-   * element off — the server omits it rather than relying on the client
-   * to hide it, so a hidden value never reaches a visitor at all.
+   * Lifetime reps of every rep-counted exercise. `null` when the owner
+   * switched this element off — the server omits it rather than relying
+   * on the client to hide it, so a hidden value never reaches a visitor.
    */
   readonly total: number | null;
-  /** Total number of recorded entries; `null` when switched off. */
+  /** Lifetime seconds of time-based exercises; same switch as `total`. */
+  readonly totalDurationSec: number | null;
+  /** Lifetime metres of distance exercises; same switch as `total`. */
+  readonly totalDistanceM: number | null;
+  /** Entries across all exercises; `null` when switched off. */
   readonly totalEntries: number | null;
-  /** Unique days with at least one entry; `null` when switched off. */
+  /** Days with at least one entry of any exercise; `null` when switched off. */
   readonly totalDays: number | null;
-  /** Current consecutive-day streak; `null` when switched off. */
+  /** Consecutive training days of any exercise; `null` when switched off. */
   readonly currentStreak: number | null;
-  /** Best single-entry rep count (null until any entries exist). */
-  readonly bestSingleEntry: number | null;
-  /** Best single-day total reps (null until any entries exist). */
-  readonly bestDayTotal: number | null;
+  /** Most XP a single entry earned; `null` when switched off. */
+  readonly bestEntryXp: number | null;
+  /** Most XP earned on one Berlin day; `null` when switched off. */
+  readonly bestDayXp: number | null;
+  /** XP and the current week's/month's share; `null` when switched off. */
+  readonly xp: PublicProfileXp | null;
   /**
    * Ids of earned achievements, newest first. Ids only — labels and
    * icons come from the local catalog, and the award timestamps stay
@@ -42,13 +48,7 @@ export interface PublicProfile {
   readonly photoURL: string | null;
   /** ISO date the account was created, null when unknown. */
   readonly memberSince: string | null;
-  /**
-   * Reps in the current Berlin week/month; 0 when the bucket is stale,
-   * `null` when the element is switched off.
-   */
-  readonly weeklyReps: number | null;
-  readonly monthlyReps: number | null;
-  /** Cumulative reps per `<weekday>-<HH>` slot. */
+  /** XP of every exercise per `<weekday>-<HH>` slot. */
   readonly heatmap: Readonly<Record<string, number>>;
   /** Top exercises by volume. */
   readonly exercises: ReadonlyArray<PublicProfileExercise>;
@@ -84,6 +84,16 @@ export interface PublicProfile {
   readonly viewerCheeredToday: boolean;
   /** ISO timestamp of the last stats update. */
   readonly updatedAt: string;
+}
+
+/**
+ * The owner's XP. Period values are 0 once their Berlin week or month has
+ * rolled over; the level is derived client-side with `levelProgress`.
+ */
+export interface PublicProfileXp {
+  readonly total: number;
+  readonly weekly: number;
+  readonly monthly: number;
 }
 
 /**

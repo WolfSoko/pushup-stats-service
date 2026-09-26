@@ -12,10 +12,11 @@ import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
   exerciseEntryToUnified,
   isProfilePublic,
+  summarizeTraining,
   type UnifiedEntry,
   type UserStats,
 } from '@pu-stats/models';
-import { daysBetween, toBerlinIsoDate } from '@pu-stats/date';
+import { toBerlinIsoDate } from '@pu-stats/date';
 import { AdsStore } from '@pu-stats/ads';
 import { UserContextService } from '@pu-auth/auth';
 import { MotivationStore } from '@pu-stats/motivation';
@@ -28,7 +29,6 @@ import {
   buildQuickAddButtons,
 } from './dashboard/quick-add-view-model';
 import {
-  computeStreakFromEntries,
   currentIsoWeekKey,
   currentMonthKey,
   goalPercent,
@@ -98,11 +98,22 @@ export const DashboardStore = signalStore(
       () => store.userStatsResource.value() ?? null
     );
 
-    const allTimeTotal = computed(() => userStats()?.total ?? 0);
-    const allTimeDays = computed(() => userStats()?.totalDays ?? 0);
-    const allTimeEntries = computed(() => userStats()?.totalEntries ?? 0);
-    const allTimeAvg = computed(() =>
-      allTimeDays() ? (allTimeTotal() / allTimeDays()).toFixed(1) : '0'
+    const allTimeSummary = computed(() =>
+      summarizeTraining(
+        store._live.exerciseEntries(),
+        toBerlinIsoDate(new Date())
+      )
+    );
+    const allTimeLoading = computed(
+      () =>
+        !store._live.exerciseEntriesLoaded() &&
+        !store._live.exerciseEntriesFailed()
+    );
+    /** The feed failed before delivering anything — no numbers to show. */
+    const allTimeUnavailable = computed(
+      () =>
+        !store._live.exerciseEntriesLoaded() &&
+        store._live.exerciseEntriesFailed()
     );
 
     const todayTotal = computed(() => {
@@ -208,16 +219,7 @@ export const DashboardStore = signalStore(
         .slice(0, 5);
     });
 
-    const currentStreak = computed(() => {
-      const us = userStats();
-      if (us) {
-        if (!us.lastEntryDate) return 0;
-        const diff = daysBetween(us.lastEntryDate, toBerlinIsoDate(new Date()));
-        return diff >= 0 && diff <= 1 ? us.currentStreak : 0;
-      }
-      // Fallback: client-side computation
-      return computeStreakFromEntries(entryRows(), toBerlinIsoDate(new Date()));
-    });
+    const currentStreak = computed(() => allTimeSummary().currentStreak);
 
     const weekReps = computed(() => {
       // In the browser live entries are always fresher than the
@@ -272,10 +274,9 @@ export const DashboardStore = signalStore(
     const todayQuote = store._motivation.todayQuote;
 
     return {
-      allTimeTotal,
-      allTimeDays,
-      allTimeEntries,
-      allTimeAvg,
+      allTimeSummary,
+      allTimeLoading,
+      allTimeUnavailable,
       entryRows,
       currentStreak,
       weekReps,

@@ -38,7 +38,7 @@ Sett sammen din egen økt: øvelser, mål og sett i din rekkefølge. Appen leder
 Hver øvelse gir XP — per repetisjon, minutt eller kilometer, også for tidligere registreringer. Gå opp i nivå, samle nivåmerker og mål deg mot andre på XP-topplisten.
 
 🏆 RESULTATLISTE OG PROFIL
-Mål deg mot andre eller hold deg privat. Lister for i dag, de siste 7 og 30 dagene. Profilen deler du med en lenke: totale reps, streak, rekorder, heatmap, de siste 10 øktene og den aktive planen — hver rute stiller du inn hver for seg på av, bare venner eller offentlig.
+Mål deg mot andre eller hold deg privat. Lister for i dag, de siste 7 og 30 dagene. Profilen deler du med en lenke: level og XP, reps, tid og km for alle øvelser, streak, heatmap, økter og aktiv plan — hver rute stiller du inn hver for seg på av, bare venner eller offentlig.
 
 👥 VENNER OG FELLES UTFORDRINGER
 Inviter venner: tavla deres viser hvem som leder denne uka. Send hverandre heiarop og start felles utfordringer — 500 armhevninger på 7 dager, hver med sin egen fremgang. Hvert heiarop havner i innboksen, også offline.

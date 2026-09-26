@@ -13,7 +13,7 @@
  * upstream rather than a silently broken card.
  */
 
-import { findAchievementDefinition } from '@pu-stats/models';
+import { findAchievementDefinition, levelForXp } from '@pu-stats/models';
 import satori from 'satori';
 import { Resvg, initWasm } from '@resvg/resvg-wasm';
 import { readFile } from 'node:fs/promises';
@@ -120,7 +120,7 @@ const OG_COPY: Readonly<Record<OgLocale, OgCopy>> = {
   de: {
     numberLocale: 'de-DE',
     daysLabel: 'Tage',
-    headline: 'Pushup-Profil',
+    headline: 'Trainingsprofil',
     cta: 'Selbst tracken — kostenlos auf pushup-stats.com',
     planCompleted: 'Plan abgeschlossen',
     firstPlanDay: 'Erster Plantag',
@@ -132,7 +132,7 @@ const OG_COPY: Readonly<Record<OgLocale, OgCopy>> = {
   en: {
     numberLocale: 'en-US',
     daysLabel: 'days',
-    headline: 'Push-up profile',
+    headline: 'Training profile',
     cta: 'Track yours — free at pushup-stats.com',
     planCompleted: 'Plan completed',
     firstPlanDay: 'First plan day',
@@ -188,6 +188,11 @@ function statLine(
   copy: { numberLocale: string; daysLabel: string }
 ): string {
   const parts: string[] = [];
+  if (profile.xp) {
+    parts.push(
+      `Level ${levelForXp(profile.xp.total)} · ${profile.xp.total.toLocaleString(copy.numberLocale)} XP`
+    );
+  }
   if (profile.total !== null) {
     parts.push(`${profile.total.toLocaleString(copy.numberLocale)} Reps`);
   }

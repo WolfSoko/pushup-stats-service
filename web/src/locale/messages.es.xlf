@@ -1733,8 +1733,8 @@
       <notes>
         <note category="location">web/src/app/app.routes.ts:139</note>
       </notes>
-      <segment state="translated">
-        <source>Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.</source>
+      <segment state="initial">
+        <source>Öffentliches Trainingsprofil mit Level, XP, Trainingstagen und Bestleistungen.</source>
         <target>Perfil público de flexiones con repeticiones, rachas y mejores actuaciones.</target>
       </segment>
     </unit>
@@ -3110,8 +3110,8 @@
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:129</note>
       </notes>
-      <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf <ph id="2" equiv="brand" disp="BRAND_NAME"/> geschafft 💪 Schau&apos;s dir an:</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Wiederholungen auf <ph id="2" equiv="brand" disp="BRAND_NAME"/> geschafft 💪 Schau&apos;s dir an:</source>
         <target><ph id="0" equiv="name" disp="profile.displayName" /> hizo flexiones <ph id="1" equiv="total" disp="profile.total" /> en <ph id="2" equiv="brand" disp="BRAND_NAME"/> 💪 Compruébalo:</target>
       </segment>
     </unit>
@@ -3146,8 +3146,8 @@
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:192</note>
       </notes>
-      <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> Liegestütze · Streak <ph id="2" equiv="streak" disp="profile.currentStreak"/> · <ph id="3" equiv="brand" disp="BRAND_NAME"/></source>
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> Wiederholungen · Streak <ph id="2" equiv="streak" disp="profile.currentStreak"/> · <ph id="3" equiv="brand" disp="BRAND_NAME"/></source>
         <target><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> flexiones · Racha <ph id="2" equiv="streak" disp="profile.currentStreak"/> · <ph id="3" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
@@ -3155,8 +3155,8 @@
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:193</note>
       </notes>
-      <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf <ph id="4" equiv="domain" disp="BRAND_DOMAIN"/>.</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Wiederholungen an <ph id="2" equiv="days" disp="profile.totalDays"/> Trainingstagen geschafft – aktuell <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage in Folge. Tracke selbst kostenlos auf <ph id="4" equiv="domain" disp="BRAND_DOMAIN"/>.</source>
         <target><ph id="0" equiv="name" disp="profile.displayName"/> ha completado <ph id="1" equiv="total" disp="profile.total"/> flexiones en <ph id="2" equiv="days" disp="profile.totalDays"/> días activos – racha actual: <ph id="3" equiv="streak" disp="profile.currentStreak"/> días. Empieza a registrar gratis en <ph id="4" equiv="domain" disp="BRAND_DOMAIN"/>.</target>
       </segment>
     </unit>
@@ -15956,6 +15956,324 @@
       <segment state="translated">
         <source><ph id="0" equiv="date" disp="date"/>: <ph id="1" equiv="xp" disp="xp"/></source>
         <target><ph id="0" equiv="date" disp="date"/>: <ph id="1" equiv="xp" disp="xp"/></target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.stat.xp">
+      <segment state="initial">
+        <source>Level &amp; XP</source>
+        <target>Level &amp; XP</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.stat.reps">
+      <segment state="initial">
+        <source>Wiederholungen gesamt</source>
+        <target>Wiederholungen gesamt</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.stat.duration">
+      <segment state="initial">
+        <source>Trainingszeit gesamt</source>
+        <target>Trainingszeit gesamt</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.stat.distance">
+      <segment state="initial">
+        <source>Strecke gesamt</source>
+        <target>Strecke gesamt</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.stat.days">
+      <segment state="initial">
+        <source>Trainingstage</source>
+        <target>Trainingstage</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.stat.streak">
+      <segment state="initial">
+        <source>Tage in Folge</source>
+        <target>Tage in Folge</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.stat.entries">
+      <segment state="initial">
+        <source>Einträge gesamt</source>
+        <target>Einträge gesamt</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.stat.bestEntry">
+      <segment state="initial">
+        <source>Stärkster Eintrag</source>
+        <target>Stärkster Eintrag</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.stat.bestDay">
+      <segment state="initial">
+        <source>Stärkster Tag</source>
+        <target>Stärkster Tag</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.xp.level">
+      <segment state="initial">
+        <source>Level <ph id="0" equiv="INTERPOLATION" disp="{{ progress().level }}"/></source>
+        <target>Level <ph id="0" equiv="INTERPOLATION" disp="{{ progress().level }}"/></target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.xp.remaining">
+      <segment state="initial">
+        <source>Noch <ph id="0" equiv="INTERPOLATION" disp="{{ remaining() }}"/> bis Level <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress().level + 1 }}"/></source>
+        <target>Noch <ph id="0" equiv="INTERPOLATION" disp="{{ remaining() }}"/> bis Level <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress().level + 1 }}"/></target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.xp.week">
+      <segment state="initial">
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ weekly() }}"/> diese Woche</source>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ weekly() }}"/> diese Woche</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.xp.month">
+      <segment state="initial">
+        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ monthly() }}"/> diesen Monat</source>
+        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ monthly() }}"/> diesen Monat</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.xp.barLabel">
+      <segment state="initial">
+        <source>Fortschritt zu Level <ph id="0" equiv="next" disp="this.progress().level + 1"/></source>
+        <target>Fortschritt zu Level <ph id="0" equiv="next" disp="this.progress().level + 1"/></target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTime.headingAll">
+      <segment state="initial">
+        <source>Alle Übungen seit Beginn</source>
+        <target>Alle Übungen seit Beginn</target>
+      </segment>
+    </unit>
+    <unit id="allTime.reps">
+      <segment state="initial">
+        <source>Wiederholungen</source>
+        <target>Wiederholungen</target>
+      </segment>
+    </unit>
+    <unit id="allTime.duration">
+      <segment state="initial">
+        <source>Zeit</source>
+        <target>Zeit</target>
+      </segment>
+    </unit>
+    <unit id="allTime.distance">
+      <segment state="initial">
+        <source>Strecke</source>
+        <target>Strecke</target>
+      </segment>
+    </unit>
+    <unit id="allTime.days">
+      <segment state="initial">
+        <source>Trainingstage</source>
+        <target>Trainingstage</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTime.hint.reps">
+      <segment state="initial">
+        <source>Alle Wiederholungen deiner Stückübungen zusammen – Liegestütze, Sit-ups, Kniebeugen und alle anderen.</source>
+        <target>Alle Wiederholungen deiner Stückübungen zusammen – Liegestütze, Sit-ups, Kniebeugen und alle anderen.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTime.hint.duration">
+      <segment state="initial">
+        <source>Gesamte Zeit deiner Zeitübungen wie Planks und Halteübungen.</source>
+        <target>Gesamte Zeit deiner Zeitübungen wie Planks und Halteübungen.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTime.hint.distance">
+      <segment state="initial">
+        <source>Gesamte Strecke deiner Lauf- und Streckenübungen.</source>
+        <target>Gesamte Strecke deiner Lauf- und Streckenübungen.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTime.hint.trainingDays">
+      <segment state="initial">
+        <source>Tage, an denen du mindestens eine Übung eingetragen hast.</source>
+        <target>Tage, an denen du mindestens eine Übung eingetragen hast.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTime.hint.allEntries">
+      <segment state="initial">
+        <source>Anzahl aller Einträge über alle Übungen – jede erfasste Serie zählt als einer.</source>
+        <target>Anzahl aller Einträge über alle Übungen – jede erfasste Serie zählt als einer.</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.trainingStatsBackfill.title">
+      <segment state="initial">
+        <source>Trainings-Statistik über alle Übungen aufbauen</source>
+        <target>Trainings-Statistik über alle Übungen aufbauen</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.trainingStatsBackfill.description">
+      <segment state="initial">
+        <source>Baut für alle Nutzer mit Einträgen die übungsübergreifende Trainings-Statistik auf (Profil, Heatmap, Freunde-Board). Ohne sie rechnen diese Seiten bei jedem Aufruf alle Einträge durch. Bis zu 200 Nutzer pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Bestehende Statistiken bleiben unverändert. Erst den Probelauf ausführen.</source>
+        <target>Baut für alle Nutzer mit Einträgen die übungsübergreifende Trainings-Statistik auf (Profil, Heatmap, Freunde-Board). Ohne sie rechnen diese Seiten bei jedem Aufruf alle Einträge durch. Bis zu 200 Nutzer pro Lauf — so oft wiederholen, bis „remaining“ 0 ist. Bestehende Statistiken bleiben unverändert. Erst den Probelauf ausführen.</target>
+      </segment>
+    </unit>
+    <unit id="announcements.profileXp">
+      <segment state="initial">
+        <source>Neu: Level &amp; XP auf deinem Profil, Statistik über alle Übungen</source>
+        <target>Neu: Level &amp; XP auf deinem Profil, Statistik über alle Übungen</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.eyebrow">
+      <segment state="initial">
+        <source> Neu · Trainingsprofil </source>
+        <target> Neu · Trainingsprofil </target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.headline">
+      <segment state="initial">
+        <source> Dein Profil zeigt alles, was du trainierst — nicht nur Liegestütze. </source>
+        <target> Dein Profil zeigt alles, was du trainierst — nicht nur Liegestütze. </target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.desc">
+      <segment state="initial">
+        <source> Ganz oben dein Level und deine XP, darunter Wiederholungen, Trainingszeit, Strecke, Trainingstage und deine Serie — über alle Übungen gezählt. Du entscheidest bei jedem Wert, ob ihn alle, nur Freunde oder niemand sieht. </source>
+        <target> Ganz oben dein Level und deine XP, darunter Wiederholungen, Trainingszeit, Strecke, Trainingstage und deine Serie — über alle Übungen gezählt. Du entscheidest bei jedem Wert, ob ihn alle, nur Freunde oder niemand sieht. </target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.chip.xp">
+      <segment state="initial">
+        <source>Level und XP, dazu was diese Woche und diesen Monat dazukam</source>
+        <target>Level und XP, dazu was diese Woche und diesen Monat dazukam</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.chip.allExercises">
+      <segment state="initial">
+        <source>Wiederholungen, Zeit und Kilometer über alle Übungen</source>
+        <target>Wiederholungen, Zeit und Kilometer über alle Übungen</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.chip.visibility">
+      <segment state="initial">
+        <source>Für alle, nur für Freunde oder privat — pro Wert</source>
+        <target>Für alle, nur für Freunde oder privat — pro Wert</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.cta">
+      <segment state="initial">
+        <source>Eigenes Profil anlegen</source>
+        <target>Eigenes Profil anlegen</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.mock.level">
+      <segment state="initial">
+        <source>Level 12</source>
+        <target>Level 12</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.mock.total">
+      <segment state="initial">
+        <source>6.930 XP</source>
+        <target>6.930 XP</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.mock.reps">
+      <segment state="initial">
+        <source>Wiederholungen</source>
+        <target>Wiederholungen</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.mock.duration">
+      <segment state="initial">
+        <source>Trainingszeit</source>
+        <target>Trainingszeit</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.mock.distance">
+      <segment state="initial">
+        <source>Strecke</source>
+        <target>Strecke</target>
+      </segment>
+    </unit>
+    <unit id="landing.profile.mock.streak">
+      <segment state="initial">
+        <source>Tage in Folge</source>
+        <target>Tage in Folge</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.badge">
+      <segment state="initial">
+        <source>Neu</source>
+        <target>Neu</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.title">
+      <segment state="initial">
+        <source>Level &amp; XP auf deinem Profil</source>
+        <target>Level &amp; XP auf deinem Profil</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.stepCount">
+      <segment state="initial">
+        <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
+        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.later">
+      <segment state="initial">
+        <source> Später </source>
+        <target> Später </target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.back">
+      <segment state="initial">
+        <source>Zurück</source>
+        <target>Zurück</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.start">
+      <segment state="initial">
+        <source>Zu meinem Profil</source>
+        <target>Zu meinem Profil</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.next">
+      <segment state="initial">
+        <source>Weiter</source>
+        <target>Weiter</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.step1.title">
+      <segment state="initial">
+        <source>Dein Level ganz oben</source>
+        <target>Dein Level ganz oben</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.step1.body">
+      <segment state="initial">
+        <source>Dein Profil zeigt jetzt oben dein Level und deine XP — im Gold deiner Abzeichen, dazu was diese Woche und diesen Monat dazukam.</source>
+        <target>Dein Profil zeigt jetzt oben dein Level und deine XP — im Gold deiner Abzeichen, dazu was diese Woche und diesen Monat dazukam.</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.step2.title">
+      <segment state="initial">
+        <source>Jede Übung zählt</source>
+        <target>Jede Übung zählt</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.step2.body">
+      <segment state="initial">
+        <source>Wiederholungen, Trainingszeit, Strecke, Trainingstage und Serie zählen jetzt alle Übungen, nicht nur Liegestütze — auf dem Profil und auf deinem Dashboard.</source>
+        <target>Wiederholungen, Trainingszeit, Strecke, Trainingstage und Serie zählen jetzt alle Übungen, nicht nur Liegestütze — auf dem Profil und auf deinem Dashboard.</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.step3.title">
+      <segment state="initial">
+        <source>Du entscheidest, wer es sieht</source>
+        <target>Du entscheidest, wer es sieht</target>
+      </segment>
+    </unit>
+    <unit id="profileXp.intro.step3.body">
+      <segment state="initial">
+        <source>Die XP-Karte siehst erst einmal nur du. Tippe auf ihr Symbol, um sie deinen Freunden oder allen zu zeigen.</source>
+        <target>Die XP-Karte siehst erst einmal nur du. Tippe auf ihr Symbol, um sie deinen Freunden oder allen zu zeigen.</target>
       </segment>
     </unit>
 </file>
